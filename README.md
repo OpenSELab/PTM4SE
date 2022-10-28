@@ -1364,3 +1364,6240 @@ Data sets are the basis of DL models, and their quality directly affects the per
 ## Performance Statistics of PTMs
 
 The powerful learning ability of pre-trained models has led researchers in the field of software engineering to apply pre-trained models to various software engineering tasks. We classify the downstream tasks in the software engineering domain into PL (Program Language) related tasks, NL (Natural Language) related tasks, programming language and natural language interaction tasks, and image related tasks in the software engineering domain according to the input data type. On this basis, we measured the performance of different models on various metrics in various downstream tasks.
+
+### PL-related tasks
+
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="581" style="width:435.4pt;border-collapse:collapse;border:none;mso-border-top-alt:
+ solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
+ 1.0pt solid black">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt">
+  <td width="42" valign="top" style="width:31.45pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PL <o:p></o:p></span></p>
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="90" valign="top" style="width:67.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Sub-Tasks<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PTMs<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Accuracy<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Precision<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Recall<o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">F1<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">MAP<o:p></o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BLEU<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">EM<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBLEU<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:8.5pt">
+  <td width="42" rowspan="38" valign="top" style="width:31.45pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code
+  classification<o:p></o:p></span></p>
+  </td>
+  <td width="90" rowspan="4" valign="top" style="width:67.5pt;border:none;border-bottom:
+  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Commit
+  classifcation<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.80<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.84<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.75<o:p></o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.79<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:2;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">seBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.87</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.85</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.84</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:3;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">BERToverflow</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.84</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.81</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.81</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:4;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">BERT-BASE</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.77</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.73</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.75</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:5;height:8.5pt">
+  <td width="90" rowspan="4" valign="top" style="width:67.5pt;border:none;border-bottom:
+  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Algorithm
+  classification<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.85<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.83<o:p></o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:6;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.83</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.80</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:7;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">ResNet18</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">86.4</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">85.8</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">84.7</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">82.2</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:8;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">ResNet50<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.90<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.86<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.87<o:p></o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.86<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:9;height:8.5pt">
+  <td width="90" rowspan="4" valign="top" style="width:67.5pt;border:none;border-bottom:
+  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Technical Debt
+  Detection<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.82<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:10;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">BERT-SO-1M</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.82<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:11;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">StackOBERTflow</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.81<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:12;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">BERT-comments</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">0.81<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:13;height:8.5pt">
+  <td width="90" rowspan="7" valign="top" style="width:67.5pt;border:none;border-bottom:
+  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Vulnerability Detection<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">GraphCodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.92<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.92<o:p></o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.92<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:14;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">CuBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.72<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:15;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">C-BERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.62<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:16;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.64<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:17;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">PLBART</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.63<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:18;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">ResNet18<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.89<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.89<o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.89<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:19;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">ResNet50<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.91<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.91<o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.91<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:20;height:8.5pt">
+  <td width="90" rowspan="9" valign="top" style="width:67.5pt;border:none;border-bottom:
+  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Defect Detection<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-base<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.66<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:21;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeT5-small</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">0.63<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:22;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.63<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:23;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CuBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.95&nbsp;</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:24;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa
+  (code)</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.61<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:25;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">BERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.76<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:26;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.68<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:27;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERTa<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.70<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:28;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">GraphCodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.71<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:29;height:8.5pt">
+  <td width="90" rowspan="10" valign="top" style="width:67.5pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Clone Detection<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">RoBERTa&nbsp;<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.97<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.96<o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.96<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:30;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBERT&nbsp;<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.97<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.96<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.96<o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.96<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.10<o:p></o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:31;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">GraphCodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.97<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.97<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.97<o:p></o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.97<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:32;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeT5-small</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt">0.97<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:33;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeT5-base</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt">0.97<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:34;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa
+  (code)</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.95<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:35;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">PLBART</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt">0.97<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:36;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">code2vec</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.82</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.40</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">0.60</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:37;height:1.0pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">OSCAR</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.49<o:p></o:p></span></b></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:38;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">InferCode</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.90<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.56<o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.75<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:39;height:8.5pt">
+  <td width="132" colspan="2" rowspan="12" valign="top" style="width:98.95pt;
+  border:none;border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Program Repair<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-base<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.77</span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.22</span></b></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:40;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeT5-small</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.76<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.19<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:41;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.75<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:42;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">RoBERTa (code)<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.16<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:43;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.72<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.16<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:44;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">GraphCodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.80</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.17<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:45;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.19<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:46;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">CuBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.89<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:47;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">T5<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.60<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:48;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.82<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.81<o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.81<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:49;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CC2Vec</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.74<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt">0.73<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt">0.72<o:p></o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt">0.72<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:50;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">BERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.74<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.74<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.70<o:p></o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.72<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:51;height:8.5pt">
+  <td width="132" colspan="2" valign="top" style="width:98.95pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Completion<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CugLM&nbsp;<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.84<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:52;height:8.5pt">
+  <td width="132" colspan="2" rowspan="7" valign="top" style="width:98.95pt;border:
+  none;border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Translation<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">RoBERTa (code)<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.56<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.83<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:53;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.80<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.59<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.85<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:54;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.83<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.65<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.88<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:55;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">GraphCodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.81<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.59<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:56;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeT5-small</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.83<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-weight:bold">0.64<o:p></o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:57;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeT5-base</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt">0.84<o:p></o:p></span></b></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt">0.66<o:p></o:p></span></b></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:58;height:8.5pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">IR-BERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.92<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.86<o:p></o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.89<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:59;height:8.5pt">
+  <td width="132" colspan="2" valign="top" style="width:98.95pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt;font-family:&quot;Times New Roman&quot;,serif">API</span><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"> </span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">Recommendation</span><span lang="EN-US" style="font-family:&quot;Times New Roman&quot;,serif"><o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">word2vec<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.23<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.93<o:p></o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:60;height:8.5pt">
+  <td width="132" colspan="2" rowspan="2" valign="top" style="width:98.95pt;border:
+  none;border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">Software
+  Effort Estimation<o:p></o:p></span></p>
+  </td>
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.78<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:61;mso-yfti-lastrow:yes;height:1.0pt">
+  <td width="104" valign="top" style="width:78.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-size:9.0pt;font-family:&quot;Times New Roman&quot;,serif">0.78<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="38" valign="top" style="width:28.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="41" valign="top" style="width:30.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="49" valign="top" style="width:36.45pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.0pt">
+  <p class="MsoNormal" align="left" style="text-align:left;mso-pagination:widow-orphan;
+  vertical-align:top"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+</tbody></table>
+
+### Interaction tasks between PL and NL
+
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
+ solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
+ 1.0pt solid black">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt">
+  <td width="125" valign="top" style="width:93.7pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">NL+PL<o:p></o:p></span></p>
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PTMs<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BLEU-4<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BLEU<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBLEU<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">EM<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">MRR<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:8.5pt">
+  <td width="125" rowspan="6" valign="top" style="width:93.7pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Summarization<o:p></o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-base<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.20</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:2;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-small<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.19<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:3;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:4;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.17<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:5;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:6;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">GraphCodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.19<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:7;height:8.5pt">
+  <td width="125" rowspan="5" valign="top" style="width:93.7pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Generation<o:p></o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-base<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.41<o:p></o:p></span></b></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.43<o:p></o:p></span></b></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.22<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:8;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-small<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.38<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.41<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.22<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:9;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.37<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.39<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.19<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:10;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">GPT-2</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.25<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.30<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.17<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:11;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeGPT-2</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.29<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.33<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:12;height:8.5pt">
+  <td width="125" valign="top" style="width:93.7pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Review<o:p></o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">T5<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.82</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:13;height:8.5pt">
+  <td width="125" rowspan="5" valign="top" style="width:93.7pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Search<o:p></o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">RoBERTa(code)<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.62<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:14;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.60<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:15;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">InferCode<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.57<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:16;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.68<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:17;mso-yfti-lastrow:yes;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">GraphCodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.70</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+ </tr>
+</tbody></table>
+
+### CV-related tasks
+
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
+ solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
+ 1.0pt solid black">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt">
+  <td width="161" valign="top" style="width:120.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CV<o:p></o:p></span></p>
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="95" valign="top" style="width:70.9pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PTMs<o:p></o:p></span></p>
+  </td>
+  <td width="323" valign="top" style="width:242.05pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">Accuracy</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;mso-yfti-lastrow:yes;height:8.5pt">
+  <td width="161" valign="top" style="width:120.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">UML diagram Classification<o:p></o:p></span></p>
+  </td>
+  <td width="95" valign="top" style="width:70.9pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">VGG-16</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="323" valign="top" style="width:242.05pt;border:none;border-bottom:
+  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.50</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+ </tr>
+</tbody></table>
+
+### NL-related tasks
+
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" align="left" width="572" style="width:428.85pt;border-collapse:collapse;border:none;
+ mso-border-top-alt:solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;
+ mso-table-overlap:never;mso-table-lspace:9.0pt;margin-left:6.75pt;mso-table-rspace:
+ 9.0pt;margin-right:6.75pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:
+ margin;mso-table-left:left;mso-table-top:6.2pt;mso-border-insideh:1.0pt solid black">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:7.1pt">
+  <td width="95" valign="top" style="width:70.9pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">NL <o:p></o:p></span></p>
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="66" valign="top" style="width:49.35pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">Sub-Tasks<o:p></o:p></span></p>
+  </td>
+  <td width="92" valign="top" style="width:69.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">PTMs<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">Accuracy&nbsp;<o:p></o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">Precision<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">Recall<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">F1<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">MCC&nbsp;<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">AUC<o:p></o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">BLEU&nbsp;<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">MAP<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:7.1pt">
+  <td width="95" rowspan="22" valign="top" style="width:70.9pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">SE Related Text classification<o:p></o:p></span></p>
+  </td>
+  <td width="66" rowspan="5" valign="top" style="width:49.35pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">Issue classification<o:p></o:p></span></p>
+  </td>
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">BERT-base<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.76<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.85<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:2;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">BERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt">0. <span style="color:black;background:white">33</span><o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.46<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.38<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:3;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">BERToverflow<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.80<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.86<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.81<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:4;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">seBERT<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.79<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.89<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.80<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:5;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">RoBERTa<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.82<o:p></o:p></span></b></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.84<o:p></o:p></span></b></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.86<o:p></o:p></span></b></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.85<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:6;height:7.1pt">
+  <td width="66" rowspan="8" valign="top" style="width:49.35pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">APP Review classification<o:p></o:p></span></p>
+  </td>
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">BERT<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.94<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.61<o:p></o:p></span></b></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.79<o:p></o:p></span></b></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:7;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">RoBERTa<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.94<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.59<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.78<o:p></o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:8;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:10.5pt;color:black;
+  background:white">ALBERT</span><span lang="EN-US" style="font-size:10.5pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.93<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.48<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.70<o:p></o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:9;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:10.5pt;color:black;
+  background:white">BERTOverflow</span><span lang="EN-US" style="font-size:10.5pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.90<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.13<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.59<o:p></o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:10;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">XLNet<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.94<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.52<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.75<o:p></o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:11;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">BERT-SO-1M</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.90<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:12;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">BERT-reviews</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.92<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:13;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">StackOBERTflow</span><span lang="EN-US" style="font-size:
+  9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.86<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:14;height:7.1pt">
+  <td width="66" rowspan="9" valign="top" style="width:49.35pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">Sentiment classification (positive)<o:p></o:p></span></p>
+  </td>
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">DeepMoji<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.95<o:p></o:p></span></b></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.95<o:p></o:p></span></b></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.95<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:15;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">BERT<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.79<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.78<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:16;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">RoBERTa<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.80<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.79<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:17;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">BERT-SO-1M</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.88<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:18;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">BERT-SO-1M-large</span><span lang="EN-US" style="font-size:
+  9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.93<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.94<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:19;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">DistilRoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.92<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.92<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:20;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">StackOBERTflow</span><span lang="EN-US" style="font-size:
+  9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.93<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.94<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:21;height:1.25pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">ALBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.79<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.74<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.77<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:1.25pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:22;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;color:black;
+  background:white">XLNet<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.75<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.81<o:p></o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.78<o:p></o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:23;height:15.3pt">
+  <td width="95" rowspan="2" valign="top" style="width:70.9pt;border:none;border-bottom:
+  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">Review Responses Automatic Generation<o:p></o:p></span></p>
+  </td>
+  <td width="66" rowspan="2" valign="top" style="width:49.35pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">RoBERTa<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">0.24<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:15.3pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:24;height:7.1pt">
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">BERT<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.57</span></b><span lang="EN-US" style="font-size:
+  9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:25;mso-yfti-lastrow:yes;height:7.1pt">
+  <td width="95" valign="top" style="width:70.9pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">Link prediction<o:p></o:p></span></p>
+  </td>
+  <td width="66" valign="top" style="width:49.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt">BERT<o:p></o:p></span></p>
+  </td>
+  <td width="40" valign="top" style="width:30.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="42" valign="top" style="width:31.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
+  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.97<o:p></o:p></span></b></p>
+  </td>
+  <td width="43" valign="top" style="width:32.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="39" valign="top" style="width:29.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="37" valign="top" style="width:27.75pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></b></p>
+  </td>
+  <td width="40" valign="top" style="width:30.35pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:7.1pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
+  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
+  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
+  mso-height-rule:exactly"><b><span lang="EN-US" style="font-size:9.0pt;
+  mso-bidi-font-size:10.0pt">0.99<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+</tbody></table>
