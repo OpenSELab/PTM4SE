@@ -7315,23 +7315,18 @@ The powerful learning ability of pre-trained models has led researchers in the f
   </td>
  </tr>
  <tr style="mso-yfti-irow:23;height:15.3pt">
-  <td width="95" rowspan="2" valign="top" style="width:70.9pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:15.3pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
-  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
-  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
-  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
-  10.0pt">Review Responses Automatic Generation<o:p></o:p></span></p>
-  </td>
-  <td width="66" rowspan="2" valign="top" style="width:49.35pt;border:none;
-  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  <td width="160" colspan="2" rowspan="2" valign="top" style="width:120.25pt;
+  border:none;border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
   padding:5.0pt 5.0pt 5.0pt 5.0pt;height:15.3pt">
   <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
   frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
   paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
   mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
-  10.0pt"><o:p>&nbsp;</o:p></span></p>
+  10.0pt">Review Responses Automatic Generation<o:p></o:p></span></p>
+  <p style="mso-line-height-alt:.9pt;mso-element:frame;mso-element-frame-hspace:
+  9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;mso-height-rule:
+  exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
   </td>
   <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
   mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
@@ -7500,23 +7495,14 @@ The powerful learning ability of pre-trained models has led researchers in the f
   </td>
  </tr>
  <tr style="mso-yfti-irow:25;mso-yfti-lastrow:yes;height:7.1pt">
-  <td width="95" valign="top" style="width:70.9pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
+  <td width="160" colspan="2" valign="top" style="width:120.25pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
   <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
   frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
   paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
   mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
   10.0pt">Link prediction<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.35pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan;mso-element:
-  frame;mso-element-frame-hspace:9.0pt;mso-element-wrap:around;mso-element-anchor-vertical:
-  paragraph;mso-element-anchor-horizontal:margin;mso-element-top:6.2pt;
-  mso-height-rule:exactly"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
-  10.0pt"><o:p>&nbsp;</o:p></span></p>
   </td>
   <td width="92" valign="top" style="width:69.0pt;border:none;border-bottom:solid black 1.0pt;
   mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
