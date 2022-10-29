@@ -7400,3 +7400,7 @@ The powerful learning ability of pre-trained models has led researchers in the f
   </td>
  </tr>
 </tbody></table>
+
+
+## More Details
+Check out our paper for more information: Research Progress of Pre-trained models in Software Engineering.
