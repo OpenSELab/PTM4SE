@@ -4499,6 +4499,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   </td>
  </tr>
 </tbody></table>
+
 ### 4.2 NL-related tasks
 
 NL-related tasks are the tasks to solve the problems through studying the feature represents included in the text information (e.g., issue report, commit message
