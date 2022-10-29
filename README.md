@@ -3,8 +3,7 @@ Recent years, deep learning has achieved excellent performance in Software Engin
 
 ## Research Framework
 In order to solve the problem that intelligent SE methods based on DL methods require a large amount of labeled data, researchers in SE have proposed many methods with PTMs to solve SE-related tasks (i.e., pre-trained model-based intelligent software engineering methods). These methods apply a small amount of labeled data from SE downstream tasks to train an intelligent model based on the existing PTMs, which could achieve the final PTMs4SE intelligent method to solve SE downstream tasks (e.g., code generation, program repair, and issue report classification).  
-6
-7
+
 The specific construction process mainly includes four parts: SE downstream task data collection and processing, intelligent method construction based on pre-trained model, model training and model evaluation.<br><br>
 
 <div align = center>
