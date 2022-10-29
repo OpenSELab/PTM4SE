@@ -10,12 +10,16 @@ The specific construction process mainly includes four parts: SE downstream task
 <img src="pictures/Research%20framework%20of%20intelligent%20software%20method%20based%20on%20pre-trained%20model.png" width="600px"><br>
 </div>
 
+<p align="center">Fig.1 Research framework of intelligent software method based on pre-trained model</p>
+
 ## PTMs in SE
 Since 2018, researchers in the field of software engineering have begun to study intelligent methods based on PTMs. According to the dataset source of the trained PTMs, the used PTMs can be divided into Off-the-shelf models in DL, Domain-specific models, and source code models.<br><br>
 
 <div align = center>
 <img src="pictures/Distribution%20of%20pre-trained%20models%20used%20in%20the%20software%20engineering.png" width="800px"><br>
 </div>
+ 
+<p align="center">Fig.2 Distribution of pre-trained models used in the software engineering</p>
 
 ## Dataset
 Data sets are the basis of DL models, and their quality directly affects the performance of the model. In particular, intelligent software methods based on PTMs are more inseparable from SE data sets. For example, domain-specific PTMs or source code PTMs need a large number of SE data sets to train the model, and a small amount of SE downstream task data is needed to fine-tune the PTM to complete downstream tasks. In order to better understand the datasets used in intelligent methods based on PTMs, we summarized and analyzed datasets from the field of SE in terms of PTM datasets and downstream task datasets.
