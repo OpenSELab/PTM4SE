@@ -15,6 +15,18 @@ The specific construction process mainly includes four parts: SE downstream task
 ## PTMs in SE
 Since 2018, researchers in the field of software engineering have begun to study intelligent methods based on PTMs. According to the dataset source of the trained PTMs, the used PTMs can be divided into Off-the-shelf models in DL, Domain-specific models, and source code models.<br><br>
 
+### Off-the-shelf Models
+
+Existing PTMs in the field of DL are pre-trained on general domain datasets, such as BERT, GPT, and XLNet models trained on English Wikipedia or general news datasets in Natural language processing (NLP), and ResNet and VGG pretrained on ImageNet datasets in computer vision (CV) model, etc. The existing PTMs used by researchers in the field of SE to solve SE tasks can be divided into two categories: NLP and CV.
+
+### Domain-specific Models
+
+Training models of existing in SE tasks while able to provide a better prediction performance, Julian et al. [21] found general field data sets and the SE domain specific data sets are very different, such as there are a lot of technical jargon in the field of SE and general field data set is different, this leads to a general domain data training build the training model It is not well adapted to the text characteristics of SE field. Therefore, researchers in the field of SE collect a large number of data sets in the field of SE to form domain-specific PTMs from zero-training DL models to solve SE tasks. At present, the domain-specific PTMs mainly include SeBERT, Text-To-Text Transfer Transformer(T5) model, Word2Vec-SO, BERT-reviews, BERT-SO-1M, BERT-SO-1M-Large, RoBERTa-SO.
+
+### Source Code Models
+
+Source code in the field of SE data (such as: Python/Java program, etc.) and NLP of text data or text data there is a big difference in the SE field, in order to better capture the syntax and semantic information in the source data, the researchers collected a large number of source code in the field of SE data sets to DL from the new training model software Source Code PTMs for engineering domains. At present, the main PTMs based on source code data are Code2Vec,CodeT5, CodeBERT, GraphCodeBERT, C-BERT, CuBERT, CodeBERT, and CodeBERT. PLBART, OSCAR, InferCode, DOBF.
+
 <div align = center>
 <img src="pictures/Distribution%20of%20pre-trained%20models%20used%20in%20the%20software%20engineering.png" width="800px"><br>
 </div>
@@ -1370,6 +1382,14 @@ Data sets are the basis of DL models, and their quality directly affects the per
 </tbody></table>
 
 ## Performance Statistics of PTMs
+
+The powerful learning ability of PTMs has led researchers in the field of SE to apply PTMs to various SE tasks. In this section, we classify the downstream tasks in the SE domain into programming language (PL) related tasks, natural language (NL) related tasks in the SE domain, PL and NL interaction tasks, and image related tasks in the SE domain according to the input data types.
+
+<div align = center>
+<img src="pictures/Distribution%20of%20downstream%20tasks%20with%20pre-trained%20models%20in%20software%20engineering.jpg" width="900px"><br>
+</div>
+
+<p align="center">Fig.3 Distribution of downstream tasks with pre-trained models in software engineering</p>
 
 The powerful learning ability of pre-trained models has led researchers in the field of software engineering to apply pre-trained models to various software engineering tasks. We classify the downstream tasks in the software engineering domain into PL (Program Language) related tasks, NL (Natural Language) related tasks, programming language and natural language interaction tasks, and image related tasks in the software engineering domain according to the input data type. On this basis, we measured the performance of different models on various metrics in various downstream tasks.
 
