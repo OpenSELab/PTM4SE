@@ -1,7 +1,7 @@
 # PTM4SE
 Recent years, deep learning has achieved excellent performance in Software Engineering (SE) tasks. However, excellent performance relies on large-scale training sets, which prevents the application of deep learning techniques in practical tasks. With the release of pre-trained models (PTMs) in the field of deep learning, researchers in SE have begun to pay attention to PTMs, and introduced PTMs into SE tasks. PTMs has made a qualitative leap in SE tasks, which makes intelligent software engineering enter a new era. However, none of the studies have refined the success, failure, and opportunities of pre-trained models in SE. To clarify the work in this cross-field (PTM4SE: Pre-trained models for Software Engineering), we systematically review the current studies related to PTM4SE. Specifically, we firstly describe the framework of the intelligent software engineering methods based on pre-trained models. We then analyze and discuss the commonly used pre-trained models in SE. Meanwhile, we introduce the downstream tasks in SE with pre-trained models in detail, and compare and analyze the performance of pre-trained model techniques on these tasks. We then present the datasets used in SE for training and fine-tuning the PTMs. Finally, we discuss the challenges and opportunities for PTM4SE.
 
-## Research Framework
+## 1. Research Framework
 In order to solve the problem that intelligent SE methods based on DL methods require a large amount of labeled data, researchers in SE have proposed many methods with PTMs to solve SE-related tasks (i.e., pre-trained model-based intelligent software engineering methods). These methods apply a small amount of labeled data from SE downstream tasks to train an intelligent model based on the existing PTMs, which could achieve the final PTMs4SE intelligent method to solve SE downstream tasks (e.g., code generation, program repair, and issue report classification).  
 
 The specific construction process mainly includes four parts: SE downstream task data collection and processing, intelligent method construction based on pre-trained model, model training and model evaluation.<br><br>
@@ -12,20 +12,8 @@ The specific construction process mainly includes four parts: SE downstream task
 
 <p align="center">Fig.1 Research framework of intelligent software method based on pre-trained model</p>
 
-## PTMs in SE
-Since 2018, researchers in the field of software engineering have begun to study intelligent methods based on PTMs. According to the dataset source of the trained PTMs, the used PTMs can be divided into Off-the-shelf models in DL, Domain-specific models, and source code models.<br><br>
-
-### Off-the-shelf Models
-
-Existing PTMs in the field of DL are pre-trained on general domain datasets, such as BERT, GPT, and XLNet models trained on English Wikipedia or general news datasets in Natural language processing (NLP), and ResNet and VGG pretrained on ImageNet datasets in computer vision (CV) model, etc. The existing PTMs used by researchers in the field of SE to solve SE tasks can be divided into two categories: NLP and CV.
-
-### Domain-specific Models
-
-Training models of existing in SE tasks while able to provide a better prediction performance, Julian et al. [21] found general field data sets and the SE domain specific data sets are very different, such as there are a lot of technical jargon in the field of SE and general field data set is different, this leads to a general domain data training build the training model It is not well adapted to the text characteristics of SE field. Therefore, researchers in the field of SE collect a large number of data sets in the field of SE to form domain-specific PTMs from zero-training DL models to solve SE tasks. At present, the domain-specific PTMs mainly include SeBERT, Text-To-Text Transfer Transformer(T5) model, Word2Vec-SO, BERT-reviews, BERT-SO-1M, BERT-SO-1M-Large, RoBERTa-SO.
-
-### Source Code Models
-
-Source code in the field of SE data (such as: Python/Java program, etc.) and NLP of text data or text data there is a big difference in the SE field, in order to better capture the syntax and semantic information in the source data, the researchers collected a large number of source code in the field of SE data sets to DL from the new training model software Source Code PTMs for engineering domains. At present, the main PTMs based on source code data are Code2Vec,CodeT5, CodeBERT, GraphCodeBERT, C-BERT, CuBERT, CodeBERT, and CodeBERT. PLBART, OSCAR, InferCode, DOBF.
+## 2. PTMs in SE
+Since 2018, researchers in SE have begun to introduce different types of PTMs into the SE-related task. Thus, we collected the intelligent software engineer with the PTMs and divided them into four types:Off-the-shelf models, Domain-specific models, and source code models.<br><br>
 
 <div align = center>
 <img src="pictures/Distribution%20of%20pre-trained%20models%20used%20in%20the%20software%20engineering.png" width="800px"><br>
@@ -33,10 +21,24 @@ Source code in the field of SE data (such as: Python/Java program, etc.) and NLP
  
 <p align="center">Fig.2 Distribution of pre-trained models used in the software engineering</p>
 
-## Dataset
-Data sets are the basis of DL models, and their quality directly affects the performance of the model. In particular, intelligent software methods based on PTMs are more inseparable from SE data sets. For example, domain-specific PTMs or source code PTMs need a large number of SE data sets to train the model, and a small amount of SE downstream task data is needed to fine-tune the PTM to complete downstream tasks. In order to better understand the datasets used in intelligent methods based on PTMs, we summarized and analyzed datasets from the field of SE in terms of PTM datasets and downstream task datasets.
+### 2.1 Off-the-shelf Models
 
-### PTM Dataset
+Off-the-shelf Models are the pre-trained models that are trained on general domain datasets in the DL doamin, e.g., BERT (or GPT or XLNet) pre-trained models which are trained on English Wikipedia and general news datasets in Natural language processing (NLP), and ResNet and VGG models which are pretrained on ImageNet datasets in computer vision (CV). Thus, we divide the off-the-shelf models into two categories:  off-the-shelf models in the NLP and  off-the-shelf models in the CV.
+
+### 2.2 Domain-specific Models
+
+Domain-specific models are the pre-trained models that are trained on the SE-specific datasets (e.g., GitHub, Stack Overflow, and JIRA). In recent years, researchers in SE have collected a large number of SE-specific datasets to re-train the DL models, such as SeBERT, Text-To-Text Transfer Transformer(T5) model, Word2Vec-SO, BERT-reviews, BERT-SO-1M, BERT-SO-1M-Large, and RoBERTa-SO in Fig. 2.
+
+### 2.3 Source Code Models
+
+Source code models are the pre-trained models that are trained on source codes to understand the syntax and semantic information included in the source data. For now, researchers in SE have collected different language of source code to retrain the DL models, such as Code2Vec,CodeT5, CodeBERT, GraphCodeBERT, C-BERT, CuBERT, CodeBERT, and CodeBERT. PLBART, OSCAR, InferCode, and DOBF in Fig. 2.
+
+## 3. Common Available SE Datasets
+Datasets as one of important components in PTMs affect the performance of PTMs for the SE-related tasks. To get the higher performance of intelligent software engineering methods, researchers in SE have collected different types of SE datasets to train or fine-tune the models. To present and understand the current SE datasets, we summarized and analyzed these datasets in SE, and divided them into PTMs datasets and SE-related downstream Task Dataset.
+
+### PTMs Datasets
+
+PTMs datasets are datasets that are used for Trained a DL model from scratch. The PTMs datasets frequently used in SE are listed in the table, which are also collected in our datasets files in this repository. 
 
 <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="501" style="width:375.65pt;border-collapse:collapse">
  <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:7.1pt">
@@ -513,7 +515,9 @@ Data sets are the basis of DL models, and their quality directly affects the per
  </tr>
 </tbody></table>
 
-### Downstream Task Dataset
+### SE-related Downstream Task Dataset
+
+SE-related downstream task datasets are the datasets used to fine tune the intellignet DL models for the se-related downstream tasks. Common SE-related downstream datasets frequently used are listed in the followed table.
 
 <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="581" style="width:435.4pt;border-collapse:collapse;border:none;mso-border-top-alt:
  solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
@@ -1166,9 +1170,9 @@ Data sets are the basis of DL models, and their quality directly affects the per
  </tr>
 </tbody></table>
 
-## Performance Statistics of PTMs
+## SE-related tasks that used the PTMs and their performance
 
-The powerful learning ability of PTMs has led researchers in the field of SE to apply PTMs to various SE tasks. In this section, we classify the downstream tasks in the SE domain into programming language (PL) related tasks, natural language (NL) related tasks in the SE domain, PL and NL interaction tasks, and image related tasks in the SE domain according to the input data types.
+ Researchers in SE have applied many PTMs into various SE-related tasks because of the powerful learning ability of PTMs. We summarized and analyzed these SE-related tasks with the PTMs. Meanwhile, based on the types of input datasets, we divided them into four types: programming language (PL) related tasks, natural language (NL) related tasks in the SE domain, the interaction task among PL and NL, and image related tasks in the SE domain.
 
 <div align = center>
 <img src="pictures/Distribution%20of%20downstream%20tasks%20with%20pre-trained%20models%20in%20software%20engineering.jpg" width="900px"><br>
@@ -1176,9 +1180,9 @@ The powerful learning ability of PTMs has led researchers in the field of SE to 
 
 <p align="center">Fig.3 Distribution of downstream tasks with pre-trained models in software engineering</p>
 
-The powerful learning ability of pre-trained models has led researchers in the field of software engineering to apply pre-trained models to various software engineering tasks. We classify the downstream tasks in the software engineering domain into PL (Program Language) related tasks, NL (Natural Language) related tasks, programming language and natural language interaction tasks, and image related tasks in the software engineering domain according to the input data type. On this basis, we measured the performance of different models on various metrics in various downstream tasks.
-
 ### PL-related tasks
+
+PL-related tasks are the tasks to solve the problems through studying the syntactic and semantic feature representations of source code. The current main tasks and performance are listed in the followed table.
 
 <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="581" style="width:435.4pt;border-collapse:collapse;border:none;mso-border-top-alt:
  solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
