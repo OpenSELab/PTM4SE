@@ -36,7 +36,7 @@ Source code models are the pre-trained models that are trained on source codes t
 ## 3. Common Available SE Datasets
 Datasets as one of important components in PTMs affect the performance of PTMs for the SE-related tasks. To get the higher performance of intelligent software engineering methods, researchers in SE have collected different types of SE datasets to train or fine-tune the models. To present and understand the current SE datasets, we summarized and analyzed these datasets in SE, and divided them into PTMs datasets and SE-related downstream Task Dataset.
 
-### PTMs Datasets
+### 3.1 PTMs Datasets
 
 PTMs datasets are datasets that are used for Trained a DL model from scratch. The PTMs datasets frequently used in SE are listed in the table, which are also collected in our datasets files in this repository. 
 
@@ -515,7 +515,7 @@ PTMs datasets are datasets that are used for Trained a DL model from scratch. Th
  </tr>
 </tbody></table>
 
-### SE-related Downstream Task Dataset
+### 3.2 SE-related Downstream Task Dataset
 
 SE-related downstream task datasets are the datasets used to fine tune the intellignet DL models for the se-related downstream tasks. Common SE-related downstream datasets frequently used are listed in the followed table.
 
@@ -1170,7 +1170,7 @@ SE-related downstream task datasets are the datasets used to fine tune the intel
  </tr>
 </tbody></table>
 
-## SE-related tasks that used the PTMs and their performance
+## 4. SE-related tasks that used the PTMs and their performance
 
  Researchers in SE have applied many PTMs into various SE-related tasks because of the powerful learning ability of PTMs. We summarized and analyzed these SE-related tasks with the PTMs. Meanwhile, based on the types of input datasets, we divided them into four types: programming language (PL) related tasks, natural language (NL) related tasks in the SE domain, the interaction task among PL and NL, and image related tasks in the SE domain.
 
@@ -1180,7 +1180,7 @@ SE-related downstream task datasets are the datasets used to fine tune the intel
 
 <p align="center">Fig.3 Distribution of downstream tasks with pre-trained models in software engineering</p>
 
-### PL-related tasks
+### 4.1 PL-related tasks
 
 PL-related tasks are the tasks to solve the problems through studying the syntactic and semantic feature representations of source code. The current main tasks and performance are listed in the followed table.
 
@@ -4499,663 +4499,10 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   </td>
  </tr>
 </tbody></table>
+### 4.2 NL-related tasks
 
-### Interaction tasks between PL and NL
-
-<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
- solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
- 1.0pt solid black">
- <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt">
-  <td width="125" valign="top" style="width:93.7pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">NL+PL<o:p></o:p></span></p>
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="112" valign="top" style="width:84.0pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PTMs<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BLEU-4<o:p></o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BLEU<o:p></o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBLEU<o:p></o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">EM<o:p></o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">MRR<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:1;height:8.5pt">
-  <td width="125" rowspan="6" valign="top" style="width:93.7pt;border:none;
-  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Summarization<o:p></o:p></span></p>
-  </td>
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-base<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.20</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:2;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-small<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
-  bold">0.19<o:p></o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:3;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:4;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.17<o:p></o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:5;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:6;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">GraphCodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.19<o:p></o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:7;height:8.5pt">
-  <td width="125" rowspan="5" valign="top" style="width:93.7pt;border:none;
-  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Generation<o:p></o:p></span></p>
-  </td>
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-base<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.41<o:p></o:p></span></b></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.43<o:p></o:p></span></b></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.22<o:p></o:p></span></b></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:8;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-small<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
-  bold">0.38<o:p></o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
-  bold">0.41<o:p></o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
-  bold">0.22<o:p></o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:9;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.37<o:p></o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.39<o:p></o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.19<o:p></o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:10;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">GPT-2</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.25<o:p></o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.30<o:p></o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.17<o:p></o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:11;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeGPT-2</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.29<o:p></o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.33<o:p></o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:12;height:8.5pt">
-  <td width="125" valign="top" style="width:93.7pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Review<o:p></o:p></span></p>
-  </td>
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">T5<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.82</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:13;height:8.5pt">
-  <td width="125" rowspan="5" valign="top" style="width:93.7pt;border:none;
-  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Search<o:p></o:p></span></p>
-  </td>
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">RoBERTa(code)<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.62<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:14;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.60<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:15;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">InferCode<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.57<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:16;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBERT<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.68<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:17;mso-yfti-lastrow:yes;height:8.5pt">
-  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">GraphCodeBERT<o:p></o:p></span></p>
-  </td>
-  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.70</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
- </tr>
-</tbody></table>
-
-### CV-related tasks
-
-<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
- solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
- 1.0pt solid black">
- <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt">
-  <td width="161" valign="top" style="width:120.5pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CV<o:p></o:p></span></p>
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="95" valign="top" style="width:70.9pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PTMs<o:p></o:p></span></p>
-  </td>
-  <td width="323" valign="top" style="width:242.05pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">Accuracy</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:1;mso-yfti-lastrow:yes;height:8.5pt">
-  <td width="161" valign="top" style="width:120.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">UML diagram Classification<o:p></o:p></span></p>
-  </td>
-  <td width="95" valign="top" style="width:70.9pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">VGG-16</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="323" valign="top" style="width:242.05pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.50</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
- </tr>
-</tbody></table>
-
-### NL-related tasks
+NL-related tasks are the tasks to solve the problems through studying the feature represents included in the text information (e.g., issue report, commit message
+) in SE, such as the classification of issue reports, the classfication of APP review, and the sentiment classification. The current NL-related tasks with the PTMs and their performance are presented in the followed table to help developers better understand textual information in the field of software engineering.
 
 <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" align="left" width="572" style="width:428.85pt;border-collapse:collapse;border:none;
  mso-border-top-alt:solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;
@@ -7405,6 +6752,664 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
  </tr>
 </tbody></table>
 
+### 4.3 Interaction tasks among PL and NL
 
-## More Details
+Interaction tasks among PL and NL are the tasks to process the pairs of PL and NL datasets in SE, such as code summarization, code generation, code review, and code search tasks. We present the these tasks and their current performance in the followed table. 
+
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
+ solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
+ 1.0pt solid black">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt">
+  <td width="125" valign="top" style="width:93.7pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">NL+PL<o:p></o:p></span></p>
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PTMs<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BLEU-4<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">BLEU<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBLEU<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">EM<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">MRR<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:8.5pt">
+  <td width="125" rowspan="6" valign="top" style="width:93.7pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Summarization<o:p></o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-base<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.20</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:2;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-small<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.19<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:3;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:4;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.17<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:5;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:6;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">GraphCodeBERT</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.19<o:p></o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:7;height:8.5pt">
+  <td width="125" rowspan="5" valign="top" style="width:93.7pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Generation<o:p></o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-base<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.41<o:p></o:p></span></b></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.43<o:p></o:p></span></b></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.22<o:p></o:p></span></b></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:8;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeT5-small<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.38<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.41<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt;mso-bidi-font-weight:
+  bold">0.22<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:9;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PLBART<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.37<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.39<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.19<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:10;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">GPT-2</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.25<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.30<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.17<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:11;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">CodeGPT-2</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.29<o:p></o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.33<o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.18<o:p></o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:12;height:8.5pt">
+  <td width="125" valign="top" style="width:93.7pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Review<o:p></o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">T5<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.82</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:13;height:8.5pt">
+  <td width="125" rowspan="5" valign="top" style="width:93.7pt;border:none;
+  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Search<o:p></o:p></span></p>
+  </td>
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">RoBERTa(code)<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.62<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:14;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">RoBERTa</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.60<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:15;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">InferCode<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.57<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:16;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.68<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:17;mso-yfti-lastrow:yes;height:8.5pt">
+  <td width="112" valign="top" style="width:84.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">GraphCodeBERT<o:p></o:p></span></p>
+  </td>
+  <td width="68" valign="top" style="width:51.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="91" valign="top" style="width:68.25pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="88" valign="top" style="width:66.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="48" valign="top" style="width:36.0pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="46" valign="top" style="width:34.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.70</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+ </tr>
+</tbody></table>
+
+### 4.4 CV-related tasks
+
+CV-related tasks are the tasks to process the software artifacts with the image as input in SE. At present, researchers in SE have applied the PTMs into the classification of UML diagrams. 
+
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
+ solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
+ 1.0pt solid black">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt">
+  <td width="161" valign="top" style="width:120.5pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CV<o:p></o:p></span></p>
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td width="95" valign="top" style="width:70.9pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PTMs<o:p></o:p></span></p>
+  </td>
+  <td width="323" valign="top" style="width:242.05pt;border-top:solid black 1.0pt;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">Accuracy</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;mso-yfti-lastrow:yes;height:8.5pt">
+  <td width="161" valign="top" style="width:120.5pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">UML diagram Classification<o:p></o:p></span></p>
+  </td>
+  <td width="95" valign="top" style="width:70.9pt;border:none;border-bottom:solid black 1.0pt;
+  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">VGG-16</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  </td>
+  <td width="323" valign="top" style="width:242.05pt;border:none;border-bottom:
+  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt">
+  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.50</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  </td>
+ </tr>
+</tbody></table>
+
+## Notes:
 Check out our paper for more information: Research Progress of Pre-trained models in Software Engineering.
