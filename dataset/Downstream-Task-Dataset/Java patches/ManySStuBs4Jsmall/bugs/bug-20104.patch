@@ -1,0 +1,16 @@
+diff --git a/web/src/main/java/org/openmrs/web/filter/StartupFilter.java b/web/src/main/java/org/openmrs/web/filter/StartupFilter.java
+index 0bcb354..22e3668 100644
+--- a/web/src/main/java/org/openmrs/web/filter/StartupFilter.java
++++ b/web/src/main/java/org/openmrs/web/filter/StartupFilter.java
+@@ -149,9 +149,9 @@
+ 				httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME + "/" + WebConstants.SETUP_PAGE_URL);
+ 			} else {
+ 				
+-				if (httpRequest.getMethod().equals("GET")) {
++				if ("GET".equals(httpRequest.getMethod())) {
+ 					doGet(httpRequest, httpResponse);
+-				} else if (httpRequest.getMethod().equals("POST")) {
++				} else if ("POST".equals(httpRequest.getMethod())) {
+ 					// only clear errors before POSTS so that redirects can show errors too.
+ 					errors.clear();
+ 					msgs.clear();

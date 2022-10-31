@@ -1,0 +1,116 @@
+diff --git a/integration-tests/src/test/java/tachyon/client/IsolatedTachyonFileSystemIntegrationTest.java b/integration-tests/src/test/java/tachyon/client/IsolatedTachyonFileSystemIntegrationTest.java
+index f2a8583..8013d67 100644
+--- a/integration-tests/src/test/java/tachyon/client/IsolatedTachyonFileSystemIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/client/IsolatedTachyonFileSystemIntegrationTest.java
+@@ -41,7 +41,7 @@
+  * Integration tests on TachyonClient (Do not reuse the LocalTachyonCluster).
+  */
+ public class IsolatedTachyonFileSystemIntegrationTest {
+-  private static final int WORKER_CAPACITY_BYTES = 20000;
++  private static final int WORKER_CAPACITY_BYTES = 200 * Constants.MB;
+   private static final int USER_QUOTA_UNIT_BYTES = 1000;
+   @Rule
+   public LocalTachyonClusterResource mLocalTachyonClusterResource = new LocalTachyonClusterResource(
+diff --git a/integration-tests/src/test/java/tachyon/client/LocalBlockInStreamIntegrationTest.java b/integration-tests/src/test/java/tachyon/client/LocalBlockInStreamIntegrationTest.java
+index ca6e027..cb600bc 100644
+--- a/integration-tests/src/test/java/tachyon/client/LocalBlockInStreamIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/client/LocalBlockInStreamIntegrationTest.java
+@@ -49,7 +49,7 @@
+ 
+   @ClassRule
+   public static LocalTachyonClusterResource sLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(Constants.MB, Constants.KB, Constants.GB);
++      new LocalTachyonClusterResource(Constants.MB, Constants.KB, Constants.MB);
+   private static TachyonFileSystem sTfs = null;
+   private static OutStreamOptions sWriteBoth;
+   private static OutStreamOptions sWriteTachyon;
+diff --git a/integration-tests/src/test/java/tachyon/client/TachyonFileSystemIntegrationTest.java b/integration-tests/src/test/java/tachyon/client/TachyonFileSystemIntegrationTest.java
+index 171ea08..81511ba 100644
+--- a/integration-tests/src/test/java/tachyon/client/TachyonFileSystemIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/client/TachyonFileSystemIntegrationTest.java
+@@ -45,11 +45,11 @@
+  * Integration tests on TachyonClient (Reuse the LocalTachyonCluster).
+  */
+ public class TachyonFileSystemIntegrationTest {
+-  private static final int WORKER_CAPACITY_BYTES = 20000;
++  private static final int WORKER_CAPACITY_BYTES = 2 * Constants.MB;
+   private static final int USER_QUOTA_UNIT_BYTES = 1000;
+   @Rule
+   public LocalTachyonClusterResource mLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(WORKER_CAPACITY_BYTES, USER_QUOTA_UNIT_BYTES, Constants.GB,
++      new LocalTachyonClusterResource(WORKER_CAPACITY_BYTES, USER_QUOTA_UNIT_BYTES, Constants.MB,
+           Constants.USER_FILE_BUFFER_BYTES, Integer.toString(USER_QUOTA_UNIT_BYTES));
+   private TachyonFileSystem mTfs = null;
+   private OutStreamOptions mWriteBoth;
+diff --git a/integration-tests/src/test/java/tachyon/client/table/RawTableIntegrationTest.java b/integration-tests/src/test/java/tachyon/client/table/RawTableIntegrationTest.java
+index b09a747..0829728 100644
+--- a/integration-tests/src/test/java/tachyon/client/table/RawTableIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/client/table/RawTableIntegrationTest.java
+@@ -40,7 +40,7 @@
+ public class RawTableIntegrationTest {
+   @Rule
+   public LocalTachyonClusterResource mLocalTachyonClusterResource = new LocalTachyonClusterResource(
+-      10000, 1000, Constants.GB, Constants.USER_FILE_BUFFER_BYTES, String.valueOf(100));
++      10 * Constants.MB, 1000, Constants.MB, Constants.USER_FILE_BUFFER_BYTES, String.valueOf(100));
+   private TachyonFileSystem mTachyonFileSystem = null;
+   private TachyonRawTables mTachyonRawTables = null;
+   private int mMaxCols = 1000;
+diff --git a/integration-tests/src/test/java/tachyon/shell/TfsShellTest.java b/integration-tests/src/test/java/tachyon/shell/TfsShellTest.java
+index 6cd1eed..1c0ceff 100644
+--- a/integration-tests/src/test/java/tachyon/shell/TfsShellTest.java
++++ b/integration-tests/src/test/java/tachyon/shell/TfsShellTest.java
+@@ -65,7 +65,7 @@
+   private static final int SIZE_BYTES = Constants.MB * 10;
+   @Rule
+   public LocalTachyonClusterResource mLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(SIZE_BYTES, 1000, Constants.GB,
++      new LocalTachyonClusterResource(SIZE_BYTES, 1000, Constants.MB,
+           Constants.MASTER_TTLCHECKER_INTERVAL_MS, String.valueOf(Integer.MAX_VALUE),
+           Constants.SECURITY_AUTHENTICATION_TYPE, AuthType.SIMPLE.getAuthName());
+   private LocalTachyonCluster mLocalTachyonCluster = null;
+diff --git a/integration-tests/src/test/java/tachyon/worker/BlockServiceHandlerIntegrationTest.java b/integration-tests/src/test/java/tachyon/worker/BlockServiceHandlerIntegrationTest.java
+index 8fa2762..d59f817 100644
+--- a/integration-tests/src/test/java/tachyon/worker/BlockServiceHandlerIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/worker/BlockServiceHandlerIntegrationTest.java
+@@ -57,13 +57,13 @@
+  * Integration tests for {@link BlockWorkerClientServiceHandler}
+  */
+ public class BlockServiceHandlerIntegrationTest {
+-  private static final long WORKER_CAPACITY_BYTES = 10000;
++  private static final long WORKER_CAPACITY_BYTES = 10 * Constants.MB;
+   private static final long SESSION_ID = 1L;
+   private static final int USER_QUOTA_UNIT_BYTES = 100;
+ 
+   @Rule
+   public LocalTachyonClusterResource mLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(WORKER_CAPACITY_BYTES, USER_QUOTA_UNIT_BYTES, Constants.GB,
++      new LocalTachyonClusterResource(WORKER_CAPACITY_BYTES, USER_QUOTA_UNIT_BYTES, Constants.MB,
+           Constants.USER_FILE_BUFFER_BYTES, String.valueOf(100));
+   private BlockWorkerClientServiceHandler mWorkerServiceHandler = null;
+   private TachyonFileSystem mTfs = null;
+diff --git a/integration-tests/src/test/java/tachyon/worker/block/meta/TieredStoreIntegrationTest.java b/integration-tests/src/test/java/tachyon/worker/block/meta/TieredStoreIntegrationTest.java
+index 0915d0e..bafd41a 100644
+--- a/integration-tests/src/test/java/tachyon/worker/block/meta/TieredStoreIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/worker/block/meta/TieredStoreIntegrationTest.java
+@@ -60,7 +60,7 @@
+   public ExpectedException mThrown = ExpectedException.none();
+   @Rule
+   public LocalTachyonClusterResource mLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(MEM_CAPACITY_BYTES, USER_QUOTA_UNIT_BYTES, Constants.GB,
++      new LocalTachyonClusterResource(MEM_CAPACITY_BYTES, USER_QUOTA_UNIT_BYTES, 1000,
+           Constants.USER_FILE_BUFFER_BYTES, String.valueOf(100));
+ 
+   @Before
+diff --git a/integration-tests/src/test/java/tachyon/client/IsolatedTachyonFileSystemIntegrationTest.java b/integration-tests/src/test/java/tachyon/client/IsolatedTachyonFileSystemIntegrationTest.java
+index f2a8583..8013d67 100644
+--- a/integration-tests/src/test/java/tachyon/client/IsolatedTachyonFileSystemIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/client/IsolatedTachyonFileSystemIntegrationTest.java
+@@ -41,7 +41,7 @@
+  * Integration tests on TachyonClient (Do not reuse the LocalTachyonCluster).
+  */
+ public class IsolatedTachyonFileSystemIntegrationTest {
+-  private static final int WORKER_CAPACITY_BYTES = 20000;
++  private static final int WORKER_CAPACITY_BYTES = 200 * Constants.MB;
+   private static final int USER_QUOTA_UNIT_BYTES = 1000;
+   @Rule
+   public LocalTachyonClusterResource mLocalTachyonClusterResource = new LocalTachyonClusterResource(

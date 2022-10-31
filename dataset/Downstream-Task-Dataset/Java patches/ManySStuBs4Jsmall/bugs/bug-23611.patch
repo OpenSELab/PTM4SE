@@ -1,0 +1,100 @@
+diff --git a/domain-management/src/main/java/org/jboss/as/domain/management/DomainManagementMessages.java b/domain-management/src/main/java/org/jboss/as/domain/management/DomainManagementMessages.java
+index 8b4bb9e..2ee742e 100644
+--- a/domain-management/src/main/java/org/jboss/as/domain/management/DomainManagementMessages.java
++++ b/domain-management/src/main/java/org/jboss/as/domain/management/DomainManagementMessages.java
+@@ -563,7 +563,7 @@
+      * @param mechanismName - the name of the mechanism being registered.
+      * @return an {@link StartException} for the failure.
+      */
+-    @Message(id = 15256, value = "Multiple CallbackHanderServices for the same mechanism (%s)")
++    @Message(id = 15256, value = "Multiple CallbackHandlerServices for the same mechanism (%s)")
+     StartException multipleCallbackHandlerForMechanism(final String mechanismName);
+ 
+     /**
+@@ -639,7 +639,7 @@
+      *
+      * @return a {@link String} for the message.
+      */
+-    @Message(id = 15266, value = "Password must not have atleast one digit.")
++    @Message(id = 15266, value = "Password must have at least one digit.")
+     String passwordMustHaveDigit();
+ 
+     /**
+@@ -664,7 +664,7 @@
+      * @return a {@link String} for the message.
+      */
+     @Message(id = 15269, value = "Password must have atleast '%s' characters!")
+-    String passwordNotLontEnough(int desiredLength);
++    String passwordNotLongEnough(int desiredLength);
+ 
+     /**
+      * A prompt to double check the user is really sure they want to set password.
+diff --git a/domain-management/src/main/java/org/jboss/as/domain/management/security/password/Keyboard.java b/domain-management/src/main/java/org/jboss/as/domain/management/security/password/Keyboard.java
+index 1330f2a..08c5f7e 100644
+--- a/domain-management/src/main/java/org/jboss/as/domain/management/security/password/Keyboard.java
++++ b/domain-management/src/main/java/org/jboss/as/domain/management/security/password/Keyboard.java
+diff --git a/domain-management/src/main/java/org/jboss/as/domain/management/security/password/LengthRestriction.java b/domain-management/src/main/java/org/jboss/as/domain/management/security/password/LengthRestriction.java
+index 12749da..2290083 100644
+--- a/domain-management/src/main/java/org/jboss/as/domain/management/security/password/LengthRestriction.java
++++ b/domain-management/src/main/java/org/jboss/as/domain/management/security/password/LengthRestriction.java
+@@ -34,7 +34,7 @@
+      * @param desiredLength
+      */
+     public LengthRestriction(int desiredLength) {
+-        super(MESSAGES.passwordNotLontEnough(desiredLength));
++        super(MESSAGES.passwordNotLongEnough(desiredLength));
+         this.desiredLength = desiredLength;
+     }
+ 
+diff --git a/domain-management/src/test/java/org/jboss/as/domain/management/security/state/WeakCheckStateTestCase.java b/domain-management/src/test/java/org/jboss/as/domain/management/security/state/WeakCheckStateTestCase.java
+index 18e0aeb..63c3f4e 100644
+--- a/domain-management/src/test/java/org/jboss/as/domain/management/security/state/WeakCheckStateTestCase.java
++++ b/domain-management/src/test/java/org/jboss/as/domain/management/security/state/WeakCheckStateTestCase.java
+@@ -108,7 +108,7 @@
+         values.setPassword("1QwD%rf".toCharArray());
+         WeakCheckState weakCheckState = new WeakCheckState(consoleMock, values);
+ 
+-        AssertConsoleBuilder consoleBuilder = new AssertConsoleBuilder().expectedErrorMessage(MESSAGES.passwordNotLontEnough(8));
++        AssertConsoleBuilder consoleBuilder = new AssertConsoleBuilder().expectedErrorMessage(MESSAGES.passwordNotLongEnough(8));
+         consoleMock.setResponses(consoleBuilder);
+ 
+         State errorState = weakCheckState.execute();
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/component/EJBComponent.java b/ejb3/src/main/java/org/jboss/as/ejb3/component/EJBComponent.java
+index b9b0fb0..c76a061 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/component/EJBComponent.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/component/EJBComponent.java
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/component/EJBComponentDescription.java b/ejb3/src/main/java/org/jboss/as/ejb3/component/EJBComponentDescription.java
+index 786bace..4d860af 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/component/EJBComponentDescription.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/component/EJBComponentDescription.java
+diff --git a/domain-management/src/main/java/org/jboss/as/domain/management/DomainManagementMessages.java b/domain-management/src/main/java/org/jboss/as/domain/management/DomainManagementMessages.java
+index 8b4bb9e..2ee742e 100644
+--- a/domain-management/src/main/java/org/jboss/as/domain/management/DomainManagementMessages.java
++++ b/domain-management/src/main/java/org/jboss/as/domain/management/DomainManagementMessages.java
+@@ -563,7 +563,7 @@
+      * @param mechanismName - the name of the mechanism being registered.
+      * @return an {@link StartException} for the failure.
+      */
+-    @Message(id = 15256, value = "Multiple CallbackHanderServices for the same mechanism (%s)")
++    @Message(id = 15256, value = "Multiple CallbackHandlerServices for the same mechanism (%s)")
+     StartException multipleCallbackHandlerForMechanism(final String mechanismName);
+ 
+     /**
+@@ -639,7 +639,7 @@
+      *
+      * @return a {@link String} for the message.
+      */
+-    @Message(id = 15266, value = "Password must not have atleast one digit.")
++    @Message(id = 15266, value = "Password must have at least one digit.")
+     String passwordMustHaveDigit();
+ 
+     /**
+@@ -664,7 +664,7 @@
+      * @return a {@link String} for the message.
+      */
+     @Message(id = 15269, value = "Password must have atleast '%s' characters!")
+-    String passwordNotLontEnough(int desiredLength);
++    String passwordNotLongEnough(int desiredLength);
+ 
+     /**
+      * A prompt to double check the user is really sure they want to set password.

@@ -1,0 +1,56 @@
+diff --git a/bundles/persistence/org.openhab.persistence.mapdb/src/main/java/org/openhab/persistence/mapdb/internal/MapDBitemSerializer.java b/bundles/persistence/org.openhab.persistence.mapdb/src/main/java/org/openhab/persistence/mapdb/internal/MapDBitemSerializer.java
+index bc3e735..c880c33 100644
+--- a/bundles/persistence/org.openhab.persistence.mapdb/src/main/java/org/openhab/persistence/mapdb/internal/MapDBitemSerializer.java
++++ b/bundles/persistence/org.openhab.persistence.mapdb/src/main/java/org/openhab/persistence/mapdb/internal/MapDBitemSerializer.java
+@@ -58,11 +58,11 @@
+ 		State state = null;
+ 
+ 		if ("DecimalType".equals(stateType)) {
+-			state = new DecimalType(Double.parseDouble(stateStr));
++			state = DecimalType.valueOf(stateStr);
+ 		} else if ("HSBType".equals(stateType)) {
+-			state = new HSBType(stateStr);
++			state = HSBType.valueOf(stateStr);
+ 		} else if ("PercentType".equals(stateType)) {
+-			state = new PercentType(Integer.parseInt(stateStr));
++			state = PercentType.valueOf(stateStr);
+ 		} else if ("OnOffType".equals(stateType)) {
+ 			state = OnOffType.valueOf(stateStr);
+ 		} else if ("OpenClosedType".equals(stateType)) {
+@@ -70,7 +70,7 @@
+ 		} else if ("DateTimeType".equals(stateType)) {
+ 			state = DateTimeType.valueOf(stateStr);
+ 		} else
+-			state = new StringType(stateStr);
++			state = StringType.valueOf(stateStr);
+ 
+ 		item.setState(state);
+ 		item.setTimestamp(new Date(in.readLong()));
+diff --git a/bundles/persistence/org.openhab.persistence.mapdb/src/main/java/org/openhab/persistence/mapdb/internal/MapDBitemSerializer.java b/bundles/persistence/org.openhab.persistence.mapdb/src/main/java/org/openhab/persistence/mapdb/internal/MapDBitemSerializer.java
+index bc3e735..c880c33 100644
+--- a/bundles/persistence/org.openhab.persistence.mapdb/src/main/java/org/openhab/persistence/mapdb/internal/MapDBitemSerializer.java
++++ b/bundles/persistence/org.openhab.persistence.mapdb/src/main/java/org/openhab/persistence/mapdb/internal/MapDBitemSerializer.java
+@@ -58,11 +58,11 @@
+ 		State state = null;
+ 
+ 		if ("DecimalType".equals(stateType)) {
+-			state = new DecimalType(Double.parseDouble(stateStr));
++			state = DecimalType.valueOf(stateStr);
+ 		} else if ("HSBType".equals(stateType)) {
+-			state = new HSBType(stateStr);
++			state = HSBType.valueOf(stateStr);
+ 		} else if ("PercentType".equals(stateType)) {
+-			state = new PercentType(Integer.parseInt(stateStr));
++			state = PercentType.valueOf(stateStr);
+ 		} else if ("OnOffType".equals(stateType)) {
+ 			state = OnOffType.valueOf(stateStr);
+ 		} else if ("OpenClosedType".equals(stateType)) {
+@@ -70,7 +70,7 @@
+ 		} else if ("DateTimeType".equals(stateType)) {
+ 			state = DateTimeType.valueOf(stateStr);
+ 		} else
+-			state = new StringType(stateStr);
++			state = StringType.valueOf(stateStr);
+ 
+ 		item.setState(state);
+ 		item.setTimestamp(new Date(in.readLong()));

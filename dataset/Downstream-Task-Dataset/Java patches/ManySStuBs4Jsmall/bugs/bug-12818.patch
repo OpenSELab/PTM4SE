@@ -1,0 +1,16 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/CursorProcessorCompiler.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/CursorProcessorCompiler.java
+index 1bb0827..38dcd7c 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/CursorProcessorCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/CursorProcessorCompiler.java
+@@ -336,9 +336,9 @@
+                 .ret();
+     }
+ 
+-    private static RowExpressionVisitor<Scope, BytecodeNode> fieldReferenceCompiler(Variable cursorVariable)
++    private static RowExpressionVisitor<BytecodeNode, Scope> fieldReferenceCompiler(Variable cursorVariable)
+     {
+-        return new RowExpressionVisitor<Scope, BytecodeNode>()
++        return new RowExpressionVisitor<BytecodeNode, Scope>()
+         {
+             @Override
+             public BytecodeNode visitInputReference(InputReferenceExpression node, Scope scope)

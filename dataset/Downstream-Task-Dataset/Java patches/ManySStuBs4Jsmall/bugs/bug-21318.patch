@@ -1,0 +1,30 @@
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
+index 470870c..06f5ef2 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
+@@ -131,8 +131,8 @@
+ 		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(config
+ 				.getClientId());
+ 		assertThat(AopUtils.isJdkDynamicProxy(clientDetailsService), equalTo(true));
+-		assertThat(AopUtils.getTargetClass(clientDetailsService),
+-				is(equalTo(InMemoryClientDetailsService.class)));
++		assertThat(AopUtils.getTargetClass(clientDetailsService).getName(),
++				is(equalTo(InMemoryClientDetailsService.class.getName())));
+ 		assertThat(handler instanceof ApprovalStoreUserApprovalHandler, equalTo(true));
+ 		assertThat(clientDetails, equalTo(config));
+ 		verifyAuthentication(config);
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
+index 470870c..06f5ef2 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
+@@ -131,8 +131,8 @@
+ 		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(config
+ 				.getClientId());
+ 		assertThat(AopUtils.isJdkDynamicProxy(clientDetailsService), equalTo(true));
+-		assertThat(AopUtils.getTargetClass(clientDetailsService),
+-				is(equalTo(InMemoryClientDetailsService.class)));
++		assertThat(AopUtils.getTargetClass(clientDetailsService).getName(),
++				is(equalTo(InMemoryClientDetailsService.class.getName())));
+ 		assertThat(handler instanceof ApprovalStoreUserApprovalHandler, equalTo(true));
+ 		assertThat(clientDetails, equalTo(config));
+ 		verifyAuthentication(config);

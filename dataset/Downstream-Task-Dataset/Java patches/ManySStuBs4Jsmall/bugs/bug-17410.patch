@@ -1,0 +1,44 @@
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFont.java b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFont.java
+index 2e01731..897c668 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFont.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFont.java
+@@ -757,7 +757,7 @@
+ 				Glyph g = data.getGlyph(ch);
+ 				if (g != null) {
+ 					if (lastGlyph != null) width += lastGlyph.getKerning(ch);
+-					if (width + g.xadvance > availableWidth) break;
++					if ((width + g.xadvance) - availableWidth > 0.001f) break;
+ 					width += g.xadvance;
+ 					lastGlyph = g;
+ 				}
+@@ -769,7 +769,7 @@
+ 				Glyph g = data.getGlyph(ch);
+ 				if (g != null) {
+ 					if (lastGlyph != null) width += lastGlyph.getKerning(ch) * scaleX;
+-					if (width + g.xadvance * scaleX > availableWidth) break;
++					if ((width + g.xadvance * scaleX) - availableWidth > 0.001f) break;
+ 					width += g.xadvance * scaleX;
+ 					lastGlyph = g;
+ 				}
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFont.java b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFont.java
+index 2e01731..897c668 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFont.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFont.java
+@@ -757,7 +757,7 @@
+ 				Glyph g = data.getGlyph(ch);
+ 				if (g != null) {
+ 					if (lastGlyph != null) width += lastGlyph.getKerning(ch);
+-					if (width + g.xadvance > availableWidth) break;
++					if ((width + g.xadvance) - availableWidth > 0.001f) break;
+ 					width += g.xadvance;
+ 					lastGlyph = g;
+ 				}
+@@ -769,7 +769,7 @@
+ 				Glyph g = data.getGlyph(ch);
+ 				if (g != null) {
+ 					if (lastGlyph != null) width += lastGlyph.getKerning(ch) * scaleX;
+-					if (width + g.xadvance * scaleX > availableWidth) break;
++					if ((width + g.xadvance * scaleX) - availableWidth > 0.001f) break;
+ 					width += g.xadvance * scaleX;
+ 					lastGlyph = g;
+ 				}

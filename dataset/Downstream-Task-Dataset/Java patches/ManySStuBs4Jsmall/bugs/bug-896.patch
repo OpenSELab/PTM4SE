@@ -1,0 +1,60 @@
+diff --git a/shell/src/main/java/alluxio/shell/command/CopyToLocalCommand.java b/shell/src/main/java/alluxio/shell/command/CopyToLocalCommand.java
+index 68682f4..ba818db 100644
+--- a/shell/src/main/java/alluxio/shell/command/CopyToLocalCommand.java
++++ b/shell/src/main/java/alluxio/shell/command/CopyToLocalCommand.java
+@@ -98,7 +98,7 @@
+         System.out.println("Create directory: " + dstFile.getPath());
+       }
+     }
+-    List<String> errorMessages = new ArrayList<String>();
++    List<String> errorMessages = new ArrayList<>();
+     for (AlluxioURI srcPath : srcPaths) {
+       try {
+         copyToLocal(srcPath, new File(dstFile.getAbsoluteFile(), srcPath.getName()));
+@@ -136,14 +136,14 @@
+         }
+       }
+ 
+-      List<URIStatus> statuses = null;
++      List<URIStatus> statuses;
+       try {
+         statuses = mFileSystem.listStatus(srcPath);
+       } catch (AlluxioException e) {
+         throw new IOException(e.getMessage());
+       }
+ 
+-      List<String> errorMessages = new ArrayList<String>();
++      List<String> errorMessages = new ArrayList<>();
+       for (URIStatus status : statuses) {
+         try {
+           copyToLocal(
+diff --git a/shell/src/main/java/alluxio/shell/command/CopyToLocalCommand.java b/shell/src/main/java/alluxio/shell/command/CopyToLocalCommand.java
+index 68682f4..ba818db 100644
+--- a/shell/src/main/java/alluxio/shell/command/CopyToLocalCommand.java
++++ b/shell/src/main/java/alluxio/shell/command/CopyToLocalCommand.java
+@@ -98,7 +98,7 @@
+         System.out.println("Create directory: " + dstFile.getPath());
+       }
+     }
+-    List<String> errorMessages = new ArrayList<String>();
++    List<String> errorMessages = new ArrayList<>();
+     for (AlluxioURI srcPath : srcPaths) {
+       try {
+         copyToLocal(srcPath, new File(dstFile.getAbsoluteFile(), srcPath.getName()));
+@@ -136,14 +136,14 @@
+         }
+       }
+ 
+-      List<URIStatus> statuses = null;
++      List<URIStatus> statuses;
+       try {
+         statuses = mFileSystem.listStatus(srcPath);
+       } catch (AlluxioException e) {
+         throw new IOException(e.getMessage());
+       }
+ 
+-      List<String> errorMessages = new ArrayList<String>();
++      List<String> errorMessages = new ArrayList<>();
+       for (URIStatus status : statuses) {
+         try {
+           copyToLocal(

@@ -1,0 +1,84 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+index 46c826a..ef501f5 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+@@ -2376,11 +2376,11 @@
+         workspaceConfigurationExternal.setPolicyLearning(LearningPolicy.OVER_TIME);
+ 
+         MemoryWorkspace workspaceT = configuration.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationTBPTT, workspaceTBPTT);
+-        MemoryWorkspace workspace = configuration.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationExternal,workspaceExternal);
++        MemoryWorkspace workspaceE = configuration.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationExternal,workspaceExternal);
+ 
+-        try(MemoryWorkspace wsT = workspaceT.notifyScopeEntered()) {
++        try(MemoryWorkspace wsE = workspaceE.notifyScopeEntered()) {
+             for (int i = 0; i < nSubsets; i++) {
+-                try (MemoryWorkspace wsE = workspace.notifyScopeEntered()) {
++                try (MemoryWorkspace wsT = workspaceT.notifyScopeEntered()) {
+                     int startTimeIdx = i * fwdLen;
+                     int endTimeIdx = startTimeIdx + fwdLen;
+                     if (endTimeIdx > timeSeriesLength)
+@@ -2437,7 +2437,7 @@
+         }
+ 
+         if (configuration.getTrainingWorkspaceMode() != WorkspaceMode.NONE) {
+-            workspace.initializeWorkspace();
++            workspaceE.initializeWorkspace();
+             workspaceT.initializeWorkspace();
+         }
+ 
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+index 3441b2f..f87a80c 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+@@ -1262,11 +1262,11 @@
+         workspaceConfigurationExternal.setPolicyLearning(LearningPolicy.OVER_TIME);
+ 
+         MemoryWorkspace workspaceT = layerWiseConfigurations.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationTBPTT, workspaceTBPTT);
+-        MemoryWorkspace workspace = layerWiseConfigurations.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationExternal,workspaceExternal);
++        MemoryWorkspace workspaceE = layerWiseConfigurations.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationExternal,workspaceExternal);
+ 
+-        try(MemoryWorkspace wsT = workspaceT.notifyScopeEntered()) {
++        try(MemoryWorkspace wsE = workspaceE.notifyScopeEntered()) {
+             for (int i = 0; i < nSubsets; i++) {
+-                try (MemoryWorkspace wsE = workspace.notifyScopeEntered()) {
++                try (MemoryWorkspace wsT = workspaceT.notifyScopeEntered()) {
+                     int startTimeIdx = i * fwdLen;
+                     int endTimeIdx = startTimeIdx + fwdLen;
+                     if (endTimeIdx > timeSeriesLength)
+@@ -1307,7 +1307,7 @@
+         }
+ 
+         if (layerWiseConfigurations.getTrainingWorkspaceMode() != WorkspaceMode.NONE) {
+-            workspace.initializeWorkspace();
++            workspaceE.initializeWorkspace();
+             workspaceT.initializeWorkspace();
+         }
+ 
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+index 46c826a..ef501f5 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+@@ -2376,11 +2376,11 @@
+         workspaceConfigurationExternal.setPolicyLearning(LearningPolicy.OVER_TIME);
+ 
+         MemoryWorkspace workspaceT = configuration.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationTBPTT, workspaceTBPTT);
+-        MemoryWorkspace workspace = configuration.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationExternal,workspaceExternal);
++        MemoryWorkspace workspaceE = configuration.getTrainingWorkspaceMode() == WorkspaceMode.NONE ? dummy : Nd4j.getWorkspaceManager().getWorkspaceForCurrentThread(workspaceConfigurationExternal,workspaceExternal);
+ 
+-        try(MemoryWorkspace wsT = workspaceT.notifyScopeEntered()) {
++        try(MemoryWorkspace wsE = workspaceE.notifyScopeEntered()) {
+             for (int i = 0; i < nSubsets; i++) {
+-                try (MemoryWorkspace wsE = workspace.notifyScopeEntered()) {
++                try (MemoryWorkspace wsT = workspaceT.notifyScopeEntered()) {
+                     int startTimeIdx = i * fwdLen;
+                     int endTimeIdx = startTimeIdx + fwdLen;
+                     if (endTimeIdx > timeSeriesLength)
+@@ -2437,7 +2437,7 @@
+         }
+ 
+         if (configuration.getTrainingWorkspaceMode() != WorkspaceMode.NONE) {
+-            workspace.initializeWorkspace();
++            workspaceE.initializeWorkspace();
+             workspaceT.initializeWorkspace();
+         }
+ 

@@ -1,0 +1,13 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesLSTM.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesLSTM.java
+index 25bd29b..7d79b04 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesLSTM.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesLSTM.java
+@@ -66,7 +66,7 @@
+             if(constraints == null){
+                 constraints = new ArrayList<>();
+             }
+-            for (LayerConstraint c : builder.allParamConstraints) {
++            for (LayerConstraint c : ((Builder) builder).recurrentConstraints) {
+                 LayerConstraint c2 = c.clone();
+                 c2.setParams(Collections.singleton(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY));
+                 constraints.add(c2);

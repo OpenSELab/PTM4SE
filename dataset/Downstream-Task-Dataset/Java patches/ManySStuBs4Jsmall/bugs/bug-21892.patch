@@ -1,0 +1,26 @@
+diff --git a/src/edu/stanford/nlp/ie/KBPSemgrexExtractor.java b/src/edu/stanford/nlp/ie/KBPSemgrexExtractor.java
+index ea32d14..f264f3c 100644
+--- a/src/edu/stanford/nlp/ie/KBPSemgrexExtractor.java
++++ b/src/edu/stanford/nlp/ie/KBPSemgrexExtractor.java
+@@ -50,7 +50,7 @@
+     // Create extractors
+     for (RelationType rel : RelationType.values()) {
+       String relFileNameComponent = rel.canonicalName.replaceAll(":", "_");
+-      String filename = semgrexdir + File.separator + rel.canonicalName.replace("/", "SLASH") + ".rules";
++      String filename = semgrexdir + File.separator + relFileNameComponent.replace("/", "SLASH") + ".rules";
+       if (IOUtils.existsInClasspathOrFileSystem(filename)) {
+ 
+         List<SemgrexPattern> rulesforrel = SemgrexBatchParser.compileStream(IOUtils.getInputStreamFromURLOrClasspathOrFileSystem(filename));
+diff --git a/src/edu/stanford/nlp/ie/KBPSemgrexExtractor.java b/src/edu/stanford/nlp/ie/KBPSemgrexExtractor.java
+index ea32d14..f264f3c 100644
+--- a/src/edu/stanford/nlp/ie/KBPSemgrexExtractor.java
++++ b/src/edu/stanford/nlp/ie/KBPSemgrexExtractor.java
+@@ -50,7 +50,7 @@
+     // Create extractors
+     for (RelationType rel : RelationType.values()) {
+       String relFileNameComponent = rel.canonicalName.replaceAll(":", "_");
+-      String filename = semgrexdir + File.separator + rel.canonicalName.replace("/", "SLASH") + ".rules";
++      String filename = semgrexdir + File.separator + relFileNameComponent.replace("/", "SLASH") + ".rules";
+       if (IOUtils.existsInClasspathOrFileSystem(filename)) {
+ 
+         List<SemgrexPattern> rulesforrel = SemgrexBatchParser.compileStream(IOUtils.getInputStreamFromURLOrClasspathOrFileSystem(filename));

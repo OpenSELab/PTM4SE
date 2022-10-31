@@ -1,0 +1,183 @@
+diff --git a/src/com/google/javascript/jscomp/AbstractCommandLineRunner.java b/src/com/google/javascript/jscomp/AbstractCommandLineRunner.java
+index 03a831b..d3a59dd 100644
+--- a/src/com/google/javascript/jscomp/AbstractCommandLineRunner.java
++++ b/src/com/google/javascript/jscomp/AbstractCommandLineRunner.java
+@@ -1741,7 +1741,7 @@
+     if (!config.variableMapOutputFile.isEmpty()) {
+       if (variableMapOutputPath != null) {
+         throw new FlagUsageException("The flags variable_map_output_file and "
+-            + "create_name_map_files cannot both be used simultaniously.");
++            + "create_name_map_files cannot both be used simultaneously.");
+       }
+ 
+       variableMapOutputPath = config.variableMapOutputFile;
+@@ -1750,7 +1750,7 @@
+     if (!config.propertyMapOutputFile.isEmpty()) {
+       if (propertyMapOutputPath != null) {
+         throw new FlagUsageException("The flags property_map_output_file and "
+-            + "create_name_map_files cannot both be used simultaniously.");
++            + "create_name_map_files cannot both be used simultaneously.");
+       }
+ 
+       propertyMapOutputPath = config.propertyMapOutputFile;
+diff --git a/src/com/google/javascript/jscomp/AbstractCompiler.java b/src/com/google/javascript/jscomp/AbstractCompiler.java
+index 4a34aa0..dd43c3e 100644
+--- a/src/com/google/javascript/jscomp/AbstractCompiler.java
++++ b/src/com/google/javascript/jscomp/AbstractCompiler.java
+@@ -176,13 +176,13 @@
+ 
+   /**
+    * Gets a memoized scope creator without type information, used by the checks and optimization
+-   * passes to avoid continously recreating the entire scope.
++   * passes to avoid continuously recreating the entire scope.
+    */
+   abstract IncrementalScopeCreator getScopeCreator();
+ 
+   /**
+    * Stores a memoized scope creator without type information, used by the checks and optimization
+-   * passes to avoid continously recreating the entire scope.
++   * passes to avoid continuously recreating the entire scope.
+    */
+   abstract void putScopeCreator(IncrementalScopeCreator creator);
+ 
+@@ -551,7 +551,7 @@
+   /**
+    * Sets the progress percentage as well as the name of the last pass that
+    * ran (if available).
+-   * @param progress A precentage expressed as a double in the range [0, 1].
++   * @param progress A percentage expressed as a double in the range [0, 1].
+    *     Use -1 if you just want to set the last pass name.
+    */
+   abstract void setProgress(double progress, @Nullable String lastPassName);
+diff --git a/src/com/google/javascript/jscomp/AccessControlUtils.java b/src/com/google/javascript/jscomp/AccessControlUtils.java
+index f997c88..2143294 100644
+--- a/src/com/google/javascript/jscomp/AccessControlUtils.java
++++ b/src/com/google/javascript/jscomp/AccessControlUtils.java
+@@ -168,7 +168,7 @@
+ 
+   /**
+    * Returns the effective visibility of the given overridden property.
+-   * An overridden propertiy inherits the visibility of the property it
++   * An overridden property inherits the visibility of the property it
+    * overrides.
+    */
+   private static Visibility getEffectiveVisibilityForOverriddenProperty(
+diff --git a/src/com/google/javascript/jscomp/CodeGenerator.java b/src/com/google/javascript/jscomp/CodeGenerator.java
+index f246f5d..615474b 100644
+--- a/src/com/google/javascript/jscomp/CodeGenerator.java
++++ b/src/com/google/javascript/jscomp/CodeGenerator.java
+@@ -1773,7 +1773,7 @@
+         case '\u2029': sb.append("\\u2029"); break;
+ 
+         case '=':
+-          // '=' is a syntactically signficant regexp character.
++          // '=' is a syntactically significant regexp character.
+           if (trustedStrings || isRegexp) {
+             sb.append(c);
+           } else {
+diff --git a/src/com/google/javascript/jscomp/ConformanceRules.java b/src/com/google/javascript/jscomp/ConformanceRules.java
+index 4ec5552..752fcbf 100644
+--- a/src/com/google/javascript/jscomp/ConformanceRules.java
++++ b/src/com/google/javascript/jscomp/ConformanceRules.java
+@@ -220,10 +220,10 @@
+       DiagnosticType msg = (result.level == ConformanceLevel.VIOLATION)
+           ? CheckConformance.CONFORMANCE_VIOLATION
+           : CheckConformance.CONFORMANCE_POSSIBLE_VIOLATION;
+-      String seperator = (result.note.isEmpty())
++      String separator = (result.note.isEmpty())
+           ? ""
+           : "\n";
+-      t.report(n, msg, message, seperator, result.note);
++      t.report(n, msg, message, separator, result.note);
+     }
+   }
+ 
+diff --git a/src/com/google/javascript/jscomp/NodeUtil.java b/src/com/google/javascript/jscomp/NodeUtil.java
+index 2c16608..7720484 100644
+--- a/src/com/google/javascript/jscomp/NodeUtil.java
++++ b/src/com/google/javascript/jscomp/NodeUtil.java
+@@ -568,7 +568,7 @@
+     //    (in which case NOT here should return true)
+     // 2) We care that expression is a side-effect free and can't
+     //    be side-effected by other expressions.
+-    // This should only be used to say the value is immuable and
++    // This should only be used to say the value is immutable and
+     // hasSideEffects and canBeSideEffected should be used for the other case.
+ 
+     switch (n.getToken()) {
+@@ -4781,7 +4781,7 @@
+     return null;
+   }
+ 
+-  /** Gets the r-value (or intializer) of a node returned by getBestLValue. */
++  /** Gets the r-value (or initializer) of a node returned by getBestLValue. */
+   static Node getRValueOfLValue(Node n) {
+     Node parent = n.getParent();
+     switch (parent.getToken()) {
+diff --git a/src/com/google/javascript/rhino/Node.java b/src/com/google/javascript/rhino/Node.java
+index 45090cc..2093960 100644
+--- a/src/com/google/javascript/rhino/Node.java
++++ b/src/com/google/javascript/rhino/Node.java
+@@ -1791,12 +1791,12 @@
+     return isEquivalentTo(node, false, false, false, false);
+   }
+ 
+-  /** Returns true if this node is equivalent semantically to another including side efffects. */
++  /** Returns true if this node is equivalent semantically to another including side effects. */
+   public final boolean isEquivalentWithSideEffectsTo(Node node) {
+     return isEquivalentTo(node, false, true, false, true);
+   }
+ 
+-  /** Returns true if this node is equivalent semantically to another including side efffects. */
++  /** Returns true if this node is equivalent semantically to another including side effects. */
+   public final boolean isEquivalentWithSideEffectsToShallow(Node node) {
+     return isEquivalentTo(node, false, false, false, true);
+   }
+diff --git a/test/com/google/javascript/jscomp/CheckConformanceTest.java b/test/com/google/javascript/jscomp/CheckConformanceTest.java
+index 90da127..1669985 100644
+--- a/test/com/google/javascript/jscomp/CheckConformanceTest.java
++++ b/test/com/google/javascript/jscomp/CheckConformanceTest.java
+@@ -544,7 +544,7 @@
+     testConformance(declarations, "var c = new C(); c.p = 'boo';",
+         CheckConformance.CONFORMANCE_VIOLATION);
+ 
+-    // Accessing property through a super type is possibily a violation.
++    // Accessing property through a super type is possibly a violation.
+     testConformance(declarations, "var sc = new SC(); sc.p = 'boo';",
+         CheckConformance.CONFORMANCE_POSSIBLE_VIOLATION);
+ 
+diff --git a/test/com/google/javascript/jscomp/ClosureRewriteModuleTest.java b/test/com/google/javascript/jscomp/ClosureRewriteModuleTest.java
+index 3481c29..87df24a 100644
+--- a/test/com/google/javascript/jscomp/ClosureRewriteModuleTest.java
++++ b/test/com/google/javascript/jscomp/ClosureRewriteModuleTest.java
+@@ -2078,7 +2078,7 @@
+         });
+   }
+ 
+-  public void testRewriteGoogModuleAliasesWithPreservedPrimitivies() {
++  public void testRewriteGoogModuleAliasesWithPreservedPrimitives() {
+     preserveClosurePrimitives = true;
+     // Need to disable tree comparison because compiler adds MODULE_BODY token when parsing
+     // expected output but it is not present in actual tree.
+diff --git a/src/com/google/javascript/jscomp/AbstractCommandLineRunner.java b/src/com/google/javascript/jscomp/AbstractCommandLineRunner.java
+index 03a831b..d3a59dd 100644
+--- a/src/com/google/javascript/jscomp/AbstractCommandLineRunner.java
++++ b/src/com/google/javascript/jscomp/AbstractCommandLineRunner.java
+@@ -1741,7 +1741,7 @@
+     if (!config.variableMapOutputFile.isEmpty()) {
+       if (variableMapOutputPath != null) {
+         throw new FlagUsageException("The flags variable_map_output_file and "
+-            + "create_name_map_files cannot both be used simultaniously.");
++            + "create_name_map_files cannot both be used simultaneously.");
+       }
+ 
+       variableMapOutputPath = config.variableMapOutputFile;
+@@ -1750,7 +1750,7 @@
+     if (!config.propertyMapOutputFile.isEmpty()) {
+       if (propertyMapOutputPath != null) {
+         throw new FlagUsageException("The flags property_map_output_file and "
+-            + "create_name_map_files cannot both be used simultaniously.");
++            + "create_name_map_files cannot both be used simultaneously.");
+       }
+ 
+       propertyMapOutputPath = config.propertyMapOutputFile;

@@ -1,0 +1,13 @@
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketServerHandshaker08.java b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketServerHandshaker08.java
+index 3cd32e7..9575e53 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketServerHandshaker08.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketServerHandshaker08.java
+@@ -155,7 +155,7 @@
+                     p.remove(HttpChunkAggregator.class);
+                 }
+ 
+-                p.replace(HttpRequestDecoder.class, "wsdecoder",
++                p.get(HttpRequestDecoder.class).replace("wsdecoder",
+                         new WebSocket08FrameDecoder(true, allowExtensions, getMaxFramePayloadLength()));
+                 p.replace(HttpResponseEncoder.class, "wsencoder", new WebSocket08FrameEncoder(false));
+             }

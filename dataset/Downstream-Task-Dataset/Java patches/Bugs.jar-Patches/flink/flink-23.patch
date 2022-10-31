@@ -1,0 +1,16 @@
+diff --git a/flink-optimizer/src/main/java/org/apache/flink/optimizer/plantranslate/JobGraphGenerator.java b/flink-optimizer/src/main/java/org/apache/flink/optimizer/plantranslate/JobGraphGenerator.java
+index dc21c13..2630019 100644
+--- a/flink-optimizer/src/main/java/org/apache/flink/optimizer/plantranslate/JobGraphGenerator.java
++++ b/flink-optimizer/src/main/java/org/apache/flink/optimizer/plantranslate/JobGraphGenerator.java
+@@ -1163,8 +1163,9 @@ public class JobGraphGenerator implements Visitor<PlanNode> {
+ 			final TempMode tm = channel.getTempMode();
+ 
+ 			boolean needsMemory = false;
+-			// Don't add a pipeline breaker if the data exchange is already blocking.
+-			if (tm.breaksPipeline() && channel.getDataExchangeMode() != DataExchangeMode.BATCH) {
++			// Don't add a pipeline breaker if the data exchange is already blocking, EXCEPT the channel is within an iteration.
++			if (tm.breaksPipeline() &&
++					(channel.isOnDynamicPath() || channel.getDataExchangeMode() != DataExchangeMode.BATCH) ) {
+ 				config.setInputAsynchronouslyMaterialized(inputNum, true);
+ 				needsMemory = true;
+ 			}

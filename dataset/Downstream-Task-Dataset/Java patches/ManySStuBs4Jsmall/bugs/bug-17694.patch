@@ -1,0 +1,28 @@
+diff --git a/src/com/android/volley/toolbox/BasicNetwork.java b/src/com/android/volley/toolbox/BasicNetwork.java
+index 5883904..c82fc34 100644
+--- a/src/com/android/volley/toolbox/BasicNetwork.java
++++ b/src/com/android/volley/toolbox/BasicNetwork.java
+@@ -98,7 +98,8 @@
+                 // Handle cache validation.
+                 if (statusCode == HttpStatus.SC_NOT_MODIFIED) {
+                     return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED,
+-                            request.getCacheEntry().data, responseHeaders, true);
++                            request.getCacheEntry() == null ? null : request.getCacheEntry().data,
++                            responseHeaders, true);
+                 }
+ 
+                 // Some responses such as 204s do not have content.  We must check.
+diff --git a/src/com/android/volley/toolbox/BasicNetwork.java b/src/com/android/volley/toolbox/BasicNetwork.java
+index 5883904..c82fc34 100644
+--- a/src/com/android/volley/toolbox/BasicNetwork.java
++++ b/src/com/android/volley/toolbox/BasicNetwork.java
+@@ -98,7 +98,8 @@
+                 // Handle cache validation.
+                 if (statusCode == HttpStatus.SC_NOT_MODIFIED) {
+                     return new NetworkResponse(HttpStatus.SC_NOT_MODIFIED,
+-                            request.getCacheEntry().data, responseHeaders, true);
++                            request.getCacheEntry() == null ? null : request.getCacheEntry().data,
++                            responseHeaders, true);
+                 }
+ 
+                 // Some responses such as 204s do not have content.  We must check.

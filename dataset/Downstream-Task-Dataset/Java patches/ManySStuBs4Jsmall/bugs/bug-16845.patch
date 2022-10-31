@@ -1,0 +1,28 @@
+diff --git a/gdx/src/com/badlogic/gdx/graphics/glutils/GLFrameBuffer.java b/gdx/src/com/badlogic/gdx/graphics/glutils/GLFrameBuffer.java
+index 95b34e9..55c958b 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/glutils/GLFrameBuffer.java
++++ b/gdx/src/com/badlogic/gdx/graphics/glutils/GLFrameBuffer.java
+@@ -183,7 +183,8 @@
+ 		int result = gl.glCheckFramebufferStatus(GL20.GL_FRAMEBUFFER);
+ 
+ 		if (result == GL20.GL_FRAMEBUFFER_UNSUPPORTED && hasDepth && hasStencil
+-			&& Gdx.graphics.supportsExtension("GL_OES_packed_depth_stencil")) {
++			&& (Gdx.graphics.supportsExtension("GL_OES_packed_depth_stencil") ||
++				Gdx.graphics.supportsExtension("GL_EXT_packed_depth_stencil"))) {
+ 			if (hasDepth) {
+ 				gl.glDeleteRenderbuffer(depthbufferHandle);
+ 				depthbufferHandle = 0;
+diff --git a/gdx/src/com/badlogic/gdx/graphics/glutils/GLFrameBuffer.java b/gdx/src/com/badlogic/gdx/graphics/glutils/GLFrameBuffer.java
+index 95b34e9..55c958b 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/glutils/GLFrameBuffer.java
++++ b/gdx/src/com/badlogic/gdx/graphics/glutils/GLFrameBuffer.java
+@@ -183,7 +183,8 @@
+ 		int result = gl.glCheckFramebufferStatus(GL20.GL_FRAMEBUFFER);
+ 
+ 		if (result == GL20.GL_FRAMEBUFFER_UNSUPPORTED && hasDepth && hasStencil
+-			&& Gdx.graphics.supportsExtension("GL_OES_packed_depth_stencil")) {
++			&& (Gdx.graphics.supportsExtension("GL_OES_packed_depth_stencil") ||
++				Gdx.graphics.supportsExtension("GL_EXT_packed_depth_stencil"))) {
+ 			if (hasDepth) {
+ 				gl.glDeleteRenderbuffer(depthbufferHandle);
+ 				depthbufferHandle = 0;

@@ -1,0 +1,26 @@
+diff --git a/messaging-activemq/src/main/java/org/wildfly/extension/messaging/activemq/jms/JMSService.java b/messaging-activemq/src/main/java/org/wildfly/extension/messaging/activemq/jms/JMSService.java
+index 40e6359..38fb95b 100644
+--- a/messaging-activemq/src/main/java/org/wildfly/extension/messaging/activemq/jms/JMSService.java
++++ b/messaging-activemq/src/main/java/org/wildfly/extension/messaging/activemq/jms/JMSService.java
+@@ -200,7 +200,7 @@
+         } catch(StartException e){
+             throw e;
+         } catch (Throwable t) {
+-            throw MessagingLogger.ROOT_LOGGER.failedToStartService(t);
++            throw new StartException(t);
+         } finally {
+             WildFlySecurityManager.setCurrentContextClassLoaderPrivileged(oldTccl);
+         }
+diff --git a/messaging-activemq/src/main/java/org/wildfly/extension/messaging/activemq/jms/JMSService.java b/messaging-activemq/src/main/java/org/wildfly/extension/messaging/activemq/jms/JMSService.java
+index 40e6359..38fb95b 100644
+--- a/messaging-activemq/src/main/java/org/wildfly/extension/messaging/activemq/jms/JMSService.java
++++ b/messaging-activemq/src/main/java/org/wildfly/extension/messaging/activemq/jms/JMSService.java
+@@ -200,7 +200,7 @@
+         } catch(StartException e){
+             throw e;
+         } catch (Throwable t) {
+-            throw MessagingLogger.ROOT_LOGGER.failedToStartService(t);
++            throw new StartException(t);
+         } finally {
+             WildFlySecurityManager.setCurrentContextClassLoaderPrivileged(oldTccl);
+         }

@@ -1,0 +1,14 @@
+diff --git a/core/server/src/main/java/alluxio/web/WebInterfaceBrowseServlet.java b/core/server/src/main/java/alluxio/web/WebInterfaceBrowseServlet.java
+index 63e4cbc..ff4574f 100644
+--- a/core/server/src/main/java/alluxio/web/WebInterfaceBrowseServlet.java
++++ b/core/server/src/main/java/alluxio/web/WebInterfaceBrowseServlet.java
+@@ -144,7 +144,8 @@
+       PlainSaslServer.AuthorizedClientUser.set(LoginUser.get(mConfiguration).getName());
+     }
+     request.setAttribute("debug", mConfiguration.getBoolean(Constants.DEBUG));
+-    request.setAttribute("viewLog", false);
++    request.setAttribute("showPermissions",
++        mConfiguration.getBoolean(Constants.SECURITY_AUTHORIZATION_PERMISSION_ENABLED));
+ 
+     request.setAttribute("masterNodeAddress", mMaster.getMasterAddress().toString());
+     request.setAttribute("invalidPathError", "");

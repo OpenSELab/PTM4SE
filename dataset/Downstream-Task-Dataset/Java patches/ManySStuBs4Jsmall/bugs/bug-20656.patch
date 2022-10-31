@@ -1,0 +1,26 @@
+diff --git a/src/api/org/openmrs/Obs.java b/src/api/org/openmrs/Obs.java
+index a99d688..d9e1171 100644
+--- a/src/api/org/openmrs/Obs.java
++++ b/src/api/org/openmrs/Obs.java
+@@ -539,7 +539,7 @@
+ 		if (getConcept() != null) {
+ 			String abbrev = getConcept().getDatatype().getHl7Abbreviation();
+ 			if (abbrev.equals("BIT"))
+-				return getValueAsBoolean().toString();
++				return getValueAsBoolean() == null ? "" : getValueAsBoolean().toString();
+ 			else if (abbrev.equals("CWE")) {
+ 				if (getValueCoded() == null)
+ 					return "";
+diff --git a/src/api/org/openmrs/Obs.java b/src/api/org/openmrs/Obs.java
+index a99d688..d9e1171 100644
+--- a/src/api/org/openmrs/Obs.java
++++ b/src/api/org/openmrs/Obs.java
+@@ -539,7 +539,7 @@
+ 		if (getConcept() != null) {
+ 			String abbrev = getConcept().getDatatype().getHl7Abbreviation();
+ 			if (abbrev.equals("BIT"))
+-				return getValueAsBoolean().toString();
++				return getValueAsBoolean() == null ? "" : getValueAsBoolean().toString();
+ 			else if (abbrev.equals("CWE")) {
+ 				if (getValueCoded() == null)
+ 					return "";

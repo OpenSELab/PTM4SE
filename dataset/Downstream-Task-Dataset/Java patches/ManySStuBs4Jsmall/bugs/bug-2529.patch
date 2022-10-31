@@ -1,0 +1,44 @@
+diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
+index 60a8d81..eba23eb 100644
+--- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
++++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
+@@ -509,7 +509,7 @@
+             }
+ 
+             jPlugin.setEnabled(true);
+-            server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
++            server.getPluginManager().callEvent(new PluginEnableEvent(plugin));
+         }
+     }
+ 
+@@ -524,7 +524,7 @@
+ 
+             jPlugin.setEnabled(false);
+ 
+-            server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
++            server.getPluginManager().callEvent(new PluginDisableEvent(plugin));
+ 
+             loaders.remove(jPlugin.getDescription().getName());
+ 
+diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
+index 60a8d81..eba23eb 100644
+--- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
++++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
+@@ -509,7 +509,7 @@
+             }
+ 
+             jPlugin.setEnabled(true);
+-            server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_ENABLE, plugin));
++            server.getPluginManager().callEvent(new PluginEnableEvent(plugin));
+         }
+     }
+ 
+@@ -524,7 +524,7 @@
+ 
+             jPlugin.setEnabled(false);
+ 
+-            server.getPluginManager().callEvent(new PluginEvent(Event.Type.PLUGIN_DISABLE, plugin));
++            server.getPluginManager().callEvent(new PluginDisableEvent(plugin));
+ 
+             loaders.remove(jPlugin.getDescription().getName());
+ 

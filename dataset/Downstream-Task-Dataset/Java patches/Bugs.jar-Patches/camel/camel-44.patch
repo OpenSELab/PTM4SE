@@ -1,0 +1,89 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java b/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
+index ed0f066..23c70bd 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
++++ b/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
+@@ -53,7 +53,7 @@ public class SedaComponent extends DefaultComponent {
+         return defaultConcurrentConsumers;
+     }
+ 
+-    public synchronized BlockingQueue<Exchange> createQueue(String uri, Map<String, Object> parameters) {
++    public synchronized BlockingQueue<Exchange> getOrCreateQueue(String uri, Integer size) {
+         String key = getQueueKey(uri);
+ 
+         QueueReference ref = getQueues().get(key);
+@@ -65,7 +65,6 @@ public class SedaComponent extends DefaultComponent {
+ 
+         // create queue
+         BlockingQueue<Exchange> queue;
+-        Integer size = getAndRemoveParameter(parameters, "size", Integer.class);
+         if (size != null && size > 0) {
+             queue = new LinkedBlockingQueue<Exchange>(size);
+         } else {
+@@ -96,7 +95,8 @@ public class SedaComponent extends DefaultComponent {
+             throw new IllegalArgumentException("The limitConcurrentConsumers flag in set to true. ConcurrentConsumers cannot be set at a value greater than "
+                     + maxConcurrentConsumers + " was " + consumers);
+         }
+-        SedaEndpoint answer = new SedaEndpoint(uri, this, createQueue(uri, parameters), consumers);
++        Integer size = getAndRemoveParameter(parameters, "size", Integer.class);
++        SedaEndpoint answer = new SedaEndpoint(uri, this, getOrCreateQueue(uri, size), consumers);
+         answer.configureProperties(parameters);
+         return answer;
+     }
+diff --git a/camel-core/src/main/java/org/apache/camel/component/seda/SedaEndpoint.java b/camel-core/src/main/java/org/apache/camel/component/seda/SedaEndpoint.java
+index 2095a93..5b2d872 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/seda/SedaEndpoint.java
++++ b/camel-core/src/main/java/org/apache/camel/component/seda/SedaEndpoint.java
+@@ -94,15 +94,27 @@ public class SedaEndpoint extends DefaultEndpoint implements BrowsableEndpoint,
+ 
+     public synchronized BlockingQueue<Exchange> getQueue() {
+         if (queue == null) {
+-            if (size > 0) {
+-                queue = new LinkedBlockingQueue<Exchange>(size);
++            // prefer to lookup queue from component, so if this endpoint is re-created or re-started
++            // then the existing queue from the component can be used, so new producers and consumers
++            // can use the already existing queue referenced from the component
++            if (getComponent() != null) {
++                queue = getComponent().getOrCreateQueue(getEndpointUri(), getSize());
+             } else {
+-                queue = new LinkedBlockingQueue<Exchange>();
++                // fallback and create queue (as this endpoint has no component)
++                queue = createQueue();
+             }
+         }
+         return queue;
+     }
+ 
++    protected BlockingQueue<Exchange> createQueue() {
++        if (size > 0) {
++            return new LinkedBlockingQueue<Exchange>(size);
++        } else {
++            return new LinkedBlockingQueue<Exchange>();
++        }
++    }
++
+     protected synchronized MulticastProcessor getConsumerMulticastProcessor() throws Exception {
+         if (!multicastStarted && consumerMulticastProcessor != null) {
+             // only start it on-demand to avoid starting it during stopping
+@@ -363,6 +375,10 @@ public class SedaEndpoint extends DefaultEndpoint implements BrowsableEndpoint,
+             getCamelContext().getExecutorServiceManager().shutdownNow(multicastExecutor);
+             multicastExecutor = null;
+         }
++
++        // clear queue, as we are shutdown, so if re-created then the queue must be updated
++        queue = null;
++
+         super.doShutdown();
+     }
+ }
+diff --git a/camel-core/src/main/java/org/apache/camel/component/seda/SedaProducer.java b/camel-core/src/main/java/org/apache/camel/component/seda/SedaProducer.java
+index 1067042..d39e39f 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/seda/SedaProducer.java
++++ b/camel-core/src/main/java/org/apache/camel/component/seda/SedaProducer.java
+@@ -27,7 +27,6 @@ import org.apache.camel.WaitForTaskToComplete;
+ import org.apache.camel.impl.DefaultAsyncProducer;
+ import org.apache.camel.support.SynchronizationAdapter;
+ import org.apache.camel.util.ExchangeHelper;
+-import org.apache.camel.util.URISupport;
+ 
+ /**
+  * @version 

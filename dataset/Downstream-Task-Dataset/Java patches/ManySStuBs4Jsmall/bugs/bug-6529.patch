@@ -1,0 +1,26 @@
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/StreamTask.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/StreamTask.java
+index bae0128..80c63da 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/StreamTask.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/StreamTask.java
+@@ -525,7 +525,7 @@
+ 						Class<? extends StateBackendFactory> clazz =
+ 							Class.forName(backendName, false, userClassLoader).asSubclass(StateBackendFactory.class);
+ 
+-						return (StateBackend<?>) clazz.newInstance();
++						return clazz.newInstance().createFromConfig(flinkConfig);
+ 					} catch (ClassNotFoundException e) {
+ 						throw new IllegalConfigurationException("Cannot find configured state backend: " + backendName);
+ 					} catch (ClassCastException e) {
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/StreamTask.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/StreamTask.java
+index bae0128..80c63da 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/StreamTask.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/StreamTask.java
+@@ -525,7 +525,7 @@
+ 						Class<? extends StateBackendFactory> clazz =
+ 							Class.forName(backendName, false, userClassLoader).asSubclass(StateBackendFactory.class);
+ 
+-						return (StateBackend<?>) clazz.newInstance();
++						return clazz.newInstance().createFromConfig(flinkConfig);
+ 					} catch (ClassNotFoundException e) {
+ 						throw new IllegalConfigurationException("Cannot find configured state backend: " + backendName);
+ 					} catch (ClassCastException e) {

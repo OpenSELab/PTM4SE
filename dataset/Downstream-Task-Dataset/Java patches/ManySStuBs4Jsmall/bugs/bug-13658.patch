@@ -1,0 +1,26 @@
+diff --git a/VisualizationModule/src/org/gephi/visualization/bridge/DHNSDataBridge.java b/VisualizationModule/src/org/gephi/visualization/bridge/DHNSDataBridge.java
+index bae1b91..0443b76 100644
+--- a/VisualizationModule/src/org/gephi/visualization/bridge/DHNSDataBridge.java
++++ b/VisualizationModule/src/org/gephi/visualization/bridge/DHNSDataBridge.java
+@@ -206,7 +206,7 @@
+                 }
+             } else if (!obj.isValid()) {
+                 engine.addObject(AbstractEngine.CLASS_EDGE, (ModelImpl) obj);
+-                if (vizConfig.isShowArrows()) {
++                if (vizConfig.isShowArrows() && !edge.isSelfLoop()) {
+                     ModelImpl arrowObj = ((Edge2dModel) obj).getArrow();
+                     engine.addObject(AbstractEngine.CLASS_ARROW, arrowObj);
+                     arrowObj.setCacheMarker(cacheMarker);
+diff --git a/VisualizationModule/src/org/gephi/visualization/bridge/DHNSDataBridge.java b/VisualizationModule/src/org/gephi/visualization/bridge/DHNSDataBridge.java
+index bae1b91..0443b76 100644
+--- a/VisualizationModule/src/org/gephi/visualization/bridge/DHNSDataBridge.java
++++ b/VisualizationModule/src/org/gephi/visualization/bridge/DHNSDataBridge.java
+@@ -206,7 +206,7 @@
+                 }
+             } else if (!obj.isValid()) {
+                 engine.addObject(AbstractEngine.CLASS_EDGE, (ModelImpl) obj);
+-                if (vizConfig.isShowArrows()) {
++                if (vizConfig.isShowArrows() && !edge.isSelfLoop()) {
+                     ModelImpl arrowObj = ((Edge2dModel) obj).getArrow();
+                     engine.addObject(AbstractEngine.CLASS_ARROW, arrowObj);
+                     arrowObj.setCacheMarker(cacheMarker);

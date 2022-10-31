@@ -1,0 +1,14 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/blob/datastore/DataStoreBlobStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/blob/datastore/DataStoreBlobStore.java
+index 3ad49ad..0880a19 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/blob/datastore/DataStoreBlobStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/blob/datastore/DataStoreBlobStore.java
+@@ -267,7 +267,8 @@ public class DataStoreBlobStore implements DataStore, BlobStore, GarbageCollecta
+             public boolean apply(DataIdentifier input) {
+                 try {
+                     DataRecord dr = delegate.getRecord(input);
+-                    if(dr != null && dr.getLastModified() < maxLastModifiedTime){
++                    if(dr != null && (maxLastModifiedTime <=0
++                            || dr.getLastModified() < maxLastModifiedTime)){
+                         return true;
+                     }
+                 } catch (DataStoreException e) {

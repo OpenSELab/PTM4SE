@@ -1,0 +1,12 @@
+diff --git a/dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintViolationExceptionMapperTest.java b/dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintViolationExceptionMapperTest.java
+index b989902..d8a9d06 100644
+--- a/dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintViolationExceptionMapperTest.java
++++ b/dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintViolationExceptionMapperTest.java
+@@ -34,6 +34,6 @@
+         final Response response = target("/valid/").request(MediaType.APPLICATION_JSON)
+                 .post(Entity.entity("{}", MediaType.APPLICATION_JSON));
+         assertThat(response.getStatus()).isEqualTo(422);
+-        assertThat(response.readEntity(String.class)).isEqualTo("{\"errors\":[\"name may not be empty (was null)\"]}");
++        assertThat(response.readEntity(String.class)).isEqualTo("{\"errors\":[\"name may not be empty\"]}");
+     }
+ }

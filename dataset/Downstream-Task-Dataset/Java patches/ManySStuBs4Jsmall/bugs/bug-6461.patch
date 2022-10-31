@@ -1,0 +1,26 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerRunner.java b/flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerRunner.java
+index 99a7c5d..a18ff40 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerRunner.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerRunner.java
+@@ -185,7 +185,7 @@
+ 
+ 		final int rpcPort = configuration.getInteger(ConfigConstants.TASK_MANAGER_IPC_PORT_KEY, 0);
+ 
+-		Preconditions.checkState(rpcPort < 0 || rpcPort >65535, "Invalid value for " +
++		Preconditions.checkState(rpcPort >= 0 && rpcPort <= 65535, "Invalid value for " +
+ 				"'%s' (port for the TaskManager actor system) : %d - Leave config parameter empty or " +
+ 				"use 0 to let the system choose port automatically.",
+ 			ConfigConstants.TASK_MANAGER_IPC_PORT_KEY, rpcPort);
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerRunner.java b/flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerRunner.java
+index 99a7c5d..a18ff40 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerRunner.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/taskexecutor/TaskManagerRunner.java
+@@ -185,7 +185,7 @@
+ 
+ 		final int rpcPort = configuration.getInteger(ConfigConstants.TASK_MANAGER_IPC_PORT_KEY, 0);
+ 
+-		Preconditions.checkState(rpcPort < 0 || rpcPort >65535, "Invalid value for " +
++		Preconditions.checkState(rpcPort >= 0 && rpcPort <= 65535, "Invalid value for " +
+ 				"'%s' (port for the TaskManager actor system) : %d - Leave config parameter empty or " +
+ 				"use 0 to let the system choose port automatically.",
+ 			ConfigConstants.TASK_MANAGER_IPC_PORT_KEY, rpcPort);

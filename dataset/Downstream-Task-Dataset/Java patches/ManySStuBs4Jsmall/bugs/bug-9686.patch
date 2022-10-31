@@ -1,0 +1,46 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/MainTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/MainTest.java
+index c75d0ac..5d6b061 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/MainTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/MainTest.java
+@@ -389,7 +389,8 @@
+         Method method = Main.class.getDeclaredMethod("loadProperties", param);
+         method.setAccessible(true);
+         try {
+-            method.invoke(null, new File(File.separator + "invalid"));
++            // https://support.microsoft.com/en-us/kb/177506
++            method.invoke(null, new File(File.separator + ":invalid"));
+             fail();
+         }
+         catch (InvocationTargetException e) {
+@@ -398,7 +399,7 @@
+             // disk drive letter appear in message,
+             // so we skip that drive letter for compatibility issues
+             assertTrue(e.getCause().getMessage().startsWith("Unable to load properties from file '"));
+-            assertTrue(e.getCause().getMessage().endsWith("invalid'."));
++            assertTrue(e.getCause().getMessage().endsWith(":invalid'."));
+         }
+         catch (Exception e) {
+             fail();
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/MainTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/MainTest.java
+index c75d0ac..5d6b061 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/MainTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/MainTest.java
+@@ -389,7 +389,8 @@
+         Method method = Main.class.getDeclaredMethod("loadProperties", param);
+         method.setAccessible(true);
+         try {
+-            method.invoke(null, new File(File.separator + "invalid"));
++            // https://support.microsoft.com/en-us/kb/177506
++            method.invoke(null, new File(File.separator + ":invalid"));
+             fail();
+         }
+         catch (InvocationTargetException e) {
+@@ -398,7 +399,7 @@
+             // disk drive letter appear in message,
+             // so we skip that drive letter for compatibility issues
+             assertTrue(e.getCause().getMessage().startsWith("Unable to load properties from file '"));
+-            assertTrue(e.getCause().getMessage().endsWith("invalid'."));
++            assertTrue(e.getCause().getMessage().endsWith(":invalid'."));
+         }
+         catch (Exception e) {
+             fail();

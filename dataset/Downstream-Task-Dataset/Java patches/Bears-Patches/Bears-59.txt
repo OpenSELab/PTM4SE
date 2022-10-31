@@ -1,0 +1,176 @@
+--- a/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
++++ b/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
+@@ -535,7 +535,24 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 
+ 	@Override
+ 	public void visitCtTypeParameter(CtTypeParameter typeParameter) {
+-		visitCtTypeParameterReference(typeParameter.getReference());
++		CtTypeParameterReference ref = typeParameter.getReference();
++		if (ref.isImplicit()) {
++			return;
++		}
++		elementPrinterHelper.writeAnnotations(ref);
++		if (printQualified(ref)) {
++			printer.write(ref.getQualifiedName());
++		} else {
++			printer.write(ref.getSimpleName());
++		}
++		if (ref.getBoundingType() != null) {
++			if (ref.isUpper()) {
++				printer.write(" extends ");
++			} else {
++				printer.write(" super ");
++			}
++			scan(ref.getBoundingType());
++		}
+ 	}
+ 
+ 	@Override
+@@ -1585,21 +1602,29 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 		} else {
+ 			printer.write(ref.getSimpleName());
+ 		}
+-		if (ref.getBoundingType() != null) {
+-			if (ref.isUpper()) {
++	}
++
++	@Override
++	public void visitCtWildcardReference(CtWildcardReference wildcardReference) {
++		if (wildcardReference.isImplicit()) {
++			return;
++		}
++		elementPrinterHelper.writeAnnotations(wildcardReference);
++		if (printQualified(wildcardReference)) {
++			printer.write(wildcardReference.getQualifiedName());
++		} else {
++			printer.write(wildcardReference.getSimpleName());
++		}
++		if (wildcardReference.getBoundingType() != null) {
++			if (wildcardReference.isUpper()) {
+ 				printer.write(" extends ");
+ 			} else {
+ 				printer.write(" super ");
+ 			}
+-			scan(ref.getBoundingType());
++			scan(wildcardReference.getBoundingType());
+ 		}
+ 	}
+ 
+-	@Override
+-	public void visitCtWildcardReference(CtWildcardReference wildcardReference) {
+-		visitCtTypeParameterReference(wildcardReference);
+-	}
+-
+ 	private boolean printQualified(CtTypeReference<?> ref) {
+ 		if (importsContext.isImported(ref) || (this.env.isAutoImports() && ref.getPackage() != null && ref.getPackage().getSimpleName().equals("java.lang"))) {
+ 			// If my.pkg.Something is imported, but
+--- a/src/main/java/spoon/support/compiler/jdt/ReferenceBuilder.java
++++ b/src/main/java/spoon/support/compiler/jdt/ReferenceBuilder.java
+@@ -650,7 +654,12 @@ public class ReferenceBuilder {
+ 					if (bindingCache.containsKey(b)) {
+ 						ref.addActualTypeArgument(getCtCircularTypeReference(b));
+ 					} else {
+-						ref.addActualTypeArgument(getTypeReference(b));
++						if (!this.exploringParameterizedBindings.contains(b)) {
++							this.exploringParameterizedBindings.add(b);
++							ref.addActualTypeArgument(getTypeReference(b));
++						} else {
++							this.exploringParameterizedBindings.remove(b);
++						}
+ 					}
+ 				}
+ 			}
+@@ -676,12 +685,35 @@ public class ReferenceBuilder {
+ 			ref.setSimpleName(new String(binding.sourceName()));
+ 		} else if (binding instanceof TypeVariableBinding) {
+ 			boolean oldBounds = bounds;
+-			ref = this.jdtTreeBuilder.getFactory().Core().createTypeParameterReference();
++
+ 			if (binding instanceof CaptureBinding) {
+ 				ref = this.jdtTreeBuilder.getFactory().Core().createWildcardReference();
+ 				bounds = true;
+ 			} else {
++				TypeVariableBinding typeParamBinding = (TypeVariableBinding) binding;
++				ReferenceBinding superClass = typeParamBinding.superclass;
++				ReferenceBinding[] superInterfaces = typeParamBinding.superInterfaces();
++
++				CtTypeReference refSuperClass = null;
++
++				// if the type parameter has a super class other than java.lang.Object, we get it
++				// superClass.superclass() is null if it's java.lang.Object
++				if (superClass != null && !(superClass.superclass() == null)) {
++					refSuperClass = this.getTypeReference(superClass);
++
++				// if the type parameter has a super interface, then we'll get it too, as a superclass
++				// type parameter can only extends an interface or a class, so we don't make the distinction
++				// in Spoon. Moreover we can only have one extends in a type parameter.
++				} else if (superInterfaces != null && superInterfaces.length == 1) {
++					refSuperClass = this.getTypeReference(superInterfaces[0]);
++				}
++
++				ref = this.jdtTreeBuilder.getFactory().Core().createTypeParameterReference();
+ 				ref.setSimpleName(new String(binding.sourceName()));
++
++				if (refSuperClass != null) {
++					((CtTypeParameterReference) ref).addBound(refSuperClass);
++				}
+ 			}
+ 			TypeVariableBinding b = (TypeVariableBinding) binding;
+ 			if (bounds) {
+@@ -721,15 +753,19 @@ public class ReferenceBuilder {
+ 				ref = ref == null ? ref : ref.clone();
+ 			}
+ 		} else if (binding instanceof WildcardBinding) {
++			WildcardBinding wildcardBinding = (WildcardBinding) binding;
+ 			ref = this.jdtTreeBuilder.getFactory().Core().createWildcardReference();
+-			if (((WildcardBinding) binding).boundKind == Wildcard.SUPER && ref instanceof CtTypeParameterReference) {
++
++			if (wildcardBinding.boundKind == Wildcard.SUPER && ref instanceof CtTypeParameterReference) {
+ 				((CtTypeParameterReference) ref).setUpper(false);
+ 			}
+ 
+-			if (((WildcardBinding) binding).bound != null && ref instanceof CtTypeParameterReference) {
+-				if (bindingCache.containsKey(((WildcardBinding) binding).bound)) {
+-					((CtTypeParameterReference) ref).setBoundingType(getCtCircularTypeReference(((WildcardBinding) binding).bound));
++			if (wildcardBinding.bound != null && ref instanceof CtTypeParameterReference) {
++				if (bindingCache.containsKey(wildcardBinding.bound)) {
++					((CtTypeParameterReference) ref).setBoundingType(getCtCircularTypeReference(wildcardBinding.bound));
+ 				} else {
++
++
+ 					((CtTypeParameterReference) ref).setBoundingType(getTypeReference(((WildcardBinding) binding).bound));
+ 				}
+ 			}
+@@ -801,6 +837,7 @@ public class ReferenceBuilder {
+ 			throw new RuntimeException("Unknown TypeBinding: " + binding.getClass() + " " + binding);
+ 		}
+ 		bindingCache.remove(binding);
++		this.exploringParameterizedBindings.clear();
+ 		return (CtTypeReference<T>) ref;
+ 	}
+ 
+--- a/src/main/java/spoon/support/reflect/reference/CtExecutableReferenceImpl.java
++++ b/src/main/java/spoon/support/reflect/reference/CtExecutableReferenceImpl.java
+@@ -315,7 +315,9 @@ public class CtExecutableReferenceImpl<T> extends CtReferenceImpl implements CtE
+ 				continue;
+ 			}
+ 			for (int i = 0; i < parameters.size(); i++) {
+-				if (m.getParameterTypes()[i] != parameters.get(i).getActualClass()) {
++				Class<?> methodParameterType = m.getParameterTypes()[i];
++				Class<?> currentParameterType = parameters.get(i).getActualClass();
++				if (methodParameterType != currentParameterType) {
+ 					continue method_loop;
+ 				}
+ 			}
+--- a/src/main/java/spoon/support/reflect/reference/CtTypeParameterReferenceImpl.java
++++ b/src/main/java/spoon/support/reflect/reference/CtTypeParameterReferenceImpl.java
+@@ -178,7 +178,8 @@ public class CtTypeParameterReferenceImpl extends CtTypeReferenceImpl<Object> im
+ 		CtElement e = this;
+ 		CtElement parent = getParent();
+ 		if (parent instanceof CtExecutableReference) {
+-			CtElement parent2 = parent.getParent();
++
++			CtElement parent2 = ((CtExecutableReference) parent).getDeclaration();
+ 			if (parent2 instanceof CtMethod) {
+ 				e = parent2;
+ 			} else {

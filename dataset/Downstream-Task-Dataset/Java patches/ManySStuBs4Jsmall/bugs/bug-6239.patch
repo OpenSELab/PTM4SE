@@ -1,0 +1,30 @@
+diff --git a/components/camel-amqp/src/test/java/org/apache/camel/component/amqp/AMQPRouteTest.java b/components/camel-amqp/src/test/java/org/apache/camel/component/amqp/AMQPRouteTest.java
+index ee33d59..e5a8435 100644
+--- a/components/camel-amqp/src/test/java/org/apache/camel/component/amqp/AMQPRouteTest.java
++++ b/components/camel-amqp/src/test/java/org/apache/camel/component/amqp/AMQPRouteTest.java
+@@ -40,8 +40,8 @@
+         resultEndpoint.message(0).header("cheese").isEqualTo(123);
+ 
+         sendExchange(expectedBody);
+-        if (System.getProperty("os.name").equals("Windows Vista")) {
+-            // send the message twice to walk around the AMQP's drop first message issue on Windows Vista box
++        if (System.getProperty("os.name").startsWith("Windows")) {
++            // send the message twice to walk around the AMQP's drop first message issue on Windows box
+             sendExchange(expectedBody);
+         }
+ 
+diff --git a/components/camel-amqp/src/test/java/org/apache/camel/component/amqp/AMQPRouteTest.java b/components/camel-amqp/src/test/java/org/apache/camel/component/amqp/AMQPRouteTest.java
+index ee33d59..e5a8435 100644
+--- a/components/camel-amqp/src/test/java/org/apache/camel/component/amqp/AMQPRouteTest.java
++++ b/components/camel-amqp/src/test/java/org/apache/camel/component/amqp/AMQPRouteTest.java
+@@ -40,8 +40,8 @@
+         resultEndpoint.message(0).header("cheese").isEqualTo(123);
+ 
+         sendExchange(expectedBody);
+-        if (System.getProperty("os.name").equals("Windows Vista")) {
+-            // send the message twice to walk around the AMQP's drop first message issue on Windows Vista box
++        if (System.getProperty("os.name").startsWith("Windows")) {
++            // send the message twice to walk around the AMQP's drop first message issue on Windows box
+             sendExchange(expectedBody);
+         }
+ 

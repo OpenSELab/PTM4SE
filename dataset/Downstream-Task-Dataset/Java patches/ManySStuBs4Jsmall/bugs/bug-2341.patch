@@ -1,0 +1,46 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index 692b47b..1a88720 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -1152,7 +1152,7 @@
+      * @throws IOException
+      * @throws ServletException
+      */
+-    protected Action doCometSupport(HttpServletRequest req, HttpServletResponse res)
++    public Action doCometSupport(HttpServletRequest req, HttpServletResponse res)
+             throws IOException, ServletException {
+         req.setAttribute(BROADCASTER_FACTORY, broadcasterFactory);
+         req.setAttribute(PROPERTY_USE_STREAM, useStreamForFlushingComments);
+diff --git a/modules/cpr/src/main/java/org/atmosphere/websocket/processor/HttpServletRequestWebSocketProcessor.java b/modules/cpr/src/main/java/org/atmosphere/websocket/processor/HttpServletRequestWebSocketProcessor.java
+index 3d50526..1d8b8b1 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/websocket/processor/HttpServletRequestWebSocketProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/websocket/processor/HttpServletRequestWebSocketProcessor.java
+@@ -53,13 +53,13 @@
+ 
+     public HttpServletRequestWebSocketProcessor(AtmosphereServlet atmosphereServlet, WebSocket webSocket) {
+         super(atmosphereServlet, webSocket);
+-        String contentType = atmosphereServlet.config.getInitParameter(AtmosphereServlet.WEBSOCKET_CONTENT_TYPE);
++        String contentType = atmosphereServlet.getAtmosphereConfig().getInitParameter(AtmosphereServlet.WEBSOCKET_CONTENT_TYPE);
+         if (contentType == null) {
+             contentType = "text/html";
+         }
+         this.contentType = contentType;
+ 
+-        String methodType = atmosphereServlet.config.getInitParameter(AtmosphereServlet.WEBSOCKET_METHOD);
++        String methodType = atmosphereServlet.getAtmosphereConfig().getInitParameter(AtmosphereServlet.WEBSOCKET_METHOD);
+         if (methodType == null) {
+             methodType = "POST";
+         }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index 692b47b..1a88720 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -1152,7 +1152,7 @@
+      * @throws IOException
+      * @throws ServletException
+      */
+-    protected Action doCometSupport(HttpServletRequest req, HttpServletResponse res)
++    public Action doCometSupport(HttpServletRequest req, HttpServletResponse res)
+             throws IOException, ServletException {
+         req.setAttribute(BROADCASTER_FACTORY, broadcasterFactory);
+         req.setAttribute(PROPERTY_USE_STREAM, useStreamForFlushingComments);

@@ -1,0 +1,30 @@
+diff --git a/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java b/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
+index d15b4b2..fa6c696 100644
+--- a/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
++++ b/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
+@@ -326,7 +326,7 @@
+     }
+ 
+     private void isJdbcLog(SessionSettings settings, Set<LogFactory> impliedLogFactories) {
+-        if (settings.isSetting(JdbcSetting.SETTING_JDBC_DRIVER)) {
++        if (impliedLogFactories.size() == 0 && settings.isSetting(JdbcSetting.SETTING_JDBC_DRIVER)) {
+             impliedLogFactories.add(new JdbcLogFactory(settings));
+         }
+     }
+diff --git a/components/camel-quickfix/src/test/java/org/apache/camel/component/quickfixj/QuickfixjEngineTest.java b/components/camel-quickfix/src/test/java/org/apache/camel/component/quickfixj/QuickfixjEngineTest.java
+index 2609e0b..c85d4ea 100644
+--- a/components/camel-quickfix/src/test/java/org/apache/camel/component/quickfixj/QuickfixjEngineTest.java
++++ b/components/camel-quickfix/src/test/java/org/apache/camel/component/quickfixj/QuickfixjEngineTest.java
+diff --git a/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java b/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
+index d15b4b2..fa6c696 100644
+--- a/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
++++ b/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
+@@ -326,7 +326,7 @@
+     }
+ 
+     private void isJdbcLog(SessionSettings settings, Set<LogFactory> impliedLogFactories) {
+-        if (settings.isSetting(JdbcSetting.SETTING_JDBC_DRIVER)) {
++        if (impliedLogFactories.size() == 0 && settings.isSetting(JdbcSetting.SETTING_JDBC_DRIVER)) {
+             impliedLogFactories.add(new JdbcLogFactory(settings));
+         }
+     }

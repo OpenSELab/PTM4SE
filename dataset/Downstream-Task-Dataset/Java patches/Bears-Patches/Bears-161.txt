@@ -1,0 +1,13 @@
+--- a/debezium-connector-mysql/src/main/java/io/debezium/connector/mysql/MySqlDdlParser.java
++++ b/debezium-connector-mysql/src/main/java/io/debezium/connector/mysql/MySqlDdlParser.java
+@@ -1297,7 +1297,9 @@ protected void parseAlterSpecification(Marker start, TableEditor table, Consumer
+         } else if (tokens.canConsume("REORGANIZE", "PARTITION")) {
+             parsePartitionNames(start);
+             tokens.consume("INTO", "(");
+-            parsePartitionDefinition(start, table);
++            do {
++                parsePartitionDefinition(start, table);
++            } while (tokens.canConsume(','));
+             tokens.consume(')');
+         } else if (tokens.canConsume("EXCHANGE", "PARTITION")) {
+             tokens.consume(); // partition name

@@ -1,0 +1,26 @@
+diff --git a/hikaricp-common/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java b/hikaricp-common/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+index 1f8fab6..6831811 100644
+--- a/hikaricp-common/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
++++ b/hikaricp-common/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+@@ -109,7 +109,7 @@
+             LOGGER.warn(String.format("Connection %s (%s) marked as broken because of SQLSTATE(%s), ErrorCode(%d).", delegate.toString(),
+                                       parentPool.toString(), sqlState, sqle.getErrorCode()), sqle);
+          }
+-         else if (sqle.getNextException() instanceof SQLException) {
++         else if (sqle.getNextException() instanceof SQLException && sqle != sqle.getNextException()) {
+             checkException(sqle.getNextException());
+          }
+       }
+diff --git a/hikaricp-common/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java b/hikaricp-common/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+index 1f8fab6..6831811 100644
+--- a/hikaricp-common/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
++++ b/hikaricp-common/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+@@ -109,7 +109,7 @@
+             LOGGER.warn(String.format("Connection %s (%s) marked as broken because of SQLSTATE(%s), ErrorCode(%d).", delegate.toString(),
+                                       parentPool.toString(), sqlState, sqle.getErrorCode()), sqle);
+          }
+-         else if (sqle.getNextException() instanceof SQLException) {
++         else if (sqle.getNextException() instanceof SQLException && sqle != sqle.getNextException()) {
+             checkException(sqle.getNextException());
+          }
+       }

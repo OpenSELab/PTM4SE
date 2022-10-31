@@ -1,0 +1,26 @@
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/atn/LexerATNSimulator.java b/runtime/Java/src/org/antlr/v4/runtime/atn/LexerATNSimulator.java
+index 900053c..7a9defa 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/atn/LexerATNSimulator.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/atn/LexerATNSimulator.java
+@@ -446,7 +446,7 @@
+ 					if (config.context.getReturnState(i) != PredictionContext.EMPTY_RETURN_STATE) {
+ 						PredictionContext newContext = config.context.getParent(i); // "pop" return state
+ 						ATNState returnState = atn.states.get(config.context.getReturnState(i));
+-						LexerATNConfig c = new LexerATNConfig(returnState, config.alt, newContext);
++						LexerATNConfig c = new LexerATNConfig(config, returnState, newContext);
+ 						currentAltReachedAcceptState = closure(input, c, configs, currentAltReachedAcceptState, speculative);
+ 					}
+ 				}
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/atn/LexerATNSimulator.java b/runtime/Java/src/org/antlr/v4/runtime/atn/LexerATNSimulator.java
+index 900053c..7a9defa 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/atn/LexerATNSimulator.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/atn/LexerATNSimulator.java
+@@ -446,7 +446,7 @@
+ 					if (config.context.getReturnState(i) != PredictionContext.EMPTY_RETURN_STATE) {
+ 						PredictionContext newContext = config.context.getParent(i); // "pop" return state
+ 						ATNState returnState = atn.states.get(config.context.getReturnState(i));
+-						LexerATNConfig c = new LexerATNConfig(returnState, config.alt, newContext);
++						LexerATNConfig c = new LexerATNConfig(config, returnState, newContext);
+ 						currentAltReachedAcceptState = closure(input, c, configs, currentAltReachedAcceptState, speculative);
+ 					}
+ 				}

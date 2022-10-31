@@ -1,0 +1,13 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/core/ExecutorServiceTest.java b/hazelcast/src/test/java/com/hazelcast/core/ExecutorServiceTest.java
+index 7e3ac21..9678ad7 100644
+--- a/hazelcast/src/test/java/com/hazelcast/core/ExecutorServiceTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/core/ExecutorServiceTest.java
+@@ -152,7 +152,7 @@
+         assertFalse(executor.isShutdown());
+         
+         // Only one task
+-        ArrayList<BasicTestTask> tasks = new ArrayList<BasicTestTask>();
++        ArrayList<Callable<String>> tasks = new ArrayList<Callable<String>>();
+         tasks.add(new BasicTestTask());
+         List<Future<String>> futures = executor.invokeAll(tasks);
+         assertEquals(futures.size(), 1);

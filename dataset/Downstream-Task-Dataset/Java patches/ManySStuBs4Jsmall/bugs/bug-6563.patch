@@ -1,0 +1,13 @@
+diff --git a/flink-runtime/src/test/java/org/apache/flink/runtime/taskmanager/TaskManagerTest.java b/flink-runtime/src/test/java/org/apache/flink/runtime/taskmanager/TaskManagerTest.java
+index e736a55..760b14e 100644
+--- a/flink-runtime/src/test/java/org/apache/flink/runtime/taskmanager/TaskManagerTest.java
++++ b/flink-runtime/src/test/java/org/apache/flink/runtime/taskmanager/TaskManagerTest.java
+@@ -566,7 +566,7 @@
+ 			if (message instanceof RegistrationMessages.RegisterTaskManager) {
+ 				final InstanceID iid = new InstanceID();
+ 				final ActorRef self = getSelf();
+-				getSender().tell(new RegistrationMessages.AcknowledgeRegistration(self, iid, -1), self);
++				getSender().tell(new RegistrationMessages.AcknowledgeRegistration(self, iid, 12345), self);
+ 			}
+ 			else if(message instanceof TaskMessages.UpdateTaskExecutionState){
+ 				getSender().tell(true, getSelf());

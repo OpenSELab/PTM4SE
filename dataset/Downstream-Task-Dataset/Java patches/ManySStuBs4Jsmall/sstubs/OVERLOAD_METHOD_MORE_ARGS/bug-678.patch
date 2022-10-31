@@ -1,0 +1,188 @@
+diff --git a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting1Message.java b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting1Message.java
+index 84e4240..81122ee 100644
+--- a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting1Message.java
++++ b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting1Message.java
+@@ -92,7 +92,8 @@
+ 	private final static List<RFXComValueSelector> supportedValueSelectors = Arrays
+ 			.asList(RFXComValueSelector.RAW_DATA,
+ 					RFXComValueSelector.SIGNAL_LEVEL,
+-					RFXComValueSelector.COMMAND);
++					RFXComValueSelector.COMMAND,
++					RFXComValueSelector.CONTACT);
+ 
+ 	public SubType subType = SubType.X10;
+ 	public char sensorId = 'A';
+@@ -225,23 +226,23 @@
+ 
+ 		} else if (valueSelector.getItemClass() == ContactItem.class) {
+ 
+-			if (valueSelector == RFXComValueSelector.COMMAND) {
++			if (valueSelector == RFXComValueSelector.CONTACT) {
+ 
+ 				switch (command) {
+ 				case OFF:
+ 				case GROUP_OFF:
+ 				case DIM:
+-					state = OpenClosedType.OPEN;
++					state = OpenClosedType.CLOSED;
+ 					break;
+ 
+ 				case ON:
+ 				case GROUP_ON:
+ 				case BRIGHT:
+-					state = OpenClosedType.CLOSED;
++					state = OpenClosedType.OPEN;
+ 					break;
+ 
+ 				case CHIME:
+-					state = OpenClosedType.CLOSED;
++					state = OpenClosedType.OPEN;
+ 					break;
+ 					
+ 				default:
+diff --git a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting2Message.java b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting2Message.java
+index e1f535e..83c6d02 100644
+--- a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting2Message.java
++++ b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting2Message.java
+@@ -91,7 +91,8 @@
+ 			.asList(RFXComValueSelector.RAW_DATA,
+ 					RFXComValueSelector.SIGNAL_LEVEL,
+ 					RFXComValueSelector.COMMAND,
+-					RFXComValueSelector.DIMMING_LEVEL);
++					RFXComValueSelector.DIMMING_LEVEL,
++					RFXComValueSelector.CONTACT);
+ 
+ 	public SubType subType = SubType.AC;
+ 	public int sensorId = 0;
+@@ -269,17 +270,17 @@
+ 
+ 		} else if (valueSelector.getItemClass() == ContactItem.class) {
+ 
+-			if (valueSelector == RFXComValueSelector.COMMAND) {
++			if (valueSelector == RFXComValueSelector.CONTACT) {
+ 
+ 				switch (command) {
+ 				case OFF:
+ 				case GROUP_OFF:
+-					state = OpenClosedType.OPEN;
++					state = OpenClosedType.CLOSED;
+ 					break;
+ 
+ 				case ON:
+ 				case GROUP_ON:
+-					state = OpenClosedType.CLOSED;
++					state = OpenClosedType.OPEN;
+ 					break;
+ 
+ 				case SET_GROUP_LEVEL:
+diff --git a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting5Message.java b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting5Message.java
+index e560ce3..1b5bc9b 100644
+--- a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting5Message.java
++++ b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting5Message.java
+@@ -106,7 +106,8 @@
+ 					RFXComValueSelector.SIGNAL_LEVEL,
+ 					RFXComValueSelector.COMMAND,
+ 					RFXComValueSelector.MOOD,
+-					RFXComValueSelector.DIMMING_LEVEL);
++					RFXComValueSelector.DIMMING_LEVEL,
++					RFXComValueSelector.CONTACT);
+ 
+ 	public SubType subType = SubType.LIGHTWAVERF;
+ 	public int sensorId = 0;
+@@ -300,16 +301,16 @@
+ 
+ 		} else if (valueSelector.getItemClass() == ContactItem.class) {
+ 
+-			if (valueSelector == RFXComValueSelector.COMMAND) {
++			if (valueSelector == RFXComValueSelector.CONTACT) {
+ 
+ 				switch (command) {
+ 				case OFF:
+ 				case GROUP_OFF:
+-					state = OpenClosedType.OPEN;
++					state = OpenClosedType.CLOSED;
+ 					break;
+ 
+ 				case ON:				
+-					state = OpenClosedType.CLOSED;
++					state = OpenClosedType.OPEN;
+ 					break;
+ 				
+ 				case SET_LEVEL:
+diff --git a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting6Message.java b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting6Message.java
+index d38a574..ff402b8 100644
+--- a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting6Message.java
++++ b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting6Message.java
+@@ -81,7 +81,8 @@
+ 	private final static List<RFXComValueSelector> supportedValueSelectors = Arrays
+ 			.asList(RFXComValueSelector.RAW_DATA,
+ 					RFXComValueSelector.SIGNAL_LEVEL,
+-					RFXComValueSelector.COMMAND);
++					RFXComValueSelector.COMMAND,
++					RFXComValueSelector.CONTACT);
+ 
+ 	public SubType subType = SubType.BLYSS;
+ 	public int sensorId = 0;
+@@ -210,17 +211,17 @@
+ 
+ 		} else if (valueSelector.getItemClass() == ContactItem.class) {
+ 
+-			if (valueSelector == RFXComValueSelector.COMMAND) {
++			if (valueSelector == RFXComValueSelector.CONTACT) {
+ 
+ 				switch (command) {
+ 				case OFF:
+ 				case GROUP_OFF:
+-					state = OpenClosedType.OPEN;
++					state = OpenClosedType.CLOSED;
+ 					break;
+ 
+ 				case ON:
+ 				case GROUP_ON:
+-					state = OpenClosedType.CLOSED;
++					state = OpenClosedType.OPEN;
+ 					break;
+ 					
+ 				default:
+diff --git a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting1Message.java b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting1Message.java
+index 84e4240..81122ee 100644
+--- a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting1Message.java
++++ b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComLighting1Message.java
+@@ -92,7 +92,8 @@
+ 	private final static List<RFXComValueSelector> supportedValueSelectors = Arrays
+ 			.asList(RFXComValueSelector.RAW_DATA,
+ 					RFXComValueSelector.SIGNAL_LEVEL,
+-					RFXComValueSelector.COMMAND);
++					RFXComValueSelector.COMMAND,
++					RFXComValueSelector.CONTACT);
+ 
+ 	public SubType subType = SubType.X10;
+ 	public char sensorId = 'A';
+@@ -225,23 +226,23 @@
+ 
+ 		} else if (valueSelector.getItemClass() == ContactItem.class) {
+ 
+-			if (valueSelector == RFXComValueSelector.COMMAND) {
++			if (valueSelector == RFXComValueSelector.CONTACT) {
+ 
+ 				switch (command) {
+ 				case OFF:
+ 				case GROUP_OFF:
+ 				case DIM:
+-					state = OpenClosedType.OPEN;
++					state = OpenClosedType.CLOSED;
+ 					break;
+ 
+ 				case ON:
+ 				case GROUP_ON:
+ 				case BRIGHT:
+-					state = OpenClosedType.CLOSED;
++					state = OpenClosedType.OPEN;
+ 					break;
+ 
+ 				case CHIME:
+-					state = OpenClosedType.CLOSED;
++					state = OpenClosedType.OPEN;
+ 					break;
+ 					
+ 				default:

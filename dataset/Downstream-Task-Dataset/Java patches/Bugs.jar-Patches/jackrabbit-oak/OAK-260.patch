@@ -1,0 +1,353 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/Query.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/Query.java
+index 57bf0d1..002bad8 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/Query.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/Query.java
+@@ -308,7 +308,7 @@ public class Query {
+         prepare();
+         Iterator<ResultRowImpl> it;
+         if (explain) {
+-            String plan = source.getPlan(rootState);
++            String plan = getPlan();
+             columns = new ColumnImpl[] { new ColumnImpl("explain", "plan", "plan")};
+             ResultRowImpl r = new ResultRowImpl(this,
+                     new String[0], 
+@@ -317,7 +317,7 @@ public class Query {
+             it = Arrays.asList(r).iterator();
+         } else {
+             if (LOG.isDebugEnabled()) {
+-                LOG.debug("plan: " + source.getPlan(rootState));
++                LOG.debug("plan: " + getPlan());
+             }
+             if (orderings == null) {
+                 // can apply limit and offset directly
+@@ -437,6 +437,15 @@ public class Query {
+         }
+         return comp;
+     }
++    
++    /**
++     * Get the query plan. The query must already be prepared.
++     * 
++     * @return the query plan
++     */
++    private String getPlan() {
++        return source.getPlan(rootState);
++    }
+ 
+     void prepare() {
+         if (prepared) {
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/QueryEngineImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/QueryEngineImpl.java
+index a7569bc..2a79d67 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/QueryEngineImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/QueryEngineImpl.java
+@@ -176,11 +176,14 @@ public abstract class QueryEngineImpl implements QueryEngine {
+                 best = index;
+             }
+         }
+-        if (best == null) {
+-            if (LOG.isDebugEnabled()) {
+-                LOG.debug("no indexes found - using TraversingIndex; indexProvider: " + indexProvider);
+-            }
+-            best = new TraversingIndex();
++        QueryIndex index = new TraversingIndex();
++        double cost = index.getCost(filter, rootState);
++        if (LOG.isDebugEnabled()) {
++            LOG.debug("cost for " + index.getIndexName() + " is " + cost);
++        }
++        if (cost < bestCost) {
++            bestCost = cost;
++            best = index;
+         }
+         return best;
+     }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/ChildNodeJoinConditionImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/ChildNodeJoinConditionImpl.java
+index 829196a..6213557 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/ChildNodeJoinConditionImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/ChildNodeJoinConditionImpl.java
+@@ -66,12 +66,22 @@ public class ChildNodeJoinConditionImpl extends JoinConditionImpl {
+     public void restrict(FilterImpl f) {
+         if (f.getSelector() == parentSelector) {
+             String c = childSelector.currentPath();
++            if (c == null && f.isPreparing() && childSelector.isPrepared()) {
++                // during the prepare phase, if the selector is already
++                // prepared, then we would know the value
++                c = KNOWN_PATH;
++            }
+             if (c != null) {
+                 f.restrictPath(PathUtils.getParentPath(c), Filter.PathRestriction.EXACT);
+             }
+         }
+         if (f.getSelector() == childSelector) {
+             String p = parentSelector.currentPath();
++            if (p == null && f.isPreparing() && parentSelector.isPrepared()) {
++                // during the prepare phase, if the selector is already
++                // prepared, then we would know the value
++                p = KNOWN_PATH;
++            }
+             if (p != null) {
+                 f.restrictPath(p, Filter.PathRestriction.DIRECT_CHILDREN);
+             }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/DescendantNodeJoinConditionImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/DescendantNodeJoinConditionImpl.java
+index 1552155..8e5f945 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/DescendantNodeJoinConditionImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/DescendantNodeJoinConditionImpl.java
+@@ -66,12 +66,22 @@ public class DescendantNodeJoinConditionImpl extends JoinConditionImpl {
+     public void restrict(FilterImpl f) {
+         if (f.getSelector() == ancestorSelector) {
+             String d = descendantSelector.currentPath();
++            if (d == null && f.isPreparing() && descendantSelector.isPrepared()) {
++                // during the prepare phase, if the selector is already
++                // prepared, then we would know the value
++                d = KNOWN_PATH;
++            }
+             if (d != null) {
+                 f.restrictPath(PathUtils.getParentPath(d), Filter.PathRestriction.PARENT);
+             }
+         }
+         if (f.getSelector() == descendantSelector) {
+             String a = ancestorSelector.currentPath();
++            if (a == null && f.isPreparing() && ancestorSelector.isPrepared()) {
++                // during the prepare phase, if the selector is already
++                // prepared, then we would know the value
++                a = KNOWN_PATH;
++            }
+             if (a != null) {
+                 f.restrictPath(a, Filter.PathRestriction.DIRECT_CHILDREN);
+             }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/EquiJoinConditionImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/EquiJoinConditionImpl.java
+index dae131d..01d1ce2 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/EquiJoinConditionImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/EquiJoinConditionImpl.java
+@@ -97,21 +97,35 @@ public class EquiJoinConditionImpl extends JoinConditionImpl {
+     public void restrict(FilterImpl f) {
+         if (f.getSelector() == selector1) {
+             PropertyValue p2 = selector2.currentProperty(property2Name);
++            if (p2 == null && f.isPreparing() && selector2.isPrepared()) {
++                // during the prepare phase, if the selector is already
++                // prepared, then we would know the value
++                p2 = PropertyValues.newString(KNOWN_VALUE);
++            }
+             if (p2 != null) {
+-                if (!p2.isArray()) {
++                if (p2.isArray()) {
+                     // TODO support join on multi-valued properties
+-                    f.restrictProperty(property1Name, Operator.EQUAL, p2);
++                    p2 = null;
+                 }
+             }
++            // always set the condition, even if unkown ( -> is not null)
++            f.restrictProperty(property1Name, Operator.EQUAL, p2);
+         }
+         if (f.getSelector() == selector2) {
+             PropertyValue p1 = selector1.currentProperty(property1Name);
++            if (p1 == null && f.isPreparing() && selector1.isPrepared()) {
++                // during the prepare phase, if the selector is already
++                // prepared, then we would know the value
++                p1 = PropertyValues.newString(KNOWN_VALUE);
++            }
+             if (p1 != null) {
+-                if (!p1.isArray()) {
++                if (p1.isArray()) {
+                     // TODO support join on multi-valued properties
+-                    f.restrictProperty(property2Name, Operator.EQUAL, p1);
++                    p1 = null;
+                 }
+             }
++            // always set the condition, even if unkown ( -> is not null)
++            f.restrictProperty(property2Name, Operator.EQUAL, p1);
+         }
+     }
+ 
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/JoinConditionImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/JoinConditionImpl.java
+index b3e2fd5..f5c8298 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/JoinConditionImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/JoinConditionImpl.java
+@@ -19,11 +19,36 @@ import org.apache.jackrabbit.oak.query.index.FilterImpl;
+  * The base class for join conditions.
+  */
+ public abstract class JoinConditionImpl extends AstElement {
++    
++    /**
++     * A path with 6 elements, which is the expected average for a join.
++     */
++    protected static final String KNOWN_PATH = "/path/from/the/join/selector";
+ 
+-    public abstract boolean evaluate();
++    protected static final String KNOWN_VALUE = "valueFromTheJoinSelector";
+ 
++    /**
++     * Evaluate the result using the currently set values.
++     * 
++     * @return true if the constraint matches
++     */
++    public abstract boolean evaluate();
++    
++    /**
++     * Apply the condition to the filter, further restricting the filter if
++     * possible. This may also verify the data types are compatible, and that
++     * paths are valid.
++     * 
++     * @param f the filter
++     */
+     public abstract void restrict(FilterImpl f);
+ 
+-    public abstract void restrictPushDown(SelectorImpl selectorImpl);
++    /**
++     * Push as much of the condition down to this selector, further restricting
++     * the selector condition if possible.
++     * 
++     * @param s the selector
++     */
++    public abstract void restrictPushDown(SelectorImpl s);
+ 
+ }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/JoinImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/JoinImpl.java
+index 6e4e408..a5ab71f 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/JoinImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/JoinImpl.java
+@@ -60,8 +60,15 @@ public class JoinImpl extends SourceImpl {
+ 
+     @Override
+     public String getPlan(NodeState rootState) {
+-        return left.getPlan(rootState) + ' ' + joinType +
+-                " " + right.getPlan(rootState) + " on " + joinCondition;
++        StringBuilder buff = new StringBuilder();
++        buff.append(left.getPlan(rootState)).
++            append(' ').
++            append(joinType).
++            append(' ').
++            append(right.getPlan(rootState)).
++            append(" on ").
++            append(joinCondition);
++        return buff.toString();
+     }
+ 
+     @Override
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SameNodeJoinConditionImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SameNodeJoinConditionImpl.java
+index 187a795..7ab0cbe 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SameNodeJoinConditionImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SameNodeJoinConditionImpl.java
+@@ -81,6 +81,11 @@ public class SameNodeJoinConditionImpl extends JoinConditionImpl {
+     public void restrict(FilterImpl f) {
+         if (f.getSelector() == selector1) {
+             String p2 = selector2.currentPath();
++            if (p2 == null && f.isPreparing() && selector2.isPrepared()) {
++                // during the prepare phase, if the selector is already
++                // prepared, then we would know the value
++                p2 = KNOWN_PATH;
++            }
+             if (p2 != null) {
+                 if (selector2Path.equals(".")) {
+                     f.restrictPath(p2, Filter.PathRestriction.EXACT);
+@@ -93,6 +98,11 @@ public class SameNodeJoinConditionImpl extends JoinConditionImpl {
+         }
+         if (f.getSelector() == selector2) {
+             String p1 = selector1.currentPath();
++            if (p1 == null && f.isPreparing() && selector1.isPrepared()) {
++                // during the prepare phase, if the selector is already
++                // prepared, then we would know the value
++                p1 = KNOWN_PATH;
++            }
+             if (p1 != null) {
+                 if (selector2Path.equals(".")) {
+                     f.restrictPath(p1, Filter.PathRestriction.EXACT);
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SelectorImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SelectorImpl.java
+index ecf1e5b..3e779ff 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SelectorImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SelectorImpl.java
+@@ -95,6 +95,9 @@ public class SelectorImpl extends SourceImpl {
+         return quote(nodeTypeName) + " as " + quote(selectorName);
+     }
+ 
++    public boolean isPrepared() {
++        return index != null;
++    }
+ 
+     @Override
+     public void prepare() {
+@@ -106,19 +109,19 @@ public class SelectorImpl extends SourceImpl {
+                 c.restrictPushDown(this);
+             }
+         }
+-        index = query.getBestIndex(createFilter());
++        index = query.getBestIndex(createFilter(true));
+     }
+ 
+     @Override
+     public void execute(NodeState rootState) {
+-        cursor = index.query(createFilter(), rootState);
++        cursor = index.query(createFilter(false), rootState);
+     }
+ 
+     @Override
+     public String getPlan(NodeState rootState) {
+         StringBuilder buff = new StringBuilder();
+         buff.append(toString());
+-        buff.append(" /* ").append(index.getPlan(createFilter(), rootState));
++        buff.append(" /* ").append(index.getPlan(createFilter(true), rootState));
+         if (selectorCondition != null) {
+             buff.append(" where ").append(selectorCondition);
+         }
+@@ -126,8 +129,15 @@ public class SelectorImpl extends SourceImpl {
+         return buff.toString();
+     }
+ 
+-    private Filter createFilter() {
++    /**
++     * Create the filter condition for planning or execution.
++     * 
++     * @param preparing whether a filter for the prepare phase should be made 
++     * @return the filter
++     */
++    private Filter createFilter(boolean preparing) {
+         FilterImpl f = new FilterImpl(this, query.getStatement());
++        f.setPreparing(preparing);
+         validateNodeType(nodeTypeName);
+         f.setNodeType(nodeTypeName);
+         if (joinCondition != null) {
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SourceImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SourceImpl.java
+index 9bf1ef2..dc1d8e9 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SourceImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/SourceImpl.java
+@@ -141,8 +141,8 @@ public abstract class SourceImpl extends AstElement {
+     public abstract String getPlan(NodeState rootState);
+ 
+     /**
+-     * Prepare executing the query. This method will decide which index to use.
+-     *
++     * Prepare executing the query (recursively). This method will decide which
++     * index to use.
+      */
+     public abstract void prepare();
+ 
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
+index f540e18..767ea3e 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
+@@ -75,6 +75,11 @@ public class FilterImpl implements Filter {
+      * Only return distinct values.
+      */
+     private boolean distinct;
++    
++    /**
++     * Set during the prepare phase of a query.
++     */
++    private boolean preparing;
+ 
+     // TODO support "order by"
+ 
+@@ -82,6 +87,14 @@ public class FilterImpl implements Filter {
+         this.selector = selector;
+         this.queryStatement = queryStatement;
+     }
++    
++    public void setPreparing(boolean preparing) {
++        this.preparing = preparing;
++    }
++    
++    public boolean isPreparing() {
++        return preparing;
++    }
+ 
+     /**
+      * Get the path.

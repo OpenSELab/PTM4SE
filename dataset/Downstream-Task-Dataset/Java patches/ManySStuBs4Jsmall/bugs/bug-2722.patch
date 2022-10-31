@@ -1,0 +1,48 @@
+diff --git a/graylog2-radio/src/main/java/org/graylog2/radio/rest/resources/system/inputs/InputsResource.java b/graylog2-radio/src/main/java/org/graylog2/radio/rest/resources/system/inputs/InputsResource.java
+index 4aee650..c50817e 100644
+--- a/graylog2-radio/src/main/java/org/graylog2/radio/rest/resources/system/inputs/InputsResource.java
++++ b/graylog2-radio/src/main/java/org/graylog2/radio/rest/resources/system/inputs/InputsResource.java
+@@ -120,7 +120,18 @@
+             throw new NotFoundException();
+         }
+ 
+-        return json(input.asMap());
++        return json(InputSummary.create(input.getTitle(),
++                input.getPersistId(),
++                input.isGlobal(),
++                input.getName(),
++                input.getContentPack(),
++                input.getId(),
++                input.getCreatedAt(),
++                input.getClass().getCanonicalName(),
++                input.getCreatorUserId(),
++                input.getAttributesWithMaskedPasswords(),
++                input.getStaticFields()
++        ));
+ 
+     }
+ 
+diff --git a/graylog2-radio/src/main/java/org/graylog2/radio/rest/resources/system/inputs/InputsResource.java b/graylog2-radio/src/main/java/org/graylog2/radio/rest/resources/system/inputs/InputsResource.java
+index 4aee650..c50817e 100644
+--- a/graylog2-radio/src/main/java/org/graylog2/radio/rest/resources/system/inputs/InputsResource.java
++++ b/graylog2-radio/src/main/java/org/graylog2/radio/rest/resources/system/inputs/InputsResource.java
+@@ -120,7 +120,18 @@
+             throw new NotFoundException();
+         }
+ 
+-        return json(input.asMap());
++        return json(InputSummary.create(input.getTitle(),
++                input.getPersistId(),
++                input.isGlobal(),
++                input.getName(),
++                input.getContentPack(),
++                input.getId(),
++                input.getCreatedAt(),
++                input.getClass().getCanonicalName(),
++                input.getCreatorUserId(),
++                input.getAttributesWithMaskedPasswords(),
++                input.getStaticFields()
++        ));
+ 
+     }
+ 

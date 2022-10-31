@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/thinkaurelius/titan/graphdb/query/AtomicTitanQuery.java b/src/main/java/com/thinkaurelius/titan/graphdb/query/AtomicTitanQuery.java
+index 2ce8f22..bc08e51 100644
+--- a/src/main/java/com/thinkaurelius/titan/graphdb/query/AtomicTitanQuery.java
++++ b/src/main/java/com/thinkaurelius/titan/graphdb/query/AtomicTitanQuery.java
+@@ -45,7 +45,7 @@
+ 
+     public AtomicTitanQuery(InternalTitanTransaction tx) {
+         this.tx=tx;
+-        if (tx.isClosed()) throw GraphDatabaseException.transactionNotOpenException();
++        if (tx!=null && tx.isClosed()) throw GraphDatabaseException.transactionNotOpenException();
+ 
+         dir = null;
+         types = null;
+diff --git a/src/main/java/com/thinkaurelius/titan/graphdb/query/AtomicTitanQuery.java b/src/main/java/com/thinkaurelius/titan/graphdb/query/AtomicTitanQuery.java
+index 2ce8f22..bc08e51 100644
+--- a/src/main/java/com/thinkaurelius/titan/graphdb/query/AtomicTitanQuery.java
++++ b/src/main/java/com/thinkaurelius/titan/graphdb/query/AtomicTitanQuery.java
+@@ -45,7 +45,7 @@
+ 
+     public AtomicTitanQuery(InternalTitanTransaction tx) {
+         this.tx=tx;
+-        if (tx.isClosed()) throw GraphDatabaseException.transactionNotOpenException();
++        if (tx!=null && tx.isClosed()) throw GraphDatabaseException.transactionNotOpenException();
+ 
+         dir = null;
+         types = null;

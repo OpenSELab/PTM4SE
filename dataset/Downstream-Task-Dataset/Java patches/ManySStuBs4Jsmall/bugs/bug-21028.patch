@@ -1,0 +1,26 @@
+diff --git a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.java b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.java
+index 73779c0..35309af 100644
+--- a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.java
++++ b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.java
+@@ -86,7 +86,7 @@
+ 		super("DataSource health check failed");
+ 		this.dataSource = dataSource;
+ 		this.query = query;
+-		this.jdbcTemplate = new JdbcTemplate(dataSource);
++		this.jdbcTemplate = (dataSource == null ? null : new JdbcTemplate(dataSource));
+ 	}
+ 
+ 	@Override
+diff --git a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.java b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.java
+index 73779c0..35309af 100644
+--- a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.java
++++ b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.java
+@@ -86,7 +86,7 @@
+ 		super("DataSource health check failed");
+ 		this.dataSource = dataSource;
+ 		this.query = query;
+-		this.jdbcTemplate = new JdbcTemplate(dataSource);
++		this.jdbcTemplate = (dataSource == null ? null : new JdbcTemplate(dataSource));
+ 	}
+ 
+ 	@Override

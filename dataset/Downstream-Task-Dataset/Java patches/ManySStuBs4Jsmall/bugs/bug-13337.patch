@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/FragmentPlanner.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/FragmentPlanner.java
+index 69b593d..2824074 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/FragmentPlanner.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/FragmentPlanner.java
+@@ -132,7 +132,7 @@
+ 
+             if (current.isPartitioned()) {
+                 // create a new non-partitioned fragment
+-                return newPlanFragment(new ExchangeNode(current.getId(), current.getRoot().getOutputSymbols()), false);
++                current = newPlanFragment(new ExchangeNode(current.getId(), current.getRoot().getOutputSymbols()), false);
+             }
+ 
+             current.setRoot(new OutputPlan(current.getRoot(), node.getColumnNames(), node.getAssignments()));
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/FragmentPlanner.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/FragmentPlanner.java
+index 69b593d..2824074 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/FragmentPlanner.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/FragmentPlanner.java
+@@ -132,7 +132,7 @@
+ 
+             if (current.isPartitioned()) {
+                 // create a new non-partitioned fragment
+-                return newPlanFragment(new ExchangeNode(current.getId(), current.getRoot().getOutputSymbols()), false);
++                current = newPlanFragment(new ExchangeNode(current.getId(), current.getRoot().getOutputSymbols()), false);
+             }
+ 
+             current.setRoot(new OutputPlan(current.getRoot(), node.getColumnNames(), node.getAssignments()));

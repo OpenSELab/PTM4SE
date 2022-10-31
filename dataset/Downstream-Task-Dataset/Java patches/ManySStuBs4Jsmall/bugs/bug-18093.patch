@@ -1,0 +1,22 @@
+diff --git a/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToFileStoreWriter.java b/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToFileStoreWriter.java
+index d7a0410..8d77f54 100644
+--- a/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToFileStoreWriter.java
++++ b/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToFileStoreWriter.java
+@@ -36,7 +36,7 @@
+     }
+ 
+     @Override
+-    public int write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
++    public long write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
+             boolean hasData ) throws IOException
+     {
+         try
+@@ -47,7 +47,7 @@
+             file.getParentFile().mkdirs();
+             try ( RandomAccessFile randomAccessFile = new RandomAccessFile( file, "rw" ) )
+             {
+-                int totalWritten = 0;
++                long totalWritten = 0;
+                 if ( hasData )
+                 {
+                     FileChannel channel = randomAccessFile.getChannel();

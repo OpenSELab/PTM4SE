@@ -1,0 +1,108 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/bundles/BundleResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/bundles/BundleResource.java
+index f3679d3..bbc8ceb 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/bundles/BundleResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/bundles/BundleResource.java
+@@ -71,7 +71,7 @@
+             @ApiResponse(code = 500, message = "Error while saving configuration bundle")
+     })
+     public Response createBundle(
+-            @ApiParam(title = "Configuration bundle", required = true)
++            @ApiParam(title = "Request body", description = "Configuration bundle", required = true)
+             @NotNull @Valid
+             final ConfigurationBundle configurationBundle) {
+         final ConfigurationBundle bundle = bundleService.insert(configurationBundle);
+@@ -107,7 +107,7 @@
+             @ApiResponse(code = 500, message = "Error while loading configuration bundle")
+     })
+     public ConfigurationBundle showBundle(
+-            @ApiParam(title = "Configuration bundle ID", required = true)
++            @ApiParam(title = "bundleId", description = "Configuration bundle ID", required = true)
+             @NotNull
+             @PathParam("bundleId")
+             final String bundleId) throws NotFoundException {
+@@ -124,11 +124,11 @@
+             @ApiResponse(code = 500, message = "Error while updating configuration bundle")
+     })
+     public void updateBundle(
+-            @ApiParam(title = "Configuration bundle ID", required = true)
++            @ApiParam(title = "bundleId", description = "Configuration bundle ID", required = true)
+             @NotNull
+             @PathParam("bundleId")
+             final String bundleId,
+-            @ApiParam(title = "Configuration bundle", required = true)
++            @ApiParam(title = "Request body", description = "Configuration bundle", required = true)
+             @NotNull @Valid
+             final ConfigurationBundle configurationBundle) {
+ 
+@@ -144,7 +144,7 @@
+             @ApiResponse(code = 500, message = "Error while applying configuration bundle")
+     })
+     public void deleteBundle(
+-            @ApiParam(title = "Configuration bundle ID", required = true)
++            @ApiParam(title = "bundleId", description = "Configuration bundle ID", required = true)
+             @NotNull
+             @PathParam("bundleId")
+             final String bundleId) {
+@@ -162,7 +162,7 @@
+             @ApiResponse(code = 500, message = "Error while applying configuration bundle")
+     })
+     public void applyBundle(
+-            @ApiParam(title = "Configuration bundle ID", required = true)
++            @ApiParam(title = "bundleId", description = "Configuration bundle ID", required = true)
+             @NotNull
+             @PathParam("bundleId")
+             final String bundleId) throws NotFoundException {
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/bundles/BundleResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/bundles/BundleResource.java
+index f3679d3..bbc8ceb 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/bundles/BundleResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/bundles/BundleResource.java
+@@ -71,7 +71,7 @@
+             @ApiResponse(code = 500, message = "Error while saving configuration bundle")
+     })
+     public Response createBundle(
+-            @ApiParam(title = "Configuration bundle", required = true)
++            @ApiParam(title = "Request body", description = "Configuration bundle", required = true)
+             @NotNull @Valid
+             final ConfigurationBundle configurationBundle) {
+         final ConfigurationBundle bundle = bundleService.insert(configurationBundle);
+@@ -107,7 +107,7 @@
+             @ApiResponse(code = 500, message = "Error while loading configuration bundle")
+     })
+     public ConfigurationBundle showBundle(
+-            @ApiParam(title = "Configuration bundle ID", required = true)
++            @ApiParam(title = "bundleId", description = "Configuration bundle ID", required = true)
+             @NotNull
+             @PathParam("bundleId")
+             final String bundleId) throws NotFoundException {
+@@ -124,11 +124,11 @@
+             @ApiResponse(code = 500, message = "Error while updating configuration bundle")
+     })
+     public void updateBundle(
+-            @ApiParam(title = "Configuration bundle ID", required = true)
++            @ApiParam(title = "bundleId", description = "Configuration bundle ID", required = true)
+             @NotNull
+             @PathParam("bundleId")
+             final String bundleId,
+-            @ApiParam(title = "Configuration bundle", required = true)
++            @ApiParam(title = "Request body", description = "Configuration bundle", required = true)
+             @NotNull @Valid
+             final ConfigurationBundle configurationBundle) {
+ 
+@@ -144,7 +144,7 @@
+             @ApiResponse(code = 500, message = "Error while applying configuration bundle")
+     })
+     public void deleteBundle(
+-            @ApiParam(title = "Configuration bundle ID", required = true)
++            @ApiParam(title = "bundleId", description = "Configuration bundle ID", required = true)
+             @NotNull
+             @PathParam("bundleId")
+             final String bundleId) {
+@@ -162,7 +162,7 @@
+             @ApiResponse(code = 500, message = "Error while applying configuration bundle")
+     })
+     public void applyBundle(
+-            @ApiParam(title = "Configuration bundle ID", required = true)
++            @ApiParam(title = "bundleId", description = "Configuration bundle ID", required = true)
+             @NotNull
+             @PathParam("bundleId")
+             final String bundleId) throws NotFoundException {

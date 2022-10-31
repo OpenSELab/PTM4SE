@@ -1,0 +1,128 @@
+diff --git a/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedDecoder.java b/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedDecoder.java
+index a2db448..f3dee9a 100644
+--- a/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedDecoder.java
++++ b/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedDecoder.java
+@@ -198,7 +198,7 @@
+             return ChunkType.COMPRESSED_DATA;
+         } else if (type == 1) {
+             return ChunkType.UNCOMPRESSED_DATA;
+-        } else if (type == -0x80) {
++        } else if (type == (byte) 0xff) {
+             return ChunkType.STREAM_IDENTIFIER;
+         } else if ((type & 0x80) == 0x80) {
+             return ChunkType.RESERVED_SKIPPABLE;
+diff --git a/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedEncoder.java b/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedEncoder.java
+index b22a026..1cc5301 100644
+--- a/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedEncoder.java
++++ b/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedEncoder.java
+@@ -40,7 +40,7 @@
+      * type 0xff, a length field of 0x6, and 'sNaPpY' in ASCII.
+      */
+     private static final byte[] STREAM_START = {
+-        -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59
++        (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59
+     };
+ 
+     private final Snappy snappy = new Snappy();
+diff --git a/codec/src/test/java/io/netty/handler/codec/compression/SnappyFramedDecoderTest.java b/codec/src/test/java/io/netty/handler/codec/compression/SnappyFramedDecoderTest.java
+index 994369b..5c8355f 100644
+--- a/codec/src/test/java/io/netty/handler/codec/compression/SnappyFramedDecoderTest.java
++++ b/codec/src/test/java/io/netty/handler/codec/compression/SnappyFramedDecoderTest.java
+@@ -53,7 +53,7 @@
+     @Test(expected = DecompressionException.class)
+     public void testInvalidStreamIdentifierValue() throws Exception {
+         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+-            -0x80, 0x06, 0x00, 0x00, 's', 'n', 'e', 't', 't', 'y'
++            (byte) 0xff, 0x06, 0x00, 0x00, 's', 'n', 'e', 't', 't', 'y'
+         });
+ 
+         channel.writeInbound(in);
+@@ -89,7 +89,7 @@
+     @Test
+     public void testReservedSkippableSkipsInput() throws Exception {
+         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+-           -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
++           (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
+            -0x7f, 0x05, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
+         });
+ 
+@@ -102,7 +102,7 @@
+     @Test
+     public void testUncompressedDataAppendsToOut() throws Exception {
+         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+-           -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
++           (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
+             0x01, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
+         });
+ 
+@@ -115,7 +115,7 @@
+     @Test
+     public void testCompressedDataDecodesAndAppendsToOut() throws Exception {
+         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+-           -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
++           (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
+             0x00, 0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                   0x05, // preamble length
+                   0x04 << 2, // literal tag + length
+@@ -137,7 +137,7 @@
+ 
+         // checksum here is presented as 0
+         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+-           -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
++           (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
+             0x01, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
+         });
+ 
+@@ -150,7 +150,7 @@
+ 
+         // checksum here is presented as a282986f (little endian)
+         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+-           -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
++           (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
+             0x01, 0x09, 0x00, 0x00, 0x6f, -0x68, -0x7e, -0x5e, 'n', 'e', 't', 't', 'y'
+         });
+ 
+diff --git a/codec/src/test/java/io/netty/handler/codec/compression/SnappyFramedEncoderTest.java b/codec/src/test/java/io/netty/handler/codec/compression/SnappyFramedEncoderTest.java
+index 25e2655..9b1d606 100644
+--- a/codec/src/test/java/io/netty/handler/codec/compression/SnappyFramedEncoderTest.java
++++ b/codec/src/test/java/io/netty/handler/codec/compression/SnappyFramedEncoderTest.java
+@@ -43,7 +43,7 @@
+         assertTrue(channel.finish());
+ 
+         ByteBuf expected = Unpooled.wrappedBuffer(new byte[] {
+-            -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
++            (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
+              0x01, 0x09, 0x00, 0x00, 0x6f, -0x68, -0x7e, -0x5e, 'n', 'e', 't', 't', 'y'
+         });
+ 
+@@ -61,7 +61,7 @@
+         assertTrue(channel.finish());
+ 
+         ByteBuf expected = Unpooled.wrappedBuffer(new byte[] {
+-            -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
++            (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
+              0x00, 0x0E, 0x00, 0x00, 0x3b, 0x36, -0x7f, 0x37,
+                    0x14, 0x10,
+                    'n', 'e', 't', 't', 'y',
+@@ -83,7 +83,7 @@
+         assertTrue(channel.finish());
+ 
+         ByteBuf expected = Unpooled.wrappedBuffer(new byte[] {
+-            -0x80, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
++            (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
+              0x01, 0x09, 0x00, 0x00, 0x6f, -0x68, -0x7e, -0x5e, 'n', 'e', 't', 't', 'y',
+              0x01, 0x09, 0x00, 0x00, 0x6f, -0x68, -0x7e, -0x5e, 'n', 'e', 't', 't', 'y',
+         });
+diff --git a/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedDecoder.java b/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedDecoder.java
+index a2db448..f3dee9a 100644
+--- a/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedDecoder.java
++++ b/codec/src/main/java/io/netty/handler/codec/compression/SnappyFramedDecoder.java
+@@ -198,7 +198,7 @@
+             return ChunkType.COMPRESSED_DATA;
+         } else if (type == 1) {
+             return ChunkType.UNCOMPRESSED_DATA;
+-        } else if (type == -0x80) {
++        } else if (type == (byte) 0xff) {
+             return ChunkType.STREAM_IDENTIFIER;
+         } else if ((type & 0x80) == 0x80) {
+             return ChunkType.RESERVED_SKIPPABLE;

@@ -1,0 +1,58 @@
+diff --git a/modules/LayoutPlugin/src/main/java/org/gephi/layout/plugin/AutoLayout.java b/modules/LayoutPlugin/src/main/java/org/gephi/layout/plugin/AutoLayout.java
+index 8f8de71..f77be7a 100644
+--- a/modules/LayoutPlugin/src/main/java/org/gephi/layout/plugin/AutoLayout.java
++++ b/modules/LayoutPlugin/src/main/java/org/gephi/layout/plugin/AutoLayout.java
+@@ -307,7 +307,7 @@
+ 
+         @Override
+         public Object getValue(float ratio) {
+-            while (thresholds[currentIndex] < ratio && currentIndex < thresholds.length) {
++            while (currentIndex < thresholds.length && thresholds[currentIndex] < ratio) {
+                 currentIndex++;
+             }
+             return value[currentIndex];
+@@ -333,13 +333,13 @@
+ 
+         @Override
+         public Object getValue(float ratio) {
+-            while (thresholds[currentIndex] < ratio && currentIndex < thresholds.length) {
++            while (currentIndex < thresholds.length && thresholds[currentIndex] < ratio) {
+                 currentIndex++;
+             }
+             if (currentIndex > 0) {
+                 float r = 1 / (thresholds[currentIndex] - thresholds[currentIndex - 1]);
+                 ratio = ((ratio - thresholds[currentIndex - 1]) * r);
+-                return new Double(value[currentIndex - 1].doubleValue() + (value[currentIndex].doubleValue() - value[currentIndex - 1].doubleValue()) * ratio);
++                return value[currentIndex - 1].doubleValue() + (value[currentIndex].doubleValue() - value[currentIndex - 1].doubleValue()) * ratio;
+             }
+             return value[currentIndex];
+         }
+diff --git a/modules/LayoutPlugin/src/main/java/org/gephi/layout/plugin/AutoLayout.java b/modules/LayoutPlugin/src/main/java/org/gephi/layout/plugin/AutoLayout.java
+index 8f8de71..f77be7a 100644
+--- a/modules/LayoutPlugin/src/main/java/org/gephi/layout/plugin/AutoLayout.java
++++ b/modules/LayoutPlugin/src/main/java/org/gephi/layout/plugin/AutoLayout.java
+@@ -307,7 +307,7 @@
+ 
+         @Override
+         public Object getValue(float ratio) {
+-            while (thresholds[currentIndex] < ratio && currentIndex < thresholds.length) {
++            while (currentIndex < thresholds.length && thresholds[currentIndex] < ratio) {
+                 currentIndex++;
+             }
+             return value[currentIndex];
+@@ -333,13 +333,13 @@
+ 
+         @Override
+         public Object getValue(float ratio) {
+-            while (thresholds[currentIndex] < ratio && currentIndex < thresholds.length) {
++            while (currentIndex < thresholds.length && thresholds[currentIndex] < ratio) {
+                 currentIndex++;
+             }
+             if (currentIndex > 0) {
+                 float r = 1 / (thresholds[currentIndex] - thresholds[currentIndex - 1]);
+                 ratio = ((ratio - thresholds[currentIndex - 1]) * r);
+-                return new Double(value[currentIndex - 1].doubleValue() + (value[currentIndex].doubleValue() - value[currentIndex - 1].doubleValue()) * ratio);
++                return value[currentIndex - 1].doubleValue() + (value[currentIndex].doubleValue() - value[currentIndex - 1].doubleValue()) * ratio;
+             }
+             return value[currentIndex];
+         }

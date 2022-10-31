@@ -1,0 +1,100 @@
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/Arial.java b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/Arial.java
+index 0ab876f..c34cca4 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/Arial.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/Arial.java
+@@ -29,7 +29,7 @@
+ 
+ package org.antlr.v4.runtime.tree.gui;
+ 
+-public class Arial extends FontMetrics {
++public class Arial extends BasicFontMetrics {
+ 	{
+ 		maxCharHeight = 781;
+         widths[32] = 277; // space
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/ArialBlack.java b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/ArialBlack.java
+index d3069ef..8235ab8 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/ArialBlack.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/ArialBlack.java
+@@ -29,7 +29,7 @@
+ 
+ package org.antlr.v4.runtime.tree.gui;
+ 
+-public class ArialBlack extends FontMetrics {
++public class ArialBlack extends BasicFontMetrics {
+     {
+ 		maxCharHeight = 770;
+         widths[32] = 333; // space
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/CourierNew.java b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/CourierNew.java
+index b4dc5ad..c483b00 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/CourierNew.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/CourierNew.java
+@@ -29,7 +29,7 @@
+ 
+ package org.antlr.v4.runtime.tree.gui;
+ 
+-public class CourierNew extends FontMetrics {
++public class CourierNew extends BasicFontMetrics {
+ 	{
+ 		maxCharHeight = 678;
+ 		for (int i=0; i<128; i++) widths[i] = 600;
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/PostScriptDocument.java b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/PostScriptDocument.java
+index 2d930a9..7ab69a8 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/PostScriptDocument.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/PostScriptDocument.java
+@@ -33,7 +33,7 @@
+ 	protected int boundingBoxWidth;
+ 	protected int boundingBoxHeight;
+ 
+-	protected FontMetrics fontMetrics;
++	protected BasicFontMetrics fontMetrics;
+ 	protected String fontName;
+ 	protected int fontSize = 12;
+ 	protected double lineWidth = 0.3;
+@@ -98,7 +98,7 @@
+ 		this.fontSize = fontSize;
+ 		try {
+ 			Class c = Class.forName("org.antlr.v4.runtime.tree.gui." + fontName);
+-			this.fontMetrics = (FontMetrics)c.newInstance();
++			this.fontMetrics = (BasicFontMetrics)c.newInstance();
+ 		}
+ 		catch (Exception e) {
+ 			throw new UnsupportedOperationException("No font metrics for "+fontName);
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/TimesNewRoman.java b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/TimesNewRoman.java
+index 52c18d2..2ca20c5 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/TimesNewRoman.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/TimesNewRoman.java
+@@ -29,7 +29,7 @@
+ 
+ package org.antlr.v4.runtime.tree.gui;
+ 
+-public class TimesNewRoman extends FontMetrics {
++public class TimesNewRoman extends BasicFontMetrics {
+     {
+ 		maxCharHeight = 717;
+         widths[32] = 250; // space
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/TreePostScriptGenerator.java b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/TreePostScriptGenerator.java
+index 6876bf5..debf073 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/TreePostScriptGenerator.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/TreePostScriptGenerator.java
+@@ -163,7 +163,7 @@
+ 		t.addChild(b);
+ 		b.addChild(c);
+ 		b.addChild(d);
+-		TreePostScriptGenerator psgen = new TreePostScriptGenerator(null, t, "TimesNewRoman", 11);
++		TreePostScriptGenerator psgen = new TreePostScriptGenerator(null, t, "CourierNew", 11);
+ 		System.out.println(psgen.getPS());
+ 	}
+ }
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/Arial.java b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/Arial.java
+index 0ab876f..c34cca4 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/tree/gui/Arial.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/tree/gui/Arial.java
+@@ -29,7 +29,7 @@
+ 
+ package org.antlr.v4.runtime.tree.gui;
+ 
+-public class Arial extends FontMetrics {
++public class Arial extends BasicFontMetrics {
+ 	{
+ 		maxCharHeight = 781;
+         widths[32] = 277; // space

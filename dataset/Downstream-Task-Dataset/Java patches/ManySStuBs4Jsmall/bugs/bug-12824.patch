@@ -1,0 +1,13 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
+index e8a83de..b960962 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
+@@ -580,7 +580,7 @@
+         return parameters.build();
+     }
+ 
+-    private static RowExpressionVisitor<Scope, BytecodeNode> fieldReferenceCompiler(CallSiteBinder callSiteBinder)
++    private static RowExpressionVisitor<BytecodeNode, Scope> fieldReferenceCompiler(CallSiteBinder callSiteBinder)
+     {
+         return new InputReferenceCompiler(
+                 (scope, field) -> scope.getVariable("block_" + field),

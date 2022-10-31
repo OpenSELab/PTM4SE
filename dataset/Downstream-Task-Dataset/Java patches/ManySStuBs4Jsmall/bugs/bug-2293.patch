@@ -1,0 +1,39 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+index 755c65b..8b95224 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+@@ -314,7 +314,7 @@
+             }
+ 
+             if (writeHeaders && enableAccessControl) {
+-                response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
++                response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, req.getHeader("Origin") == null ? "*" : req.getHeader("Origin"));
+                 response.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+             }
+ 
+diff --git a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+index db7e656..5230ef4 100755
+--- a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
++++ b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+@@ -626,7 +626,7 @@
+             }
+ 
+             if (enableAccessControl) {
+-                b = b.header(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
++                b = b.header(ACCESS_CONTROL_ALLOW_ORIGIN,  servletReq.getHeader("Origin") == null ? "*" : servletReq.getHeader("Origin"));
+                 b = b.header(ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+             }
+             return b;
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+index 755c65b..8b95224 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+@@ -314,7 +314,7 @@
+             }
+ 
+             if (writeHeaders && enableAccessControl) {
+-                response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
++                response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, req.getHeader("Origin") == null ? "*" : req.getHeader("Origin"));
+                 response.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+             }
+ 

@@ -1,0 +1,20 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/file/FileEndpoint.java b/camel-core/src/main/java/org/apache/camel/component/file/FileEndpoint.java
+index 8109971..b8aaff3 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/file/FileEndpoint.java
++++ b/camel-core/src/main/java/org/apache/camel/component/file/FileEndpoint.java
+@@ -49,14 +49,8 @@ public class FileEndpoint extends GenericFileEndpoint<File> {
+         ObjectHelper.notNull(operations, "operations");
+         ObjectHelper.notNull(file, "file");
+ 
+-        // we assume its a file if the name has a dot in it (eg foo.txt)
+-        boolean isDirectory = file.isDirectory();
+-        if (!isDirectory && file.getName().contains(".")) {
+-            throw new IllegalArgumentException("Only directory is supported. Endpoint must be configured with a valid starting directory: " + file);
+-        }
+-
+         // auto create starting directory if needed
+-        if (!file.exists() && !isDirectory) {
++        if (!file.exists() && !file.isDirectory()) {
+             if (isAutoCreate()) {
+                 log.debug("Creating non existing starting directory: {}", file);
+                 boolean absolute = FileUtil.isAbsolute(file);

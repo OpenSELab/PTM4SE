@@ -1,0 +1,48 @@
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
+index 5f1693f..6c5c818 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
+@@ -399,7 +399,8 @@
+     am2.waitForState(RMAppAttemptState.FAILED);
+     Assert.assertTrue(! attempt2.shouldCountTowardsMaxAttemptRetry());
+     rm1.waitForState(app1.getApplicationId(), RMAppState.ACCEPTED);
+-    MockAM am3 = MockRM.launchAndRegisterAM(app1, rm1, nm1);
++    MockAM am3 =
++        rm1.waitForNewAMToLaunchAndRegister(app1.getApplicationId(), 3, nm1);
+     RMAppAttempt attempt3 = app1.getCurrentAppAttempt();
+     Assert.assertTrue(((RMAppAttemptImpl) attempt3).mayBeLastAttempt());
+ 
+@@ -422,7 +423,8 @@
+         .getAMContainerExitStatus());
+ 
+     rm1.waitForState(app1.getApplicationId(), RMAppState.ACCEPTED);
+-    MockAM am4 = MockRM.launchAndRegisterAM(app1, rm1, nm1);
++    MockAM am4 =
++        rm1.waitForNewAMToLaunchAndRegister(app1.getApplicationId(), 4, nm1);
+     RMAppAttempt attempt4 = app1.getCurrentAppAttempt();
+     Assert.assertTrue(((RMAppAttemptImpl) attempt4).mayBeLastAttempt());
+ 
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
+index 5f1693f..6c5c818 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
+@@ -399,7 +399,8 @@
+     am2.waitForState(RMAppAttemptState.FAILED);
+     Assert.assertTrue(! attempt2.shouldCountTowardsMaxAttemptRetry());
+     rm1.waitForState(app1.getApplicationId(), RMAppState.ACCEPTED);
+-    MockAM am3 = MockRM.launchAndRegisterAM(app1, rm1, nm1);
++    MockAM am3 =
++        rm1.waitForNewAMToLaunchAndRegister(app1.getApplicationId(), 3, nm1);
+     RMAppAttempt attempt3 = app1.getCurrentAppAttempt();
+     Assert.assertTrue(((RMAppAttemptImpl) attempt3).mayBeLastAttempt());
+ 
+@@ -422,7 +423,8 @@
+         .getAMContainerExitStatus());
+ 
+     rm1.waitForState(app1.getApplicationId(), RMAppState.ACCEPTED);
+-    MockAM am4 = MockRM.launchAndRegisterAM(app1, rm1, nm1);
++    MockAM am4 =
++        rm1.waitForNewAMToLaunchAndRegister(app1.getApplicationId(), 4, nm1);
+     RMAppAttempt attempt4 = app1.getCurrentAppAttempt();
+     Assert.assertTrue(((RMAppAttemptImpl) attempt4).mayBeLastAttempt());
+ 

@@ -1,0 +1,15 @@
+diff --git a/core/server/proxy/src/main/java/alluxio/proxy/s3/ListBucketResult.java b/core/server/proxy/src/main/java/alluxio/proxy/s3/ListBucketResult.java
+index 1308874..f0d885c 100644
+--- a/core/server/proxy/src/main/java/alluxio/proxy/s3/ListBucketResult.java
++++ b/core/server/proxy/src/main/java/alluxio/proxy/s3/ListBucketResult.java
+@@ -96,7 +96,9 @@
+           mName + AlluxioURI.SEPARATOR + mContinuationToken));
+       startIndex = Collections.binarySearch(objectsList, tokenStatus, new URIStatusComparator());
+       if (startIndex < 0) {
+-        startIndex = 0;
++        // If continuation token does not exist in the object list, find the first element which is
++        // greater than the token.
++        startIndex = (-1) * startIndex - 1;
+       }
+     }
+ 

@@ -1,0 +1,26 @@
+diff --git a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+index 5eaae41..e5ee993 100644
+--- a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
++++ b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+@@ -222,7 +222,7 @@
+         final String operationPath = apiOperation == null ? null : apiOperation.nickname();
+         return PathUtils.collectPath(context.getParentPath(),
+                 apiAnnotation == null ? null : apiAnnotation.value(),
+-                method.getName());
++                StringUtils.isBlank(operationPath) ? method.getName() : operationPath);
+     }
+ 
+     @Override
+diff --git a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+index 5eaae41..e5ee993 100644
+--- a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
++++ b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+@@ -222,7 +222,7 @@
+         final String operationPath = apiOperation == null ? null : apiOperation.nickname();
+         return PathUtils.collectPath(context.getParentPath(),
+                 apiAnnotation == null ? null : apiAnnotation.value(),
+-                method.getName());
++                StringUtils.isBlank(operationPath) ? method.getName() : operationPath);
+     }
+ 
+     @Override

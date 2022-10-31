@@ -1,0 +1,42 @@
+diff --git a/samediff/src/main/java/org/nd4j/autodiff/functions/AbstractScalarFunction.java b/samediff/src/main/java/org/nd4j/autodiff/functions/AbstractScalarFunction.java
+index 566367b..c8d4c7f 100644
+--- a/samediff/src/main/java/org/nd4j/autodiff/functions/AbstractScalarFunction.java
++++ b/samediff/src/main/java/org/nd4j/autodiff/functions/AbstractScalarFunction.java
+@@ -47,7 +47,7 @@
+         validateFunctionReference(i_v1);
+         ArrayField v1 = i_v1.getValue(true);
+         validateDifferentialFunctionsameDiff(v1);
+-        NDArrayInformation information =   inPlace ? i_v1.getOpState().getResult() : NDArrayInformation.builder()
++        NDArrayInformation information =   inPlace ? i_v1.getResult() : NDArrayInformation.builder()
+                 .arrId(UUID.randomUUID().toString())
+                 .id(opName + "(" + v1.getInput().getId() + " -> " +
+                         v1.getInput().getId() + ")")
+diff --git a/samediff/src/main/java/org/nd4j/autodiff/samediff/impl/SDVariable.java b/samediff/src/main/java/org/nd4j/autodiff/samediff/impl/SDVariable.java
+index 6b6ef83..1bff7f9 100644
+--- a/samediff/src/main/java/org/nd4j/autodiff/samediff/impl/SDVariable.java
++++ b/samediff/src/main/java/org/nd4j/autodiff/samediff/impl/SDVariable.java
+@@ -132,9 +132,9 @@
+ 
+         if(this.gradient != null && this.gradient.getArr() == null) {
+             if(arrayField != null)
+-                this.gradient.setArr(sameDiff.getNDArray(arrayField.getGradient().getOpState().getResult()));
++                this.gradient.setArr(sameDiff.getNDArray(arrayField.getGradient().getResult()));
+             else {
+-                this.gradient.setArr(sameDiff.getNDArray(differentialFunction.getGradient().getOpState().getResult()));
++                this.gradient.setArr(sameDiff.getNDArray(differentialFunction.getGradient().getResult()));
+ 
+             }
+         }
+diff --git a/samediff/src/main/java/org/nd4j/autodiff/functions/AbstractScalarFunction.java b/samediff/src/main/java/org/nd4j/autodiff/functions/AbstractScalarFunction.java
+index 566367b..c8d4c7f 100644
+--- a/samediff/src/main/java/org/nd4j/autodiff/functions/AbstractScalarFunction.java
++++ b/samediff/src/main/java/org/nd4j/autodiff/functions/AbstractScalarFunction.java
+@@ -47,7 +47,7 @@
+         validateFunctionReference(i_v1);
+         ArrayField v1 = i_v1.getValue(true);
+         validateDifferentialFunctionsameDiff(v1);
+-        NDArrayInformation information =   inPlace ? i_v1.getOpState().getResult() : NDArrayInformation.builder()
++        NDArrayInformation information =   inPlace ? i_v1.getResult() : NDArrayInformation.builder()
+                 .arrId(UUID.randomUUID().toString())
+                 .id(opName + "(" + v1.getInput().getId() + " -> " +
+                         v1.getInput().getId() + ")")

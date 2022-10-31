@@ -1,0 +1,36 @@
+diff --git a/server/src/main/java/com/metamx/druid/master/DruidMasterRuleRunner.java b/server/src/main/java/com/metamx/druid/master/DruidMasterRuleRunner.java
+index 87f16a7..6f7d182 100644
+--- a/server/src/main/java/com/metamx/druid/master/DruidMasterRuleRunner.java
++++ b/server/src/main/java/com/metamx/druid/master/DruidMasterRuleRunner.java
+@@ -68,7 +68,12 @@
+       }
+ 
+       if (!foundMatchingRule) {
+-        log.makeAlert("Unable to find a matching rule for segment[%s]", segment.getIdentifier()).emit();
++        log.makeAlert(
++            "Unable to find a matching rule for dataSource[%s]",
++            segment.getDataSource()
++        )
++           .addData("segment", segment.getIdentifier())
++           .emit();
+       }
+     }
+ 
+diff --git a/server/src/main/java/com/metamx/druid/master/DruidMasterRuleRunner.java b/server/src/main/java/com/metamx/druid/master/DruidMasterRuleRunner.java
+index 87f16a7..6f7d182 100644
+--- a/server/src/main/java/com/metamx/druid/master/DruidMasterRuleRunner.java
++++ b/server/src/main/java/com/metamx/druid/master/DruidMasterRuleRunner.java
+@@ -68,7 +68,12 @@
+       }
+ 
+       if (!foundMatchingRule) {
+-        log.makeAlert("Unable to find a matching rule for segment[%s]", segment.getIdentifier()).emit();
++        log.makeAlert(
++            "Unable to find a matching rule for dataSource[%s]",
++            segment.getDataSource()
++        )
++           .addData("segment", segment.getIdentifier())
++           .emit();
+       }
+     }
+ 

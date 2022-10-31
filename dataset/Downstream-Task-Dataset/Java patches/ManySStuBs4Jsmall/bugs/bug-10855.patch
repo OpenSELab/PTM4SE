@@ -1,0 +1,13 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/graph/ComputationGraphUpdater.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/graph/ComputationGraphUpdater.java
+index 433b71b..545e76e 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/graph/ComputationGraphUpdater.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/graph/ComputationGraphUpdater.java
+@@ -59,7 +59,7 @@
+ 
+         for(Map.Entry<String,INDArray> gradientPair : gradient.gradientForVariable().entrySet()) {
+             String key = gradientPair.getKey();
+-            int idx = key.lastIndexOf("_");
++            int idx = key.lastIndexOf('_');
+             if( idx == -1 ) throw new IllegalStateException("Invalid key: ComputationGraph Gradient key does not have layer separator: \""+key+"\"");
+ 
+             String layerName = key.substring(0,idx);

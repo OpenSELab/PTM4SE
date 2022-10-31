@@ -1,0 +1,50 @@
+diff --git a/processing/src/main/java/io/druid/segment/IndexMaker.java b/processing/src/main/java/io/druid/segment/IndexMaker.java
+index 33be955..06c9278 100644
+--- a/processing/src/main/java/io/druid/segment/IndexMaker.java
++++ b/processing/src/main/java/io/druid/segment/IndexMaker.java
+@@ -579,9 +579,8 @@
+                   );
+                 }
+               }
+-          )
+-          ,
+-          Ordering.<String>natural().nullsFirst()
++          ),
++          Ordering.<String>natural()
+       );
+ 
+       int cardinality = 0;
+@@ -1010,7 +1009,7 @@
+       if (nullSet != null) {
+         log.info("Dimension[%s] has null rows.", dimension);
+ 
+-        if (Iterables.getFirst(dimensionValues, null) != null) {
++        if (Iterables.getFirst(dimensionValues, "") != null) {
+           bumpDictionary = true;
+           log.info("Dimension[%s] has no null value in the dictionary, expanding...", dimension);
+ 
+diff --git a/processing/src/main/java/io/druid/segment/IndexMaker.java b/processing/src/main/java/io/druid/segment/IndexMaker.java
+index 33be955..06c9278 100644
+--- a/processing/src/main/java/io/druid/segment/IndexMaker.java
++++ b/processing/src/main/java/io/druid/segment/IndexMaker.java
+@@ -579,9 +579,8 @@
+                   );
+                 }
+               }
+-          )
+-          ,
+-          Ordering.<String>natural().nullsFirst()
++          ),
++          Ordering.<String>natural()
+       );
+ 
+       int cardinality = 0;
+@@ -1010,7 +1009,7 @@
+       if (nullSet != null) {
+         log.info("Dimension[%s] has null rows.", dimension);
+ 
+-        if (Iterables.getFirst(dimensionValues, null) != null) {
++        if (Iterables.getFirst(dimensionValues, "") != null) {
+           bumpDictionary = true;
+           log.info("Dimension[%s] has no null value in the dictionary, expanding...", dimension);
+ 

@@ -1,0 +1,26 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/protocol/http/servlet/ServletWebRequest.java b/wicket-core/src/main/java/org/apache/wicket/protocol/http/servlet/ServletWebRequest.java
+index 83df540..24947bb 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/protocol/http/servlet/ServletWebRequest.java
++++ b/wicket-core/src/main/java/org/apache/wicket/protocol/http/servlet/ServletWebRequest.java
+@@ -102,20 +102,7 @@ public class ServletWebRequest extends WebRequest
+ 
+ 		forwardAttributes = ForwardAttributes.of(httpServletRequest, filterPrefix);
+ 
+-		if (forwardAttributes != null || errorAttributes != null)
+-		{
+-			if (LOG.isDebugEnabled())
+-			{
+-				LOG.debug("Setting filterPrefix('{}') to '' because there is either an error or a forward. {}, {}",
+-						new Object[] {filterPrefix, forwardAttributes, errorAttributes});
+-			}
+-			// the filter prefix is not needed when the current request is internal
+-			// see WICKET-4387
+-			this.filterPrefix = "";
+-		} else
+-		{
+-			this.filterPrefix = filterPrefix;
+-		}
++		this.filterPrefix = filterPrefix;
+ 
+ 		if (url != null)
+ 		{

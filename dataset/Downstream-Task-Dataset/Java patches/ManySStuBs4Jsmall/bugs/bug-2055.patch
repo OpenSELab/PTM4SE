@@ -1,0 +1,26 @@
+diff --git a/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java b/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
+index c80c183..68669fb 100644
+--- a/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
++++ b/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
+@@ -205,7 +205,7 @@
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+ 
+                 try {
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                     assertTrue(event.isResumedOnTimeout());
+                     long time = System.currentTimeMillis() - currentTime;
+                     if (time > 5000 && time < 15000) {
+diff --git a/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java b/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
+index c80c183..68669fb 100644
+--- a/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
++++ b/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
+@@ -205,7 +205,7 @@
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+ 
+                 try {
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                     assertTrue(event.isResumedOnTimeout());
+                     long time = System.currentTimeMillis() - currentTime;
+                     if (time > 5000 && time < 15000) {

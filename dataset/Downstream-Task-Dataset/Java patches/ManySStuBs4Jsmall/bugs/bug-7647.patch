@@ -1,0 +1,44 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java b/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java
+index eab9f4a..c3809d8 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java
+@@ -1754,7 +1754,7 @@
+           Utilities.FILE_OP_LOGGER.trace("moving " + loadPath + " to " + destPath);
+         }
+ 
+-        boolean isManaged = tbl.getTableType().equals(TableType.MANAGED_TABLE.toString());
++        boolean isManaged = tbl.getTableType() == TableType.MANAGED_TABLE;
+         // TODO: why is "&& !isAcidIUDoperation" needed here?
+         if (!isTxnTable && ((loadFileType == LoadFileType.REPLACE_ALL) || (oldPart == null && !isAcidIUDoperation))) {
+           //for fullAcid tables we don't delete files for commands with OVERWRITE - we create a new
+@@ -2338,7 +2338,7 @@
+ 
+       perfLogger.PerfLogBegin("MoveTask", PerfLogger.FILE_MOVES);
+ 
+-      boolean isManaged = tbl.getTableType().equals(TableType.MANAGED_TABLE.toString());
++      boolean isManaged = tbl.getTableType() == TableType.MANAGED_TABLE;
+ 
+       if (loadFileType == LoadFileType.REPLACE_ALL && !isTxnTable) {
+         //for fullAcid we don't want to delete any files even for OVERWRITE see HIVE-14988/HIVE-17361
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java b/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java
+index eab9f4a..c3809d8 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java
+@@ -1754,7 +1754,7 @@
+           Utilities.FILE_OP_LOGGER.trace("moving " + loadPath + " to " + destPath);
+         }
+ 
+-        boolean isManaged = tbl.getTableType().equals(TableType.MANAGED_TABLE.toString());
++        boolean isManaged = tbl.getTableType() == TableType.MANAGED_TABLE;
+         // TODO: why is "&& !isAcidIUDoperation" needed here?
+         if (!isTxnTable && ((loadFileType == LoadFileType.REPLACE_ALL) || (oldPart == null && !isAcidIUDoperation))) {
+           //for fullAcid tables we don't delete files for commands with OVERWRITE - we create a new
+@@ -2338,7 +2338,7 @@
+ 
+       perfLogger.PerfLogBegin("MoveTask", PerfLogger.FILE_MOVES);
+ 
+-      boolean isManaged = tbl.getTableType().equals(TableType.MANAGED_TABLE.toString());
++      boolean isManaged = tbl.getTableType() == TableType.MANAGED_TABLE;
+ 
+       if (loadFileType == LoadFileType.REPLACE_ALL && !isTxnTable) {
+         //for fullAcid we don't want to delete any files even for OVERWRITE see HIVE-14988/HIVE-17361

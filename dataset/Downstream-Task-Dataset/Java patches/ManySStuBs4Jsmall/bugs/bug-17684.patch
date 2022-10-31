@@ -1,0 +1,44 @@
+diff --git a/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudioDevice.java b/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudioDevice.java
+index b9103db..1f41e70 100644
+--- a/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudioDevice.java
++++ b/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudioDevice.java
+@@ -67,7 +67,7 @@
+ 	{	
+ 		int writtenSamples = track.write( samples, offset, numSamples );
+ 		while( writtenSamples != numSamples )
+-			track.write( samples, offset + writtenSamples, numSamples - writtenSamples );
++			writtenSamples += track.write( samples, offset + writtenSamples, numSamples - writtenSamples );
+ 	}
+ 
+ 	@Override
+@@ -90,7 +90,7 @@
+ 		
+ 		int writtenSamples = track.write( buffer, 0, numSamples );
+ 		while( writtenSamples != numSamples )
+-			track.write( buffer, writtenSamples, numSamples - writtenSamples );
++			writtenSamples += track.write( buffer, writtenSamples, numSamples - writtenSamples );
+ 	}
+ 
+ }
+diff --git a/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudioDevice.java b/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudioDevice.java
+index b9103db..1f41e70 100644
+--- a/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudioDevice.java
++++ b/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudioDevice.java
+@@ -67,7 +67,7 @@
+ 	{	
+ 		int writtenSamples = track.write( samples, offset, numSamples );
+ 		while( writtenSamples != numSamples )
+-			track.write( samples, offset + writtenSamples, numSamples - writtenSamples );
++			writtenSamples += track.write( samples, offset + writtenSamples, numSamples - writtenSamples );
+ 	}
+ 
+ 	@Override
+@@ -90,7 +90,7 @@
+ 		
+ 		int writtenSamples = track.write( buffer, 0, numSamples );
+ 		while( writtenSamples != numSamples )
+-			track.write( buffer, writtenSamples, numSamples - writtenSamples );
++			writtenSamples += track.write( buffer, writtenSamples, numSamples - writtenSamples );
+ 	}
+ 
+ }

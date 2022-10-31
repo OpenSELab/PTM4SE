@@ -1,0 +1,26 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpilledSubpartitionView.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpilledSubpartitionView.java
+index 378b086..2a6a71f 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpilledSubpartitionView.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpilledSubpartitionView.java
+@@ -148,7 +148,7 @@
+ 		}
+ 
+ 		int newBacklog = parent.decreaseBuffersInBacklog(current);
+-		return new BufferAndBacklog(current, newBacklog > 0, newBacklog, nextBufferIsEvent);
++		return new BufferAndBacklog(current, newBacklog > 0 || nextBufferIsEvent, newBacklog, nextBufferIsEvent);
+ 	}
+ 
+ 	@Nullable
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpilledSubpartitionView.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpilledSubpartitionView.java
+index 378b086..2a6a71f 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpilledSubpartitionView.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpilledSubpartitionView.java
+@@ -148,7 +148,7 @@
+ 		}
+ 
+ 		int newBacklog = parent.decreaseBuffersInBacklog(current);
+-		return new BufferAndBacklog(current, newBacklog > 0, newBacklog, nextBufferIsEvent);
++		return new BufferAndBacklog(current, newBacklog > 0 || nextBufferIsEvent, newBacklog, nextBufferIsEvent);
+ 	}
+ 
+ 	@Nullable

@@ -1,0 +1,26 @@
+diff --git a/external/storm-hdfs-blobstore/src/main/java/org/apache/storm/hdfs/blobstore/HdfsBlobStore.java b/external/storm-hdfs-blobstore/src/main/java/org/apache/storm/hdfs/blobstore/HdfsBlobStore.java
+index 2627231..e6608c5 100644
+--- a/external/storm-hdfs-blobstore/src/main/java/org/apache/storm/hdfs/blobstore/HdfsBlobStore.java
++++ b/external/storm-hdfs-blobstore/src/main/java/org/apache/storm/hdfs/blobstore/HdfsBlobStore.java
+@@ -162,7 +162,7 @@
+                 localSubject = getHadoopUser();
+             }
+         } catch (IOException e) {
+-            throw new RuntimeException("Error logging in from keytab!", e);
++            throw new RuntimeException("Error logging in from keytab: " + e.getMessage(), e);
+         }
+         aclHandler = new BlobStoreAclHandler(conf);
+         Path baseDir = new Path(overrideBase, BASE_BLOBS_DIR_NAME);
+diff --git a/external/storm-hdfs-blobstore/src/main/java/org/apache/storm/hdfs/blobstore/HdfsBlobStore.java b/external/storm-hdfs-blobstore/src/main/java/org/apache/storm/hdfs/blobstore/HdfsBlobStore.java
+index 2627231..e6608c5 100644
+--- a/external/storm-hdfs-blobstore/src/main/java/org/apache/storm/hdfs/blobstore/HdfsBlobStore.java
++++ b/external/storm-hdfs-blobstore/src/main/java/org/apache/storm/hdfs/blobstore/HdfsBlobStore.java
+@@ -162,7 +162,7 @@
+                 localSubject = getHadoopUser();
+             }
+         } catch (IOException e) {
+-            throw new RuntimeException("Error logging in from keytab!", e);
++            throw new RuntimeException("Error logging in from keytab: " + e.getMessage(), e);
+         }
+         aclHandler = new BlobStoreAclHandler(conf);
+         Path baseDir = new Path(overrideBase, BASE_BLOBS_DIR_NAME);

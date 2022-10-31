@@ -1,0 +1,28 @@
+diff --git a/testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketRstTest.java b/testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketRstTest.java
+index d467f3f..4eb1b84 100644
+--- a/testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketRstTest.java
++++ b/testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketRstTest.java
+@@ -35,7 +35,8 @@
+ public class SocketRstTest extends AbstractSocketTest {
+     protected void assertRstOnCloseException(IOException cause, Channel clientChannel) {
+         if (Locale.getDefault() == Locale.US || Locale.getDefault() == Locale.UK) {
+-            assertTrue("actual message: " + cause.getMessage(), cause.getMessage().contains("reset"));
++            assertTrue("actual message: " + cause.getMessage(),
++                       cause.getMessage().contains("reset") || cause.getMessage().contains("closed"));
+         }
+     }
+ 
+diff --git a/testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketRstTest.java b/testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketRstTest.java
+index d467f3f..4eb1b84 100644
+--- a/testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketRstTest.java
++++ b/testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketRstTest.java
+@@ -35,7 +35,8 @@
+ public class SocketRstTest extends AbstractSocketTest {
+     protected void assertRstOnCloseException(IOException cause, Channel clientChannel) {
+         if (Locale.getDefault() == Locale.US || Locale.getDefault() == Locale.UK) {
+-            assertTrue("actual message: " + cause.getMessage(), cause.getMessage().contains("reset"));
++            assertTrue("actual message: " + cause.getMessage(),
++                       cause.getMessage().contains("reset") || cause.getMessage().contains("closed"));
+         }
+     }
+ 

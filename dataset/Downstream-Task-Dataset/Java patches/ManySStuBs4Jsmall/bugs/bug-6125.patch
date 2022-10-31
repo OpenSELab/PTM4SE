@@ -1,0 +1,28 @@
+diff --git a/components/camel-spring/src/main/java/org/apache/camel/spring/SpringCamelContext.java b/components/camel-spring/src/main/java/org/apache/camel/spring/SpringCamelContext.java
+index 7b98d41..c7c6eae 100644
+--- a/components/camel-spring/src/main/java/org/apache/camel/spring/SpringCamelContext.java
++++ b/components/camel-spring/src/main/java/org/apache/camel/spring/SpringCamelContext.java
+@@ -93,7 +93,8 @@
+             return;
+         }
+ 
+-        if (!isStarted()) {
++        if (!isStarted() && !isStarting()) {
++            // Make sure we will not get into the endless loop of calling star
+             LOG.info("Starting Apache Camel as property ShouldStartContext is true");
+             start();
+         } else {
+diff --git a/components/camel-spring/src/main/java/org/apache/camel/spring/SpringCamelContext.java b/components/camel-spring/src/main/java/org/apache/camel/spring/SpringCamelContext.java
+index 7b98d41..c7c6eae 100644
+--- a/components/camel-spring/src/main/java/org/apache/camel/spring/SpringCamelContext.java
++++ b/components/camel-spring/src/main/java/org/apache/camel/spring/SpringCamelContext.java
+@@ -93,7 +93,8 @@
+             return;
+         }
+ 
+-        if (!isStarted()) {
++        if (!isStarted() && !isStarting()) {
++            // Make sure we will not get into the endless loop of calling star
+             LOG.info("Starting Apache Camel as property ShouldStartContext is true");
+             start();
+         } else {

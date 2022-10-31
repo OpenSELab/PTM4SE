@@ -1,0 +1,24 @@
+diff --git a/maven-model-builder/src/main/java/org/apache/maven/model/interpolation/StringSearchModelInterpolator.java b/maven-model-builder/src/main/java/org/apache/maven/model/interpolation/StringSearchModelInterpolator.java
+index 712508d..6ff36b4 100644
+--- a/maven-model-builder/src/main/java/org/apache/maven/model/interpolation/StringSearchModelInterpolator.java
++++ b/maven-model-builder/src/main/java/org/apache/maven/model/interpolation/StringSearchModelInterpolator.java
+@@ -32,6 +32,7 @@ import org.codehaus.plexus.interpolation.ValueSource;
+ import java.io.File;
+ import java.lang.reflect.Array;
+ import java.lang.reflect.Field;
++import java.lang.reflect.Modifier;
+ import java.security.AccessController;
+ import java.security.PrivilegedAction;
+ import java.util.ArrayList;
+@@ -329,6 +330,11 @@ public class StringSearchModelInterpolator
+                 return false;
+             }
+ 
++            if ( Modifier.isFinal( field.getModifiers() ) )
++            {
++                return false;
++            }
++
+             return true;
+         }
+ 

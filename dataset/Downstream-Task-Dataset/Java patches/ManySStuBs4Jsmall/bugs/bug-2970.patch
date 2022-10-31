@@ -1,0 +1,13 @@
+diff --git a/src/test/java/io/mycat/performance/UserTableInsertJob.java b/src/test/java/io/mycat/performance/UserTableInsertJob.java
+index 8a759b2..a074334 100644
+--- a/src/test/java/io/mycat/performance/UserTableInsertJob.java
++++ b/src/test/java/io/mycat/performance/UserTableInsertJob.java
+@@ -39,7 +39,7 @@
+ 			stms.addBatch(sql);
+ 		}
+ 		stms.executeBatch();
+-		if (this.autocommit == false) {
++		if (!this.autocommit) {
+ 			con.commit();
+ 		}
+ 		// stms.clearBatch();

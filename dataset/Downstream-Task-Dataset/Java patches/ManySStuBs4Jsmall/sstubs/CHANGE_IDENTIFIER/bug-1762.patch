@@ -1,0 +1,56 @@
+diff --git a/src/com/google/javascript/jscomp/Es6ConvertSuperConstructorCalls.java b/src/com/google/javascript/jscomp/Es6ConvertSuperConstructorCalls.java
+index d8aeacd..f881a25 100644
+--- a/src/com/google/javascript/jscomp/Es6ConvertSuperConstructorCalls.java
++++ b/src/com/google/javascript/jscomp/Es6ConvertSuperConstructorCalls.java
+@@ -319,10 +319,8 @@
+             IR.assign(
+                 IR.getprop(IR.thisNode(), IR.string("stack")),
+                 IR.getprop(IR.name(TMP_ERROR), IR.string("stack"))));
+-    // TODO(bradfordcsmith): The spec says super() should return `this`, but Angular2 errors.ts
+-    //     currently depends on it returning the newly created Error object.
+     Node superErrorExpr =
+-        IR.comma(IR.comma(IR.comma(getTmpError, copyMessage), setStack), IR.name(TMP_ERROR))
++        IR.comma(IR.comma(IR.comma(getTmpError, copyMessage), setStack), IR.thisNode())
+             .useSourceInfoIfMissingFromForTree(superCall);
+     superCall.replaceWith(superErrorExpr);
+   }
+diff --git a/test/com/google/javascript/jscomp/Es6ToEs3ConverterTest.java b/test/com/google/javascript/jscomp/Es6ToEs3ConverterTest.java
+index b2fe9ef..def8c59 100644
+--- a/test/com/google/javascript/jscomp/Es6ToEs3ConverterTest.java
++++ b/test/com/google/javascript/jscomp/Es6ToEs3ConverterTest.java
+@@ -669,7 +669,7 @@
+             "  $jscomp$tmp$error = Error.apply(this, arguments),",
+             "      this.message = $jscomp$tmp$error.message,",
+             "      ('stack' in $jscomp$tmp$error) && (this.stack = $jscomp$tmp$error.stack),",
+-            "      $jscomp$tmp$error;",
++            "      this;",
+             "};",
+             "$jscomp.inherits(C, Error);"));
+     test(
+@@ -690,9 +690,7 @@
+             "      ($jscomp$tmp$error = Error.call(this, 'C error'),",
+             "          this.message = $jscomp$tmp$error.message,",
+             "          ('stack' in $jscomp$tmp$error) && (this.stack = $jscomp$tmp$error.stack),",
+-            // TODO(bradfordcsmith): The spec says super() should return `this`, but Angular2
+-            //     errors.ts currently depends on it returning the newly created Error object.
+-            "          $jscomp$tmp$error)",
++            "          this)",
+             "      || this;",
+             "};",
+             "$jscomp.inherits(C, Error);"));
+diff --git a/src/com/google/javascript/jscomp/Es6ConvertSuperConstructorCalls.java b/src/com/google/javascript/jscomp/Es6ConvertSuperConstructorCalls.java
+index d8aeacd..f881a25 100644
+--- a/src/com/google/javascript/jscomp/Es6ConvertSuperConstructorCalls.java
++++ b/src/com/google/javascript/jscomp/Es6ConvertSuperConstructorCalls.java
+@@ -319,10 +319,8 @@
+             IR.assign(
+                 IR.getprop(IR.thisNode(), IR.string("stack")),
+                 IR.getprop(IR.name(TMP_ERROR), IR.string("stack"))));
+-    // TODO(bradfordcsmith): The spec says super() should return `this`, but Angular2 errors.ts
+-    //     currently depends on it returning the newly created Error object.
+     Node superErrorExpr =
+-        IR.comma(IR.comma(IR.comma(getTmpError, copyMessage), setStack), IR.name(TMP_ERROR))
++        IR.comma(IR.comma(IR.comma(getTmpError, copyMessage), setStack), IR.thisNode())
+             .useSourceInfoIfMissingFromForTree(superCall);
+     superCall.replaceWith(superErrorExpr);
+   }

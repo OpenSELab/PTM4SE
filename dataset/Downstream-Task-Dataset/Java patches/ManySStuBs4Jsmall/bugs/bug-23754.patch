@@ -1,0 +1,13 @@
+diff --git a/server/src/main/java/org/jboss/as/server/ServerEnvironment.java b/server/src/main/java/org/jboss/as/server/ServerEnvironment.java
+index 47d3a76..2edc3e0 100644
+--- a/server/src/main/java/org/jboss/as/server/ServerEnvironment.java
++++ b/server/src/main/java/org/jboss/as/server/ServerEnvironment.java
+@@ -367,7 +367,7 @@
+             tmp = new File(serverBaseDir, "configuration");
+         }
+         serverConfigurationDir = tmp;
+-        if (standalone && !serverConfigurationDir.exists() && !serverConfigurationDir.isDirectory()) {
++        if (standalone && (!serverConfigurationDir.exists() || !serverConfigurationDir.isDirectory())) {
+             throw MESSAGES.configDirectoryDoesNotExist(serverConfigurationDir);
+         }
+ 

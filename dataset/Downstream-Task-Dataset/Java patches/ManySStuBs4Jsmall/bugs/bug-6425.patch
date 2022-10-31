@@ -1,0 +1,36 @@
+diff --git a/flink-core/src/main/java/org/apache/flink/api/common/state/StateDescriptor.java b/flink-core/src/main/java/org/apache/flink/api/common/state/StateDescriptor.java
+index 199f8d5..b603c71 100644
+--- a/flink-core/src/main/java/org/apache/flink/api/common/state/StateDescriptor.java
++++ b/flink-core/src/main/java/org/apache/flink/api/common/state/StateDescriptor.java
+@@ -137,7 +137,12 @@
+ 		try {
+ 			this.typeInfo = TypeExtractor.createTypeInfo(type);
+ 		} catch (Exception e) {
+-			throw new RuntimeException("Cannot create full type information based on the given class. If the type has generics, please", e);
++			throw new RuntimeException(
++					"Could not create the type information for '" + type.getName() + "'. " +
++					"The most common reason is failure to infer the generic type information, due to Java's type erasure. " +
++					"In that case, please pass a 'TypeHint' instead of a class to describe the type. " +
++					"For example, to describe 'Tuple2<String, String>' as a generic type, use " +
++					"'new PravegaDeserializationSchema<>(new TypeHint<Tuple2<String, String>>(){}, serializer);'", e);
+ 		}
+ 
+ 		this.defaultValue = defaultValue;
+diff --git a/flink-core/src/main/java/org/apache/flink/api/common/state/StateDescriptor.java b/flink-core/src/main/java/org/apache/flink/api/common/state/StateDescriptor.java
+index 199f8d5..b603c71 100644
+--- a/flink-core/src/main/java/org/apache/flink/api/common/state/StateDescriptor.java
++++ b/flink-core/src/main/java/org/apache/flink/api/common/state/StateDescriptor.java
+@@ -137,7 +137,12 @@
+ 		try {
+ 			this.typeInfo = TypeExtractor.createTypeInfo(type);
+ 		} catch (Exception e) {
+-			throw new RuntimeException("Cannot create full type information based on the given class. If the type has generics, please", e);
++			throw new RuntimeException(
++					"Could not create the type information for '" + type.getName() + "'. " +
++					"The most common reason is failure to infer the generic type information, due to Java's type erasure. " +
++					"In that case, please pass a 'TypeHint' instead of a class to describe the type. " +
++					"For example, to describe 'Tuple2<String, String>' as a generic type, use " +
++					"'new PravegaDeserializationSchema<>(new TypeHint<Tuple2<String, String>>(){}, serializer);'", e);
+ 		}
+ 
+ 		this.defaultValue = defaultValue;

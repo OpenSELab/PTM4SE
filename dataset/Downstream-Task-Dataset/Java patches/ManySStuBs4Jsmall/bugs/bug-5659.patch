@@ -1,0 +1,13 @@
+diff --git a/components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/MarshalDomainObjectTest.java b/components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/MarshalDomainObjectTest.java
+index ef11426..2992a12 100644
+--- a/components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/MarshalDomainObjectTest.java
++++ b/components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/MarshalDomainObjectTest.java
+@@ -74,7 +74,7 @@
+         mock.message(0).body().equals(order);
+ 
+         // we get it back as byte array so type convert it to string
+-        Object result = (Object)template.requestBody("direct:marshal", order);
++        Object result = template.requestBody("direct:marshal", order);
+         String body = context.getTypeConverter().convertTo(String.class, result);        
+         template.sendBody("direct:reverse", body);
+ 

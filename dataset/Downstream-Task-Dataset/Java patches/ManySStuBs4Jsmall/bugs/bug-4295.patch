@@ -1,0 +1,13 @@
+diff --git a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringTestContextLoader.java b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringTestContextLoader.java
+index 049bc7c..583ebca 100644
+--- a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringTestContextLoader.java
++++ b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringTestContextLoader.java
+@@ -291,7 +291,7 @@
+                 @Override
+                 public void execute(String contextName, SpringCamelContext camelContext) throws Exception {
+                     LOG.info("Enabling RouteCoverage");
+-                    EventNotifier notifier = new RouteCoverageEventNotifier(testClass.getName(), (String) -> getTestMethod().getName());
++                    EventNotifier notifier = new RouteCoverageEventNotifier(testClass.getName(), s -> getTestMethod().getName());
+                     camelContext.addService(notifier, true);
+                     camelContext.getManagementStrategy().addEventNotifier(notifier);
+                 }

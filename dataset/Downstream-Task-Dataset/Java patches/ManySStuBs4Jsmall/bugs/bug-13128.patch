@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/StateMachine.java b/presto-main/src/main/java/com/facebook/presto/execution/StateMachine.java
+index 05985b4..55318d8 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/StateMachine.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/StateMachine.java
+@@ -186,7 +186,7 @@
+         checkState(!Thread.holdsLock(this), "Can not fire state change event while holding a lock on this");
+ 
+         executor.execute(() -> {
+-            checkState(!Thread.holdsLock(StateMachine.this), "Can not notify while holding a lock on this");
++            checkState(!Thread.holdsLock(this), "Can not notify while holding a lock on this");
+             for (SettableFuture<T> futureStateChange : futureStateChanges) {
+                 try {
+                     futureStateChange.set(newState);
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/StateMachine.java b/presto-main/src/main/java/com/facebook/presto/execution/StateMachine.java
+index 05985b4..55318d8 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/StateMachine.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/StateMachine.java
+@@ -186,7 +186,7 @@
+         checkState(!Thread.holdsLock(this), "Can not fire state change event while holding a lock on this");
+ 
+         executor.execute(() -> {
+-            checkState(!Thread.holdsLock(StateMachine.this), "Can not notify while holding a lock on this");
++            checkState(!Thread.holdsLock(this), "Can not notify while holding a lock on this");
+             for (SettableFuture<T> futureStateChange : futureStateChanges) {
+                 try {
+                     futureStateChange.set(newState);

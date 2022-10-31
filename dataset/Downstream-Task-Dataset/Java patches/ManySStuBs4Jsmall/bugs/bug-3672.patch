@@ -1,0 +1,17 @@
+diff --git a/runtime-testsuite/test/org/antlr/v4/test/runtime/go/BaseGoTest.java b/runtime-testsuite/test/org/antlr/v4/test/runtime/go/BaseGoTest.java
+index 762635b..4f5179e 100644
+--- a/runtime-testsuite/test/org/antlr/v4/test/runtime/go/BaseGoTest.java
++++ b/runtime-testsuite/test/org/antlr/v4/test/runtime/go/BaseGoTest.java
+@@ -696,7 +696,11 @@
+ 				+ "}\n"
+ 				+ "\n"
+ 				+ "func main() {\n"
+-				+ "	input := antlr.NewFileStream(os.Args[1])\n"
++				+ "	input, err := antlr.NewFileStream(os.Args[1])\n"
++				+ "     if err != nil {\n"
++				+ "     	fmt.Printf("Failed to find file: %v", err)\n"
++				+ "     	return\n"
++				+ "     }\n"
+ 				+ "	lexer := parser.New<lexerName>(input)\n"
+ 				+ "	stream := antlr.NewCommonTokenStream(lexer,0)\n"
+ 				+ "<createParser>"

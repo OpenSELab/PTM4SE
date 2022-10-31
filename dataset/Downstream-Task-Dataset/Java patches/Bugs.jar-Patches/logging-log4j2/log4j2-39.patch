@@ -1,0 +1,44 @@
+diff --git a/api/src/main/java/org/apache/logging/log4j/spi/DefaultThreadContextMap.java b/api/src/main/java/org/apache/logging/log4j/spi/DefaultThreadContextMap.java
+index eca7126..953d1e5 100644
+--- a/api/src/main/java/org/apache/logging/log4j/spi/DefaultThreadContextMap.java
++++ b/api/src/main/java/org/apache/logging/log4j/spi/DefaultThreadContextMap.java
+@@ -139,4 +139,10 @@ public class DefaultThreadContextMap implements ThreadContextMap {
+         final Map<String, String> map = localMap.get();
+         return map == null || map.size() == 0;
+     }
++
++    @Override
++    public String toString() {
++        Map<String, String> map = localMap.get();
++        return map == null ? "{}" : map.toString();
++    }
+ }
+diff --git a/api/src/main/java/org/apache/logging/log4j/spi/DefaultThreadContextStack.java b/api/src/main/java/org/apache/logging/log4j/spi/DefaultThreadContextStack.java
+index 20f5afb..54ea256 100644
+--- a/api/src/main/java/org/apache/logging/log4j/spi/DefaultThreadContextStack.java
++++ b/api/src/main/java/org/apache/logging/log4j/spi/DefaultThreadContextStack.java
+@@ -251,4 +251,10 @@ public class DefaultThreadContextStack implements ThreadContextStack {
+         stack.set(Collections.unmodifiableList(copy));
+         return result;
+     }
++    
++    @Override
++    public String toString() {
++        final List<String> list = stack.get();
++        return list == null ? "[]" : list.toString();
++    }
+ }
+diff --git a/api/src/main/java/org/apache/logging/log4j/spi/MutableThreadContextStack.java b/api/src/main/java/org/apache/logging/log4j/spi/MutableThreadContextStack.java
+index 164c5c0..1c1e654 100644
+--- a/api/src/main/java/org/apache/logging/log4j/spi/MutableThreadContextStack.java
++++ b/api/src/main/java/org/apache/logging/log4j/spi/MutableThreadContextStack.java
+@@ -161,4 +161,9 @@ public class MutableThreadContextStack implements ThreadContextStack {
+     public boolean retainAll(final Collection<?> objects) {
+         return list.retainAll(objects);
+     }
++    
++    @Override
++    public String toString() {
++        return String.valueOf(list);
++    }
+ }

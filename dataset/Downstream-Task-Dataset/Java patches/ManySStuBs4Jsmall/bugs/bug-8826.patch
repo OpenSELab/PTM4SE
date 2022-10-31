@@ -1,0 +1,140 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheckTest.java
+index 50bae84..676c19a 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheckTest.java
+@@ -82,10 +82,10 @@
+             "174:15: " + getCheckMessage(MSG_KEY, "21"),
+             "178:15: " + getCheckMessage(MSG_KEY, "37"),
+             "182:15: " + getCheckMessage(MSG_KEY, "101"),
+-            "185:31: " + getCheckMessage(MSG_KEY, "42"),
+-            "189:37: " + getCheckMessage(MSG_KEY, "43"),
+-            "193:31: " + getCheckMessage(MSG_KEY, "-44"),
+-            "197:37: " + getCheckMessage(MSG_KEY, "-45"),
++            "185:42: " + getCheckMessage(MSG_KEY, "42"),
++            "189:48: " + getCheckMessage(MSG_KEY, "43"),
++            "193:42: " + getCheckMessage(MSG_KEY, "-44"),
++            "197:48: " + getCheckMessage(MSG_KEY, "-45"),
+         };
+         verify(checkConfig, getPath("InputMagicNumber.java"), expected);
+     }
+@@ -377,10 +377,10 @@
+             "174:15: " + getCheckMessage(MSG_KEY, "21"),
+             "178:15: " + getCheckMessage(MSG_KEY, "37"),
+             "182:15: " + getCheckMessage(MSG_KEY, "101"),
+-            "185:31: " + getCheckMessage(MSG_KEY, "42"),
+-            "189:37: " + getCheckMessage(MSG_KEY, "43"),
+-            "193:31: " + getCheckMessage(MSG_KEY, "-44"),
+-            "197:37: " + getCheckMessage(MSG_KEY, "-45"),
++            "185:42: " + getCheckMessage(MSG_KEY, "42"),
++            "189:48: " + getCheckMessage(MSG_KEY, "43"),
++            "193:42: " + getCheckMessage(MSG_KEY, "-44"),
++            "197:48: " + getCheckMessage(MSG_KEY, "-45"),
+         };
+         verify(checkConfig, getPath("InputMagicNumber.java"), expected);
+     }
+@@ -435,10 +435,10 @@
+             "174:15: " + getCheckMessage(MSG_KEY, "21"),
+             "178:15: " + getCheckMessage(MSG_KEY, "37"),
+             "182:15: " + getCheckMessage(MSG_KEY, "101"),
+-            "185:31: " + getCheckMessage(MSG_KEY, "42"),
+-            "189:37: " + getCheckMessage(MSG_KEY, "43"),
+-            "193:31: " + getCheckMessage(MSG_KEY, "-44"),
+-            "197:37: " + getCheckMessage(MSG_KEY, "-45"),
++            "185:42: " + getCheckMessage(MSG_KEY, "42"),
++            "189:48: " + getCheckMessage(MSG_KEY, "43"),
++            "193:42: " + getCheckMessage(MSG_KEY, "-44"),
++            "197:48: " + getCheckMessage(MSG_KEY, "-45"),
+             "209:63: " + getCheckMessage(MSG_KEY, "62"),
+         };
+         verify(checkConfig, getPath("InputMagicNumber.java"), expected);
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/PackageDeclarationCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/PackageDeclarationCheckTest.java
+index e4cc8f9..560d54b 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/PackageDeclarationCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/PackageDeclarationCheckTest.java
+@@ -57,7 +57,8 @@
+             "4: " + getCheckMessage(MSG_KEY_MISSING),
+         };
+ 
+-        verify(checkConfig, getNonCompilablePath("InputNoPackage.java"), expected);
++        verify(checkConfig,
++                getNonCompilablePath("InputPackageDeclarationNoPackage.java"), expected);
+     }
+ 
+     @Test
+diff --git a/src/test/resources/com/puppycrawl/tools/checkstyle/checks/coding/magicnumber/InputMagicNumber.java b/src/test/resources/com/puppycrawl/tools/checkstyle/checks/coding/magicnumber/InputMagicNumber.java
+index 2d546ba..7038372 100644
+--- a/src/test/resources/com/puppycrawl/tools/checkstyle/checks/coding/magicnumber/InputMagicNumber.java
++++ b/src/test/resources/com/puppycrawl/tools/checkstyle/checks/coding/magicnumber/InputMagicNumber.java
+@@ -182,19 +182,19 @@
+         int z=101;
+     }
+ 
+-    @InputIntMethodAnnotation(42)
++    @InputMagicNumberIntMethodAnnotation(42)
+     public void another() {
+     }
+ 
+-    @InputIntMethodAnnotation(value=43)
++    @InputMagicNumberIntMethodAnnotation(value=43)
+     public void another2() {
+     }
+     
+-    @InputIntMethodAnnotation(-44)
++    @InputMagicNumberIntMethodAnnotation(-44)
+     public void anotherNegative() {
+     }
+ 
+-    @InputIntMethodAnnotation(value=-45)
++    @InputMagicNumberIntMethodAnnotation(value=-45)
+     public void anotherNegative2() {
+     }
+ }
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheckTest.java
+index 50bae84..676c19a 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheckTest.java
+@@ -82,10 +82,10 @@
+             "174:15: " + getCheckMessage(MSG_KEY, "21"),
+             "178:15: " + getCheckMessage(MSG_KEY, "37"),
+             "182:15: " + getCheckMessage(MSG_KEY, "101"),
+-            "185:31: " + getCheckMessage(MSG_KEY, "42"),
+-            "189:37: " + getCheckMessage(MSG_KEY, "43"),
+-            "193:31: " + getCheckMessage(MSG_KEY, "-44"),
+-            "197:37: " + getCheckMessage(MSG_KEY, "-45"),
++            "185:42: " + getCheckMessage(MSG_KEY, "42"),
++            "189:48: " + getCheckMessage(MSG_KEY, "43"),
++            "193:42: " + getCheckMessage(MSG_KEY, "-44"),
++            "197:48: " + getCheckMessage(MSG_KEY, "-45"),
+         };
+         verify(checkConfig, getPath("InputMagicNumber.java"), expected);
+     }
+@@ -377,10 +377,10 @@
+             "174:15: " + getCheckMessage(MSG_KEY, "21"),
+             "178:15: " + getCheckMessage(MSG_KEY, "37"),
+             "182:15: " + getCheckMessage(MSG_KEY, "101"),
+-            "185:31: " + getCheckMessage(MSG_KEY, "42"),
+-            "189:37: " + getCheckMessage(MSG_KEY, "43"),
+-            "193:31: " + getCheckMessage(MSG_KEY, "-44"),
+-            "197:37: " + getCheckMessage(MSG_KEY, "-45"),
++            "185:42: " + getCheckMessage(MSG_KEY, "42"),
++            "189:48: " + getCheckMessage(MSG_KEY, "43"),
++            "193:42: " + getCheckMessage(MSG_KEY, "-44"),
++            "197:48: " + getCheckMessage(MSG_KEY, "-45"),
+         };
+         verify(checkConfig, getPath("InputMagicNumber.java"), expected);
+     }
+@@ -435,10 +435,10 @@
+             "174:15: " + getCheckMessage(MSG_KEY, "21"),
+             "178:15: " + getCheckMessage(MSG_KEY, "37"),
+             "182:15: " + getCheckMessage(MSG_KEY, "101"),
+-            "185:31: " + getCheckMessage(MSG_KEY, "42"),
+-            "189:37: " + getCheckMessage(MSG_KEY, "43"),
+-            "193:31: " + getCheckMessage(MSG_KEY, "-44"),
+-            "197:37: " + getCheckMessage(MSG_KEY, "-45"),
++            "185:42: " + getCheckMessage(MSG_KEY, "42"),
++            "189:48: " + getCheckMessage(MSG_KEY, "43"),
++            "193:42: " + getCheckMessage(MSG_KEY, "-44"),
++            "197:48: " + getCheckMessage(MSG_KEY, "-45"),
+             "209:63: " + getCheckMessage(MSG_KEY, "62"),
+         };
+         verify(checkConfig, getPath("InputMagicNumber.java"), expected);

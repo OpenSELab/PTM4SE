@@ -1,0 +1,26 @@
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ws/ejb/SimpleStatelessWebserviceEndpointTestCase.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ws/ejb/SimpleStatelessWebserviceEndpointTestCase.java
+index 197710c..6d8b40a 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ws/ejb/SimpleStatelessWebserviceEndpointTestCase.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ws/ejb/SimpleStatelessWebserviceEndpointTestCase.java
+@@ -58,7 +58,7 @@
+     @Deployment (testable=false)
+     public static JavaArchive createDeployment() {
+         final JavaArchive jar = ShrinkWrap.create(JavaArchive.class, "stateless-ws-endpoint-example.jar");
+-        jar.addPackage(SimpleStatelessWebserviceEndpointImpl.class.getPackage());
++        jar.addClasses(SimpleStatelessWebserviceEndpointIface.class, SimpleStatelessWebserviceEndpointImpl.class);
+         log.info(jar.toString(true));
+         return jar;
+     }
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ws/ejb/SimpleStatelessWebserviceEndpointTestCase.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ws/ejb/SimpleStatelessWebserviceEndpointTestCase.java
+index 197710c..6d8b40a 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ws/ejb/SimpleStatelessWebserviceEndpointTestCase.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ws/ejb/SimpleStatelessWebserviceEndpointTestCase.java
+@@ -58,7 +58,7 @@
+     @Deployment (testable=false)
+     public static JavaArchive createDeployment() {
+         final JavaArchive jar = ShrinkWrap.create(JavaArchive.class, "stateless-ws-endpoint-example.jar");
+-        jar.addPackage(SimpleStatelessWebserviceEndpointImpl.class.getPackage());
++        jar.addClasses(SimpleStatelessWebserviceEndpointIface.class, SimpleStatelessWebserviceEndpointImpl.class);
+         log.info(jar.toString(true));
+         return jar;
+     }

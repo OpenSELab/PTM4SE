@@ -1,0 +1,914 @@
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/zookeeper/ZooCache.java b/src/core/src/main/java/org/apache/accumulo/core/zookeeper/ZooCache.java
+index 6931ea8..f5bdd6b 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/zookeeper/ZooCache.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/zookeeper/ZooCache.java
+@@ -136,7 +136,7 @@ public class ZooCache {
+         }
+         log.warn("Zookeeper error, will retry", e);
+       } catch (InterruptedException e) {
+-        log.warn("Zookeeper error, will retry", e);
++        log.info("Zookeeper error, will retry", e);
+       } catch (ConcurrentModificationException e) {
+         log.debug("Zookeeper was modified, will retry");
+       }
+diff --git a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/ArticleExtractor.java b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/ArticleExtractor.java
+index 54e47b6..06d1670 100644
+--- a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/ArticleExtractor.java
++++ b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/ArticleExtractor.java
+@@ -16,6 +16,9 @@
+  */
+ package org.apache.accumulo.examples.wikisearch.ingest;
+ 
++import java.io.DataInput;
++import java.io.DataOutput;
++import java.io.IOException;
+ import java.io.Reader;
+ import java.text.ParseException;
+ import java.text.SimpleDateFormat;
+@@ -29,6 +32,7 @@ import javax.xml.stream.XMLStreamReader;
+ 
+ import org.apache.accumulo.examples.wikisearch.normalizer.LcNoDiacriticsNormalizer;
+ import org.apache.accumulo.examples.wikisearch.normalizer.NumberNormalizer;
++import org.apache.hadoop.io.Writable;
+ 
+ 
+ public class ArticleExtractor {
+@@ -37,13 +41,15 @@ public class ArticleExtractor {
+   private static NumberNormalizer nn = new NumberNormalizer();
+   private static LcNoDiacriticsNormalizer lcdn = new LcNoDiacriticsNormalizer();
+   
+-  public static class Article {
++  public static class Article implements Writable {
+     int id;
+     String title;
+     long timestamp;
+     String comments;
+     String text;
+     
++    public Article(){}
++    
+     private Article(int id, String title, long timestamp, String comments, String text) {
+       super();
+       this.id = id;
+@@ -90,6 +96,24 @@ public class ArticleExtractor {
+       fields.put("COMMENTS", lcdn.normalizeFieldValue("COMMENTS", this.comments));
+       return fields;
+     }
++
++    @Override
++    public void readFields(DataInput in) throws IOException {
++      id = in.readInt();
++      title = in.readUTF();
++      timestamp = in.readLong();
++      comments = in.readUTF();
++      text = in.readUTF();
++    }
++
++    @Override
++    public void write(DataOutput out) throws IOException {
++      out.writeInt(id);
++      out.writeUTF(title);
++      out.writeLong(timestamp);
++      out.writeUTF(comments);
++      out.writeUTF(text);
++    }
+     
+   }
+   
+diff --git a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaConfiguration.java b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaConfiguration.java
+index d76d713..5a0aad4 100644
+--- a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaConfiguration.java
++++ b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaConfiguration.java
+@@ -48,6 +48,11 @@ public class WikipediaConfiguration {
+ 
+   public final static String NUM_GROUPS = "wikipedia.ingest.groups";
+ 
++  public final static String PARTITIONED_ARTICLES_DIRECTORY = "wikipedia.partitioned.directory";
++  
++  public final static String RUN_PARTITIONER = "wikipedia.run.partitioner";
++  public final static String RUN_INGEST = "wikipedia.run.ingest";
++  
+   
+   public static String getUser(Configuration conf) {
+     return conf.get(USER);
+@@ -117,6 +122,18 @@ public class WikipediaConfiguration {
+     return conf.getInt(NUM_GROUPS, 1);
+   }
+   
++  public static Path getPartitionedArticlesPath(Configuration conf) {
++    return new Path(conf.get(PARTITIONED_ARTICLES_DIRECTORY));
++  }
++  
++  public static boolean runPartitioner(Configuration conf) {
++    return conf.getBoolean(RUN_PARTITIONER, false);
++  }
++
++  public static boolean runIngest(Configuration conf) {
++    return conf.getBoolean(RUN_INGEST, true);
++  }
++
+   /**
+    * Helper method to get properties from Hadoop configuration
+    * 
+diff --git a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaInputFormat.java b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaInputFormat.java
+index e8b8b52..dd2eeb9 100644
+--- a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaInputFormat.java
++++ b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaInputFormat.java
+@@ -75,10 +75,14 @@ public class WikipediaInputFormat extends TextInputFormat {
+       Path file = new Path(in.readUTF());
+       long start = in.readLong();
+       long length = in.readLong();
+-      int numHosts = in.readInt();
+-      String[] hosts = new String[numHosts];
+-      for(int i = 0; i < numHosts; i++)
+-        hosts[i] = in.readUTF();
++      String [] hosts = null;
++      if(in.readBoolean())
++      {
++        int numHosts = in.readInt();
++        hosts = new String[numHosts];
++        for(int i = 0; i < numHosts; i++)
++          hosts[i] = in.readUTF();
++      }
+       fileSplit = new FileSplit(file, start, length, hosts);
+       partition = in.readInt();
+     }
+@@ -89,10 +93,17 @@ public class WikipediaInputFormat extends TextInputFormat {
+       out.writeLong(fileSplit.getStart());
+       out.writeLong(fileSplit.getLength());
+       String [] hosts = fileSplit.getLocations();
+-      out.writeInt(hosts.length);
+-      for(String host:hosts)
++      if(hosts == null)
++      {
++        out.writeBoolean(false);
++      }
++      else
++      {
++        out.writeBoolean(true);
++        out.writeInt(hosts.length);
++        for(String host:hosts)
+         out.writeUTF(host);
+-      fileSplit.write(out);
++      }
+       out.writeInt(partition);
+     }
+     
+diff --git a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitionedIngester.java b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitionedIngester.java
+new file mode 100644
+index 0000000..e7493dc
+--- /dev/null
++++ b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitionedIngester.java
+@@ -0,0 +1,247 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.accumulo.examples.wikisearch.ingest;
++
++import java.io.IOException;
++import java.util.ArrayList;
++import java.util.Collections;
++import java.util.EnumSet;
++import java.util.List;
++import java.util.Set;
++import java.util.SortedSet;
++import java.util.TreeSet;
++import java.util.regex.Matcher;
++import java.util.regex.Pattern;
++
++import org.apache.accumulo.core.client.AccumuloException;
++import org.apache.accumulo.core.client.AccumuloSecurityException;
++import org.apache.accumulo.core.client.Connector;
++import org.apache.accumulo.core.client.IteratorSetting;
++import org.apache.accumulo.core.client.IteratorSetting.Column;
++import org.apache.accumulo.core.client.TableExistsException;
++import org.apache.accumulo.core.client.TableNotFoundException;
++import org.apache.accumulo.core.client.admin.TableOperations;
++import org.apache.accumulo.core.client.mapreduce.AccumuloOutputFormat;
++import org.apache.accumulo.core.data.Mutation;
++import org.apache.accumulo.core.iterators.IteratorUtil.IteratorScope;
++import org.apache.accumulo.core.iterators.user.SummingCombiner;
++import org.apache.accumulo.examples.wikisearch.ingest.ArticleExtractor.Article;
++import org.apache.accumulo.examples.wikisearch.iterator.GlobalIndexUidCombiner;
++import org.apache.accumulo.examples.wikisearch.iterator.TextIndexCombiner;
++import org.apache.accumulo.examples.wikisearch.reader.AggregatingRecordReader;
++import org.apache.commons.lang.StringUtils;
++import org.apache.hadoop.conf.Configuration;
++import org.apache.hadoop.conf.Configured;
++import org.apache.hadoop.fs.FileStatus;
++import org.apache.hadoop.fs.FileSystem;
++import org.apache.hadoop.fs.Path;
++import org.apache.hadoop.fs.PathFilter;
++import org.apache.hadoop.io.Text;
++import org.apache.hadoop.mapreduce.Job;
++import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
++import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
++import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
++import org.apache.hadoop.util.Tool;
++import org.apache.hadoop.util.ToolRunner;
++
++public class WikipediaPartitionedIngester extends Configured implements Tool {
++  
++  public final static String INGEST_LANGUAGE = "wikipedia.ingest_language";
++  public final static String SPLIT_FILE = "wikipedia.split_file";
++  public final static String TABLE_NAME = "wikipedia.table";
++  
++  public static void main(String[] args) throws Exception {
++    int res = ToolRunner.run(new Configuration(), new WikipediaPartitionedIngester(), args);
++    System.exit(res);
++  }
++  
++  private void createTables(TableOperations tops, String tableName) throws AccumuloException, AccumuloSecurityException, TableNotFoundException,
++      TableExistsException {
++    // Create the shard table
++    String indexTableName = tableName + "Index";
++    String reverseIndexTableName = tableName + "ReverseIndex";
++    String metadataTableName = tableName + "Metadata";
++    
++    // create the shard table
++    if (!tops.exists(tableName)) {
++      // Set a text index combiner on the given field names. No combiner is set if the option is not supplied
++      String textIndexFamilies = WikipediaMapper.TOKENS_FIELD_NAME;
++      
++      tops.create(tableName);
++      if (textIndexFamilies.length() > 0) {
++        System.out.println("Adding content combiner on the fields: " + textIndexFamilies);
++        
++        IteratorSetting setting = new IteratorSetting(10, TextIndexCombiner.class);
++        List<Column> columns = new ArrayList<Column>();
++        for (String family : StringUtils.split(textIndexFamilies, ',')) {
++          columns.add(new Column("fi\0" + family));
++        }
++        TextIndexCombiner.setColumns(setting, columns);
++        TextIndexCombiner.setLossyness(setting, true);
++        
++        tops.attachIterator(tableName, setting, EnumSet.allOf(IteratorScope.class));
++      }
++      
++      // Set the locality group for the full content column family
++      tops.setLocalityGroups(tableName, Collections.singletonMap("WikipediaDocuments", Collections.singleton(new Text(WikipediaMapper.DOCUMENT_COLUMN_FAMILY))));
++      
++    }
++    
++    if (!tops.exists(indexTableName)) {
++      tops.create(indexTableName);
++      // Add the UID combiner
++      IteratorSetting setting = new IteratorSetting(19, "UIDAggregator", GlobalIndexUidCombiner.class);
++      GlobalIndexUidCombiner.setCombineAllColumns(setting, true);
++      GlobalIndexUidCombiner.setLossyness(setting, true);
++      tops.attachIterator(indexTableName, setting, EnumSet.allOf(IteratorScope.class));
++    }
++    
++    if (!tops.exists(reverseIndexTableName)) {
++      tops.create(reverseIndexTableName);
++      // Add the UID combiner
++      IteratorSetting setting = new IteratorSetting(19, "UIDAggregator", GlobalIndexUidCombiner.class);
++      GlobalIndexUidCombiner.setCombineAllColumns(setting, true);
++      GlobalIndexUidCombiner.setLossyness(setting, true);
++      tops.attachIterator(reverseIndexTableName, setting, EnumSet.allOf(IteratorScope.class));
++    }
++    
++    if (!tops.exists(metadataTableName)) {
++      // Add the SummingCombiner with VARLEN encoding for the frequency column
++      tops.create(metadataTableName);
++      IteratorSetting setting = new IteratorSetting(10, SummingCombiner.class);
++      SummingCombiner.setColumns(setting, Collections.singletonList(new Column("f")));
++      SummingCombiner.setEncodingType(setting, SummingCombiner.Type.VARLEN);
++      tops.attachIterator(metadataTableName, setting, EnumSet.allOf(IteratorScope.class));
++    }
++  }
++  
++  @Override
++  public int run(String[] args) throws Exception {
++    Configuration conf = getConf();
++    if(WikipediaConfiguration.runPartitioner(conf))
++    {
++      int result = runPartitionerJob();
++      if(result != 0)
++        return result;
++    }
++    if(WikipediaConfiguration.runIngest(conf))
++      return runIngestJob();
++    return 0;
++  }
++  
++  public int runPartitionerJob() throws Exception
++  {
++    Job partitionerJob = new Job(getConf(), "Partition Wikipedia");
++    Configuration partitionerConf = partitionerJob.getConfiguration();
++    partitionerConf.set("mapred.map.tasks.speculative.execution", "false");
++
++    configurePartitionerJob(partitionerJob);
++    
++    List<Path> inputPaths = new ArrayList<Path>();
++    SortedSet<String> languages = new TreeSet<String>();
++    FileSystem fs = FileSystem.get(partitionerConf);
++    Path parent = new Path(partitionerConf.get("wikipedia.input"));
++    listFiles(parent, fs, inputPaths, languages);
++    
++    System.out.println("Input files in " + parent + ":" + inputPaths.size());
++    Path[] inputPathsArray = new Path[inputPaths.size()];
++    inputPaths.toArray(inputPathsArray);
++    
++    System.out.println("Languages:" + languages.size());
++
++    // setup input format
++    
++    WikipediaInputFormat.setInputPaths(partitionerJob, inputPathsArray);
++    
++    partitionerJob.setMapperClass(WikipediaPartitioner.class);
++    partitionerJob.setNumReduceTasks(0);
++
++    // setup output format
++    partitionerJob.setMapOutputKeyClass(Text.class);
++    partitionerJob.setMapOutputValueClass(Article.class);
++    partitionerJob.setOutputFormatClass(SequenceFileOutputFormat.class);
++    Path outputDir = WikipediaConfiguration.getPartitionedArticlesPath(partitionerConf);
++    SequenceFileOutputFormat.setOutputPath(partitionerJob, outputDir);
++    
++    return partitionerJob.waitForCompletion(true) ? 0 : 1;
++  }
++  
++  public int runIngestJob() throws Exception
++  {
++    Job ingestJob = new Job(getConf(), "Ingest Partitioned Wikipedia");
++    Configuration ingestConf = ingestJob.getConfiguration();
++    ingestConf.set("mapred.map.tasks.speculative.execution", "false");
++
++    String tablename = WikipediaConfiguration.getTableName(ingestConf);
++    
++    String zookeepers = WikipediaConfiguration.getZookeepers(ingestConf);
++    String instanceName = WikipediaConfiguration.getInstanceName(ingestConf);
++    
++    String user = WikipediaConfiguration.getUser(ingestConf);
++    byte[] password = WikipediaConfiguration.getPassword(ingestConf);
++    Connector connector = WikipediaConfiguration.getConnector(ingestConf);
++    
++    TableOperations tops = connector.tableOperations();
++    
++    createTables(tops, tablename);
++    
++    // setup input format
++    ingestJob.setInputFormatClass(SequenceFileInputFormat.class);
++    SequenceFileInputFormat.setInputPaths(ingestJob, WikipediaConfiguration.getPartitionedArticlesPath(ingestConf));
++
++    // setup output format
++    ingestJob.setMapOutputKeyClass(Text.class);
++    ingestJob.setMapOutputValueClass(Mutation.class);
++    ingestJob.setOutputFormatClass(AccumuloOutputFormat.class);
++    AccumuloOutputFormat.setOutputInfo(ingestJob.getConfiguration(), user, password, true, tablename);
++    AccumuloOutputFormat.setZooKeeperInstance(ingestJob.getConfiguration(), instanceName, zookeepers);
++    
++    return ingestJob.waitForCompletion(true) ? 0 : 1;
++  }
++  
++  public final static PathFilter partFilter = new PathFilter() {
++    @Override
++    public boolean accept(Path path) {
++      return path.getName().startsWith("part");
++    };
++  };
++  
++  protected void configurePartitionerJob(Job job) {
++    Configuration conf = job.getConfiguration();
++    job.setJarByClass(WikipediaPartitionedIngester.class);
++    job.setInputFormatClass(WikipediaInputFormat.class);
++    conf.set(AggregatingRecordReader.START_TOKEN, "<page>");
++    conf.set(AggregatingRecordReader.END_TOKEN, "</page>");
++  }
++  
++  protected static final Pattern filePattern = Pattern.compile("([a-z_]+).*.xml(.bz2)?");
++  
++  protected void listFiles(Path path, FileSystem fs, List<Path> files, Set<String> languages) throws IOException {
++    for (FileStatus status : fs.listStatus(path)) {
++      if (status.isDir()) {
++        listFiles(status.getPath(), fs, files, languages);
++      } else {
++        Path p = status.getPath();
++        Matcher matcher = filePattern.matcher(p.getName());
++        if (matcher.matches()) {
++          languages.add(matcher.group(1));
++          files.add(p);
++        }
++      }
++    }
++  }
++}
+diff --git a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitionedMapper.java b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitionedMapper.java
+new file mode 100644
+index 0000000..4d94c24
+--- /dev/null
++++ b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitionedMapper.java
+@@ -0,0 +1,192 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++/**
++ * 
++ */
++package org.apache.accumulo.examples.wikisearch.ingest;
++
++
++import java.io.IOException;
++import java.io.StringReader;
++import java.nio.charset.Charset;
++import java.util.HashSet;
++import java.util.Map.Entry;
++import java.util.Set;
++
++import org.apache.accumulo.core.data.Mutation;
++import org.apache.accumulo.core.data.Value;
++import org.apache.accumulo.core.security.ColumnVisibility;
++import org.apache.accumulo.examples.wikisearch.ingest.ArticleExtractor.Article;
++import org.apache.accumulo.examples.wikisearch.normalizer.LcNoDiacriticsNormalizer;
++import org.apache.accumulo.examples.wikisearch.protobuf.Uid;
++import org.apache.accumulo.examples.wikisearch.protobuf.Uid.List.Builder;
++import org.apache.commons.codec.binary.Base64;
++import org.apache.commons.lang.StringUtils;
++import org.apache.hadoop.conf.Configuration;
++import org.apache.hadoop.io.Text;
++import org.apache.hadoop.mapreduce.Mapper;
++import org.apache.log4j.Logger;
++import org.apache.lucene.analysis.tokenattributes.TermAttribute;
++import org.apache.lucene.wikipedia.analysis.WikipediaTokenizer;
++
++import com.google.common.collect.HashMultimap;
++import com.google.common.collect.Multimap;
++
++public class WikipediaPartitionedMapper extends Mapper<Text,Article,Text,Mutation> {
++  
++  private static final Logger log = Logger.getLogger(WikipediaPartitionedMapper.class);
++  
++  public final static Charset UTF8 = Charset.forName("UTF-8");
++  public static final String DOCUMENT_COLUMN_FAMILY = "d";
++  public static final String METADATA_EVENT_COLUMN_FAMILY = "e";
++  public static final String METADATA_INDEX_COLUMN_FAMILY = "i";
++  public static final String TOKENS_FIELD_NAME = "TEXT";
++  
++  private static final Value NULL_VALUE = new Value(new byte[0]);
++  private static final String cvPrefix = "all|";
++  
++  private int numPartitions = 0;
++
++  private Text tablename = null;
++  private Text indexTableName = null;
++  private Text reverseIndexTableName = null;
++  private Text metadataTableName = null;
++  
++  @Override
++  public void setup(Context context) {
++    Configuration conf = context.getConfiguration();
++    tablename = new Text(WikipediaConfiguration.getTableName(conf));
++    indexTableName = new Text(tablename + "Index");
++    reverseIndexTableName = new Text(tablename + "ReverseIndex");
++    metadataTableName = new Text(tablename + "Metadata");
++    
++    numPartitions = WikipediaConfiguration.getNumPartitions(conf);
++  }
++  
++  @Override
++  protected void map(Text language, Article article, Context context) throws IOException, InterruptedException {
++    String NULL_BYTE = "\u0000";
++    String colfPrefix = language.toString() + NULL_BYTE;
++    String indexPrefix = "fi" + NULL_BYTE;
++    ColumnVisibility cv = new ColumnVisibility(cvPrefix + language);
++    
++    if (article != null) {
++      Text partitionId = new Text(Integer.toString(WikipediaMapper.getPartitionId(article, numPartitions)));
++      
++      // Create the mutations for the document.
++      // Row is partition id, colf is language0articleid, colq is fieldName\0fieldValue
++      Mutation m = new Mutation(partitionId);
++      for (Entry<String,Object> entry : article.getFieldValues().entrySet()) {
++        m.put(colfPrefix + article.getId(), entry.getKey() + NULL_BYTE + entry.getValue().toString(), cv, article.getTimestamp(), NULL_VALUE);
++        // Create mutations for the metadata table.
++        Mutation mm = new Mutation(entry.getKey());
++        mm.put(METADATA_EVENT_COLUMN_FAMILY, language.toString(), cv, article.getTimestamp(), NULL_VALUE);
++        context.write(metadataTableName, mm);
++      }
++      
++      // Tokenize the content
++      Set<String> tokens = getTokens(article);
++      
++      // We are going to put the fields to be indexed into a multimap. This allows us to iterate
++      // over the entire set once.
++      Multimap<String,String> indexFields = HashMultimap.create();
++      // Add the normalized field values
++      LcNoDiacriticsNormalizer normalizer = new LcNoDiacriticsNormalizer();
++      for (Entry<String,String> index : article.getNormalizedFieldValues().entrySet())
++        indexFields.put(index.getKey(), index.getValue());
++      // Add the tokens
++      for (String token : tokens)
++        indexFields.put(TOKENS_FIELD_NAME, normalizer.normalizeFieldValue("", token));
++      
++      for (Entry<String,String> index : indexFields.entries()) {
++        // Create mutations for the in partition index
++        // Row is partition id, colf is 'fi'\0fieldName, colq is fieldValue\0language\0article id
++        m.put(indexPrefix + index.getKey(), index.getValue() + NULL_BYTE + colfPrefix + article.getId(), cv, article.getTimestamp(), NULL_VALUE);
++        
++        // Create mutations for the global index
++        // Create a UID object for the Value
++        Builder uidBuilder = Uid.List.newBuilder();
++        uidBuilder.setIGNORE(false);
++        uidBuilder.setCOUNT(1);
++        uidBuilder.addUID(Integer.toString(article.getId()));
++        Uid.List uidList = uidBuilder.build();
++        Value val = new Value(uidList.toByteArray());
++        
++        // Create mutations for the global index
++        // Row is field value, colf is field name, colq is partitionid\0language, value is Uid.List object
++        Mutation gm = new Mutation(index.getValue());
++        gm.put(index.getKey(), partitionId + NULL_BYTE + language, cv, article.getTimestamp(), val);
++        context.write(indexTableName, gm);
++        
++        // Create mutations for the global reverse index
++        Mutation grm = new Mutation(StringUtils.reverse(index.getValue()));
++        grm.put(index.getKey(), partitionId + NULL_BYTE + language, cv, article.getTimestamp(), val);
++        context.write(reverseIndexTableName, grm);
++        
++        // Create mutations for the metadata table.
++        Mutation mm = new Mutation(index.getKey());
++        mm.put(METADATA_INDEX_COLUMN_FAMILY, language + NULL_BYTE + LcNoDiacriticsNormalizer.class.getName(), cv, article.getTimestamp(), NULL_VALUE);
++        context.write(metadataTableName, mm);
++        
++      }
++      // Add the entire text to the document section of the table.
++      // row is the partition, colf is 'd', colq is language\0articleid, value is Base64 encoded GZIP'd document
++      m.put(DOCUMENT_COLUMN_FAMILY, colfPrefix + article.getId(), cv, article.getTimestamp(), new Value(Base64.encodeBase64(article.getText().getBytes())));
++      context.write(tablename, m);
++      
++    } else {
++      context.getCounter("wikipedia", "invalid articles").increment(1);
++    }
++    context.progress();
++  }
++  
++  /**
++   * Tokenize the wikipedia content
++   * 
++   * @param article
++   * @return
++   * @throws IOException
++   */
++  private Set<String> getTokens(Article article) throws IOException {
++    Set<String> tokenList = new HashSet<String>();
++    WikipediaTokenizer tok = new WikipediaTokenizer(new StringReader(article.getText()));
++    TermAttribute term = tok.addAttribute(TermAttribute.class);
++    try {
++      while (tok.incrementToken()) {
++        String token = term.term();
++        if (!StringUtils.isEmpty(token))
++          tokenList.add(token);
++      }
++    } catch (IOException e) {
++      log.error("Error tokenizing text", e);
++    } finally {
++      try {
++        tok.end();
++      } catch (IOException e) {
++        log.error("Error calling end()", e);
++      } finally {
++        try {
++          tok.close();
++        } catch (IOException e) {
++          log.error("Error closing tokenizer", e);
++        }
++      }
++    }
++    return tokenList;
++  }
++  
++}
+diff --git a/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitioner.java b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitioner.java
+new file mode 100644
+index 0000000..82af9fd
+--- /dev/null
++++ b/src/examples/wikisearch/ingest/src/main/java/org/apache/accumulo/examples/wikisearch/ingest/WikipediaPartitioner.java
+@@ -0,0 +1,108 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++/**
++ * 
++ */
++package org.apache.accumulo.examples.wikisearch.ingest;
++
++
++import java.io.ByteArrayInputStream;
++import java.io.IOException;
++import java.io.InputStreamReader;
++import java.io.StringReader;
++import java.nio.charset.Charset;
++import java.util.HashSet;
++import java.util.IllegalFormatException;
++import java.util.Map.Entry;
++import java.util.Set;
++import java.util.regex.Matcher;
++import java.util.regex.Pattern;
++
++import org.apache.accumulo.core.data.Mutation;
++import org.apache.accumulo.core.data.Value;
++import org.apache.accumulo.core.security.ColumnVisibility;
++import org.apache.accumulo.examples.wikisearch.ingest.ArticleExtractor.Article;
++import org.apache.accumulo.examples.wikisearch.ingest.WikipediaInputFormat.WikipediaInputSplit;
++import org.apache.accumulo.examples.wikisearch.normalizer.LcNoDiacriticsNormalizer;
++import org.apache.accumulo.examples.wikisearch.protobuf.Uid;
++import org.apache.accumulo.examples.wikisearch.protobuf.Uid.List.Builder;
++import org.apache.commons.codec.binary.Base64;
++import org.apache.commons.lang.StringUtils;
++import org.apache.hadoop.conf.Configuration;
++import org.apache.hadoop.io.LongWritable;
++import org.apache.hadoop.io.Text;
++import org.apache.hadoop.mapreduce.Mapper;
++import org.apache.hadoop.mapreduce.lib.input.FileSplit;
++import org.apache.log4j.Logger;
++import org.apache.lucene.analysis.tokenattributes.TermAttribute;
++import org.apache.lucene.wikipedia.analysis.WikipediaTokenizer;
++
++import com.google.common.collect.HashMultimap;
++import com.google.common.collect.Multimap;
++
++public class WikipediaPartitioner extends Mapper<LongWritable,Text,Text,Article> {
++  
++  private static final Logger log = Logger.getLogger(WikipediaPartitioner.class);
++  
++  public final static Charset UTF8 = Charset.forName("UTF-8");
++  public static final String DOCUMENT_COLUMN_FAMILY = "d";
++  public static final String METADATA_EVENT_COLUMN_FAMILY = "e";
++  public static final String METADATA_INDEX_COLUMN_FAMILY = "i";
++  public static final String TOKENS_FIELD_NAME = "TEXT";
++  
++  private final static Pattern languagePattern = Pattern.compile("([a-z_]+).*.xml(.bz2)?");
++  
++  private ArticleExtractor extractor;
++  private String language;
++
++  private int myGroup = -1;
++  private int numGroups = -1;
++  
++  @Override
++  public void setup(Context context) {
++    Configuration conf = context.getConfiguration();
++    
++    WikipediaInputSplit wiSplit = (WikipediaInputSplit)context.getInputSplit();
++    myGroup = wiSplit.getPartition();
++    numGroups = WikipediaConfiguration.getNumGroups(conf);
++    
++    FileSplit split = wiSplit.getFileSplit();
++    String fileName = split.getPath().getName();
++    Matcher matcher = languagePattern.matcher(fileName);
++    if (matcher.matches()) {
++      language = matcher.group(1).replace('_', '-').toLowerCase();
++    } else {
++      throw new RuntimeException("Unknown ingest language! " + fileName);
++    }
++    extractor = new ArticleExtractor();
++  }
++  
++  @Override
++  protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
++    Article article = extractor.extract(new InputStreamReader(new ByteArrayInputStream(value.getBytes()), UTF8));
++    if (article != null) {
++      int groupId = WikipediaMapper.getPartitionId(article, numGroups);
++      if(groupId != myGroup)
++        return;
++      context.write(new Text(language), article);
++    } else {
++      context.getCounter("wikipedia", "invalid articles").increment(1);
++      context.progress();
++    }
++  }
++  
++}
+diff --git a/src/server/src/main/java/org/apache/accumulo/server/tabletserver/Tablet.java b/src/server/src/main/java/org/apache/accumulo/server/tabletserver/Tablet.java
+index 3e719e6..e709704 100644
+--- a/src/server/src/main/java/org/apache/accumulo/server/tabletserver/Tablet.java
++++ b/src/server/src/main/java/org/apache/accumulo/server/tabletserver/Tablet.java
+@@ -123,6 +123,8 @@ import org.apache.hadoop.fs.FileSystem;
+ import org.apache.hadoop.fs.Path;
+ import org.apache.hadoop.io.Text;
+ import org.apache.log4j.Logger;
++import org.apache.zookeeper.KeeperException;
++import org.apache.zookeeper.KeeperException.NoNodeException;
+ 
+ import cloudtrace.instrument.Span;
+ import cloudtrace.instrument.Trace;
+@@ -2274,6 +2276,7 @@ public class Tablet {
+       if (updateMetadata) {
+         synchronized (this) {
+           updatingFlushID = false;
++          this.notifyAll();
+         }
+       }
+     }
+@@ -2281,8 +2284,19 @@ public class Tablet {
+   }
+   
+   boolean initiateMinorCompaction() {
++    if (isClosed()) {
++      // don't bother trying to get flush id if closed... could be closed after this check but that is ok... just trying to cut down on uneeded log messages....
++      return false;
++    }
++
+     // get the flush id before the new memmap is made available for write
+-    long flushId = getFlushID();
++    long flushId;
++    try {
++      flushId = getFlushID();
++    } catch (NoNodeException e) {
++      log.info("Asked to initiate MinC when there was no flush id " + getExtent() + " " + e.getMessage());
++      return false;
++    }
+     return initiateMinorCompaction(flushId);
+   }
+   
+@@ -2338,23 +2352,39 @@ public class Tablet {
+     return true;
+   }
+   
+-  long getFlushID() {
++  long getFlushID() throws NoNodeException {
+     try {
+       String zTablePath = Constants.ZROOT + "/" + HdfsZooInstance.getInstance().getInstanceID() + Constants.ZTABLES + "/" + extent.getTableId()
+           + Constants.ZTABLE_FLUSH_ID;
+       return Long.parseLong(new String(ZooReaderWriter.getRetryingInstance().getData(zTablePath, null)));
+-    } catch (Exception e) {
++    } catch (InterruptedException e) {
+       throw new RuntimeException(e);
++    } catch (NumberFormatException nfe) {
++      throw new RuntimeException(nfe);
++    } catch (KeeperException ke) {
++      if (ke instanceof NoNodeException) {
++        throw (NoNodeException) ke;
++      } else {
++        throw new RuntimeException(ke);
++      }
+     }
+   }
+   
+-  long getCompactionID() {
++  long getCompactionID() throws NoNodeException {
+     try {
+       String zTablePath = Constants.ZROOT + "/" + HdfsZooInstance.getInstance().getInstanceID() + Constants.ZTABLES + "/" + extent.getTableId()
+           + Constants.ZTABLE_COMPACT_ID;
+       return Long.parseLong(new String(ZooReaderWriter.getRetryingInstance().getData(zTablePath, null)));
+-    } catch (Exception e) {
++    } catch (InterruptedException e) {
+       throw new RuntimeException(e);
++    } catch (NumberFormatException nfe) {
++      throw new RuntimeException(nfe);
++    } catch (KeeperException ke) {
++      if (ke instanceof NoNodeException) {
++        throw (NoNodeException) ke;
++      } else {
++        throw new RuntimeException(ke);
++      }
+     }
+   }
+   
+@@ -2557,13 +2587,25 @@ public class Tablet {
+         }
+       }
+       
++      while (updatingFlushID) {
++        try {
++          this.wait(50);
++        } catch (InterruptedException e) {
++          log.error(e.toString());
++        }
++      }
++
+       if (!saveState || tabletMemory.getMemTable().getNumEntries() == 0) {
+         return;
+       }
+       
+       tabletMemory.waitForMinC();
+       
+-      mct = prepareForMinC(getFlushID());
++      try {
++        mct = prepareForMinC(getFlushID());
++      } catch (NoNodeException e) {
++        throw new RuntimeException(e);
++      }
+       
+       if (queueMinC) {
+         tabletResources.executeMinorCompaction(mct);
+@@ -2612,7 +2654,11 @@ public class Tablet {
+     tabletMemory.waitForMinC();
+     
+     if (saveState && tabletMemory.getMemTable().getNumEntries() > 0) {
+-      prepareForMinC(getFlushID()).run();
++      try {
++        prepareForMinC(getFlushID()).run();
++      } catch (NoNodeException e) {
++        throw new RuntimeException(e);
++      }
+     }
+     
+     if (saveState) {
+@@ -3103,7 +3149,11 @@ public class Tablet {
+       Long compactionId = null;
+       if (!propogateDeletes) {
+         // compacting everything, so update the compaction id in !METADATA
+-        compactionId = getCompactionID();
++        try {
++          compactionId = getCompactionID();
++        } catch (NoNodeException e) {
++          throw new RuntimeException(e);
++        }
+       }
+       
+       // need to handle case where only one file is being major compacted
+diff --git a/src/server/src/main/java/org/apache/accumulo/server/tabletserver/TabletServer.java b/src/server/src/main/java/org/apache/accumulo/server/tabletserver/TabletServer.java
+index e01ca07..94e8137 100644
+--- a/src/server/src/main/java/org/apache/accumulo/server/tabletserver/TabletServer.java
++++ b/src/server/src/main/java/org/apache/accumulo/server/tabletserver/TabletServer.java
+@@ -194,6 +194,7 @@ import org.apache.thrift.TProcessor;
+ import org.apache.thrift.TServiceClient;
+ import org.apache.thrift.server.TServer;
+ import org.apache.zookeeper.KeeperException;
++import org.apache.zookeeper.KeeperException.NoNodeException;
+ 
+ import cloudtrace.instrument.Span;
+ import cloudtrace.instrument.Trace;
+@@ -1887,7 +1888,13 @@ public class TabletServer extends AbstractMetricsImpl implements org.apache.accu
+         if (flushID == null) {
+           // read the flush id once from zookeeper instead of reading
+           // it for each tablet
+-          flushID = tablet.getFlushID();
++          try {
++            flushID = tablet.getFlushID();
++          } catch (NoNodeException e) {
++            // table was probably deleted
++            log.info("Asked to flush table that has no flush id " + ke + " " + e.getMessage());
++            return;
++          }
+         }
+         tablet.flush(flushID);
+       }
+@@ -1904,7 +1911,11 @@ public class TabletServer extends AbstractMetricsImpl implements org.apache.accu
+       Tablet tablet = onlineTablets.get(new KeyExtent(textent));
+       if (tablet != null) {
+         log.info("Flushing " + tablet.getExtent());
+-        tablet.flush(tablet.getFlushID());
++        try {
++          tablet.flush(tablet.getFlushID());
++        } catch (NoNodeException nne) {
++          log.info("Asked to flush tablet that has no flush id " + new KeyExtent(textent) + " " + nne.getMessage());
++        }
+       }
+     }
+     
+@@ -1999,7 +2010,12 @@ public class TabletServer extends AbstractMetricsImpl implements org.apache.accu
+         // all for the same table id, so only need to read
+         // compaction id once
+         if (compactionId == null)
+-          compactionId = tablet.getCompactionID();
++          try {
++            compactionId = tablet.getCompactionID();
++          } catch (NoNodeException e) {
++            log.info("Asked to compact table with no compaction id " + ke + " " + e.getMessage());
++            return;
++          }
+         tablet.compactAll(compactionId);
+       }
+       

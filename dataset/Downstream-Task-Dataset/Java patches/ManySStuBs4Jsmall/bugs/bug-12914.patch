@@ -1,0 +1,34 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/server/ResourceUtil.java b/presto-main/src/main/java/com/facebook/presto/server/ResourceUtil.java
+index 07e5841..2870b61 100644
+--- a/presto-main/src/main/java/com/facebook/presto/server/ResourceUtil.java
++++ b/presto-main/src/main/java/com/facebook/presto/server/ResourceUtil.java
+@@ -92,7 +92,11 @@
+             accessControl.checkCanSetUser(principal, user);
+         }
+         catch (AccessDeniedException e) {
+-            throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
++            throw new WebApplicationException(
++                    e,
++                    Response.status(Status.FORBIDDEN)
++                            .entity("Access denied: " + e.getMessage())
++                            .build());
+         }
+ 
+         Identity identity = new Identity(user, Optional.ofNullable(principal));
+diff --git a/presto-main/src/main/java/com/facebook/presto/server/ResourceUtil.java b/presto-main/src/main/java/com/facebook/presto/server/ResourceUtil.java
+index 07e5841..2870b61 100644
+--- a/presto-main/src/main/java/com/facebook/presto/server/ResourceUtil.java
++++ b/presto-main/src/main/java/com/facebook/presto/server/ResourceUtil.java
+@@ -92,7 +92,11 @@
+             accessControl.checkCanSetUser(principal, user);
+         }
+         catch (AccessDeniedException e) {
+-            throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
++            throw new WebApplicationException(
++                    e,
++                    Response.status(Status.FORBIDDEN)
++                            .entity("Access denied: " + e.getMessage())
++                            .build());
+         }
+ 
+         Identity identity = new Identity(user, Optional.ofNullable(principal));

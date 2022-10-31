@@ -1,0 +1,26 @@
+diff --git a/transport/src/main/java/io/netty/channel/group/DefaultChannelGroup.java b/transport/src/main/java/io/netty/channel/group/DefaultChannelGroup.java
+index d211d6d..09c7cf6 100644
+--- a/transport/src/main/java/io/netty/channel/group/DefaultChannelGroup.java
++++ b/transport/src/main/java/io/netty/channel/group/DefaultChannelGroup.java
+@@ -186,7 +186,7 @@
+             new LinkedHashMap<Integer, ChannelFuture>(size());
+ 
+         for (Channel c: serverChannels.values()) {
+-            futures.put(c.id(), c.close().awaitUninterruptibly());
++            futures.put(c.id(), c.close());
+         }
+         for (Channel c: nonServerChannels.values()) {
+             futures.put(c.id(), c.close());
+diff --git a/transport/src/main/java/io/netty/channel/group/DefaultChannelGroup.java b/transport/src/main/java/io/netty/channel/group/DefaultChannelGroup.java
+index d211d6d..09c7cf6 100644
+--- a/transport/src/main/java/io/netty/channel/group/DefaultChannelGroup.java
++++ b/transport/src/main/java/io/netty/channel/group/DefaultChannelGroup.java
+@@ -186,7 +186,7 @@
+             new LinkedHashMap<Integer, ChannelFuture>(size());
+ 
+         for (Channel c: serverChannels.values()) {
+-            futures.put(c.id(), c.close().awaitUninterruptibly());
++            futures.put(c.id(), c.close());
+         }
+         for (Channel c: nonServerChannels.values()) {
+             futures.put(c.id(), c.close());

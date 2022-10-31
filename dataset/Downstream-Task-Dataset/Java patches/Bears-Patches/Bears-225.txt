@@ -1,0 +1,59 @@
+--- a/src/main/java/io/lettuce/core/dynamic/DeclaredCommandMethod.java
++++ b/src/main/java/io/lettuce/core/dynamic/DeclaredCommandMethod.java
+@@ -79,8 +79,7 @@ public class DeclaredCommandMethod implements CommandMethod {
+ 
+         ResolvableType actualReturnType = this.returnType;
+ 
+-        while (Future.class.isAssignableFrom(actualReturnType.getRawClass())
+-                || ReactiveTypes.supports(actualReturnType.getRawClass())) {
++        while (Future.class.isAssignableFrom(actualReturnType.getRawClass())) {
+             ResolvableType[] generics = actualReturnType.getGenerics();
+ 
+             if (generics.length != 1) {
+diff --git a/src/main/java/io/lettuce/core/dynamic/ReactiveCommandSegmentCommandFactory.java b/src/main/java/io/lettuce/core/dynamic/ReactiveCommandSegmentCommandFactory.java
+index 1def7e6..e4d4247 100644
+--- a/src/main/java/io/lettuce/core/dynamic/ReactiveCommandSegmentCommandFactory.java
++++ b/src/main/java/io/lettuce/core/dynamic/ReactiveCommandSegmentCommandFactory.java
+@@ -31,7 +31,7 @@ class ReactiveCommandSegmentCommandFactory extends CommandSegmentCommandFactory
+ 
+     private boolean streamingExecution;
+ 
+-    public ReactiveCommandSegmentCommandFactory(CommandSegments commandSegments, CommandMethod commandMethod,
++    ReactiveCommandSegmentCommandFactory(CommandSegments commandSegments, CommandMethod commandMethod,
+             RedisCodec<?, ?> redisCodec, CommandOutputFactoryResolver outputResolver) {
+ 
+         super(commandSegments, commandMethod, redisCodec, outputResolver);
+@@ -49,20 +49,27 @@ class ReactiveCommandSegmentCommandFactory extends CommandSegmentCommandFactory
+     @Override
+     protected CommandOutputFactory resolveCommandOutputFactory(OutputSelector outputSelector) {
+ 
+-        CommandOutputFactory factory = getOutputResolver().resolveStreamingCommandOutput(outputSelector);
++        streamingExecution = ReactiveTypes.isMultiValueType(outputSelector.getOutputType().getRawClass());
+ 
+-        if (factory != null) {
+-            streamingExecution = true;
+-            return factory;
++        OutputSelector componentType = new OutputSelector(outputSelector.getOutputType().getGeneric(0),
++                outputSelector.getRedisCodec());
++
++        if (streamingExecution) {
++
++            CommandOutputFactory streamingFactory = getOutputResolver().resolveStreamingCommandOutput(componentType);
++
++            if (streamingExecution && streamingFactory != null) {
++                return streamingFactory;
++            }
+         }
+ 
+-        return super.resolveCommandOutputFactory(outputSelector);
++        return super.resolveCommandOutputFactory(componentType);
+     }
+ 
+     /**
+      * @return {@literal true} if the resolved {@link io.lettuce.core.output.CommandOutput} should use streaming.
+      */
+-    public boolean isStreamingExecution() {
++    boolean isStreamingExecution() {
+         return streamingExecution;
+     }
+ }

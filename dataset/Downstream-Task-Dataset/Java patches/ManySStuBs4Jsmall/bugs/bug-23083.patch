@@ -1,0 +1,70 @@
+diff --git a/modules/swagger-jaxrs2/src/test/java/io/swagger/jaxrs2/annotations/security/SecurityTests.java b/modules/swagger-jaxrs2/src/test/java/io/swagger/jaxrs2/annotations/security/SecurityTests.java
+index dc45fac..f409db3 100644
+--- a/modules/swagger-jaxrs2/src/test/java/io/swagger/jaxrs2/annotations/security/SecurityTests.java
++++ b/modules/swagger-jaxrs2/src/test/java/io/swagger/jaxrs2/annotations/security/SecurityTests.java
+@@ -19,25 +19,14 @@
+         String expectedYAML = "components:\n" +
+                 "  securitySchemes:\n" +
+                 "    myOauth2Security:\n" +
+-                "      name: \"myOauth2Security\"\n" +
++                "      type: oauth2\n" +
++                "      name: myOauth2Security\n" +
++                "      in: header\n" +
+                 "      flows:\n" +
+                 "        implicit:\n" +
+-                "          authorizationUrl: \"http://url.com/auth\"\n" +
++                "          authorizationUrl: http://url.com/auth\n" +
+                 "          scopes:\n" +
+-                "            name: \"write:pets\"\n" +
+-                "            description: \"modify pets in your account\"\n" +
+-                "        password:\n" +
+-                "          scopes:\n" +
+-                "            name: \"\"\n" +
+-                "            description: \"\"\n" +
+-                "        clientCredentials:\n" +
+-                "          scopes:\n" +
+-                "            name: \"\"\n" +
+-                "            description: \"\"\n" +
+-                "        authorizationCode:\n" +
+-                "          scopes:\n" +
+-                "            name: \"\"\n" +
+-                "            description: \"\"";
++                "            write:pets: modify pets in your account";
+         assertEquals(extractedYAML, expectedYAML);
+ 
+     }
+diff --git a/modules/swagger-jaxrs2/src/test/java/io/swagger/jaxrs2/annotations/security/SecurityTests.java b/modules/swagger-jaxrs2/src/test/java/io/swagger/jaxrs2/annotations/security/SecurityTests.java
+index dc45fac..f409db3 100644
+--- a/modules/swagger-jaxrs2/src/test/java/io/swagger/jaxrs2/annotations/security/SecurityTests.java
++++ b/modules/swagger-jaxrs2/src/test/java/io/swagger/jaxrs2/annotations/security/SecurityTests.java
+@@ -19,25 +19,14 @@
+         String expectedYAML = "components:\n" +
+                 "  securitySchemes:\n" +
+                 "    myOauth2Security:\n" +
+-                "      name: \"myOauth2Security\"\n" +
++                "      type: oauth2\n" +
++                "      name: myOauth2Security\n" +
++                "      in: header\n" +
+                 "      flows:\n" +
+                 "        implicit:\n" +
+-                "          authorizationUrl: \"http://url.com/auth\"\n" +
++                "          authorizationUrl: http://url.com/auth\n" +
+                 "          scopes:\n" +
+-                "            name: \"write:pets\"\n" +
+-                "            description: \"modify pets in your account\"\n" +
+-                "        password:\n" +
+-                "          scopes:\n" +
+-                "            name: \"\"\n" +
+-                "            description: \"\"\n" +
+-                "        clientCredentials:\n" +
+-                "          scopes:\n" +
+-                "            name: \"\"\n" +
+-                "            description: \"\"\n" +
+-                "        authorizationCode:\n" +
+-                "          scopes:\n" +
+-                "            name: \"\"\n" +
+-                "            description: \"\"";
++                "            write:pets: modify pets in your account";
+         assertEquals(extractedYAML, expectedYAML);
+ 
+     }

@@ -1,0 +1,17 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/markup/MergedMarkup.java b/wicket/src/main/java/org/apache/wicket/markup/MergedMarkup.java
+index 1e686c2..c1194ff 100644
+--- a/wicket/src/main/java/org/apache/wicket/markup/MergedMarkup.java
++++ b/wicket/src/main/java/org/apache/wicket/markup/MergedMarkup.java
+@@ -63,6 +63,12 @@ public class MergedMarkup extends Markup
+ 
+ 		getMarkupResourceStream().setBaseMarkup(baseMarkup);
+ 
++		// Copy settings from derived markup
++		MarkupResourceStream baseResourceStream = baseMarkup.getMarkupResourceStream();
++		getMarkupResourceStream().setXmlDeclaration(baseResourceStream.getXmlDeclaration());
++		getMarkupResourceStream().setEncoding(baseResourceStream.getEncoding());
++		getMarkupResourceStream().setWicketNamespace(baseResourceStream.getWicketNamespace());
++
+ 		if (log.isDebugEnabled())
+ 		{
+ 			String derivedResource = Strings.afterLast(markup.getMarkupResourceStream()

@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultAsyncSupportResolver.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultAsyncSupportResolver.java
+index 4e4a044..cedab00 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultAsyncSupportResolver.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultAsyncSupportResolver.java
+@@ -227,7 +227,7 @@
+      */
+     public AsyncSupport newCometSupport(final Class<? extends AsyncSupport> targetClass) {
+         try {
+-            return targetClass.getDeclaredConstructor(new Class[]{AtmosphereConfig.class})
++            return (AsyncSupport) targetClass.getDeclaredConstructor(new Class[]{AtmosphereConfig.class})
+                     .newInstance(config);
+         } catch (final Exception e) {
+             logger.error("Failed to create comet support class: {}, error: {}", targetClass, e);
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultAsyncSupportResolver.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultAsyncSupportResolver.java
+index 4e4a044..cedab00 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultAsyncSupportResolver.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultAsyncSupportResolver.java
+@@ -227,7 +227,7 @@
+      */
+     public AsyncSupport newCometSupport(final Class<? extends AsyncSupport> targetClass) {
+         try {
+-            return targetClass.getDeclaredConstructor(new Class[]{AtmosphereConfig.class})
++            return (AsyncSupport) targetClass.getDeclaredConstructor(new Class[]{AtmosphereConfig.class})
+                     .newInstance(config);
+         } catch (final Exception e) {
+             logger.error("Failed to create comet support class: {}, error: {}", targetClass, e);

@@ -1,0 +1,28 @@
+diff --git a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/ZWaveNetworkMonitor.java b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/ZWaveNetworkMonitor.java
+index 3704922..66cfe9b 100644
+--- a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/ZWaveNetworkMonitor.java
++++ b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/ZWaveNetworkMonitor.java
+@@ -331,7 +331,8 @@
+ 
+ 			// We now have the oldest node that we've heard from - ping it!
+ 			// If we've actually received from this node recently, the don't bother to ping
+-			if (oldestNode != null && oldestNode.getLastReceived().getTime() < System.currentTimeMillis() - pollPeriod) {
++			if (oldestNode != null && oldestNode.getLastReceived() != null &&
++					oldestNode.getLastReceived().getTime() < System.currentTimeMillis() - pollPeriod) {
+ 				logger.debug("NODE {}: Sending periodic PING.", oldestNode.getNodeId());
+ 
+ 				// Reset the resend count - also resets the lastUpdate timer
+diff --git a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/ZWaveNetworkMonitor.java b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/ZWaveNetworkMonitor.java
+index 3704922..66cfe9b 100644
+--- a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/ZWaveNetworkMonitor.java
++++ b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/ZWaveNetworkMonitor.java
+@@ -331,7 +331,8 @@
+ 
+ 			// We now have the oldest node that we've heard from - ping it!
+ 			// If we've actually received from this node recently, the don't bother to ping
+-			if (oldestNode != null && oldestNode.getLastReceived().getTime() < System.currentTimeMillis() - pollPeriod) {
++			if (oldestNode != null && oldestNode.getLastReceived() != null &&
++					oldestNode.getLastReceived().getTime() < System.currentTimeMillis() - pollPeriod) {
+ 				logger.debug("NODE {}: Sending periodic PING.", oldestNode.getNodeId());
+ 
+ 				// Reset the resend count - also resets the lastUpdate timer

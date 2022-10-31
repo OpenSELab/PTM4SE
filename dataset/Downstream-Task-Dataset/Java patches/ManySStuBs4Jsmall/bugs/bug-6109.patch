@@ -1,0 +1,52 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java b/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
+index b658bc3..e444ee8 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
+@@ -33,7 +33,7 @@
+  */
+ @XmlRootElement(name = "from")
+ @XmlAccessorType(XmlAccessType.FIELD)
+-public class FromDefinition extends OptionalIdentifiedType<FromDefinition> {
++public class FromDefinition extends OptionalIdentifiedDefinition<FromDefinition> {
+     @XmlAttribute
+     private String uri;
+     @XmlAttribute
+diff --git a/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java b/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
+index d760e05..fd50d18 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
+@@ -71,7 +71,7 @@
+  * @version $Revision$
+  */
+ @XmlAccessorType(XmlAccessType.PROPERTY)
+-public abstract class ProcessorDefinition<Type extends ProcessorDefinition> extends OptionalIdentifiedType<Type> implements Block {
++public abstract class ProcessorDefinition<Type extends ProcessorDefinition> extends OptionalIdentifiedDefinition<Type> implements Block {
+     protected final transient Log log = LogFactory.getLog(getClass());
+     private ErrorHandlerBuilder errorHandlerBuilder;
+     private NodeFactory nodeFactory;
+diff --git a/camel-core/src/main/java/org/apache/camel/model/RoutesDefinition.java b/camel-core/src/main/java/org/apache/camel/model/RoutesDefinition.java
+index aaf91d2..032c730 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/RoutesDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/RoutesDefinition.java
+@@ -36,7 +36,7 @@
+  */
+ @XmlRootElement(name = "routes")
+ @XmlAccessorType(XmlAccessType.FIELD)
+-public class RoutesDefinition extends OptionalIdentifiedType<RoutesDefinition> implements RouteContainer {
++public class RoutesDefinition extends OptionalIdentifiedDefinition<RoutesDefinition> implements RouteContainer {
+     @XmlElementRef
+     private List<RouteDefinition> routes = new ArrayList<RouteDefinition>();
+     @XmlTransient
+diff --git a/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java b/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
+index b658bc3..e444ee8 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
+@@ -33,7 +33,7 @@
+  */
+ @XmlRootElement(name = "from")
+ @XmlAccessorType(XmlAccessType.FIELD)
+-public class FromDefinition extends OptionalIdentifiedType<FromDefinition> {
++public class FromDefinition extends OptionalIdentifiedDefinition<FromDefinition> {
+     @XmlAttribute
+     private String uri;
+     @XmlAttribute

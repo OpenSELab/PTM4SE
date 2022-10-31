@@ -1,0 +1,34 @@
+diff --git a/src/main/java/io/vertx/core/json/impl/Json.java b/src/main/java/io/vertx/core/json/impl/Json.java
+index 9964be3..fade5f3 100644
+--- a/src/main/java/io/vertx/core/json/impl/Json.java
++++ b/src/main/java/io/vertx/core/json/impl/Json.java
+@@ -112,10 +112,9 @@
+     }
+   }
+ 
+-  @SuppressWarnings("unchecked")
+-  public static <T> T decodeValue(String str, Class<?> clazz) throws DecodeException {
++  public static <T> T decodeValue(String str, Class<T> clazz) throws DecodeException {
+     try {
+-      return (T)mapper.readValue(str, clazz);
++      return mapper.readValue(str, clazz);
+     }
+     catch (Exception e) {
+       throw new DecodeException("Failed to decode:" + e.getMessage());
+diff --git a/src/main/java/io/vertx/core/json/impl/Json.java b/src/main/java/io/vertx/core/json/impl/Json.java
+index 9964be3..fade5f3 100644
+--- a/src/main/java/io/vertx/core/json/impl/Json.java
++++ b/src/main/java/io/vertx/core/json/impl/Json.java
+@@ -112,10 +112,9 @@
+     }
+   }
+ 
+-  @SuppressWarnings("unchecked")
+-  public static <T> T decodeValue(String str, Class<?> clazz) throws DecodeException {
++  public static <T> T decodeValue(String str, Class<T> clazz) throws DecodeException {
+     try {
+-      return (T)mapper.readValue(str, clazz);
++      return mapper.readValue(str, clazz);
+     }
+     catch (Exception e) {
+       throw new DecodeException("Failed to decode:" + e.getMessage());

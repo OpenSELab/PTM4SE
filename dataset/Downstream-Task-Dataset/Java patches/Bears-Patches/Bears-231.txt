@@ -1,0 +1,25 @@
+--- a/src/main/java/org/jsapar/compose/bean/BeanComposer.java
++++ b/src/main/java/org/jsapar/compose/bean/BeanComposer.java
+@@ -136,7 +136,7 @@ public class BeanComposer<T> implements Composer, BeanEventListener<T>, ErrorEve
+ 
+         for (Cell cell : line) {
+             String sName = cell.getName();
+-            if (sName == null || sName.isEmpty())
++            if (sName == null || sName.isEmpty() || cell.isEmpty())
+                 continue;
+ 
+             try {
+diff --git a/src/main/java/org/jsapar/parse/bean/Bean2Cell.java b/src/main/java/org/jsapar/parse/bean/Bean2Cell.java
+index 5a9b4ed..bdecb9b 100644
+--- a/src/main/java/org/jsapar/parse/bean/Bean2Cell.java
++++ b/src/main/java/org/jsapar/parse/bean/Bean2Cell.java
+@@ -228,6 +228,9 @@ public class Bean2Cell {
+ 
+     public void assign(Object bean, Cell cell)
+             throws BeanComposeException, InvocationTargetException, IllegalAccessException, InstantiationException {
++        if(cell.isEmpty()) {
++            return;
++        }
+         if (isLeaf()) {
+             assignProperty(bean, cell);
+             return;

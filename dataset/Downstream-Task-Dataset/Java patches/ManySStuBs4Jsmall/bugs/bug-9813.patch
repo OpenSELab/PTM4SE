@@ -1,0 +1,17 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
+index 4e2ff8f..8c48736 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
+@@ -74,7 +74,11 @@
+         Iterator it = mImports.iterator();
+         while (it.hasNext()) {
+             final String imp = (String) it.next();
+-            if (imp.endsWith(aName)) {
++            // Very important to add the "." in the check below. Otherwise you
++            // when checking for "DataException", it will match on
++            // "SecurityDataException". This has been the cause of a very
++            // difficult bug to resolve!
++            if (imp.endsWith("." + aName)) {
+                 if (isLoadable(imp)) {
+                     return safeLoad(imp);
+                 }

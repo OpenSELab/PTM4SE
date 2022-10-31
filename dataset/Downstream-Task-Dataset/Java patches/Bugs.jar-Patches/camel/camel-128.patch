@@ -1,0 +1,13 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/aggregate/AbstractListAggregationStrategy.java b/camel-core/src/main/java/org/apache/camel/processor/aggregate/AbstractListAggregationStrategy.java
+index ad2ec8e..d4ff93f 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/aggregate/AbstractListAggregationStrategy.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/aggregate/AbstractListAggregationStrategy.java
+@@ -62,7 +62,7 @@ public abstract class AbstractListAggregationStrategy<V> implements CompletionAw
+ 
+     @SuppressWarnings("unchecked")
+     public void onCompletion(Exchange exchange) {
+-        if (isStoreAsBodyOnCompletion()) {
++        if (exchange != null && isStoreAsBodyOnCompletion()) {
+             List<V> list = (List<V>) exchange.removeProperty(Exchange.GROUPED_EXCHANGE);
+             if (list != null) {
+                 exchange.getIn().setBody(list);

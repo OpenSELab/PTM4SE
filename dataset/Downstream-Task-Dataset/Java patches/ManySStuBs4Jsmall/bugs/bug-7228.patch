@@ -1,0 +1,61 @@
+diff --git a/hbase-procedure/src/main/java/org/apache/hadoop/hbase/procedure2/store/wal/ProcedureWALFile.java b/hbase-procedure/src/main/java/org/apache/hadoop/hbase/procedure2/store/wal/ProcedureWALFile.java
+index 1e9ef6e..6226350 100644
+--- a/hbase-procedure/src/main/java/org/apache/hadoop/hbase/procedure2/store/wal/ProcedureWALFile.java
++++ b/hbase-procedure/src/main/java/org/apache/hadoop/hbase/procedure2/store/wal/ProcedureWALFile.java
+@@ -160,7 +160,7 @@
+     boolean archived = false;
+     if (walArchiveDir != null) {
+       Path archivedFile = new Path(walArchiveDir, logFile.getName());
+-      LOG.info("ARCHIVED (TODO: FILES ARE NOT PURGED FROM ARCHIVE!) " + logFile + " to " + archivedFile);
++      LOG.info("Archiving " + logFile + " to " + archivedFile);
+       if (!fs.rename(logFile, archivedFile)) {
+         LOG.warn("Failed archive of " + logFile + ", deleting");
+       } else {
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/procedure/MasterProcedureUtil.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/procedure/MasterProcedureUtil.java
+index b87f437..4afd711 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/procedure/MasterProcedureUtil.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/procedure/MasterProcedureUtil.java
+@@ -147,7 +147,7 @@
+    * Pattern used to validate a Procedure WAL file name see
+    * {@link #validateProcedureWALFilename(String)} for description.
+    */
+-  private static final Pattern pattern = Pattern.compile(".*pv-\\d{20}.log");
++  private static final Pattern pattern = Pattern.compile(".*pv2-\\d{20}.log");
+ 
+   /**
+    * A Procedure WAL file name is of the format: pv-&lt;wal-id&gt;.log where wal-id is 20 digits.
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/master/cleaner/TestLogsCleaner.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/master/cleaner/TestLogsCleaner.java
+index 43fc6a4..2d517c4 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/master/cleaner/TestLogsCleaner.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/master/cleaner/TestLogsCleaner.java
+@@ -134,7 +134,7 @@
+ 
+     // Case 2: 5 Procedure WALs that are old which would be deleted
+     for (int i = 1; i < 6; i++) {
+-      Path fileName = new Path(oldProcedureWALDir, String.format("pv-%020d.log", i));
++      Path fileName = new Path(oldProcedureWALDir, String.format("pv2-%020d.log", i));
+       fs.createNewFile(fileName);
+     }
+ 
+@@ -155,7 +155,7 @@
+ 
+     // Case 5: 5 Procedure WALs that are new, will stay
+     for (int i = 6; i < 11; i++) {
+-      Path fileName = new Path(oldProcedureWALDir, String.format("pv-%020d.log", i));
++      Path fileName = new Path(oldProcedureWALDir, String.format("pv2-%020d.log", i));
+       fs.createNewFile(fileName);
+     }
+ 
+diff --git a/hbase-procedure/src/main/java/org/apache/hadoop/hbase/procedure2/store/wal/ProcedureWALFile.java b/hbase-procedure/src/main/java/org/apache/hadoop/hbase/procedure2/store/wal/ProcedureWALFile.java
+index 1e9ef6e..6226350 100644
+--- a/hbase-procedure/src/main/java/org/apache/hadoop/hbase/procedure2/store/wal/ProcedureWALFile.java
++++ b/hbase-procedure/src/main/java/org/apache/hadoop/hbase/procedure2/store/wal/ProcedureWALFile.java
+@@ -160,7 +160,7 @@
+     boolean archived = false;
+     if (walArchiveDir != null) {
+       Path archivedFile = new Path(walArchiveDir, logFile.getName());
+-      LOG.info("ARCHIVED (TODO: FILES ARE NOT PURGED FROM ARCHIVE!) " + logFile + " to " + archivedFile);
++      LOG.info("Archiving " + logFile + " to " + archivedFile);
+       if (!fs.rename(logFile, archivedFile)) {
+         LOG.warn("Failed archive of " + logFile + ", deleting");
+       } else {

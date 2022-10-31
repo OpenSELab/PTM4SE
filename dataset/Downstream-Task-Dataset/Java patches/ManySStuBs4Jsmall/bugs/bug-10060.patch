@@ -1,0 +1,21 @@
+diff --git a/src/jvm/clojure/lang/APersistentVector.java b/src/jvm/clojure/lang/APersistentVector.java
+index e6da23b..28bc856 100644
+--- a/src/jvm/clojure/lang/APersistentVector.java
++++ b/src/jvm/clojure/lang/APersistentVector.java
+@@ -272,14 +272,14 @@
+ 	public Object reduce(IFn f) throws Exception{
+ 		Object ret = v.nth(i);
+ 		for(int x = i + 1; x < v.count(); x++)
+-			ret = f.invoke(ret, x);
++			ret = f.invoke(ret, v.nth(x));
+ 		return ret;
+ 	}
+ 
+ 	public Object reduce(IFn f, Object start) throws Exception{
+ 		Object ret = f.invoke(start, v.nth(i));
+ 		for(int x = i + 1; x < v.count(); x++)
+-			ret = f.invoke(ret, x);
++			ret = f.invoke(ret, v.nth(x));
+ 		return ret;
+ 	}
+ }

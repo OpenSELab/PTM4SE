@@ -1,0 +1,44 @@
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
+index e5dd063..b262690 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
+@@ -928,7 +928,7 @@
+ 
+     public void testCreateEmptyBucketedPartition(HiveStorageFormat storageFormat)
+     {
+-        String tableName = "test_insert_partitioned_bucketed_table";
++        String tableName = "test_insert_empty_partitioned_bucketed_table";
+         createPartitionedBucketedTable(tableName, storageFormat);
+ 
+         List<String> orderStatusList = ImmutableList.of("F", "O", "P");
+@@ -936,7 +936,7 @@
+             String sql = format("CALL system.create_empty_partition('%s', '%s', ARRAY['orderstatus'], ARRAY['%s'])", TPCH_SCHEMA, tableName, orderStatusList.get(i));
+             assertUpdate(sql);
+             assertQuery(
+-                    "SELECT count(*) FROM \"test_insert_partitioned_bucketed_table$partitions\"",
++                    format("SELECT count(*) FROM \"%s$partitions\"", tableName),
+                     "SELECT " + (i + 1));
+ 
+             assertQueryFails(sql, "Partition already exists.*");
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
+index e5dd063..b262690 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
+@@ -928,7 +928,7 @@
+ 
+     public void testCreateEmptyBucketedPartition(HiveStorageFormat storageFormat)
+     {
+-        String tableName = "test_insert_partitioned_bucketed_table";
++        String tableName = "test_insert_empty_partitioned_bucketed_table";
+         createPartitionedBucketedTable(tableName, storageFormat);
+ 
+         List<String> orderStatusList = ImmutableList.of("F", "O", "P");
+@@ -936,7 +936,7 @@
+             String sql = format("CALL system.create_empty_partition('%s', '%s', ARRAY['orderstatus'], ARRAY['%s'])", TPCH_SCHEMA, tableName, orderStatusList.get(i));
+             assertUpdate(sql);
+             assertQuery(
+-                    "SELECT count(*) FROM \"test_insert_partitioned_bucketed_table$partitions\"",
++                    format("SELECT count(*) FROM \"%s$partitions\"", tableName),
+                     "SELECT " + (i + 1));
+ 
+             assertQueryFails(sql, "Partition already exists.*");

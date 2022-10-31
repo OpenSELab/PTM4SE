@@ -1,0 +1,13 @@
+diff --git a/src/main/java/io/mycat/route/parser/druid/impl/DruidSelectOracleParser.java b/src/main/java/io/mycat/route/parser/druid/impl/DruidSelectOracleParser.java
+index 4d7d423..094e017 100644
+--- a/src/main/java/io/mycat/route/parser/druid/impl/DruidSelectOracleParser.java
++++ b/src/main/java/io/mycat/route/parser/druid/impl/DruidSelectOracleParser.java
+@@ -55,7 +55,7 @@
+ 			{
+ 				parseOrderAggGroupMysql(schema, selectStmt,rrs, mysqlSelectQuery);
+ 				//更改canRunInReadDB属性
+-				if ((mysqlSelectQuery.isForUpdate() || mysqlSelectQuery.isLockInShareMode()) && rrs.isAutocommit() == false)
++				if ((mysqlSelectQuery.isForUpdate() || mysqlSelectQuery.isLockInShareMode()) && !rrs.isAutocommit())
+ 				{
+ 					rrs.setCanRunInReadDB(false);
+ 				}

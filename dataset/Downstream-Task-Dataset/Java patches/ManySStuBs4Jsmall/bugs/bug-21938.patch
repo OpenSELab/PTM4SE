@@ -1,0 +1,26 @@
+diff --git a/src/edu/stanford/nlp/pipeline/CorefAnnotator.java b/src/edu/stanford/nlp/pipeline/CorefAnnotator.java
+index 5463606..04eea9e 100644
+--- a/src/edu/stanford/nlp/pipeline/CorefAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/CorefAnnotator.java
+@@ -85,7 +85,7 @@
+       sourceNERTagClass = CoreAnnotations.NamedEntityTagAnnotation.class;
+     // switch tags
+     for (CoreLabel token : tokens) {
+-      if (!token.get(sourceNERTagClass).equals("") && token.get(sourceNERTagClass) != null)
++      if (token.get(sourceNERTagClass) != null && !token.get(sourceNERTagClass).equals(""))
+         token.set(CoreAnnotations.NamedEntityTagAnnotation.class, token.get(sourceNERTagClass));
+     }
+   }
+diff --git a/src/edu/stanford/nlp/pipeline/CorefAnnotator.java b/src/edu/stanford/nlp/pipeline/CorefAnnotator.java
+index 5463606..04eea9e 100644
+--- a/src/edu/stanford/nlp/pipeline/CorefAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/CorefAnnotator.java
+@@ -85,7 +85,7 @@
+       sourceNERTagClass = CoreAnnotations.NamedEntityTagAnnotation.class;
+     // switch tags
+     for (CoreLabel token : tokens) {
+-      if (!token.get(sourceNERTagClass).equals("") && token.get(sourceNERTagClass) != null)
++      if (token.get(sourceNERTagClass) != null && !token.get(sourceNERTagClass).equals(""))
+         token.set(CoreAnnotations.NamedEntityTagAnnotation.class, token.get(sourceNERTagClass));
+     }
+   }

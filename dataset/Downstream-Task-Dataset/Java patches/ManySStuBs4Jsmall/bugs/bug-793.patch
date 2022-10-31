@@ -1,0 +1,14 @@
+diff --git a/core/server/src/main/java/alluxio/worker/file/UnderFileSystemManager.java b/core/server/src/main/java/alluxio/worker/file/UnderFileSystemManager.java
+index de0cdaa..7036800 100644
+--- a/core/server/src/main/java/alluxio/worker/file/UnderFileSystemManager.java
++++ b/core/server/src/main/java/alluxio/worker/file/UnderFileSystemManager.java
+@@ -308,7 +308,8 @@
+       mStream.close();
+       UnderFileSystem ufs = UnderFileSystem.get(mUri, mConfiguration);
+       if (ufs.rename(mTemporaryUri, mUri)) {
+-        if (!perm.getOwner().isEmpty() || !perm.getGroup().isEmpty()) {
++        if ((perm.getOwner() != null && !perm.getOwner().isEmpty())
++            || (perm.getGroup() != null && !perm.getGroup().isEmpty())) {
+           try {
+             ufs.setOwner(mUri, perm.getOwner(), perm.getGroup());
+           } catch (Exception e) {

@@ -1,0 +1,44 @@
+diff --git a/community/server/src/main/java/org/neo4j/server/rest/transactional/TransactionHandle.java b/community/server/src/main/java/org/neo4j/server/rest/transactional/TransactionHandle.java
+index 7447f82..f3da84f 100644
+--- a/community/server/src/main/java/org/neo4j/server/rest/transactional/TransactionHandle.java
++++ b/community/server/src/main/java/org/neo4j/server/rest/transactional/TransactionHandle.java
+@@ -122,7 +122,7 @@
+                 }
+                 catch ( CypherException e )
+                 {
+-                    errors.add( new Neo4jError( EXCEPTION_MAPPING.apply( e ), e ) );
++                    errors.add( new Neo4jError( e.status(), e ) );
+                     throw e;
+                 }
+ 
+@@ -333,7 +333,7 @@
+             }
+             catch ( CypherException e )
+             {
+-                errors.add( new Neo4jError( EXCEPTION_MAPPING.apply( e ), e ) );
++                errors.add( new Neo4jError( e.status(), e ) );
+             }
+             catch( DeadlockDetectedException e )
+             {
+diff --git a/community/server/src/main/java/org/neo4j/server/rest/transactional/TransactionHandle.java b/community/server/src/main/java/org/neo4j/server/rest/transactional/TransactionHandle.java
+index 7447f82..f3da84f 100644
+--- a/community/server/src/main/java/org/neo4j/server/rest/transactional/TransactionHandle.java
++++ b/community/server/src/main/java/org/neo4j/server/rest/transactional/TransactionHandle.java
+@@ -122,7 +122,7 @@
+                 }
+                 catch ( CypherException e )
+                 {
+-                    errors.add( new Neo4jError( EXCEPTION_MAPPING.apply( e ), e ) );
++                    errors.add( new Neo4jError( e.status(), e ) );
+                     throw e;
+                 }
+ 
+@@ -333,7 +333,7 @@
+             }
+             catch ( CypherException e )
+             {
+-                errors.add( new Neo4jError( EXCEPTION_MAPPING.apply( e ), e ) );
++                errors.add( new Neo4jError( e.status(), e ) );
+             }
+             catch( DeadlockDetectedException e )
+             {

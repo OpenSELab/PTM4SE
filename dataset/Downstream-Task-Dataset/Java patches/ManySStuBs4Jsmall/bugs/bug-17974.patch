@@ -1,0 +1,22 @@
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanIdMatcher.java b/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanIdMatcher.java
+index 2ed6838..3b25ffb 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanIdMatcher.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanIdMatcher.java
+@@ -41,7 +41,7 @@
+     public SpanBo approximateMatch(long spanEventBoStartTime) {
+         // TODO: need algorithm for matching
+         List<WeightSpanBo> weightSpanList = computeWeight(spanEventBoStartTime);
+-        if (weightSpanList.size() == 0) {
++        if (weightSpanList.isEmpty()) {
+             return null;
+         }
+         Collections.sort(weightSpanList, new Comparator<WeightSpanBo>() {
+@@ -119,7 +119,7 @@
+ 
+ 
+     public List<SpanBo> other() {
+-        if (nextSpanBoList.size() == 0) {
++        if (nextSpanBoList.isEmpty()) {
+             return null;
+         }
+         return nextSpanBoList;

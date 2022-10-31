@@ -1,0 +1,77 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/Counter.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/Counter.java
+index e5adf43..7b5c8c5 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/Counter.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/Counter.java
+@@ -183,7 +183,7 @@
+ 		double total = totalCount();
+ 		if (total <= 0.0) {
+ 			throw new RuntimeException(String.format(
+-					"Attempting to sample() with totalCount() %.3f\n", total));
++					"Attempting to sample() with totalCount() %.3f%n", total));
+ 		}
+ 		double sum = 0.0;
+ 		double r = rand.nextDouble();
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/ConfusionMatrix.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/ConfusionMatrix.java
+index b2a8bd3..0ae47b6 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/ConfusionMatrix.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/ConfusionMatrix.java
+@@ -186,7 +186,7 @@
+         builder.append("<table>\n");
+         builder.append("<tr><th class=\"empty-space\" colspan=\"2\" rowspan=\"2\">");
+         builder.append(String.format(
+-                "<th class=\"predicted-class-header\" colspan=\"%d\">Predicted Class</th></tr>\n",
++                "<th class=\"predicted-class-header\" colspan=\"%d\">Predicted Class</th></tr>%n",
+                 numClasses + 1));
+ 
+         // Predicted Classes Header Row
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
+index 7018521..2c82c4b 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
+@@ -362,17 +362,17 @@
+                 int count = confusion.getCount(clazz, clazz2);
+                 if (count != 0) {
+                     expected = resolveLabelForClass(clazz2);
+-                    builder.append(String.format("Examples labeled as %s classified by model as %s: %d times\n", actual, expected, count));
++                    builder.append(String.format("Examples labeled as %s classified by model as %s: %d times%n", actual, expected, count));
+                 }
+             }
+ 
+             //Output possible warnings regarding precision/recall calculation
+             if (!suppressWarnings && truePositives.getCount(clazz) == 0) {
+                 if (falsePositives.getCount(clazz) == 0) {
+-                    warnings.append(String.format("Warning: class %s was never predicted by the model. This class was excluded from the average precision\n", actual));
++                    warnings.append(String.format("Warning: class %s was never predicted by the model. This class was excluded from the average precision%n", actual));
+                 }
+                 if (falseNegatives.getCount(clazz) == 0) {
+-                    warnings.append(String.format("Warning: class %s has never appeared as a true label. This class was excluded from the average recall\n", actual));
++                    warnings.append(String.format("Warning: class %s has never appeared as a true label. This class was excluded from the average recall%n", actual));
+                 }
+             }
+         }
+diff --git a/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/layers/recurrent/GravesBidirectionalLSTMTest.java b/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/layers/recurrent/GravesBidirectionalLSTMTest.java
+index d1ece14..f0da5b7 100644
+--- a/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/layers/recurrent/GravesBidirectionalLSTMTest.java
++++ b/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/layers/recurrent/GravesBidirectionalLSTMTest.java
+@@ -492,7 +492,7 @@
+         for (int iEpoch = 0; iEpoch < 3; iEpoch++) {
+             net.fit(ds);
+ 
+-            System.out.print(String.format("score is %f\n",score));
++            System.out.print(String.format("score is %f%n",score));
+ 
+             assertTrue(!Double.isNaN(score));
+ 
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/Counter.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/Counter.java
+index e5adf43..7b5c8c5 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/Counter.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/Counter.java
+@@ -183,7 +183,7 @@
+ 		double total = totalCount();
+ 		if (total <= 0.0) {
+ 			throw new RuntimeException(String.format(
+-					"Attempting to sample() with totalCount() %.3f\n", total));
++					"Attempting to sample() with totalCount() %.3f%n", total));
+ 		}
+ 		double sum = 0.0;
+ 		double r = rand.nextDouble();

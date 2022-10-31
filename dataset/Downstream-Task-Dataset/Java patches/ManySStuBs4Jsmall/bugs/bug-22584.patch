@@ -1,0 +1,26 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 80b49df..221d00e 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -2685,7 +2685,7 @@
+         // set the example value
+         // if not specified in x-example, generate a default value
+         if (p.vendorExtensions.containsKey("x-example")) {
+-            p.example = Objects.toString(p.vendorExtensions.get("x-example"));
++            p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+         } else if (Boolean.TRUE.equals(p.isString)) {
+             p.example = p.paramName + "_example";
+         } else if (Boolean.TRUE.equals(p.isBoolean)) {
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 80b49df..221d00e 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -2685,7 +2685,7 @@
+         // set the example value
+         // if not specified in x-example, generate a default value
+         if (p.vendorExtensions.containsKey("x-example")) {
+-            p.example = Objects.toString(p.vendorExtensions.get("x-example"));
++            p.example = Json.pretty(p.vendorExtensions.get("x-example"));
+         } else if (Boolean.TRUE.equals(p.isString)) {
+             p.example = p.paramName + "_example";
+         } else if (Boolean.TRUE.equals(p.isBoolean)) {

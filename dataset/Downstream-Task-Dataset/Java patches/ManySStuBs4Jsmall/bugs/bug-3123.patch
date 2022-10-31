@@ -1,0 +1,28 @@
+diff --git a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlConnection.java b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlConnection.java
+index c3c633d..e3576d7 100644
+--- a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlConnection.java
++++ b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlConnection.java
+@@ -279,7 +279,8 @@
+         }
+ 
+         List<String> columnValues = rs.getFieldValues();
+-        if(columnValues.get(0).toUpperCase().equals("CRC32")){
++        if (columnValues.size() > 0 && columnValues.get(0) != null
++                && columnValues.get(0).toUpperCase().equals("CRC32")) {
+         	binlogChecksum = LogEvent.BINLOG_CHECKSUM_ALG_CRC32;
+         }else{
+         	binlogChecksum = LogEvent.BINLOG_CHECKSUM_ALG_OFF;
+diff --git a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlConnection.java b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlConnection.java
+index c3c633d..e3576d7 100644
+--- a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlConnection.java
++++ b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlConnection.java
+@@ -279,7 +279,8 @@
+         }
+ 
+         List<String> columnValues = rs.getFieldValues();
+-        if(columnValues.get(0).toUpperCase().equals("CRC32")){
++        if (columnValues.size() > 0 && columnValues.get(0) != null
++                && columnValues.get(0).toUpperCase().equals("CRC32")) {
+         	binlogChecksum = LogEvent.BINLOG_CHECKSUM_ALG_CRC32;
+         }else{
+         	binlogChecksum = LogEvent.BINLOG_CHECKSUM_ALG_OFF;

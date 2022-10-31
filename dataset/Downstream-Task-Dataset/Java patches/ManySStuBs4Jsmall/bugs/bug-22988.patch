@@ -1,0 +1,26 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+index 7a19d64..60b8901 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+@@ -220,7 +220,7 @@
+             bundle.put("apiFolder", config.apiPackage().replace('.', File.separatorChar));
+             bundle.put("modelPackage", config.modelPackage());
+             List<CodegenSecurity> authMethods = config.fromSecurity(swagger.getSecurityDefinitions());
+-            if (!authMethods.isEmpty()) {
++            if (authMethods != null && !authMethods.isEmpty()) {
+                 bundle.put("authMethods", authMethods);
+                 bundle.put("hasAuthMethods", true);
+             }
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+index 7a19d64..60b8901 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+@@ -220,7 +220,7 @@
+             bundle.put("apiFolder", config.apiPackage().replace('.', File.separatorChar));
+             bundle.put("modelPackage", config.modelPackage());
+             List<CodegenSecurity> authMethods = config.fromSecurity(swagger.getSecurityDefinitions());
+-            if (!authMethods.isEmpty()) {
++            if (authMethods != null && !authMethods.isEmpty()) {
+                 bundle.put("authMethods", authMethods);
+                 bundle.put("hasAuthMethods", true);
+             }

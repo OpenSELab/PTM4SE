@@ -1,0 +1,39 @@
+diff --git a/src/com/google/javascript/jscomp/CommandLineRunner.java b/src/com/google/javascript/jscomp/CommandLineRunner.java
+index 70e97b2..547fcd1 100644
+--- a/src/com/google/javascript/jscomp/CommandLineRunner.java
++++ b/src/com/google/javascript/jscomp/CommandLineRunner.java
+@@ -1136,7 +1136,7 @@
+     }
+ 
+     if (flags.exportLocalPropertyDefinitions) {
+-      options.setExportLocalPropertyDefinitions(flags.exportLocalPropertyDefinitions);
++      options.setExportLocalPropertyDefinitions(true);
+     }
+ 
+     WarningLevel wLevel = flags.warningLevel;
+diff --git a/src/com/google/javascript/jscomp/SourceMapInput.java b/src/com/google/javascript/jscomp/SourceMapInput.java
+index 95c3244..11b9174 100644
+--- a/src/com/google/javascript/jscomp/SourceMapInput.java
++++ b/src/com/google/javascript/jscomp/SourceMapInput.java
+@@ -32,7 +32,7 @@
+       Logger.getLogger(SourceMapInput.class.getName());
+ 
+   private SourceFile sourceFile;
+-  private SourceMapConsumerV3 parsedSourceMap = null;
++  private volatile SourceMapConsumerV3 parsedSourceMap = null;
+ 
+   public SourceMapInput(SourceFile sourceFile) {
+     this.sourceFile = sourceFile;
+diff --git a/src/com/google/javascript/jscomp/CommandLineRunner.java b/src/com/google/javascript/jscomp/CommandLineRunner.java
+index 70e97b2..547fcd1 100644
+--- a/src/com/google/javascript/jscomp/CommandLineRunner.java
++++ b/src/com/google/javascript/jscomp/CommandLineRunner.java
+@@ -1136,7 +1136,7 @@
+     }
+ 
+     if (flags.exportLocalPropertyDefinitions) {
+-      options.setExportLocalPropertyDefinitions(flags.exportLocalPropertyDefinitions);
++      options.setExportLocalPropertyDefinitions(true);
+     }
+ 
+     WarningLevel wLevel = flags.warningLevel;

@@ -1,0 +1,40 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index 41daa45..d06be1e 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -966,7 +966,7 @@
+ 
+                     if (!multipleConsumersSupported && routeInputs.contains(endpoint)) {
+                         throw new FailedToStartRouteException(routeService.getId(),
+-                            "Multiple consumers for the same endpoint is now allowed: " + endpoint);
++                            "Multiple consumers for the same endpoint is not allowed: " + endpoint);
+                     } else {
+                         routeInputs.add(endpoint);
+                     }
+diff --git a/camel-core/src/test/java/org/apache/camel/impl/MultipleConsumersSupportTest.java b/camel-core/src/test/java/org/apache/camel/impl/MultipleConsumersSupportTest.java
+index c655533..2476828 100644
+--- a/camel-core/src/test/java/org/apache/camel/impl/MultipleConsumersSupportTest.java
++++ b/camel-core/src/test/java/org/apache/camel/impl/MultipleConsumersSupportTest.java
+@@ -51,8 +51,7 @@
+             context.start();
+             fail("Should have thrown exception");
+         } catch (FailedToStartRouteException e) {
+-            assertTrue(e.getMessage().endsWith("Multiple consumers for the same endpoint is now allowed: Endpoint[MyEndpoint]"));
+-
++            assertTrue(e.getMessage().endsWith("Multiple consumers for the same endpoint is not allowed: Endpoint[MyEndpoint]"));
+         }
+     }
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index 41daa45..d06be1e 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -966,7 +966,7 @@
+ 
+                     if (!multipleConsumersSupported && routeInputs.contains(endpoint)) {
+                         throw new FailedToStartRouteException(routeService.getId(),
+-                            "Multiple consumers for the same endpoint is now allowed: " + endpoint);
++                            "Multiple consumers for the same endpoint is not allowed: " + endpoint);
+                     } else {
+                         routeInputs.add(endpoint);
+                     }

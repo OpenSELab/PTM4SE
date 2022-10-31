@@ -1,0 +1,28 @@
+diff --git a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveMultiInstanceCommandClass.java b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveMultiInstanceCommandClass.java
+index 783d00b..0afc33f 100644
+--- a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveMultiInstanceCommandClass.java
++++ b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveMultiInstanceCommandClass.java
+@@ -433,7 +433,8 @@
+ 		logger.trace("Process Multi-channel Encapsulation");
+ 
+ 		if(serialMessage.getMessagePayload().length < offset + 2) {
+-			logger.error("NODE {}: Invalid data length", this.getNode().getNodeId());
++			logger.error("NODE {}: Invalid data length ({}/{})", this.getNode().getNodeId(),
++					serialMessage.getMessagePayload().length, offset);
+ 			return;
+ 		}
+ 
+diff --git a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveMultiInstanceCommandClass.java b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveMultiInstanceCommandClass.java
+index 783d00b..0afc33f 100644
+--- a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveMultiInstanceCommandClass.java
++++ b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveMultiInstanceCommandClass.java
+@@ -433,7 +433,8 @@
+ 		logger.trace("Process Multi-channel Encapsulation");
+ 
+ 		if(serialMessage.getMessagePayload().length < offset + 2) {
+-			logger.error("NODE {}: Invalid data length", this.getNode().getNodeId());
++			logger.error("NODE {}: Invalid data length ({}/{})", this.getNode().getNodeId(),
++					serialMessage.getMessagePayload().length, offset);
+ 			return;
+ 		}
+ 

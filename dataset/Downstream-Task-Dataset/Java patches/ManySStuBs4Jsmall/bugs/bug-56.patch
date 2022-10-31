@@ -1,0 +1,36 @@
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractNativeQuery.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractNativeQuery.java
+index 95a8620..9f62755 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractNativeQuery.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractNativeQuery.java
+@@ -120,9 +120,9 @@
+       parameterMap.put("firstResult", firstResult);
+       parameterMap.put("maxResults", maxResults);
+       if (StringUtils.isNotBlank(ObjectUtils.toString(parameterMap.get("orderBy")))) {
+-        parameterMap.put("orderBy", "RES." + parameterMap.get("orderBy"));
++        parameterMap.put("orderByColumns", "RES." + parameterMap.get("orderBy"));
+       } else {
+-        parameterMap.put("orderBy", "RES.ID_ asc");
++        parameterMap.put("orderByColumns", "RES.ID_ asc");
+       }
+ 
+       int firstRow = firstResult + 1;
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/db/DbSqlSessionFactory.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/db/DbSqlSessionFactory.java
+index 4812988..080f2a8 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/db/DbSqlSessionFactory.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/db/DbSqlSessionFactory.java
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractNativeQuery.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractNativeQuery.java
+index 95a8620..9f62755 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractNativeQuery.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractNativeQuery.java
+@@ -120,9 +120,9 @@
+       parameterMap.put("firstResult", firstResult);
+       parameterMap.put("maxResults", maxResults);
+       if (StringUtils.isNotBlank(ObjectUtils.toString(parameterMap.get("orderBy")))) {
+-        parameterMap.put("orderBy", "RES." + parameterMap.get("orderBy"));
++        parameterMap.put("orderByColumns", "RES." + parameterMap.get("orderBy"));
+       } else {
+-        parameterMap.put("orderBy", "RES.ID_ asc");
++        parameterMap.put("orderByColumns", "RES.ID_ asc");
+       }
+ 
+       int firstRow = firstResult + 1;

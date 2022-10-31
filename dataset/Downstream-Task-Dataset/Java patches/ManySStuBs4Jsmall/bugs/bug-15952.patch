@@ -1,0 +1,52 @@
+diff --git a/hazelcast-spring/src/main/java/com/hazelcast/spring/cache/HazelcastCache.java b/hazelcast-spring/src/main/java/com/hazelcast/spring/cache/HazelcastCache.java
+index e9eaab7..f44683d 100644
+--- a/hazelcast-spring/src/main/java/com/hazelcast/spring/cache/HazelcastCache.java
++++ b/hazelcast-spring/src/main/java/com/hazelcast/spring/cache/HazelcastCache.java
+@@ -56,7 +56,7 @@
+     
+     public <T> T get(Object key, Class<T> type) {
+         Object value = fromStoreValue(this.map.get(key));
+-        if (type != null && !type.isInstance(value)) {
++        if (type != null && value != null && !type.isInstance(value)) {
+             throw new IllegalStateException("Cached value is not of required type [" + type.getName() + "]: " + value);
+         }
+         return (T) value;
+diff --git a/hazelcast-spring/src/test/java/com/hazelcast/spring/cache/CacheMapLoader.java b/hazelcast-spring/src/test/java/com/hazelcast/spring/cache/CacheMapLoader.java
+index e1a7058..5345096 100644
+--- a/hazelcast-spring/src/test/java/com/hazelcast/spring/cache/CacheMapLoader.java
++++ b/hazelcast-spring/src/test/java/com/hazelcast/spring/cache/CacheMapLoader.java
+@@ -55,21 +55,17 @@
+ 
+     @Override
+     public void store(Object key, Object value) {
+-        //To change body of implemented methods use File | Settings | File Templates.
+     }
+ 
+     @Override
+     public void storeAll(Map map) {
+-        //To change body of implemented methods use File | Settings | File Templates.
+     }
+ 
+     @Override
+     public void delete(Object key) {
+-        //To change body of implemented methods use File | Settings | File Templates.
+     }
+ 
+     @Override
+     public void deleteAll(Collection keys) {
+-        //To change body of implemented methods use File | Settings | File Templates.
+     }
+ }
+diff --git a/hazelcast-spring/src/main/java/com/hazelcast/spring/cache/HazelcastCache.java b/hazelcast-spring/src/main/java/com/hazelcast/spring/cache/HazelcastCache.java
+index e9eaab7..f44683d 100644
+--- a/hazelcast-spring/src/main/java/com/hazelcast/spring/cache/HazelcastCache.java
++++ b/hazelcast-spring/src/main/java/com/hazelcast/spring/cache/HazelcastCache.java
+@@ -56,7 +56,7 @@
+     
+     public <T> T get(Object key, Class<T> type) {
+         Object value = fromStoreValue(this.map.get(key));
+-        if (type != null && !type.isInstance(value)) {
++        if (type != null && value != null && !type.isInstance(value)) {
+             throw new IllegalStateException("Cached value is not of required type [" + type.getName() + "]: " + value);
+         }
+         return (T) value;

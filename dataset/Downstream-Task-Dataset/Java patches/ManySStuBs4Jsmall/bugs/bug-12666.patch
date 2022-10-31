@@ -1,0 +1,21 @@
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/scalar/TestDateTimeFunctionsBase.java b/presto-main/src/test/java/com/facebook/presto/operator/scalar/TestDateTimeFunctionsBase.java
+index b384e64..ab26279 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/scalar/TestDateTimeFunctionsBase.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/scalar/TestDateTimeFunctionsBase.java
+@@ -143,14 +143,14 @@
+     @Test
+     public void testLocalTime()
+     {
+-        long millis = new LocalTime(session.getStartTime(), DATE_TIME_ZONE).getMillisOfDay();
++        long millis = new LocalTime(session.getStartTime(), DateTimeZone.UTC).getMillisOfDay();
+         functionAssertions.assertFunction("LOCALTIME", TimeType.TIME, toTime(millis));
+     }
+ 
+     @Test
+     public void testCurrentTime()
+     {
+-        long millis = new LocalTime(session.getStartTime(), DATE_TIME_ZONE).getMillisOfDay();
++        long millis = new LocalTime(session.getStartTime(), DateTimeZone.UTC).getMillisOfDay();
+         functionAssertions.assertFunction("CURRENT_TIME", TIME_WITH_TIME_ZONE, new SqlTimeWithTimeZone(millis, session.getTimeZoneKey()));
+     }
+ 

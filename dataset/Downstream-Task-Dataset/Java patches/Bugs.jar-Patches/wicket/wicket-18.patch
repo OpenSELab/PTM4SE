@@ -1,0 +1,13 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/markup/html/list/PageableListView.java b/wicket/src/main/java/org/apache/wicket/markup/html/list/PageableListView.java
+index 707cef4..e1b2e77 100644
+--- a/wicket/src/main/java/org/apache/wicket/markup/html/list/PageableListView.java
++++ b/wicket/src/main/java/org/apache/wicket/markup/html/list/PageableListView.java
+@@ -84,7 +84,7 @@ public abstract class PageableListView<T> extends ListView<T> implements IPageab
+ 	public final int getCurrentPage()
+ 	{
+ 		// If first cell is out of range, bring page back into range
+-		while ((currentPage * rowsPerPage) >= getList().size())
++		while ((currentPage > 0) && ((currentPage * rowsPerPage) >= getList().size()))
+ 		{
+ 			currentPage--;
+ 		}

@@ -1,0 +1,64 @@
+diff --git a/flink-contrib/flink-storm-examples/src/test/java/org/apache/flink/storm/tests/StormFieldsGroupingITCase.java b/flink-contrib/flink-storm-examples/src/test/java/org/apache/flink/storm/tests/StormFieldsGroupingITCase.java
+index a0121c7..b43b24d 100644
+--- a/flink-contrib/flink-storm-examples/src/test/java/org/apache/flink/storm/tests/StormFieldsGroupingITCase.java
++++ b/flink-contrib/flink-storm-examples/src/test/java/org/apache/flink/storm/tests/StormFieldsGroupingITCase.java
+@@ -49,9 +49,9 @@
+ 
+ 	@Override
+ 	protected void postSubmit() throws Exception {
+-		compareResultsByLinesInMemory("3> -1155484576\n" + "3> 1033096058\n" + "3> -1930858313\n" +
+-			"3> 1431162155\n" + "4> -1557280266\n" + "4> -1728529858\n" + "4> 1654374947\n" +
+-			"4> -65105105\n" + "4> -518907128\n" + "4> -252332814\n", this.resultPath);
++		compareResultsByLinesInMemory("4> -1155484576\n" + "3> 1033096058\n" + "3> -1930858313\n" +
++			"4> 1431162155\n" + "3> -1557280266\n" + "4> -1728529858\n" + "3> 1654374947\n" +
++			"3> -65105105\n" + "3> -518907128\n" + "4> -252332814\n", this.resultPath);
+ 	}
+ 
+ 	@Override
+diff --git a/flink-core/src/main/java/org/apache/flink/util/MathUtils.java b/flink-core/src/main/java/org/apache/flink/util/MathUtils.java
+index e9d9df7..f40c83a 100644
+--- a/flink-core/src/main/java/org/apache/flink/util/MathUtils.java
++++ b/flink-core/src/main/java/org/apache/flink/util/MathUtils.java
+@@ -135,10 +135,7 @@
+ 		code *= 0x1b873593;
+ 
+ 		code = Integer.rotateLeft(code, 13);
+-		// By the MurmurHash algorithm the following should be "code = code * 5 + 0xe6546b64;" (see FLINK-3623)
+-		// but correcting the algorithm is a breaking change (see FLINK-4154). The effect of the resulting skew
+-		// increases with increased parallelism (see FLINK-4154).
+-		code *= 0xe6546b64;
++		code = code * 5 + 0xe6546b64;
+ 
+ 		code ^= 4;
+ 		code ^= code >>> 16;
+diff --git a/flink-tests/src/test/java/org/apache/flink/test/streaming/api/StreamingOperatorsITCase.java b/flink-tests/src/test/java/org/apache/flink/test/streaming/api/StreamingOperatorsITCase.java
+index 0c0db08..5d99de4 100644
+--- a/flink-tests/src/test/java/org/apache/flink/test/streaming/api/StreamingOperatorsITCase.java
++++ b/flink-tests/src/test/java/org/apache/flink/test/streaming/api/StreamingOperatorsITCase.java
+@@ -223,7 +223,8 @@
+ 		@Override
+ 		public void run(SourceContext<Tuple2<Integer, Integer>> ctx) throws Exception {
+ 			for (int i = 0; i < numElements; i++) {
+-				Tuple2<Integer, Integer> result = new Tuple2<>(MathUtils.murmurHash(i) % numKeys, i);
++				// keys '1' and '2' hash to different buckets
++				Tuple2<Integer, Integer> result = new Tuple2<>(1 + (MathUtils.murmurHash(i) % numKeys), i);
+ 				ctx.collect(result);
+ 			}
+ 		}
+diff --git a/flink-contrib/flink-storm-examples/src/test/java/org/apache/flink/storm/tests/StormFieldsGroupingITCase.java b/flink-contrib/flink-storm-examples/src/test/java/org/apache/flink/storm/tests/StormFieldsGroupingITCase.java
+index a0121c7..b43b24d 100644
+--- a/flink-contrib/flink-storm-examples/src/test/java/org/apache/flink/storm/tests/StormFieldsGroupingITCase.java
++++ b/flink-contrib/flink-storm-examples/src/test/java/org/apache/flink/storm/tests/StormFieldsGroupingITCase.java
+@@ -49,9 +49,9 @@
+ 
+ 	@Override
+ 	protected void postSubmit() throws Exception {
+-		compareResultsByLinesInMemory("3> -1155484576\n" + "3> 1033096058\n" + "3> -1930858313\n" +
+-			"3> 1431162155\n" + "4> -1557280266\n" + "4> -1728529858\n" + "4> 1654374947\n" +
+-			"4> -65105105\n" + "4> -518907128\n" + "4> -252332814\n", this.resultPath);
++		compareResultsByLinesInMemory("4> -1155484576\n" + "3> 1033096058\n" + "3> -1930858313\n" +
++			"4> 1431162155\n" + "3> -1557280266\n" + "4> -1728529858\n" + "3> 1654374947\n" +
++			"3> -65105105\n" + "3> -518907128\n" + "4> -252332814\n", this.resultPath);
+ 	}
+ 
+ 	@Override

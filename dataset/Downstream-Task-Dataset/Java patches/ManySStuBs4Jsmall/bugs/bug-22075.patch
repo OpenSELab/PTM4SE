@@ -1,0 +1,14 @@
+diff --git a/src/edu/stanford/nlp/process/PTBTokenizer.java b/src/edu/stanford/nlp/process/PTBTokenizer.java
+index 8be17ab..6882c51 100644
+--- a/src/edu/stanford/nlp/process/PTBTokenizer.java
++++ b/src/edu/stanford/nlp/process/PTBTokenizer.java
+@@ -727,7 +727,8 @@
+     Pattern parseInsidePattern = null;
+     if (parseInsideKey != null) {
+       try {
+-        parseInsidePattern = Pattern.compile("<(/?)(?:" + parseInsideKey + ")(?:\\s[^>]*?)?>");
++        // We still allow space, but PTBTokenizer will change space to &nbsp; so need to also match it
++        parseInsidePattern = Pattern.compile("<(/?)(?:" + parseInsideKey + ")(?:(?:\\s|\u00A0)[^>]*?)?>");
+       } catch (PatternSyntaxException e) {
+         // just go with null parseInsidePattern
+       }

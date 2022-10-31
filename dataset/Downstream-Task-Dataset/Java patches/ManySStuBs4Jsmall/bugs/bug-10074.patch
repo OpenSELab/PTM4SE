@@ -1,0 +1,80 @@
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index cf0b801..1b14857 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -734,7 +734,7 @@
+ 		this.field = targetClass != null ? targetClass.getField(fieldName) : null;
+ 		this.fieldName = fieldName;
+ 		this.line = line;
+-		if(field == null && RT.booleanCast(RT.WARN_ON_REFLECTION))
++		if(field == null && RT.booleanCast(RT.WARN_ON_REFLECTION.get()))
+ 			{
+ 			System.err.format("Reflection warning, line: %d - reference to field %s can't be resolved.\n", line, fieldName);
+ 			}
+@@ -930,7 +930,7 @@
+ 		else
+ 			method = null;
+ 
+-		if(method == null && RT.booleanCast(RT.WARN_ON_REFLECTION))
++		if(method == null && RT.booleanCast(RT.WARN_ON_REFLECTION.get()))
+ 			{
+ 			System.err.format("Reflection warning, line: %d - call to %s can't be resolved.\n", line, methodName);
+ 			}
+@@ -1016,7 +1016,7 @@
+ 			methodidx = getMatchingParams(params, args);
+ 			}
+ 		method = (java.lang.reflect.Method) (methodidx >= 0 ? methods.get(methodidx) : null);
+-		if(method == null && RT.booleanCast(RT.WARN_ON_REFLECTION))
++		if(method == null && RT.booleanCast(RT.WARN_ON_REFLECTION.get()))
+ 			{
+ 			System.err.format("Reflection warning, line: %d - call to %s can't be resolved.\n", line, methodName);
+ 			}
+@@ -1700,7 +1700,7 @@
+ 			}
+ 
+ 		this.ctor = ctoridx >= 0 ? (Constructor) ctors.get(ctoridx) : null;
+-		if(ctor == null && RT.booleanCast(RT.WARN_ON_REFLECTION))
++		if(ctor == null && RT.booleanCast(RT.WARN_ON_REFLECTION.get()))
+ 			{
+ 			System.err.format("Reflection warning, line: %d - call to %s ctor can't be resolved.\n", line, className);
+ 			}
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index cf0b801..1b14857 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -734,7 +734,7 @@
+ 		this.field = targetClass != null ? targetClass.getField(fieldName) : null;
+ 		this.fieldName = fieldName;
+ 		this.line = line;
+-		if(field == null && RT.booleanCast(RT.WARN_ON_REFLECTION))
++		if(field == null && RT.booleanCast(RT.WARN_ON_REFLECTION.get()))
+ 			{
+ 			System.err.format("Reflection warning, line: %d - reference to field %s can't be resolved.\n", line, fieldName);
+ 			}
+@@ -930,7 +930,7 @@
+ 		else
+ 			method = null;
+ 
+-		if(method == null && RT.booleanCast(RT.WARN_ON_REFLECTION))
++		if(method == null && RT.booleanCast(RT.WARN_ON_REFLECTION.get()))
+ 			{
+ 			System.err.format("Reflection warning, line: %d - call to %s can't be resolved.\n", line, methodName);
+ 			}
+@@ -1016,7 +1016,7 @@
+ 			methodidx = getMatchingParams(params, args);
+ 			}
+ 		method = (java.lang.reflect.Method) (methodidx >= 0 ? methods.get(methodidx) : null);
+-		if(method == null && RT.booleanCast(RT.WARN_ON_REFLECTION))
++		if(method == null && RT.booleanCast(RT.WARN_ON_REFLECTION.get()))
+ 			{
+ 			System.err.format("Reflection warning, line: %d - call to %s can't be resolved.\n", line, methodName);
+ 			}
+@@ -1700,7 +1700,7 @@
+ 			}
+ 
+ 		this.ctor = ctoridx >= 0 ? (Constructor) ctors.get(ctoridx) : null;
+-		if(ctor == null && RT.booleanCast(RT.WARN_ON_REFLECTION))
++		if(ctor == null && RT.booleanCast(RT.WARN_ON_REFLECTION.get()))
+ 			{
+ 			System.err.format("Reflection warning, line: %d - call to %s ctor can't be resolved.\n", line, className);
+ 			}

@@ -1,0 +1,13 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
+index d73250e..86c549b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
+@@ -145,7 +145,7 @@
+      */
+     public final void setExcludedPackages(String... excludedPackages) {
+         final List<String> invalidIdentifiers = Arrays.stream(excludedPackages)
+-            .filter(x -> !CommonUtils.isName(x))
++            .filter(packageName -> !CommonUtils.isName(packageName))
+             .collect(Collectors.toList());
+         if (!invalidIdentifiers.isEmpty()) {
+             throw new IllegalArgumentException(

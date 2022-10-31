@@ -1,0 +1,69 @@
+diff --git a/test/com/google/javascript/jscomp/IntegrationTestCase.java b/test/com/google/javascript/jscomp/IntegrationTestCase.java
+index 148e08b..a83b784 100644
+--- a/test/com/google/javascript/jscomp/IntegrationTestCase.java
++++ b/test/com/google/javascript/jscomp/IntegrationTestCase.java
+@@ -35,8 +35,11 @@
+   protected static final Joiner LINE_JOINER = Joiner.on('\n');
+ 
+   /** Externs for the test */
+-  protected static final List<SourceFile> DEFAULT_EXTERNS =
+-      ImmutableList.of(SourceFile.fromCode("externs", LINE_JOINER.join(
++  protected static final ImmutableList<SourceFile> DEFAULT_EXTERNS =
++      ImmutableList.of(
++          SourceFile.fromCode(
++              "externs",
++              LINE_JOINER.join(
+           "var arguments;",
+           "var undefined;",
+           "var Math;",
+@@ -50,7 +53,8 @@
+           "var IteratorIterable = function() {};",
+           "/** @interface */",
+           "function IArrayLike() {};",
+-          // TODO(sdh): See if we can remove IIterableResult and Set once polyfills are split
++                  // TODO(sdh): See if we can remove IIterableResult and Set once polyfills are
++                  // split
+           "/** @interface */",
+           "var IIterableResult = function() {};",
+           "/** @constructor */",
+diff --git a/test/com/google/javascript/jscomp/PeepholeFoldConstantsTest.java b/test/com/google/javascript/jscomp/PeepholeFoldConstantsTest.java
+index 07e3ec7..e9f005b 100644
+--- a/test/com/google/javascript/jscomp/PeepholeFoldConstantsTest.java
++++ b/test/com/google/javascript/jscomp/PeepholeFoldConstantsTest.java
+@@ -1330,7 +1330,7 @@
+     testSame("Object.defineProperties(a, {anything:1})");
+   }
+ 
+-  private static final List<String> LITERAL_OPERANDS =
++  private static final ImmutableList<String> LITERAL_OPERANDS =
+       ImmutableList.of(
+           "null",
+           "undefined",
+diff --git a/test/com/google/javascript/jscomp/IntegrationTestCase.java b/test/com/google/javascript/jscomp/IntegrationTestCase.java
+index 148e08b..a83b784 100644
+--- a/test/com/google/javascript/jscomp/IntegrationTestCase.java
++++ b/test/com/google/javascript/jscomp/IntegrationTestCase.java
+@@ -35,8 +35,11 @@
+   protected static final Joiner LINE_JOINER = Joiner.on('\n');
+ 
+   /** Externs for the test */
+-  protected static final List<SourceFile> DEFAULT_EXTERNS =
+-      ImmutableList.of(SourceFile.fromCode("externs", LINE_JOINER.join(
++  protected static final ImmutableList<SourceFile> DEFAULT_EXTERNS =
++      ImmutableList.of(
++          SourceFile.fromCode(
++              "externs",
++              LINE_JOINER.join(
+           "var arguments;",
+           "var undefined;",
+           "var Math;",
+@@ -50,7 +53,8 @@
+           "var IteratorIterable = function() {};",
+           "/** @interface */",
+           "function IArrayLike() {};",
+-          // TODO(sdh): See if we can remove IIterableResult and Set once polyfills are split
++                  // TODO(sdh): See if we can remove IIterableResult and Set once polyfills are
++                  // split
+           "/** @interface */",
+           "var IIterableResult = function() {};",
+           "/** @constructor */",

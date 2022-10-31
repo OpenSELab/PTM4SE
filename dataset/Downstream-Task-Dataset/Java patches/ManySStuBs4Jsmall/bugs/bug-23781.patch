@@ -1,0 +1,26 @@
+diff --git a/web/src/main/java/org/jboss/as/web/WebConnectorService.java b/web/src/main/java/org/jboss/as/web/WebConnectorService.java
+index b657e71..4e0f65b 100644
+--- a/web/src/main/java/org/jboss/as/web/WebConnectorService.java
++++ b/web/src/main/java/org/jboss/as/web/WebConnectorService.java
+@@ -180,7 +180,7 @@
+                         }
+                         if (ssl.hasDefined(Constants.CERTIFICATE_FILE)) {
+                             Method m = connector.getProtocolHandler().getClass().getMethod("setSSLCertificateFile", String.class);
+-                            m.invoke(connector.getProtocolHandler(), ssl.get(Constants.CERTIFICATE_FILE));
++                            m.invoke(connector.getProtocolHandler(), ssl.get(Constants.CERTIFICATE_FILE).asString());
+                         }
+                         if (ssl.hasDefined(Constants.CA_CERTIFICATE_FILE)) {
+                             Method m = connector.getProtocolHandler().getClass().getMethod("setSSLCACertificateFile", String.class);
+diff --git a/web/src/main/java/org/jboss/as/web/WebConnectorService.java b/web/src/main/java/org/jboss/as/web/WebConnectorService.java
+index b657e71..4e0f65b 100644
+--- a/web/src/main/java/org/jboss/as/web/WebConnectorService.java
++++ b/web/src/main/java/org/jboss/as/web/WebConnectorService.java
+@@ -180,7 +180,7 @@
+                         }
+                         if (ssl.hasDefined(Constants.CERTIFICATE_FILE)) {
+                             Method m = connector.getProtocolHandler().getClass().getMethod("setSSLCertificateFile", String.class);
+-                            m.invoke(connector.getProtocolHandler(), ssl.get(Constants.CERTIFICATE_FILE));
++                            m.invoke(connector.getProtocolHandler(), ssl.get(Constants.CERTIFICATE_FILE).asString());
+                         }
+                         if (ssl.hasDefined(Constants.CA_CERTIFICATE_FILE)) {
+                             Method m = connector.getProtocolHandler().getClass().getMethod("setSSLCACertificateFile", String.class);

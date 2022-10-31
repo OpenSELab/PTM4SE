@@ -1,0 +1,26 @@
+diff --git a/hbase-it/src/test/java/org/apache/hadoop/hbase/mapreduce/IntegrationTestBulkLoad.java b/hbase-it/src/test/java/org/apache/hadoop/hbase/mapreduce/IntegrationTestBulkLoad.java
+index c6f014c..9dac95b 100644
+--- a/hbase-it/src/test/java/org/apache/hadoop/hbase/mapreduce/IntegrationTestBulkLoad.java
++++ b/hbase-it/src/test/java/org/apache/hadoop/hbase/mapreduce/IntegrationTestBulkLoad.java
+@@ -524,7 +524,7 @@
+                             LinkChain linkChain,
+                             int numPartitions) {
+       int hash = linkKey.getChainId().hashCode();
+-      return hash % numPartitions;
++      return Math.abs(hash % numPartitions);
+     }
+   }
+ 
+diff --git a/hbase-it/src/test/java/org/apache/hadoop/hbase/mapreduce/IntegrationTestBulkLoad.java b/hbase-it/src/test/java/org/apache/hadoop/hbase/mapreduce/IntegrationTestBulkLoad.java
+index c6f014c..9dac95b 100644
+--- a/hbase-it/src/test/java/org/apache/hadoop/hbase/mapreduce/IntegrationTestBulkLoad.java
++++ b/hbase-it/src/test/java/org/apache/hadoop/hbase/mapreduce/IntegrationTestBulkLoad.java
+@@ -524,7 +524,7 @@
+                             LinkChain linkChain,
+                             int numPartitions) {
+       int hash = linkKey.getChainId().hashCode();
+-      return hash % numPartitions;
++      return Math.abs(hash % numPartitions);
+     }
+   }
+ 

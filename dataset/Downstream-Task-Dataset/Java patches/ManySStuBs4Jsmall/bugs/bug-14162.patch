@@ -1,0 +1,32 @@
+diff --git a/test/com/google/javascript/jscomp/CompilerTestCase.java b/test/com/google/javascript/jscomp/CompilerTestCase.java
+index fd65925..7d5c841 100644
+--- a/test/com/google/javascript/jscomp/CompilerTestCase.java
++++ b/test/com/google/javascript/jscomp/CompilerTestCase.java
+@@ -1193,7 +1193,10 @@
+     }
+ 
+     if (error == null) {
+-      assertEquals("Unexpected error(s): " + errorMsg, 0, compiler.getErrorCount());
++      assertEquals(
++          "Unexpected error(s):\n" + LINE_JOINER.join(compiler.getErrors()),
++          0,
++          compiler.getErrorCount());
+ 
+       // Verify the symbol table.
+       ErrorManager symbolTableErrorManager = new BlackHoleErrorManager();
+diff --git a/test/com/google/javascript/jscomp/CompilerTestCase.java b/test/com/google/javascript/jscomp/CompilerTestCase.java
+index fd65925..7d5c841 100644
+--- a/test/com/google/javascript/jscomp/CompilerTestCase.java
++++ b/test/com/google/javascript/jscomp/CompilerTestCase.java
+@@ -1193,7 +1193,10 @@
+     }
+ 
+     if (error == null) {
+-      assertEquals("Unexpected error(s): " + errorMsg, 0, compiler.getErrorCount());
++      assertEquals(
++          "Unexpected error(s):\n" + LINE_JOINER.join(compiler.getErrors()),
++          0,
++          compiler.getErrorCount());
+ 
+       // Verify the symbol table.
+       ErrorManager symbolTableErrorManager = new BlackHoleErrorManager();

@@ -1,0 +1,62 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/util/annotation/AnnotationDetector.java b/modules/cpr/src/main/java/org/atmosphere/util/annotation/AnnotationDetector.java
+index 8275123..cd3af7d 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/util/annotation/AnnotationDetector.java
++++ b/modules/cpr/src/main/java/org/atmosphere/util/annotation/AnnotationDetector.java
+@@ -330,7 +330,7 @@
+                     }
+                 } else if (isRunningJavaWebStart()) {
+                     try {
+-                        webstart((JarURLConnection) url.openConnection(), packageName, streams);
++                        loadJarContent((JarURLConnection) url.openConnection(), packageName, streams);
+                     } catch (ClassCastException cce) {
+                         throw new AssertionError("Not a File: " + url.toExternalForm());
+                     }
+@@ -360,7 +360,7 @@
+                         files.add(jarFile);
+                         if (DEBUG) print("Add jar file: '%s'", jarFile);
+                     } else {
+-                        throw new AssertionError("Not a File: " + jarFile);
++                        loadJarContent((JarURLConnection) url.openConnection(), packageName, streams);
+                     }
+                 }
+             }
+@@ -384,7 +384,7 @@
+         return hasJNLP;
+     }
+ 
+-    private void webstart(JarURLConnection url, String packageName, Set<InputStream> streams) throws IOException {
++    private void loadJarContent(JarURLConnection url, String packageName, Set<InputStream> streams) throws IOException {
+         // Using a JarURLConnection will load the JAR from the cache when using Webstart 1.6
+         // In Webstart 1.5, the URL will point to the cached JAR on the local filesystem
+         JarFile jarFile = url.getJarFile();
+diff --git a/modules/cpr/src/main/java/org/atmosphere/util/annotation/AnnotationDetector.java b/modules/cpr/src/main/java/org/atmosphere/util/annotation/AnnotationDetector.java
+index 8275123..cd3af7d 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/util/annotation/AnnotationDetector.java
++++ b/modules/cpr/src/main/java/org/atmosphere/util/annotation/AnnotationDetector.java
+@@ -330,7 +330,7 @@
+                     }
+                 } else if (isRunningJavaWebStart()) {
+                     try {
+-                        webstart((JarURLConnection) url.openConnection(), packageName, streams);
++                        loadJarContent((JarURLConnection) url.openConnection(), packageName, streams);
+                     } catch (ClassCastException cce) {
+                         throw new AssertionError("Not a File: " + url.toExternalForm());
+                     }
+@@ -360,7 +360,7 @@
+                         files.add(jarFile);
+                         if (DEBUG) print("Add jar file: '%s'", jarFile);
+                     } else {
+-                        throw new AssertionError("Not a File: " + jarFile);
++                        loadJarContent((JarURLConnection) url.openConnection(), packageName, streams);
+                     }
+                 }
+             }
+@@ -384,7 +384,7 @@
+         return hasJNLP;
+     }
+ 
+-    private void webstart(JarURLConnection url, String packageName, Set<InputStream> streams) throws IOException {
++    private void loadJarContent(JarURLConnection url, String packageName, Set<InputStream> streams) throws IOException {
+         // Using a JarURLConnection will load the JAR from the cache when using Webstart 1.6
+         // In Webstart 1.5, the URL will point to the cached JAR on the local filesystem
+         JarFile jarFile = url.getJarFile();

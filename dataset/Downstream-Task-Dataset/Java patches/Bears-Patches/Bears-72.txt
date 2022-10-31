@@ -1,0 +1,23 @@
+--- a/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
++++ b/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
+@@ -292,12 +294,46 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 					printer.adjustStartPosition(e);
+ 				}
+ 			}
+-			e.accept(this);
++			try {
++				e.accept(this);
++			} catch (SpoonException ex) {
++				throw ex;
++			} catch (Exception ex) {
++				String elementInfo = e.getClass().getName();
++				elementInfo += " on path " + getPath(e) + "\n";
++				if (e.getPosition() != null) {
++					elementInfo += "at position " + e.getPosition().toString() + " ";
++				}
++				throw new SpoonException("Printing of " + elementInfo + "failed", ex);
++			}
+ 			context.elementStack.pop();
+ 		}
+ 		return this;
+ 	}

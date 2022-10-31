@@ -1,0 +1,27 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+index d57f875..35a5f77 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+@@ -589,6 +589,10 @@ public final class DocumentNodeStore
+         return docChildrenCacheStats;
+     }
+ 
++    void invalidateDocChildrenCache() {
++        docChildrenCache.invalidateAll();
++    }
++
+     public int getPendingWriteCount() {
+         return unsavedLastRevisions.getPaths().size();
+     }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/VersionGarbageCollector.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/VersionGarbageCollector.java
+index e671b66..885f721 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/VersionGarbageCollector.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/VersionGarbageCollector.java
+@@ -121,6 +121,7 @@ public class VersionGarbageCollector {
+             log.debug(sb.toString());
+         }
+         nodeStore.getDocumentStore().remove(Collection.NODES, docIdsToDelete);
++        nodeStore.invalidateDocChildrenCache();
+         stats.deletedDocGCCount += docIdsToDelete.size();
+     }
+ 

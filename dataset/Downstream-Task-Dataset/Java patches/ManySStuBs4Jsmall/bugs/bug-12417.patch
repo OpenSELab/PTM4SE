@@ -1,0 +1,34 @@
+diff --git a/Essentials/src/com/earth2me/essentials/Settings.java b/Essentials/src/com/earth2me/essentials/Settings.java
+index 2152fc8..e50e9c1 100644
+--- a/Essentials/src/com/earth2me/essentials/Settings.java
++++ b/Essentials/src/com/earth2me/essentials/Settings.java
+@@ -405,9 +405,10 @@
+ 	private List<EssentialsSign> getEnabledSigns()
+ 	{
+ 		List<EssentialsSign> newSigns = new ArrayList<EssentialsSign>();
+-		for (String signName : config.getString("enabledSigns", "").split(","))
++		
++		for (String signName : config.getStringList("enabledSigns", null))
+ 		{
+-			signName = signName.trim();
++			signName = signName.trim().toUpperCase(Locale.ENGLISH);
+ 			if (signName.isEmpty())
+ 			{
+ 				continue;
+diff --git a/Essentials/src/com/earth2me/essentials/Settings.java b/Essentials/src/com/earth2me/essentials/Settings.java
+index 2152fc8..e50e9c1 100644
+--- a/Essentials/src/com/earth2me/essentials/Settings.java
++++ b/Essentials/src/com/earth2me/essentials/Settings.java
+@@ -405,9 +405,10 @@
+ 	private List<EssentialsSign> getEnabledSigns()
+ 	{
+ 		List<EssentialsSign> newSigns = new ArrayList<EssentialsSign>();
+-		for (String signName : config.getString("enabledSigns", "").split(","))
++		
++		for (String signName : config.getStringList("enabledSigns", null))
+ 		{
+-			signName = signName.trim();
++			signName = signName.trim().toUpperCase(Locale.ENGLISH);
+ 			if (signName.isEmpty())
+ 			{
+ 				continue;

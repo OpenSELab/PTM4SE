@@ -1,0 +1,13 @@
+diff --git a/src/main/java/org/apache/hadoop/hbase/master/SplitLogManager.java b/src/main/java/org/apache/hadoop/hbase/master/SplitLogManager.java
+index 5489402..79862c5 100644
+--- a/src/main/java/org/apache/hadoop/hbase/master/SplitLogManager.java
++++ b/src/main/java/org/apache/hadoop/hbase/master/SplitLogManager.java
+@@ -608,7 +608,7 @@
+       create(ZKSplitLog.getRescanNode(watcher),
+         TaskState.TASK_DONE.get(serverName), Ids.OPEN_ACL_UNSAFE,
+         CreateMode.EPHEMERAL_SEQUENTIAL,
+-        new CreateRescanAsyncCallback(), new Long(retries));
++        new CreateRescanAsyncCallback(), Long.valueOf(retries));
+   }
+ 
+   private void createRescanSuccess(String path) {

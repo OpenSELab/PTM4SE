@@ -1,0 +1,39 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
+index f608ccf..0448905 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
+@@ -68,7 +68,7 @@
+ 
+     public final static String SERVLET_30 = "javax.servlet.AsyncListener";
+     public final static String GLASSFISH_V2 = "com.sun.enterprise.web.PEWebContainer";
+-    public final static String TOMCAT_7 = "org.apache.catalina.valves.CrawlerSessionManagerValve";
++    public final static String TOMCAT_7 = "org.apache.catalina.core.JreMemoryLeakPreventionListener";
+     public final static String TOMCAT = "org.apache.coyote.http11.Http11NioProcessor";
+     public final static String JBOSS_5 = "org.jboss.";
+     public final static String JETTY = "org.mortbay.util.ajax.Continuation";
+diff --git a/samples/chat/src/main/java/org/atmosphere/samples/chat/ChatAtmosphereHandler.java b/samples/chat/src/main/java/org/atmosphere/samples/chat/ChatAtmosphereHandler.java
+index 3498112..d355f77 100644
+--- a/samples/chat/src/main/java/org/atmosphere/samples/chat/ChatAtmosphereHandler.java
++++ b/samples/chat/src/main/java/org/atmosphere/samples/chat/ChatAtmosphereHandler.java
+@@ -102,7 +102,7 @@
+                 if (clusterType.equals("jgroups")){
+                     event.getAtmosphereConfig().getServletContext().log("JGroupsFilter enabled");
+                     bc.getBroadcasterConfig().addFilter(
+-                            new JGroupsFilter(bc, event.getAtmosphereConfig().getWebServerName()));
++                            new JGroupsFilter(bc));
+                 }
+             }
+ 
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
+index f608ccf..0448905 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
+@@ -68,7 +68,7 @@
+ 
+     public final static String SERVLET_30 = "javax.servlet.AsyncListener";
+     public final static String GLASSFISH_V2 = "com.sun.enterprise.web.PEWebContainer";
+-    public final static String TOMCAT_7 = "org.apache.catalina.valves.CrawlerSessionManagerValve";
++    public final static String TOMCAT_7 = "org.apache.catalina.core.JreMemoryLeakPreventionListener";
+     public final static String TOMCAT = "org.apache.coyote.http11.Http11NioProcessor";
+     public final static String JBOSS_5 = "org.jboss.";
+     public final static String JETTY = "org.mortbay.util.ajax.Continuation";

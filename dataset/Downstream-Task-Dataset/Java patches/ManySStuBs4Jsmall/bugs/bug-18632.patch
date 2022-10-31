@@ -1,0 +1,190 @@
+diff --git a/transport-native-epoll/src/main/java/io/netty/channel/unix/Errors.java b/transport-native-epoll/src/main/java/io/netty/channel/unix/Errors.java
+index 38a5b88..581efb9 100644
+--- a/transport-native-epoll/src/main/java/io/netty/channel/unix/Errors.java
++++ b/transport-native-epoll/src/main/java/io/netty/channel/unix/Errors.java
+@@ -61,7 +61,7 @@
+         private static final long serialVersionUID = 8222160204268655526L;
+         private final int expectedErr;
+         public NativeIoException(String method, int expectedErr) {
+-            super(method + " failed: " + ERRORS[-expectedErr]);
++            super(method + "(..) failed: " + ERRORS[-expectedErr]);
+             this.expectedErr = expectedErr;
+         }
+ 
+@@ -74,7 +74,7 @@
+         private static final long serialVersionUID = -5532328671712318161L;
+         private final int expectedErr;
+         NativeConnectException(String method, int expectedErr) {
+-            super(method + " failed: " + ERRORS[-expectedErr]);
++            super(method + "(..) failed: " + ERRORS[-expectedErr]);
+             this.expectedErr = expectedErr;
+         }
+ 
+@@ -104,7 +104,7 @@
+         if (err == ERROR_EISCONN_NEGATIVE) {
+             throw new AlreadyConnectedException();
+         }
+-        throw new ConnectException(method + "() failed: " + ERRORS[-err]);
++        throw new ConnectException(method + "(..) failed: " + ERRORS[-err]);
+     }
+ 
+     public static NativeIoException newConnectionResetException(String method, int errnoNegative) {
+@@ -114,7 +114,7 @@
+     }
+ 
+     public static NativeIoException newIOException(String method, int err) {
+-        return new NativeIoException(method + "() failed: " + ERRORS[-err], err);
++        return new NativeIoException(method, err);
+     }
+ 
+     public static int ioResult(String method, int err, NativeIoException resetCause,
+diff --git a/transport-native-epoll/src/main/java/io/netty/channel/unix/FileDescriptor.java b/transport-native-epoll/src/main/java/io/netty/channel/unix/FileDescriptor.java
+index 62cc5e5..190953c 100644
+--- a/transport-native-epoll/src/main/java/io/netty/channel/unix/FileDescriptor.java
++++ b/transport-native-epoll/src/main/java/io/netty/channel/unix/FileDescriptor.java
+@@ -33,35 +33,35 @@
+  */
+ public class FileDescriptor {
+     private static final ClosedChannelException WRITE_CLOSED_CHANNEL_EXCEPTION = ThrowableUtil.unknownStackTrace(
+-            new ClosedChannelException(), FileDescriptor.class, "write(...)");
++            new ClosedChannelException(), FileDescriptor.class, "write(..)");
+     private static final ClosedChannelException WRITE_ADDRESS_CLOSED_CHANNEL_EXCEPTION =
+-            ThrowableUtil.unknownStackTrace(new ClosedChannelException(), FileDescriptor.class, "writeAddress(...)");
++            ThrowableUtil.unknownStackTrace(new ClosedChannelException(), FileDescriptor.class, "writeAddress(..)");
+     private static final ClosedChannelException WRITEV_CLOSED_CHANNEL_EXCEPTION = ThrowableUtil.unknownStackTrace(
+-            new ClosedChannelException(), FileDescriptor.class, "writev(...)");
++            new ClosedChannelException(), FileDescriptor.class, "writev(..)");
+     private static final ClosedChannelException WRITEV_ADDRESSES_CLOSED_CHANNEL_EXCEPTION =
+-            ThrowableUtil.unknownStackTrace(new ClosedChannelException(), FileDescriptor.class, "writevAddresses(...)");
++            ThrowableUtil.unknownStackTrace(new ClosedChannelException(), FileDescriptor.class, "writevAddresses(..)");
+     private static final ClosedChannelException READ_CLOSED_CHANNEL_EXCEPTION = ThrowableUtil.unknownStackTrace(
+-            new ClosedChannelException(), FileDescriptor.class, "read(...)");
++            new ClosedChannelException(), FileDescriptor.class, "read(..)");
+     private static final ClosedChannelException READ_ADDRESS_CLOSED_CHANNEL_EXCEPTION = ThrowableUtil.unknownStackTrace(
+-            new ClosedChannelException(), FileDescriptor.class, "readAddress(...)");
++            new ClosedChannelException(), FileDescriptor.class, "readAddress(..)");
+     private static final Errors.NativeIoException WRITE_CONNECTION_RESET_EXCEPTION = ThrowableUtil.unknownStackTrace(
+-            Errors.newConnectionResetException("syscall:write(...)", Errors.ERRNO_EPIPE_NEGATIVE),
+-            FileDescriptor.class, "write(...)");
++            Errors.newConnectionResetException("syscall:write", Errors.ERRNO_EPIPE_NEGATIVE),
++            FileDescriptor.class, "write(..)");
+     private static final Errors.NativeIoException WRITE_ADDRESS_CONNECTION_RESET_EXCEPTION =
+-            ThrowableUtil.unknownStackTrace(Errors.newConnectionResetException("syscall:write(...)",
+-                    Errors.ERRNO_EPIPE_NEGATIVE), FileDescriptor.class, "writeAddress(...)");
++            ThrowableUtil.unknownStackTrace(Errors.newConnectionResetException("syscall:write",
++                    Errors.ERRNO_EPIPE_NEGATIVE), FileDescriptor.class, "writeAddress(..)");
+     private static final Errors.NativeIoException WRITEV_CONNECTION_RESET_EXCEPTION = ThrowableUtil.unknownStackTrace(
+-            Errors.newConnectionResetException("syscall:writev(...)", Errors.ERRNO_EPIPE_NEGATIVE),
+-            FileDescriptor.class, "writev(...)");
++            Errors.newConnectionResetException("syscall:writev", Errors.ERRNO_EPIPE_NEGATIVE),
++            FileDescriptor.class, "writev(..)");
+     private static final Errors.NativeIoException WRITEV_ADDRESSES_CONNECTION_RESET_EXCEPTION =
+-            ThrowableUtil.unknownStackTrace(Errors.newConnectionResetException("syscall:writev(...)",
+-                    Errors.ERRNO_EPIPE_NEGATIVE), FileDescriptor.class, "writeAddresses(...)");
++            ThrowableUtil.unknownStackTrace(Errors.newConnectionResetException("syscall:writev",
++                    Errors.ERRNO_EPIPE_NEGATIVE), FileDescriptor.class, "writeAddresses(..)");
+     private static final Errors.NativeIoException READ_CONNECTION_RESET_EXCEPTION = ThrowableUtil.unknownStackTrace(
+-            Errors.newConnectionResetException("syscall:read(...)", Errors.ERRNO_ECONNRESET_NEGATIVE),
+-            FileDescriptor.class, "read(...)");
++            Errors.newConnectionResetException("syscall:read", Errors.ERRNO_ECONNRESET_NEGATIVE),
++            FileDescriptor.class, "read(..)");
+     private static final Errors.NativeIoException READ_ADDRESS_CONNECTION_RESET_EXCEPTION =
+-            ThrowableUtil.unknownStackTrace(Errors.newConnectionResetException("syscall:read(...)",
+-                    Errors.ERRNO_ECONNRESET_NEGATIVE), FileDescriptor.class, "readAddress(...)");
++            ThrowableUtil.unknownStackTrace(Errors.newConnectionResetException("syscall:read",
++                    Errors.ERRNO_ECONNRESET_NEGATIVE), FileDescriptor.class, "readAddress(..)");
+ 
+     private static final AtomicIntegerFieldUpdater<FileDescriptor> stateUpdater =
+             AtomicIntegerFieldUpdater.newUpdater(FileDescriptor.class, "state");
+diff --git a/transport-native-epoll/src/main/java/io/netty/channel/unix/Socket.java b/transport-native-epoll/src/main/java/io/netty/channel/unix/Socket.java
+index 4151413..ccbc9ab 100644
+--- a/transport-native-epoll/src/main/java/io/netty/channel/unix/Socket.java
++++ b/transport-native-epoll/src/main/java/io/netty/channel/unix/Socket.java
+@@ -42,31 +42,31 @@
+  */
+ public final class Socket extends FileDescriptor {
+     private static final ClosedChannelException SHUTDOWN_CLOSED_CHANNEL_EXCEPTION = unknownStackTrace(
+-            new ClosedChannelException(), Socket.class, "shutdown(...)");
++            new ClosedChannelException(), Socket.class, "shutdown(..)");
+     private static final ClosedChannelException SEND_TO_CLOSED_CHANNEL_EXCEPTION = unknownStackTrace(
+-            new ClosedChannelException(), Socket.class, "sendTo(...)");
++            new ClosedChannelException(), Socket.class, "sendTo(..)");
+     private static final ClosedChannelException SEND_TO_ADDRESS_CLOSED_CHANNEL_EXCEPTION =
+-            unknownStackTrace(new ClosedChannelException(), Socket.class, "sendToAddress(...)");
++            unknownStackTrace(new ClosedChannelException(), Socket.class, "sendToAddress(..)");
+     private static final ClosedChannelException SEND_TO_ADDRESSES_CLOSED_CHANNEL_EXCEPTION =
+-            unknownStackTrace(new ClosedChannelException(), Socket.class, "sendToAddresses(...)");
++            unknownStackTrace(new ClosedChannelException(), Socket.class, "sendToAddresses(..)");
+     private static final Errors.NativeIoException SEND_TO_CONNECTION_RESET_EXCEPTION = unknownStackTrace(
+-            Errors.newConnectionResetException("syscall:sendto(...)", Errors.ERRNO_EPIPE_NEGATIVE),
+-            Socket.class, "sendTo(...)");
++            Errors.newConnectionResetException("syscall:sendto", Errors.ERRNO_EPIPE_NEGATIVE),
++            Socket.class, "sendTo(..)");
+     private static final Errors.NativeIoException SEND_TO_ADDRESS_CONNECTION_RESET_EXCEPTION =
+-            unknownStackTrace(Errors.newConnectionResetException("syscall:sendto(...)",
+-                    Errors.ERRNO_EPIPE_NEGATIVE), Socket.class, "sendToAddress(...)");
++            unknownStackTrace(Errors.newConnectionResetException("syscall:sendto",
++                    Errors.ERRNO_EPIPE_NEGATIVE), Socket.class, "sendToAddress");
+     private static final Errors.NativeIoException CONNECTION_RESET_EXCEPTION_SENDMSG = unknownStackTrace(
+-            Errors.newConnectionResetException("syscall:sendmsg(...)",
+-            Errors.ERRNO_EPIPE_NEGATIVE), Socket.class, "sendToAddresses(...)");
++            Errors.newConnectionResetException("syscall:sendmsg",
++            Errors.ERRNO_EPIPE_NEGATIVE), Socket.class, "sendToAddresses(..)");
+     private static final Errors.NativeIoException CONNECTION_RESET_SHUTDOWN_EXCEPTION =
+-            unknownStackTrace(Errors.newConnectionResetException("syscall:shutdown(...)",
+-                    Errors.ERRNO_ECONNRESET_NEGATIVE), Socket.class, "shutdown(...)");
++            unknownStackTrace(Errors.newConnectionResetException("syscall:shutdown",
++                    Errors.ERRNO_ECONNRESET_NEGATIVE), Socket.class, "shutdown");
+     private static final Errors.NativeConnectException FINISH_CONNECT_REFUSED_EXCEPTION =
+-            unknownStackTrace(new Errors.NativeConnectException("syscall:getsockopt(...)",
+-                    Errors.ERROR_ECONNREFUSED_NEGATIVE), Socket.class, "finishConnect(...)");
++            unknownStackTrace(new Errors.NativeConnectException("syscall:getsockopt",
++                    Errors.ERROR_ECONNREFUSED_NEGATIVE), Socket.class, "finishConnect(..)");
+     private static final Errors.NativeConnectException CONNECT_REFUSED_EXCEPTION =
+-            unknownStackTrace(new Errors.NativeConnectException("syscall:connect(...)",
+-                    Errors.ERROR_ECONNREFUSED_NEGATIVE), Socket.class, "connect(...)");
++            unknownStackTrace(new Errors.NativeConnectException("syscall:connect",
++                    Errors.ERROR_ECONNREFUSED_NEGATIVE), Socket.class, "connect(..)");
+     public Socket(int fd) {
+         super(fd);
+     }
+diff --git a/transport-native-epoll/src/main/java/io/netty/channel/unix/Errors.java b/transport-native-epoll/src/main/java/io/netty/channel/unix/Errors.java
+index 38a5b88..581efb9 100644
+--- a/transport-native-epoll/src/main/java/io/netty/channel/unix/Errors.java
++++ b/transport-native-epoll/src/main/java/io/netty/channel/unix/Errors.java
+@@ -61,7 +61,7 @@
+         private static final long serialVersionUID = 8222160204268655526L;
+         private final int expectedErr;
+         public NativeIoException(String method, int expectedErr) {
+-            super(method + " failed: " + ERRORS[-expectedErr]);
++            super(method + "(..) failed: " + ERRORS[-expectedErr]);
+             this.expectedErr = expectedErr;
+         }
+ 
+@@ -74,7 +74,7 @@
+         private static final long serialVersionUID = -5532328671712318161L;
+         private final int expectedErr;
+         NativeConnectException(String method, int expectedErr) {
+-            super(method + " failed: " + ERRORS[-expectedErr]);
++            super(method + "(..) failed: " + ERRORS[-expectedErr]);
+             this.expectedErr = expectedErr;
+         }
+ 
+@@ -104,7 +104,7 @@
+         if (err == ERROR_EISCONN_NEGATIVE) {
+             throw new AlreadyConnectedException();
+         }
+-        throw new ConnectException(method + "() failed: " + ERRORS[-err]);
++        throw new ConnectException(method + "(..) failed: " + ERRORS[-err]);
+     }
+ 
+     public static NativeIoException newConnectionResetException(String method, int errnoNegative) {
+@@ -114,7 +114,7 @@
+     }
+ 
+     public static NativeIoException newIOException(String method, int err) {
+-        return new NativeIoException(method + "() failed: " + ERRORS[-err], err);
++        return new NativeIoException(method, err);
+     }
+ 
+     public static int ioResult(String method, int err, NativeIoException resetCause,

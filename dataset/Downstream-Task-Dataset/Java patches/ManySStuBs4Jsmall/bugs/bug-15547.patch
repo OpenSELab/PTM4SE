@@ -1,0 +1,57 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapLoaderFailoverTest.java b/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapLoaderFailoverTest.java
+index a9a0017..69a0454 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapLoaderFailoverTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapLoaderFailoverTest.java
+@@ -108,7 +108,7 @@
+         assertSizeAndLoadCount(map);
+ 
+         hz3.getLifecycleService().terminate();
+-        assertClusterSize(2, nodes[0]);
++        assertClusterSizeEventually(2, nodes[0]);
+         map.loadAll(true);
+ 
+         assertSizeEventually(MAP_STORE_ENTRY_COUNT, map);
+@@ -132,7 +132,7 @@
+         pausingLoader.awaitPause();
+ 
+         hz3.getLifecycleService().terminate();
+-        assertClusterSize(2, nodes[0]);
++        assertClusterSizeEventually(2, nodes[0]);
+ 
+         pausingLoader.resume();
+ 
+diff --git a/hazelcast/src/test/java/com/hazelcast/test/HazelcastTestSupport.java b/hazelcast/src/test/java/com/hazelcast/test/HazelcastTestSupport.java
+index c699df5..52feb9c 100644
+--- a/hazelcast/src/test/java/com/hazelcast/test/HazelcastTestSupport.java
++++ b/hazelcast/src/test/java/com/hazelcast/test/HazelcastTestSupport.java
+@@ -681,7 +681,7 @@
+             @Override
+             public void run()
+                     throws Exception {
+-                assertEquals("the size of the cluster is not correct", expectedSize, instance.getCluster().getMembers().size());
++                assertClusterSize(expectedSize, instance);
+             }
+         }, timeoutSeconds);
+     }
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapLoaderFailoverTest.java b/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapLoaderFailoverTest.java
+index a9a0017..69a0454 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapLoaderFailoverTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapLoaderFailoverTest.java
+@@ -108,7 +108,7 @@
+         assertSizeAndLoadCount(map);
+ 
+         hz3.getLifecycleService().terminate();
+-        assertClusterSize(2, nodes[0]);
++        assertClusterSizeEventually(2, nodes[0]);
+         map.loadAll(true);
+ 
+         assertSizeEventually(MAP_STORE_ENTRY_COUNT, map);
+@@ -132,7 +132,7 @@
+         pausingLoader.awaitPause();
+ 
+         hz3.getLifecycleService().terminate();
+-        assertClusterSize(2, nodes[0]);
++        assertClusterSizeEventually(2, nodes[0]);
+ 
+         pausingLoader.resume();
+ 

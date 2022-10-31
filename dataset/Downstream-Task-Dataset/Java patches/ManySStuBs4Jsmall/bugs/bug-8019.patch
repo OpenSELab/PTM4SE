@@ -1,0 +1,13 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
+index 26df8f4..0ece5a0 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
+@@ -2730,7 +2730,7 @@
+     StructObjectInspector oi = null;
+     try {
+       Deserializer deserializer = table_desc.getDeserializerClass().newInstance();
+-      deserializer.initialize(null, table_desc.getProperties());
++      deserializer.initialize(conf, table_desc.getProperties());
+       oi = (StructObjectInspector) deserializer.getObjectInspector();
+     } catch (Exception e) {
+       throw new SemanticException(e);

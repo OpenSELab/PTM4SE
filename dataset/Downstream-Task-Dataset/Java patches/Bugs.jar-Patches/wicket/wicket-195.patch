@@ -1,0 +1,42 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/BookmarkableMapper.java b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/BookmarkableMapper.java
+index 1fd71d6..a9fd212 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/BookmarkableMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/BookmarkableMapper.java
+@@ -190,6 +190,11 @@ public class BookmarkableMapper extends AbstractBookmarkableMapper
+ 		{
+ 			matches = true;
+ 		}
++		// baseUrl = 'bookmarkable/com.example.SomePage', requestUrl = 'bookmarkable/com.example.SomePage'
++		else if (baseUrl.getSegments().size() == 2 && urlStartsWith(baseUrl, bookmarkableIdentifier) && url.getSegments().size() == 2 && urlStartsWith(url, bookmarkableIdentifier))
++		{
++			matches = true;
++		}
+ 		// baseUrl = 'wicket/page[?...]', requestUrl = 'bookmarkable/com.example.SomePage'
+ 		else if (baseUrl.getSegments().size() == 2 && urlStartsWith(baseUrl, namespace, pageIdentifier) && url.getSegments().size() >= 2 && urlStartsWith(url, bookmarkableIdentifier))
+ 		{
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PageInstanceMapper.java b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PageInstanceMapper.java
+index 3789a9f..a034642 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PageInstanceMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PageInstanceMapper.java
+@@ -175,17 +175,19 @@ public class PageInstanceMapper extends AbstractComponentMapper
+ 	{
+ 		boolean matches = false;
+ 		Url url = request.getUrl();
++		Url baseUrl = request.getClientUrl();
+ 		String namespace = getContext().getNamespace();
+ 		String pageIdentifier = getContext().getPageIdentifier();
++
+ 		if (urlStartsWith(url, namespace, pageIdentifier))
+ 		{
+ 			matches = true;
+ 		}
+-		else if (urlStartsWith(request.getClientUrl(), namespace, pageIdentifier) && urlStartsWith(url, pageIdentifier))
++		else if (urlStartsWith(baseUrl, namespace, pageIdentifier) && urlStartsWith(url, pageIdentifier))
+ 		{
+ 			matches = true;
+ 		}
+-		else if (urlStartsWith(request.getClientUrl(), pageIdentifier) && urlStartsWith(url, pageIdentifier))
++		else if (urlStartsWith(baseUrl, pageIdentifier) && urlStartsWith(url, pageIdentifier))
+ 		{
+ 			matches = true;
+ 		}

@@ -1,0 +1,39 @@
+diff --git a/Essentials/src/com/earth2me/essentials/Trade.java b/Essentials/src/com/earth2me/essentials/Trade.java
+index 1a03a01..3d51c5a 100644
+--- a/Essentials/src/com/earth2me/essentials/Trade.java
++++ b/Essentials/src/com/earth2me/essentials/Trade.java
+@@ -169,7 +169,7 @@
+ 			{
+ 				throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+ 			}
+-			user.getInventory().removeItem(getItemStack());
++			user.getInventory().removeItem(getItemStack().clone());
+ 			user.updateInventory();
+ 		}
+ 		if (command != null)
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandsell.java b/Essentials/src/com/earth2me/essentials/commands/Commandsell.java
+index a7b1ae3..b238361 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandsell.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandsell.java
+@@ -157,7 +157,7 @@
+ 			// This should never happen.
+ 			throw new IllegalStateException("Trying to remove more items than are available.");
+ 		}
+-		user.getInventory().removeItem(ris);
++		user.getInventory().removeItem(ris.clone());
+ 		user.updateInventory();
+ 		Trade.log("Command", "Sell", "Item", user.getName(), new Trade(ris, ess), user.getName(), new Trade(worth * amount, ess), user.getLocation(), ess);
+ 		user.giveMoney(worth * amount);
+diff --git a/Essentials/src/com/earth2me/essentials/Trade.java b/Essentials/src/com/earth2me/essentials/Trade.java
+index 1a03a01..3d51c5a 100644
+--- a/Essentials/src/com/earth2me/essentials/Trade.java
++++ b/Essentials/src/com/earth2me/essentials/Trade.java
+@@ -169,7 +169,7 @@
+ 			{
+ 				throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+ 			}
+-			user.getInventory().removeItem(getItemStack());
++			user.getInventory().removeItem(getItemStack().clone());
+ 			user.updateInventory();
+ 		}
+ 		if (command != null)

@@ -1,0 +1,90 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Application.java b/wicket-core/src/main/java/org/apache/wicket/Application.java
+index 6cd4445..98078ea 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Application.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Application.java
+@@ -685,11 +685,11 @@ public abstract class Application implements UnboundListener, IEventSink
+ 		pageSettings.addComponentResolver(new HtmlHeaderResolver());
+ 		pageSettings.addComponentResolver(new WicketLinkTagHandler());
+ 		pageSettings.addComponentResolver(new WicketMessageResolver());
+-		pageSettings.addComponentResolver(new WicketMessageTagHandler());
+ 		pageSettings.addComponentResolver(new FragmentResolver());
+ 		pageSettings.addComponentResolver(new RelativePathPrefixHandler());
+ 		pageSettings.addComponentResolver(new EnclosureHandler());
+ 		pageSettings.addComponentResolver(new InlineEnclosureHandler());
++		pageSettings.addComponentResolver(new WicketMessageTagHandler());
+ 		pageSettings.addComponentResolver(new WicketContainerResolver());
+ 
+ 		// Install button image resource factory
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/MarkupParser.java b/wicket-core/src/main/java/org/apache/wicket/markup/MarkupParser.java
+index d84383f..4720314 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/MarkupParser.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/MarkupParser.java
+@@ -150,6 +150,7 @@ public class MarkupParser extends AbstractMarkupParser
+ 		filters.add(new WicketLinkTagHandler());
+ 		filters.add(new AutoLabelTagHandler());
+ 		filters.add(new WicketNamespaceHandler(markupResourceStream));
++		filters.add(new WicketMessageTagHandler(markupResourceStream));
+ 
+ 		// Provided the wicket component requesting the markup is known ...
+ 		if ((markupResourceStream != null) && (markupResourceStream.getResource() != null))
+@@ -157,8 +158,6 @@ public class MarkupParser extends AbstractMarkupParser
+ 			final ContainerInfo containerInfo = markupResourceStream.getContainerInfo();
+ 			if (containerInfo != null)
+ 			{
+-				filters.add(new WicketMessageTagHandler(markupResourceStream));
+-
+ 				// Pages require additional handlers
+ 				if (Page.class.isAssignableFrom(containerInfo.getContainerClass()))
+ 				{
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
+index ab7e609..06a193a 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
+@@ -43,7 +43,6 @@ import org.apache.wicket.util.string.Strings;
+  * enclosure is identified by the 'child' attribute value which must be equal to the relative child
+  * id path.
+  * 
+- * @see EnclosureResolver
+  * @see InlineEnclosure
+  * 
+  * @author Joonas Hamalainen
+@@ -96,7 +95,7 @@ public final class InlineEnclosureHandler extends AbstractMarkupFilter
+ 							tag.toString(), tag.getPos());
+ 				}
+ 
+-				// if it doesn't have a wicket-id already, than assign one now.
++				// if it doesn't have a wicket-id already, then assign one now.
+ 				if (Strings.isEmpty(tag.getId()))
+ 				{
+ 					if (Strings.isEmpty(htmlId))
+@@ -129,7 +128,7 @@ public final class InlineEnclosureHandler extends AbstractMarkupFilter
+ 		// Are we within an enclosure?
+ 		else if ((enclosures != null) && (enclosures.size() > 0))
+ 		{
+-			// In case the enclosure tag did not provide a child component id, than assign the
++			// In case the enclosure tag did not provide a child component id, then assign the
+ 			// first ComponentTag's id found as the controlling child to the enclosure.
+ 			if (tag.isOpen() && (tag.getId() != null) && !(tag instanceof WicketTag) &&
+ 				!tag.isAutoComponentTag())
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/WicketMessageTagHandler.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/WicketMessageTagHandler.java
+index acda0a6..5044128 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/WicketMessageTagHandler.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/WicketMessageTagHandler.java
+@@ -83,7 +83,7 @@ public final class WicketMessageTagHandler extends AbstractMarkupFilter
+ 		final String wicketMessageAttribute = tag.getAttributes().getString(
+ 			getWicketMessageAttrName());
+ 
+-		if ((wicketMessageAttribute != null) && (wicketMessageAttribute.trim().length() > 0))
++		if (Strings.isEmpty(wicketMessageAttribute) == false)
+ 		{
+ 			// check if this tag is raw markup
+ 			if (tag.getId() == null)
+@@ -165,7 +165,7 @@ public final class WicketMessageTagHandler extends AbstractMarkupFilter
+ 		// localize any raw markup that has wicket:message attrs
+ 		if ((tag != null) && (tag.getId().startsWith(WICKET_MESSAGE_CONTAINER_ID)))
+ 		{
+-			Component wc = null;
++			Component wc;
+ 			int autoIndex = container.getPage().getAutoIndex();
+ 			String id = WICKET_MESSAGE_CONTAINER_ID + autoIndex;
+ 

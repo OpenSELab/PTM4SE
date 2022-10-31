@@ -1,0 +1,104 @@
+diff --git a/community/com/src/test/java/org/neo4j/com/backup/TestOnlineBackupExtension.java b/community/com/src/test/java/org/neo4j/com/backup/TestOnlineBackupExtension.java
+index 10ee318..2517e26 100644
+--- a/community/com/src/test/java/org/neo4j/com/backup/TestOnlineBackupExtension.java
++++ b/community/com/src/test/java/org/neo4j/com/backup/TestOnlineBackupExtension.java
+@@ -32,12 +32,12 @@
+     }
+ 
+     @Override
+-    protected Map<String, String> configuration( boolean shouldLoad )
++    protected Map<String, String> configuration( boolean shouldLoad, int instance )
+     {
+-        Map<String, String> configuration = super.configuration( shouldLoad );
++        Map<String, String> configuration = super.configuration( shouldLoad, instance );
+         if ( shouldLoad )
+         {
+-            configuration.put( Config.ENABLE_ONLINE_BACKUP, "true" );
++            configuration.put( Config.ENABLE_ONLINE_BACKUP, "port=" + ( BackupServer.DEFAULT_PORT + instance ) );
+         }
+         return configuration;
+     }
+diff --git a/community/kernel/src/test/java/org/neo4j/kernel/KernelExtensionContractTest.java b/community/kernel/src/test/java/org/neo4j/kernel/KernelExtensionContractTest.java
+index 98719f5..b839b7a 100644
+--- a/community/kernel/src/test/java/org/neo4j/kernel/KernelExtensionContractTest.java
++++ b/community/kernel/src/test/java/org/neo4j/kernel/KernelExtensionContractTest.java
+@@ -56,9 +56,9 @@
+         this.key = key;
+     }
+ 
+-    EmbeddedGraphDatabase graphdb( String name, boolean loadExtensions )
++    EmbeddedGraphDatabase graphdb( String name, boolean loadExtensions, int instance )
+     {
+-        Map<String, String> config = configuration( true );
++        Map<String, String> config = configuration( true, instance );
+         config.put( Config.LOAD_EXTENSIONS, Boolean.toString( loadExtensions ) );
+         return new EmbeddedGraphDatabase( target.directory( name, true ).getAbsolutePath(), config );
+     }
+@@ -71,9 +71,11 @@
+      *            extension load should be created, <code>false</code> if
+      *            configuration that makes the extension not load should be
+      *            created.
++     * @param instance used for differentiating multiple instances that will run
++     *            simultaneously.
+      * @return configuration for an {@link EmbeddedGraphDatabase} that
+      */
+-    protected Map<String, String> configuration( boolean shouldLoad )
++    protected Map<String, String> configuration( boolean shouldLoad, int instance )
+     {
+         return MapUtil.stringMap();
+     }
+@@ -212,7 +214,7 @@
+     @Test
+     public void canLoadKernelExtension() throws Exception
+     {
+-        EmbeddedGraphDatabase graphdb = graphdb( "graphdb", /*loadExtensions=*/true );
++        EmbeddedGraphDatabase graphdb = graphdb( "graphdb", /*loadExtensions=*/true, 0 );
+         try
+         {
+             assertTrue( "Failed to load extension", isLoadedOk( getExtensions( graphdb ) ) );
+@@ -226,10 +228,10 @@
+     @Test
+     public void sameInstanceCanLoadWithMultipleKernels() throws Exception
+     {
+-        EmbeddedGraphDatabase graphdb1 = graphdb( "graphdb1", /*loadExtensions=*/false );
++        EmbeddedGraphDatabase graphdb1 = graphdb( "graphdb1", /*loadExtensions=*/false, 1 );
+         try
+         {
+-            EmbeddedGraphDatabase graphdb2 = graphdb( "graphdb2", /*loadExtensions=*/false );
++            EmbeddedGraphDatabase graphdb2 = graphdb( "graphdb2", /*loadExtensions=*/false, 2 );
+             try
+             {
+                 KernelData extensions1 = getExtensions( graphdb1 ), extensions2 = getExtensions( graphdb2 );
+diff --git a/community/kernel/src/test/java/org/neo4j/kernel/TestKernelExtension.java b/community/kernel/src/test/java/org/neo4j/kernel/TestKernelExtension.java
+index ab7a609..1304387 100644
+--- a/community/kernel/src/test/java/org/neo4j/kernel/TestKernelExtension.java
++++ b/community/kernel/src/test/java/org/neo4j/kernel/TestKernelExtension.java
+@@ -34,7 +34,7 @@
+     @Test
+     public void canDisableLoadingKernelExtensions() throws Exception
+     {
+-        EmbeddedGraphDatabase graphdb = graphdb( "graphdb", /*loadExtensions=*/false );
++        EmbeddedGraphDatabase graphdb = graphdb( "graphdb", /*loadExtensions=*/false, 0 );
+         try
+         {
+             assertFalse( "Extensions were loaded despite configured not to",
+diff --git a/community/com/src/test/java/org/neo4j/com/backup/TestOnlineBackupExtension.java b/community/com/src/test/java/org/neo4j/com/backup/TestOnlineBackupExtension.java
+index 10ee318..2517e26 100644
+--- a/community/com/src/test/java/org/neo4j/com/backup/TestOnlineBackupExtension.java
++++ b/community/com/src/test/java/org/neo4j/com/backup/TestOnlineBackupExtension.java
+@@ -32,12 +32,12 @@
+     }
+ 
+     @Override
+-    protected Map<String, String> configuration( boolean shouldLoad )
++    protected Map<String, String> configuration( boolean shouldLoad, int instance )
+     {
+-        Map<String, String> configuration = super.configuration( shouldLoad );
++        Map<String, String> configuration = super.configuration( shouldLoad, instance );
+         if ( shouldLoad )
+         {
+-            configuration.put( Config.ENABLE_ONLINE_BACKUP, "true" );
++            configuration.put( Config.ENABLE_ONLINE_BACKUP, "port=" + ( BackupServer.DEFAULT_PORT + instance ) );
+         }
+         return configuration;
+     }

@@ -1,0 +1,26 @@
+diff --git a/spring-boot/src/test/java/org/springframework/boot/context/config/ConfigFileApplicationListenerTests.java b/spring-boot/src/test/java/org/springframework/boot/context/config/ConfigFileApplicationListenerTests.java
+index 8dac5d4..ae0e8cc 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/context/config/ConfigFileApplicationListenerTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/context/config/ConfigFileApplicationListenerTests.java
+@@ -604,7 +604,7 @@
+ 	@Test
+ 	public void absoluteResourceDefaultsToFile() throws Exception {
+ 		String location = new File("src/test/resources/specificlocation.properties")
+-				.getAbsolutePath();
++				.getAbsolutePath().replace("\\", "/");
+ 		TestPropertySourceUtils.addInlinedPropertiesToEnvironment(this.environment,
+ 				"spring.config.location=" + location);
+ 		this.initializer.postProcessEnvironment(this.environment, this.application);
+diff --git a/spring-boot/src/test/java/org/springframework/boot/context/config/ConfigFileApplicationListenerTests.java b/spring-boot/src/test/java/org/springframework/boot/context/config/ConfigFileApplicationListenerTests.java
+index 8dac5d4..ae0e8cc 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/context/config/ConfigFileApplicationListenerTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/context/config/ConfigFileApplicationListenerTests.java
+@@ -604,7 +604,7 @@
+ 	@Test
+ 	public void absoluteResourceDefaultsToFile() throws Exception {
+ 		String location = new File("src/test/resources/specificlocation.properties")
+-				.getAbsolutePath();
++				.getAbsolutePath().replace("\\", "/");
+ 		TestPropertySourceUtils.addInlinedPropertiesToEnvironment(this.environment,
+ 				"spring.config.location=" + location);
+ 		this.initializer.postProcessEnvironment(this.environment, this.application);

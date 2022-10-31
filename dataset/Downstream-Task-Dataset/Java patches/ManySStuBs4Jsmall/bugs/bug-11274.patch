@@ -1,0 +1,30 @@
+diff --git a/dropwizard-configuration/src/main/java/io/dropwizard/configuration/ConfigurationParsingException.java b/dropwizard-configuration/src/main/java/io/dropwizard/configuration/ConfigurationParsingException.java
+index 1fab8b7..3457a81 100644
+--- a/dropwizard-configuration/src/main/java/io/dropwizard/configuration/ConfigurationParsingException.java
++++ b/dropwizard-configuration/src/main/java/io/dropwizard/configuration/ConfigurationParsingException.java
+@@ -327,9 +327,7 @@
+                 }
+ 
+                 // determine which of the two is closer to the base and order it first
+-                return StringUtils.getLevenshteinDistance(a, base) < StringUtils.getLevenshteinDistance(b, base)
+-                        ? -1
+-                        : 1;
++                return Integer.compare(StringUtils.getLevenshteinDistance(a, base), StringUtils.getLevenshteinDistance(b, base));
+             }
+ 
+             private void writeObject(ObjectOutputStream stream) throws IOException {
+diff --git a/dropwizard-configuration/src/main/java/io/dropwizard/configuration/ConfigurationParsingException.java b/dropwizard-configuration/src/main/java/io/dropwizard/configuration/ConfigurationParsingException.java
+index 1fab8b7..3457a81 100644
+--- a/dropwizard-configuration/src/main/java/io/dropwizard/configuration/ConfigurationParsingException.java
++++ b/dropwizard-configuration/src/main/java/io/dropwizard/configuration/ConfigurationParsingException.java
+@@ -327,9 +327,7 @@
+                 }
+ 
+                 // determine which of the two is closer to the base and order it first
+-                return StringUtils.getLevenshteinDistance(a, base) < StringUtils.getLevenshteinDistance(b, base)
+-                        ? -1
+-                        : 1;
++                return Integer.compare(StringUtils.getLevenshteinDistance(a, base), StringUtils.getLevenshteinDistance(b, base));
+             }
+ 
+             private void writeObject(ObjectOutputStream stream) throws IOException {

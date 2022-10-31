@@ -1,0 +1,33 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/impl/ThrowableProxy.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/impl/ThrowableProxy.java
+index 75c8564..3aadf6c 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/impl/ThrowableProxy.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/impl/ThrowableProxy.java
+@@ -451,15 +451,23 @@ public class ThrowableProxy implements Serializable {
+         try {
+             clazz = Loader.loadClass(className);
+         } catch (final ClassNotFoundException ignored) {
+-            try {
+-                clazz = Loader.initializeClass(className, this.getClass().getClassLoader());
+-            } catch (final ClassNotFoundException ignore) {
+-                return null;
+-            }
++            return initializeClass(className);
++        } catch (final NoClassDefFoundError ignored) {
++            return initializeClass(className);
+         }
+         return clazz;
+     }
+ 
++    private Class<?> initializeClass(final String className) {
++        try {
++            return Loader.initializeClass(className, this.getClass().getClassLoader());
++        } catch (final ClassNotFoundException ignore) {
++            return null;
++        } catch (final NoClassDefFoundError ignore) {
++            return null;
++        }
++    }
++
+     /**
+      * Construct the CacheEntry from the Class's information.
+      * 

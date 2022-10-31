@@ -1,0 +1,85 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
+index 74736d0..4d832f8 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
+@@ -100,7 +100,7 @@
+     private void updateRegexp(String regexpFormat, int compileFlagsParam) {
+         try {
+             regexp = Pattern.compile(regexpFormat, compileFlagsParam);
+-            this.format = regexpFormat;
++            format = regexpFormat;
+             compileFlags |= compileFlagsParam;
+         }
+         catch (final PatternSyntaxException e) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
+index 7112ca3..83c073f 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
+@@ -453,7 +453,7 @@
+          * @param clazz {@code Class} to associate with.
+          */
+         private void setClazz(Class<?> clazz) {
+-            this.classObj = clazz;
++            classObj = clazz;
+             loadable = clazz != null;
+         }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/AnnotationUseStyleCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/AnnotationUseStyleCheck.java
+index 41f0a3c..78592ca 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/AnnotationUseStyleCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/AnnotationUseStyleCheck.java
+@@ -182,7 +182,7 @@
+      * @throws ConversionException if cannot convert string.
+      */
+     public void setElementStyle(final String style) {
+-        this.elementStyle = getOption(ElementStyle.class, style);
++        elementStyle = getOption(ElementStyle.class, style);
+     }
+ 
+     /**
+@@ -192,7 +192,7 @@
+      * @throws ConversionException if cannot convert string.
+      */
+     public void setTrailingArrayComma(final String comma) {
+-        this.trailingArrayComma = getOption(TrailingArrayComma.class, comma);
++        trailingArrayComma = getOption(TrailingArrayComma.class, comma);
+     }
+ 
+     /**
+@@ -202,7 +202,7 @@
+      * @throws ConversionException if cannot convert string.
+      */
+     public void setClosingParens(final String parens) {
+-        this.closingParens = getOption(ClosingParens.class, parens);
++        closingParens = getOption(ClosingParens.class, parens);
+     }
+ 
+     /**
+@@ -386,12 +386,12 @@
+         //comma can be null if array is empty
+         final DetailAST comma = rCurly.getPreviousSibling();
+ 
+-        if (this.trailingArrayComma == TrailingArrayComma.ALWAYS
++        if (trailingArrayComma == TrailingArrayComma.ALWAYS
+             && (comma == null || comma.getType() != TokenTypes.COMMA)) {
+             log(rCurly.getLineNo(),
+                 rCurly.getColumnNo(), MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING);
+         }
+-        else if (this.trailingArrayComma == TrailingArrayComma.NEVER
++        else if (trailingArrayComma == TrailingArrayComma.NEVER
+             && comma != null && comma.getType() == TokenTypes.COMMA) {
+             log(comma.getLineNo(),
+                 comma.getColumnNo(), MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
+index 74736d0..4d832f8 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
+@@ -100,7 +100,7 @@
+     private void updateRegexp(String regexpFormat, int compileFlagsParam) {
+         try {
+             regexp = Pattern.compile(regexpFormat, compileFlagsParam);
+-            this.format = regexpFormat;
++            format = regexpFormat;
+             compileFlags |= compileFlagsParam;
+         }
+         catch (final PatternSyntaxException e) {

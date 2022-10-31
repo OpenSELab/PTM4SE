@@ -1,0 +1,22 @@
+diff --git a/components/camel-aws/src/test/java/org/apache/camel/component/aws/s3/S3ComponentListBucketsSpringTest.java b/components/camel-aws/src/test/java/org/apache/camel/component/aws/s3/S3ComponentListBucketsSpringTest.java
+index 1cee1a7..4a21958 100644
+--- a/components/camel-aws/src/test/java/org/apache/camel/component/aws/s3/S3ComponentListBucketsSpringTest.java
++++ b/components/camel-aws/src/test/java/org/apache/camel/component/aws/s3/S3ComponentListBucketsSpringTest.java
+@@ -32,7 +32,7 @@
+ 
+ public class S3ComponentListBucketsSpringTest extends CamelSpringTestSupport {
+     
+-    @EndpointInject(uri = "direct:start")
++    @EndpointInject(uri = "direct:listBuckets")
+     private ProducerTemplate template;
+     
+     @EndpointInject(uri = "mock:result")
+@@ -44,7 +44,7 @@
+     public void sendIn() throws Exception {
+         result.expectedMessageCount(1);
+         
+-        template.sendBody("direct:start", ExchangePattern.InOnly, "");
++        template.sendBody("direct:listBuckets", ExchangePattern.InOnly, "");
+         assertMockEndpointsSatisfied();
+         
+         assertResultExchange(result.getExchanges().get(0));

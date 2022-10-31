@@ -1,0 +1,88 @@
+diff --git a/src/main/java/org/b3log/solo/event/rhythm/ArticleUpdater.java b/src/main/java/org/b3log/solo/event/rhythm/ArticleUpdater.java
+index adbcc05..18f2e1d 100644
+--- a/src/main/java/org/b3log/solo/event/rhythm/ArticleUpdater.java
++++ b/src/main/java/org/b3log/solo/event/rhythm/ArticleUpdater.java
+@@ -48,7 +48,7 @@
+  * </p>
+  *
+  * @author <a href="http://88250.b3log.org">Liang Ding</a>
+- * @version 1.0.0.4, Jul 6, 2017
++ * @version 1.0.1.0, Sep 6, 2017
+  * @since 0.6.0
+  */
+ public final class ArticleUpdater extends AbstractEventListener<JSONObject> {
+@@ -132,7 +132,7 @@
+             requestJSONObject.put(Common.BLOG_VERSION, SoloServletListener.VERSION);
+             requestJSONObject.put(Common.BLOG, "B3log Solo");
+             requestJSONObject.put(Option.ID_C_BLOG_TITLE, preference.getString(Option.ID_C_BLOG_TITLE));
+-            requestJSONObject.put("blogHost", Latkes.getServerHost() + ":" + Latkes.getServerPort());
++            requestJSONObject.put("blogHost", Latkes.getServePath());
+             requestJSONObject.put("userB3Key", preference.optString(Option.ID_C_KEY_OF_SOLO));
+             requestJSONObject.put("clientAdminEmail", preference.optString(Option.ID_C_ADMIN_EMAIL));
+             requestJSONObject.put("clientRuntimeEnv", "LOCAL");
+diff --git a/src/main/java/org/b3log/solo/event/symphony/CommentSender.java b/src/main/java/org/b3log/solo/event/symphony/CommentSender.java
+index 1175263..59f8dcc 100644
+--- a/src/main/java/org/b3log/solo/event/symphony/CommentSender.java
++++ b/src/main/java/org/b3log/solo/event/symphony/CommentSender.java
+@@ -45,7 +45,7 @@
+  * This listener is responsible for sending comment to B3log Symphony.
+  *
+  * @author <a href="http://88250.b3log.org">Liang Ding</a>
+- * @version 1.0.0.5, Jul 6, 2017
++ * @version 1.0.1.0, Sep 6, 2017
+  * @since 0.5.5
+  */
+ public final class CommentSender extends AbstractEventListener<JSONObject> {
+@@ -114,7 +114,7 @@
+             requestJSONObject.put("clientVersion", SoloServletListener.VERSION);
+             requestJSONObject.put("clientRuntimeEnv", "LOCAL");
+             requestJSONObject.put("clientName", "B3log Solo");
+-            requestJSONObject.put("clientHost", Latkes.getServerHost() + ":" + Latkes.getServerPort());
++            requestJSONObject.put("clientHost", Latkes.getServePath());
+             requestJSONObject.put("clientAdminEmail", preference.optString(Option.ID_C_ADMIN_EMAIL));
+             requestJSONObject.put("userB3Key", preference.optString(Option.ID_C_KEY_OF_SOLO));
+ 
+diff --git a/src/main/java/org/b3log/solo/processor/util/Filler.java b/src/main/java/org/b3log/solo/processor/util/Filler.java
+index 0baa39e..95a9838 100644
+--- a/src/main/java/org/b3log/solo/processor/util/Filler.java
++++ b/src/main/java/org/b3log/solo/processor/util/Filler.java
+@@ -60,7 +60,7 @@
+  *
+  * @author <a href="http://88250.b3log.org">Liang Ding</a>
+  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
+- * @version 1.6.14.15, Aug 16, 2017
++ * @version 1.6.15.0, Sep 6, 2017
+  * @since 0.3.1
+  */
+ @Service
+@@ -589,7 +589,7 @@
+             final String blogTitle = preference.getString(Option.ID_C_BLOG_TITLE);
+ 
+             dataModel.put(Option.ID_C_BLOG_TITLE, blogTitle);
+-            dataModel.put("blogHost", Latkes.getServerHost() + ":" + Latkes.getServerPort());
++            dataModel.put("blogHost", Latkes.getServePath());
+ 
+             dataModel.put(Common.VERSION, SoloServletListener.VERSION);
+             dataModel.put(Common.STATIC_RESOURCE_VERSION, Latkes.getStaticResourceVersion());
+diff --git a/src/main/java/org/b3log/solo/event/rhythm/ArticleUpdater.java b/src/main/java/org/b3log/solo/event/rhythm/ArticleUpdater.java
+index adbcc05..18f2e1d 100644
+--- a/src/main/java/org/b3log/solo/event/rhythm/ArticleUpdater.java
++++ b/src/main/java/org/b3log/solo/event/rhythm/ArticleUpdater.java
+@@ -48,7 +48,7 @@
+  * </p>
+  *
+  * @author <a href="http://88250.b3log.org">Liang Ding</a>
+- * @version 1.0.0.4, Jul 6, 2017
++ * @version 1.0.1.0, Sep 6, 2017
+  * @since 0.6.0
+  */
+ public final class ArticleUpdater extends AbstractEventListener<JSONObject> {
+@@ -132,7 +132,7 @@
+             requestJSONObject.put(Common.BLOG_VERSION, SoloServletListener.VERSION);
+             requestJSONObject.put(Common.BLOG, "B3log Solo");
+             requestJSONObject.put(Option.ID_C_BLOG_TITLE, preference.getString(Option.ID_C_BLOG_TITLE));
+-            requestJSONObject.put("blogHost", Latkes.getServerHost() + ":" + Latkes.getServerPort());
++            requestJSONObject.put("blogHost", Latkes.getServePath());
+             requestJSONObject.put("userB3Key", preference.optString(Option.ID_C_KEY_OF_SOLO));
+             requestJSONObject.put("clientAdminEmail", preference.optString(Option.ID_C_ADMIN_EMAIL));
+             requestJSONObject.put("clientRuntimeEnv", "LOCAL");

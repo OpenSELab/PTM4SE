@@ -1,0 +1,20 @@
+diff --git a/log4j-slf4j-impl/src/main/java/org/apache/logging/slf4j/Log4jMarker.java b/log4j-slf4j-impl/src/main/java/org/apache/logging/slf4j/Log4jMarker.java
+index 50d126c..c2273f5 100644
+--- a/log4j-slf4j-impl/src/main/java/org/apache/logging/slf4j/Log4jMarker.java
++++ b/log4j-slf4j-impl/src/main/java/org/apache/logging/slf4j/Log4jMarker.java
+@@ -84,9 +84,12 @@ public class Log4jMarker implements Marker {
+     }
+ 
+     @Override
+-    public boolean contains(final org.slf4j.Marker marker) {
+-        return this.marker.isInstanceOf(marker.getName());
+-    }
++	public boolean contains(final org.slf4j.Marker marker) {
++		if (marker == null) {
++			throw new IllegalArgumentException();
++		}
++		return this.marker.isInstanceOf(marker.getName());
++	}
+ 
+     @Override
+ 	public boolean contains(final String s) {

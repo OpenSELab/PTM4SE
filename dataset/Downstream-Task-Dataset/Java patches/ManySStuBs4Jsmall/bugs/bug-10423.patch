@@ -1,0 +1,66 @@
+diff --git a/deeplearning4j-ui-parent/deeplearning4j-ui-model/src/main/java/org/deeplearning4j/ui/storage/sqlite/J7FileStatsStorage.java b/deeplearning4j-ui-parent/deeplearning4j-ui-model/src/main/java/org/deeplearning4j/ui/storage/sqlite/J7FileStatsStorage.java
+index 1107054..0e8d883 100644
+--- a/deeplearning4j-ui-parent/deeplearning4j-ui-model/src/main/java/org/deeplearning4j/ui/storage/sqlite/J7FileStatsStorage.java
++++ b/deeplearning4j-ui-parent/deeplearning4j-ui-model/src/main/java/org/deeplearning4j/ui/storage/sqlite/J7FileStatsStorage.java
+@@ -543,7 +543,7 @@
+     @Override
+     public List<Persistable> getAllUpdatesAfter(String sessionID, String typeID, String workerID, long timestamp) {
+         String sql = "SELECT * FROM " + TABLE_NAME_UPDATES + " WHERE SessionID = '" + sessionID + "' AND TypeID = '"
+-                        + typeID + "' " + "AND Timestamp > " + timestamp + ";";
++                        + typeID + "' AND workerId = '" + workerID + "' AND Timestamp > " + timestamp + ";";
+         try (Statement statement = connection.createStatement()) {
+             ResultSet rs = statement.executeQuery(sql);
+             List<Persistable> out = new ArrayList<>();
+@@ -560,18 +560,12 @@
+     @Override
+     public List<Persistable> getAllUpdatesAfter(String sessionID, String typeID, long timestamp) {
+         String sql = "SELECT ObjectBytes FROM " + TABLE_NAME_UPDATES + " WHERE SessionID = '" + sessionID + "'  "
+-                        + "AND Timestamp > " + timestamp + ";";
++                        + "AND TypeID = '" + typeID + "' AND Timestamp > " + timestamp + ";";
+         return queryUpdates(sql);
+     }
+ 
+     @Override
+     public long[] getAllUpdateTimes(String sessionID, String typeID, String workerID) {
+-        /*
+-        statement.executeUpdate("CREATE TABLE " + TABLE_NAME_UPDATES + " (" + "SessionID TEXT NOT NULL, "
+-                + "TypeID TEXT NOT NULL, " + "WorkerID TEXT NOT NULL, " + "Timestamp INTEGER NOT NULL, "
+-                + "ObjectClass TEXT NOT NULL, " + "ObjectBytes BLOB NOT NULL, "
+-                + "PRIMARY KEY ( SessionID, TypeID, WorkerID, Timestamp )" + ");");
+-         */
+         String sql = "SELECT Timestamp FROM " + TABLE_NAME_UPDATES + " WHERE SessionID = '" + sessionID + "'  "
+                 + "AND TypeID = '" + typeID + "' AND workerID = '" + workerID + "';";
+         try (Statement statement = connection.createStatement()) {
+diff --git a/deeplearning4j-ui-parent/deeplearning4j-ui-model/src/main/java/org/deeplearning4j/ui/storage/sqlite/J7FileStatsStorage.java b/deeplearning4j-ui-parent/deeplearning4j-ui-model/src/main/java/org/deeplearning4j/ui/storage/sqlite/J7FileStatsStorage.java
+index 1107054..0e8d883 100644
+--- a/deeplearning4j-ui-parent/deeplearning4j-ui-model/src/main/java/org/deeplearning4j/ui/storage/sqlite/J7FileStatsStorage.java
++++ b/deeplearning4j-ui-parent/deeplearning4j-ui-model/src/main/java/org/deeplearning4j/ui/storage/sqlite/J7FileStatsStorage.java
+@@ -543,7 +543,7 @@
+     @Override
+     public List<Persistable> getAllUpdatesAfter(String sessionID, String typeID, String workerID, long timestamp) {
+         String sql = "SELECT * FROM " + TABLE_NAME_UPDATES + " WHERE SessionID = '" + sessionID + "' AND TypeID = '"
+-                        + typeID + "' " + "AND Timestamp > " + timestamp + ";";
++                        + typeID + "' AND workerId = '" + workerID + "' AND Timestamp > " + timestamp + ";";
+         try (Statement statement = connection.createStatement()) {
+             ResultSet rs = statement.executeQuery(sql);
+             List<Persistable> out = new ArrayList<>();
+@@ -560,18 +560,12 @@
+     @Override
+     public List<Persistable> getAllUpdatesAfter(String sessionID, String typeID, long timestamp) {
+         String sql = "SELECT ObjectBytes FROM " + TABLE_NAME_UPDATES + " WHERE SessionID = '" + sessionID + "'  "
+-                        + "AND Timestamp > " + timestamp + ";";
++                        + "AND TypeID = '" + typeID + "' AND Timestamp > " + timestamp + ";";
+         return queryUpdates(sql);
+     }
+ 
+     @Override
+     public long[] getAllUpdateTimes(String sessionID, String typeID, String workerID) {
+-        /*
+-        statement.executeUpdate("CREATE TABLE " + TABLE_NAME_UPDATES + " (" + "SessionID TEXT NOT NULL, "
+-                + "TypeID TEXT NOT NULL, " + "WorkerID TEXT NOT NULL, " + "Timestamp INTEGER NOT NULL, "
+-                + "ObjectClass TEXT NOT NULL, " + "ObjectBytes BLOB NOT NULL, "
+-                + "PRIMARY KEY ( SessionID, TypeID, WorkerID, Timestamp )" + ");");
+-         */
+         String sql = "SELECT Timestamp FROM " + TABLE_NAME_UPDATES + " WHERE SessionID = '" + sessionID + "'  "
+                 + "AND TypeID = '" + typeID + "' AND workerID = '" + workerID + "';";
+         try (Statement statement = connection.createStatement()) {

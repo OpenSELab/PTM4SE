@@ -1,0 +1,26 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/outputs/GelfOutput.java b/graylog2-server/src/main/java/org/graylog2/outputs/GelfOutput.java
+index 4e4ea4a..7b8c048 100644
+--- a/graylog2-server/src/main/java/org/graylog2/outputs/GelfOutput.java
++++ b/graylog2-server/src/main/java/org/graylog2/outputs/GelfOutput.java
+@@ -80,7 +80,7 @@
+     protected GelfTransport buildTransport(final Configuration configuration) throws MessageOutputConfigurationException {
+         final String protocol = configuration.getString(CK_PROTOCOL).toUpperCase();
+         final String hostname = configuration.getString(CK_HOSTNAME);
+-        final int port = Integer.parseInt(configuration.getString(CK_PORT));
++        final int port = configuration.getInt(CK_PORT);
+ 
+         final GelfConfiguration gelfConfiguration = new GelfConfiguration(new InetSocketAddress(hostname, port))
+                 .transport(GelfTransports.valueOf(protocol));
+diff --git a/graylog2-server/src/main/java/org/graylog2/outputs/GelfOutput.java b/graylog2-server/src/main/java/org/graylog2/outputs/GelfOutput.java
+index 4e4ea4a..7b8c048 100644
+--- a/graylog2-server/src/main/java/org/graylog2/outputs/GelfOutput.java
++++ b/graylog2-server/src/main/java/org/graylog2/outputs/GelfOutput.java
+@@ -80,7 +80,7 @@
+     protected GelfTransport buildTransport(final Configuration configuration) throws MessageOutputConfigurationException {
+         final String protocol = configuration.getString(CK_PROTOCOL).toUpperCase();
+         final String hostname = configuration.getString(CK_HOSTNAME);
+-        final int port = Integer.parseInt(configuration.getString(CK_PORT));
++        final int port = configuration.getInt(CK_PORT);
+ 
+         final GelfConfiguration gelfConfiguration = new GelfConfiguration(new InetSocketAddress(hostname, port))
+                 .transport(GelfTransports.valueOf(protocol));

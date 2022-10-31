@@ -1,0 +1,216 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java b/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
+index b607b4e..1ec4f02 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
+@@ -1535,7 +1535,7 @@ public abstract class MarkupContainer extends Component implements Iterable<Comp
+ 				ComponentTag.IAutoComponentFactory autoComponentFactory = tag.getAutoComponentFactory();
+ 				if (autoComponentFactory != null)
+ 				{
+-					queue(autoComponentFactory.newComponent(tag));
++					queue(autoComponentFactory.newComponent(this, tag));
+ 				}
+ 			}
+ 		}
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/ComponentTag.java b/wicket-core/src/main/java/org/apache/wicket/markup/ComponentTag.java
+index b572677..bffde4e 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/ComponentTag.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/ComponentTag.java
+@@ -25,6 +25,7 @@ import java.util.List;
+ import java.util.Map;
+ 
+ import org.apache.wicket.Component;
++import org.apache.wicket.MarkupContainer;
+ import org.apache.wicket.behavior.Behavior;
+ import org.apache.wicket.markup.parser.XmlTag;
+ import org.apache.wicket.markup.parser.XmlTag.TagType;
+@@ -65,7 +66,7 @@ public class ComponentTag extends MarkupElement
+ 		/**
+ 		 * Creates a new instance of auto component to be queued
+ 		 */
+-		Component newComponent(ComponentTag tag);
++		Component newComponent(MarkupContainer container, ComponentTag tag);
+ 	}
+ 
+ 
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/EnclosureHandler.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/EnclosureHandler.java
+index 4a47f38..098533c 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/EnclosureHandler.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/EnclosureHandler.java
+@@ -56,7 +56,7 @@ public final class EnclosureHandler extends AbstractMarkupFilter implements ICom
+ 	private static final IAutoComponentFactory FACTORY = new IAutoComponentFactory()
+ 	{
+ 		@Override
+-		public Component newComponent(ComponentTag tag)
++		public Component newComponent(MarkupContainer container, ComponentTag tag)
+ 		{
+ 			return new Enclosure(tag.getId(), tag
+ 				.getAttribute(EnclosureHandler.CHILD_ATTRIBUTE));
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/HtmlHeaderSectionHandler.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/HtmlHeaderSectionHandler.java
+index 0f85964..6d08c95 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/HtmlHeaderSectionHandler.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/HtmlHeaderSectionHandler.java
+@@ -49,8 +49,8 @@ import org.apache.wicket.markup.resolver.HtmlHeaderResolver;
+  */
+ public final class HtmlHeaderSectionHandler extends AbstractMarkupFilter
+ {
+-	private static final String BODY = "body";
+-	private static final String HEAD = "head";
++	public static final String BODY = "body";
++	public static final String HEAD = "head";
+ 
+ 	/** The automatically assigned wicket:id to &gt;head&lt; tag */
+ 	public static final String HEADER_ID = "_header_";
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
+index e3c953a..0014b92 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
+@@ -127,7 +127,7 @@ public final class InlineEnclosureHandler extends AbstractMarkupFilter
+ 					tag.setAutoComponentFactory(new ComponentTag.IAutoComponentFactory()
+ 					{
+ 						@Override
+-						public Component newComponent(ComponentTag tag)
++						public Component newComponent(MarkupContainer container, ComponentTag tag)
+ 						{
+ 							String attributeName = getInlineEnclosureAttributeName(null);
+ 							String childId = tag.getAttribute(attributeName);
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/RelativePathPrefixHandler.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/RelativePathPrefixHandler.java
+index 0ae97ee..79edb52 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/RelativePathPrefixHandler.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/RelativePathPrefixHandler.java
+@@ -86,8 +86,8 @@ public final class RelativePathPrefixHandler extends AbstractMarkupFilter
+ 			{
+ 				String attrValue = tag.getAttributes().getString(attrName);
+ 
+-				if ((attrValue != null) && (attrValue.startsWith("/") == false) &&
+-					(!attrValue.contains(":")) && !(attrValue.startsWith("#")))
++				if ((attrValue != null) && (attrValue.startsWith("/") == false)
++					&& (!attrValue.contains(":")) && !(attrValue.startsWith("#")))
+ 				{
+ 					tag.getAttributes().put(attrName,
+ 						UrlUtils.rewriteToContextRelative(attrValue, RequestCycle.get()));
+@@ -95,6 +95,14 @@ public final class RelativePathPrefixHandler extends AbstractMarkupFilter
+ 			}
+ 		}
+ 	};
++	
++	/** 
++	 * https://issues.apache.org/jira/browse/WICKET-5724
++	 * 
++	 * Says if we are inside an head tag or wicket:head tag. 
++	 * 
++	 * */
++	private boolean insideHead;
+ 
+ 	/**
+ 	 * Constructor for the IComponentResolver role.
+@@ -106,8 +114,9 @@ public final class RelativePathPrefixHandler extends AbstractMarkupFilter
+ 
+ 	/**
+ 	 * Constructor for the IMarkupFilter role
++	 * 
+ 	 * @param markup
+-	 *      The markup created by reading the markup file
++	 *            The markup created by reading the markup file
+ 	 */
+ 	public RelativePathPrefixHandler(final MarkupResourceStream markup)
+ 	{
+@@ -119,30 +128,62 @@ public final class RelativePathPrefixHandler extends AbstractMarkupFilter
+ 	{
+ 		if (tag.isClose())
+ 		{
++			if (isHeadTag(tag))	
++			{
++				//outside head tag
++				insideHead = false;
++			}
++			
+ 			return tag;
+ 		}
+ 
++		if (isHeadTag(tag))	
++		{
++			//inside head tag
++			insideHead = true;
++		}
++
+ 		String wicketIdAttr = getWicketNamespace() + ":" + "id";
+ 
+ 		// Don't touch any wicket:id component and any auto-components
+-		if ((tag instanceof WicketTag) || (tag.isAutolinkEnabled() == true) ||
+-			(tag.getAttributes().get(wicketIdAttr) != null))
++		if ((tag instanceof WicketTag) || (tag.isAutolinkEnabled() == true)
++			|| (tag.getAttributes().get(wicketIdAttr) != null))
+ 		{
+ 			return tag;
+ 		}
+-
++		
+ 		// Work out whether we have any attributes that require us to add a
+ 		// behavior that prepends the relative path.
+ 		for (String attrName : attributeNames)
+ 		{
+ 			String attrValue = tag.getAttributes().getString(attrName);
+-			if ((attrValue != null) && (attrValue.startsWith("/") == false) &&
+-				(!attrValue.contains(":")) && !(attrValue.startsWith("#")))
++			if ((attrValue != null) && (attrValue.startsWith("/") == false)
++				&& (!attrValue.contains(":")) && !(attrValue.startsWith("#")))
+ 			{
+ 				if (tag.getId() == null)
+ 				{
+ 					tag.setId(getWicketRelativePathPrefix(null));
+ 					tag.setAutoComponentTag(true);
++					
++					/**
++					 * https://issues.apache.org/jira/browse/WICKET-5724
++					 * Transparent component inside page body must allow 
++					 * queued children components.
++					 */
++					if(!insideHead)
++					{
++						tag.setAutoComponentFactory(new ComponentTag.IAutoComponentFactory()
++						{
++							@Override
++							public Component newComponent(MarkupContainer container, ComponentTag tag)
++							{
++								String id = tag.getId() + container.getPage().getAutoIndex();
++								tag.setId(id);
++	
++								return new TransparentWebMarkupContainer(id);
++							}
++						});	
++					}
+ 				}
+ 				tag.addBehavior(RELATIVE_PATH_BEHAVIOR);
+ 				tag.setModified(true);
+@@ -152,7 +193,17 @@ public final class RelativePathPrefixHandler extends AbstractMarkupFilter
+ 
+ 		return tag;
+ 	}
+-
++	
++	private boolean isHeadTag(ComponentTag tag)
++	{
++		if (HtmlHeaderSectionHandler.HEAD.equalsIgnoreCase(tag.getName()))
++		{
++			return true;
++		}	
++		
++		return false;
++	}
++	
+ 	@Override
+ 	public Component resolve(final MarkupContainer container, final MarkupStream markupStream,
+ 		final ComponentTag tag)
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/resolver/IComponentResolver.java b/wicket-core/src/main/java/org/apache/wicket/markup/resolver/IComponentResolver.java
+index b8d1588..9e83b71 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/resolver/IComponentResolver.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/resolver/IComponentResolver.java
+@@ -28,6 +28,8 @@ import org.apache.wicket.util.io.IClusterable;
+  * are first looked up in a component's hierarchy before falling back to a list of
+  * IComponentResolvers maintained in {@link PageSettings}.
+  * 
++ * NOTE: implementations for this interface must be thread-safe!
++ * 
+  * @see ComponentResolvers
+  * 
+  * @author Juergen Donnerstag

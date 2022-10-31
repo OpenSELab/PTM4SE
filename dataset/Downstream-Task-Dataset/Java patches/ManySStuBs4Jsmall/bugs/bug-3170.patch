@@ -1,0 +1,34 @@
+diff --git a/src/main/java/com/alibaba/druid/pool/DruidDataSource.java b/src/main/java/com/alibaba/druid/pool/DruidDataSource.java
+index fc770ac..256f6f7 100644
+--- a/src/main/java/com/alibaba/druid/pool/DruidDataSource.java
++++ b/src/main/java/com/alibaba/druid/pool/DruidDataSource.java
+@@ -139,10 +139,10 @@
+     private DruidConnectionHolder[]          keepAliveConnections;
+ 
+     // threads
+-    private ScheduledFuture<?>               destroySchedulerFuture;
++    private volatile ScheduledFuture<?>      destroySchedulerFuture;
+     private DestroyTask                      destroyTask;
+ 
+-    private Future<?>                        createSchedulerFuture;
++    private volatile Future<?>               createSchedulerFuture;
+ 
+     private CreateConnectionThread           createConnectionThread;
+     private DestroyConnectionThread          destroyConnectionThread;
+diff --git a/src/main/java/com/alibaba/druid/pool/DruidDataSource.java b/src/main/java/com/alibaba/druid/pool/DruidDataSource.java
+index fc770ac..256f6f7 100644
+--- a/src/main/java/com/alibaba/druid/pool/DruidDataSource.java
++++ b/src/main/java/com/alibaba/druid/pool/DruidDataSource.java
+@@ -139,10 +139,10 @@
+     private DruidConnectionHolder[]          keepAliveConnections;
+ 
+     // threads
+-    private ScheduledFuture<?>               destroySchedulerFuture;
++    private volatile ScheduledFuture<?>      destroySchedulerFuture;
+     private DestroyTask                      destroyTask;
+ 
+-    private Future<?>                        createSchedulerFuture;
++    private volatile Future<?>               createSchedulerFuture;
+ 
+     private CreateConnectionThread           createConnectionThread;
+     private DestroyConnectionThread          destroyConnectionThread;

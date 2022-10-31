@@ -1,0 +1,13 @@
+diff --git a/src/main/java/org/apache/ibatis/executor/loader/cglib/CglibProxyFactory.java b/src/main/java/org/apache/ibatis/executor/loader/cglib/CglibProxyFactory.java
+index 962544d..7548c6b 100644
+--- a/src/main/java/org/apache/ibatis/executor/loader/cglib/CglibProxyFactory.java
++++ b/src/main/java/org/apache/ibatis/executor/loader/cglib/CglibProxyFactory.java
+@@ -185,7 +185,7 @@
+     @Override
+     public Object intercept(Object enhanced, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+       final Object o = super.invoke(enhanced, method, args);
+-      return (o instanceof AbstractSerialStateHolder) ? o : methodProxy.invokeSuper(o, args);
++      return o instanceof AbstractSerialStateHolder ? o : methodProxy.invokeSuper(o, args);
+     }
+ 
+     @Override

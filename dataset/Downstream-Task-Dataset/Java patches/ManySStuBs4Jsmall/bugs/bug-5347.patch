@@ -1,0 +1,48 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/util/URISupport.java b/camel-core/src/main/java/org/apache/camel/util/URISupport.java
+index 4b06a13..0f37a2c 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/URISupport.java
++++ b/camel-core/src/main/java/org/apache/camel/util/URISupport.java
+@@ -155,7 +155,7 @@
+                 char ch = uri.charAt(i);
+                 // look ahead of the next char
+                 char next;
+-                if (i < uri.length() - 2) {
++                if (i <= uri.length() - 2) {
+                     next = uri.charAt(i + 1);
+                 } else {
+                     next = '\u0000';
+diff --git a/camel-core/src/test/java/org/apache/camel/issues/EndpointWithRawUriParameterTest.java b/camel-core/src/test/java/org/apache/camel/issues/EndpointWithRawUriParameterTest.java
+index da21b39..b4bfcf5 100644
+--- a/camel-core/src/test/java/org/apache/camel/issues/EndpointWithRawUriParameterTest.java
++++ b/camel-core/src/test/java/org/apache/camel/issues/EndpointWithRawUriParameterTest.java
+@@ -92,7 +92,7 @@
+     public void testRawUriParameter() throws Exception {
+         getMockEndpoint("mock:result").expectedMessageCount(1);
+         getMockEndpoint("mock:result").expectedHeaderReceived("username", "scott");
+-        getMockEndpoint("mock:result").expectedHeaderReceived("password", "++%%w?rd");
++        getMockEndpoint("mock:result").expectedHeaderReceived("password", "++%%w?rd)");
+ 
+         template.sendBody("direct:start", "Hello World");
+ 
+@@ -108,7 +108,7 @@
+                 context.addComponent("mycomponent", new MyComponent());
+ 
+                 from("direct:start")
+-                    .to("mycomponent:foo?password=RAW(++%%w?rd)&username=scott")
++                    .to("mycomponent:foo?username=scott&password=RAW(++%%w?rd))")
+                     .to("mock:result");
+             }
+         };
+diff --git a/camel-core/src/main/java/org/apache/camel/util/URISupport.java b/camel-core/src/main/java/org/apache/camel/util/URISupport.java
+index 4b06a13..0f37a2c 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/URISupport.java
++++ b/camel-core/src/main/java/org/apache/camel/util/URISupport.java
+@@ -155,7 +155,7 @@
+                 char ch = uri.charAt(i);
+                 // look ahead of the next char
+                 char next;
+-                if (i < uri.length() - 2) {
++                if (i <= uri.length() - 2) {
+                     next = uri.charAt(i + 1);
+                 } else {
+                     next = '\u0000';

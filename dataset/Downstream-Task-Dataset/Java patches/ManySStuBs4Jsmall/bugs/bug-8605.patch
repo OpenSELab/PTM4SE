@@ -1,0 +1,15 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/ClassResolver.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/ClassResolver.java
+index 2f0e1b4..04877a5 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/ClassResolver.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/ClassResolver.java
+@@ -90,9 +90,7 @@
+                         clazz = resolveByStarImports(name);
+                         // -@cs[NestedIfDepth] it is better to have single return point from method
+                         if (clazz == null) {
+-                            // Giving up, the type is unknown, so load the class to generate an
+-                            // exception
+-                            clazz = safeLoad(name);
++                            throw new ClassNotFoundException(name);
+                         }
+                     }
+                 }

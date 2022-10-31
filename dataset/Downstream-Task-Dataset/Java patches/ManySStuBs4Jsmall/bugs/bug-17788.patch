@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java b/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
+index 21692b6..57b420b 100644
+--- a/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
++++ b/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
+@@ -86,7 +86,7 @@
+       ParameterMapping parameterMapping = parameterMappings.get(i);
+       if (parameterMapping.getMode() == ParameterMode.OUT || parameterMapping.getMode() == ParameterMode.INOUT) {
+         if (null == parameterMapping.getJdbcType()) {
+-          throw new ExecutorException("The JDBC Type must be specified for output parameterArray.  Paramter: " + parameterMapping.getProperty());
++          throw new ExecutorException("The JDBC Type must be specified for output parameter.  Parameter: " + parameterMapping.getProperty());
+         } else {
+           if (parameterMapping.getNumericScale() != null && (parameterMapping.getJdbcType() == JdbcType.NUMERIC || parameterMapping.getJdbcType() == JdbcType.DECIMAL)) {
+             cs.registerOutParameter(i + 1, parameterMapping.getJdbcType().TYPE_CODE, parameterMapping.getNumericScale());
+diff --git a/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java b/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
+index 21692b6..57b420b 100644
+--- a/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
++++ b/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
+@@ -86,7 +86,7 @@
+       ParameterMapping parameterMapping = parameterMappings.get(i);
+       if (parameterMapping.getMode() == ParameterMode.OUT || parameterMapping.getMode() == ParameterMode.INOUT) {
+         if (null == parameterMapping.getJdbcType()) {
+-          throw new ExecutorException("The JDBC Type must be specified for output parameterArray.  Paramter: " + parameterMapping.getProperty());
++          throw new ExecutorException("The JDBC Type must be specified for output parameter.  Parameter: " + parameterMapping.getProperty());
+         } else {
+           if (parameterMapping.getNumericScale() != null && (parameterMapping.getJdbcType() == JdbcType.NUMERIC || parameterMapping.getJdbcType() == JdbcType.DECIMAL)) {
+             cs.registerOutParameter(i + 1, parameterMapping.getJdbcType().TYPE_CODE, parameterMapping.getNumericScale());

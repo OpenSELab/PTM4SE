@@ -1,0 +1,26 @@
+diff --git a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
+index 17875c1..cd032e4 100644
+--- a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
++++ b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
+@@ -385,7 +385,7 @@
+             try {
+                 final Map<String, InetAddress> resultA = testResolve0(resolver, EXCLUSIONS_RESOLVE_A);
+                 for (Entry<String, InetAddress> resolvedEntry : resultA.entrySet()) {
+-                    if (resolvedEntry.getValue().getHostAddress().equalsIgnoreCase("localhost")) {
++                    if (resolvedEntry.getValue().isLoopbackAddress()) {
+                         continue;
+                     }
+                     if (overridenHostnames.contains(resolvedEntry.getKey())) {
+diff --git a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
+index 17875c1..cd032e4 100644
+--- a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
++++ b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
+@@ -385,7 +385,7 @@
+             try {
+                 final Map<String, InetAddress> resultA = testResolve0(resolver, EXCLUSIONS_RESOLVE_A);
+                 for (Entry<String, InetAddress> resolvedEntry : resultA.entrySet()) {
+-                    if (resolvedEntry.getValue().getHostAddress().equalsIgnoreCase("localhost")) {
++                    if (resolvedEntry.getValue().isLoopbackAddress()) {
+                         continue;
+                     }
+                     if (overridenHostnames.contains(resolvedEntry.getKey())) {

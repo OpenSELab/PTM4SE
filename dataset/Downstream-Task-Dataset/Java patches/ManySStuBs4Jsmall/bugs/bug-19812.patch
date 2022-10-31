@@ -1,0 +1,32 @@
+diff --git a/bundles/binding/org.openhab.binding.yamahareceiver/src/main/java/org/openhab/binding/yamahareceiver/internal/hardware/YamahaReceiverProxy.java b/bundles/binding/org.openhab.binding.yamahareceiver/src/main/java/org/openhab/binding/yamahareceiver/internal/hardware/YamahaReceiverProxy.java
+index 932a69a..094b237 100644
+--- a/bundles/binding/org.openhab.binding.yamahareceiver/src/main/java/org/openhab/binding/yamahareceiver/internal/hardware/YamahaReceiverProxy.java
++++ b/bundles/binding/org.openhab.binding.yamahareceiver/src/main/java/org/openhab/binding/yamahareceiver/internal/hardware/YamahaReceiverProxy.java
+@@ -87,8 +87,9 @@
+ 	}
+ 
+ 	public void setNetRadio(int lineNo) throws IOException {
+-		postAndGetResponse("<?xml version=\"1.0\" encoding=\"utf-8\"?><YAMAHA_AV cmd=\"PUT\"><NET_RADIO><Play_Control><Preset_Sel>"
+-				+ lineNo + "</Preset_Sel></Play_Control></NET_RADIO></YAMAHA_AV>");
++		 /* Jump to specified line in preset list */
++		postAndGetResponse("<?xml version=\"1.0\" encoding=\"utf-8\"?><YAMAHA_AV cmd=\"PUT\"><NET_RADIO><Play_Control><Preset><Preset_Sel>"
++				+ lineNo + "</Preset_Sel></Preset></Play_Control></NET_RADIO></YAMAHA_AV>");
+ 	}
+ 	
+ 	public YamahaReceiverState getState(Zone zone) throws IOException {
+diff --git a/bundles/binding/org.openhab.binding.yamahareceiver/src/main/java/org/openhab/binding/yamahareceiver/internal/hardware/YamahaReceiverProxy.java b/bundles/binding/org.openhab.binding.yamahareceiver/src/main/java/org/openhab/binding/yamahareceiver/internal/hardware/YamahaReceiverProxy.java
+index 932a69a..094b237 100644
+--- a/bundles/binding/org.openhab.binding.yamahareceiver/src/main/java/org/openhab/binding/yamahareceiver/internal/hardware/YamahaReceiverProxy.java
++++ b/bundles/binding/org.openhab.binding.yamahareceiver/src/main/java/org/openhab/binding/yamahareceiver/internal/hardware/YamahaReceiverProxy.java
+@@ -87,8 +87,9 @@
+ 	}
+ 
+ 	public void setNetRadio(int lineNo) throws IOException {
+-		postAndGetResponse("<?xml version=\"1.0\" encoding=\"utf-8\"?><YAMAHA_AV cmd=\"PUT\"><NET_RADIO><Play_Control><Preset_Sel>"
+-				+ lineNo + "</Preset_Sel></Play_Control></NET_RADIO></YAMAHA_AV>");
++		 /* Jump to specified line in preset list */
++		postAndGetResponse("<?xml version=\"1.0\" encoding=\"utf-8\"?><YAMAHA_AV cmd=\"PUT\"><NET_RADIO><Play_Control><Preset><Preset_Sel>"
++				+ lineNo + "</Preset_Sel></Preset></Play_Control></NET_RADIO></YAMAHA_AV>");
+ 	}
+ 	
+ 	public YamahaReceiverState getState(Zone zone) throws IOException {

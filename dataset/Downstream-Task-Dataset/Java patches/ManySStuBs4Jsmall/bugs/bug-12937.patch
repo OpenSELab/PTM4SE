@@ -1,0 +1,58 @@
+diff --git a/presto-mongodb/src/main/java/com/facebook/presto/mongodb/MongoColumnHandle.java b/presto-mongodb/src/main/java/com/facebook/presto/mongodb/MongoColumnHandle.java
+index e7effdf..59d9bb7 100644
+--- a/presto-mongodb/src/main/java/com/facebook/presto/mongodb/MongoColumnHandle.java
++++ b/presto-mongodb/src/main/java/com/facebook/presto/mongodb/MongoColumnHandle.java
+@@ -88,10 +88,7 @@
+     @Override
+     public int hashCode()
+     {
+-        return Objects.hash(
+-                connectorId,
+-                name,
+-                hidden);
++        return Objects.hash(name, type, hidden);
+     }
+ 
+     @Override
+@@ -104,9 +101,9 @@
+             return false;
+         }
+         MongoColumnHandle other = (MongoColumnHandle) obj;
+-        return Objects.equals(this.connectorId, other.connectorId) &&
+-                Objects.equals(this.type, other.type) &&
+-                Objects.equals(this.name, other.name);
++        return Objects.equals(name, other.name) &&
++                Objects.equals(type, other.type) &&
++                Objects.equals(hidden, other.hidden);
+     }
+ 
+     @Override
+diff --git a/presto-mongodb/src/main/java/com/facebook/presto/mongodb/MongoColumnHandle.java b/presto-mongodb/src/main/java/com/facebook/presto/mongodb/MongoColumnHandle.java
+index e7effdf..59d9bb7 100644
+--- a/presto-mongodb/src/main/java/com/facebook/presto/mongodb/MongoColumnHandle.java
++++ b/presto-mongodb/src/main/java/com/facebook/presto/mongodb/MongoColumnHandle.java
+@@ -88,10 +88,7 @@
+     @Override
+     public int hashCode()
+     {
+-        return Objects.hash(
+-                connectorId,
+-                name,
+-                hidden);
++        return Objects.hash(name, type, hidden);
+     }
+ 
+     @Override
+@@ -104,9 +101,9 @@
+             return false;
+         }
+         MongoColumnHandle other = (MongoColumnHandle) obj;
+-        return Objects.equals(this.connectorId, other.connectorId) &&
+-                Objects.equals(this.type, other.type) &&
+-                Objects.equals(this.name, other.name);
++        return Objects.equals(name, other.name) &&
++                Objects.equals(type, other.type) &&
++                Objects.equals(hidden, other.hidden);
+     }
+ 
+     @Override

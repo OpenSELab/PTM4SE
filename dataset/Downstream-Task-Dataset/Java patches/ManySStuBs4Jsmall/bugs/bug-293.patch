@@ -1,0 +1,32 @@
+diff --git a/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java b/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
+index 95ed811..88cd510 100644
+--- a/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
++++ b/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
+@@ -174,8 +174,9 @@
+         Integer.parseInt(conf.getValue(PropertyKey.UNDERFS_S3_UPLOAD_THREADS_MAX));
+     int numThreads = Integer.parseInt(conf.getValue(PropertyKey.UNDERFS_S3_THREADS_MAX));
+     if (numThreads < numAdminThreads + numTransferThreads) {
+-      LOG.warn("Configured s3 max threads: {} is less than # admin threads: {} plus transfer "
+-          + "threads {}. Using admin threads + transfer threads as max threads instead.");
++      LOG.warn("Configured s3 max threads ({}) is less than # admin threads ({}) plus transfer "
++          + "threads ({}). Using admin threads + transfer threads as max threads instead.",
++              numThreads, numAdminThreads, numTransferThreads);
+       numThreads = numAdminThreads + numTransferThreads;
+     }
+     clientConf.setMaxConnections(numThreads);
+diff --git a/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java b/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
+index 95ed811..88cd510 100644
+--- a/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
++++ b/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
+@@ -174,8 +174,9 @@
+         Integer.parseInt(conf.getValue(PropertyKey.UNDERFS_S3_UPLOAD_THREADS_MAX));
+     int numThreads = Integer.parseInt(conf.getValue(PropertyKey.UNDERFS_S3_THREADS_MAX));
+     if (numThreads < numAdminThreads + numTransferThreads) {
+-      LOG.warn("Configured s3 max threads: {} is less than # admin threads: {} plus transfer "
+-          + "threads {}. Using admin threads + transfer threads as max threads instead.");
++      LOG.warn("Configured s3 max threads ({}) is less than # admin threads ({}) plus transfer "
++          + "threads ({}). Using admin threads + transfer threads as max threads instead.",
++              numThreads, numAdminThreads, numTransferThreads);
+       numThreads = numAdminThreads + numTransferThreads;
+     }
+     clientConf.setMaxConnections(numThreads);

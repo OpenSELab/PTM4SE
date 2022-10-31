@@ -1,0 +1,26 @@
+diff --git a/dropwizard-auth/src/main/java/com/yammer/dropwizard/auth/CachingAuthenticator.java b/dropwizard-auth/src/main/java/com/yammer/dropwizard/auth/CachingAuthenticator.java
+index 62cee55..da1af9f 100644
+--- a/dropwizard-auth/src/main/java/com/yammer/dropwizard/auth/CachingAuthenticator.java
++++ b/dropwizard-auth/src/main/java/com/yammer/dropwizard/auth/CachingAuthenticator.java
+@@ -49,7 +49,7 @@
+                                      "gets",
+                                      TimeUnit.MILLISECONDS,
+                                      TimeUnit.SECONDS);
+-        this.cache = builder.build(new CacheLoader<C, Optional<P>> () {
++        this.cache = builder.recordStats().build(new CacheLoader<C, Optional<P>> () {
+             @Override
+             public Optional<P> load(C key) throws Exception {
+                 cacheMisses.mark();
+diff --git a/dropwizard-auth/src/main/java/com/yammer/dropwizard/auth/CachingAuthenticator.java b/dropwizard-auth/src/main/java/com/yammer/dropwizard/auth/CachingAuthenticator.java
+index 62cee55..da1af9f 100644
+--- a/dropwizard-auth/src/main/java/com/yammer/dropwizard/auth/CachingAuthenticator.java
++++ b/dropwizard-auth/src/main/java/com/yammer/dropwizard/auth/CachingAuthenticator.java
+@@ -49,7 +49,7 @@
+                                      "gets",
+                                      TimeUnit.MILLISECONDS,
+                                      TimeUnit.SECONDS);
+-        this.cache = builder.build(new CacheLoader<C, Optional<P>> () {
++        this.cache = builder.recordStats().build(new CacheLoader<C, Optional<P>> () {
+             @Override
+             public Optional<P> load(C key) throws Exception {
+                 cacheMisses.mark();

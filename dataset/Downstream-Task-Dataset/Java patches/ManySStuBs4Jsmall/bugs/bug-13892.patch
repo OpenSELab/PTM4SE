@@ -1,0 +1,85 @@
+diff --git a/src/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSorted.java b/src/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSorted.java
+index c4c11fe..fa1ba81 100644
+--- a/src/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSorted.java
++++ b/src/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSorted.java
+@@ -40,11 +40,13 @@
+     implements HotSwapCompilerPass {
+   public static final DiagnosticType REQUIRES_NOT_SORTED =
+       DiagnosticType.warning("JSC_REQUIRES_NOT_SORTED",
+-      "goog.require() statements are not sorted. The correct order is:\n\n{0}\n");
++      "goog.require() statements are not sorted."
++          + " The correct order is:\n\n{0}\n");
+ 
+   public static final DiagnosticType PROVIDES_NOT_SORTED =
+       DiagnosticType.warning("JSC_PROVIDES_NOT_SORTED",
+-          "goog.provide() statements are not sorted. The correct order is:\n\n{0}\n");
++          "goog.provide() statements are not sorted."
++              + " The correct order is:\n\n{0}\n");
+ 
+   public static final DiagnosticType PROVIDES_AFTER_REQUIRES =
+       DiagnosticType.warning(
+diff --git a/test/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSortedTest.java b/test/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSortedTest.java
+index 3dfb0fc..17d01ee 100644
+--- a/test/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSortedTest.java
++++ b/test/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSortedTest.java
+@@ -62,9 +62,7 @@
+   }
+ 
+   public void testWarning_require() {
+-    testWarning("goog.require('a.c');\ngoog.require('a.b')", REQUIRES_NOT_SORTED,
+-        "goog.require() statements are not sorted. The correct order is:\n\n"
+-        + "goog.require('a.b');\ngoog.require('a.c');\n\n");
++    testWarning("goog.require('a.c');\ngoog.require('a.b')", REQUIRES_NOT_SORTED);
+ 
+     testWarning("goog.require('a.c');\ngoog.require('a')", REQUIRES_NOT_SORTED);
+   }
+@@ -75,17 +73,7 @@
+             "goog.require('a.c');",
+             "/** @suppress {extraRequire} */",
+             "goog.require('a.b')"),
+-        REQUIRES_NOT_SORTED,
+-        LINE_JOINER.join(
+-            "goog.require() statements are not sorted. The correct order is:",
+-            "",
+-            "/**",
+-            " @suppress {extraRequire}",
+-            " */",
+-            "goog.require('a.b');",
+-            "goog.require('a.c');",
+-            "",
+-            ""));
++        REQUIRES_NOT_SORTED);
+   }
+ 
+   public void testWarning_provide() {
+@@ -157,9 +145,7 @@
+             "var c = goog.require('a.c');",
+             "",
+             "alert(1);"),
+-        REQUIRES_NOT_SORTED,
+-        "goog.require() statements are not sorted. The correct order is:\n\n"
+-            + "var c = goog.require('a.c');\nvar d = goog.require('a.b.d');\n\n");
++        REQUIRES_NOT_SORTED);
+   }
+ 
+   public void testGoogModule_shorthand_destructuring() {
+diff --git a/src/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSorted.java b/src/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSorted.java
+index c4c11fe..fa1ba81 100644
+--- a/src/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSorted.java
++++ b/src/com/google/javascript/jscomp/lint/CheckRequiresAndProvidesSorted.java
+@@ -40,11 +40,13 @@
+     implements HotSwapCompilerPass {
+   public static final DiagnosticType REQUIRES_NOT_SORTED =
+       DiagnosticType.warning("JSC_REQUIRES_NOT_SORTED",
+-      "goog.require() statements are not sorted. The correct order is:\n\n{0}\n");
++      "goog.require() statements are not sorted."
++          + " The correct order is:\n\n{0}\n");
+ 
+   public static final DiagnosticType PROVIDES_NOT_SORTED =
+       DiagnosticType.warning("JSC_PROVIDES_NOT_SORTED",
+-          "goog.provide() statements are not sorted. The correct order is:\n\n{0}\n");
++          "goog.provide() statements are not sorted."
++              + " The correct order is:\n\n{0}\n");
+ 
+   public static final DiagnosticType PROVIDES_AFTER_REQUIRES =
+       DiagnosticType.warning(

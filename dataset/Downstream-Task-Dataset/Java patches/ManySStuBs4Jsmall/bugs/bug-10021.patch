@@ -1,0 +1,28 @@
+diff --git a/src/jvm/clojure/lang/Reflector.java b/src/jvm/clojure/lang/Reflector.java
+index 4a7061f..12d5801 100644
+--- a/src/jvm/clojure/lang/Reflector.java
++++ b/src/jvm/clojure/lang/Reflector.java
+@@ -382,7 +382,8 @@
+ 		else if(paramType == byte.class)
+ 			return n.byteValue();
+ 		}
+-	throw new IllegalArgumentException("Unexpected param type");
++	throw new IllegalArgumentException("Unexpected param type, expected: " + paramType +
++	                                   ", given: " + arg.getClass().getName());
+ }
+ 
+ static Object[] boxArgs(Class[] params, Object[] args){
+diff --git a/src/jvm/clojure/lang/Reflector.java b/src/jvm/clojure/lang/Reflector.java
+index 4a7061f..12d5801 100644
+--- a/src/jvm/clojure/lang/Reflector.java
++++ b/src/jvm/clojure/lang/Reflector.java
+@@ -382,7 +382,8 @@
+ 		else if(paramType == byte.class)
+ 			return n.byteValue();
+ 		}
+-	throw new IllegalArgumentException("Unexpected param type");
++	throw new IllegalArgumentException("Unexpected param type, expected: " + paramType +
++	                                   ", given: " + arg.getClass().getName());
+ }
+ 
+ static Object[] boxArgs(Class[] params, Object[] args){

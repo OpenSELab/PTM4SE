@@ -1,0 +1,126 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/PropertyStates.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/PropertyStates.java
+index 3837e96..372ca23 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/PropertyStates.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/PropertyStates.java
+@@ -32,6 +32,7 @@ import org.apache.jackrabbit.oak.api.Blob;
+ import org.apache.jackrabbit.oak.api.PropertyState;
+ import org.apache.jackrabbit.oak.api.Type;
+ import org.apache.jackrabbit.oak.plugins.value.Conversions;
++import org.apache.jackrabbit.oak.plugins.value.ValueImpl;
+ 
+ import static org.apache.jackrabbit.oak.api.Type.STRINGS;
+ 
+@@ -52,10 +53,11 @@ public final class PropertyStates {
+      */
+     @Nonnull
+     public static PropertyState createProperty(String name, Value value) throws RepositoryException {
++
+         int type = value.getType();
+         switch (type) {
+             case PropertyType.STRING:
+-                return StringPropertyState.stringProperty(name, value.getString());
++                return StringPropertyState.stringProperty(name, getString(value, type));
+             case PropertyType.BINARY:
+                 return BinaryPropertyState.binaryProperty(name, value);
+             case PropertyType.LONG:
+@@ -69,7 +71,7 @@ public final class PropertyStates {
+             case PropertyType.DECIMAL:
+                 return DecimalPropertyState.decimalProperty(name, value.getDecimal());
+             default:
+-                return new GenericPropertyState(name, value.getString(), Type.fromTag(type, false));
++                return new GenericPropertyState(name, getString(value, type), Type.fromTag(type, false));
+         }
+     }
+ 
+@@ -96,7 +98,7 @@ public final class PropertyStates {
+             case PropertyType.STRING:
+                 List<String> strings = Lists.newArrayList();
+                 for (Value value : values) {
+-                    strings.add(value.getString());
++                    strings.add(getString(value, type));
+                 }
+                 return MultiStringPropertyState.stringProperty(name, strings);
+             case PropertyType.BINARY:
+@@ -138,12 +140,24 @@ public final class PropertyStates {
+             default:
+                 List<String> vals = Lists.newArrayList();
+                 for (Value value : values) {
+-                    vals.add(value.getString());
++                    vals.add(getString(value, type));
+                 }
+                 return new MultiGenericPropertyState(name, vals, Type.fromTag(type, true));
+         }
+     }
+ 
++    private static String getString(Value value, int type) throws RepositoryException {
++        if (value instanceof ValueImpl) {
++            return ((ValueImpl) value).getOakString();
++        }
++        else if (type == PropertyType.NAME || type == PropertyType.PATH) {
++            throw new IllegalArgumentException("Cannot create name of path property state from Value " +
++                    "of class '" + value.getClass() + '\'');
++        } else {
++            return value.getString();
++        }
++    }
++
+     /**
+      * Create a {@code PropertyState} from a string.
+      * @param name  The name of the property state
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/value/ValueImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/value/ValueImpl.java
+index 59ea846..4f733eb 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/value/ValueImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/value/ValueImpl.java
+@@ -73,6 +73,15 @@ public class ValueImpl implements Value {
+         this(checkSingleValued(property), 0, namePathMapper);
+     }
+ 
++    /**
++     * Same as {@link #getString()} unless that names and paths are returned in their
++     * Oak representation instead of being mapped to their JCR representation.
++     * @return  A String representation of the value of this property.
++     */
++    public String getOakString() {
++        return propertyState.getValue(Type.STRING, index);
++    }
++
+     private static PropertyState checkSingleValued(PropertyState property) {
+         checkArgument(!property.isArray());
+         return property;
+@@ -208,9 +217,9 @@ public class ValueImpl implements Value {
+ 
+         switch (getType()) {
+             case PropertyType.NAME:
+-                return namePathMapper.getJcrName(propertyState.getValue(Type.STRING, index));
++                return namePathMapper.getJcrName(getOakString());
+             case PropertyType.PATH:
+-                String s = propertyState.getValue(Type.STRING, index);
++                String s = getOakString();
+                 if (s.startsWith("[") && s.endsWith("]")) {
+                     // identifier paths are returned as-is (JCR 2.0, 3.4.3.1)
+                     return s;
+@@ -218,7 +227,7 @@ public class ValueImpl implements Value {
+                     return namePathMapper.getJcrPath(s);
+                 }
+             default:
+-                return propertyState.getValue(Type.STRING, index);
++                return getOakString();
+         }
+     }
+ 
+@@ -273,13 +282,13 @@ public class ValueImpl implements Value {
+             return propertyState.getValue(Type.BINARY, index).hashCode();
+         }
+         else {
+-            return propertyState.getValue(Type.STRING, index).hashCode();
++            return getOakString().hashCode();
+         }
+     }
+ 
+     @Override
+     public String toString() {
+-        return propertyState.getValue(Type.STRING, index);
++        return getOakString();
+     }
+ 
+     private static int compare(PropertyState p1, int i1, PropertyState p2, int i2) {

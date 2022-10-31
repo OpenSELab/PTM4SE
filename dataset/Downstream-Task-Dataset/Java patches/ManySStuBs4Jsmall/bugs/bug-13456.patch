@@ -1,0 +1,65 @@
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/AbstractAttributeFilter.java b/FiltersPlugin/src/org/gephi/filters/plugin/AbstractAttributeFilter.java
+index de55405..bb68655 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/AbstractAttributeFilter.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/AbstractAttributeFilter.java
+@@ -18,7 +18,7 @@
+     protected AbstractAttributeFilter.Type type;
+ 
+     public AbstractAttributeFilter(String name, AttributeColumn column) {
+-        super(name);
++        super(name + " (" + column.getTitle() + ")");
+         this.column = column;
+         this.type = AttributeUtils.getDefault().isNodeColumn(column) ? Type.NODE : Type.EDGE;
+         
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/partition/InterEdgesBuilder.java b/FiltersPlugin/src/org/gephi/filters/plugin/partition/InterEdgesBuilder.java
+index 9e235af..e775d02 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/partition/InterEdgesBuilder.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/partition/InterEdgesBuilder.java
+@@ -149,7 +149,7 @@
+ 
+         @Override
+         public String getName() {
+-            return NbBundle.getMessage(InterEdgesBuilder.class, "InterEdgesBuilder.name");
++            return NbBundle.getMessage(IntraEdgesBuilder.class, "InterEdgesBuilder.name") + " (" + partition.getColumn().getTitle() + ")";
+         }
+ 
+         @Override
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/partition/IntraEdgesBuilder.java b/FiltersPlugin/src/org/gephi/filters/plugin/partition/IntraEdgesBuilder.java
+index ad6edb7..444dfc9 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/partition/IntraEdgesBuilder.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/partition/IntraEdgesBuilder.java
+@@ -144,7 +144,7 @@
+ 
+         @Override
+         public String getName() {
+-            return NbBundle.getMessage(IntraEdgesBuilder.class, "IntraEdgesBuilder.name");
++            return NbBundle.getMessage(IntraEdgesBuilder.class, "IntraEdgesBuilder.name") + " (" + partition.getColumn().getTitle() + ")";
+         }
+ 
+         @Override
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/partition/PartitionBuilder.java b/FiltersPlugin/src/org/gephi/filters/plugin/partition/PartitionBuilder.java
+index 5b01a30..2ef5fbb 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/partition/PartitionBuilder.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/partition/PartitionBuilder.java
+@@ -185,7 +185,7 @@
+         }
+ 
+         public String getName() {
+-            return NbBundle.getMessage(PartitionBuilder.class, "PartitionBuilder.name");
++            return NbBundle.getMessage(PartitionBuilder.class, "PartitionBuilder.name") + "( " + partition.getColumn().getTitle() + ")";
+         }
+ 
+         public boolean init(Graph graph) {
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/AbstractAttributeFilter.java b/FiltersPlugin/src/org/gephi/filters/plugin/AbstractAttributeFilter.java
+index de55405..bb68655 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/AbstractAttributeFilter.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/AbstractAttributeFilter.java
+@@ -18,7 +18,7 @@
+     protected AbstractAttributeFilter.Type type;
+ 
+     public AbstractAttributeFilter(String name, AttributeColumn column) {
+-        super(name);
++        super(name + " (" + column.getTitle() + ")");
+         this.column = column;
+         this.type = AttributeUtils.getDefault().isNodeColumn(column) ? Type.NODE : Type.EDGE;
+         

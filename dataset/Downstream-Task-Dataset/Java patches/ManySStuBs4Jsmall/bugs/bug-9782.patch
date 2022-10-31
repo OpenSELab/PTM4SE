@@ -1,0 +1,119 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
+index 778332b..b79689f 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
+@@ -290,7 +290,7 @@
+         final Vector aTags,
+         final List aTypeParamNames)
+     {
+-        Pattern pattern = Utils.getPattern("\\s*<([^>])+>.*");
++        Pattern pattern = Utils.getPattern("\\s*<([^>]+)>.*");
+         for (int i = aTags.size() - 1; i >= 0; i--) {
+             final JavadocTag tag = (JavadocTag) aTags.get(i);
+             if (tag.getTag().equals("param")) {
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/TagParser.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/TagParser.java
+index 1172a8a..b080acb 100755
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/TagParser.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/TagParser.java
+@@ -166,7 +166,9 @@
+                && ((text.charAt(column) >= 'A'
+                     && text.charAt(column) <= 'Z')
+                    || (text.charAt(column) >= 'a'
+-                       && text.charAt(column) <= 'z')))
++                       && text.charAt(column) <= 'z')
++                   || (text.charAt(column) >= '0'
++                       && text.charAt(column) <= '9')))
+         {
+             column++;
+         }
+diff --git a/src/testinputs/com/puppycrawl/tools/checkstyle/InputJavadocStyleCheck.java b/src/testinputs/com/puppycrawl/tools/checkstyle/InputJavadocStyleCheck.java
+index eafae96..2cd0cd7 100755
+--- a/src/testinputs/com/puppycrawl/tools/checkstyle/InputJavadocStyleCheck.java
++++ b/src/testinputs/com/puppycrawl/tools/checkstyle/InputJavadocStyleCheck.java
+@@ -248,16 +248,16 @@
+ 
+     /**
+     * A test class.
+-    * @param <T> this is NOT an unclosed T tag
++    * @param <T1> this is NOT an unclosed T1 tag
+     * @author <a href="mailto:foo@nomail.com">Foo Bar</a>
+     */
+-    public class TestClass<T>
++    public class TestClass<T1>
+     {
+         /**
+         * Retrieves X.
+         * @return a value
+         */
+-        public T getX()
++        public T1 getX()
+         {
+             return null;
+         }
+diff --git a/src/testinputs/com/puppycrawl/tools/checkstyle/InputTypeParamsTags.java b/src/testinputs/com/puppycrawl/tools/checkstyle/InputTypeParamsTags.java
+index c057ba0..acabdec 100644
+--- a/src/testinputs/com/puppycrawl/tools/checkstyle/InputTypeParamsTags.java
++++ b/src/testinputs/com/puppycrawl/tools/checkstyle/InputTypeParamsTags.java
+@@ -3,20 +3,20 @@
+ /**
+  * Some explanation.
+  * @param <A> A type param
+- * @param <B> Another type param
+- * @param <D> The wrong type param
++ * @param <B1> Another type param
++ * @param <D123> The wrong type param
+  * @author Nobody
+  * @version 1.0
+  */
+-public class InputTypeParamsTags<A,B,C extends Comparable>
++public class InputTypeParamsTags<A,B1,C456 extends Comparable>
+ {
+     /**
+      * Some explanation.
+      * @param <X> A type param
+-     * @param <Y> Another type param
++     * @param <Y1> Another type param
+      * @return a string
+      */
+-    public <X, Y> String doSomething()
++    public <X, Y1> String doSomething()
+     {
+         return null;
+     }
+diff --git a/src/tests/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheckTest.java b/src/tests/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheckTest.java
+index 129752d..dc306f4 100644
+--- a/src/tests/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheckTest.java
++++ b/src/tests/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheckTest.java
+@@ -280,8 +280,8 @@
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(JavadocTypeCheck.class);
+         final String[] expected = {
+-            "7:4: Unused @param tag for '<D>'.",
+-            "11: Type Javadoc comment is missing an @param <C> tag.",
++            "7:4: Unused @param tag for '<D123>'.",
++            "11: Type Javadoc comment is missing an @param <C456> tag.",
+         };
+         verify(checkConfig, getPath("InputTypeParamsTags.java"), expected);
+     }
+@@ -291,7 +291,7 @@
+             createCheckConfig(JavadocTypeCheck.class);
+         checkConfig.addAttribute("allowMissingParamTags", "true");
+         final String[] expected = {
+-            "7:4: Unused @param tag for '<D>'.",
++            "7:4: Unused @param tag for '<D123>'.",
+         };
+         verify(checkConfig, getPath("InputTypeParamsTags.java"), expected);
+     }
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
+index 778332b..b79689f 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
+@@ -290,7 +290,7 @@
+         final Vector aTags,
+         final List aTypeParamNames)
+     {
+-        Pattern pattern = Utils.getPattern("\\s*<([^>])+>.*");
++        Pattern pattern = Utils.getPattern("\\s*<([^>]+)>.*");
+         for (int i = aTags.size() - 1; i >= 0; i--) {
+             final JavadocTag tag = (JavadocTag) aTags.get(i);
+             if (tag.getTag().equals("param")) {

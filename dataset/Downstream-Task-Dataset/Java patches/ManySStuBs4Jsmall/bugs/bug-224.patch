@@ -1,0 +1,28 @@
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/behavior/ErrorEndEventActivityBehavior.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/behavior/ErrorEndEventActivityBehavior.java
+index 3b0b7eb..c2dffdc 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/behavior/ErrorEndEventActivityBehavior.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/behavior/ErrorEndEventActivityBehavior.java
+@@ -69,7 +69,8 @@
+       if (outgoingExecution != null && catchingActivity != null) {
+         for (ActivityImpl nestedActivity : catchingActivity.getActivities()) {
+           if ("boundaryError".equals(nestedActivity.getProperty("type"))
+-                  && errorCode.equals(nestedActivity.getProperty("errorCode"))) {
++                  && (nestedActivity.getProperty("errorCode") == null 
++                      || errorCode.equals(nestedActivity.getProperty("errorCode")))) {
+             found = true;
+             catchingActivity = nestedActivity;
+           }
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/behavior/ErrorEndEventActivityBehavior.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/behavior/ErrorEndEventActivityBehavior.java
+index 3b0b7eb..c2dffdc 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/behavior/ErrorEndEventActivityBehavior.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/behavior/ErrorEndEventActivityBehavior.java
+@@ -69,7 +69,8 @@
+       if (outgoingExecution != null && catchingActivity != null) {
+         for (ActivityImpl nestedActivity : catchingActivity.getActivities()) {
+           if ("boundaryError".equals(nestedActivity.getProperty("type"))
+-                  && errorCode.equals(nestedActivity.getProperty("errorCode"))) {
++                  && (nestedActivity.getProperty("errorCode") == null 
++                      || errorCode.equals(nestedActivity.getProperty("errorCode")))) {
+             found = true;
+             catchingActivity = nestedActivity;
+           }

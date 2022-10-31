@@ -1,0 +1,41 @@
+diff --git a/src/main/java/tachyon/MasterInfo.java b/src/main/java/tachyon/MasterInfo.java
+index 5356245..af988b6 100644
+--- a/src/main/java/tachyon/MasterInfo.java
++++ b/src/main/java/tachyon/MasterInfo.java
+@@ -490,7 +490,7 @@
+       for (InetSocketAddress address: mWorkerAddressToId.keySet()) {
+         if (address.getHostName().equals(host)) {
+           LOG.info("getLocalWorker: " + address);
+-          return new NetAddress(address.getHostName(), Config.WORKER_DATA_SERVER_PORT);
++          return new NetAddress(address.getHostName(), address.getPort());
+         }
+       }
+     }
+diff --git a/src/main/java/tachyon/client/TachyonFile.java b/src/main/java/tachyon/client/TachyonFile.java
+index 1674751..ea7662e 100644
+--- a/src/main/java/tachyon/client/TachyonFile.java
++++ b/src/main/java/tachyon/client/TachyonFile.java
+@@ -364,8 +364,9 @@
+         LOG.info("readByteBuffer() Read from remote machine: " + host + ":" +
+             mLocations.get(k).mPort);
+         try {
++          // TODO Using Config.WORKER_DATA_SERVER_PORT here is a bug. Fix it later.
+           ret = retrieveByteBufferFromRemoteMachine(
+-              new InetSocketAddress(host, mLocations.get(k).mPort));
++              new InetSocketAddress(host, Config.WORKER_DATA_SERVER_PORT));
+           if (ret != null) {
+             break;
+           }
+diff --git a/src/main/java/tachyon/MasterInfo.java b/src/main/java/tachyon/MasterInfo.java
+index 5356245..af988b6 100644
+--- a/src/main/java/tachyon/MasterInfo.java
++++ b/src/main/java/tachyon/MasterInfo.java
+@@ -490,7 +490,7 @@
+       for (InetSocketAddress address: mWorkerAddressToId.keySet()) {
+         if (address.getHostName().equals(host)) {
+           LOG.info("getLocalWorker: " + address);
+-          return new NetAddress(address.getHostName(), Config.WORKER_DATA_SERVER_PORT);
++          return new NetAddress(address.getHostName(), address.getPort());
+         }
+       }
+     }

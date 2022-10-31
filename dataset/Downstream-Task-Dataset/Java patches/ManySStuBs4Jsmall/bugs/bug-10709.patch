@@ -1,0 +1,39 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+index 6274972..3f09bd2 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+@@ -1419,7 +1419,7 @@
+             IOutputLayer ol = (IOutputLayer) outLayer;
+             ol.setLabels(labels[i++]);
+ 
+-            score += ol.computeScore(l1, l2, true);
++            score += ol.computeScore(l1, l2, training);
+ 
+             //Only want to add l1/l2 once...
+             l1 = 0.0;
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/util/MLLibUtil.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/util/MLLibUtil.java
+index 4a7a8e3..043ae40 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/util/MLLibUtil.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/util/MLLibUtil.java
+@@ -252,7 +252,7 @@
+      * @return a JavaRDD<Dataset> with a continuous label
+      */
+     @Deprecated
+-    public static JavaRDD<DataSet> fromContinuousLabeledPoint(JavaRDD<LabeledPoint> data) {
++    public static JavaRDD<DataSet> fromContinuousLabeledPoint(JavaSparkContext sc, JavaRDD<LabeledPoint> data) {
+         List<LabeledPoint> labeledPoints = data.collect();
+         List<DataSet> dataSets = new ArrayList<>();
+         for (LabeledPoint labeledPoint : labeledPoints) {
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+index 6274972..3f09bd2 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+@@ -1419,7 +1419,7 @@
+             IOutputLayer ol = (IOutputLayer) outLayer;
+             ol.setLabels(labels[i++]);
+ 
+-            score += ol.computeScore(l1, l2, true);
++            score += ol.computeScore(l1, l2, training);
+ 
+             //Only want to add l1/l2 once...
+             l1 = 0.0;

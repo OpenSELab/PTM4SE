@@ -1,0 +1,26 @@
+diff --git a/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java b/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
+index 502d546..21806c3 100644
+--- a/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
++++ b/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
+@@ -1948,7 +1948,7 @@
+     boolean loadDirectChildren = false;
+     if (inodeExists) {
+       try {
+-        Inode inode = inodePath.getInode();
++        Inode<?> inode = inodePath.getInode();
+         loadDirectChildren =
+             inode.isDirectory() && inode.isPersisted() && options.isLoadDirectChildren();
+       } catch (FileDoesNotExistException e) {
+diff --git a/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java b/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
+index 502d546..21806c3 100644
+--- a/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
++++ b/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
+@@ -1948,7 +1948,7 @@
+     boolean loadDirectChildren = false;
+     if (inodeExists) {
+       try {
+-        Inode inode = inodePath.getInode();
++        Inode<?> inode = inodePath.getInode();
+         loadDirectChildren =
+             inode.isDirectory() && inode.isPersisted() && options.isLoadDirectChildren();
+       } catch (FileDoesNotExistException e) {

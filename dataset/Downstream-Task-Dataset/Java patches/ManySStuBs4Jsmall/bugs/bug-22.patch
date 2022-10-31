@@ -1,0 +1,13 @@
+diff --git a/modules/activiti5-engine/src/main/java/org/activiti5/engine/impl/persistence/deploy/ProcessDefinitionInfoCache.java b/modules/activiti5-engine/src/main/java/org/activiti5/engine/impl/persistence/deploy/ProcessDefinitionInfoCache.java
+index e93813c..73d3a9f 100644
+--- a/modules/activiti5-engine/src/main/java/org/activiti5/engine/impl/persistence/deploy/ProcessDefinitionInfoCache.java
++++ b/modules/activiti5-engine/src/main/java/org/activiti5/engine/impl/persistence/deploy/ProcessDefinitionInfoCache.java
+@@ -44,7 +44,7 @@
+   /** Cache with no limit */
+   public ProcessDefinitionInfoCache(CommandExecutor commandExecutor) {
+     this.commandExecutor = commandExecutor;
+-    this.cache = new HashMap<String, ProcessDefinitionInfoCacheObject>();
++    this.cache = Collections.synchronizedMap(new HashMap<String, ProcessDefinitionInfoCacheObject>());
+   }
+   
+   /** Cache which has a hard limit: no more elements will be cached than the limit. */

@@ -1,0 +1,26 @@
+diff --git a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsBinding.java b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsBinding.java
+index fbf0f5e..70efe7a 100644
+--- a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsBinding.java
++++ b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsBinding.java
+@@ -277,7 +277,7 @@
+             Object value = getValidJMSHeaderValue(headerName, headerValue);
+             if (value != null) {
+                 // must encode to safe JMS header name before setting property on jmsMessage
+-                String key = endpoint.getJmsKeyFormatStrategy().encodeKey(headerName);
++                String key = jmsKeyFormatStrategy.encodeKey(headerName);
+                 jmsMessage.setObjectProperty(key, value);
+             } else if (LOG.isDebugEnabled()) {
+                 // okay the value is not a primitive or string so we cannot sent it over the wire
+diff --git a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsBinding.java b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsBinding.java
+index fbf0f5e..70efe7a 100644
+--- a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsBinding.java
++++ b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsBinding.java
+@@ -277,7 +277,7 @@
+             Object value = getValidJMSHeaderValue(headerName, headerValue);
+             if (value != null) {
+                 // must encode to safe JMS header name before setting property on jmsMessage
+-                String key = endpoint.getJmsKeyFormatStrategy().encodeKey(headerName);
++                String key = jmsKeyFormatStrategy.encodeKey(headerName);
+                 jmsMessage.setObjectProperty(key, value);
+             } else if (LOG.isDebugEnabled()) {
+                 // okay the value is not a primitive or string so we cannot sent it over the wire

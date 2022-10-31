@@ -1,0 +1,22 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/InnerTypeLastCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/InnerTypeLastCheck.java
+index a9e77ab..7c20b5c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/InnerTypeLastCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/InnerTypeLastCheck.java
+@@ -61,7 +61,7 @@
+         }
+         else {
+             DetailAST nextSibling = ast.getNextSibling();
+-            while (null != nextSibling) {
++            while (nextSibling != null) {
+                 if (!ScopeUtils.inCodeBlock(ast)
+                     && (nextSibling.getType() == TokenTypes.VARIABLE_DEF
+                         || nextSibling.getType() == TokenTypes.METHOD_DEF)) {
+@@ -76,7 +76,7 @@
+     @Override
+     public void leaveToken(DetailAST ast) {
+         /** Is this a root class */
+-        if (null == ast.getParent()) {
++        if (ast.getParent() == null) {
+             rootClass = true;
+         }
+     }

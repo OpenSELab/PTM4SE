@@ -1,0 +1,28 @@
+diff --git a/guava/src/com/google/common/util/concurrent/Futures.java b/guava/src/com/google/common/util/concurrent/Futures.java
+index bc7b941..edca3db 100644
+--- a/guava/src/com/google/common/util/concurrent/Futures.java
++++ b/guava/src/com/google/common/util/concurrent/Futures.java
+@@ -859,7 +859,8 @@
+         }
+ 
+         final ListenableFuture<? extends O> outputFuture = this.outputFuture =
+-            function.apply(sourceResult);
++            Preconditions.checkNotNull(function.apply(sourceResult),
++                "AsyncFunction may not return null.");
+         if (isCancelled()) {
+           outputFuture.cancel(wasInterrupted());
+           this.outputFuture = null;
+diff --git a/guava/src/com/google/common/util/concurrent/Futures.java b/guava/src/com/google/common/util/concurrent/Futures.java
+index bc7b941..edca3db 100644
+--- a/guava/src/com/google/common/util/concurrent/Futures.java
++++ b/guava/src/com/google/common/util/concurrent/Futures.java
+@@ -859,7 +859,8 @@
+         }
+ 
+         final ListenableFuture<? extends O> outputFuture = this.outputFuture =
+-            function.apply(sourceResult);
++            Preconditions.checkNotNull(function.apply(sourceResult),
++                "AsyncFunction may not return null.");
+         if (isCancelled()) {
+           outputFuture.cancel(wasInterrupted());
+           this.outputFuture = null;

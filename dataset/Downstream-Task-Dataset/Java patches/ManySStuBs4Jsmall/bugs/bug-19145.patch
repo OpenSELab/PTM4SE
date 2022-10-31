@@ -1,0 +1,52 @@
+diff --git a/src/main/java/org/jboss/netty/handler/timeout/HashedWheelTimer.java b/src/main/java/org/jboss/netty/handler/timeout/HashedWheelTimer.java
+index 73c5ba2..0148c3a 100644
+--- a/src/main/java/org/jboss/netty/handler/timeout/HashedWheelTimer.java
++++ b/src/main/java/org/jboss/netty/handler/timeout/HashedWheelTimer.java
+@@ -318,7 +318,7 @@
+                 }
+ 
+                 try {
+-                    Thread.sleep(sleepTime / 1000000, (int) (sleepTime % 1000000));
++                    Thread.sleep(sleepTime);
+                 } catch (InterruptedException e) {
+                     if (shutdown.get()) {
+                         return;
+@@ -401,10 +401,10 @@
+ 
+             buf.append("deadline: ");
+             if (remaining > 0) {
+-                buf.append(remaining / 1000000);
++                buf.append(remaining);
+                 buf.append(" ms later, ");
+             } else if (remaining < 0) {
+-                buf.append(-remaining / 1000000);
++                buf.append(-remaining);
+                 buf.append(" ms ago, ");
+             } else {
+                 buf.append("now, ");
+diff --git a/src/main/java/org/jboss/netty/handler/timeout/HashedWheelTimer.java b/src/main/java/org/jboss/netty/handler/timeout/HashedWheelTimer.java
+index 73c5ba2..0148c3a 100644
+--- a/src/main/java/org/jboss/netty/handler/timeout/HashedWheelTimer.java
++++ b/src/main/java/org/jboss/netty/handler/timeout/HashedWheelTimer.java
+@@ -318,7 +318,7 @@
+                 }
+ 
+                 try {
+-                    Thread.sleep(sleepTime / 1000000, (int) (sleepTime % 1000000));
++                    Thread.sleep(sleepTime);
+                 } catch (InterruptedException e) {
+                     if (shutdown.get()) {
+                         return;
+@@ -401,10 +401,10 @@
+ 
+             buf.append("deadline: ");
+             if (remaining > 0) {
+-                buf.append(remaining / 1000000);
++                buf.append(remaining);
+                 buf.append(" ms later, ");
+             } else if (remaining < 0) {
+-                buf.append(-remaining / 1000000);
++                buf.append(-remaining);
+                 buf.append(" ms ago, ");
+             } else {
+                 buf.append("now, ");

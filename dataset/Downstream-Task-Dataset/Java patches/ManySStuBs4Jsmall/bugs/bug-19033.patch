@@ -1,0 +1,26 @@
+diff --git a/handler/src/main/java/io/netty/handler/ssl/SslHandler.java b/handler/src/main/java/io/netty/handler/ssl/SslHandler.java
+index 0b37456..fa51955 100644
+--- a/handler/src/main/java/io/netty/handler/ssl/SslHandler.java
++++ b/handler/src/main/java/io/netty/handler/ssl/SslHandler.java
+@@ -972,7 +972,7 @@
+             outAppBuf.flip();
+ 
+             if (outAppBuf.hasRemaining()) {
+-                ChannelBuffer frame = ChannelBuffers.buffer(outAppBuf.remaining());
++                ChannelBuffer frame = ctx.getChannel().getConfig().getBufferFactory().getBuffer(outAppBuf.remaining());
+                 frame.writeBytes(outAppBuf.array(), 0, frame.capacity());
+                 return frame;
+             } else {
+diff --git a/handler/src/main/java/io/netty/handler/ssl/SslHandler.java b/handler/src/main/java/io/netty/handler/ssl/SslHandler.java
+index 0b37456..fa51955 100644
+--- a/handler/src/main/java/io/netty/handler/ssl/SslHandler.java
++++ b/handler/src/main/java/io/netty/handler/ssl/SslHandler.java
+@@ -972,7 +972,7 @@
+             outAppBuf.flip();
+ 
+             if (outAppBuf.hasRemaining()) {
+-                ChannelBuffer frame = ChannelBuffers.buffer(outAppBuf.remaining());
++                ChannelBuffer frame = ctx.getChannel().getConfig().getBufferFactory().getBuffer(outAppBuf.remaining());
+                 frame.writeBytes(outAppBuf.array(), 0, frame.capacity());
+                 return frame;
+             } else {

@@ -1,0 +1,64 @@
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationStateHBaseImpl.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationStateHBaseImpl.java
+index 25f30d8..ccae8a5 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationStateHBaseImpl.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationStateHBaseImpl.java
+@@ -81,9 +81,9 @@
+   public static void setUpBeforeClass() throws Exception {
+     utility = new HBaseTestingUtility();
+     conf = utility.getConfiguration();
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesType",
++    conf.setClass("hbase.region.replica.replication.replicationQueues.class",
+       TableBasedReplicationQueuesImpl.class, ReplicationQueues.class);
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesClientType",
++    conf.setClass("hbase.region.replica.replication.replicationQueuesClient.class",
+       TableBasedReplicationQueuesClientImpl.class, ReplicationQueuesClient.class);
+     utility.startMiniCluster();
+     zkw = HBaseTestingUtility.getZooKeeperWatcher(utility);
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationTableBase.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationTableBase.java
+index aa5cfed..83fdad7 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationTableBase.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationTableBase.java
+@@ -54,9 +54,9 @@
+     utility = new HBaseTestingUtility();
+     utility.startMiniZKCluster();
+     conf = utility.getConfiguration();
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesType",
++    conf.setClass("hbase.region.replica.replication.replicationQueues.class",
+       TableBasedReplicationQueuesImpl.class, ReplicationQueues.class);
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesClientType",
++    conf.setClass("hbase.region.replica.replication.replicationQueuesClient.class",
+       TableBasedReplicationQueuesClientImpl.class, ReplicationQueuesClient.class);
+     zkw = HBaseTestingUtility.getZooKeeperWatcher(utility);
+     utility.waitFor(0, TIME_OUT_MILLIS, new Waiter.ExplainingPredicate<Exception>() {
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/regionserver/TestTableBasedReplicationSourceManagerImpl.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/regionserver/TestTableBasedReplicationSourceManagerImpl.java
+index 59acfb3..26b5081 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/regionserver/TestTableBasedReplicationSourceManagerImpl.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/regionserver/TestTableBasedReplicationSourceManagerImpl.java
+@@ -48,9 +48,9 @@
+     conf.setLong("replication.sleep.before.failover", 2000);
+     conf.setInt("replication.source.maxretriesmultiplier", 10);
+ 
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesType",
++    conf.setClass("hbase.region.replica.replication.replicationQueues.class",
+       TableBasedReplicationQueuesImpl.class, ReplicationQueues.class);
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesClientType",
++    conf.setClass("hbase.region.replica.replication.replicationQueuesClient.class",
+       TableBasedReplicationQueuesClientImpl.class, ReplicationQueuesClient.class);
+     utility = new HBaseTestingUtility(conf);
+     utility.startMiniCluster();
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationStateHBaseImpl.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationStateHBaseImpl.java
+index 25f30d8..ccae8a5 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationStateHBaseImpl.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationStateHBaseImpl.java
+@@ -81,9 +81,9 @@
+   public static void setUpBeforeClass() throws Exception {
+     utility = new HBaseTestingUtility();
+     conf = utility.getConfiguration();
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesType",
++    conf.setClass("hbase.region.replica.replication.replicationQueues.class",
+       TableBasedReplicationQueuesImpl.class, ReplicationQueues.class);
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesClientType",
++    conf.setClass("hbase.region.replica.replication.replicationQueuesClient.class",
+       TableBasedReplicationQueuesClientImpl.class, ReplicationQueuesClient.class);
+     utility.startMiniCluster();
+     zkw = HBaseTestingUtility.getZooKeeperWatcher(utility);

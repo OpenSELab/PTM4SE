@@ -1,0 +1,28 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryPropertyBuilder.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryPropertyBuilder.java
+index 2e9ac56..286b453 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryPropertyBuilder.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryPropertyBuilder.java
+@@ -223,11 +223,21 @@ public class MemoryPropertyBuilder<T> implements PropertyBuilder<T> {
+             setName(property.getName());
+             if (property.isArray()) {
+                 isArray = true;
+-                setValues((Iterable<T>) property.getValue(type.getArrayType()));
++                if (type == Type.DATE) {
++                    setValues((Iterable<T>) property.getValue(Type.STRINGS));
++                }
++                else {
++                    setValues((Iterable<T>) property.getValue(type.getArrayType()));
++                }
+             }
+             else {
+                 isArray = false;
+-                setValue(property.getValue(type));
++                if (type == Type.DATE) {
++                    setValue((T) property.getValue(Type.STRING));
++                }
++                else {
++                    setValue(property.getValue(type));
++                }
+             }
+         }
+         return this;

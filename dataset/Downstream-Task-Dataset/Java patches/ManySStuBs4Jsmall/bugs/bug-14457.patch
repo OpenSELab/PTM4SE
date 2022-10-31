@@ -1,0 +1,15 @@
+diff --git a/src/com/google/javascript/jscomp/NameReferenceGraphConstruction.java b/src/com/google/javascript/jscomp/NameReferenceGraphConstruction.java
+index b966828..32c673a 100644
+--- a/src/com/google/javascript/jscomp/NameReferenceGraphConstruction.java
++++ b/src/com/google/javascript/jscomp/NameReferenceGraphConstruction.java
+@@ -424,8 +424,8 @@
+       String qNameStr = className + ".prototype." +
+           NodeUtil.getPrototypePropertyName(qName);
+       Name prototypeProp = graph.defineNameIfNotExists(qNameStr, isExtern);
+-      Preconditions.checkNotNull(
+-          prototypeProp, qNameStr + " should be in the name graph as a node.");
++      Preconditions.checkNotNull(prototypeProp,
++          "%s should be in the name graph as a node.", qNameStr);
+       if (assign != null) {
+         prototypeProp.addAssignmentDeclaration(assign);
+       }

@@ -1,0 +1,44 @@
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractQuery.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractQuery.java
+index 74695f0..1464bd1 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractQuery.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractQuery.java
+@@ -205,7 +205,7 @@
+     			orderBy = orderBy + "isnull(" + column +") desc," + defaultOrderByClause;
+     		} else if (ProcessEngineConfigurationImpl.DATABASE_TYPE_DB2.equals(databaseType)
+     				|| ProcessEngineConfigurationImpl.DATABASE_TYPE_MSSQL.equals(databaseType)) {
+-    			orderBy = orderBy + "case when " + column + " is null then 1 else 0 end," + defaultOrderByClause;
++    			orderBy = orderBy + "case when " + column + " is null then 0 else 1 end," + defaultOrderByClause;
+     		} else {
+     			orderBy = orderBy + defaultOrderByClause;
+     		}
+@@ -221,7 +221,7 @@
+     			orderBy = orderBy + "isnull(" + column +") asc," + defaultOrderByClause;
+     		} else if (ProcessEngineConfigurationImpl.DATABASE_TYPE_DB2.equals(databaseType)
+     				|| ProcessEngineConfigurationImpl.DATABASE_TYPE_MSSQL.equals(databaseType)) {
+-    			orderBy = orderBy + "case when " + column + " is null then 0 else 1 end," + defaultOrderByClause;
++    			orderBy = orderBy + "case when " + column + " is null then 1 else 0 end," + defaultOrderByClause;
+     		} else {
+     			orderBy = orderBy + defaultOrderByClause;
+     		}
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractQuery.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractQuery.java
+index 74695f0..1464bd1 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractQuery.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/AbstractQuery.java
+@@ -205,7 +205,7 @@
+     			orderBy = orderBy + "isnull(" + column +") desc," + defaultOrderByClause;
+     		} else if (ProcessEngineConfigurationImpl.DATABASE_TYPE_DB2.equals(databaseType)
+     				|| ProcessEngineConfigurationImpl.DATABASE_TYPE_MSSQL.equals(databaseType)) {
+-    			orderBy = orderBy + "case when " + column + " is null then 1 else 0 end," + defaultOrderByClause;
++    			orderBy = orderBy + "case when " + column + " is null then 0 else 1 end," + defaultOrderByClause;
+     		} else {
+     			orderBy = orderBy + defaultOrderByClause;
+     		}
+@@ -221,7 +221,7 @@
+     			orderBy = orderBy + "isnull(" + column +") asc," + defaultOrderByClause;
+     		} else if (ProcessEngineConfigurationImpl.DATABASE_TYPE_DB2.equals(databaseType)
+     				|| ProcessEngineConfigurationImpl.DATABASE_TYPE_MSSQL.equals(databaseType)) {
+-    			orderBy = orderBy + "case when " + column + " is null then 0 else 1 end," + defaultOrderByClause;
++    			orderBy = orderBy + "case when " + column + " is null then 1 else 0 end," + defaultOrderByClause;
+     		} else {
+     			orderBy = orderBy + defaultOrderByClause;
+     		}

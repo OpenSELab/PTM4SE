@@ -1,0 +1,101 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java b/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
+index 2ef20b1..7c166d2 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
+@@ -29,7 +29,7 @@
+  * Default log message format is: [SEVERITY LEVEL] filePath:lineNo:columnNo: message. [CheckName]
+  * @author Andrei Selkin
+  */
+-public class AuditEventDefaultFormatter implements AuditEvemtFormatter {
++public class AuditEventDefaultFormatter implements AuditEventFormatter {
+ 
+     /** Length of all separators. */
+     private static final int LENGTH_OF_ALL_SEPARATORS = 10;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
+index 8c3fbc4..70b5065 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
+@@ -53,7 +53,7 @@
+     private final boolean closeError;
+ 
+     /** Formatter for the log message. */
+-    private final AuditEvemtFormatter formatter;
++    private final AuditEventFormatter formatter;
+ 
+     /**
+      * Creates a new {@code DefaultLogger} instance.
+@@ -93,7 +93,7 @@
+                          boolean closeInfoAfterUse,
+                          OutputStream errorStream,
+                          boolean closeErrorAfterUse,
+-                         AuditEvemtFormatter messageFormatter) {
++                         AuditEventFormatter messageFormatter) {
+         closeInfo = closeInfoAfterUse;
+         closeError = closeErrorAfterUse;
+         final Writer infoStreamWriter = new OutputStreamWriter(infoStream, StandardCharsets.UTF_8);
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatterTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatterTest.java
+index e22c977..e29f811 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatterTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatterTest.java
+@@ -44,7 +44,7 @@
+         when(mock.getColumn()).thenReturn(1);
+         when(mock.getMessage()).thenReturn("Mocked message.");
+         when(mock.getFileName()).thenReturn("InputMockFile.java");
+-        final AuditEvemtFormatter formatter = new AuditEventDefaultFormatter();
++        final AuditEventFormatter formatter = new AuditEventDefaultFormatter();
+ 
+         final String expected = "[WARN] InputMockFile.java:1:1: Mocked message. [TestModule]";
+ 
+@@ -60,7 +60,7 @@
+         when(mock.getColumn()).thenReturn(1);
+         when(mock.getMessage()).thenReturn("Mocked message.");
+         when(mock.getFileName()).thenReturn("InputMockFile.java");
+-        final AuditEvemtFormatter formatter = new AuditEventDefaultFormatter();
++        final AuditEventFormatter formatter = new AuditEventDefaultFormatter();
+ 
+         final String expected = "[WARN] InputMockFile.java:1:1: Mocked message. [TestModule]";
+ 
+@@ -76,7 +76,7 @@
+         when(mock.getColumn()).thenReturn(1);
+         when(mock.getMessage()).thenReturn("Mocked message.");
+         when(mock.getFileName()).thenReturn("InputMockFile.java");
+-        final AuditEvemtFormatter formatter = new AuditEventDefaultFormatter();
++        final AuditEventFormatter formatter = new AuditEventDefaultFormatter();
+ 
+         final String expected = "[WARN] InputMockFile.java:1:1: Mocked message. [TestModule]";
+ 
+@@ -92,7 +92,7 @@
+         when(mock.getColumn()).thenReturn(1);
+         when(mock.getMessage()).thenReturn("Mocked message.");
+         when(mock.getFileName()).thenReturn("InputMockFile.java");
+-        final AuditEvemtFormatter formatter = new AuditEventDefaultFormatter();
++        final AuditEventFormatter formatter = new AuditEventDefaultFormatter();
+ 
+         final String expected = "[WARN] InputMockFile.java:1:1: Mocked message. [TestModule]";
+ 
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/AuditEventUtFormatter.java b/src/test/java/com/puppycrawl/tools/checkstyle/AuditEventUtFormatter.java
+index a10a526..0219be9 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/AuditEventUtFormatter.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/AuditEventUtFormatter.java
+@@ -26,7 +26,7 @@
+  * Message format is: filePath:lineNo:columnNo: message.
+  * @author Andrei Selkin
+  */
+-public class AuditEventUtFormatter implements AuditEvemtFormatter {
++public class AuditEventUtFormatter implements AuditEventFormatter {
+ 
+     /** Length of all separators. */
+     private static final int LENGTH_OF_ALL_SEPARATORS = 4;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java b/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
+index 2ef20b1..7c166d2 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
+@@ -29,7 +29,7 @@
+  * Default log message format is: [SEVERITY LEVEL] filePath:lineNo:columnNo: message. [CheckName]
+  * @author Andrei Selkin
+  */
+-public class AuditEventDefaultFormatter implements AuditEvemtFormatter {
++public class AuditEventDefaultFormatter implements AuditEventFormatter {
+ 
+     /** Length of all separators. */
+     private static final int LENGTH_OF_ALL_SEPARATORS = 10;

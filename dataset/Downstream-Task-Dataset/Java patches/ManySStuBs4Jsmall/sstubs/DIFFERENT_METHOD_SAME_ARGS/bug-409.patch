@@ -1,0 +1,13 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/ha/StandbyCheckpointer.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/ha/StandbyCheckpointer.java
+index a97e55d..46f13f0 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/ha/StandbyCheckpointer.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/ha/StandbyCheckpointer.java
+@@ -262,7 +262,7 @@
+         try {
+           // We may have lost our ticket since last checkpoint, log in again, just in case
+           if (UserGroupInformation.isSecurityEnabled()) {
+-            UserGroupInformation.getCurrentUser().reloginFromKeytab();
++            UserGroupInformation.getCurrentUser().checkTGTAndReloginFromKeytab();
+           }
+           
+           long now = now();

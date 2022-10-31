@@ -1,0 +1,13 @@
+diff --git a/flink-connectors/flink-connector-cassandra/src/test/java/org/apache/flink/streaming/connectors/cassandra/CassandraConnectorITCase.java b/flink-connectors/flink-connector-cassandra/src/test/java/org/apache/flink/streaming/connectors/cassandra/CassandraConnectorITCase.java
+index f6cc231..e6924a3 100644
+--- a/flink-connectors/flink-connector-cassandra/src/test/java/org/apache/flink/streaming/connectors/cassandra/CassandraConnectorITCase.java
++++ b/flink-connectors/flink-connector-cassandra/src/test/java/org/apache/flink/streaming/connectors/cassandra/CassandraConnectorITCase.java
+@@ -466,7 +466,7 @@
+ 		}
+ 		sink.close();
+ 
+-		ResultSet rs = session.execute(SELECT_DATA_QUERY);
++		ResultSet rs = session.execute(injectTableName(SELECT_DATA_QUERY));
+ 		List<Row> rows = rs.all();
+ 		assertEquals(scalaTupleCollection.size(), rows.size());
+ 

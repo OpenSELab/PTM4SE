@@ -1,0 +1,30 @@
+diff --git a/src/test/java/org/apache/hadoop/hbase/io/hfile/slab/TestSlabCache.java b/src/test/java/org/apache/hadoop/hbase/io/hfile/slab/TestSlabCache.java
+index 1a25ea2..26705d0 100644
+--- a/src/test/java/org/apache/hadoop/hbase/io/hfile/slab/TestSlabCache.java
++++ b/src/test/java/org/apache/hadoop/hbase/io/hfile/slab/TestSlabCache.java
+@@ -87,7 +87,9 @@
+   public void testStatsArithmetic(){
+     SlabStats test = cache.requestStats;
+     for(int i = 0; i < test.NUMDIVISIONS; i++){
+-      assert(test.getUpperBound(i) < test.getLowerBound(i + 1));
++      assertTrue("Upper for index " + i + " is " + test.getUpperBound(i) +
++          " lower " + test.getLowerBound(i + 1),
++          test.getUpperBound(i) <= test.getLowerBound(i + 1));
+     }
+   }
+ }
+diff --git a/src/test/java/org/apache/hadoop/hbase/io/hfile/slab/TestSlabCache.java b/src/test/java/org/apache/hadoop/hbase/io/hfile/slab/TestSlabCache.java
+index 1a25ea2..26705d0 100644
+--- a/src/test/java/org/apache/hadoop/hbase/io/hfile/slab/TestSlabCache.java
++++ b/src/test/java/org/apache/hadoop/hbase/io/hfile/slab/TestSlabCache.java
+@@ -87,7 +87,9 @@
+   public void testStatsArithmetic(){
+     SlabStats test = cache.requestStats;
+     for(int i = 0; i < test.NUMDIVISIONS; i++){
+-      assert(test.getUpperBound(i) < test.getLowerBound(i + 1));
++      assertTrue("Upper for index " + i + " is " + test.getUpperBound(i) +
++          " lower " + test.getLowerBound(i + 1),
++          test.getUpperBound(i) <= test.getLowerBound(i + 1));
+     }
+   }
+ }

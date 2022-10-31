@@ -1,0 +1,47 @@
+diff --git a/core/src/main/java/org/apache/logging/log4j/core/appender/OutputStreamManager.java b/core/src/main/java/org/apache/logging/log4j/core/appender/OutputStreamManager.java
+index 8d6b3a3..54fde20 100644
+--- a/core/src/main/java/org/apache/logging/log4j/core/appender/OutputStreamManager.java
++++ b/core/src/main/java/org/apache/logging/log4j/core/appender/OutputStreamManager.java
+@@ -28,6 +28,7 @@ public class OutputStreamManager extends AbstractManager {
+     private OutputStream os;
+ 
+     private byte[] footer = null;
++    private byte[] header = null;
+ 
+     protected OutputStreamManager(final OutputStream os, final String streamName) {
+         super(streamName);
+@@ -54,6 +55,7 @@ public class OutputStreamManager extends AbstractManager {
+      */
+     public synchronized void setHeader(final byte[] header) {
+         if (header != null) {
++            this.header = header;
+             try {
+                 this.os.write(header, 0, header.length);
+             } catch (final IOException ioe) {
+@@ -97,6 +99,13 @@ public class OutputStreamManager extends AbstractManager {
+ 
+     protected void setOutputStream(final OutputStream os) {
+         this.os = os;
++        if (header != null) {
++            try {
++                this.os.write(header, 0, header.length);
++            } catch (final IOException ioe) {
++                LOGGER.error("Unable to write header", ioe);
++            }
++        }
+     }
+ 
+     /**
+diff --git a/core/src/main/java/org/apache/logging/log4j/core/net/DatagramOutputStream.java b/core/src/main/java/org/apache/logging/log4j/core/net/DatagramOutputStream.java
+index bf2a2e6..2fe3d9a 100644
+--- a/core/src/main/java/org/apache/logging/log4j/core/net/DatagramOutputStream.java
++++ b/core/src/main/java/org/apache/logging/log4j/core/net/DatagramOutputStream.java
+@@ -89,7 +89,7 @@ public class DatagramOutputStream extends OutputStream {
+ 
+     @Override
+     public synchronized void flush() throws IOException {
+-        if (this.ds != null && this.address != null) {
++        if (this.data != null && this.ds != null && this.address != null) {
+             final DatagramPacket packet = new DatagramPacket(data, data.length, address, port);
+             ds.send(packet);
+         }

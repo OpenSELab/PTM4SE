@@ -1,0 +1,48 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
+index 17efdf3..158fe6b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
+@@ -572,8 +572,7 @@
+                 && astTraverse.getType() != TokenTypes.CLASS_DEF
+                 && astTraverse.getType() != TokenTypes.ENUM_DEF
+                 && astTraverse.getType() != TokenTypes.CTOR_DEF
+-                && (astTraverse.getType() != TokenTypes.VARIABLE_DEF
+-                        || !ScopeUtils.isClassFieldDef(astTraverse))) {
++                && !ScopeUtils.isClassFieldDef(astTraverse)) {
+             astTraverse = astTraverse.getParent();
+         }
+         return astTraverse;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/utils/ScopeUtils.java b/src/main/java/com/puppycrawl/tools/checkstyle/utils/ScopeUtils.java
+index e0c00e5..632f501 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/utils/ScopeUtils.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/utils/ScopeUtils.java
+@@ -268,13 +268,13 @@
+ 
+     /**
+      * Determines whether a node is a class field definition.
+-     * I.e. if it is not declared in a code block, a for initializer,
++     * I.e. if a variable is not declared in a code block, a for initializer,
+      * or a catch parameter.
+      * @param node the node to check.
+      * @return whether a node is a class field definition.
+      */
+     public static boolean isClassFieldDef(DetailAST node) {
+-        return !isLocalVariableDef(node);
++        return node.getType() == TokenTypes.VARIABLE_DEF && !isLocalVariableDef(node);
+     }
+ 
+     /**
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
+index 17efdf3..158fe6b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
+@@ -572,8 +572,7 @@
+                 && astTraverse.getType() != TokenTypes.CLASS_DEF
+                 && astTraverse.getType() != TokenTypes.ENUM_DEF
+                 && astTraverse.getType() != TokenTypes.CTOR_DEF
+-                && (astTraverse.getType() != TokenTypes.VARIABLE_DEF
+-                        || !ScopeUtils.isClassFieldDef(astTraverse))) {
++                && !ScopeUtils.isClassFieldDef(astTraverse)) {
+             astTraverse = astTraverse.getParent();
+         }
+         return astTraverse;

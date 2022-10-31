@@ -1,0 +1,52 @@
+diff --git a/jsonschema2pojo-integration-tests/src/test/java/com/googlecode/jsonschema2pojo/integration/util/TestableJsonschema2PojoMojo.java b/jsonschema2pojo-integration-tests/src/test/java/com/googlecode/jsonschema2pojo/integration/util/TestableJsonschema2PojoMojo.java
+index 5f7e9b6..f44862e 100644
+--- a/jsonschema2pojo-integration-tests/src/test/java/com/googlecode/jsonschema2pojo/integration/util/TestableJsonschema2PojoMojo.java
++++ b/jsonschema2pojo-integration-tests/src/test/java/com/googlecode/jsonschema2pojo/integration/util/TestableJsonschema2PojoMojo.java
+@@ -37,7 +37,7 @@
+         setPrivateField("targetPackage", targetPackage);
+         setPrivateField("generateBuilders", generateBuilders);
+         setPrivateField("usePrimitives", usePrimitives);
+-        setPrivateField("propertyWordDelimiters", wordDelimiters);
++        setPrivateField("propertyWordDelimiters", new String(wordDelimiters));
+         
+         return this;
+     }
+diff --git a/jsonschema2pojo-maven-plugin/src/main/java/com/googlecode/jsonschema2pojo/maven/Jsonschema2PojoMojo.java b/jsonschema2pojo-maven-plugin/src/main/java/com/googlecode/jsonschema2pojo/maven/Jsonschema2PojoMojo.java
+index 2cedcb4..1701a03 100644
+--- a/jsonschema2pojo-maven-plugin/src/main/java/com/googlecode/jsonschema2pojo/maven/Jsonschema2PojoMojo.java
++++ b/jsonschema2pojo-maven-plugin/src/main/java/com/googlecode/jsonschema2pojo/maven/Jsonschema2PojoMojo.java
+@@ -121,10 +121,10 @@
+      * JSON properties will be considered to contain a single word when creating
+      * Java Bean property names.
+      * 
+-     * @param expression=${jsonschema2pojo.propertyWordDelimiters} default-value=""
++     * @parameter expression=${jsonschema2pojo.propertyWordDelimiters} default-value=""
+      * @since 0.2.2
+      */
+-    private char[] propertyWordDelimiters;
++    private String propertyWordDelimiters;
+     
+     /**
+      * The project being built.
+@@ -210,7 +210,7 @@
+     
+     @Override
+     public char[] getPropertyWordDelimiters() {
+-        return propertyWordDelimiters;
++        return propertyWordDelimiters.toCharArray();
+     }
+ 
+ }
+diff --git a/jsonschema2pojo-integration-tests/src/test/java/com/googlecode/jsonschema2pojo/integration/util/TestableJsonschema2PojoMojo.java b/jsonschema2pojo-integration-tests/src/test/java/com/googlecode/jsonschema2pojo/integration/util/TestableJsonschema2PojoMojo.java
+index 5f7e9b6..f44862e 100644
+--- a/jsonschema2pojo-integration-tests/src/test/java/com/googlecode/jsonschema2pojo/integration/util/TestableJsonschema2PojoMojo.java
++++ b/jsonschema2pojo-integration-tests/src/test/java/com/googlecode/jsonschema2pojo/integration/util/TestableJsonschema2PojoMojo.java
+@@ -37,7 +37,7 @@
+         setPrivateField("targetPackage", targetPackage);
+         setPrivateField("generateBuilders", generateBuilders);
+         setPrivateField("usePrimitives", usePrimitives);
+-        setPrivateField("propertyWordDelimiters", wordDelimiters);
++        setPrivateField("propertyWordDelimiters", new String(wordDelimiters));
+         
+         return this;
+     }

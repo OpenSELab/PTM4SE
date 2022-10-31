@@ -1,0 +1,14 @@
+diff --git a/core/src/main/java/tachyon/worker/TachyonWorker.java b/core/src/main/java/tachyon/worker/TachyonWorker.java
+index 76a164a..e248f02 100644
+--- a/core/src/main/java/tachyon/worker/TachyonWorker.java
++++ b/core/src/main/java/tachyon/worker/TachyonWorker.java
+@@ -97,7 +97,8 @@
+    * @return The new TachyonWorker
+    */
+   public static synchronized TachyonWorker createWorker(TachyonConf tachyonConf) {
+-    String masterHostname = NetworkUtils.getLocalHostName(tachyonConf);
++    String masterHostname = tachyonConf.get(Constants.MASTER_HOSTNAME,
++        NetworkUtils.getLocalHostName(tachyonConf));
+     int masterPort = tachyonConf.getInt(Constants.MASTER_PORT, Constants.DEFAULT_MASTER_PORT);
+     String workerHostName = NetworkUtils.getLocalHostName(tachyonConf);
+     int workerPort = tachyonConf.getInt(Constants.WORKER_PORT, Constants.DEFAULT_WORKER_PORT);

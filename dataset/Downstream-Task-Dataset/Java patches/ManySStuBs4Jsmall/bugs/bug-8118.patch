@@ -1,0 +1,34 @@
+diff --git a/external/storm-hive/src/test/java/org/apache/storm/hive/bolt/TestHiveBolt.java b/external/storm-hive/src/test/java/org/apache/storm/hive/bolt/TestHiveBolt.java
+index 8e79c8c..159beda 100644
+--- a/external/storm-hive/src/test/java/org/apache/storm/hive/bolt/TestHiveBolt.java
++++ b/external/storm-hive/src/test/java/org/apache/storm/hive/bolt/TestHiveBolt.java
+@@ -380,10 +380,10 @@
+         bolt = new HiveBolt(hiveOptions);
+         bolt.prepare(config, null, new OutputCollector(collector));
+ 
+-        //The tick should NOT cause any acks since the batch was empty
++        //The tick should NOT cause any acks since the batch was empty except for acking itself
+         Tuple mockTick = MockTupleHelpers.mockTickTuple();
+         bolt.execute(mockTick);
+-        verifyZeroInteractions(collector);
++        verify(collector).ack(mockTick);
+ 
+         bolt.cleanup();
+     }
+diff --git a/external/storm-hive/src/test/java/org/apache/storm/hive/bolt/TestHiveBolt.java b/external/storm-hive/src/test/java/org/apache/storm/hive/bolt/TestHiveBolt.java
+index 8e79c8c..159beda 100644
+--- a/external/storm-hive/src/test/java/org/apache/storm/hive/bolt/TestHiveBolt.java
++++ b/external/storm-hive/src/test/java/org/apache/storm/hive/bolt/TestHiveBolt.java
+@@ -380,10 +380,10 @@
+         bolt = new HiveBolt(hiveOptions);
+         bolt.prepare(config, null, new OutputCollector(collector));
+ 
+-        //The tick should NOT cause any acks since the batch was empty
++        //The tick should NOT cause any acks since the batch was empty except for acking itself
+         Tuple mockTick = MockTupleHelpers.mockTickTuple();
+         bolt.execute(mockTick);
+-        verifyZeroInteractions(collector);
++        verify(collector).ack(mockTick);
+ 
+         bolt.cleanup();
+     }

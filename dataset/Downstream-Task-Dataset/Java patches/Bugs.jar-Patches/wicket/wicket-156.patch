@@ -1,0 +1,23 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java b/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
+index 50402f6..a5ae4f2 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
+@@ -265,7 +265,17 @@ public class PageProvider implements IPageProvider
+ 		{
+ 			if (pageClass != null)
+ 			{
+-				page = getPageSource().newPageInstance(pageClass, pageParameters);
++				PageParameters parameters;
++				if (pageId != null)
++				{
++					// WICKET-4594 - re-creating an expired page. Ignore the parsed parameters for the callback url
++					parameters = new PageParameters();
++				}
++				else
++				{
++					parameters = pageParameters;
++				}
++				page = getPageSource().newPageInstance(pageClass, parameters);
+ 				freshCreated = true;
+ 			}
+ 		}

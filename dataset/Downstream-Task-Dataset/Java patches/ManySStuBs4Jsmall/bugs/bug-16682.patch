@@ -1,0 +1,66 @@
+diff --git a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/audio/Wav.java b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/audio/Wav.java
+index cd32539..5008635 100644
+--- a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/audio/Wav.java
++++ b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/audio/Wav.java
+@@ -94,8 +94,8 @@
+ 				if (type != 1) {
+ 					String name;
+ 					switch (type) {
+-					case 0x0001:
+-						name = "PCM";
++					case 0x0002:
++						name = "ADPCM";
+ 						break;
+ 					case 0x0003:
+ 						name = "IEEE float";
+@@ -104,7 +104,7 @@
+ 						name = "8-bit ITU-T G.711 A-law";
+ 						break;
+ 					case 0x0007:
+-						name = "8-bit ITU-T G.711 μ-law";
++						name = "8-bit ITU-T G.711 u-law";
+ 						break;
+ 					case 0xFFFE:
+ 						name = "Extensible";
+@@ -112,7 +112,7 @@
+ 					default:
+ 						name = "Unknown";
+ 					}
+-					throw new GdxRuntimeException("WAV files must be PCM: " + name + " (" + type + ")");
++					throw new GdxRuntimeException("WAV files must be PCM, unsupported format: " + name + " (" + type + ")");
+ 				}
+ 
+ 				channels = read() & 0xff | (read() & 0xff) << 8;
+diff --git a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/audio/Wav.java b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/audio/Wav.java
+index cd32539..5008635 100644
+--- a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/audio/Wav.java
++++ b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/audio/Wav.java
+@@ -94,8 +94,8 @@
+ 				if (type != 1) {
+ 					String name;
+ 					switch (type) {
+-					case 0x0001:
+-						name = "PCM";
++					case 0x0002:
++						name = "ADPCM";
+ 						break;
+ 					case 0x0003:
+ 						name = "IEEE float";
+@@ -104,7 +104,7 @@
+ 						name = "8-bit ITU-T G.711 A-law";
+ 						break;
+ 					case 0x0007:
+-						name = "8-bit ITU-T G.711 μ-law";
++						name = "8-bit ITU-T G.711 u-law";
+ 						break;
+ 					case 0xFFFE:
+ 						name = "Extensible";
+@@ -112,7 +112,7 @@
+ 					default:
+ 						name = "Unknown";
+ 					}
+-					throw new GdxRuntimeException("WAV files must be PCM: " + name + " (" + type + ")");
++					throw new GdxRuntimeException("WAV files must be PCM, unsupported format: " + name + " (" + type + ")");
+ 				}
+ 
+ 				channels = read() & 0xff | (read() & 0xff) << 8;

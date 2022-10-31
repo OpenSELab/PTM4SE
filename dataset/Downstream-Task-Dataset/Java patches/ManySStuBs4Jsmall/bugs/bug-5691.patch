@@ -1,0 +1,39 @@
+diff --git a/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreConsumer.java b/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreConsumer.java
+index 0adf35f..3fc9926 100644
+--- a/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreConsumer.java
++++ b/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreConsumer.java
+@@ -177,7 +177,7 @@
+         try {
+             ois = new ObjectInputStream(is) {
+                 @Override
+-                public Class resolveClass(ObjectStreamClass desc) throws IOException,
++                public Class<?> resolveClass(ObjectStreamClass desc) throws IOException,
+                         ClassNotFoundException {
+                     try {
+                         return getEndpoint().getCamelContext().getClassResolver().resolveClass(desc.getName());
+diff --git a/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreProducer.java b/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreProducer.java
+index cb06daf..80cd749 100644
+--- a/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreProducer.java
++++ b/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreProducer.java
+@@ -48,7 +48,7 @@
+         if (blobName != null && exchange.getIn() != null && exchange.getIn().getBody() != null) {
+             Object body = exchange.getIn().getBody();
+             BlobStore blobStore = blobStoreContext.getBlobStore();
+-            Blob blob = blobStore.newBlob(blobName);
++            Blob blob = blobStore.blobBuilder(blobName).build();
+             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             ObjectOutputStream oos = null;
+             try {
+diff --git a/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreConsumer.java b/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreConsumer.java
+index 0adf35f..3fc9926 100644
+--- a/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreConsumer.java
++++ b/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsBlobStoreConsumer.java
+@@ -177,7 +177,7 @@
+         try {
+             ois = new ObjectInputStream(is) {
+                 @Override
+-                public Class resolveClass(ObjectStreamClass desc) throws IOException,
++                public Class<?> resolveClass(ObjectStreamClass desc) throws IOException,
+                         ClassNotFoundException {
+                     try {
+                         return getEndpoint().getCamelContext().getClassResolver().resolveClass(desc.getName());

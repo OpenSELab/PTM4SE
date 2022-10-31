@@ -1,0 +1,60 @@
+diff --git a/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystem.java b/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystem.java
+index 31a5bfc..96e9533 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystem.java
++++ b/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystem.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2012-2015 the original author or authors.
++ * Copyright 2012-2016 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -107,7 +107,7 @@
+ 		if (StringUtils.hasText(System.getProperty(CONFIGURATION_FILE_PROPERTY))) {
+ 			getLogger(LogbackLoggingSystem.class.getName()).warn(
+ 					"Ignoring '" + CONFIGURATION_FILE_PROPERTY + "' system property. "
+-							+ "Please use 'logging.path' instead.");
++							+ "Please use 'logging.config' instead.");
+ 		}
+ 	}
+ 
+diff --git a/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemTests.java b/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemTests.java
+index 270fc24..57b10df 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemTests.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2012-2015 the original author or authors.
++ * Copyright 2012-2016 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -149,7 +149,7 @@
+ 			this.loggingSystem.initialize(this.initializationContext, null, null);
+ 			String output = this.output.toString().trim();
+ 			assertTrue("Wrong output:\n" + output, output.contains("Ignoring "
+-					+ "'logback.configurationFile' system property. Please use 'logging.path' instead."));
++					+ "'logback.configurationFile' system property. Please use 'logging.config' instead."));
+ 		}
+ 		finally {
+ 			System.clearProperty("logback.configurationFile");
+diff --git a/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystem.java b/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystem.java
+index 31a5bfc..96e9533 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystem.java
++++ b/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystem.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2012-2015 the original author or authors.
++ * Copyright 2012-2016 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -107,7 +107,7 @@
+ 		if (StringUtils.hasText(System.getProperty(CONFIGURATION_FILE_PROPERTY))) {
+ 			getLogger(LogbackLoggingSystem.class.getName()).warn(
+ 					"Ignoring '" + CONFIGURATION_FILE_PROPERTY + "' system property. "
+-							+ "Please use 'logging.path' instead.");
++							+ "Please use 'logging.config' instead.");
+ 		}
+ 	}
+ 

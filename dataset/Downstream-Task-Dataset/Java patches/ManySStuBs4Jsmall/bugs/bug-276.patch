@@ -1,0 +1,22 @@
+diff --git a/core/server/master/src/test/java/alluxio/master/file/meta/InodeTreeTest.java b/core/server/master/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
+index 00f3e24..6bb1ecc 100644
+--- a/core/server/master/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
++++ b/core/server/master/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
+@@ -465,7 +465,7 @@
+   @Test
+   public void getInodeByNonexistingPath() throws Exception {
+     mThrown.expect(FileDoesNotExistException.class);
+-    mThrown.expectMessage("Path /test does not exist");
++    mThrown.expectMessage("Path \"/test\" does not exist");
+ 
+     assertFalse(mTree.inodePathExists(TEST_URI));
+     getInodeByPath(mTree, TEST_URI);
+@@ -477,7 +477,7 @@
+   @Test
+   public void getInodeByNonexistingNestedPath() throws Exception {
+     mThrown.expect(FileDoesNotExistException.class);
+-    mThrown.expectMessage("Path /nested/test/file does not exist");
++    mThrown.expectMessage("Path \"/nested/test/file\" does not exist");
+ 
+     createPath(mTree, NESTED_URI, sNestedDirectoryOptions);
+     assertFalse(mTree.inodePathExists(NESTED_FILE_URI));

@@ -1,0 +1,22 @@
+diff --git a/test/com/google/javascript/jscomp/transpile/BaseTranspilerTest.java b/test/com/google/javascript/jscomp/transpile/BaseTranspilerTest.java
+index 065dde4..a277e50 100644
+--- a/test/com/google/javascript/jscomp/transpile/BaseTranspilerTest.java
++++ b/test/com/google/javascript/jscomp/transpile/BaseTranspilerTest.java
+@@ -67,7 +67,7 @@
+ 
+   public void testCompilerSupplier_compileChanged() {
+     BaseTranspiler.CompileResult result = compiler.compile("source.js", "const x = () => 42;");
+-    assertThat(result.source).isEqualTo("'use strict';var x = function() {\n  return 42;\n};\n");
++    assertThat(result.source).isEqualTo("var x = function() {\n  return 42;\n};\n");
+     assertThat(result.errors).isEmpty();
+     assertThat(result.transpiled).isTrue();
+     assertThat(result.sourceMap).contains("\"mappings\":\";\"");
+@@ -75,7 +75,7 @@
+ 
+   public void testCompilerSupplier_compileNoChange() {
+     BaseTranspiler.CompileResult result = compiler.compile("source.js", "var x = 42;");
+-    assertThat(result.source).isEqualTo("'use strict';var x = 42;\n");
++    assertThat(result.source).isEqualTo("var x = 42;\n");
+     assertThat(result.errors).isEmpty();
+     assertThat(result.transpiled).isFalse();
+     assertThat(result.sourceMap).contains("\"mappings\":\";\"");

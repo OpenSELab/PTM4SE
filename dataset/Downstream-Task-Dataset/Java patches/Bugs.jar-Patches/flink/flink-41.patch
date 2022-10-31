@@ -1,0 +1,145 @@
+diff --git a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/state/PartitionedStreamOperatorState.java b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/state/PartitionedStreamOperatorState.java
+index 115a97c..408a0f0 100644
+--- a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/state/PartitionedStreamOperatorState.java
++++ b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/state/PartitionedStreamOperatorState.java
+@@ -55,6 +55,8 @@ public class PartitionedStreamOperatorState<IN, S, C extends Serializable> exten
+ 	private IN currentInput;
+ 
+ 	private ClassLoader cl;
++	private boolean restored = true;
++	private StateHandle<Serializable> checkpoint = null;
+ 
+ 	public PartitionedStreamOperatorState(StateCheckpointer<S, C> checkpointer,
+ 			StateHandleProvider<C> provider, KeySelector<IN, Serializable> keySelector, ClassLoader cl) {
+@@ -76,6 +78,10 @@ public class PartitionedStreamOperatorState<IN, S, C extends Serializable> exten
+ 		if (currentInput == null) {
+ 			throw new IllegalStateException("Need a valid input for accessing the state.");
+ 		} else {
++			if (!restored) {
++				// If the state is not restored yet, restore now
++				restoreWithCheckpointer();
++			}
+ 			Serializable key;
+ 			try {
+ 				key = keySelector.getKey(currentInput);
+@@ -100,6 +106,10 @@ public class PartitionedStreamOperatorState<IN, S, C extends Serializable> exten
+ 		if (currentInput == null) {
+ 			throw new IllegalStateException("Need a valid input for updating a state.");
+ 		} else {
++			if (!restored) {
++				// If the state is not restored yet, restore now
++				restoreWithCheckpointer();
++			}
+ 			Serializable key;
+ 			try {
+ 				key = keySelector.getKey(currentInput);
+@@ -131,18 +141,38 @@ public class PartitionedStreamOperatorState<IN, S, C extends Serializable> exten
+ 
+ 	@Override
+ 	public StateHandle<Serializable> snapshotState(long checkpointId, long checkpointTimestamp) throws Exception {
+-		return stateStore.snapshotStates(checkpointId, checkpointTimestamp);
++		// If the state is restored we take a snapshot, otherwise return the last checkpoint
++		return restored ? stateStore.snapshotStates(checkpointId, checkpointTimestamp) : provider
++				.createStateHandle(checkpoint.getState(cl));
+ 	}
+-
++	
+ 	@Override
+-	public void restoreState(StateHandle<Serializable> snapshots, ClassLoader userCodeClassLoader) throws Exception {
+-		stateStore.restoreStates(snapshots, userCodeClassLoader);
++	public void restoreState(StateHandle<Serializable> snapshot, ClassLoader userCodeClassLoader) throws Exception {
++		// We store the snapshot for lazy restore
++		checkpoint = snapshot;
++		restored = false;
++	}
++	
++	private void restoreWithCheckpointer() throws IOException {
++		try {
++			stateStore.restoreStates(checkpoint, cl);
++		} catch (Exception e) {
++			throw new IOException(e);
++		}
++		restored = true;
++		checkpoint = null;
+ 	}
+ 
+ 	@Override
+ 	public Map<Serializable, S> getPartitionedState() throws Exception {
+ 		return stateStore.getPartitionedState();
+ 	}
++	
++	@Override
++	public void setCheckpointer(StateCheckpointer<S, C> checkpointer) {
++		super.setCheckpointer(checkpointer);
++		stateStore.setCheckPointer(checkpointer);
++	}
+ 
+ 	@Override
+ 	public String toString() {
+diff --git a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/state/StreamOperatorState.java b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/state/StreamOperatorState.java
+index 29a19b5..c33b94e 100644
+--- a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/state/StreamOperatorState.java
++++ b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/state/StreamOperatorState.java
+@@ -44,7 +44,10 @@ public class StreamOperatorState<S, C extends Serializable> implements OperatorS
+ 
+ 	private S state;
+ 	protected StateCheckpointer<S, C> checkpointer;
+-	private final StateHandleProvider<Serializable> provider;
++	protected final StateHandleProvider<Serializable> provider;
++	
++	private boolean restored = true;
++	private Serializable checkpoint = null;
+ 
+ 	@SuppressWarnings("unchecked")
+ 	public StreamOperatorState(StateCheckpointer<S, C> checkpointer, StateHandleProvider<C> provider) {
+@@ -59,6 +62,10 @@ public class StreamOperatorState<S, C extends Serializable> implements OperatorS
+ 
+ 	@Override
+ 	public S value() throws IOException {
++		if (!restored) {
++			// If the state is not restore it yet, restore at this point
++			restoreWithCheckpointer();
++		}
+ 		return state;
+ 	}
+ 
+@@ -67,6 +74,11 @@ public class StreamOperatorState<S, C extends Serializable> implements OperatorS
+ 		if (state == null) {
+ 			throw new RuntimeException("Cannot set state to null.");
+ 		}
++		if (!restored) {
++			// If the value is updated before the restore it is overwritten
++			restored = true;
++			checkpoint = false;
++		}
+ 		this.state = state;
+ 	}
+ 	
+@@ -90,14 +102,22 @@ public class StreamOperatorState<S, C extends Serializable> implements OperatorS
+ 
+ 	public StateHandle<Serializable> snapshotState(long checkpointId, long checkpointTimestamp)
+ 			throws Exception {
+-		return provider.createStateHandle(checkpointer.snapshotState(value(), checkpointId,
+-				checkpointTimestamp));
+-
++		// If the state is restored we take a snapshot, otherwise return the last checkpoint
++		return provider.createStateHandle(restored ? checkpointer.snapshotState(value(), checkpointId,
++				checkpointTimestamp) : checkpoint);
+ 	}
+ 
+-	@SuppressWarnings("unchecked")
+ 	public void restoreState(StateHandle<Serializable> snapshot, ClassLoader userCodeClassLoader) throws Exception {
+-		update(checkpointer.restoreState((C) snapshot.getState(userCodeClassLoader)));
++		// We set the checkpoint for lazy restore
++		checkpoint = snapshot.getState(userCodeClassLoader);
++		restored = false;
++	}
++	
++	@SuppressWarnings("unchecked")
++	private void restoreWithCheckpointer() throws IOException {
++		update(checkpointer.restoreState((C) checkpoint));
++		restored = true;
++		checkpoint = null;
+ 	}
+ 
+ 	public Map<Serializable, S> getPartitionedState() throws Exception {

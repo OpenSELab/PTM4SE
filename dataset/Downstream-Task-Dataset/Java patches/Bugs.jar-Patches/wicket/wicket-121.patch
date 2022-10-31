@@ -1,0 +1,99 @@
+diff --git a/wicket-extensions/src/main/java/org/apache/wicket/extensions/ajax/markup/html/AjaxEditableLabel.java b/wicket-extensions/src/main/java/org/apache/wicket/extensions/ajax/markup/html/AjaxEditableLabel.java
+index 15dc1c1..ee3006e 100644
+--- a/wicket-extensions/src/main/java/org/apache/wicket/extensions/ajax/markup/html/AjaxEditableLabel.java
++++ b/wicket-extensions/src/main/java/org/apache/wicket/extensions/ajax/markup/html/AjaxEditableLabel.java
+@@ -30,6 +30,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
+ import org.apache.wicket.markup.html.form.TextField;
+ import org.apache.wicket.markup.html.panel.Panel;
+ import org.apache.wicket.model.IModel;
++import org.apache.wicket.model.IObjectClassAwareModel;
+ import org.apache.wicket.request.cycle.RequestCycle;
+ import org.apache.wicket.util.convert.IConverter;
+ import org.apache.wicket.util.string.JavaScriptUtils;
+@@ -391,7 +392,7 @@ public class AjaxEditableLabel<T> extends Panel
+ 	{
+ 		if (editor == null)
+ 		{
+-			initLabelAndEditor(getDelegatingParentModel());
++			initLabelAndEditor(new WrapperModel());
+ 		}
+ 		return editor;
+ 	}
+@@ -405,7 +406,7 @@ public class AjaxEditableLabel<T> extends Panel
+ 	{
+ 		if (label == null)
+ 		{
+-			initLabelAndEditor(getDelegatingParentModel());
++			initLabelAndEditor(new WrapperModel());
+ 		}
+ 		return label;
+ 	}
+@@ -420,7 +421,7 @@ public class AjaxEditableLabel<T> extends Panel
+ 		// lazily add label and editor
+ 		if (editor == null)
+ 		{
+-			initLabelAndEditor(getDelegatingParentModel());
++			initLabelAndEditor(new WrapperModel());
+ 		}
+ 		// obsolete with WICKET-1919
+ 		// label.setEnabled(isEnabledInHierarchy());
+@@ -510,35 +511,41 @@ public class AjaxEditableLabel<T> extends Panel
+ 	}
+ 
+ 	/**
+-	 * get a model that accesses the parent model lazily. this is required since we eventually
+-	 * request the parents model before the component is added to the parent.
+-	 * 
+-	 * @return model
++	 * Model that accesses the parent model lazily. this is required since we eventually request the
++	 * parents model before the component is added to the parent.
+ 	 */
+-	private IModel<T> getDelegatingParentModel()
++	private class WrapperModel implements IModel<T>, IObjectClassAwareModel<T>
+ 	{
+-		return new IModel<T>()
++
++		public T getObject()
+ 		{
+-			private static final long serialVersionUID = 1L;
++			return getParentModel().getObject();
++		}
+ 
+-			public T getObject()
+-			{
+-				return getParentModel().getObject();
+-			}
++		public void setObject(final T object)
++		{
++			getParentModel().setObject(object);
++		}
++
++		public void detach()
++		{
++			getParentModel().detach();
++
++		}
+ 
+-			public void setObject(final T object)
++		public Class<T> getObjectClass()
++		{
++			if (getParentModel() instanceof IObjectClassAwareModel)
+ 			{
+-				getParentModel().setObject(object);
++				return ((IObjectClassAwareModel)getParentModel()).getObjectClass();
+ 			}
+-
+-			public void detach()
++			else
+ 			{
+-				getParentModel().detach();
++				return null;
+ 			}
+-		};
++		}
+ 	}
+ 
+-
+ 	/**
+ 	 * @return Gets the parent model in case no explicit model was specified.
+ 	 */

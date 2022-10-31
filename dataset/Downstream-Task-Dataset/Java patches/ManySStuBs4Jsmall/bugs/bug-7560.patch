@@ -1,0 +1,38 @@
+diff --git a/src/main/java/org/apache/hadoop/hbase/KeyValue.java b/src/main/java/org/apache/hadoop/hbase/KeyValue.java
+index b031e33..bb26f27 100644
+--- a/src/main/java/org/apache/hadoop/hbase/KeyValue.java
++++ b/src/main/java/org/apache/hadoop/hbase/KeyValue.java
+@@ -1904,10 +1904,11 @@
+ 
+   // HeapSize
+   public long heapSize() {
+-    return ClassSize.align(ClassSize.OBJECT + ClassSize.REFERENCE +
++    return ClassSize.align(ClassSize.OBJECT + (2 * ClassSize.REFERENCE) +
+         ClassSize.align(ClassSize.ARRAY + length) +
+-        (2 * Bytes.SIZEOF_INT) +
+-        Bytes.SIZEOF_LONG);
++        (3 * Bytes.SIZEOF_INT) +
++        ClassSize.align(ClassSize.ARRAY + (rowCache == null ? 0 : rowCache.length)) +
++        (2 * Bytes.SIZEOF_LONG));
+   }
+ 
+   // this overload assumes that the length bytes have already been read,
+diff --git a/src/main/java/org/apache/hadoop/hbase/KeyValue.java b/src/main/java/org/apache/hadoop/hbase/KeyValue.java
+index b031e33..bb26f27 100644
+--- a/src/main/java/org/apache/hadoop/hbase/KeyValue.java
++++ b/src/main/java/org/apache/hadoop/hbase/KeyValue.java
+@@ -1904,10 +1904,11 @@
+ 
+   // HeapSize
+   public long heapSize() {
+-    return ClassSize.align(ClassSize.OBJECT + ClassSize.REFERENCE +
++    return ClassSize.align(ClassSize.OBJECT + (2 * ClassSize.REFERENCE) +
+         ClassSize.align(ClassSize.ARRAY + length) +
+-        (2 * Bytes.SIZEOF_INT) +
+-        Bytes.SIZEOF_LONG);
++        (3 * Bytes.SIZEOF_INT) +
++        ClassSize.align(ClassSize.ARRAY + (rowCache == null ? 0 : rowCache.length)) +
++        (2 * Bytes.SIZEOF_LONG));
+   }
+ 
+   // this overload assumes that the length bytes have already been read,

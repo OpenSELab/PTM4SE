@@ -1,0 +1,13 @@
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
+index 7fbaeb5..a66158f 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
+@@ -685,7 +685,7 @@
+ 		if (checkLocation) {
+ 			query.setInteger("locationId", patientIdentifier.getLocation().getLocationId());
+ 		}
+-		return !query.uniqueResult().toString().equals("0");
++		return !"0".equals(query.uniqueResult().toString());
+ 	}
+ 	
+ 	/**

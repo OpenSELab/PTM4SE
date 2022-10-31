@@ -1,0 +1,57 @@
+diff --git a/spring-boot/src/main/java/org/springframework/boot/web/support/ErrorPageFilter.java b/spring-boot/src/main/java/org/springframework/boot/web/support/ErrorPageFilter.java
+index 484bc42..08c262f 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/web/support/ErrorPageFilter.java
++++ b/spring-boot/src/main/java/org/springframework/boot/web/support/ErrorPageFilter.java
+@@ -179,7 +179,7 @@
+ 		}
+ 		setErrorAttributes(request, 500, ex.getMessage());
+ 		request.setAttribute(ERROR_EXCEPTION, ex);
+-		request.setAttribute(ERROR_EXCEPTION_TYPE, ex.getClass().getName());
++		request.setAttribute(ERROR_EXCEPTION_TYPE, ex.getClass());
+ 		response.reset();
+ 		response.sendError(500, ex.getMessage());
+ 		request.getRequestDispatcher(path).forward(request, response);
+diff --git a/spring-boot/src/test/java/org/springframework/boot/web/support/ErrorPageFilterTests.java b/spring-boot/src/test/java/org/springframework/boot/web/support/ErrorPageFilterTests.java
+index f5c03a7..8f0b8d3 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/web/support/ErrorPageFilterTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/web/support/ErrorPageFilterTests.java
+@@ -262,7 +262,7 @@
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_MESSAGE))
+ 				.isEqualTo("BAD");
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_EXCEPTION_TYPE))
+-				.isEqualTo(RuntimeException.class.getName());
++				.isEqualTo(RuntimeException.class);
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI))
+ 				.isEqualTo("/test/path");
+ 		assertThat(this.response.isCommitted()).isTrue();
+@@ -319,7 +319,7 @@
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_MESSAGE))
+ 				.isEqualTo("BAD");
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_EXCEPTION_TYPE))
+-				.isEqualTo(IllegalStateException.class.getName());
++				.isEqualTo(IllegalStateException.class);
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI))
+ 				.isEqualTo("/test/path");
+ 		assertThat(this.response.isCommitted()).isTrue();
+@@ -493,7 +493,7 @@
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_MESSAGE))
+ 				.isEqualTo("BAD");
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_EXCEPTION_TYPE))
+-				.isEqualTo(RuntimeException.class.getName());
++				.isEqualTo(RuntimeException.class);
+ 		assertThat(this.request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI))
+ 				.isEqualTo("/test/path");
+ 		assertThat(this.response.isCommitted()).isTrue();
+diff --git a/spring-boot/src/main/java/org/springframework/boot/web/support/ErrorPageFilter.java b/spring-boot/src/main/java/org/springframework/boot/web/support/ErrorPageFilter.java
+index 484bc42..08c262f 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/web/support/ErrorPageFilter.java
++++ b/spring-boot/src/main/java/org/springframework/boot/web/support/ErrorPageFilter.java
+@@ -179,7 +179,7 @@
+ 		}
+ 		setErrorAttributes(request, 500, ex.getMessage());
+ 		request.setAttribute(ERROR_EXCEPTION, ex);
+-		request.setAttribute(ERROR_EXCEPTION_TYPE, ex.getClass().getName());
++		request.setAttribute(ERROR_EXCEPTION_TYPE, ex.getClass());
+ 		response.reset();
+ 		response.sendError(500, ex.getMessage());
+ 		request.getRequestDispatcher(path).forward(request, response);

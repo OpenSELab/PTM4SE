@@ -1,0 +1,17 @@
+diff --git a/deeplearning4j/deeplearning4j-modelimport/src/test/java/org/deeplearning4j/nn/modelimport/keras/configurations/KerasModelImportTest.java b/deeplearning4j/deeplearning4j-modelimport/src/test/java/org/deeplearning4j/nn/modelimport/keras/configurations/KerasModelImportTest.java
+index 66ed1ff..21c381a 100644
+--- a/deeplearning4j/deeplearning4j-modelimport/src/test/java/org/deeplearning4j/nn/modelimport/keras/configurations/KerasModelImportTest.java
++++ b/deeplearning4j/deeplearning4j-modelimport/src/test/java/org/deeplearning4j/nn/modelimport/keras/configurations/KerasModelImportTest.java
+@@ -74,10 +74,8 @@
+ 
+         MultiLayerNetwork network = null;
+         try {
+-            network = new KerasModel().modelBuilder()
+-                    .modelJsonFilename((modelResource.getFile().getAbsolutePath()))
+-                    .weightsHdf5FilenameNoRoot(weightResource.getFile().getAbsolutePath())
+-                    .enforceTrainingConfig(false).buildSequential().getMultiLayerNetwork();
++            network = KerasModelImport.importKerasSequentialModelAndWeights(modelResource.getFile().getAbsolutePath(),
++                    weightResource.getFile().getAbsolutePath(), false);
+         } catch (IOException | InvalidKerasConfigurationException | UnsupportedKerasConfigurationException e) {
+             e.printStackTrace();
+         }

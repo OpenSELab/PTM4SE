@@ -1,0 +1,59 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index 84b4dee..7e2b5ce 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -152,7 +152,9 @@
+         final Object module = moduleFactory.createModule(name);
+         if (!(module instanceof AbstractCheck)) {
+             throw new CheckstyleException(
+-                "TreeWalker is not allowed as a parent of " + name);
++                "TreeWalker is not allowed as a parent of " + name
++                        + " Please review 'Parent Module' section for this Check in web"
++                        + " documentation if Check is standard.");
+         }
+         final AbstractCheck check = (AbstractCheck) module;
+         check.contextualize(childContext);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/AutomaticBean.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/AutomaticBean.java
+index 3a703c6..91766f3 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/AutomaticBean.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/AutomaticBean.java
+@@ -271,7 +271,8 @@
+             throws CheckstyleException {
+         if (childConf != null) {
+             throw new CheckstyleException(childConf.getName() + " is not allowed as a child in "
+-                    + getConfiguration().getName());
++                    + getConfiguration().getName() + ". Please review 'Parent Module' section "
++                    + "for this Check in web documentation if Check is standard.");
+         }
+     }
+ 
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/api/AutomaticBeanTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/api/AutomaticBeanTest.java
+index e8b77b0..39ec46d 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/api/AutomaticBeanTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/api/AutomaticBeanTest.java
+@@ -83,7 +83,9 @@
+             fail("expecting checkstyle exception");
+         }
+         catch (CheckstyleException ex) {
+-            assertEquals("expected exception", "childConf is not allowed as a child in parentConf",
++            assertEquals("expected exception", "childConf is not allowed as a "
++                            + "child in parentConf. Please review 'Parent Module' section "
++                            + "for this Check in web documentation if Check is standard.",
+                     ex.getMessage());
+         }
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index 84b4dee..7e2b5ce 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -152,7 +152,9 @@
+         final Object module = moduleFactory.createModule(name);
+         if (!(module instanceof AbstractCheck)) {
+             throw new CheckstyleException(
+-                "TreeWalker is not allowed as a parent of " + name);
++                "TreeWalker is not allowed as a parent of " + name
++                        + " Please review 'Parent Module' section for this Check in web"
++                        + " documentation if Check is standard.");
+         }
+         final AbstractCheck check = (AbstractCheck) module;
+         check.contextualize(childContext);

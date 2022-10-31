@@ -1,0 +1,34 @@
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/test/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/linux/privileged/TestPrivilegedOperationExecutor.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/test/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/linux/privileged/TestPrivilegedOperationExecutor.java
+index 7154d03..8f297ed 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/test/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/linux/privileged/TestPrivilegedOperationExecutor.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/test/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/linux/privileged/TestPrivilegedOperationExecutor.java
+@@ -217,8 +217,10 @@
+           .squashCGroupOperations(ops);
+       String expected = new StringBuffer
+           (PrivilegedOperation.CGROUP_ARG_PREFIX)
+-          .append(cGroupTasks1).append(',')
+-          .append(cGroupTasks2).append(',')
++          .append(cGroupTasks1).append(PrivilegedOperation
++              .LINUX_FILE_PATH_SEPARATOR)
++          .append(cGroupTasks2).append(PrivilegedOperation
++              .LINUX_FILE_PATH_SEPARATOR)
+           .append(cGroupTasks3).toString();
+ 
+       //We expect axactly one argument
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/test/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/linux/privileged/TestPrivilegedOperationExecutor.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/test/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/linux/privileged/TestPrivilegedOperationExecutor.java
+index 7154d03..8f297ed 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/test/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/linux/privileged/TestPrivilegedOperationExecutor.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/test/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/linux/privileged/TestPrivilegedOperationExecutor.java
+@@ -217,8 +217,10 @@
+           .squashCGroupOperations(ops);
+       String expected = new StringBuffer
+           (PrivilegedOperation.CGROUP_ARG_PREFIX)
+-          .append(cGroupTasks1).append(',')
+-          .append(cGroupTasks2).append(',')
++          .append(cGroupTasks1).append(PrivilegedOperation
++              .LINUX_FILE_PATH_SEPARATOR)
++          .append(cGroupTasks2).append(PrivilegedOperation
++              .LINUX_FILE_PATH_SEPARATOR)
+           .append(cGroupTasks3).toString();
+ 
+       //We expect axactly one argument

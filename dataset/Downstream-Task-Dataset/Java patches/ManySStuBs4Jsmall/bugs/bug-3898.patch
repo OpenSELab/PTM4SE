@@ -1,0 +1,555 @@
+diff --git a/tool/src/org/antlr/v4/semantics/AttributeChecks.java b/tool/src/org/antlr/v4/semantics/AttributeChecks.java
+index 94c48ea..0e96520 100644
+--- a/tool/src/org/antlr/v4/semantics/AttributeChecks.java
++++ b/tool/src/org/antlr/v4/semantics/AttributeChecks.java
+@@ -135,7 +135,7 @@
+ 			if ( rref!=null ) {
+ 				if ( rref.args!=null && rref.args.get(y.getText())!=null ) {
+ 					g.tool.errMgr.grammarError(ErrorType.INVALID_RULE_PARAMETER_REF,
+-											  g.fileName, y, y.getText(), expr);
++											  g.fileName, y, y.getText(), rref.name, expr);
+ 				}
+ 				else {
+ 					errMgr.grammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,
+diff --git a/tool/src/org/antlr/v4/tool/ErrorType.java b/tool/src/org/antlr/v4/tool/ErrorType.java
+index 3f112e2..987c406 100644
+--- a/tool/src/org/antlr/v4/tool/ErrorType.java
++++ b/tool/src/org/antlr/v4/tool/ErrorType.java
+@@ -43,15 +43,15 @@
+  */
+ public enum ErrorType {
+ 	// Tool errors
+-	CANNOT_WRITE_FILE(1, "cannot write file <arg>: <arg2>", ErrorSeverity.ERROR),
+-	INVALID_CMDLINE_ARG(2, "unknown command-line option <arg>", ErrorSeverity.ERROR),
+-	CANNOT_FIND_TOKENS_FILE(3, "cannot find tokens file <arg>", ErrorSeverity.ERROR),
+-	ERROR_READING_TOKENS_FILE(4, "cannot find tokens file <arg>: <arg2>", ErrorSeverity.ERROR),
++	CANNOT_WRITE_FILE(1, "cannot write file '<arg>': <arg2>", ErrorSeverity.ERROR),
++	INVALID_CMDLINE_ARG(2, "unknown command-line option '<arg>'", ErrorSeverity.ERROR),
++	CANNOT_FIND_TOKENS_FILE(3, "cannot find tokens file '<arg>'", ErrorSeverity.ERROR),
++	ERROR_READING_TOKENS_FILE(4, "cannot find tokens file '<arg>': <arg2>", ErrorSeverity.ERROR),
+ 	DIR_NOT_FOUND(5, "directory not found: <arg>", ErrorSeverity.ERROR),
+ 	OUTPUT_DIR_IS_FILE(6, "output directory is a file: <arg>", ErrorSeverity.ERROR),
+ 	CANNOT_OPEN_FILE(7, "cannot find or open file: <arg><if(exception&&verbose)>; reason: <exception><endif>", ErrorSeverity.ERROR),
+-	FILE_AND_GRAMMAR_NAME_DIFFER(8, "grammar name <arg> and file name <arg2> differ", ErrorSeverity.ERROR),
+-	BAD_OPTION_SET_SYNTAX(9, "invalid -Dname=value syntax: <arg>", ErrorSeverity.ERROR),
++	FILE_AND_GRAMMAR_NAME_DIFFER(8, "grammar name '<arg>' and file name '<arg2>' differ", ErrorSeverity.ERROR),
++	BAD_OPTION_SET_SYNTAX(9, "invalid -Dname=value syntax: '<arg>'", ErrorSeverity.ERROR),
+ 	WARNING_TREATED_AS_ERROR(10, "warning treated as error", ErrorSeverity.ERROR_ONE_OFF),
+ 
+ 	INTERNAL_ERROR(20, "internal error: <arg> <arg2><if(exception&&verbose)>: <exception>" +
+@@ -62,70 +62,70 @@
+ 
+ 	// Code generation errors
+ 	MISSING_CODE_GEN_TEMPLATES(30, "can't find code generation templates: <arg>", ErrorSeverity.ERROR),
+-	CANNOT_CREATE_TARGET_GENERATOR(31, "ANTLR cannot generate <arg> code as of version "+ Tool.VERSION, ErrorSeverity.ERROR),
+-	CODE_TEMPLATE_ARG_ISSUE(32, "code generation template <arg> has missing, misnamed, or incomplete arg list; missing <arg2>", ErrorSeverity.ERROR),
+-	CODE_GEN_TEMPLATES_INCOMPLETE(33, "missing code generation template <arg>", ErrorSeverity.ERROR),
+-	NO_MODEL_TO_TEMPLATE_MAPPING(34, "no mapping to template name for output model class <arg>", ErrorSeverity.ERROR),
++	CANNOT_CREATE_TARGET_GENERATOR(31, "ANTLR cannot generate '<arg>' code as of version "+ Tool.VERSION, ErrorSeverity.ERROR),
++	CODE_TEMPLATE_ARG_ISSUE(32, "code generation template '<arg>' has missing, misnamed, or incomplete arg list; missing '<arg2>'", ErrorSeverity.ERROR),
++	CODE_GEN_TEMPLATES_INCOMPLETE(33, "missing code generation template '<arg>'", ErrorSeverity.ERROR),
++	NO_MODEL_TO_TEMPLATE_MAPPING(34, "no mapping to template name for output model class '<arg>'", ErrorSeverity.ERROR),
+ 
+ 	// Grammar errors
+-	SYNTAX_ERROR(50, "<arg>", ErrorSeverity.ERROR),
+-	RULE_REDEFINITION(51, "rule <arg> redefinition (ignoring); previous at line <arg2>", ErrorSeverity.ERROR),
+-	LEXER_RULES_NOT_ALLOWED(52, "lexer rule <arg> not allowed in parser", ErrorSeverity.ERROR),
+-	PARSER_RULES_NOT_ALLOWED(53, "parser rule <arg> not allowed in lexer", ErrorSeverity.ERROR),
++	SYNTAX_ERROR(50, "syntax error: <arg>", ErrorSeverity.ERROR),
++	RULE_REDEFINITION(51, "rule '<arg>' redefinition (ignoring); previous at line <arg2>", ErrorSeverity.ERROR),
++	LEXER_RULES_NOT_ALLOWED(52, "lexer rule '<arg>' not allowed in parser", ErrorSeverity.ERROR),
++	PARSER_RULES_NOT_ALLOWED(53, "parser rule '<arg>' not allowed in lexer", ErrorSeverity.ERROR),
+     REPEATED_PREQUEL(54, "repeated grammar prequel spec (option, token, or import); please merge", ErrorSeverity.ERROR),
+ 	UNDEFINED_RULE_REF(56, "reference to undefined rule: <arg>", ErrorSeverity.ERROR),
+ 	UNDEFINED_RULE_IN_NONLOCAL_REF(57, "reference to undefined rule in nonlocal ref: <arg>::<arg2>", ErrorSeverity.ERROR),
+     TOKEN_NAMES_MUST_START_UPPER(60, "token names must start with an uppercase letter: <arg>", ErrorSeverity.ERROR),
+-	UNKNOWN_SIMPLE_ATTRIBUTE(63, "unknown attribute reference <arg> in <arg2>", ErrorSeverity.ERROR),
+-	INVALID_RULE_PARAMETER_REF(64, "cannot access rule <arg>'s parameter: <arg2>", ErrorSeverity.ERROR),
+-	UNKNOWN_RULE_ATTRIBUTE(65, "unknown attribute <arg> for rule <arg2> in <arg3>", ErrorSeverity.ERROR),
+-    UNKNOWN_ATTRIBUTE_IN_SCOPE(66, "attribute <arg> isn't a valid property in <arg2>", ErrorSeverity.ERROR),
+-	ISOLATED_RULE_REF(67, "missing attribute access on rule reference <arg> in <arg2>", ErrorSeverity.ERROR),
+-	LABEL_CONFLICTS_WITH_RULE(69, "label <arg> conflicts with rule with same name", ErrorSeverity.ERROR),
+-	LABEL_CONFLICTS_WITH_TOKEN(70, "label <arg> conflicts with token with same name", ErrorSeverity.ERROR),
+-	LABEL_CONFLICTS_WITH_ARG(72, "label <arg> conflicts with parameter with same name", ErrorSeverity.ERROR),
+-	LABEL_CONFLICTS_WITH_RETVAL(73, "label <arg> conflicts with return value with same name", ErrorSeverity.ERROR),
+-	LABEL_CONFLICTS_WITH_LOCAL(74, "label <arg> conflicts with local with same name", ErrorSeverity.ERROR),
+-	LABEL_TYPE_CONFLICT(75, "label <arg> type mismatch with previous definition: <arg2>", ErrorSeverity.ERROR),
+-	RETVAL_CONFLICTS_WITH_ARG(76, "return value <arg> conflicts with parameter with same name", ErrorSeverity.ERROR),
+-	MISSING_RULE_ARGS(79, "missing parameter(s) on rule reference: <arg>", ErrorSeverity.ERROR),
+-	RULE_HAS_NO_ARGS(80, "rule <arg> has no defined parameters", ErrorSeverity.ERROR),
+-	ILLEGAL_OPTION(83, "illegal option <arg>", ErrorSeverity.WARNING),
+-	ILLEGAL_OPTION_VALUE(84, "illegal option value <arg>=<arg2>", ErrorSeverity.WARNING),
+-    ACTION_REDEFINITION(94, "redefinition of <arg> action", ErrorSeverity.ERROR),
+-	NO_RULES(99, "<if(arg2.implicitLexerOwner)>implicitly generated <endif>grammar <arg> has no rules", ErrorSeverity.ERROR),
++	UNKNOWN_SIMPLE_ATTRIBUTE(63, "unknown attribute reference '<arg>' in '<arg2>'", ErrorSeverity.ERROR),
++	INVALID_RULE_PARAMETER_REF(64, "parameter '<arg>' of rule '<arg2>' is not accessible in this scope: <arg3>", ErrorSeverity.ERROR),
++	UNKNOWN_RULE_ATTRIBUTE(65, "unknown attribute '<arg>' for rule '<arg2>' in '<arg3>'", ErrorSeverity.ERROR),
++    UNKNOWN_ATTRIBUTE_IN_SCOPE(66, "attribute '<arg>' isn't a valid property in '<arg2>'", ErrorSeverity.ERROR),
++	ISOLATED_RULE_REF(67, "missing attribute access on rule reference '<arg>' in '<arg2>'", ErrorSeverity.ERROR),
++	LABEL_CONFLICTS_WITH_RULE(69, "label '<arg>' conflicts with rule with same name", ErrorSeverity.ERROR),
++	LABEL_CONFLICTS_WITH_TOKEN(70, "label '<arg>' conflicts with token with same name", ErrorSeverity.ERROR),
++	LABEL_CONFLICTS_WITH_ARG(72, "label '<arg>' conflicts with parameter with same name", ErrorSeverity.ERROR),
++	LABEL_CONFLICTS_WITH_RETVAL(73, "label '<arg>' conflicts with return value with same name", ErrorSeverity.ERROR),
++	LABEL_CONFLICTS_WITH_LOCAL(74, "label '<arg>' conflicts with local with same name", ErrorSeverity.ERROR),
++	LABEL_TYPE_CONFLICT(75, "label '<arg>' type mismatch with previous definition: <arg2>", ErrorSeverity.ERROR),
++	RETVAL_CONFLICTS_WITH_ARG(76, "return value '<arg>' conflicts with parameter with same name", ErrorSeverity.ERROR),
++	MISSING_RULE_ARGS(79, "missing arguments(s) on rule reference: <arg>", ErrorSeverity.ERROR),
++	RULE_HAS_NO_ARGS(80, "rule '<arg>' has no defined parameters", ErrorSeverity.ERROR),
++	ILLEGAL_OPTION(83, "illegal option '<arg>'", ErrorSeverity.WARNING),
++	ILLEGAL_OPTION_VALUE(84, "illegal option value '<arg>=<arg2>'", ErrorSeverity.WARNING),
++    ACTION_REDEFINITION(94, "redefinition of '<arg>' action", ErrorSeverity.ERROR),
++	NO_RULES(99, "<if(arg2.implicitLexerOwner)>implicitly generated <endif>grammar '<arg>' has no rules", ErrorSeverity.ERROR),
+ 	NO_SUCH_GRAMMAR_SCOPE(105, "reference to undefined grammar in rule reference: <arg>.<arg2>", ErrorSeverity.ERROR),
+-	NO_SUCH_RULE_IN_SCOPE(106, "rule <arg2> is not defined in grammar <arg>", ErrorSeverity.ERROR),
+-	TOKEN_NAME_REASSIGNMENT(108, "token name <arg> is already defined", ErrorSeverity.WARNING),
+-	OPTIONS_IN_DELEGATE(109, "options ignored in imported grammar <arg>", ErrorSeverity.WARNING),
+-	CANNOT_FIND_IMPORTED_GRAMMAR(110, "can't find or load grammar <arg> from <arg2>", ErrorSeverity.ERROR),
+-	INVALID_IMPORT(111, "<arg.typeString> grammar <arg.name> cannot import <arg2.typeString> grammar <arg2.name>", ErrorSeverity.ERROR),
+-	IMPORT_NAME_CLASH(113, "<arg.typeString> grammar <arg.name> and imported <arg2.typeString> grammar <arg2.name> both generate <arg2.recognizerName>", ErrorSeverity.ERROR),
+-	ALL_OPS_NEED_SAME_ASSOC(118, "all operators of alt <arg> of left-recursive rule must have same associativity", ErrorSeverity.WARNING),
++	NO_SUCH_RULE_IN_SCOPE(106, "rule '<arg2>' is not defined in grammar '<arg>'", ErrorSeverity.ERROR),
++	TOKEN_NAME_REASSIGNMENT(108, "token name '<arg>' is already defined", ErrorSeverity.WARNING),
++	OPTIONS_IN_DELEGATE(109, "options ignored in imported grammar '<arg>'", ErrorSeverity.WARNING),
++	CANNOT_FIND_IMPORTED_GRAMMAR(110, "can't find or load grammar '<arg>' from '<arg2>'", ErrorSeverity.ERROR),
++	INVALID_IMPORT(111, "<arg.typeString> grammar '<arg.name>' cannot import <arg2.typeString> grammar '<arg2.name>'", ErrorSeverity.ERROR),
++	IMPORT_NAME_CLASH(113, "<arg.typeString> grammar '<arg.name>' and imported <arg2.typeString> grammar '<arg2.name>' both generate '<arg2.recognizerName>'", ErrorSeverity.ERROR),
++	ALL_OPS_NEED_SAME_ASSOC(118, "all operators of alt '<arg>' of left-recursive rule must have same associativity", ErrorSeverity.WARNING),
+ 	LEFT_RECURSION_CYCLES(119, "The following sets of rules are mutually left-recursive <arg:{c| [<c:{r|<r.name>}; separator=\", \">]}; separator=\" and \">", ErrorSeverity.ERROR),
+ 	MODE_NOT_IN_LEXER(120, "lexical modes are only allowed in lexer grammars", ErrorSeverity.ERROR),
+ 	CANNOT_FIND_ATTRIBUTE_NAME_IN_DECL(121, "cannot find an attribute name in attribute declaration", ErrorSeverity.ERROR),
+-	RULE_WITH_TOO_FEW_ALT_LABELS(122, "rule <arg>: must label all alternatives or none", ErrorSeverity.ERROR),
+-	ALT_LABEL_REDEF(123, "rule alt label <arg> redefined in rule <arg2>, originally in <arg3>", ErrorSeverity.ERROR),
+-	ALT_LABEL_CONFLICTS_WITH_RULE(124, "rule alt label <arg> conflicts with rule <arg2>", ErrorSeverity.ERROR),
+-	IMPLICIT_TOKEN_DEFINITION(125, "implicit definition of token <arg> in parser", ErrorSeverity.WARNING),
+-	IMPLICIT_STRING_DEFINITION(126, "cannot create implicit token for string literal <arg> in non-combined grammar", ErrorSeverity.ERROR),
++	RULE_WITH_TOO_FEW_ALT_LABELS(122, "rule '<arg>': must label all alternatives or none", ErrorSeverity.ERROR),
++	ALT_LABEL_REDEF(123, "rule alt label '<arg>' redefined in rule '<arg2>', originally in rule '<arg3>'", ErrorSeverity.ERROR),
++	ALT_LABEL_CONFLICTS_WITH_RULE(124, "rule alt label '<arg>' conflicts with rule '<arg2>'", ErrorSeverity.ERROR),
++	IMPLICIT_TOKEN_DEFINITION(125, "implicit definition of token '<arg>' in parser", ErrorSeverity.WARNING),
++	IMPLICIT_STRING_DEFINITION(126, "cannot create implicit token for string literal in non-combined grammar: <arg>", ErrorSeverity.ERROR),
+ 	ATTRIBUTE_IN_LEXER_ACTION(128, "attribute references not allowed in lexer actions: $<arg>", ErrorSeverity.ERROR),
+-	LABEL_BLOCK_NOT_A_SET(130, "label <arg> assigned to a block which is not a set", ErrorSeverity.ERROR),
++	LABEL_BLOCK_NOT_A_SET(130, "label '<arg>' assigned to a block which is not a set", ErrorSeverity.ERROR),
+ 	EXPECTED_NON_GREEDY_WILDCARD_BLOCK(131, "greedy block ()<arg> contains wildcard; the non-greedy syntax ()<arg>? may be preferred", ErrorSeverity.WARNING),
+-	LEXER_ACTION_PLACEMENT_ISSUE(132, "action in lexer rule <arg> must be last element of single outermost alt", ErrorSeverity.ERROR),
+-	LEXER_COMMAND_PLACEMENT_ISSUE(133, "->command in lexer rule <arg> must be last element of single outermost alt", ErrorSeverity.ERROR),
+-	USE_OF_BAD_WORD(134, "symbol <arg> conflicts with generated code in target language or runtime", ErrorSeverity.ERROR),
+-	UNSUPPORTED_REFERENCE_IN_LEXER_SET(134, "rule reference <arg> is not currently supported in a set", ErrorSeverity.ERROR),
+-	ASSIGNMENT_TO_LIST_LABEL(135, "cannot assign a value to list label: $<arg>", ErrorSeverity.ERROR),
+-	RETVAL_CONFLICTS_WITH_RULE(136, "return value <arg> conflicts with rule with same name", ErrorSeverity.ERROR),
+-	RETVAL_CONFLICTS_WITH_TOKEN(137, "return value <arg> conflicts with token with same name", ErrorSeverity.ERROR),
+-	ARG_CONFLICTS_WITH_RULE(138, "parameter <arg> conflicts with rule with same name", ErrorSeverity.ERROR),
+-	ARG_CONFLICTS_WITH_TOKEN(139, "parameter <arg> conflicts with token with same name", ErrorSeverity.ERROR),
+-	LOCAL_CONFLICTS_WITH_RULE(140, "local <arg> conflicts with rule with same name", ErrorSeverity.ERROR),
+-	LOCAL_CONFLICTS_WITH_TOKEN(141, "local <arg> conflicts with rule token same name", ErrorSeverity.ERROR),
+-	LOCAL_CONFLICTS_WITH_ARG(142, "local <arg> conflicts with parameter with same name", ErrorSeverity.ERROR),
+-	LOCAL_CONFLICTS_WITH_RETVAL(143, "local <arg> conflicts with return value with same name", ErrorSeverity.ERROR),
++	LEXER_ACTION_PLACEMENT_ISSUE(132, "action in lexer rule '<arg>' must be last element of single outermost alt", ErrorSeverity.ERROR),
++	LEXER_COMMAND_PLACEMENT_ISSUE(133, "->command in lexer rule '<arg>' must be last element of single outermost alt", ErrorSeverity.ERROR),
++	USE_OF_BAD_WORD(134, "symbol '<arg>' conflicts with generated code in target language or runtime", ErrorSeverity.ERROR),
++	UNSUPPORTED_REFERENCE_IN_LEXER_SET(134, "rule reference '<arg>' is not currently supported in a set", ErrorSeverity.ERROR),
++	ASSIGNMENT_TO_LIST_LABEL(135, "cannot assign a value to list label '<arg>'", ErrorSeverity.ERROR),
++	RETVAL_CONFLICTS_WITH_RULE(136, "return value '<arg>' conflicts with rule with same name", ErrorSeverity.ERROR),
++	RETVAL_CONFLICTS_WITH_TOKEN(137, "return value '<arg>' conflicts with token with same name", ErrorSeverity.ERROR),
++	ARG_CONFLICTS_WITH_RULE(138, "parameter '<arg>' conflicts with rule with same name", ErrorSeverity.ERROR),
++	ARG_CONFLICTS_WITH_TOKEN(139, "parameter '<arg>' conflicts with token with same name", ErrorSeverity.ERROR),
++	LOCAL_CONFLICTS_WITH_RULE(140, "local '<arg>' conflicts with rule with same name", ErrorSeverity.ERROR),
++	LOCAL_CONFLICTS_WITH_TOKEN(141, "local '<arg>' conflicts with rule token same name", ErrorSeverity.ERROR),
++	LOCAL_CONFLICTS_WITH_ARG(142, "local '<arg>' conflicts with parameter with same name", ErrorSeverity.ERROR),
++	LOCAL_CONFLICTS_WITH_RETVAL(143, "local '<arg>' conflicts with return value with same name", ErrorSeverity.ERROR),
+ 	INVALID_LITERAL_IN_LEXER_SET(144, "multi-character literals are not allowed in lexer sets: <arg>", ErrorSeverity.ERROR),
+ 
+ 	// Backward incompatibility errors
+diff --git a/tool/test/org/antlr/v4/test/TestAttributeChecks.java b/tool/test/org/antlr/v4/test/TestAttributeChecks.java
+index ac3749a..b4dca81 100644
+--- a/tool/test/org/antlr/v4/test/TestAttributeChecks.java
++++ b/tool/test/org/antlr/v4/test/TestAttributeChecks.java
+@@ -54,8 +54,8 @@
+         "c   :   ;\n";
+ 
+     String[] membersChecks = {
+-		"$a",			"error(63): A.g4:2:11: unknown attribute reference a in $a\n",
+-        "$a.y",			"error(63): A.g4:2:11: unknown attribute reference a in $a.y\n",
++		"$a",			"error(63): A.g4:2:11: unknown attribute reference 'a' in '$a'\n",
++        "$a.y",			"error(63): A.g4:2:11: unknown attribute reference 'a' in '$a.y'\n",
+     };
+ 
+     String[] initChecks = {
+@@ -67,8 +67,8 @@
+ 		"$ids",			"",
+ 		"$labs",		"",
+ 
+-		"$c",			"error(63): A.g4:5:8: unknown attribute reference c in $c\n",
+-		"$a.q",			"error(65): A.g4:5:10: unknown attribute q for rule a in $a.q\n",
++		"$c",			"error(63): A.g4:5:8: unknown attribute reference 'c' in '$c'\n",
++		"$a.q",			"error(65): A.g4:5:10: unknown attribute 'q' for rule 'a' in '$a.q'\n",
+     };
+ 
+ 	String[] inlineChecks = {
+@@ -90,21 +90,21 @@
+ 	};
+ 
+ 	String[] bad_inlineChecks = {
+-		"$lab",			"error(67): A.g4:7:4: missing attribute access on rule reference lab in $lab\n",
+-		"$q",           "error(63): A.g4:7:4: unknown attribute reference q in $q\n",
+-		"$q.y",         "error(63): A.g4:7:4: unknown attribute reference q in $q.y\n",
+-		"$q = 3",       "error(63): A.g4:7:4: unknown attribute reference q in $q\n",
+-		"$q = 3;",      "error(63): A.g4:7:4: unknown attribute reference q in $q = 3;\n",
+-		"$q.y = 3;",    "error(63): A.g4:7:4: unknown attribute reference q in $q.y = 3;\n",
+-		"$q = $blort;", "error(63): A.g4:7:4: unknown attribute reference q in $q = $blort;\n" +
+-						"error(63): A.g4:7:9: unknown attribute reference blort in $blort\n",
+-		"$a.ick",       "error(65): A.g4:7:6: unknown attribute ick for rule a in $a.ick\n",
+-		"$a.ick = 3;",  "error(65): A.g4:7:6: unknown attribute ick for rule a in $a.ick = 3;\n",
+-		"$b.d",         "error(64): A.g4:7:6: cannot access rule d's parameter: $b.d\n",  // can't see rule ref's arg
+-		"$d.text",      "error(63): A.g4:7:4: unknown attribute reference d in $d.text\n", // valid rule, but no ref
+-		"$lab.d",		"error(64): A.g4:7:8: cannot access rule d's parameter: $lab.d\n",
+-		"$ids = null;",	"error(135): A.g4:7:4: cannot assign a value to list label: $ids\n",
+-		"$labs = null;","error(135): A.g4:7:4: cannot assign a value to list label: $labs\n",
++		"$lab",			"error(67): A.g4:7:4: missing attribute access on rule reference 'lab' in '$lab'\n",
++		"$q",           "error(63): A.g4:7:4: unknown attribute reference 'q' in '$q'\n",
++		"$q.y",         "error(63): A.g4:7:4: unknown attribute reference 'q' in '$q.y'\n",
++		"$q = 3",       "error(63): A.g4:7:4: unknown attribute reference 'q' in '$q'\n",
++		"$q = 3;",      "error(63): A.g4:7:4: unknown attribute reference 'q' in '$q = 3;'\n",
++		"$q.y = 3;",    "error(63): A.g4:7:4: unknown attribute reference 'q' in '$q.y = 3;'\n",
++		"$q = $blort;", "error(63): A.g4:7:4: unknown attribute reference 'q' in '$q = $blort;'\n" +
++						"error(63): A.g4:7:9: unknown attribute reference 'blort' in '$blort'\n",
++		"$a.ick",       "error(65): A.g4:7:6: unknown attribute 'ick' for rule 'a' in '$a.ick'\n",
++		"$a.ick = 3;",  "error(65): A.g4:7:6: unknown attribute 'ick' for rule 'a' in '$a.ick = 3;'\n",
++		"$b.d",         "error(64): A.g4:7:6: parameter 'd' of rule 'b' is not accessible in this scope: $b.d\n",  // can't see rule ref's arg
++		"$d.text",      "error(63): A.g4:7:4: unknown attribute reference 'd' in '$d.text'\n", // valid rule, but no ref
++		"$lab.d",		"error(64): A.g4:7:8: parameter 'd' of rule 'b' is not accessible in this scope: $lab.d\n",
++		"$ids = null;",	"error(135): A.g4:7:4: cannot assign a value to list label 'ids'\n",
++		"$labs = null;","error(135): A.g4:7:4: cannot assign a value to list label 'labs'\n",
+ 	};
+ 
+ 	String[] finallyChecks = {
+@@ -119,20 +119,20 @@
+ 		"$ids",			"",
+ 		"$labs",		"",
+ 
+-		"$lab",			"error(67): A.g4:10:14: missing attribute access on rule reference lab in $lab\n",
+-		"$q",           "error(63): A.g4:10:14: unknown attribute reference q in $q\n",
+-		"$q.y",         "error(63): A.g4:10:14: unknown attribute reference q in $q.y\n",
+-		"$q = 3",       "error(63): A.g4:10:14: unknown attribute reference q in $q\n",
+-		"$q = 3;",      "error(63): A.g4:10:14: unknown attribute reference q in $q = 3;\n",
+-		"$q.y = 3;",    "error(63): A.g4:10:14: unknown attribute reference q in $q.y = 3;\n",
+-		"$q = $blort;", "error(63): A.g4:10:14: unknown attribute reference q in $q = $blort;\n" +
+-						"error(63): A.g4:10:19: unknown attribute reference blort in $blort\n",
+-		"$a.ick",       "error(65): A.g4:10:16: unknown attribute ick for rule a in $a.ick\n",
+-		"$a.ick = 3;",  "error(65): A.g4:10:16: unknown attribute ick for rule a in $a.ick = 3;\n",
+-		"$b.e",			"error(63): A.g4:10:14: unknown attribute reference b in $b.e\n", // can't see rule refs outside alts
+-		"$b.d",         "error(63): A.g4:10:14: unknown attribute reference b in $b.d\n",
+-		"$c.text",      "error(63): A.g4:10:14: unknown attribute reference c in $c.text\n",
+-		"$lab.d",		"error(64): A.g4:10:18: cannot access rule d's parameter: $lab.d\n",
++		"$lab",			"error(67): A.g4:10:14: missing attribute access on rule reference 'lab' in '$lab'\n",
++		"$q",           "error(63): A.g4:10:14: unknown attribute reference 'q' in '$q'\n",
++		"$q.y",         "error(63): A.g4:10:14: unknown attribute reference 'q' in '$q.y'\n",
++		"$q = 3",       "error(63): A.g4:10:14: unknown attribute reference 'q' in '$q'\n",
++		"$q = 3;",      "error(63): A.g4:10:14: unknown attribute reference 'q' in '$q = 3;'\n",
++		"$q.y = 3;",    "error(63): A.g4:10:14: unknown attribute reference 'q' in '$q.y = 3;'\n",
++		"$q = $blort;", "error(63): A.g4:10:14: unknown attribute reference 'q' in '$q = $blort;'\n" +
++						"error(63): A.g4:10:19: unknown attribute reference 'blort' in '$blort'\n",
++		"$a.ick",       "error(65): A.g4:10:16: unknown attribute 'ick' for rule 'a' in '$a.ick'\n",
++		"$a.ick = 3;",  "error(65): A.g4:10:16: unknown attribute 'ick' for rule 'a' in '$a.ick = 3;'\n",
++		"$b.e",			"error(63): A.g4:10:14: unknown attribute reference 'b' in '$b.e'\n", // can't see rule refs outside alts
++		"$b.d",         "error(63): A.g4:10:14: unknown attribute reference 'b' in '$b.d'\n",
++		"$c.text",      "error(63): A.g4:10:14: unknown attribute reference 'c' in '$c.text'\n",
++		"$lab.d",		"error(64): A.g4:10:18: parameter 'd' of rule 'b' is not accessible in this scope: $lab.d\n",
+ 	};
+ 
+ 	String[] dynMembersChecks = {
+diff --git a/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java b/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
+index 2dfbf27..e894bf5 100644
+--- a/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
++++ b/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
+@@ -54,17 +54,17 @@
+         "b : ( options { ick=bar; greedy=true; } : ID )+ ;\n" +
+         "c : ID<blue> ID<x=y> ;",
+         // YIELDS
+-		"warning(83): U.g4:2:10: illegal option foo\n" +
+-		"warning(83): U.g4:2:19: illegal option k\n" +
++		"warning(83): U.g4:2:10: illegal option 'foo'\n" +
++		"warning(83): U.g4:2:19: illegal option 'k'\n" +
+ 		"error(60): U.g4:5:8: token names must start with an uppercase letter: f\n" +
+-		"warning(83): U.g4:9:10: illegal option x\n" +
++		"warning(83): U.g4:9:10: illegal option 'x'\n" +
+ 		"error(54): U.g4:9:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
+ 		"error(54): U.g4:8:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
+-		"warning(83): U.g4:12:10: illegal option blech\n" +
+-		"warning(83): U.g4:12:21: illegal option greedy\n" +
+-		"warning(83): U.g4:15:16: illegal option ick\n" +
+-		"warning(83): U.g4:15:25: illegal option greedy\n" +
+-		"warning(83): U.g4:16:16: illegal option x\n",
++		"warning(83): U.g4:12:10: illegal option 'blech'\n" +
++		"warning(83): U.g4:12:21: illegal option 'greedy'\n" +
++		"warning(83): U.g4:15:16: illegal option 'ick'\n" +
++		"warning(83): U.g4:15:25: illegal option 'greedy'\n" +
++		"warning(83): U.g4:16:16: illegal option 'x'\n",
+     };
+ 
+ 	@Test public void testU() { super.testErrors(U, false); }
+@@ -82,7 +82,7 @@
+ 			"";
+ 
+ 		String expected =
+-			"error(130): T.g4:2:5: label op assigned to a block which is not a set\n";
++			"error(130): T.g4:2:5: label 'op' assigned to a block which is not a set\n";
+ 
+ 		testErrors(new String[] { grammar, expected }, false);
+ 	}
+@@ -97,16 +97,16 @@
+ 			"expr : '=';\n";
+ 
+ 		String expected =
+-			"error(" + ErrorType.ARG_CONFLICTS_WITH_RULE.code + "): T.g4:2:7: parameter expr conflicts with rule with same name\n" +
+-			"error(" + ErrorType.RETVAL_CONFLICTS_WITH_RULE.code + "): T.g4:2:26: return value expr conflicts with rule with same name\n" +
+-			"error(" + ErrorType.LOCAL_CONFLICTS_WITH_RULE.code + "): T.g4:3:12: local expr conflicts with rule with same name\n" +
+-			"error(" + ErrorType.RETVAL_CONFLICTS_WITH_ARG.code + "): T.g4:2:26: return value expr conflicts with parameter with same name\n" +
+-			"error(" + ErrorType.LOCAL_CONFLICTS_WITH_ARG.code + "): T.g4:3:12: local expr conflicts with parameter with same name\n" +
+-			"error(" + ErrorType.LOCAL_CONFLICTS_WITH_RETVAL.code + "): T.g4:3:12: local expr conflicts with return value with same name\n" +
+-			"error(" + ErrorType.LABEL_CONFLICTS_WITH_RULE.code + "): T.g4:4:4: label expr conflicts with rule with same name\n" +
+-			"error(" + ErrorType.LABEL_CONFLICTS_WITH_ARG.code + "): T.g4:4:4: label expr conflicts with parameter with same name\n" +
+-			"error(" + ErrorType.LABEL_CONFLICTS_WITH_RETVAL.code + "): T.g4:4:4: label expr conflicts with return value with same name\n" +
+-			"error(" + ErrorType.LABEL_CONFLICTS_WITH_LOCAL.code + "): T.g4:4:4: label expr conflicts with local with same name\n";
++			"error(" + ErrorType.ARG_CONFLICTS_WITH_RULE.code + "): T.g4:2:7: parameter 'expr' conflicts with rule with same name\n" +
++			"error(" + ErrorType.RETVAL_CONFLICTS_WITH_RULE.code + "): T.g4:2:26: return value 'expr' conflicts with rule with same name\n" +
++			"error(" + ErrorType.LOCAL_CONFLICTS_WITH_RULE.code + "): T.g4:3:12: local 'expr' conflicts with rule with same name\n" +
++			"error(" + ErrorType.RETVAL_CONFLICTS_WITH_ARG.code + "): T.g4:2:26: return value 'expr' conflicts with parameter with same name\n" +
++			"error(" + ErrorType.LOCAL_CONFLICTS_WITH_ARG.code + "): T.g4:3:12: local 'expr' conflicts with parameter with same name\n" +
++			"error(" + ErrorType.LOCAL_CONFLICTS_WITH_RETVAL.code + "): T.g4:3:12: local 'expr' conflicts with return value with same name\n" +
++			"error(" + ErrorType.LABEL_CONFLICTS_WITH_RULE.code + "): T.g4:4:4: label 'expr' conflicts with rule with same name\n" +
++			"error(" + ErrorType.LABEL_CONFLICTS_WITH_ARG.code + "): T.g4:4:4: label 'expr' conflicts with parameter with same name\n" +
++			"error(" + ErrorType.LABEL_CONFLICTS_WITH_RETVAL.code + "): T.g4:4:4: label 'expr' conflicts with return value with same name\n" +
++			"error(" + ErrorType.LABEL_CONFLICTS_WITH_LOCAL.code + "): T.g4:4:4: label 'expr' conflicts with local with same name\n";
+ 		ST grammarST = new ST(grammarTemplate);
+ 		grammarST.add("args", "int expr");
+ 		grammarST.add("retvals", "int expr");
+diff --git a/tool/test/org/antlr/v4/test/TestSets.java b/tool/test/org/antlr/v4/test/TestSets.java
+index 8d1c6d7..f74d06d 100644
+--- a/tool/test/org/antlr/v4/test/TestSets.java
++++ b/tool/test/org/antlr/v4/test/TestSets.java
+@@ -237,7 +237,7 @@
+ 			"a : A {System.out.println($A.text);} ;\n" +
+ 			"A : ~('a'|B) ;\n" +
+ 			"B : 'b' ;\n",
+-			"error(134): T.g4:3:10: rule reference B is not currently supported in a set\n"
++			"error(134): T.g4:3:10: rule reference 'B' is not currently supported in a set\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+diff --git a/tool/test/org/antlr/v4/test/TestSymbolIssues.java b/tool/test/org/antlr/v4/test/TestSymbolIssues.java
+index 8409ecd..bf04e0e 100644
+--- a/tool/test/org/antlr/v4/test/TestSymbolIssues.java
++++ b/tool/test/org/antlr/v4/test/TestSymbolIssues.java
+@@ -53,16 +53,16 @@
+         "\n" +
+         "ID : 'a'..'z'+ ID ;",
+         // YIELDS
+-			"error(94): A.g4:5:1: redefinition of members action\n" +
+-			"error(94): A.g4:7:1: redefinition of header action\n" +
+-			"warning(83): A.g4:2:10: illegal option opt\n" +
+-			"warning(83): A.g4:2:21: illegal option k\n" +
+-			"error(94): A.g4:5:1: redefinition of members action\n" +
+-			"warning(125): A.g4:9:27: implicit definition of token X in parser\n" +
+-			"warning(125): A.g4:10:20: implicit definition of token Y in parser\n" +
+-			"warning(125): A.g4:11:4: implicit definition of token FJKD in parser\n" +
+-			"error(80): A.g4:9:37: rule b has no defined parameters\n" +
+-			"error(79): A.g4:10:31: missing parameter(s) on rule reference: a\n"
++			"error(94): A.g4:5:1: redefinition of 'members' action\n" +
++			"error(94): A.g4:7:1: redefinition of 'header' action\n" +
++			"warning(83): A.g4:2:10: illegal option 'opt'\n" +
++			"warning(83): A.g4:2:21: illegal option 'k'\n" +
++			"error(94): A.g4:5:1: redefinition of 'members' action\n" +
++			"warning(125): A.g4:9:27: implicit definition of token 'X' in parser\n" +
++			"warning(125): A.g4:10:20: implicit definition of token 'Y' in parser\n" +
++			"warning(125): A.g4:11:4: implicit definition of token 'FJKD' in parser\n" +
++			"error(80): A.g4:9:37: rule 'b' has no defined parameters\n" +
++			"error(79): A.g4:10:31: missing arguments(s) on rule reference: a\n"
+     };
+ 
+     static String[] B = {
+@@ -76,11 +76,11 @@
+         "\n" +
+         "s : FOO ;",
+         // YIELDS
+-		"error(69): B.g4:4:4: label s conflicts with rule with same name\n" +
+-		"error(69): B.g4:4:9: label b conflicts with rule with same name\n" +
+-		"error(70): B.g4:4:15: label X conflicts with token with same name\n" +
+-		"error(75): B.g4:6:9: label x type mismatch with previous definition: TOKEN_LIST_LABEL!=TOKEN_LABEL\n" +
+-		"error(126): B.g4:4:20: cannot create implicit token for string literal '.' in non-combined grammar\n"
++		"error(69): B.g4:4:4: label 's' conflicts with rule with same name\n" +
++		"error(69): B.g4:4:9: label 'b' conflicts with rule with same name\n" +
++		"error(70): B.g4:4:15: label 'X' conflicts with token with same name\n" +
++		"error(75): B.g4:6:9: label 'x' type mismatch with previous definition: TOKEN_LIST_LABEL!=TOKEN_LABEL\n" +
++		"error(126): B.g4:4:20: cannot create implicit token for string literal in non-combined grammar: '.'\n"
+     };
+ 
+     static String[] D = {
+@@ -96,8 +96,8 @@
+         "        :       ID ;",
+ 
+         // YIELDS
+-        "error(72): D.g4:4:21: label j conflicts with parameter with same name\n" +
+-		"error(76): D.g4:6:22: return value i conflicts with parameter with same name\n"
++        "error(72): D.g4:4:21: label 'j' conflicts with parameter with same name\n" +
++		"error(76): D.g4:6:22: return value 'i' conflicts with parameter with same name\n"
+     };
+ 
+ 	static String[] E = {
+@@ -111,7 +111,7 @@
+ 		"a : A ;\n",
+ 
+ 		// YIELDS
+-		"warning(108): E.g4:3:4: token name A is already defined\n"
++		"warning(108): E.g4:3:4: token name 'A' is already defined\n"
+ 	};
+ 
+     @Test public void testA() { super.testErrors(A, false); }
+diff --git a/tool/test/org/antlr/v4/test/TestToolSyntaxErrors.java b/tool/test/org/antlr/v4/test/TestToolSyntaxErrors.java
+index 21839f1..6e4182d 100644
+--- a/tool/test/org/antlr/v4/test/TestToolSyntaxErrors.java
++++ b/tool/test/org/antlr/v4/test/TestToolSyntaxErrors.java
+@@ -38,37 +38,37 @@
+         "grammar A;\n" +
+         "",
+         // YIELDS
+-        "error(99): A.g4::: grammar A has no rules\n",
++        "error(99): A.g4::: grammar 'A' has no rules\n",
+ 
+ 		"A;",
+-		"error(50): <string>:1:0: 'A' came as a complete surprise to me\n",
++		"error(50): <string>:1:0: syntax error: 'A' came as a complete surprise to me\n",
+ 
+ 		"grammar ;",
+-		"error(50): <string>:1:8: ';' came as a complete surprise to me while looking for an identifier\n",
++		"error(50): <string>:1:8: syntax error: ';' came as a complete surprise to me while looking for an identifier\n",
+ 
+ 		"grammar A\n" +
+ 		"a : ID ;\n",
+-		"error(50): <string>:2:0: missing SEMI at 'a'\n",
++		"error(50): <string>:2:0: syntax error: missing SEMI at 'a'\n",
+ 
+ 		"grammar A;\n" +
+ 		"a : ID ;;\n"+
+ 		"b : B ;",
+-		"error(50): A.g4:2:8: ';' came as a complete surprise to me\n",
++		"error(50): A.g4:2:8: syntax error: ';' came as a complete surprise to me\n",
+ 
+ 		"grammar A;;\n" +
+ 		"a : ID ;\n",
+-		"error(50): A;.g4:1:10: ';' came as a complete surprise to me\n",
++		"error(50): A;.g4:1:10: syntax error: ';' came as a complete surprise to me\n",
+ 
+ 		"grammar A;\n" +
+ 		"a @init : ID ;\n",
+-		"error(50): A.g4:2:8: mismatched input ':' expecting ACTION while matching rule preamble\n",
++		"error(50): A.g4:2:8: syntax error: mismatched input ':' expecting ACTION while matching rule preamble\n",
+ 
+ 		"grammar A;\n" +
+ 		"a  ( A | B ) D ;\n" +
+ 		"b : B ;",
+-		"error(50): A.g4:2:3: '(' came as a complete surprise to me while matching rule preamble\n" +
+-		"error(50): A.g4:2:11: mismatched input ')' expecting SEMI while matching a rule\n" +
+-		"error(50): A.g4:2:15: mismatched input ';' expecting COLON while matching a lexer rule\n",
++		"error(50): A.g4:2:3: syntax error: '(' came as a complete surprise to me while matching rule preamble\n" +
++		"error(50): A.g4:2:11: syntax error: mismatched input ')' expecting SEMI while matching a rule\n" +
++		"error(50): A.g4:2:15: syntax error: mismatched input ';' expecting COLON while matching a lexer rule\n",
+     };
+ 
+ 	@Test public void testA() { super.testErrors(A, true); }
+@@ -78,7 +78,7 @@
+ 			"grammar A;\n" +
+ 			"a : : A ;\n" +
+ 			"b : B ;",
+-			"error(50): A.g4:2:4: ':' came as a complete surprise to me while matching alternative\n",
++			"error(50): A.g4:2:4: syntax error: ':' came as a complete surprise to me while matching alternative\n",
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -88,7 +88,7 @@
+ 			"grammar A;\n" +
+ 			"a : A \n" +
+ 			"b : B ;",
+-			"error(50): A.g4:3:0: unterminated rule (missing ';') detected at 'b :' while looking for rule element\n",
++			"error(50): A.g4:3:0: syntax error: unterminated rule (missing ';') detected at 'b :' while looking for rule element\n",
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -98,7 +98,7 @@
+ 			"lexer grammar A;\n" +
+ 			"A : 'a' \n" +
+ 			"B : 'b' ;",
+-			"error(50): A.g4:3:0: unterminated rule (missing ';') detected at 'B :' while looking for lexer rule element\n",
++			"error(50): A.g4:3:0: syntax error: unterminated rule (missing ';') detected at 'B :' while looking for lexer rule element\n",
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -108,7 +108,7 @@
+ 			"grammar A;\n" +
+ 			"a : A \n" +
+ 			"b[int i] returns [int y] : B ;",
+-			"error(50): A.g4:3:9: unterminated rule (missing ';') detected at 'returns int y' while looking for rule element\n"
++			"error(50): A.g4:3:9: syntax error: unterminated rule (missing ';') detected at 'returns int y' while looking for rule element\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -120,7 +120,7 @@
+ 			"  catch [Exception e] {...}\n" +
+ 			"b : B ;\n",
+ 
+-			"error(50): A.g4:2:4: unterminated rule (missing ';') detected at 'b catch' while looking for rule element\n"
++			"error(50): A.g4:2:4: syntax error: unterminated rule (missing ';') detected at 'b catch' while looking for rule element\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -131,7 +131,7 @@
+ 			"a : A \n" +
+ 			"  catch [Exception e] {...}\n",
+ 
+-			"error(50): A.g4:2:4: unterminated rule (missing ';') detected at 'A catch' while looking for rule element\n"
++			"error(50): A.g4:2:4: syntax error: unterminated rule (missing ';') detected at 'A catch' while looking for rule element\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -142,7 +142,7 @@
+ 			"a @ options {k=1;} : A ;\n" +
+ 			"b : B ;",
+ 
+-			"error(50): A.g4:2:4: 'options {' came as a complete surprise to me while looking for an identifier\n"
++			"error(50): A.g4:2:4: syntax error: 'options {' came as a complete surprise to me while looking for an identifier\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -153,7 +153,7 @@
+ 			"a } : A ;\n" +
+ 			"b : B ;",
+ 
+-			"error(50): A.g4:2:2: '}' came as a complete surprise to me while matching rule preamble\n"
++			"error(50): A.g4:2:2: syntax error: '}' came as a complete surprise to me while matching rule preamble\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -165,8 +165,8 @@
+ 			"mode foo;\n" +
+ 			"b : B ;",
+ 
+-			"error(50): A.g4:4:0: 'b' came as a complete surprise to me\n" +
+-			"error(50): A.g4:4:6: mismatched input ';' expecting COLON while matching a lexer rule\n"
++			"error(50): A.g4:4:0: syntax error: 'b' came as a complete surprise to me\n" +
++			"error(50): A.g4:4:6: syntax error: mismatched input ';' expecting COLON while matching a lexer rule\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+diff --git a/tool/src/org/antlr/v4/semantics/AttributeChecks.java b/tool/src/org/antlr/v4/semantics/AttributeChecks.java
+index 94c48ea..0e96520 100644
+--- a/tool/src/org/antlr/v4/semantics/AttributeChecks.java
++++ b/tool/src/org/antlr/v4/semantics/AttributeChecks.java
+@@ -135,7 +135,7 @@
+ 			if ( rref!=null ) {
+ 				if ( rref.args!=null && rref.args.get(y.getText())!=null ) {
+ 					g.tool.errMgr.grammarError(ErrorType.INVALID_RULE_PARAMETER_REF,
+-											  g.fileName, y, y.getText(), expr);
++											  g.fileName, y, y.getText(), rref.name, expr);
+ 				}
+ 				else {
+ 					errMgr.grammarError(ErrorType.UNKNOWN_RULE_ATTRIBUTE,

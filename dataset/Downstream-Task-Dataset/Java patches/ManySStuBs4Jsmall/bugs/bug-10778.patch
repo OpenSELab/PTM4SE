@@ -1,0 +1,42 @@
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/lossfunctions/impl/LossMAE.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/lossfunctions/impl/LossMAE.java
+index a990c38..343ee6a 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/lossfunctions/impl/LossMAE.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/lossfunctions/impl/LossMAE.java
+@@ -20,14 +20,14 @@
+     @Override
+     public INDArray computeScoreArray(INDArray labels, INDArray preOutput, String activationFn, INDArray mask) {
+         INDArray scoreArr = super.computeScoreArray(labels,preOutput,activationFn,mask);
+-        scoreArr.muli(1/scoreArr.size(1));
++        scoreArr.divi(scoreArr.size(1));
+         return scoreArr;
+     }
+ 
+     @Override
+     public INDArray computeGradient(INDArray labels, INDArray preOutput, String activationFn, INDArray mask) {
+         INDArray gradients = super.computeGradient(labels,preOutput,activationFn,mask);
+-        gradients.muli(1.0/labels.size(1));
++        gradients.divi(labels.size(1));
+         return gradients;
+     }
+ 
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/lossfunctions/impl/LossMAE.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/lossfunctions/impl/LossMAE.java
+index a990c38..343ee6a 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/lossfunctions/impl/LossMAE.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/lossfunctions/impl/LossMAE.java
+@@ -20,14 +20,14 @@
+     @Override
+     public INDArray computeScoreArray(INDArray labels, INDArray preOutput, String activationFn, INDArray mask) {
+         INDArray scoreArr = super.computeScoreArray(labels,preOutput,activationFn,mask);
+-        scoreArr.muli(1/scoreArr.size(1));
++        scoreArr.divi(scoreArr.size(1));
+         return scoreArr;
+     }
+ 
+     @Override
+     public INDArray computeGradient(INDArray labels, INDArray preOutput, String activationFn, INDArray mask) {
+         INDArray gradients = super.computeGradient(labels,preOutput,activationFn,mask);
+-        gradients.muli(1.0/labels.size(1));
++        gradients.divi(labels.size(1));
+         return gradients;
+     }
+ 

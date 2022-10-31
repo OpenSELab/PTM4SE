@@ -1,0 +1,46 @@
+diff --git a/Essentials/src/com/earth2me/essentials/PlayerList.java b/Essentials/src/com/earth2me/essentials/PlayerList.java
+index bfd7ce2..f0ce2fb 100644
+--- a/Essentials/src/com/earth2me/essentials/PlayerList.java
++++ b/Essentials/src/com/earth2me/essentials/PlayerList.java
+@@ -51,7 +51,7 @@
+ 		int hiddenCount = 0;
+ 		for (Player onlinePlayer : server.getOnlinePlayers())
+ 		{
+-			if (ess.getUser(onlinePlayer).isHidden(user.getBase()))
++			if (ess.getUser(onlinePlayer).isHidden() || (user != null && !user.getBase().canSee(onlinePlayer)))
+ 			{
+ 				playerHidden++;
+ 				if (showHidden || user.getBase().canSee(onlinePlayer))
+@@ -80,7 +80,8 @@
+ 		for (Player onlinePlayer : server.getOnlinePlayers())
+ 		{
+ 			final User onlineUser = ess.getUser(onlinePlayer);
+-			if (onlineUser.isHidden(sender.getBase()) && !showHidden && (sender != null && !sender.getBase().canSee(onlinePlayer)))
++			if ((sender == null && !showHidden && onlineUser.isHidden()) ||
++				(sender != null && !showHidden && !sender.getBase().canSee(onlinePlayer)))
+ 			{
+ 				continue;
+ 			}
+diff --git a/Essentials/src/com/earth2me/essentials/PlayerList.java b/Essentials/src/com/earth2me/essentials/PlayerList.java
+index bfd7ce2..f0ce2fb 100644
+--- a/Essentials/src/com/earth2me/essentials/PlayerList.java
++++ b/Essentials/src/com/earth2me/essentials/PlayerList.java
+@@ -51,7 +51,7 @@
+ 		int hiddenCount = 0;
+ 		for (Player onlinePlayer : server.getOnlinePlayers())
+ 		{
+-			if (ess.getUser(onlinePlayer).isHidden(user.getBase()))
++			if (ess.getUser(onlinePlayer).isHidden() || (user != null && !user.getBase().canSee(onlinePlayer)))
+ 			{
+ 				playerHidden++;
+ 				if (showHidden || user.getBase().canSee(onlinePlayer))
+@@ -80,7 +80,8 @@
+ 		for (Player onlinePlayer : server.getOnlinePlayers())
+ 		{
+ 			final User onlineUser = ess.getUser(onlinePlayer);
+-			if (onlineUser.isHidden(sender.getBase()) && !showHidden && (sender != null && !sender.getBase().canSee(onlinePlayer)))
++			if ((sender == null && !showHidden && onlineUser.isHidden()) ||
++				(sender != null && !showHidden && !sender.getBase().canSee(onlinePlayer)))
+ 			{
+ 				continue;
+ 			}

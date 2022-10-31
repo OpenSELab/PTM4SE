@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java b/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
+index 2ddb383..7744ca9 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
+@@ -200,7 +200,7 @@
+         }
+ 
+         // validate that top-level is only added on the route (eg top level)
+-        boolean parentIsRoute = this.getClass().isAssignableFrom(RouteDefinition.class);
++        boolean parentIsRoute = RouteDefinition.class.isAssignableFrom(this.getClass());
+         if (output.isTopLevelOnly() && !parentIsRoute) {
+             throw new IllegalArgumentException("The output must be added as top-level on the route. Try moving " + output + " to the top of route.");
+         }
+diff --git a/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java b/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
+index 2ddb383..7744ca9 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinition.java
+@@ -200,7 +200,7 @@
+         }
+ 
+         // validate that top-level is only added on the route (eg top level)
+-        boolean parentIsRoute = this.getClass().isAssignableFrom(RouteDefinition.class);
++        boolean parentIsRoute = RouteDefinition.class.isAssignableFrom(this.getClass());
+         if (output.isTopLevelOnly() && !parentIsRoute) {
+             throw new IllegalArgumentException("The output must be added as top-level on the route. Try moving " + output + " to the top of route.");
+         }

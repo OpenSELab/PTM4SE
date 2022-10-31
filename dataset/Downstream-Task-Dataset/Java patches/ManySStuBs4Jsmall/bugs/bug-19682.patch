@@ -1,0 +1,117 @@
+diff --git a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/SatelBindingConfig.java b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/SatelBindingConfig.java
+index 1bf2d89..dcdcb24 100644
+--- a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/SatelBindingConfig.java
++++ b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/SatelBindingConfig.java
+@@ -99,18 +99,18 @@
+ 			try {
+ 				return Enum.valueOf(enumType, next().toUpperCase());
+ 			} catch (Exception e) {
+-				throw new BindingConfigParseException(String.format("Invalid {}: {}", description, bindingConfig));
++				throw new BindingConfigParseException(String.format("Invalid %s: %s", description, this.bindingConfig));
+ 			}
+ 		}
+ 
+ 		@Override
+ 		public boolean hasNext() {
+-			return idx < configElements.length;
++			return idx < this.configElements.length;
+ 		}
+ 
+ 		@Override
+ 		public String next() {
+-			return configElements[idx++];
++			return this.configElements[idx++];
+ 		}
+ 
+ 		@Override
+@@ -147,7 +147,7 @@
+ 			if (iterator.hasNext()) {
+ 				// options are always the last element
+ 				// if anything left, throw exception
+-				throw new BindingConfigParseException(String.format("Too many elements: {}",
++				throw new BindingConfigParseException(String.format("Too many elements: %s",
+ 						iterator.getBindingConfig()));
+ 			}
+ 		}
+diff --git a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/config/IntegraStateBindingConfig.java b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/config/IntegraStateBindingConfig.java
+index 83009a1..e43347c 100644
+--- a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/config/IntegraStateBindingConfig.java
++++ b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/config/IntegraStateBindingConfig.java
+@@ -104,12 +104,12 @@
+ 				for (int i = 0; i < objectNumbersStr.length; ++i) {
+ 					int objectNumber = Integer.parseInt(objectNumbersStr[i]);
+ 					if (objectNumber < 1 || objectNumber > 256) {
+-						throw new BindingConfigParseException(String.format("Invalid object number: {}", bindingConfig));
++						throw new BindingConfigParseException(String.format("Invalid object number: %s", bindingConfig));
+ 					}
+ 					objectNumbers[i] = objectNumber;
+ 				}
+ 			} catch (NumberFormatException e) {
+-				throw new BindingConfigParseException(String.format("Invalid object number: {}", bindingConfig));
++				throw new BindingConfigParseException(String.format("Invalid object number: %s", bindingConfig));
+ 			}
+ 		}
+ 
+diff --git a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/SatelGenericBindingProvider.java b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/SatelGenericBindingProvider.java
+index bc21a88..56afdd0 100644
+--- a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/SatelGenericBindingProvider.java
++++ b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/SatelGenericBindingProvider.java
+@@ -105,6 +105,6 @@
+ 			// throw parse exception in case of any error
+ 		}
+ 
+-		throw new BindingConfigParseException(String.format("Invalid binding configuration: {}", bindingConfig));
++		throw new BindingConfigParseException(String.format("Invalid binding configuration: %s", bindingConfig));
+ 	}
+ }
+diff --git a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/protocol/command/SatelCommand.java b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/protocol/command/SatelCommand.java
+index 3f11555..f03fe1d 100644
+--- a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/protocol/command/SatelCommand.java
++++ b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/protocol/command/SatelCommand.java
+@@ -153,9 +153,9 @@
+ 			return true;
+ 		default:
+ 			if (responseCode >= 0x80 && responseCode <= 0x8f) {
+-				errorMsg = String.format("Other error: {}", responseCode);
++				errorMsg = String.format("Other error: %02X", responseCode);
+ 			} else {
+-				errorMsg = String.format("Unknown response code: {}", responseCode);
++				errorMsg = String.format("Unknown response code: %02X", responseCode);
+ 			}
+ 		}
+ 
+diff --git a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/SatelBindingConfig.java b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/SatelBindingConfig.java
+index 1bf2d89..dcdcb24 100644
+--- a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/SatelBindingConfig.java
++++ b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/SatelBindingConfig.java
+@@ -99,18 +99,18 @@
+ 			try {
+ 				return Enum.valueOf(enumType, next().toUpperCase());
+ 			} catch (Exception e) {
+-				throw new BindingConfigParseException(String.format("Invalid {}: {}", description, bindingConfig));
++				throw new BindingConfigParseException(String.format("Invalid %s: %s", description, this.bindingConfig));
+ 			}
+ 		}
+ 
+ 		@Override
+ 		public boolean hasNext() {
+-			return idx < configElements.length;
++			return idx < this.configElements.length;
+ 		}
+ 
+ 		@Override
+ 		public String next() {
+-			return configElements[idx++];
++			return this.configElements[idx++];
+ 		}
+ 
+ 		@Override
+@@ -147,7 +147,7 @@
+ 			if (iterator.hasNext()) {
+ 				// options are always the last element
+ 				// if anything left, throw exception
+-				throw new BindingConfigParseException(String.format("Too many elements: {}",
++				throw new BindingConfigParseException(String.format("Too many elements: %s",
+ 						iterator.getBindingConfig()));
+ 			}
+ 		}

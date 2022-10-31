@@ -1,0 +1,178 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/ErrorHandlerSupport.java b/camel-core/src/main/java/org/apache/camel/processor/ErrorHandlerSupport.java
+index aa00fbb..a7904e8 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/ErrorHandlerSupport.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/ErrorHandlerSupport.java
+@@ -24,6 +24,8 @@ import org.apache.camel.Exchange;
+ import org.apache.camel.Processor;
+ import org.apache.camel.impl.ServiceSupport;
+ import org.apache.camel.model.OnExceptionDefinition;
++import org.apache.camel.model.ProcessorDefinitionHelper;
++import org.apache.camel.model.RouteDefinition;
+ import org.apache.camel.processor.exceptionpolicy.DefaultExceptionPolicyStrategy;
+ import org.apache.camel.processor.exceptionpolicy.ExceptionPolicyKey;
+ import org.apache.camel.processor.exceptionpolicy.ExceptionPolicyStrategy;
+@@ -49,7 +51,9 @@ public abstract class ErrorHandlerSupport extends ServiceSupport implements Erro
+         List<Class> list = exceptionType.getExceptionClasses();
+ 
+         for (Class clazz : list) {
+-            ExceptionPolicyKey key = new ExceptionPolicyKey(clazz, exceptionType.getOnWhen());
++            RouteDefinition route = ProcessorDefinitionHelper.getRoute(exceptionType);
++            String routeId = route != null ? route.getId() : null;
++            ExceptionPolicyKey key = new ExceptionPolicyKey(routeId, clazz, exceptionType.getOnWhen());
+             exceptionPolicies.put(key, exceptionType);
+         }
+     }
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/exceptionpolicy/DefaultExceptionPolicyStrategy.java b/camel-core/src/main/java/org/apache/camel/processor/exceptionpolicy/DefaultExceptionPolicyStrategy.java
+index 01d86e3..d727e17 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/exceptionpolicy/DefaultExceptionPolicyStrategy.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/exceptionpolicy/DefaultExceptionPolicyStrategy.java
+@@ -17,6 +17,7 @@
+ package org.apache.camel.processor.exceptionpolicy;
+ 
+ import java.util.Iterator;
++import java.util.LinkedHashMap;
+ import java.util.Map;
+ import java.util.Set;
+ import java.util.TreeMap;
+@@ -61,17 +62,29 @@ public class DefaultExceptionPolicyStrategy implements ExceptionPolicyStrategy {
+                                                     Exchange exchange, Throwable exception) {
+ 
+         Map<Integer, OnExceptionDefinition> candidates = new TreeMap<Integer, OnExceptionDefinition>();
++        Map<ExceptionPolicyKey, OnExceptionDefinition> routeScoped = new LinkedHashMap<ExceptionPolicyKey, OnExceptionDefinition>();
++        Map<ExceptionPolicyKey, OnExceptionDefinition> contextScoped = new LinkedHashMap<ExceptionPolicyKey, OnExceptionDefinition>();
+ 
++        // split policies into route and context scoped
++        initRouteAndContextScopedExceptionPolicies(exceptionPolicies, routeScoped, contextScoped);
++
++        // at first check route scoped as we prefer them over context scoped
+         // recursive up the tree using the iterator
+         boolean exactMatch = false;
+         Iterator<Throwable> it = createExceptionIterator(exception);
+         while (!exactMatch && it.hasNext()) {
+             // we should stop looking if we have found an exact match
+-            exactMatch = findMatchedExceptionPolicy(exceptionPolicies, exchange, it.next(), candidates);
++            exactMatch = findMatchedExceptionPolicy(routeScoped, exchange, it.next(), candidates);
+         }
+ 
+-        // now go through the candidates and find the best
++        // fallback to check context scoped (only do this if there was no exact match)
++        it = createExceptionIterator(exception);
++        while (!exactMatch && it.hasNext()) {
++            // we should stop looking if we have found an exact match
++            exactMatch = findMatchedExceptionPolicy(contextScoped, exchange, it.next(), candidates);
++        }
+ 
++        // now go through the candidates and find the best
+         if (LOG.isTraceEnabled()) {
+             LOG.trace("Found " + candidates.size() + " candidates");
+         }
+@@ -80,11 +93,26 @@ public class DefaultExceptionPolicyStrategy implements ExceptionPolicyStrategy {
+             // no type found
+             return null;
+         } else {
+-            // return the first in the map as its sorted and
++            // return the first in the map as its sorted and we checked route scoped first, which we prefer
+             return candidates.values().iterator().next();
+         }
+     }
+ 
++    private void initRouteAndContextScopedExceptionPolicies(Map<ExceptionPolicyKey, OnExceptionDefinition> exceptionPolicies,
++                                                            Map<ExceptionPolicyKey, OnExceptionDefinition> routeScoped,
++                                                            Map<ExceptionPolicyKey, OnExceptionDefinition> contextScoped) {
++
++        // loop through all the entries and split into route and context scoped
++        Set<Map.Entry<ExceptionPolicyKey, OnExceptionDefinition>> entries = exceptionPolicies.entrySet();
++        for (Map.Entry<ExceptionPolicyKey, OnExceptionDefinition> entry : entries) {
++            if (entry.getKey().getRouteId() != null) {
++                routeScoped.put(entry.getKey(), entry.getValue());
++            } else {
++                contextScoped.put(entry.getKey(), entry.getValue());
++            }
++        }
++    }
++
+ 
+     private boolean findMatchedExceptionPolicy(Map<ExceptionPolicyKey, OnExceptionDefinition> exceptionPolicies,
+                                                Exchange exchange, Throwable exception,
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/exceptionpolicy/ExceptionPolicyKey.java b/camel-core/src/main/java/org/apache/camel/processor/exceptionpolicy/ExceptionPolicyKey.java
+index cbd1fa1..3c79baa 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/exceptionpolicy/ExceptionPolicyKey.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/exceptionpolicy/ExceptionPolicyKey.java
+@@ -20,16 +20,30 @@ import org.apache.camel.model.WhenDefinition;
+ 
+ /**
+  * Exception policy key is a compound key for storing:
+- * <b>exception class</b> + <b>when</b> => <b>exception type</b>.
++ * <b>route id </b> + <b>exception class</b> + <b>when</b> => <b>exception type</b>.
+  * <p/>
+  * This is used by Camel to store the onException types configured that has or has not predicates attached (when).
+  */
+ public final class ExceptionPolicyKey {
+ 
++    private final String routeId;
+     private final Class exceptionClass;
+     private final WhenDefinition when;
+ 
++    @Deprecated
+     public ExceptionPolicyKey(Class exceptionClass, WhenDefinition when) {
++        this(null, exceptionClass, when);
++    }
++
++    /**
++     * Key for exception clause
++     *
++     * @param routeId          the route, or use <tt>null</tt> for a global scoped
++     * @param exceptionClass   the exception class
++     * @param when             optional predicate when the exception clause should trigger
++     */
++    public ExceptionPolicyKey(String routeId, Class exceptionClass, WhenDefinition when) {
++        this.routeId = routeId;
+         this.exceptionClass = exceptionClass;
+         this.when = when;
+     }
+@@ -42,10 +56,16 @@ public final class ExceptionPolicyKey {
+         return when;
+     }
+ 
++    public String getRouteId() {
++        return routeId;
++    }
++
++    @Deprecated
+     public static ExceptionPolicyKey newInstance(Class exceptionClass) {
+         return new ExceptionPolicyKey(exceptionClass, null);
+     }
+ 
++    @Deprecated
+     public static ExceptionPolicyKey newInstance(Class exceptionClass, WhenDefinition when) {
+         return new ExceptionPolicyKey(exceptionClass, when);
+     }
+@@ -61,7 +81,10 @@ public final class ExceptionPolicyKey {
+ 
+         ExceptionPolicyKey that = (ExceptionPolicyKey) o;
+ 
+-        if (!exceptionClass.equals(that.exceptionClass)) {
++        if (exceptionClass != null ? !exceptionClass.equals(that.exceptionClass) : that.exceptionClass != null) {
++            return false;
++        }
++        if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) {
+             return false;
+         }
+         if (when != null ? !when.equals(that.when) : that.when != null) {
+@@ -73,13 +96,14 @@ public final class ExceptionPolicyKey {
+ 
+     @Override
+     public int hashCode() {
+-        int result = exceptionClass.hashCode();
++        int result = routeId != null ? routeId.hashCode() : 0;
++        result = 31 * result + (exceptionClass != null ? exceptionClass.hashCode() : 0);
+         result = 31 * result + (when != null ? when.hashCode() : 0);
+         return result;
+     }
+ 
+     @Override
+     public String toString() {
+-        return "ExceptionPolicyKey[" + exceptionClass + (when != null ? " " + when : "") + "]";
++        return "ExceptionPolicyKey[route: " + (routeId != null ? routeId : "<global>") + ", " + exceptionClass + (when != null ? " " + when : "") + "]";
+     }
+ }

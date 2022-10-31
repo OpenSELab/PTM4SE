@@ -1,0 +1,52 @@
+diff --git a/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingDBIExceptionMapper.java b/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingDBIExceptionMapper.java
+index eb35d13..3e06ebb 100644
+--- a/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingDBIExceptionMapper.java
++++ b/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingDBIExceptionMapper.java
+@@ -29,7 +29,7 @@
+     }
+ 
+     @VisibleForTesting
+-    static void setLogger(Logger newLogger) {
++    static synchronized void setLogger(Logger newLogger) {
+         logger = newLogger;
+     }
+ }
+diff --git a/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingSQLExceptionMapper.java b/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingSQLExceptionMapper.java
+index 99b5a6e..504c190 100644
+--- a/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingSQLExceptionMapper.java
++++ b/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingSQLExceptionMapper.java
+@@ -24,7 +24,7 @@
+     }
+ 
+     @VisibleForTesting
+-    static void setLogger(Logger newLogger) {
++    static synchronized void setLogger(Logger newLogger) {
+         logger = newLogger;
+     }
+ }
+diff --git a/dropwizard-lifecycle/src/main/java/io/dropwizard/lifecycle/setup/ExecutorServiceBuilder.java b/dropwizard-lifecycle/src/main/java/io/dropwizard/lifecycle/setup/ExecutorServiceBuilder.java
+index 4827c2a..3329d85 100644
+--- a/dropwizard-lifecycle/src/main/java/io/dropwizard/lifecycle/setup/ExecutorServiceBuilder.java
++++ b/dropwizard-lifecycle/src/main/java/io/dropwizard/lifecycle/setup/ExecutorServiceBuilder.java
+@@ -94,7 +94,7 @@
+     }
+ 
+     @VisibleForTesting
+-    static void setLog(Logger newLog) {
++    static synchronized void setLog(Logger newLog) {
+        log = newLog;
+     }
+ }
+diff --git a/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingDBIExceptionMapper.java b/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingDBIExceptionMapper.java
+index eb35d13..3e06ebb 100644
+--- a/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingDBIExceptionMapper.java
++++ b/dropwizard-jdbi/src/main/java/io/dropwizard/jdbi/jersey/LoggingDBIExceptionMapper.java
+@@ -29,7 +29,7 @@
+     }
+ 
+     @VisibleForTesting
+-    static void setLogger(Logger newLogger) {
++    static synchronized void setLogger(Logger newLogger) {
+         logger = newLogger;
+     }
+ }

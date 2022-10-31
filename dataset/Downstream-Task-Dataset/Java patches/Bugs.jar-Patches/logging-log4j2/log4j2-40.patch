@@ -1,0 +1,16 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/net/SMTPManager.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/net/SMTPManager.java
+index dd0b7fb..ebd45e1 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/net/SMTPManager.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/net/SMTPManager.java
+@@ -136,9 +136,8 @@ public class SMTPManager extends AbstractManager {
+         }
+         try {
+             final LogEvent[] priorEvents = buffer.removeAll();
+-            if (priorEvents == null || priorEvents.length == 0) {
+-                return; // nothing to do, another thread already took all events
+-            }
++            // LOG4J-310: log appendEvent even if priorEvents is empty
++            
+             final byte[] rawBytes = formatContentToBytes(priorEvents, appendEvent, layout);
+ 
+             final String contentType = layout.getContentType();

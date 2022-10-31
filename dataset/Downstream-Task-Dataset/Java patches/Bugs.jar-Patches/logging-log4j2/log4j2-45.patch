@@ -1,0 +1,13 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/Interpolator.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/Interpolator.java
+index a768f4e..f50293f 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/Interpolator.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/Interpolator.java
+@@ -71,6 +71,8 @@ public class Interpolator implements StrLookup {
+         lookups.put("sys", new SystemPropertiesLookup());
+         lookups.put("env", new EnvironmentLookup());
+         lookups.put("jndi", new JndiLookup());
++        lookups.put("date", new DateLookup());
++        lookups.put("ctx", new ContextMapLookup());
+         try {
+             if (Class.forName("javax.servlet.ServletContext") != null) {
+                 lookups.put("web", new WebLookup());

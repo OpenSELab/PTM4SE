@@ -1,0 +1,28 @@
+diff --git a/ExportPlugin/src/org/gephi/io/exporter/plugin/ExporterGEXF.java b/ExportPlugin/src/org/gephi/io/exporter/plugin/ExporterGEXF.java
+index 5c50885..db25224 100644
+--- a/ExportPlugin/src/org/gephi/io/exporter/plugin/ExporterGEXF.java
++++ b/ExportPlugin/src/org/gephi/io/exporter/plugin/ExporterGEXF.java
+@@ -284,7 +284,8 @@
+                 } else {
+                     staticCols.add(col);
+                 }
+-            } else if (exportDynamic && col.getType().isDynamicType() && col.getOrigin().equals(AttributeOrigin.PROPERTY) && col.getIndex() == PropertiesColumn.EDGE_WEIGHT.getIndex()) {
++            } else if (exportDynamic && col.getType().isDynamicType() && col.getType() != AttributeType.TIME_INTERVAL
++                    && col.getOrigin().equals(AttributeOrigin.PROPERTY) && col.getIndex() == PropertiesColumn.EDGE_WEIGHT.getIndex()) {
+                 dynamicCols.add(col);
+             }
+         }
+diff --git a/ExportPlugin/src/org/gephi/io/exporter/plugin/ExporterGEXF.java b/ExportPlugin/src/org/gephi/io/exporter/plugin/ExporterGEXF.java
+index 5c50885..db25224 100644
+--- a/ExportPlugin/src/org/gephi/io/exporter/plugin/ExporterGEXF.java
++++ b/ExportPlugin/src/org/gephi/io/exporter/plugin/ExporterGEXF.java
+@@ -284,7 +284,8 @@
+                 } else {
+                     staticCols.add(col);
+                 }
+-            } else if (exportDynamic && col.getType().isDynamicType() && col.getOrigin().equals(AttributeOrigin.PROPERTY) && col.getIndex() == PropertiesColumn.EDGE_WEIGHT.getIndex()) {
++            } else if (exportDynamic && col.getType().isDynamicType() && col.getType() != AttributeType.TIME_INTERVAL
++                    && col.getOrigin().equals(AttributeOrigin.PROPERTY) && col.getIndex() == PropertiesColumn.EDGE_WEIGHT.getIndex()) {
+                 dynamicCols.add(col);
+             }
+         }

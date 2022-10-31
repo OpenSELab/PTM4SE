@@ -1,0 +1,42 @@
+diff --git a/core/common/src/main/java/alluxio/exception/ExceptionMessage.java b/core/common/src/main/java/alluxio/exception/ExceptionMessage.java
+index a8228a9..fa335ce 100644
+--- a/core/common/src/main/java/alluxio/exception/ExceptionMessage.java
++++ b/core/common/src/main/java/alluxio/exception/ExceptionMessage.java
+@@ -104,8 +104,8 @@
+ 
+   // file system master
+   FILEID_MUST_BE_FILE("File id {0} must be a file"),
+-  INODE_DOES_NOT_EXIST("Inode id {} does not exist"),
+-  INODE_DOES_NOT_EXIST_RETRIES("Inode id {} does not exist; too many retries"),
++  INODE_DOES_NOT_EXIST("Inode id {0} does not exist"),
++  INODE_DOES_NOT_EXIST_RETRIES("Inode id {0} does not exist; too many retries"),
+   NOT_MUTABLE_INODE_PATH("Not a MutableLockedInodePath: {0}"),
+   PATH_COMPONENTS_INVALID("Parameter pathComponents is {0}"),
+   PATH_COMPONENTS_INVALID_START("Path starts with {0}"),
+diff --git a/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java b/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
+index d15adb4..88253bf 100644
+--- a/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
++++ b/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
+@@ -1798,7 +1798,6 @@
+           LoadMetadataOptions loadMetadataOptions = LoadMetadataOptions.defaults();
+           loadMetadataOptions.setLoadDirectChildren(false).setCreateAncestors(false);
+ 
+-          // TODO(gpang): fix this
+           for (String file : files) {
+             if (PathUtils.isTemporaryFileName(file)) {
+               continue;
+diff --git a/core/common/src/main/java/alluxio/exception/ExceptionMessage.java b/core/common/src/main/java/alluxio/exception/ExceptionMessage.java
+index a8228a9..fa335ce 100644
+--- a/core/common/src/main/java/alluxio/exception/ExceptionMessage.java
++++ b/core/common/src/main/java/alluxio/exception/ExceptionMessage.java
+@@ -104,8 +104,8 @@
+ 
+   // file system master
+   FILEID_MUST_BE_FILE("File id {0} must be a file"),
+-  INODE_DOES_NOT_EXIST("Inode id {} does not exist"),
+-  INODE_DOES_NOT_EXIST_RETRIES("Inode id {} does not exist; too many retries"),
++  INODE_DOES_NOT_EXIST("Inode id {0} does not exist"),
++  INODE_DOES_NOT_EXIST_RETRIES("Inode id {0} does not exist; too many retries"),
+   NOT_MUTABLE_INODE_PATH("Not a MutableLockedInodePath: {0}"),
+   PATH_COMPONENTS_INVALID("Parameter pathComponents is {0}"),
+   PATH_COMPONENTS_INVALID_START("Path starts with {0}"),

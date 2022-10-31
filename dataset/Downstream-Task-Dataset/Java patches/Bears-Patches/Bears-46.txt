@@ -1,0 +1,12 @@
+--- a/src/main/java/spoon/support/reflect/declaration/CtElementImpl.java
++++ b/src/main/java/spoon/support/reflect/declaration/CtElementImpl.java
+@@ -386,6 +386,9 @@ public abstract class CtElementImpl implements CtElement, Serializable {
+ 
+ 	@Override
+ 	public Set<String> getMetadataKeys() {
++		if (metadata == null) {
++			return Collections.EMPTY_SET;
++		}
+ 		return metadata.keySet();
+ 	}
+ 

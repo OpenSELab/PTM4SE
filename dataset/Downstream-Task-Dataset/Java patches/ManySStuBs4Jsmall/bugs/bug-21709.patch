@@ -1,0 +1,61 @@
+diff --git a/src/main/java/com/squareup/javawriter/ConstructorWriter.java b/src/main/java/com/squareup/javawriter/ConstructorWriter.java
+index fb0fb59..3d9264c 100644
+--- a/src/main/java/com/squareup/javawriter/ConstructorWriter.java
++++ b/src/main/java/com/squareup/javawriter/ConstructorWriter.java
+@@ -48,7 +48,7 @@
+   }
+ 
+   public VariableWriter addParameter(Class<?> type, String name) {
+-    return addParameter(ClassName.fromClass(type), name);
++    return addParameter(TypeNames.forClass(type), name);
+   }
+ 
+   public VariableWriter addParameter(TypeElement type, String name) {
+diff --git a/src/main/java/com/squareup/javawriter/MethodWriter.java b/src/main/java/com/squareup/javawriter/MethodWriter.java
+index 7c83d56..65b6307 100644
+--- a/src/main/java/com/squareup/javawriter/MethodWriter.java
++++ b/src/main/java/com/squareup/javawriter/MethodWriter.java
+@@ -55,7 +55,7 @@
+   }
+ 
+   public VariableWriter addParameter(Class<?> type, String name) {
+-    return addParameter(ClassName.fromClass(type), name);
++    return addParameter(TypeNames.forClass(type), name);
+   }
+ 
+   public VariableWriter addParameter(TypeElement type, String name) {
+diff --git a/src/main/java/com/squareup/javawriter/TypeWriter.java b/src/main/java/com/squareup/javawriter/TypeWriter.java
+index 9632c5e..066b49f 100644
+--- a/src/main/java/com/squareup/javawriter/TypeWriter.java
++++ b/src/main/java/com/squareup/javawriter/TypeWriter.java
+@@ -70,7 +70,7 @@
+ 
+   public MethodWriter addMethod(Class<?> returnType, String name) {
+     MethodWriter methodWriter =
+-        new MethodWriter(ClassName.fromClass(returnType), name);
++        new MethodWriter(TypeNames.forClass(returnType), name);
+     methodWriters.add(methodWriter);
+     return methodWriter;
+   }
+@@ -90,7 +90,7 @@
+   }
+ 
+   public FieldWriter addField(Class<?> type, String name) {
+-    return addField(ClassName.fromClass(type), name);
++    return addField(TypeNames.forClass(type), name);
+   }
+ 
+   public FieldWriter addField(TypeElement type, String name) {
+diff --git a/src/main/java/com/squareup/javawriter/ConstructorWriter.java b/src/main/java/com/squareup/javawriter/ConstructorWriter.java
+index fb0fb59..3d9264c 100644
+--- a/src/main/java/com/squareup/javawriter/ConstructorWriter.java
++++ b/src/main/java/com/squareup/javawriter/ConstructorWriter.java
+@@ -48,7 +48,7 @@
+   }
+ 
+   public VariableWriter addParameter(Class<?> type, String name) {
+-    return addParameter(ClassName.fromClass(type), name);
++    return addParameter(TypeNames.forClass(type), name);
+   }
+ 
+   public VariableWriter addParameter(TypeElement type, String name) {

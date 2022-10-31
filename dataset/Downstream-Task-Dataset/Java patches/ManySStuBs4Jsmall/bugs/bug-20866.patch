@@ -1,0 +1,31 @@
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/web/servlet/ConditionalOnMissingFilterBeanTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/web/servlet/ConditionalOnMissingFilterBeanTests.java
+index 7220d85..41fd8bb 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/web/servlet/ConditionalOnMissingFilterBeanTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/web/servlet/ConditionalOnMissingFilterBeanTests.java
+@@ -154,7 +154,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<OtherFilter> myOtherFilter() {
+-			return new FilterRegistrationBean<OtherFilter>(new OtherFilter());
++			return new FilterRegistrationBean<>(new OtherFilter());
+ 		}
+ 
+ 	}
+@@ -164,7 +164,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<TestFilter> myTestFilter() {
+-			return new FilterRegistrationBean<TestFilter>(new TestFilter());
++			return new FilterRegistrationBean<>(new TestFilter());
+ 		}
+ 
+ 	}
+@@ -197,7 +197,7 @@
+ 		@Bean
+ 		@ConditionalOnMissingFilterBean
+ 		public FilterRegistrationBean<TestFilter> testFilter() {
+-			return new FilterRegistrationBean<TestFilter>(new TestFilter());
++			return new FilterRegistrationBean<>(new TestFilter());
+ 		}
+ 
+ 	}

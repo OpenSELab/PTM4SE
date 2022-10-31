@@ -1,0 +1,15 @@
+diff --git a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/TrashPolicyDefault.java b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/TrashPolicyDefault.java
+index a8f49c2..cfb51e2 100644
+--- a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/TrashPolicyDefault.java
++++ b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/TrashPolicyDefault.java
+@@ -90,8 +90,8 @@
+         FS_TRASH_CHECKPOINT_INTERVAL_KEY, FS_TRASH_CHECKPOINT_INTERVAL_DEFAULT)
+         * MSECS_PER_MINUTE);
+     LOG.info("Namenode trash configuration: Deletion interval = " +
+-             this.deletionInterval + " minutes, Emptier interval = " +
+-             this.emptierInterval + " minutes.");
++             (this.deletionInterval / MSECS_PER_MINUTE) + " minutes, Emptier interval = " +
++             (this.emptierInterval / MSECS_PER_MINUTE) + " minutes.");
+    }
+ 
+   private Path makeTrashRelativePath(Path basePath, Path rmFilePath) {

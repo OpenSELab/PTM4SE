@@ -1,0 +1,74 @@
+diff --git a/spring-boot-tools/spring-boot-configuration-metadata/src/main/java/org/springframework/boot/configurationmetadata/DescriptionExtractor.java b/spring-boot-tools/spring-boot-configuration-metadata/src/main/java/org/springframework/boot/configurationmetadata/DescriptionExtractor.java
+index d59745c..d4d346d 100644
+--- a/spring-boot-tools/spring-boot-configuration-metadata/src/main/java/org/springframework/boot/configurationmetadata/DescriptionExtractor.java
++++ b/spring-boot-tools/spring-boot-configuration-metadata/src/main/java/org/springframework/boot/configurationmetadata/DescriptionExtractor.java
+@@ -20,13 +20,13 @@
+ import java.util.Locale;
+ 
+ /**
+- * Utility to extract a descriptions.
++ * Utility to extract a description.
+  *
+  * @author Stephane Nicoll
+  */
+ class DescriptionExtractor {
+ 
+-	private static final String NEW_LINE = System.getProperty("line.separator");
++	static final String NEW_LINE = System.getProperty("line.separator");
+ 
+ 	public String getShortDescription(String description) {
+ 		if (description == null) {
+diff --git a/spring-boot-tools/spring-boot-configuration-metadata/src/test/java/org/springframework/boot/configurationmetadata/DescriptionExtractorTests.java b/spring-boot-tools/spring-boot-configuration-metadata/src/test/java/org/springframework/boot/configurationmetadata/DescriptionExtractorTests.java
+index ab5e698..37f2971 100644
+--- a/spring-boot-tools/spring-boot-configuration-metadata/src/test/java/org/springframework/boot/configurationmetadata/DescriptionExtractorTests.java
++++ b/spring-boot-tools/spring-boot-configuration-metadata/src/test/java/org/springframework/boot/configurationmetadata/DescriptionExtractorTests.java
+@@ -38,14 +38,17 @@
+ 	@Test
+ 	public void extractShortDescriptionNewLineBeforeDot() {
+ 		assertEquals("My short description.",
+-				this.extractor.getShortDescription("My short\ndescription.\nMore stuff."));
++				this.extractor.getShortDescription("My short" + DescriptionExtractor.NEW_LINE +
++						"description." + DescriptionExtractor.NEW_LINE + "More stuff."));
+ 	}
+ 
+ 	@Test
+ 	public void extractShortDescriptionNewLineBeforeDotWithSpaces() {
+ 		assertEquals("My short description.",
+ 				this.extractor
+-						.getShortDescription("My short  \n description.  \nMore stuff."));
++						.getShortDescription("My short  "
++								+ DescriptionExtractor.NEW_LINE + " description.  "
++								+ DescriptionExtractor.NEW_LINE + "More stuff."));
+ 	}
+ 
+ 	@Test
+@@ -57,7 +60,8 @@
+ 	@Test
+ 	public void extractShortDescriptionNoDotMultipleLines() {
+ 		assertEquals("My short description",
+-				this.extractor.getShortDescription("My short description  \n More stuff"));
++				this.extractor.getShortDescription("My short description "
++						+ DescriptionExtractor.NEW_LINE + " More stuff"));
+ 	}
+ 
+ 	@Test
+diff --git a/spring-boot-tools/spring-boot-configuration-metadata/src/main/java/org/springframework/boot/configurationmetadata/DescriptionExtractor.java b/spring-boot-tools/spring-boot-configuration-metadata/src/main/java/org/springframework/boot/configurationmetadata/DescriptionExtractor.java
+index d59745c..d4d346d 100644
+--- a/spring-boot-tools/spring-boot-configuration-metadata/src/main/java/org/springframework/boot/configurationmetadata/DescriptionExtractor.java
++++ b/spring-boot-tools/spring-boot-configuration-metadata/src/main/java/org/springframework/boot/configurationmetadata/DescriptionExtractor.java
+@@ -20,13 +20,13 @@
+ import java.util.Locale;
+ 
+ /**
+- * Utility to extract a descriptions.
++ * Utility to extract a description.
+  *
+  * @author Stephane Nicoll
+  */
+ class DescriptionExtractor {
+ 
+-	private static final String NEW_LINE = System.getProperty("line.separator");
++	static final String NEW_LINE = System.getProperty("line.separator");
+ 
+ 	public String getShortDescription(String description) {
+ 		if (description == null) {

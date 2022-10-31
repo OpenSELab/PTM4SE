@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index 0cd26f6..a12f088 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -1659,7 +1659,7 @@
+ 
+     public synchronized RouteDefinition getRouteDefinition(String id) {
+         for (RouteDefinition route : routeDefinitions) {
+-            if (route.getId() != null && route.getId().equals(id)) {
++            if (route.idOrCreate(nodeIdFactory).equals(id)) {
+                 return route;
+             }
+         }
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index 0cd26f6..a12f088 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -1659,7 +1659,7 @@
+ 
+     public synchronized RouteDefinition getRouteDefinition(String id) {
+         for (RouteDefinition route : routeDefinitions) {
+-            if (route.getId() != null && route.getId().equals(id)) {
++            if (route.idOrCreate(nodeIdFactory).equals(id)) {
+                 return route;
+             }
+         }

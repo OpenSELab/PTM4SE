@@ -1,0 +1,38 @@
+diff --git a/common/src/main/java/io/netty/util/internal/TypeParameterMatcher.java b/common/src/main/java/io/netty/util/internal/TypeParameterMatcher.java
+index 3ee45b9..be8b597 100644
+--- a/common/src/main/java/io/netty/util/internal/TypeParameterMatcher.java
++++ b/common/src/main/java/io/netty/util/internal/TypeParameterMatcher.java
+@@ -50,12 +50,12 @@
+             for (;;) {
+                 if (currentClass.getSuperclass() == parameterizedSuperClass) {
+                     Type[] types = ((ParameterizedType) currentClass.getGenericSuperclass()).getActualTypeArguments();
+-                    if (types.length - 1 < typeParamIndex || !(types[0] instanceof Class)) {
++                    if (types.length - 1 < typeParamIndex || !(types[typeParamIndex] instanceof Class)) {
+                         throw new IllegalStateException(
+                                 "cannot determine the type of the type parameter of " + thisClass.getSimpleName());
+                     }
+ 
+-                    Class<?> messageType = (Class<?>) types[0];
++                    Class<?> messageType = (Class<?>) types[typeParamIndex];
+                     if (messageType == Object.class) {
+                         matcher = NOOP;
+                     } else {
+diff --git a/common/src/main/java/io/netty/util/internal/TypeParameterMatcher.java b/common/src/main/java/io/netty/util/internal/TypeParameterMatcher.java
+index 3ee45b9..be8b597 100644
+--- a/common/src/main/java/io/netty/util/internal/TypeParameterMatcher.java
++++ b/common/src/main/java/io/netty/util/internal/TypeParameterMatcher.java
+@@ -50,12 +50,12 @@
+             for (;;) {
+                 if (currentClass.getSuperclass() == parameterizedSuperClass) {
+                     Type[] types = ((ParameterizedType) currentClass.getGenericSuperclass()).getActualTypeArguments();
+-                    if (types.length - 1 < typeParamIndex || !(types[0] instanceof Class)) {
++                    if (types.length - 1 < typeParamIndex || !(types[typeParamIndex] instanceof Class)) {
+                         throw new IllegalStateException(
+                                 "cannot determine the type of the type parameter of " + thisClass.getSimpleName());
+                     }
+ 
+-                    Class<?> messageType = (Class<?>) types[0];
++                    Class<?> messageType = (Class<?>) types[typeParamIndex];
+                     if (messageType == Object.class) {
+                         matcher = NOOP;
+                     } else {

@@ -1,0 +1,63 @@
+diff --git a/presto-local-file/src/main/java/com/facebook/presto/localfile/LocalFileConfig.java b/presto-local-file/src/main/java/com/facebook/presto/localfile/LocalFileConfig.java
+index 937069a..50058b4 100644
+--- a/presto-local-file/src/main/java/com/facebook/presto/localfile/LocalFileConfig.java
++++ b/presto-local-file/src/main/java/com/facebook/presto/localfile/LocalFileConfig.java
+@@ -26,7 +26,7 @@
+         return httpRequestLogLocation;
+     }
+ 
+-    @Config("presto-logs.http-request-log-location")
++    @Config("presto-logs.http-request-log.location")
+     @ConfigDescription("Directory or file where http request logs are written")
+     public LocalFileConfig setHttpRequestLogLocation(String httpRequestLogLocation)
+     {
+@@ -39,8 +39,8 @@
+         return httpRequestLogFileNamePattern;
+     }
+ 
+-    @Config("presto-log.http-request-log-pattern")
+-    @ConfigDescription("If http-request-log-location is a directory, file name regex for files in this directory")
++    @Config("presto-logs.http-request-log.pattern")
++    @ConfigDescription("If log location is a directory this glob is used to match the file names in the directory")
+     public LocalFileConfig setHttpRequestLogFileNamePattern(String pattern)
+     {
+         this.httpRequestLogFileNamePattern = pattern;
+diff --git a/presto-local-file/src/test/java/com/facebook/presto/localfile/TestLocalFileConfig.java b/presto-local-file/src/test/java/com/facebook/presto/localfile/TestLocalFileConfig.java
+index e5f835e..3fcc9e7 100644
+--- a/presto-local-file/src/test/java/com/facebook/presto/localfile/TestLocalFileConfig.java
++++ b/presto-local-file/src/test/java/com/facebook/presto/localfile/TestLocalFileConfig.java
+@@ -34,8 +34,8 @@
+     public void testExplicitPropertyMappings()
+     {
+         Map<String, String> properties = new ImmutableMap.Builder<String, String>()
+-                .put("presto-logs.http-request-log-location", "/data/foo.log")
+-                .put("presto-log.http-request-log-pattern", "bar")
++                .put("presto-logs.http-request-log.location", "/data/foo.log")
++                .put("presto-logs.http-request-log.pattern", "bar")
+                 .build();
+ 
+         LocalFileConfig expected = new LocalFileConfig()
+diff --git a/presto-local-file/src/main/java/com/facebook/presto/localfile/LocalFileConfig.java b/presto-local-file/src/main/java/com/facebook/presto/localfile/LocalFileConfig.java
+index 937069a..50058b4 100644
+--- a/presto-local-file/src/main/java/com/facebook/presto/localfile/LocalFileConfig.java
++++ b/presto-local-file/src/main/java/com/facebook/presto/localfile/LocalFileConfig.java
+@@ -26,7 +26,7 @@
+         return httpRequestLogLocation;
+     }
+ 
+-    @Config("presto-logs.http-request-log-location")
++    @Config("presto-logs.http-request-log.location")
+     @ConfigDescription("Directory or file where http request logs are written")
+     public LocalFileConfig setHttpRequestLogLocation(String httpRequestLogLocation)
+     {
+@@ -39,8 +39,8 @@
+         return httpRequestLogFileNamePattern;
+     }
+ 
+-    @Config("presto-log.http-request-log-pattern")
+-    @ConfigDescription("If http-request-log-location is a directory, file name regex for files in this directory")
++    @Config("presto-logs.http-request-log.pattern")
++    @ConfigDescription("If log location is a directory this glob is used to match the file names in the directory")
+     public LocalFileConfig setHttpRequestLogFileNamePattern(String pattern)
+     {
+         this.httpRequestLogFileNamePattern = pattern;

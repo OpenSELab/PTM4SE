@@ -1,0 +1,39 @@
+--- a/byte-buddy-dep/src/main/java/net/bytebuddy/dynamic/scaffold/TypeWriter.java
++++ b/byte-buddy-dep/src/main/java/net/bytebuddy/dynamic/scaffold/TypeWriter.java
+@@ -4346,10 +4346,7 @@ public interface TypeWriter<T> {
+                                     enclosingMethod.getInternalName(),
+                                     enclosingMethod.getDescriptor());
+                         } else if (instrumentedType.isLocalType() || instrumentedType.isAnonymousType()) {
+-                            TypeDescription enclosingType = instrumentedType.getEnclosingType();
+-                            if (enclosingType != null) { // The Scala compiler sometimes generates illegal combinations.
+-                                cv.visitOuterClass(enclosingType.getInternalName(), NO_REFERENCE, NO_REFERENCE);
+-                            }
++                            cv.visitOuterClass(instrumentedType.getEnclosingType().getInternalName(), NO_REFERENCE, NO_REFERENCE);
+                         }
+                     }
+ 
+diff --git a/byte-buddy-dep/src/main/java/net/bytebuddy/pool/TypePool.java b/byte-buddy-dep/src/main/java/net/bytebuddy/pool/TypePool.java
+index eee2c35..4ceea2e 100644
+--- a/byte-buddy-dep/src/main/java/net/bytebuddy/pool/TypePool.java
++++ b/byte-buddy-dep/src/main/java/net/bytebuddy/pool/TypePool.java
+@@ -7567,16 +7567,16 @@ public interface TypePool {
+             @Override
+             public void visitInnerClass(String internalName, String outerName, String innerName, int modifiers) {
+                 if (internalName.equals(this.internalName)) {
+-                    this.modifiers = modifiers & REAL_MODIFIER_MASK;
+-                    if (innerName == null) {
+-                        anonymousType = true;
+-                    }
+                     if (outerName != null) {
+                         declaringTypeName = outerName;
+                         if (typeContainment.isSelfContained()) {
+                             typeContainment = new LazyTypeDescription.TypeContainment.WithinType(outerName, false);
+                         }
+                     }
++                    if (innerName == null && !typeContainment.isSelfContained()) { // Some compilers define this property inconsistently.
++                        anonymousType = true;
++                    }
++                    this.modifiers = modifiers & REAL_MODIFIER_MASK;
+                 } else if (outerName != null && innerName != null && outerName.equals(this.internalName)) {
+                     declaredTypes.add("L" + internalName + ";");
+                 }

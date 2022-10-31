@@ -1,0 +1,20 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/model/RedeliveryPolicyDefinition.java b/camel-core/src/main/java/org/apache/camel/model/RedeliveryPolicyDefinition.java
+index 41e53e9..f695d26 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/RedeliveryPolicyDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/RedeliveryPolicyDefinition.java
+@@ -156,13 +156,13 @@ public class RedeliveryPolicyDefinition {
+                 }
+             }
+             if (delayPattern != null) {
+-                answer.setDelayPattern(delayPattern);
++                answer.setDelayPattern(CamelContextHelper.parseText(context, delayPattern));
+             }
+             if (allowRedeliveryWhileStopping != null) {
+                 answer.setAllowRedeliveryWhileStopping(CamelContextHelper.parseBoolean(context, allowRedeliveryWhileStopping));
+             }
+             if (exchangeFormatterRef != null) {
+-                answer.setExchangeFormatterRef(exchangeFormatterRef);
++                answer.setExchangeFormatterRef(CamelContextHelper.parseText(context, exchangeFormatterRef));
+             }
+         } catch (Exception e) {
+             throw ObjectHelper.wrapRuntimeCamelException(e);

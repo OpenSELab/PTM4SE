@@ -1,0 +1,36 @@
+diff --git a/dubbo-rpc/dubbo-rpc-api/src/main/java/org/apache/dubbo/rpc/protocol/AbstractInvoker.java b/dubbo-rpc/dubbo-rpc-api/src/main/java/org/apache/dubbo/rpc/protocol/AbstractInvoker.java
+index e4eba3c..fd0cca6 100644
+--- a/dubbo-rpc/dubbo-rpc-api/src/main/java/org/apache/dubbo/rpc/protocol/AbstractInvoker.java
++++ b/dubbo-rpc/dubbo-rpc-api/src/main/java/org/apache/dubbo/rpc/protocol/AbstractInvoker.java
+@@ -126,10 +126,10 @@
+ 
+     @Override
+     public Result invoke(Invocation inv) throws RpcException {
++        // if invoker is destroyed due to address refresh from registry, let's allow the current invoke to proceed
+         if (destroyed.get()) {
+-            throw new RpcException("Rpc invoker for service " + this + " on consumer " + NetUtils.getLocalHost()
+-                    + " use dubbo version " + Version.getVersion()
+-                    + " is DESTROYED, can not be invoked any more!");
++            logger.warn("Invoker for service " + this + " on consumer " + NetUtils.getLocalHost() + " is destroyed, "
++                    + ", dubbo version is " + Version.getVersion() + ", this invoker should not be used any longer");
+         }
+         RpcInvocation invocation = (RpcInvocation) inv;
+         invocation.setInvoker(this);
+diff --git a/dubbo-rpc/dubbo-rpc-api/src/main/java/org/apache/dubbo/rpc/protocol/AbstractInvoker.java b/dubbo-rpc/dubbo-rpc-api/src/main/java/org/apache/dubbo/rpc/protocol/AbstractInvoker.java
+index e4eba3c..fd0cca6 100644
+--- a/dubbo-rpc/dubbo-rpc-api/src/main/java/org/apache/dubbo/rpc/protocol/AbstractInvoker.java
++++ b/dubbo-rpc/dubbo-rpc-api/src/main/java/org/apache/dubbo/rpc/protocol/AbstractInvoker.java
+@@ -126,10 +126,10 @@
+ 
+     @Override
+     public Result invoke(Invocation inv) throws RpcException {
++        // if invoker is destroyed due to address refresh from registry, let's allow the current invoke to proceed
+         if (destroyed.get()) {
+-            throw new RpcException("Rpc invoker for service " + this + " on consumer " + NetUtils.getLocalHost()
+-                    + " use dubbo version " + Version.getVersion()
+-                    + " is DESTROYED, can not be invoked any more!");
++            logger.warn("Invoker for service " + this + " on consumer " + NetUtils.getLocalHost() + " is destroyed, "
++                    + ", dubbo version is " + Version.getVersion() + ", this invoker should not be used any longer");
+         }
+         RpcInvocation invocation = (RpcInvocation) inv;
+         invocation.setInvoker(this);

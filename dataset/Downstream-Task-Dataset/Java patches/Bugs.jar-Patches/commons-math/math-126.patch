@@ -1,0 +1,65 @@
+diff --git a/src/main/java/org/apache/commons/math3/distribution/FDistribution.java b/src/main/java/org/apache/commons/math3/distribution/FDistribution.java
+index 8b0993c..e301e2e 100644
+--- a/src/main/java/org/apache/commons/math3/distribution/FDistribution.java
++++ b/src/main/java/org/apache/commons/math3/distribution/FDistribution.java
+@@ -272,7 +272,7 @@ public class FDistribution extends AbstractRealDistribution {
+ 
+     /** {@inheritDoc} */
+     public boolean isSupportLowerBoundInclusive() {
+-        return true;
++        return false;
+     }
+ 
+     /** {@inheritDoc} */
+diff --git a/src/main/java/org/apache/commons/math3/distribution/RealDistribution.java b/src/main/java/org/apache/commons/math3/distribution/RealDistribution.java
+index f09c5ac..90dc8fd 100644
+--- a/src/main/java/org/apache/commons/math3/distribution/RealDistribution.java
++++ b/src/main/java/org/apache/commons/math3/distribution/RealDistribution.java
+@@ -137,18 +137,26 @@ public interface RealDistribution {
+     double getSupportUpperBound();
+ 
+     /**
+-     * Use this method to get information about whether the lower bound
+-     * of the support is inclusive or not.
+-     *
+-     * @return whether the lower bound of the support is inclusive or not
++     * Whether or not the lower bound of support is in the domain of the density
++     * function.  Returns true iff {@code getSupporLowerBound()} is finite and
++     * {@code density(getSupportLowerBound())} returns a non-NaN, non-infinite
++     * value.
++     *
++     * @return true if the lower bound of support is finite and the density 
++     * function returns a non-NaN, non-infinite value there
++     * @deprecated to be removed in 4.0
+      */
+     boolean isSupportLowerBoundInclusive();
+ 
+     /**
+-     * Use this method to get information about whether the upper bound
+-     * of the support is inclusive or not.
+-     *
+-     * @return whether the upper bound of the support is inclusive or not
++     * Whether or not the upper bound of support is in the domain of the density
++     * function.  Returns true iff {@code getSupportUpperBound()} is finite and
++     * {@code density(getSupportUpperBound())} returns a non-NaN, non-infinite
++     * value.
++     *
++     * @return true if the upper bound of support is finite and the density 
++     * function returns a non-NaN, non-infinite value there
++     * @deprecated to be removed in 4.0
+      */
+     boolean isSupportUpperBoundInclusive();
+ 
+diff --git a/src/main/java/org/apache/commons/math3/distribution/UniformRealDistribution.java b/src/main/java/org/apache/commons/math3/distribution/UniformRealDistribution.java
+index 5d32f6e..0d279de 100644
+--- a/src/main/java/org/apache/commons/math3/distribution/UniformRealDistribution.java
++++ b/src/main/java/org/apache/commons/math3/distribution/UniformRealDistribution.java
+@@ -181,7 +181,7 @@ public class UniformRealDistribution extends AbstractRealDistribution {
+ 
+     /** {@inheritDoc} */
+     public boolean isSupportUpperBoundInclusive() {
+-        return false;
++        return true;
+     }
+ 
+     /**

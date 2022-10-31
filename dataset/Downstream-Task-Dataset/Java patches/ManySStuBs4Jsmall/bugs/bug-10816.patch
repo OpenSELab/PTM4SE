@@ -1,0 +1,31 @@
+diff --git a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/LongColumnCondition.java b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/LongColumnCondition.java
+index d7c5c0a..231a5f6 100644
+--- a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/LongColumnCondition.java
++++ b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/LongColumnCondition.java
+@@ -33,7 +33,7 @@
+ public class LongColumnCondition extends BaseColumnCondition {
+ 
+     private final ConditionOp op;
+-    private final long value;
++    private final Long value;
+     private final Set<Long> set;
+ 
+     /**
+@@ -94,7 +94,7 @@
+             throw new IllegalArgumentException("Invalid condition op: can ONLY use this constructor with InSet or NotInSet ops");
+         }
+         this.op = op;
+-        this.value = 0;
++        this.value = null;
+         this.set = set;
+     }
+ 
+@@ -103,7 +103,7 @@
+                                 @JsonProperty("value") long value, @JsonProperty("set") Set<Long> set) {
+         super(columnName, DEFAULT_SEQUENCE_CONDITION_MODE);
+         this.op = op;
+-        this.value = value;
++        this.value = (set == null ? value : null);
+         this.set = set;
+     }
+ 

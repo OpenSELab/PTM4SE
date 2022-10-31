@@ -1,0 +1,31 @@
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedScheduledExecutorService.java b/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedScheduledExecutorService.java
+index 4b20551..efe0299 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedScheduledExecutorService.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedScheduledExecutorService.java
+@@ -75,7 +75,7 @@
+     @Override
+     public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit) {
+         scheduledOnce.mark();
+-        return delegate.schedule(new InstrumentedCallable<V>(callable), delay, unit);
++        return delegate.schedule(new InstrumentedCallable<>(callable), delay, unit);
+     }
+ 
+     /**
+@@ -142,7 +142,7 @@
+     @Override
+     public <T> Future<T> submit(Callable<T> task) {
+         submitted.mark();
+-        return delegate.submit(new InstrumentedCallable<T>(task));
++        return delegate.submit(new InstrumentedCallable<>(task));
+     }
+ 
+     /**
+@@ -204,7 +204,7 @@
+     }
+ 
+     private <T> Collection<? extends Callable<T>> instrument(Collection<? extends Callable<T>> tasks) {
+-        final List<InstrumentedCallable<T>> instrumented = new ArrayList<InstrumentedCallable<T>>(tasks.size());
++        final List<InstrumentedCallable<T>> instrumented = new ArrayList<>(tasks.size());
+         for (Callable<T> task : tasks) {
+             instrumented.add(new InstrumentedCallable(task));
+         }

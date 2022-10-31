@@ -1,0 +1,975 @@
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/ByteParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/ByteParser.java
+index 5858da2..09e517a 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/ByteParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/ByteParser.java
+@@ -21,22 +21,23 @@ package org.apache.flink.types.parser;
+ 
+ 
+ public class ByteParser extends FieldParser<Byte> {
+-	
++
+ 	private byte result;
+-	
++
+ 	@Override
+ 	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, Byte reusable) {
+ 		int val = 0;
+ 		boolean neg = false;
+ 
+-		final int delimLimit = limit-delimiter.length+1;
+-		
++		final int delimLimit = limit - delimiter.length + 1;
++
+ 		if (bytes[startPos] == '-') {
+ 			neg = true;
+ 			startPos++;
+-			
++
+ 			// check for empty field with only the sign
+-			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos, delimiter))) {
++			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos, 
++				delimiter))) {
+ 				setErrorState(ParseErrorState.NUMERIC_VALUE_ORPHAN_SIGN);
+ 				return -1;
+ 			}
+@@ -44,6 +45,10 @@ public class ByteParser extends FieldParser<Byte> {
+ 
+ 		for (int i = startPos; i < limit; i++) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
++				if (i == startPos) {
++					setErrorState(ParseErrorState.EMPTY_STRING);
++					return -1;
++				}
+ 				this.result = (byte) (neg ? -val : val);
+ 				return i + delimiter.length;
+ 			}
+@@ -53,17 +58,17 @@ public class ByteParser extends FieldParser<Byte> {
+ 			}
+ 			val *= 10;
+ 			val += bytes[i] - 48;
+-			
++
+ 			if (val > Byte.MAX_VALUE && (!neg || val > -Byte.MIN_VALUE)) {
+ 				setErrorState(ParseErrorState.NUMERIC_VALUE_OVERFLOW_UNDERFLOW);
+ 				return -1;
+ 			}
+ 		}
+-		
++
+ 		this.result = (byte) (neg ? -val : val);
+ 		return limit;
+ 	}
+-	
++
+ 	@Override
+ 	public Byte createValue() {
+ 		return Byte.MIN_VALUE;
+@@ -73,43 +78,40 @@ public class ByteParser extends FieldParser<Byte> {
+ 	public Byte getLastResult() {
+ 		return Byte.valueOf(this.result);
+ 	}
+-	
++
+ 	/**
+-	 * Static utility to parse a field of type byte from a byte sequence that represents text characters
++	 * Static utility to parse a field of type byte from a byte sequence that represents text 
++	 * characters
+ 	 * (such as when read from a file stream).
+-	 * 
+-	 * @param bytes The bytes containing the text data that should be parsed.
++	 *
++	 * @param bytes    The bytes containing the text data that should be parsed.
+ 	 * @param startPos The offset to start the parsing.
+-	 * @param length The length of the byte sequence (counting from the offset).
+-	 * 
++	 * @param length   The length of the byte sequence (counting from the offset).
+ 	 * @return The parsed value.
+-	 * 
+-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
++	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
++	 * represents not a correct number.
+ 	 */
+ 	public static final byte parseField(byte[] bytes, int startPos, int length) {
+ 		return parseField(bytes, startPos, length, (char) 0xffff);
+ 	}
+-	
++
+ 	/**
+-	 * Static utility to parse a field of type byte from a byte sequence that represents text characters
++	 * Static utility to parse a field of type byte from a byte sequence that represents text 
++	 * characters
+ 	 * (such as when read from a file stream).
+-	 * 
+-	 * @param bytes The bytes containing the text data that should be parsed.
+-	 * @param startPos The offset to start the parsing.
+-	 * @param length The length of the byte sequence (counting from the offset).
++	 *
++	 * @param bytes     The bytes containing the text data that should be parsed.
++	 * @param startPos  The offset to start the parsing.
++	 * @param length    The length of the byte sequence (counting from the offset).
+ 	 * @param delimiter The delimiter that terminates the field.
+-	 * 
+ 	 * @return The parsed value.
+-	 * 
+-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
++	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
++	 * represents not a correct number.
+ 	 */
+ 	public static final byte parseField(byte[] bytes, int startPos, int length, char delimiter) {
+-		if (length <= 0) {
+-			throw new NumberFormatException("Invalid input: Empty string");
+-		}
+ 		long val = 0;
+ 		boolean neg = false;
+-		
++
+ 		if (bytes[startPos] == '-') {
+ 			neg = true;
+ 			startPos++;
+@@ -118,17 +120,17 @@ public class ByteParser extends FieldParser<Byte> {
+ 				throw new NumberFormatException("Orphaned minus sign.");
+ 			}
+ 		}
+-		
++
+ 		for (; length > 0; startPos++, length--) {
+ 			if (bytes[startPos] == delimiter) {
+-				return (byte) (neg ? -val : val);
++				throw new NumberFormatException("Empty field.");
+ 			}
+ 			if (bytes[startPos] < 48 || bytes[startPos] > 57) {
+ 				throw new NumberFormatException("Invalid character.");
+ 			}
+ 			val *= 10;
+ 			val += bytes[startPos] - 48;
+-			
++
+ 			if (val > Byte.MAX_VALUE && (!neg || val > -Byte.MIN_VALUE)) {
+ 				throw new NumberFormatException("Value overflow/underflow");
+ 			}
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/ByteValueParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/ByteValueParser.java
+index f9b36e4..612a1cb 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/ByteValueParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/ByteValueParser.java
+@@ -52,6 +52,10 @@ public class ByteValueParser extends FieldParser<ByteValue> {
+ 		for (int i = startPos; i < limit; i++) {
+ 
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
++				if (i == startPos) {
++					setErrorState(ParseErrorState.EMPTY_STRING);
++					return -1;
++				}
+ 				reusable.setValue((byte) (neg ? -val : val));
+ 				return i + delimiter.length;
+ 			}
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/DoubleParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/DoubleParser.java
+index 947fdfe..086c1f5 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/DoubleParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/DoubleParser.java
+@@ -23,35 +23,39 @@ package org.apache.flink.types.parser;
+  * Parses a text field into a Double.
+  */
+ public class DoubleParser extends FieldParser<Double> {
+-	
++
+ 	private static final Double DOUBLE_INSTANCE = Double.valueOf(0.0);
+-	
++
+ 	private double result;
+-	
++
+ 	@Override
+ 	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, Double reusable) {
+ 		int i = startPos;
+ 
+-		final int delimLimit = limit-delimiter.length+1;
+-		
++		final int delimLimit = limit - delimiter.length + 1;
++
+ 		while (i < limit) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
+ 				break;
+ 			}
+ 			i++;
+ 		}
+-		
+-		String str = new String(bytes, startPos, i-startPos);
++
++		String str = new String(bytes, startPos, i - startPos);
++		int len = str.length();
++		if (Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[Math.max(i - 1, 0)])) {
++			setErrorState(ParseErrorState.WHITESPACE_IN_NUMERIC_FIELD);
++			return -1;
++		}
+ 		try {
+ 			this.result = Double.parseDouble(str);
+ 			return (i == limit) ? limit : i + delimiter.length;
+-		}
+-		catch (NumberFormatException e) {
++		} catch (NumberFormatException e) {
+ 			setErrorState(ParseErrorState.NUMERIC_VALUE_FORMAT_ERROR);
+ 			return -1;
+ 		}
+ 	}
+-	
++
+ 	@Override
+ 	public Double createValue() {
+ 		return DOUBLE_INSTANCE;
+@@ -61,35 +65,35 @@ public class DoubleParser extends FieldParser<Double> {
+ 	public Double getLastResult() {
+ 		return Double.valueOf(this.result);
+ 	}
+-	
++
+ 	/**
+-	 * Static utility to parse a field of type double from a byte sequence that represents text characters
++	 * Static utility to parse a field of type double from a byte sequence that represents text 
++	 * characters
+ 	 * (such as when read from a file stream).
+-	 * 
+-	 * @param bytes The bytes containing the text data that should be parsed.
++	 *
++	 * @param bytes    The bytes containing the text data that should be parsed.
+ 	 * @param startPos The offset to start the parsing.
+-	 * @param length The length of the byte sequence (counting from the offset).
+-	 * 
++	 * @param length   The length of the byte sequence (counting from the offset).
+ 	 * @return The parsed value.
+-	 * 
+-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
++	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
++	 * represents not a correct number.
+ 	 */
+ 	public static final double parseField(byte[] bytes, int startPos, int length) {
+ 		return parseField(bytes, startPos, length, (char) 0xffff);
+ 	}
+-	
++
+ 	/**
+-	 * Static utility to parse a field of type double from a byte sequence that represents text characters
++	 * Static utility to parse a field of type double from a byte sequence that represents text 
++	 * characters
+ 	 * (such as when read from a file stream).
+-	 * 
+-	 * @param bytes The bytes containing the text data that should be parsed.
+-	 * @param startPos The offset to start the parsing.
+-	 * @param length The length of the byte sequence (counting from the offset).
++	 *
++	 * @param bytes     The bytes containing the text data that should be parsed.
++	 * @param startPos  The offset to start the parsing.
++	 * @param length    The length of the byte sequence (counting from the offset).
+ 	 * @param delimiter The delimiter that terminates the field.
+-	 * 
+ 	 * @return The parsed value.
+-	 * 
+-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
++	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
++	 * represents not a correct number.
+ 	 */
+ 	public static final double parseField(byte[] bytes, int startPos, int length, char delimiter) {
+ 		if (length <= 0) {
+@@ -97,12 +101,17 @@ public class DoubleParser extends FieldParser<Double> {
+ 		}
+ 		int i = 0;
+ 		final byte delByte = (byte) delimiter;
+-		
++
+ 		while (i < length && bytes[i] != delByte) {
+ 			i++;
+ 		}
+-		
+-		String str = new String(bytes, startPos, i);
++
++		String str = new String(bytes, startPos, i - startPos);
++		int len = str.length();
++		if (Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[Math.max(i - 1, 0)])) {
++			throw new NumberFormatException("There is leading or trailing whitespace in the " +
++				"numeric field: " + str);
++		}
+ 		return Double.parseDouble(str);
+ 	}
+ }
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/DoubleValueParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/DoubleValueParser.java
+index e225c1f..7751831 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/DoubleValueParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/DoubleValueParser.java
+@@ -33,7 +33,7 @@ public class DoubleValueParser extends FieldParser<DoubleValue> {
+ 		
+ 		int i = startPos;
+ 
+-		final int delimLimit = limit-delimiter.length+1;
++		final int delimLimit = limit - delimiter.length + 1;
+ 
+ 		while (i < limit) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
+@@ -42,7 +42,11 @@ public class DoubleValueParser extends FieldParser<DoubleValue> {
+ 			i++;
+ 		}
+ 		
+-		String str = new String(bytes, startPos, i-startPos);
++		String str = new String(bytes, startPos, i - startPos);
++		if (Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[Math.max(i - 1, 0)])) {
++			setErrorState(ParseErrorState.WHITESPACE_IN_NUMERIC_FIELD);
++			return -1;
++		}
+ 		try {
+ 			double value = Double.parseDouble(str);
+ 			reusable.setValue(value);
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/FieldParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/FieldParser.java
+index 33697fd..55e9915 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/FieldParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/FieldParser.java
+@@ -64,7 +64,13 @@ public abstract class FieldParser<T> {
+ 		UNTERMINATED_QUOTED_STRING,
+ 
+ 		/** The parser found characters between the end of the quoted string and the delimiter. */
+-		UNQUOTED_CHARS_AFTER_QUOTED_STRING
++		UNQUOTED_CHARS_AFTER_QUOTED_STRING,
++		
++		/** The string is empty. */
++		EMPTY_STRING,
++
++		/** There is whitespace in a numeric field. */
++		WHITESPACE_IN_NUMERIC_FIELD
+ 	}
+ 	
+ 	private ParseErrorState errorState = ParseErrorState.NONE;
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/FloatParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/FloatParser.java
+index 7d166c7..be98aa1 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/FloatParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/FloatParser.java
+@@ -23,15 +23,16 @@ package org.apache.flink.types.parser;
+  * Parses a text field into a {@link Float}.
+  */
+ public class FloatParser extends FieldParser<Float> {
+-	
++
+ 	private float result;
+ 	
+ 	@Override
+-	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, Float reusable) {
+-		
++	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, Float 
++		reusable) {
++
+ 		int i = startPos;
+ 
+-		final int delimLimit = limit-delimiter.length+1;
++		final int delimLimit = limit - delimiter.length + 1;
+ 
+ 		while (i < limit) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
+@@ -39,18 +40,23 @@ public class FloatParser extends FieldParser<Float> {
+ 			}
+ 			i++;
+ 		}
+-		
+-		String str = new String(bytes, startPos, i-startPos);
++
++		if (Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[Math.max(i - 1, 0)])) {
++			setErrorState(ParseErrorState.WHITESPACE_IN_NUMERIC_FIELD);
++			return -1;
++		}
++
++		String str = new String(bytes, startPos, i - startPos);
++		int len = str.length();
+ 		try {
+ 			this.result = Float.parseFloat(str);
+-			return (i == limit) ? limit : i+ delimiter.length;
+-		}
+-		catch (NumberFormatException e) {
++			return (i == limit) ? limit : i + delimiter.length;
++		} catch (NumberFormatException e) {
+ 			setErrorState(ParseErrorState.NUMERIC_VALUE_FORMAT_ERROR);
+ 			return -1;
+ 		}
+ 	}
+-	
++
+ 	@Override
+ 	public Float createValue() {
+ 		return Float.MIN_VALUE;
+@@ -60,35 +66,35 @@ public class FloatParser extends FieldParser<Float> {
+ 	public Float getLastResult() {
+ 		return Float.valueOf(this.result);
+ 	}
+-	
++
+ 	/**
+-	 * Static utility to parse a field of type float from a byte sequence that represents text characters
++	 * Static utility to parse a field of type float from a byte sequence that represents text 
++	 * characters
+ 	 * (such as when read from a file stream).
+-	 * 
+-	 * @param bytes The bytes containing the text data that should be parsed.
++	 *
++	 * @param bytes    The bytes containing the text data that should be parsed.
+ 	 * @param startPos The offset to start the parsing.
+-	 * @param length The length of the byte sequence (counting from the offset).
+-	 * 
++	 * @param length   The length of the byte sequence (counting from the offset).
+ 	 * @return The parsed value.
+-	 * 
+-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
++	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
++	 * represents not a correct number.
+ 	 */
+ 	public static final float parseField(byte[] bytes, int startPos, int length) {
+ 		return parseField(bytes, startPos, length, (char) 0xffff);
+ 	}
+-	
++
+ 	/**
+-	 * Static utility to parse a field of type float from a byte sequence that represents text characters
++	 * Static utility to parse a field of type float from a byte sequence that represents text 
++	 * characters
+ 	 * (such as when read from a file stream).
+-	 * 
+-	 * @param bytes The bytes containing the text data that should be parsed.
+-	 * @param startPos The offset to start the parsing.
+-	 * @param length The length of the byte sequence (counting from the offset).
++	 *
++	 * @param bytes     The bytes containing the text data that should be parsed.
++	 * @param startPos  The offset to start the parsing.
++	 * @param length    The length of the byte sequence (counting from the offset).
+ 	 * @param delimiter The delimiter that terminates the field.
+-	 * 
+ 	 * @return The parsed value.
+-	 * 
+-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
++	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
++	 * represents not a correct number.
+ 	 */
+ 	public static final float parseField(byte[] bytes, int startPos, int length, char delimiter) {
+ 		if (length <= 0) {
+@@ -96,12 +102,17 @@ public class FloatParser extends FieldParser<Float> {
+ 		}
+ 		int i = 0;
+ 		final byte delByte = (byte) delimiter;
+-		
++
+ 		while (i < length && bytes[i] != delByte) {
+ 			i++;
+ 		}
+ 		
+-		String str = new String(bytes, startPos, i);
++		String str = new String(bytes, startPos, i - startPos);
++		if (Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[Math.max(i - 1, 0)])) {
++			throw new NumberFormatException("There is leading or trailing whitespace in the " +
++				"numeric field: " + str);
++		}
++		int len = str.length();
+ 		return Float.parseFloat(str);
+ 	}
+ }
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/FloatValueParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/FloatValueParser.java
+index af16d4c..e8caac2 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/FloatValueParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/FloatValueParser.java
+@@ -33,7 +33,7 @@ public class FloatValueParser extends FieldParser<FloatValue> {
+ 		
+ 		int i = startPos;
+ 
+-		final int delimLimit = limit-delimiter.length+1;
++		final int delimLimit = limit - delimiter.length + 1;
+ 
+ 		while (i < limit) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
+@@ -42,7 +42,11 @@ public class FloatValueParser extends FieldParser<FloatValue> {
+ 			i++;
+ 		}
+ 		
+-		String str = new String(bytes, startPos, i-startPos);
++		String str = new String(bytes, startPos, i - startPos);
++		if (Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[Math.max(i - 1, 0)])) {
++			setErrorState(ParseErrorState.WHITESPACE_IN_NUMERIC_FIELD);
++			return -1;
++		}
+ 		try {
+ 			float value = Float.parseFloat(str);
+ 			reusable.setValue(value);
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/IntParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/IntParser.java
+index c871f4a..dcd2ec2 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/IntParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/IntParser.java
+@@ -25,32 +25,38 @@ package org.apache.flink.types.parser;
+  * The parser does not check for the maximum value.
+  */
+ public class IntParser extends FieldParser<Integer> {
+-	
++
+ 	private static final long OVERFLOW_BOUND = 0x7fffffffL;
+ 	private static final long UNDERFLOW_BOUND = 0x80000000L;
+ 
+ 	private int result;
+-	
++
+ 	@Override
+-	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, Integer reusable) {
++	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, Integer 
++		reusable) {
+ 		long val = 0;
+ 		boolean neg = false;
+ 
+-		final int delimLimit = limit-delimiter.length+1;
++		final int delimLimit = limit - delimiter.length + 1;
+ 
+ 		if (bytes[startPos] == '-') {
+ 			neg = true;
+ 			startPos++;
+-			
++
+ 			// check for empty field with only the sign
+-			if (startPos == limit || ( startPos < delimLimit && delimiterNext(bytes, startPos, delimiter))) {
++			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos, 
++				delimiter))) {
+ 				setErrorState(ParseErrorState.NUMERIC_VALUE_ORPHAN_SIGN);
+ 				return -1;
+ 			}
+ 		}
+-		
++
+ 		for (int i = startPos; i < limit; i++) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
++				if (i == startPos) {
++					setErrorState(ParseErrorState.EMPTY_STRING);
++					return -1;
++				}
+ 				this.result = (int) (neg ? -val : val);
+ 				return i + delimiter.length;
+ 			}
+@@ -60,17 +66,17 @@ public class IntParser extends FieldParser<Integer> {
+ 			}
+ 			val *= 10;
+ 			val += bytes[i] - 48;
+-			
++
+ 			if (val > OVERFLOW_BOUND && (!neg || val > UNDERFLOW_BOUND)) {
+ 				setErrorState(ParseErrorState.NUMERIC_VALUE_OVERFLOW_UNDERFLOW);
+ 				return -1;
+ 			}
+ 		}
+-		
++
+ 		this.result = (int) (neg ? -val : val);
+ 		return limit;
+ 	}
+-	
++
+ 	@Override
+ 	public Integer createValue() {
+ 		return Integer.MIN_VALUE;
+@@ -80,40 +86,37 @@ public class IntParser extends FieldParser<Integer> {
+ 	public Integer getLastResult() {
+ 		return Integer.valueOf(this.result);
+ 	}
+-	
++
+ 	/**
+-	 * Static utility to parse a field of type int from a byte sequence that represents text characters
++	 * Static utility to parse a field of type int from a byte sequence that represents text 
++	 * characters
+ 	 * (such as when read from a file stream).
+-	 * 
+-	 * @param bytes The bytes containing the text data that should be parsed.
++	 *
++	 * @param bytes    The bytes containing the text data that should be parsed.
+ 	 * @param startPos The offset to start the parsing.
+-	 * @param length The length of the byte sequence (counting from the offset).
+-	 * 
++	 * @param length   The length of the byte sequence (counting from the offset).
+ 	 * @return The parsed value.
+-	 * 
+-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
++	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
++	 * represents not a correct number.
+ 	 */
+ 	public static final int parseField(byte[] bytes, int startPos, int length) {
+ 		return parseField(bytes, startPos, length, (char) 0xffff);
+ 	}
+-	
++
+ 	/**
+-	 * Static utility to parse a field of type int from a byte sequence that represents text characters
++	 * Static utility to parse a field of type int from a byte sequence that represents text 
++	 * characters
+ 	 * (such as when read from a file stream).
+-	 * 
+-	 * @param bytes The bytes containing the text data that should be parsed.
+-	 * @param startPos The offset to start the parsing.
+-	 * @param length The length of the byte sequence (counting from the offset).
++	 *
++	 * @param bytes     The bytes containing the text data that should be parsed.
++	 * @param startPos  The offset to start the parsing.
++	 * @param length    The length of the byte sequence (counting from the offset).
+ 	 * @param delimiter The delimiter that terminates the field.
+-	 * 
+ 	 * @return The parsed value.
+-	 * 
+-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
++	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
++	 * represents not a correct number.
+ 	 */
+ 	public static final int parseField(byte[] bytes, int startPos, int length, char delimiter) {
+-		if (length <= 0) {
+-			throw new NumberFormatException("Invalid input: Empty string");
+-		}
+ 		long val = 0;
+ 		boolean neg = false;
+ 
+@@ -125,17 +128,17 @@ public class IntParser extends FieldParser<Integer> {
+ 				throw new NumberFormatException("Orphaned minus sign.");
+ 			}
+ 		}
+-		
++
+ 		for (; length > 0; startPos++, length--) {
+ 			if (bytes[startPos] == delimiter) {
+-				return (int) (neg ? -val : val);
++				throw new NumberFormatException("Empty field.");
+ 			}
+ 			if (bytes[startPos] < 48 || bytes[startPos] > 57) {
+ 				throw new NumberFormatException("Invalid character.");
+ 			}
+ 			val *= 10;
+ 			val += bytes[startPos] - 48;
+-			
++
+ 			if (val > OVERFLOW_BOUND && (!neg || val > UNDERFLOW_BOUND)) {
+ 				throw new NumberFormatException("Value overflow/underflow");
+ 			}
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/IntValueParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/IntValueParser.java
+index 8cb8176..abd8615 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/IntValueParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/IntValueParser.java
+@@ -54,6 +54,10 @@ public class IntValueParser extends FieldParser<IntValue> {
+ 		
+ 		for (int i = startPos; i < limit; i++) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
++				if (i == startPos) {
++					setErrorState(ParseErrorState.EMPTY_STRING);
++					return -1;
++				}
+ 				reusable.setValue((int) (neg ? -val : val));
+ 				return i + delimiter.length;
+ 			}
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/LongParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/LongParser.java
+index af17f15..bb6c7c9 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/LongParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/LongParser.java
+@@ -24,9 +24,9 @@ package org.apache.flink.types.parser;
+  * Only characters '1' to '0' and '-' are allowed.
+  */
+ public class LongParser extends FieldParser<Long> {
+-	
++
+ 	private long result;
+-	
++
+ 	@Override
+ 	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, Long reusable) {
+ 		long val = 0;
+@@ -37,16 +37,20 @@ public class LongParser extends FieldParser<Long> {
+ 		if (bytes[startPos] == '-') {
+ 			neg = true;
+ 			startPos++;
+-			
++
+ 			// check for empty field with only the sign
+ 			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos, delimiter))) {
+ 				setErrorState(ParseErrorState.NUMERIC_VALUE_ORPHAN_SIGN);
+ 				return -1;
+ 			}
+ 		}
+-		
++
+ 		for (int i = startPos; i < limit; i++) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
++				if (i == startPos) {
++					setErrorState(ParseErrorState.EMPTY_STRING);
++					return -1;
++				}
+ 				this.result = neg ? -val : val;
+ 				return i + delimiter.length;
+ 			}
+@@ -56,15 +60,15 @@ public class LongParser extends FieldParser<Long> {
+ 			}
+ 			val *= 10;
+ 			val += bytes[i] - 48;
+-			
++
+ 			// check for overflow / underflow
+ 			if (val < 0) {
+ 				// this is an overflow/underflow, unless we hit exactly the Long.MIN_VALUE
+ 				if (neg && val == Long.MIN_VALUE) {
+ 					this.result = Long.MIN_VALUE;
+-					
++
+ 					if (i+1 >= limit) {
+-						return limit; 
++						return limit;
+ 					} else if (i+1 < delimLimit && delimiterNext(bytes, i+1, delimiter)) {
+ 						return i + 1 + delimiter.length;
+ 					} else {
+@@ -78,57 +82,54 @@ public class LongParser extends FieldParser<Long> {
+ 				}
+ 			}
+ 		}
+-		
++
+ 		this.result = neg ? -val : val;
+ 		return limit;
+ 	}
+-	
++
+ 	@Override
+ 	public Long createValue() {
+ 		return Long.MIN_VALUE;
+ 	}
+-	
++
+ 	@Override
+ 	public Long getLastResult() {
+ 		return Long.valueOf(this.result);
+ 	}
+-	
++
+ 	/**
+ 	 * Static utility to parse a field of type long from a byte sequence that represents text characters
+ 	 * (such as when read from a file stream).
+-	 * 
++	 *
+ 	 * @param bytes The bytes containing the text data that should be parsed.
+ 	 * @param startPos The offset to start the parsing.
+ 	 * @param length The length of the byte sequence (counting from the offset).
+-	 * 
++	 *
+ 	 * @return The parsed value.
+-	 * 
++	 *
+ 	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
+ 	 */
+ 	public static final long parseField(byte[] bytes, int startPos, int length) {
+ 		return parseField(bytes, startPos, length, (char) 0xffff);
+ 	}
+-	
++
+ 	/**
+ 	 * Static utility to parse a field of type long from a byte sequence that represents text characters
+ 	 * (such as when read from a file stream).
+-	 * 
++	 *
+ 	 * @param bytes The bytes containing the text data that should be parsed.
+ 	 * @param startPos The offset to start the parsing.
+ 	 * @param length The length of the byte sequence (counting from the offset).
+ 	 * @param delimiter The delimiter that terminates the field.
+-	 * 
++	 *
+ 	 * @return The parsed value.
+-	 * 
++	 *
+ 	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
+ 	 */
+ 	public static final long parseField(byte[] bytes, int startPos, int length, char delimiter) {
+-		if (length <= 0) {
+-			throw new NumberFormatException("Invalid input: Empty string");
+-		}
+ 		long val = 0;
+ 		boolean neg = false;
+-		
++
+ 		if (bytes[startPos] == '-') {
+ 			neg = true;
+ 			startPos++;
+@@ -137,17 +138,17 @@ public class LongParser extends FieldParser<Long> {
+ 				throw new NumberFormatException("Orphaned minus sign.");
+ 			}
+ 		}
+-		
++
+ 		for (; length > 0; startPos++, length--) {
+ 			if (bytes[startPos] == delimiter) {
+-				return neg ? -val : val;
++				throw new NumberFormatException("Empty field.");
+ 			}
+ 			if (bytes[startPos] < 48 || bytes[startPos] > 57) {
+ 				throw new NumberFormatException("Invalid character.");
+ 			}
+ 			val *= 10;
+ 			val += bytes[startPos] - 48;
+-			
++
+ 			// check for overflow / underflow
+ 			if (val < 0) {
+ 				// this is an overflow/underflow, unless we hit exactly the Long.MIN_VALUE
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/LongValueParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/LongValueParser.java
+index 8b697cc..a99a86e 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/LongValueParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/LongValueParser.java
+@@ -51,6 +51,10 @@ public class LongValueParser extends FieldParser<LongValue> {
+ 		
+ 		for (int i = startPos; i < limit; i++) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
++				if (i == startPos) {
++					setErrorState(ParseErrorState.EMPTY_STRING);
++					return -1;
++				}
+ 				reusable.setValue(neg ? -val : val);
+ 				return i + delimiter.length;
+ 			}
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/ShortParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/ShortParser.java
+index a6f9898..6e04d60 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/ShortParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/ShortParser.java
+@@ -25,10 +25,10 @@ package org.apache.flink.types.parser;
+  * The parser does not check for the maximum value.
+  */
+ public class ShortParser extends FieldParser<Short> {
+-	
++
+ 	private static final int OVERFLOW_BOUND = 0x7fff;
+ 	private static final int UNDERFLOW_BOUND = 0x8000;
+-	
++
+ 	private short result;
+ 
+ 	@Override
+@@ -37,20 +37,24 @@ public class ShortParser extends FieldParser<Short> {
+ 		boolean neg = false;
+ 
+ 		final int delimLimit = limit-delimiter.length+1;
+-		
++
+ 		if (bytes[startPos] == '-') {
+ 			neg = true;
+ 			startPos++;
+-			
++
+ 			// check for empty field with only the sign
+ 			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos, delimiter))) {
+ 				setErrorState(ParseErrorState.NUMERIC_VALUE_ORPHAN_SIGN);
+ 				return -1;
+ 			}
+ 		}
+-		
++
+ 		for (int i = startPos; i < limit; i++) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
++				if (i == startPos) {
++					setErrorState(ParseErrorState.EMPTY_STRING);
++					return -1;
++				}
+ 				this.result = (short) (neg ? -val : val);
+ 				return i + delimiter.length;
+ 			}
+@@ -60,17 +64,17 @@ public class ShortParser extends FieldParser<Short> {
+ 			}
+ 			val *= 10;
+ 			val += bytes[i] - 48;
+-			
++
+ 			if (val > OVERFLOW_BOUND && (!neg || val > UNDERFLOW_BOUND)) {
+ 				setErrorState(ParseErrorState.NUMERIC_VALUE_OVERFLOW_UNDERFLOW);
+ 				return -1;
+ 			}
+ 		}
+-		
++
+ 		this.result = (short) (neg ? -val : val);
+ 		return limit;
+ 	}
+-	
++
+ 	@Override
+ 	public Short createValue() {
+ 		return Short.MIN_VALUE;
+@@ -80,43 +84,40 @@ public class ShortParser extends FieldParser<Short> {
+ 	public Short getLastResult() {
+ 		return Short.valueOf(this.result);
+ 	}
+-	
++
+ 	/**
+ 	 * Static utility to parse a field of type short from a byte sequence that represents text characters
+ 	 * (such as when read from a file stream).
+-	 * 
++	 *
+ 	 * @param bytes The bytes containing the text data that should be parsed.
+ 	 * @param startPos The offset to start the parsing.
+ 	 * @param length The length of the byte sequence (counting from the offset).
+-	 * 
++	 *
+ 	 * @return The parsed value.
+-	 * 
++	 *
+ 	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
+ 	 */
+ 	public static final short parseField(byte[] bytes, int startPos, int length) {
+ 		return parseField(bytes, startPos, length, (char) 0xffff);
+ 	}
+-	
++
+ 	/**
+ 	 * Static utility to parse a field of type short from a byte sequence that represents text characters
+ 	 * (such as when read from a file stream).
+-	 * 
++	 *
+ 	 * @param bytes The bytes containing the text data that should be parsed.
+ 	 * @param startPos The offset to start the parsing.
+ 	 * @param length The length of the byte sequence (counting from the offset).
+ 	 * @param delimiter The delimiter that terminates the field.
+-	 * 
++	 *
+ 	 * @return The parsed value.
+-	 * 
++	 *
+ 	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
+ 	 */
+ 	public static final short parseField(byte[] bytes, int startPos, int length, char delimiter) {
+-		if (length <= 0) {
+-			throw new NumberFormatException("Invalid input: Empty string");
+-		}
+ 		long val = 0;
+ 		boolean neg = false;
+-		
++
+ 		if (bytes[startPos] == '-') {
+ 			neg = true;
+ 			startPos++;
+@@ -125,17 +126,17 @@ public class ShortParser extends FieldParser<Short> {
+ 				throw new NumberFormatException("Orphaned minus sign.");
+ 			}
+ 		}
+-		
++
+ 		for (; length > 0; startPos++, length--) {
+ 			if (bytes[startPos] == delimiter) {
+-				return (short) (neg ? -val : val);
++				throw new NumberFormatException("Empty field.");
+ 			}
+ 			if (bytes[startPos] < 48 || bytes[startPos] > 57) {
+ 				throw new NumberFormatException("Invalid character.");
+ 			}
+ 			val *= 10;
+ 			val += bytes[startPos] - 48;
+-			
++
+ 			if (val > OVERFLOW_BOUND && (!neg || val > UNDERFLOW_BOUND)) {
+ 				throw new NumberFormatException("Value overflow/underflow");
+ 			}
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/ShortValueParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/ShortValueParser.java
+index f5168cc..4289d1a 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/ShortValueParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/ShortValueParser.java
+@@ -54,6 +54,10 @@ public class ShortValueParser extends FieldParser<ShortValue> {
+ 		
+ 		for (int i = startPos; i < limit; i++) {
+ 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
++				if (i == startPos) {
++					setErrorState(ParseErrorState.EMPTY_STRING);
++					return -1;
++				}
+ 				reusable.setValue((short) (neg ? -val : val));
+ 				return i + delimiter.length;
+ 			}

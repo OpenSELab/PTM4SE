@@ -1,0 +1,80 @@
+diff --git a/threads/src/test/java/org/jboss/as/threads/ThreadsSubsystemTestCase.java b/threads/src/test/java/org/jboss/as/threads/ThreadsSubsystemTestCase.java
+index 7aea089..901291d 100644
+--- a/threads/src/test/java/org/jboss/as/threads/ThreadsSubsystemTestCase.java
++++ b/threads/src/test/java/org/jboss/as/threads/ThreadsSubsystemTestCase.java
+@@ -225,7 +225,7 @@
+         assertEquals(ModelType.STRING, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(THREAD_FACTORY).require(TYPE)
+                 .asType());
+         assertEquals(ModelType.LIST, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(TYPE).asType());
+-        assertEquals("(AS7-2784) DMR: PROPERTY is missing in org.jboss.dmrTypeModelValue.of(type)", ModelType.UNDEFINED, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
++        assertEquals(ModelType.PROPERTY, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
+         assertEquals(ModelType.OBJECT, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(MAX_THREADS).require(TYPE)
+                 .asType());
+         assertEquals(
+@@ -269,7 +269,7 @@
+         assertEquals(ModelType.STRING, queueLessThreadPoolDesc.require(ATTRIBUTES).require(THREAD_FACTORY).require(TYPE)
+                 .asType());
+         assertEquals(ModelType.LIST, queueLessThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(TYPE).asType());
+-        assertEquals("(AS7-2784) DMR: PROPERTY is missing in org.jboss.dmrTypeModelValue.of(type)", ModelType.UNDEFINED, queueLessThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
++        assertEquals(ModelType.PROPERTY, queueLessThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
+         assertEquals(
+                 ModelType.INT,
+                 boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(MAX_THREADS).require(VALUE_TYPE).require(COUNT)
+@@ -291,7 +291,7 @@
+         assertEquals(ModelType.STRING, scheduledThreadPoolDesc.require(ATTRIBUTES).require(THREAD_FACTORY).require(TYPE)
+                 .asType());
+         assertEquals(ModelType.LIST, scheduledThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(TYPE).asType());
+-        assertEquals("(AS7-2784) DMR: PROPERTY is missing in org.jboss.dmrTypeModelValue.of(type)", ModelType.UNDEFINED, scheduledThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
++        assertEquals(ModelType.PROPERTY, scheduledThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
+         assertEquals(
+                 ModelType.INT,
+                 boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(MAX_THREADS).require(VALUE_TYPE).require(COUNT)
+@@ -311,7 +311,7 @@
+         assertEquals(ModelType.STRING, unboundedThreadPoolDesc.require(ATTRIBUTES).require(THREAD_FACTORY).require(TYPE)
+                 .asType());
+         assertEquals(ModelType.LIST, unboundedThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(TYPE).asType());
+-        assertEquals("(AS7-2784) DMR: PROPERTY is missing in org.jboss.dmrTypeModelValue.of(type)", ModelType.UNDEFINED, unboundedThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
++        assertEquals(ModelType.PROPERTY, unboundedThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
+         assertEquals(
+                 ModelType.INT,
+                 boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(MAX_THREADS).require(VALUE_TYPE).require(COUNT)
+diff --git a/threads/src/test/java/org/jboss/as/threads/ThreadsSubsystemTestCase.java b/threads/src/test/java/org/jboss/as/threads/ThreadsSubsystemTestCase.java
+index 7aea089..901291d 100644
+--- a/threads/src/test/java/org/jboss/as/threads/ThreadsSubsystemTestCase.java
++++ b/threads/src/test/java/org/jboss/as/threads/ThreadsSubsystemTestCase.java
+@@ -225,7 +225,7 @@
+         assertEquals(ModelType.STRING, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(THREAD_FACTORY).require(TYPE)
+                 .asType());
+         assertEquals(ModelType.LIST, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(TYPE).asType());
+-        assertEquals("(AS7-2784) DMR: PROPERTY is missing in org.jboss.dmrTypeModelValue.of(type)", ModelType.UNDEFINED, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
++        assertEquals(ModelType.PROPERTY, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
+         assertEquals(ModelType.OBJECT, boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(MAX_THREADS).require(TYPE)
+                 .asType());
+         assertEquals(
+@@ -269,7 +269,7 @@
+         assertEquals(ModelType.STRING, queueLessThreadPoolDesc.require(ATTRIBUTES).require(THREAD_FACTORY).require(TYPE)
+                 .asType());
+         assertEquals(ModelType.LIST, queueLessThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(TYPE).asType());
+-        assertEquals("(AS7-2784) DMR: PROPERTY is missing in org.jboss.dmrTypeModelValue.of(type)", ModelType.UNDEFINED, queueLessThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
++        assertEquals(ModelType.PROPERTY, queueLessThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
+         assertEquals(
+                 ModelType.INT,
+                 boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(MAX_THREADS).require(VALUE_TYPE).require(COUNT)
+@@ -291,7 +291,7 @@
+         assertEquals(ModelType.STRING, scheduledThreadPoolDesc.require(ATTRIBUTES).require(THREAD_FACTORY).require(TYPE)
+                 .asType());
+         assertEquals(ModelType.LIST, scheduledThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(TYPE).asType());
+-        assertEquals("(AS7-2784) DMR: PROPERTY is missing in org.jboss.dmrTypeModelValue.of(type)", ModelType.UNDEFINED, scheduledThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
++        assertEquals(ModelType.PROPERTY, scheduledThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
+         assertEquals(
+                 ModelType.INT,
+                 boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(MAX_THREADS).require(VALUE_TYPE).require(COUNT)
+@@ -311,7 +311,7 @@
+         assertEquals(ModelType.STRING, unboundedThreadPoolDesc.require(ATTRIBUTES).require(THREAD_FACTORY).require(TYPE)
+                 .asType());
+         assertEquals(ModelType.LIST, unboundedThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(TYPE).asType());
+-        assertEquals("(AS7-2784) DMR: PROPERTY is missing in org.jboss.dmrTypeModelValue.of(type)", ModelType.UNDEFINED, unboundedThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
++        assertEquals(ModelType.PROPERTY, unboundedThreadPoolDesc.require(ATTRIBUTES).require(PROPERTIES).require(VALUE_TYPE).asType());
+         assertEquals(
+                 ModelType.INT,
+                 boundedQueueThreadPoolDesc.require(ATTRIBUTES).require(MAX_THREADS).require(VALUE_TYPE).require(COUNT)

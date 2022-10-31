@@ -1,0 +1,13 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/ClientConfiguration.java b/core/src/main/java/org/apache/accumulo/core/client/ClientConfiguration.java
+index b64fab4..17ad10b 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/ClientConfiguration.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/ClientConfiguration.java
+@@ -107,6 +107,8 @@ public class ClientConfiguration extends CompositeConfiguration {
+ 
+   public ClientConfiguration(List<? extends Configuration> configs) {
+     super(configs);
++    // Don't do list interpolation
++    this.setListDelimiter('\0');
+   }
+ 
+   /**

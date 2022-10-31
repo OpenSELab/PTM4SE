@@ -1,0 +1,47 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/management/ManagedCBRTest.java b/camel-core/src/test/java/org/apache/camel/management/ManagedCBRTest.java
+index 4003894..9c6c966 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/ManagedCBRTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/ManagedCBRTest.java
+@@ -68,10 +68,10 @@
+                 from("direct:start").routeId("route")
+                     .to("mock:a").id("task-a")
+                     .choice().id("choice")
+-                        .when(simple("${body} contains Camel")).id("when")
++                        .when(simple("${body} contains 'Camel'")).id("when")
+                             .to("mock:b").id("task-b")
+                             .to("mock:c").id("task-c")
+-                        .when(simple("${body} contains Donkey")).id("when2")
++                        .when(simple("${body} contains 'Donkey'")).id("when2")
+                             .to("mock:d").id("task-d")
+                         .otherwise().id("otherwise")
+                             .to("mock:e").id("task-e")
+diff --git a/camel-core/src/test/java/org/apache/camel/util/DumpModelAsXmlChoiceFilterRouteTest.java b/camel-core/src/test/java/org/apache/camel/util/DumpModelAsXmlChoiceFilterRouteTest.java
+index f589c85..e41fbb9 100644
+--- a/camel-core/src/test/java/org/apache/camel/util/DumpModelAsXmlChoiceFilterRouteTest.java
++++ b/camel-core/src/test/java/org/apache/camel/util/DumpModelAsXmlChoiceFilterRouteTest.java
+@@ -57,7 +57,7 @@
+                             .filter().header("extra-gold")
+                                 .to("mock:extra-gold")
+                             .endChoice()
+-                        .when().simple("${body} contains Camel")
++                        .when().simple("${body} contains 'Camel'")
+                             .to("mock:camel")
+                         .otherwise()
+                             .to("mock:other")
+diff --git a/camel-core/src/test/java/org/apache/camel/management/ManagedCBRTest.java b/camel-core/src/test/java/org/apache/camel/management/ManagedCBRTest.java
+index 4003894..9c6c966 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/ManagedCBRTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/ManagedCBRTest.java
+@@ -68,10 +68,10 @@
+                 from("direct:start").routeId("route")
+                     .to("mock:a").id("task-a")
+                     .choice().id("choice")
+-                        .when(simple("${body} contains Camel")).id("when")
++                        .when(simple("${body} contains 'Camel'")).id("when")
+                             .to("mock:b").id("task-b")
+                             .to("mock:c").id("task-c")
+-                        .when(simple("${body} contains Donkey")).id("when2")
++                        .when(simple("${body} contains 'Donkey'")).id("when2")
+                             .to("mock:d").id("task-d")
+                         .otherwise().id("otherwise")
+                             .to("mock:e").id("task-e")

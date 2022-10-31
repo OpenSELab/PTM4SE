@@ -1,0 +1,60 @@
+diff --git a/components/camel-jetty/src/test/java/org/apache/camel/component/jetty/JettyHttpGetWithParamAsExchangeHeaderTest.java b/components/camel-jetty/src/test/java/org/apache/camel/component/jetty/JettyHttpGetWithParamAsExchangeHeaderTest.java
+index e7a1a39..446df84 100644
+--- a/components/camel-jetty/src/test/java/org/apache/camel/component/jetty/JettyHttpGetWithParamAsExchangeHeaderTest.java
++++ b/components/camel-jetty/src/test/java/org/apache/camel/component/jetty/JettyHttpGetWithParamAsExchangeHeaderTest.java
+@@ -44,10 +44,10 @@
+     @Test
+     public void testHttpGetWithUTF8EncodedParamsViaURI() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+-        mock.expectedHeaderReceived("message", "Keine gltige GPS-Daten!");
++        mock.expectedHeaderReceived("message", "Keine g\u00FCltige GPS-Daten!");
+         mock.expectedHeaderReceived(Exchange.HTTP_METHOD, "GET");
+ 
+-        template.requestBody(serverUri + "?message=Keine%20gltige%20GPS-Daten!", null, Object.class);
++        template.requestBody(serverUri + "?message=Keine%20g%C3%BCltige%20GPS-Daten!", null, Object.class);
+ 
+         assertMockEndpointsSatisfied();
+     }
+@@ -56,10 +56,10 @@
+     @Ignore
+     public void testHttpGetWithISO8859EncodedParamsViaURI() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+-        mock.expectedHeaderReceived("message", "Keine gltige GPS-Daten!");
++        mock.expectedHeaderReceived("message", "Keine g\u00C6ltige GPS-Daten!");
+         mock.expectedHeaderReceived(Exchange.HTTP_METHOD, "GET");
+ 
+-        template.requestBody(serverUri + "?message=Keine+gltige+GPS-Daten%21", null, Object.class);
++        template.requestBody(serverUri + "?message=Keine+g%C6ltige+GPS-Daten%21", null, Object.class);
+ 
+         assertMockEndpointsSatisfied();
+     }
+diff --git a/components/camel-jetty/src/test/java/org/apache/camel/component/jetty/JettyHttpGetWithParamAsExchangeHeaderTest.java b/components/camel-jetty/src/test/java/org/apache/camel/component/jetty/JettyHttpGetWithParamAsExchangeHeaderTest.java
+index e7a1a39..446df84 100644
+--- a/components/camel-jetty/src/test/java/org/apache/camel/component/jetty/JettyHttpGetWithParamAsExchangeHeaderTest.java
++++ b/components/camel-jetty/src/test/java/org/apache/camel/component/jetty/JettyHttpGetWithParamAsExchangeHeaderTest.java
+@@ -44,10 +44,10 @@
+     @Test
+     public void testHttpGetWithUTF8EncodedParamsViaURI() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+-        mock.expectedHeaderReceived("message", "Keine gltige GPS-Daten!");
++        mock.expectedHeaderReceived("message", "Keine g\u00FCltige GPS-Daten!");
+         mock.expectedHeaderReceived(Exchange.HTTP_METHOD, "GET");
+ 
+-        template.requestBody(serverUri + "?message=Keine%20gltige%20GPS-Daten!", null, Object.class);
++        template.requestBody(serverUri + "?message=Keine%20g%C3%BCltige%20GPS-Daten!", null, Object.class);
+ 
+         assertMockEndpointsSatisfied();
+     }
+@@ -56,10 +56,10 @@
+     @Ignore
+     public void testHttpGetWithISO8859EncodedParamsViaURI() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+-        mock.expectedHeaderReceived("message", "Keine gltige GPS-Daten!");
++        mock.expectedHeaderReceived("message", "Keine g\u00C6ltige GPS-Daten!");
+         mock.expectedHeaderReceived(Exchange.HTTP_METHOD, "GET");
+ 
+-        template.requestBody(serverUri + "?message=Keine+gltige+GPS-Daten%21", null, Object.class);
++        template.requestBody(serverUri + "?message=Keine+g%C6ltige+GPS-Daten%21", null, Object.class);
+ 
+         assertMockEndpointsSatisfied();
+     }

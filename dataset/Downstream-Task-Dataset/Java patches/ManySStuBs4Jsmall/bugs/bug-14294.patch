@@ -1,0 +1,61 @@
+diff --git a/src/com/google/javascript/jscomp/Compiler.java b/src/com/google/javascript/jscomp/Compiler.java
+index 8707710..222dca3 100644
+--- a/src/com/google/javascript/jscomp/Compiler.java
++++ b/src/com/google/javascript/jscomp/Compiler.java
+@@ -2224,7 +2224,7 @@
+   void throwInternalError(String message, Exception cause) {
+     String finalMessage =
+       "INTERNAL COMPILER ERROR.\n" +
+-      "Please report this problem.\n" + message;
++      "Please report this problem.\n\n" + message;
+ 
+     RuntimeException e = new RuntimeException(finalMessage, cause);
+     if (cause != null) {
+diff --git a/src/com/google/javascript/refactoring/RefasterJsScanner.java b/src/com/google/javascript/refactoring/RefasterJsScanner.java
+index 47a1148..50289d7 100644
+--- a/src/com/google/javascript/refactoring/RefasterJsScanner.java
++++ b/src/com/google/javascript/refactoring/RefasterJsScanner.java
+@@ -197,13 +197,15 @@
+ 
+     Preconditions.checkState(
+         !beforeTemplates.isEmpty(),
+-        "Did not find any RefasterJs templates!");
++        "Did not find any RefasterJs templates! Make sure that there are 2 functions defined "
++        + "with the same name, one with a \"before_\" prefix and one with a \"after_\" prefix");
+ 
+     ImmutableList.Builder<RefasterJsTemplate> builder = ImmutableList.builder();
+     for (String templateName : beforeTemplates.keySet()) {
+       Preconditions.checkState(
+           afterTemplates.containsKey(templateName),
+-          "Found before template without a corresponding after template: %s", templateName);
++          "Found before template without a corresponding after template. Make sure there is an "
++          + "after_%s function defined.", templateName);
+       builder.add(new RefasterJsTemplate(compiler,
+           beforeTemplates.get(templateName), afterTemplates.get(templateName)));
+     }
+diff --git a/test/com/google/javascript/jscomp/NodeTraversalTest.java b/test/com/google/javascript/jscomp/NodeTraversalTest.java
+index 0352f0f..a0ea681 100644
+--- a/test/com/google/javascript/jscomp/NodeTraversalTest.java
++++ b/test/com/google/javascript/jscomp/NodeTraversalTest.java
+@@ -115,7 +115,7 @@
+     } catch (RuntimeException e) {
+       assertTrue(e.getMessage().startsWith(
+           "INTERNAL COMPILER ERROR.\n" +
+-          "Please report this problem.\n" +
++          "Please report this problem.\n\n" +
+           "test me"));
+     }
+   }
+diff --git a/src/com/google/javascript/jscomp/Compiler.java b/src/com/google/javascript/jscomp/Compiler.java
+index 8707710..222dca3 100644
+--- a/src/com/google/javascript/jscomp/Compiler.java
++++ b/src/com/google/javascript/jscomp/Compiler.java
+@@ -2224,7 +2224,7 @@
+   void throwInternalError(String message, Exception cause) {
+     String finalMessage =
+       "INTERNAL COMPILER ERROR.\n" +
+-      "Please report this problem.\n" + message;
++      "Please report this problem.\n\n" + message;
+ 
+     RuntimeException e = new RuntimeException(finalMessage, cause);
+     if (cause != null) {

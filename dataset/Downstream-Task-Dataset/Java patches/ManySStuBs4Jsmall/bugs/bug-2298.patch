@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResponse.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResponse.java
+index b68b7fe..457406a 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResponse.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResponse.java
+@@ -396,7 +396,7 @@
+                 writeStatusAndHeaders();
+                 if (asyncProtocol.inspectResponse()) {
+                     byte[] b = asyncProtocol.handleResponse(AtmosphereResponse.this, bytes, start, offset);
+-                    asyncIOWriter.write(b, 0, b.length);
++                    asyncIOWriter.write(b, start, offset);
+                 } else {
+                     asyncIOWriter.write(bytes, start, offset);
+                 }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResponse.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResponse.java
+index b68b7fe..457406a 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResponse.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResponse.java
+@@ -396,7 +396,7 @@
+                 writeStatusAndHeaders();
+                 if (asyncProtocol.inspectResponse()) {
+                     byte[] b = asyncProtocol.handleResponse(AtmosphereResponse.this, bytes, start, offset);
+-                    asyncIOWriter.write(b, 0, b.length);
++                    asyncIOWriter.write(b, start, offset);
+                 } else {
+                     asyncIOWriter.write(bytes, start, offset);
+                 }

@@ -1,0 +1,26 @@
+diff --git a/bundles/io/org.openhab.io.transport.cul/src/main/java/org/openhab/io/transport/cul/internal/AbstractCULHandler.java b/bundles/io/org.openhab.io.transport.cul/src/main/java/org/openhab/io/transport/cul/internal/AbstractCULHandler.java
+index f004a04..0f375b2 100644
+--- a/bundles/io/org.openhab.io.transport.cul/src/main/java/org/openhab/io/transport/cul/internal/AbstractCULHandler.java
++++ b/bundles/io/org.openhab.io.transport.cul/src/main/java/org/openhab/io/transport/cul/internal/AbstractCULHandler.java
+@@ -155,7 +155,7 @@
+ 
+     @Override
+     public boolean hasListeners() {
+-        return listeners.size() > 0;
++        return (listeners.size() == 1 && listeners.get(0) != sendThread || listeners.size() > 1);
+     }
+ 
+     @Override
+diff --git a/bundles/io/org.openhab.io.transport.cul/src/main/java/org/openhab/io/transport/cul/internal/AbstractCULHandler.java b/bundles/io/org.openhab.io.transport.cul/src/main/java/org/openhab/io/transport/cul/internal/AbstractCULHandler.java
+index f004a04..0f375b2 100644
+--- a/bundles/io/org.openhab.io.transport.cul/src/main/java/org/openhab/io/transport/cul/internal/AbstractCULHandler.java
++++ b/bundles/io/org.openhab.io.transport.cul/src/main/java/org/openhab/io/transport/cul/internal/AbstractCULHandler.java
+@@ -155,7 +155,7 @@
+ 
+     @Override
+     public boolean hasListeners() {
+-        return listeners.size() > 0;
++        return (listeners.size() == 1 && listeners.get(0) != sendThread || listeners.size() > 1);
+     }
+ 
+     @Override

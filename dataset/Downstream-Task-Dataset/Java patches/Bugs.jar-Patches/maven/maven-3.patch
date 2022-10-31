@@ -1,0 +1,61 @@
+diff --git a/maven-project/src/main/java/org/apache/maven/project/ModelUtils.java b/maven-project/src/main/java/org/apache/maven/project/ModelUtils.java
+index ec56f1b..b0c6c75 100644
+--- a/maven-project/src/main/java/org/apache/maven/project/ModelUtils.java
++++ b/maven-project/src/main/java/org/apache/maven/project/ModelUtils.java
+@@ -53,6 +53,7 @@ import java.util.List;
+ import java.util.Map;
+ import java.util.Properties;
+ import java.util.TreeMap;
++import java.util.HashMap;
+ 
+ public final class ModelUtils
+ {
+@@ -64,7 +65,7 @@ public final class ModelUtils
+             // nothing to do.
+             return;
+         }
+-        
++
+         List mergedPlugins = new ArrayList();
+ 
+         List parentPlugins = parentContainer.getPlugins();
+@@ -208,6 +209,8 @@ public final class ModelUtils
+ 
+         child.setConfiguration( childConfiguration );
+ 
++        child.setDependencies( mergeDependencyList( child.getDependencies(), parent.getDependencies() ) );
++
+         // from here to the end of the method is dealing with merging of the <executions/> section.
+         String parentInherited = parent.getInherited();
+ 
+@@ -1000,4 +1003,30 @@ public final class ModelUtils
+             }
+         }
+     }
++
++    public static List mergeDependencyList( List child, List parent )
++    {
++        Map depsMap = new HashMap();
++
++        if ( parent != null )
++        {
++            for ( Iterator it = parent.iterator(); it.hasNext(); )
++            {
++                Dependency dependency = (Dependency) it.next();
++                depsMap.put( dependency.getManagementKey(), dependency );
++            }
++        }
++
++        if ( child != null )
++        {
++            for ( Iterator it = child.iterator(); it.hasNext(); )
++            {
++                Dependency dependency = (Dependency) it.next();
++                depsMap.put( dependency.getManagementKey(), dependency );
++            }
++        }
++
++        return new ArrayList( depsMap.values() );
++    }
++
+ }

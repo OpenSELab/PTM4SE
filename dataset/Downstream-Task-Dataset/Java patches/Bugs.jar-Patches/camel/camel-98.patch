@@ -1,0 +1,19 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultEndpoint.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultEndpoint.java
+index 3dae289..badd48e 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultEndpoint.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultEndpoint.java
+@@ -136,7 +136,13 @@ public abstract class DefaultEndpoint extends ServiceSupport implements Endpoint
+ 
+     @Override
+     public String toString() {
+-        return String.format("Endpoint[%s]", URISupport.sanitizeUri(getEndpointUri()));
++        String value = null;
++        try {
++            value = getEndpointUri();
++        } catch (RuntimeException e) {
++            // ignore any exception and use null for building the string value
++        }
++        return String.format("Endpoint[%s]", URISupport.sanitizeUri(value));
+     }
+ 
+     /**

@@ -1,0 +1,70 @@
+diff --git a/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyFileMulticastTest.java b/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyFileMulticastTest.java
+index b67574d..f3729b1 100644
+--- a/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyFileMulticastTest.java
++++ b/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyFileMulticastTest.java
+@@ -59,7 +59,7 @@
+         
+         String result = resultExchanges.get(0).getIn().getBody(String.class);
+         assertEquals("Should get the request", "<response>Hello form Willem</response>", result);
+-        assertEquals("Should get the header", "greetMe", resultExchanges.get(0).getIn().getHeader("Operation"));        
++        assertEquals("Should get the responise code", 200, resultExchanges.get(0).getIn().getHeader(Exchange.HTTP_RESPONSE_CODE));        
+         
+     }
+ 
+diff --git a/tests/camel-itest/src/test/java/org/apache/camel/itest/tx/JmsToHttpWithOnExceptionAndNoTransactionErrorHandlerConfiguredRoute.java b/tests/camel-itest/src/test/java/org/apache/camel/itest/tx/JmsToHttpWithOnExceptionAndNoTransactionErrorHandlerConfiguredRoute.java
+index 174f347..dd6c067 100644
+--- a/tests/camel-itest/src/test/java/org/apache/camel/itest/tx/JmsToHttpWithOnExceptionAndNoTransactionErrorHandlerConfiguredRoute.java
++++ b/tests/camel-itest/src/test/java/org/apache/camel/itest/tx/JmsToHttpWithOnExceptionAndNoTransactionErrorHandlerConfiguredRoute.java
+@@ -71,7 +71,7 @@
+                 // first hit is always a error code 500 to force the caller to retry
+                 if (counter++ < 1) {
+                     // simulate http error 500
+-                    exchange.getOut().setHeader(HttpConstants.HTTP_RESPONSE_CODE, 500);
++                    exchange.getOut().setHeader(Exchange.HTTP_RESPONSE_CODE, 500);
+                     exchange.getOut().setBody("Damn some internal server error");
+                     return;
+                 }
+@@ -79,7 +79,7 @@
+                 String user = exchange.getIn().getHeader("user", String.class);
+                 if ("unknown".equals(user)) {
+                     // no page for a unknown user
+-                    exchange.getOut().setHeader(HttpConstants.HTTP_RESPONSE_CODE, 404);
++                    exchange.getOut().setHeader(Exchange.HTTP_RESPONSE_CODE, 404);
+                     exchange.getOut().setBody("Page does not exists");
+                     return;
+                 } else if ("guest".equals(user)) {
+diff --git a/tests/camel-itest/src/test/java/org/apache/camel/itest/tx/JmsToHttpWithOnExceptionRoute.java b/tests/camel-itest/src/test/java/org/apache/camel/itest/tx/JmsToHttpWithOnExceptionRoute.java
+index 4635edb..579f9db 100644
+--- a/tests/camel-itest/src/test/java/org/apache/camel/itest/tx/JmsToHttpWithOnExceptionRoute.java
++++ b/tests/camel-itest/src/test/java/org/apache/camel/itest/tx/JmsToHttpWithOnExceptionRoute.java
+@@ -74,7 +74,7 @@
+                 // first hit is always a error code 500 to force the caller to retry
+                 if (counter++ < 1) {
+                     // simulate http error 500
+-                    exchange.getOut().setHeader(HttpConstants.HTTP_RESPONSE_CODE, 500);
++                    exchange.getOut().setHeader(Exchange.HTTP_RESPONSE_CODE, 500);
+                     exchange.getOut().setBody("Damn some internal server error");
+                     return;
+                 }
+@@ -82,7 +82,7 @@
+                 String user = exchange.getIn().getHeader("user", String.class);
+                 if ("unknown".equals(user)) {
+                     // no page for a unknown user
+-                    exchange.getOut().setHeader(HttpConstants.HTTP_RESPONSE_CODE, 404);
++                    exchange.getOut().setHeader(Exchange.HTTP_RESPONSE_CODE, 404);
+                     exchange.getOut().setBody("Page does not exists");
+                     return;
+                 } else if ("guest".equals(user)) {
+diff --git a/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyFileMulticastTest.java b/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyFileMulticastTest.java
+index b67574d..f3729b1 100644
+--- a/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyFileMulticastTest.java
++++ b/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyFileMulticastTest.java
+@@ -59,7 +59,7 @@
+         
+         String result = resultExchanges.get(0).getIn().getBody(String.class);
+         assertEquals("Should get the request", "<response>Hello form Willem</response>", result);
+-        assertEquals("Should get the header", "greetMe", resultExchanges.get(0).getIn().getHeader("Operation"));        
++        assertEquals("Should get the responise code", 200, resultExchanges.get(0).getIn().getHeader(Exchange.HTTP_RESPONSE_CODE));        
+         
+     }
+ 

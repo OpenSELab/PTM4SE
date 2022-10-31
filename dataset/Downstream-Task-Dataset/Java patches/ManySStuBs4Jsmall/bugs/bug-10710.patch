@@ -1,0 +1,38 @@
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/StackDescriptor.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/StackDescriptor.java
+index 6347363..f001665 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/StackDescriptor.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/StackDescriptor.java
+@@ -20,7 +20,7 @@
+         for (; start < stack.length; start++) {
+             if (!stack[start].getClassName().contains("OpProfiler")) {
+                 // we make one more step, to skip profilerHookIn method
+-                if (stack[start+1].getClassName().contains("profilerHookIn"))
++                if (stack[start].getClassName().contains("DefaultOpExecutioner"))
+                     start++;
+                 break;
+             }
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/TimeSet.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/TimeSet.java
+index de12426..0947976 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/TimeSet.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/TimeSet.java
+@@ -70,6 +70,6 @@
+ 
+     @Override
+     public int compareTo(TimeSet o) {
+-        return Long.compare(o.size(), this.size());
++        return Long.compare(o.getSum(), this.getSum());
+     }
+ }
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/StackDescriptor.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/StackDescriptor.java
+index 6347363..f001665 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/StackDescriptor.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/profiler/data/primitives/StackDescriptor.java
+@@ -20,7 +20,7 @@
+         for (; start < stack.length; start++) {
+             if (!stack[start].getClassName().contains("OpProfiler")) {
+                 // we make one more step, to skip profilerHookIn method
+-                if (stack[start+1].getClassName().contains("profilerHookIn"))
++                if (stack[start].getClassName().contains("DefaultOpExecutioner"))
+                     start++;
+                 break;
+             }

@@ -1,0 +1,13 @@
+diff --git a/bundles/binding/org.openhab.binding.ucprelayboard/src/main/java/org/openhab/binding/ucprelayboard/internal/DowCRC.java b/bundles/binding/org.openhab.binding.ucprelayboard/src/main/java/org/openhab/binding/ucprelayboard/internal/DowCRC.java
+index 6aca864..03aa23b 100644
+--- a/bundles/binding/org.openhab.binding.ucprelayboard/src/main/java/org/openhab/binding/ucprelayboard/internal/DowCRC.java
++++ b/bundles/binding/org.openhab.binding.ucprelayboard/src/main/java/org/openhab/binding/ucprelayboard/internal/DowCRC.java
+@@ -36,7 +36,7 @@
+ 	public static byte compute(byte[] tab) {
+ 		int result = 0;
+ 		for (byte value : tab) {
+-			result = crc8[ (int)value ^ result];
++			result = crc8[(value ^ result) & 0xFF];
+ 		}
+ 		return (byte) result;
+ 	}

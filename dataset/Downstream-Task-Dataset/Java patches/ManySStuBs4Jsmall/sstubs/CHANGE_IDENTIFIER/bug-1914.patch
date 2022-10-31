@@ -1,0 +1,70 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/internal/diagnostics/DiagnosticsLogWriterImpl.java b/hazelcast/src/main/java/com/hazelcast/internal/diagnostics/DiagnosticsLogWriterImpl.java
+index b182fa5..650e22c 100644
+--- a/hazelcast/src/main/java/com/hazelcast/internal/diagnostics/DiagnosticsLogWriterImpl.java
++++ b/hazelcast/src/main/java/com/hazelcast/internal/diagnostics/DiagnosticsLogWriterImpl.java
+@@ -51,7 +51,7 @@
+     //32 chars should be more than enough to encode primitives
+     private static final int CHARS_LENGTH = 32;
+ 
+-    private final StringBuffer tmpSb = new StringBuffer();
++    private final StringBuilder tmpSb = new StringBuilder();
+     private final boolean includeEpochTime;
+ 
+     private int sectionLevel = -1;
+@@ -61,10 +61,10 @@
+     private final Calendar calendar = new GregorianCalendar(TimeZone.getDefault());
+     private final Date date = new Date();
+ 
+-    // used for encoding primitives.
++    // used for encoding primitives
+     private char[] chars = new char[CHARS_LENGTH];
+ 
+-    // used to write primitives without causing litter.
++    // used to write primitives without causing litter
+     private StringBuilder stringBuilder = new StringBuilder();
+ 
+     public DiagnosticsLogWriterImpl() {
+@@ -149,7 +149,7 @@
+         write(value);
+     }
+ 
+-    // we can't rely on NumberFormat since it generates a ton of garbage
++    // we can't rely on NumberFormat, since it generates a ton of garbage
+     @SuppressWarnings("checkstyle:magicnumber")
+     void writeLong(long value) {
+         if (value == Long.MIN_VALUE) {
+diff --git a/hazelcast/src/main/java/com/hazelcast/internal/diagnostics/DiagnosticsLogWriterImpl.java b/hazelcast/src/main/java/com/hazelcast/internal/diagnostics/DiagnosticsLogWriterImpl.java
+index b182fa5..650e22c 100644
+--- a/hazelcast/src/main/java/com/hazelcast/internal/diagnostics/DiagnosticsLogWriterImpl.java
++++ b/hazelcast/src/main/java/com/hazelcast/internal/diagnostics/DiagnosticsLogWriterImpl.java
+@@ -51,7 +51,7 @@
+     //32 chars should be more than enough to encode primitives
+     private static final int CHARS_LENGTH = 32;
+ 
+-    private final StringBuffer tmpSb = new StringBuffer();
++    private final StringBuilder tmpSb = new StringBuilder();
+     private final boolean includeEpochTime;
+ 
+     private int sectionLevel = -1;
+@@ -61,10 +61,10 @@
+     private final Calendar calendar = new GregorianCalendar(TimeZone.getDefault());
+     private final Date date = new Date();
+ 
+-    // used for encoding primitives.
++    // used for encoding primitives
+     private char[] chars = new char[CHARS_LENGTH];
+ 
+-    // used to write primitives without causing litter.
++    // used to write primitives without causing litter
+     private StringBuilder stringBuilder = new StringBuilder();
+ 
+     public DiagnosticsLogWriterImpl() {
+@@ -149,7 +149,7 @@
+         write(value);
+     }
+ 
+-    // we can't rely on NumberFormat since it generates a ton of garbage
++    // we can't rely on NumberFormat, since it generates a ton of garbage
+     @SuppressWarnings("checkstyle:magicnumber")
+     void writeLong(long value) {
+         if (value == Long.MIN_VALUE) {

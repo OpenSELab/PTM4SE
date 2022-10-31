@@ -1,0 +1,116 @@
+diff --git a/client/src/main/java/org/asynchttpclient/oauth/ConsumerKey.java b/client/src/main/java/org/asynchttpclient/oauth/ConsumerKey.java
+index d2a8554..552a132 100644
+--- a/client/src/main/java/org/asynchttpclient/oauth/ConsumerKey.java
++++ b/client/src/main/java/org/asynchttpclient/oauth/ConsumerKey.java
+@@ -26,7 +26,7 @@
+   private final String secret;
+   private final String percentEncodedKey;
+ 
+-  ConsumerKey(String key, String secret) {
++  public ConsumerKey(String key, String secret) {
+     this.key = key;
+     this.secret = secret;
+     this.percentEncodedKey = Utf8UrlEncoder.percentEncodeQueryElement(key);
+@@ -40,7 +40,7 @@
+     return secret;
+   }
+ 
+-  String getPercentEncodedKey() {
++  public String getPercentEncodedKey() {
+     return percentEncodedKey;
+   }
+ 
+diff --git a/client/src/main/java/org/asynchttpclient/oauth/OAuthSignatureCalculator.java b/client/src/main/java/org/asynchttpclient/oauth/OAuthSignatureCalculator.java
+index c0122c3..bc65919 100644
+--- a/client/src/main/java/org/asynchttpclient/oauth/OAuthSignatureCalculator.java
++++ b/client/src/main/java/org/asynchttpclient/oauth/OAuthSignatureCalculator.java
+@@ -41,7 +41,7 @@
+    * @param consumerAuth Consumer key to use for signature calculation
+    * @param userAuth     Request/access token to use for signature calculation
+    */
+-  OAuthSignatureCalculator(ConsumerKey consumerAuth, RequestToken userAuth) {
++  public OAuthSignatureCalculator(ConsumerKey consumerAuth, RequestToken userAuth) {
+     this.consumerAuth = consumerAuth;
+     this.userAuth = userAuth;
+   }
+diff --git a/client/src/main/java/org/asynchttpclient/oauth/Parameter.java b/client/src/main/java/org/asynchttpclient/oauth/Parameter.java
+index c89eba8..bc4734e 100644
+--- a/client/src/main/java/org/asynchttpclient/oauth/Parameter.java
++++ b/client/src/main/java/org/asynchttpclient/oauth/Parameter.java
+@@ -20,7 +20,7 @@
+ 
+   final String key, value;
+ 
+-  Parameter(String key, String value) {
++  public Parameter(String key, String value) {
+     this.key = key;
+     this.value = value;
+   }
+diff --git a/client/src/main/java/org/asynchttpclient/oauth/Parameters.java b/client/src/main/java/org/asynchttpclient/oauth/Parameters.java
+index e82829f..b0c533a 100644
+--- a/client/src/main/java/org/asynchttpclient/oauth/Parameters.java
++++ b/client/src/main/java/org/asynchttpclient/oauth/Parameters.java
+@@ -19,16 +19,16 @@
+ import java.util.Collections;
+ import java.util.List;
+ 
+-class Parameters {
++final class Parameters {
+ 
+   private List<Parameter> parameters = new ArrayList<>();
+ 
+-  Parameters add(String key, String value) {
++  public Parameters add(String key, String value) {
+     parameters.add(new Parameter(key, value));
+     return this;
+   }
+ 
+-  void reset() {
++  public void reset() {
+     parameters.clear();
+   }
+ 
+diff --git a/client/src/main/java/org/asynchttpclient/oauth/RequestToken.java b/client/src/main/java/org/asynchttpclient/oauth/RequestToken.java
+index 89a30d6..3dc5364 100644
+--- a/client/src/main/java/org/asynchttpclient/oauth/RequestToken.java
++++ b/client/src/main/java/org/asynchttpclient/oauth/RequestToken.java
+@@ -28,7 +28,7 @@
+   private final String secret;
+   private final String percentEncodedKey;
+ 
+-  RequestToken(String key, String token) {
++  public RequestToken(String key, String token) {
+     this.key = key;
+     this.secret = token;
+     this.percentEncodedKey = Utf8UrlEncoder.percentEncodeQueryElement(key);
+@@ -42,7 +42,7 @@
+     return secret;
+   }
+ 
+-  String getPercentEncodedKey() {
++  public String getPercentEncodedKey() {
+     return percentEncodedKey;
+   }
+ 
+diff --git a/client/src/main/java/org/asynchttpclient/oauth/ConsumerKey.java b/client/src/main/java/org/asynchttpclient/oauth/ConsumerKey.java
+index d2a8554..552a132 100644
+--- a/client/src/main/java/org/asynchttpclient/oauth/ConsumerKey.java
++++ b/client/src/main/java/org/asynchttpclient/oauth/ConsumerKey.java
+@@ -26,7 +26,7 @@
+   private final String secret;
+   private final String percentEncodedKey;
+ 
+-  ConsumerKey(String key, String secret) {
++  public ConsumerKey(String key, String secret) {
+     this.key = key;
+     this.secret = secret;
+     this.percentEncodedKey = Utf8UrlEncoder.percentEncodeQueryElement(key);
+@@ -40,7 +40,7 @@
+     return secret;
+   }
+ 
+-  String getPercentEncodedKey() {
++  public String getPercentEncodedKey() {
+     return percentEncodedKey;
+   }
+ 

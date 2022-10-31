@@ -1,0 +1,23 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java b/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
+index 4b95e32..8c99c13 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
+@@ -332,10 +332,16 @@ public class WebPageRenderer extends PageRenderer
+ 	protected boolean shouldRenderPageAndWriteResponse(RequestCycle cycle, Url currentUrl,
+ 		Url targetUrl)
+ 	{
++		// WICKET-5484 never render and write for Ajax requests
++		if (isAjax(cycle))
++		{
++			return false;
++		}
++
+ 		return neverRedirect(getRedirectPolicy())
+-			|| (!isAjax(cycle) && ((isOnePassRender() && notForcedRedirect(getRedirectPolicy())) || (targetUrl
++			|| ((isOnePassRender() && notForcedRedirect(getRedirectPolicy())) || (targetUrl
+ 				.equals(currentUrl) && notNewAndNotStatelessPage(isNewPageInstance(),
+-				isPageStateless())))) || (targetUrl.equals(currentUrl) && isRedirectToRender())
++				isPageStateless()))) || (targetUrl.equals(currentUrl) && isRedirectToRender())
+ 			|| shouldPreserveClientUrl(cycle);
+ 	}
+ 

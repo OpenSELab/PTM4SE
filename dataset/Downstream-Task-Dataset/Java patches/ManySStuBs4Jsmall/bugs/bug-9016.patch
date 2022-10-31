@@ -1,0 +1,77 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/OuterTypeFilenameCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/OuterTypeFilenameCheck.java
+index 9f500ec..ac0392c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/OuterTypeFilenameCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/OuterTypeFilenameCheck.java
+@@ -39,7 +39,7 @@
+     public static final String MSG_KEY = "type.file.mismatch";
+ 
+     /** Pattern matching any file extension with dot included. */
+-    private static final Pattern FILE_EXTENSION_PATTERN = Pattern.compile("\\.[^\\.]*$");
++    private static final Pattern FILE_EXTENSION_PATTERN = Pattern.compile("\\.[^.]*$");
+ 
+     /** Indicates whether the first token has been seen in the file. */
+     private boolean seenFirstToken;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TrailingCommentCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TrailingCommentCheck.java
+index d12ded6..282cbcb 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TrailingCommentCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TrailingCommentCheck.java
+@@ -109,7 +109,7 @@
+     private Pattern legalComment;
+ 
+     /** The format string of the regexp. */
+-    private String format = "^[\\s\\}\\);]*$";
++    private String format = "^[\\s\\});]*$";
+ 
+     /** The regexp to match against. */
+     private Pattern regexp = Pattern.compile(format);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTypeCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTypeCheck.java
+index 54c5f50..e4d4c52 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTypeCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTypeCheck.java
+@@ -133,7 +133,7 @@
+     private List<Integer> memberModifiers;
+ 
+     /** The format string of the regexp. */
+-    private String format = "^(.*[\\.])?Abstract.*$";
++    private String format = "^(.*[.])?Abstract.*$";
+ 
+     /** The regexp to match against. */
+     private Pattern regexp = Pattern.compile(format);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/DetectorOptions.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/DetectorOptions.java
+index 582794f..879c27a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/DetectorOptions.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/DetectorOptions.java
+@@ -60,7 +60,6 @@
+     /**
+      * Returns new Builder object.
+      * @return Builder object.
+-     * @noinspection ReturnOfInnerClass
+      */
+     public static Builder newBuilder() {
+         return new DetectorOptions().new Builder();
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/internal/CommitValidationTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/internal/CommitValidationTest.java
+index 10e6633..97bcb4a 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/internal/CommitValidationTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/internal/CommitValidationTest.java
+@@ -87,7 +87,7 @@
+     private static final Pattern ACCEPTED_COMMIT_MESSAGE_PATTERN =
+             Pattern.compile(ACCEPTED_COMMIT_MESSAGE_REGEX_PATTERN);
+ 
+-    private static final Pattern INVALID_POSTFIX_PATTERN = Pattern.compile("^.*[\\. \\t]$");
++    private static final Pattern INVALID_POSTFIX_PATTERN = Pattern.compile("^.*[. \\t]$");
+ 
+     private static final int PREVIOUS_COMMITS_TO_CHECK_COUNT = 10;
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/OuterTypeFilenameCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/OuterTypeFilenameCheck.java
+index 9f500ec..ac0392c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/OuterTypeFilenameCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/OuterTypeFilenameCheck.java
+@@ -39,7 +39,7 @@
+     public static final String MSG_KEY = "type.file.mismatch";
+ 
+     /** Pattern matching any file extension with dot included. */
+-    private static final Pattern FILE_EXTENSION_PATTERN = Pattern.compile("\\.[^\\.]*$");
++    private static final Pattern FILE_EXTENSION_PATTERN = Pattern.compile("\\.[^.]*$");
+ 
+     /** Indicates whether the first token has been seen in the file. */
+     private boolean seenFirstToken;

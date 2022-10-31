@@ -1,0 +1,13 @@
+--- a/src/main/java/spoon/support/reflect/declaration/CtElementImpl.java
++++ b/src/main/java/spoon/support/reflect/declaration/CtElementImpl.java
+@@ -228,7 +228,9 @@ public abstract class CtElementImpl implements CtElement, Serializable {
+ 			LOGGER.error(ERROR_MESSAGE_TO_STRING, ignore);
+ 			errorMessage = ERROR_MESSAGE_TO_STRING;
+ 		}
+-		return printer.toString() + errorMessage;
++		// in line-preservation mode, newlines are added at the beginning to matches the lines
++		// removing them from the toString() representation
++		return printer.toString().replaceFirst("^\\s+", "") + errorMessage;
+ 	}
+ 
+ 	@SuppressWarnings("unchecked")

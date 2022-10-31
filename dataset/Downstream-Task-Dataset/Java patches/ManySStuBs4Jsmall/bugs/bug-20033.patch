@@ -1,0 +1,231 @@
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateAdministrationDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateAdministrationDAO.java
+index 72af45a..29a33c7 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateAdministrationDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateAdministrationDAO.java
+@@ -276,7 +276,7 @@
+ 	 * @return list of compatible validators
+ 	 */
+ 	protected List<Validator> getValidators(Object obj) {
+-		List<Validator> matchingValidators = new ArrayList<Validator>();
++		List<Validator> matchingValidators = new ArrayList<>();
+ 
+ 		List<Validator> validators = HandlerUtil.getHandlersForType(Validator.class, obj.getClass());
+ 		
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateConceptDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateConceptDAO.java
+index 50df657..935a65b 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateConceptDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateConceptDAO.java
+@@ -1438,7 +1438,7 @@
+ 			final Set<Locale> searchLocales;
+ 			
+ 			if (locales == null) {
+-				searchLocales = new HashSet<Locale>(Collections.singletonList(Context.getLocale()));
++				searchLocales = new HashSet<>(Collections.singletonList(Context.getLocale()));
+ 			} else {
+ 				searchLocales = new HashSet<>(locales);
+ 			}
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateEncounterDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateEncounterDAO.java
+index bebb449..3e6ecec 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateEncounterDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateEncounterDAO.java
+@@ -311,7 +311,7 @@
+ 	 */
+ 	@Override
+ 	public Map<Integer, List<Encounter>> getAllEncounters(Cohort patients) {
+-		Map<Integer, List<Encounter>> encountersBypatient = new HashMap<Integer, List<Encounter>>();
++		Map<Integer, List<Encounter>> encountersBypatient = new HashMap<>();
+ 		
+ 		@SuppressWarnings("unchecked")
+ 		List<Encounter> allEncounters = createEncounterCriteria(patients).list();
+@@ -322,7 +322,7 @@
+ 			List<Encounter> encounters = encountersBypatient.get(patientId);
+ 			
+ 			if (encounters == null) {
+-				encounters = new ArrayList<Encounter>();
++				encounters = new ArrayList<>();
+ 			}
+ 			
+ 			encounters.add(encounter);
+@@ -345,7 +345,7 @@
+ 		
+ 		// only include this where clause if patients were passed in
+ 		if (patients != null) {
+-            ArrayList<Integer> patientIds = new ArrayList<Integer>();
++            ArrayList<Integer> patientIds = new ArrayList<>();
+ 			patients.getMemberships().forEach(m -> patientIds.add(m.getPatientId()));
+ 			criteria.add(Restrictions.in("patient.personId", patientIds));
+ 		}
+@@ -438,7 +438,7 @@
+ 			//As identifier could be all alpha, no heuristic here will work in determining intent of user for querying by name versus identifier
+ 			//So search by both!
+ 			criteria = new PatientSearchCriteria(sessionFactory, criteria).prepareCriteria(query, query,
+-			    new ArrayList<PatientIdentifierType>(), true, orderByNames, true);	
++					new ArrayList<>(), true, orderByNames, true);
+ 		}
+ 		
+ 		return criteria;
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateOrderDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateOrderDAO.java
+index 357cb11..1bba511 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateOrderDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateOrderDAO.java
+@@ -436,7 +436,7 @@
+ 		criteria.createAlias("concept.names", "conceptName");
+ 		criteria.add(Restrictions.ilike("conceptName.name", searchPhrase, MatchMode.ANYWHERE));
+ 		if (locale != null) {
+-			List<Locale> locales = new ArrayList<Locale>(2);
++			List<Locale> locales = new ArrayList<>(2);
+ 			locales.add(locale);
+ 			//look in the broader locale too if exactLocale is false e.g en for en_GB
+ 			if (!exactLocale && StringUtils.isNotBlank(locale.getCountry())) {
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
+index f7c13ab..55ee5b5 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
+@@ -787,7 +787,7 @@
+ 	 * @see PatientSearchCriteria
+ 	 */
+ 	private List<String> tokenizeIdentifierQuery(String query) {
+-		List<String> searchPatterns = new ArrayList<String>();
++		List<String> searchPatterns = new ArrayList<>();
+ 
+ 		String patternSearch = Context.getAdministrationService().getGlobalProperty(
+ 				OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SEARCH_PATTERN, "");
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateUserDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateUserDAO.java
+index 13e8f49..0c0a141 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateUserDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateUserDAO.java
+@@ -435,7 +435,7 @@
+ 	 */
+ 	@Override
+ 	public List<User> getUsersByName(String givenName, String familyName, boolean includeRetired) {
+-		List<User> users = new ArrayList<User>();
++		List<User> users = new ArrayList<>();
+ 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(User.class);
+ 		crit.createAlias("person", "person");
+ 		crit.createAlias("person.names", "names");
+@@ -566,9 +566,9 @@
+ 		//	 and role in :roleList 
+ 		//   and user.retired = false
+ 		// order by username asc
+-		List<String> criteria = new ArrayList<String>();
++		List<String> criteria = new ArrayList<>();
+ 		int counter = 0;
+-		Map<String, String> namesMap = new HashMap<String, String>();
++		Map<String, String> namesMap = new HashMap<>();
+ 		if (name != null) {
+ 			name = name.replace(", ", " ");
+ 			String[] names = name.split(" ");
+diff --git a/api/src/main/java/org/openmrs/api/impl/AdministrationServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/AdministrationServiceImpl.java
+index 16751a5..12ff939 100644
+--- a/api/src/main/java/org/openmrs/api/impl/AdministrationServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/AdministrationServiceImpl.java
+@@ -471,7 +471,7 @@
+ 		}
+ 		
+ 		// set up the data map to post to the openmrs server
+-		Map<String, String> data = new HashMap<String, String>();
++		Map<String, String> data = new HashMap<>();
+ 		data.put("implementationId", implementationId);
+ 		data.put("description", description);
+ 		data.put("passphrase", passphrase);
+@@ -525,7 +525,7 @@
+ 		}
+ 		
+ 		// allowedLocales is guaranteed to not be null at this point
+-		return new ArrayList<Locale>(allowedLocales);
++		return new ArrayList<>(allowedLocales);
+ 	}
+ 	
+ 	/**
+@@ -545,14 +545,14 @@
+ 	@Transactional(readOnly = true)
+ 	public Set<Locale> getPresentationLocales() {
+ 		if (presentationLocales == null) {
+-			presentationLocales = new LinkedHashSet<Locale>();
++			presentationLocales = new LinkedHashSet<>();
+ 			Collection<Locale> messageLocales = Context.getMessageSourceService().getLocales();
+ 			List<Locale> allowedLocales = getAllowedLocales();
+ 			
+ 			for (Locale locale : allowedLocales) {
+ 				// if no country is specified all countries with this language will be added
+ 				if (StringUtils.isEmpty(locale.getCountry())) {
+-					List<Locale> localsWithSameLanguage = new ArrayList<Locale>();
++					List<Locale> localsWithSameLanguage = new ArrayList<>();
+ 					for (Locale possibleLocale : messageLocales) {
+ 						if (locale.getLanguage().equals(possibleLocale.getLanguage())
+ 						        && !StringUtils.isEmpty(possibleLocale.getCountry())) {
+@@ -665,7 +665,7 @@
+ 	@Override
+ 	@Transactional(readOnly = true)
+ 	public Map<String, Map<String, String>> getSystemInformation() throws APIException {
+-		Map<String, Map<String, String>> systemInfoMap = new LinkedHashMap<String, Map<String, String>>();
++		Map<String, Map<String, String>> systemInfoMap = new LinkedHashMap<>();
+ 		
+ 		systemInfoMap.put("SystemInfo.title.openmrsInformation", new LinkedHashMap<String, String>() {
+ 			
+@@ -803,7 +803,7 @@
+ 	@Override
+ 	@Cacheable(value = "userSearchLocales")
+ 	public List<Locale> getSearchLocales(Locale currentLocale, User user) throws APIException {
+-		Set<Locale> locales = new LinkedHashSet<Locale>();
++		Set<Locale> locales = new LinkedHashSet<>();
+ 		locales.add(currentLocale); //the currently used full locale
+ 		locales.add(new Locale(currentLocale.getLanguage()));
+ 
+@@ -817,7 +817,7 @@
+ 		//limit locales to only allowed locales
+ 		List<Locale> allowedLocales = Context.getAdministrationService().getAllowedLocales();
+ 		if (allowedLocales != null) {
+-			Set<Locale> retainLocales = new HashSet<Locale>();
++			Set<Locale> retainLocales = new HashSet<>();
+ 			
+ 			for (Locale allowedLocale : allowedLocales) {
+ 				retainLocales.add(allowedLocale);
+@@ -827,7 +827,7 @@
+ 			locales.retainAll(retainLocales);
+ 		}
+ 		
+-		return new ArrayList<Locale>(locales);
++		return new ArrayList<>(locales);
+ 	}
+ 
+ 	/**
+diff --git a/api/src/main/java/org/openmrs/hl7/impl/HL7ServiceImpl.java b/api/src/main/java/org/openmrs/hl7/impl/HL7ServiceImpl.java
+index 283e8bb..5fe6e11 100644
+--- a/api/src/main/java/org/openmrs/hl7/impl/HL7ServiceImpl.java
++++ b/api/src/main/java/org/openmrs/hl7/impl/HL7ServiceImpl.java
+@@ -892,7 +892,7 @@
+ 		person.setUuid(uuid);
+ 		
+ 		// Patient Identifiers
+-		List<PatientIdentifier> goodIdentifiers = new ArrayList<PatientIdentifier>();
++		List<PatientIdentifier> goodIdentifiers = new ArrayList<>();
+ 		for (CX id : identifiers) {
+ 			
+ 			String assigningAuthority = id.getAssigningAuthority().getNamespaceID().getValue();
+diff --git a/api/src/main/java/org/openmrs/util/Graph.java b/api/src/main/java/org/openmrs/util/Graph.java
+index 5bb5d02..1f5539c 100644
+--- a/api/src/main/java/org/openmrs/util/Graph.java
++++ b/api/src/main/java/org/openmrs/util/Graph.java
+@@ -88,7 +88,7 @@
+ 		for (Edge edge : edges) {
+ 			nodesWithIncomingEdges.add(edge.getToNode());
+ 		}
+-		Set<T> nodesWithoutIncomingEdges = new HashSet<T>(nodes);
++		Set<T> nodesWithoutIncomingEdges = new HashSet<>(nodes);
+ 		for (T node : nodesWithIncomingEdges) {
+ 			nodesWithoutIncomingEdges.remove(node);
+ 		}
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateAdministrationDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateAdministrationDAO.java
+index 72af45a..29a33c7 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateAdministrationDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateAdministrationDAO.java
+@@ -276,7 +276,7 @@
+ 	 * @return list of compatible validators
+ 	 */
+ 	protected List<Validator> getValidators(Object obj) {
+-		List<Validator> matchingValidators = new ArrayList<Validator>();
++		List<Validator> matchingValidators = new ArrayList<>();
+ 
+ 		List<Validator> validators = HandlerUtil.getHandlersForType(Validator.class, obj.getClass());
+ 		

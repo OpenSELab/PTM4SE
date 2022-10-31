@@ -1,0 +1,26 @@
+diff --git a/spring-boot/src/test/java/org/springframework/boot/context/embedded/AbstractEmbeddedServletContainerFactoryTests.java b/spring-boot/src/test/java/org/springframework/boot/context/embedded/AbstractEmbeddedServletContainerFactoryTests.java
+index a551e2c..9a5a616 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/context/embedded/AbstractEmbeddedServletContainerFactoryTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/context/embedded/AbstractEmbeddedServletContainerFactoryTests.java
+@@ -112,7 +112,7 @@
+ 		this.container.stop();
+ 		this.thrown.expect(IOException.class);
+ 		String response = getResponse(getLocalUrl("/hello"));
+-		throw new RuntimeException(response);
++		throw new RuntimeException(this.container.getPort() + " " + response);
+ 	}
+ 
+ 	@Test
+diff --git a/spring-boot/src/test/java/org/springframework/boot/context/embedded/AbstractEmbeddedServletContainerFactoryTests.java b/spring-boot/src/test/java/org/springframework/boot/context/embedded/AbstractEmbeddedServletContainerFactoryTests.java
+index a551e2c..9a5a616 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/context/embedded/AbstractEmbeddedServletContainerFactoryTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/context/embedded/AbstractEmbeddedServletContainerFactoryTests.java
+@@ -112,7 +112,7 @@
+ 		this.container.stop();
+ 		this.thrown.expect(IOException.class);
+ 		String response = getResponse(getLocalUrl("/hello"));
+-		throw new RuntimeException(response);
++		throw new RuntimeException(this.container.getPort() + " " + response);
+ 	}
+ 
+ 	@Test

@@ -1,0 +1,62 @@
+diff --git a/twitter4j-core/src/test/java/twitter4j/SearchAPITest.java b/twitter4j-core/src/test/java/twitter4j/SearchAPITest.java
+index d2a913a..87db7a0 100644
+--- a/twitter4j-core/src/test/java/twitter4j/SearchAPITest.java
++++ b/twitter4j-core/src/test/java/twitter4j/SearchAPITest.java
+@@ -63,7 +63,7 @@
+         RateLimitStatus rateLimitStatus = queryResult.getRateLimitStatus();
+         assertTrue("sinceId", -1 != queryResult.getSinceId());
+         assertTrue(1265204883 < queryResult.getMaxId());
+-        assertTrue(-1 != queryResult.getRefreshURL().indexOf(queryStr));
++        assertTrue(queryResult.getRefreshURL().contains(queryStr));
+         assertEquals(15, queryResult.getCount());
+         assertTrue(0 < queryResult.getCompletedIn());
+         assertEquals(queryStr + " until:" + dateStr, queryResult.getQuery());
+@@ -77,7 +77,7 @@
+         assertTrue(-1 != tweets.get(0).getId());
+         assertNotNull(tweets.get(0).getUser().getProfileImageURL());
+         String source = tweets.get(0).getSource();
+-        assertTrue(-1 != source.indexOf("<a href=\"") || "web".equals(source) || "API".equals(source));
++        assertTrue(source.contains("<a href=\"") || "web".equals(source) || "API".equals(source));
+ 
+ 
+         query = new Query("from:twit4j doesnothit");
+@@ -111,7 +111,7 @@
+         assertNotNull(queryResult.nextQuery());
+ 
+         query = new Query("\\u5e30%u5e30 <%}& foobar").count(100);
+-        QueryResult result = twitter1.search(query);
++        twitter1.search(query);
+     }
+ 
+     public void testEasyPaging() throws Exception {
+diff --git a/twitter4j-core/src/test/java/twitter4j/SearchAPITest.java b/twitter4j-core/src/test/java/twitter4j/SearchAPITest.java
+index d2a913a..87db7a0 100644
+--- a/twitter4j-core/src/test/java/twitter4j/SearchAPITest.java
++++ b/twitter4j-core/src/test/java/twitter4j/SearchAPITest.java
+@@ -63,7 +63,7 @@
+         RateLimitStatus rateLimitStatus = queryResult.getRateLimitStatus();
+         assertTrue("sinceId", -1 != queryResult.getSinceId());
+         assertTrue(1265204883 < queryResult.getMaxId());
+-        assertTrue(-1 != queryResult.getRefreshURL().indexOf(queryStr));
++        assertTrue(queryResult.getRefreshURL().contains(queryStr));
+         assertEquals(15, queryResult.getCount());
+         assertTrue(0 < queryResult.getCompletedIn());
+         assertEquals(queryStr + " until:" + dateStr, queryResult.getQuery());
+@@ -77,7 +77,7 @@
+         assertTrue(-1 != tweets.get(0).getId());
+         assertNotNull(tweets.get(0).getUser().getProfileImageURL());
+         String source = tweets.get(0).getSource();
+-        assertTrue(-1 != source.indexOf("<a href=\"") || "web".equals(source) || "API".equals(source));
++        assertTrue(source.contains("<a href=\"") || "web".equals(source) || "API".equals(source));
+ 
+ 
+         query = new Query("from:twit4j doesnothit");
+@@ -111,7 +111,7 @@
+         assertNotNull(queryResult.nextQuery());
+ 
+         query = new Query("\\u5e30%u5e30 <%}& foobar").count(100);
+-        QueryResult result = twitter1.search(query);
++        twitter1.search(query);
+     }
+ 
+     public void testEasyPaging() throws Exception {

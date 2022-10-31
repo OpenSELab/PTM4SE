@@ -1,0 +1,88 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/OutputStreamManager.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/OutputStreamManager.java
+index 246abba..0065585 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/OutputStreamManager.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/OutputStreamManager.java
+@@ -28,8 +28,7 @@ import org.apache.logging.log4j.core.Layout;
+ public class OutputStreamManager extends AbstractManager {
+ 
+     private volatile OutputStream os;
+-
+-    private final Layout<?> layout;
++    protected final Layout<?> layout;
+ 
+     protected OutputStreamManager(final OutputStream os, final String streamName, final Layout<?> layout) {
+         super(streamName);
+@@ -66,11 +65,21 @@ public class OutputStreamManager extends AbstractManager {
+      */
+     @Override
+     public void releaseSub() {
++        writeFooter();
++        close();
++    }
++
++    /**
++     * Writes the footer.
++     */
++    protected void writeFooter() {
++        if (layout == null) {
++            return;
++        }
+         byte[] footer = layout.getFooter();
+         if (footer != null) {
+             write(footer);
+         }
+-        close();
+     }
+ 
+     /**
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/rolling/RollingFileManager.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/rolling/RollingFileManager.java
+index c58b18c..3184702 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/rolling/RollingFileManager.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/rolling/RollingFileManager.java
+@@ -167,6 +167,7 @@ public class RollingFileManager extends FileManager {
+         try {
+             final RolloverDescription descriptor = strategy.rollover(this);
+             if (descriptor != null) {
++                writeFooter();
+                 close();
+                 if (descriptor.getSynchronous() != null) {
+                     LOGGER.debug("RollingFileManager executing synchronous {}", descriptor.getSynchronous());
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/rolling/RollingRandomAccessFileManager.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/rolling/RollingRandomAccessFileManager.java
+index cc63bfe..992ab09 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/rolling/RollingRandomAccessFileManager.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/rolling/RollingRandomAccessFileManager.java
+@@ -55,6 +55,26 @@ public class RollingRandomAccessFileManager extends RollingFileManager {
+         this.randomAccessFile = raf;
+         isEndOfBatch.set(Boolean.FALSE);
+         this.buffer = ByteBuffer.allocate(bufferSize);
++        writeHeader();
++    }
++
++    /**
++     * Writes the layout's header to the file if it exists.
++     */
++    private void writeHeader() {
++        if (layout == null) {
++            return;
++        }
++        byte[] header = layout.getHeader();
++        if (header == null) {
++            return;
++        }
++        try {
++            // write to the file, not to the buffer: the buffer may not be empty
++            randomAccessFile.write(header, 0, header.length);
++        } catch (final IOException ioe) {
++            LOGGER.error("Unable to write header", ioe);
++        }
+     }
+ 
+     public static RollingRandomAccessFileManager getRollingRandomAccessFileManager(final String fileName,
+@@ -99,6 +119,7 @@ public class RollingRandomAccessFileManager extends RollingFileManager {
+         if (isAppend()) {
+             randomAccessFile.seek(randomAccessFile.length());
+         }
++        writeHeader();
+     }
+ 
+     @Override

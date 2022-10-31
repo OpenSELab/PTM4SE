@@ -1,0 +1,112 @@
+diff --git a/Essentials/src/com/earth2me/essentials/Kit.java b/Essentials/src/com/earth2me/essentials/Kit.java
+index 1b71eef..7291594 100644
+--- a/Essentials/src/com/earth2me/essentials/Kit.java
++++ b/Essentials/src/com/earth2me/essentials/Kit.java
+@@ -133,7 +133,7 @@
+ 		}
+ 	}
+ 
+-	public static List<String> getItems(final IEssentials ess, final User user, final Map<String, Object> kit) throws Exception
++	public static List<String> getItems(final IEssentials ess, final User user, final String kitName, final Map<String, Object> kit) throws Exception
+ 	{
+ 		if (kit == null)
+ 		{
+@@ -152,15 +152,15 @@
+ 						itemList.add(item.toString());
+ 						continue;
+ 					}
+-					throw new Exception("Error parsing kit item: " + item.toString());
++					throw new Exception("Invalid kit item: " + item.toString());
+ 				}
+ 				return itemList;
+ 			}
+-			throw new Exception("Error parsing kit: " + kitItems.toString());
++			throw new Exception("Invalid item list");
+ 		}
+ 		catch (Exception e)
+ 		{
+-			ess.getLogger().log(Level.WARNING, e.getMessage());
++			ess.getLogger().log(Level.WARNING, "Error parsing kit " + kitName + ": " + e.getMessage());
+ 			throw new Exception(_("kitError2"), e);
+ 		}
+ 	}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandkit.java b/Essentials/src/com/earth2me/essentials/commands/Commandkit.java
+index c3983b8..ccc58c2 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandkit.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandkit.java
+@@ -56,7 +56,7 @@
+ 			final String kitName = args[0].toLowerCase(Locale.ENGLISH);
+ 
+ 			final Map<String, Object> kit = ess.getSettings().getKit(kitName);
+-			final List<String> items = Kit.getItems(ess, userTo, kit);
++			final List<String> items = Kit.getItems(ess, userTo, kitName, kit);
+ 			Kit.expandItems(ess, userTo, items);
+ 
+ 			sender.sendMessage(_("kitGiveTo", kitName, userTo.getDisplayName()));
+@@ -78,7 +78,7 @@
+ 			throw new Exception(_("noKitPermission", "essentials.kits." + kitName));
+ 		}
+ 
+-		final List<String> items = Kit.getItems(ess, userTo, kit);
++		final List<String> items = Kit.getItems(ess, userTo, kitName, kit);
+ 
+ 		Kit.checkTime(userFrom, kitName, kit);
+ 
+diff --git a/Essentials/src/com/earth2me/essentials/signs/SignKit.java b/Essentials/src/com/earth2me/essentials/signs/SignKit.java
+index b11125e..a2964d7 100644
+--- a/Essentials/src/com/earth2me/essentials/signs/SignKit.java
++++ b/Essentials/src/com/earth2me/essentials/signs/SignKit.java
+@@ -61,7 +61,7 @@
+ 			{
+ 				final Map<String, Object> kit = ess.getSettings().getKit(kitName);
+ 				Kit.checkTime(player, kitName, kit);
+-				final List<String> items = Kit.getItems(ess, player, kit);
++				final List<String> items = Kit.getItems(ess, player, kitName, kit);
+ 				Kit.expandItems(ess, player, items);
+ 				charge.charge(player);
+ 				Trade.log("Sign", "Kit", "Interact", username, null, username, charge, sign.getBlock().getLocation(), ess);
+diff --git a/EssentialsSpawn/src/com/earth2me/essentials/spawn/EssentialsSpawnPlayerListener.java b/EssentialsSpawn/src/com/earth2me/essentials/spawn/EssentialsSpawnPlayerListener.java
+index 8b645fa..6fcabe6 100644
+--- a/EssentialsSpawn/src/com/earth2me/essentials/spawn/EssentialsSpawnPlayerListener.java
++++ b/EssentialsSpawn/src/com/earth2me/essentials/spawn/EssentialsSpawnPlayerListener.java
+@@ -123,7 +123,7 @@
+ 					try
+ 					{
+ 						final Map<String, Object> kit = ess.getSettings().getKit(kitName.toLowerCase(Locale.ENGLISH));
+-						final List<String> items = Kit.getItems(ess, user, kit);
++						final List<String> items = Kit.getItems(ess, user, kitName, kit);
+ 						Kit.expandItems(ess, user, items);
+ 					}
+ 					catch (Exception ex)
+diff --git a/Essentials/src/com/earth2me/essentials/Kit.java b/Essentials/src/com/earth2me/essentials/Kit.java
+index 1b71eef..7291594 100644
+--- a/Essentials/src/com/earth2me/essentials/Kit.java
++++ b/Essentials/src/com/earth2me/essentials/Kit.java
+@@ -133,7 +133,7 @@
+ 		}
+ 	}
+ 
+-	public static List<String> getItems(final IEssentials ess, final User user, final Map<String, Object> kit) throws Exception
++	public static List<String> getItems(final IEssentials ess, final User user, final String kitName, final Map<String, Object> kit) throws Exception
+ 	{
+ 		if (kit == null)
+ 		{
+@@ -152,15 +152,15 @@
+ 						itemList.add(item.toString());
+ 						continue;
+ 					}
+-					throw new Exception("Error parsing kit item: " + item.toString());
++					throw new Exception("Invalid kit item: " + item.toString());
+ 				}
+ 				return itemList;
+ 			}
+-			throw new Exception("Error parsing kit: " + kitItems.toString());
++			throw new Exception("Invalid item list");
+ 		}
+ 		catch (Exception e)
+ 		{
+-			ess.getLogger().log(Level.WARNING, e.getMessage());
++			ess.getLogger().log(Level.WARNING, "Error parsing kit " + kitName + ": " + e.getMessage());
+ 			throw new Exception(_("kitError2"), e);
+ 		}
+ 	}

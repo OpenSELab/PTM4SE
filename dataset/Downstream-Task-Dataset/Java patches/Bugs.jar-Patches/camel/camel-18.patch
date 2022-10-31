@@ -1,0 +1,71 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/builder/AdviceWithRouteBuilder.java b/camel-core/src/main/java/org/apache/camel/builder/AdviceWithRouteBuilder.java
+index cf6cf02..fb472a7 100644
+--- a/camel-core/src/main/java/org/apache/camel/builder/AdviceWithRouteBuilder.java
++++ b/camel-core/src/main/java/org/apache/camel/builder/AdviceWithRouteBuilder.java
+@@ -68,7 +68,6 @@ public abstract class AdviceWithRouteBuilder extends RouteBuilder {
+      * @throws Exception can be thrown if error occurred
+      */
+     public void mockEndpoints() throws Exception {
+-        getContext().removeEndpoints("*");
+         getContext().addRegisterEndpointCallback(new InterceptSendToMockEndpointStrategy(null));
+     }
+ 
+@@ -80,7 +79,6 @@ public abstract class AdviceWithRouteBuilder extends RouteBuilder {
+      * @see org.apache.camel.util.EndpointHelper#matchEndpoint(String, String)
+      */
+     public void mockEndpoints(String pattern) throws Exception {
+-        getContext().removeEndpoints(pattern);
+         getContext().addRegisterEndpointCallback(new InterceptSendToMockEndpointStrategy(pattern));
+     }
+ 
+@@ -95,7 +93,6 @@ public abstract class AdviceWithRouteBuilder extends RouteBuilder {
+      */
+     public AdviceWithBuilder weaveById(String pattern) {
+         ObjectHelper.notNull(originalRoute, "originalRoute", this);
+-
+         return new AdviceWithBuilder(this, pattern, null);
+     }
+ 
+@@ -110,7 +107,6 @@ public abstract class AdviceWithRouteBuilder extends RouteBuilder {
+      */
+     public AdviceWithBuilder weaveByToString(String pattern) {
+         ObjectHelper.notNull(originalRoute, "originalRoute", this);
+-
+         return new AdviceWithBuilder(this, null, pattern);
+     }
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/InterceptSendToEndpoint.java b/camel-core/src/main/java/org/apache/camel/impl/InterceptSendToEndpoint.java
+index bd97de1..80c5b11 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/InterceptSendToEndpoint.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/InterceptSendToEndpoint.java
+@@ -114,6 +114,7 @@ public class InterceptSendToEndpoint implements Endpoint {
+                 if (LOG.isDebugEnabled()) {
+                     LOG.debug("Sending to endpoint: " + getEndpointUri() + " is intercepted and detoured to: " + detour + " for exchange: " + exchange);
+                 }
++                LOG.info("Sending to endpoint: " + getEndpointUri() + " is intercepted and detoured to: " + detour + " for exchange: " + exchange);
+                 // add header with the real endpoint uri
+                 exchange.getIn().setHeader(Exchange.INTERCEPTED_ENDPOINT, delegate.getEndpointUri());
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/InterceptSendToMockEndpointStrategy.java b/camel-core/src/main/java/org/apache/camel/impl/InterceptSendToMockEndpointStrategy.java
+index e0b168c..e1d52d1 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/InterceptSendToMockEndpointStrategy.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/InterceptSendToMockEndpointStrategy.java
+@@ -21,6 +21,7 @@ import org.apache.camel.Processor;
+ import org.apache.camel.component.mock.MockEndpoint;
+ import org.apache.camel.spi.EndpointStrategy;
+ import org.apache.camel.util.EndpointHelper;
++import org.apache.camel.util.ObjectHelper;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+@@ -73,6 +74,10 @@ public class InterceptSendToMockEndpointStrategy implements EndpointStrategy {
+             // create mock endpoint which we will use as interceptor
+             // replace :// from scheme to make it easy to lookup the mock endpoint without having double :// in uri
+             String key = "mock:" + endpoint.getEndpointKey().replaceFirst("://", ":");
++            // strip off parameters as well
++            if (key.contains("?")) {
++                key = ObjectHelper.before(key, "?");
++            }
+             LOG.info("Adviced endpoint [" + uri + "] with mock endpoint [" + key + "]");
+ 
+             MockEndpoint mock = endpoint.getCamelContext().getEndpoint(key, MockEndpoint.class);

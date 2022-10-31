@@ -1,0 +1,62 @@
+diff --git a/jsonschema2pojo-core/src/main/java/org/jsonschema2pojo/rules/FormatRule.java b/jsonschema2pojo-core/src/main/java/org/jsonschema2pojo/rules/FormatRule.java
+index 4eda1e3..1a92039 100644
+--- a/jsonschema2pojo-core/src/main/java/org/jsonschema2pojo/rules/FormatRule.java
++++ b/jsonschema2pojo-core/src/main/java/org/jsonschema2pojo/rules/FormatRule.java
+@@ -134,7 +134,7 @@
+         String type=ruleFactory.getGenerationConfig().getDateTimeType();
+         if (!isEmpty(type)){
+             try {
+-                Class<?> clazz=Class.forName(type);
++                Class<?> clazz=Thread.currentThread().getContextClassLoader().loadClass(type);
+                 return clazz;
+             }
+             catch (ClassNotFoundException e) {
+@@ -148,7 +148,7 @@
+         String type=ruleFactory.getGenerationConfig().getDateType();
+         if (!isEmpty(type)){
+             try {
+-                Class<?> clazz=Class.forName(type);
++                Class<?> clazz=Thread.currentThread().getContextClassLoader().loadClass(type);
+                 return clazz;
+             }
+             catch (ClassNotFoundException e) {
+@@ -162,7 +162,7 @@
+         String type=ruleFactory.getGenerationConfig().getTimeType();
+         if (!isEmpty(type)){
+             try {
+-                Class<?> clazz=Class.forName(type);
++                Class<?> clazz=Thread.currentThread().getContextClassLoader().loadClass(type);
+                 return clazz;
+             }
+             catch (ClassNotFoundException e) {
+diff --git a/jsonschema2pojo-core/src/main/java/org/jsonschema2pojo/rules/FormatRule.java b/jsonschema2pojo-core/src/main/java/org/jsonschema2pojo/rules/FormatRule.java
+index 4eda1e3..1a92039 100644
+--- a/jsonschema2pojo-core/src/main/java/org/jsonschema2pojo/rules/FormatRule.java
++++ b/jsonschema2pojo-core/src/main/java/org/jsonschema2pojo/rules/FormatRule.java
+@@ -134,7 +134,7 @@
+         String type=ruleFactory.getGenerationConfig().getDateTimeType();
+         if (!isEmpty(type)){
+             try {
+-                Class<?> clazz=Class.forName(type);
++                Class<?> clazz=Thread.currentThread().getContextClassLoader().loadClass(type);
+                 return clazz;
+             }
+             catch (ClassNotFoundException e) {
+@@ -148,7 +148,7 @@
+         String type=ruleFactory.getGenerationConfig().getDateType();
+         if (!isEmpty(type)){
+             try {
+-                Class<?> clazz=Class.forName(type);
++                Class<?> clazz=Thread.currentThread().getContextClassLoader().loadClass(type);
+                 return clazz;
+             }
+             catch (ClassNotFoundException e) {
+@@ -162,7 +162,7 @@
+         String type=ruleFactory.getGenerationConfig().getTimeType();
+         if (!isEmpty(type)){
+             try {
+-                Class<?> clazz=Class.forName(type);
++                Class<?> clazz=Thread.currentThread().getContextClassLoader().loadClass(type);
+                 return clazz;
+             }
+             catch (ClassNotFoundException e) {

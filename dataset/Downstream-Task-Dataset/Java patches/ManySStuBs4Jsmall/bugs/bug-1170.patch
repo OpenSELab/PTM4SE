@@ -1,0 +1,64 @@
+diff --git a/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValuePartitionIntegrationTest.java b/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValuePartitionIntegrationTest.java
+index f810995..261f120 100644
+--- a/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValuePartitionIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValuePartitionIntegrationTest.java
+@@ -44,7 +44,9 @@
+ 
+   @ClassRule
+   public static LocalTachyonClusterResource sLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(Constants.GB, Constants.KB, BLOCK_SIZE);
++      new LocalTachyonClusterResource(Constants.GB, Constants.KB, BLOCK_SIZE,
++          /* ensure key-value service is turned on */
++          Constants.KEYVALUE_ENABLED, "true");
+ 
+   @BeforeClass
+   public static void beforeClass() throws Exception {
+diff --git a/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValueStoreIntegrationTest.java b/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValueStoreIntegrationTest.java
+index 83256aa..890d806 100644
+--- a/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValueStoreIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValueStoreIntegrationTest.java
+diff --git a/servers/src/main/java/tachyon/master/TachyonMaster.java b/servers/src/main/java/tachyon/master/TachyonMaster.java
+index bdc6c10..1b85915 100644
+--- a/servers/src/main/java/tachyon/master/TachyonMaster.java
++++ b/servers/src/main/java/tachyon/master/TachyonMaster.java
+@@ -199,8 +199,9 @@
+       mAdditionalMasters = Lists.newArrayList();
+       List<? extends  Master> masters = Lists.newArrayList(mBlockMaster, mFileSystemMaster);
+       // Discover and register the available factories
++      // NOTE, ClassLoader is explicitly specified so we don't need to set ContextClassLoader
+       ServiceLoader<MasterFactory> discoveredMasterFactories =
+-          ServiceLoader.load(MasterFactory.class);
++          ServiceLoader.load(MasterFactory.class, MasterFactory.class.getClassLoader());
+       for (MasterFactory factory : discoveredMasterFactories) {
+         Master master = factory.create(masters, journalDirectory);
+         if (master != null) {
+diff --git a/servers/src/main/java/tachyon/worker/TachyonWorker.java b/servers/src/main/java/tachyon/worker/TachyonWorker.java
+index 29a2ecf..064162a 100644
+--- a/servers/src/main/java/tachyon/worker/TachyonWorker.java
++++ b/servers/src/main/java/tachyon/worker/TachyonWorker.java
+@@ -97,8 +97,9 @@
+       mAdditionalWorkers = Lists.newArrayList();
+       List<? extends Worker> workers = Lists.newArrayList(mBlockWorker, mFileSystemWorker);
+       // Discover and register the available factories
++      // NOTE, ClassLoader is explicitly specified so we don't need to set ContextClassLoader
+       ServiceLoader<WorkerFactory> discoveredMasterFactories =
+-          ServiceLoader.load(WorkerFactory.class);
++          ServiceLoader.load(WorkerFactory.class, WorkerFactory.class.getClassLoader());
+       for (WorkerFactory factory : discoveredMasterFactories) {
+         Worker worker = factory.create(workers);
+         if (worker != null) {
+diff --git a/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValuePartitionIntegrationTest.java b/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValuePartitionIntegrationTest.java
+index f810995..261f120 100644
+--- a/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValuePartitionIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/client/keyvalue/KeyValuePartitionIntegrationTest.java
+@@ -44,7 +44,9 @@
+ 
+   @ClassRule
+   public static LocalTachyonClusterResource sLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(Constants.GB, Constants.KB, BLOCK_SIZE);
++      new LocalTachyonClusterResource(Constants.GB, Constants.KB, BLOCK_SIZE,
++          /* ensure key-value service is turned on */
++          Constants.KEYVALUE_ENABLED, "true");
+ 
+   @BeforeClass
+   public static void beforeClass() throws Exception {

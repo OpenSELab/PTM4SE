@@ -1,0 +1,26 @@
+diff --git a/hbase-rsgroup/src/main/java/org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java b/hbase-rsgroup/src/main/java/org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java
+index c4b4bf3..14bc442 100644
+--- a/hbase-rsgroup/src/main/java/org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java
++++ b/hbase-rsgroup/src/main/java/org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java
+@@ -325,7 +325,7 @@
+             " on server: " + assignedServer +
+             " found in group: " +
+             RSGroupInfoManager.getRSGroupOfServer(assignedServer.getHostPort()) +
+-            " outside of group: " + info.getName());
++            " outside of group: " + (info == null ? "UNKNOWN" : info.getName()));
+         misplacedRegions.add(region);
+       }
+     }
+diff --git a/hbase-rsgroup/src/main/java/org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java b/hbase-rsgroup/src/main/java/org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java
+index c4b4bf3..14bc442 100644
+--- a/hbase-rsgroup/src/main/java/org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java
++++ b/hbase-rsgroup/src/main/java/org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java
+@@ -325,7 +325,7 @@
+             " on server: " + assignedServer +
+             " found in group: " +
+             RSGroupInfoManager.getRSGroupOfServer(assignedServer.getHostPort()) +
+-            " outside of group: " + info.getName());
++            " outside of group: " + (info == null ? "UNKNOWN" : info.getName()));
+         misplacedRegions.add(region);
+       }
+     }

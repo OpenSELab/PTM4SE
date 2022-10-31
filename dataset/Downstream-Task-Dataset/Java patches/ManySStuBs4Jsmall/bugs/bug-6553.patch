@@ -1,0 +1,26 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestServerHandler.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestServerHandler.java
+index 15a9951..90c93e5 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestServerHandler.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestServerHandler.java
+@@ -134,7 +134,7 @@
+ 	}
+ 
+ 	private void respondWithError(ChannelHandlerContext ctx, Throwable error, InputChannelID sourceId) {
+-		LOG.debug("Responding with error {}.", error);
++		LOG.debug("Responding with error: {}.", error.getClass());
+ 
+ 		ctx.writeAndFlush(new NettyMessage.ErrorResponse(error, sourceId));
+ 	}
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestServerHandler.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestServerHandler.java
+index 15a9951..90c93e5 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestServerHandler.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestServerHandler.java
+@@ -134,7 +134,7 @@
+ 	}
+ 
+ 	private void respondWithError(ChannelHandlerContext ctx, Throwable error, InputChannelID sourceId) {
+-		LOG.debug("Responding with error {}.", error);
++		LOG.debug("Responding with error: {}.", error.getClass());
+ 
+ 		ctx.writeAndFlush(new NettyMessage.ErrorResponse(error, sourceId));
+ 	}

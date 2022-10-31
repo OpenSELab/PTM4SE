@@ -1,0 +1,22 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/ListToTreeSelectionModelWrapper.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/ListToTreeSelectionModelWrapper.java
+index 470e402..539ea4a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/ListToTreeSelectionModelWrapper.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/ListToTreeSelectionModelWrapper.java
+@@ -37,7 +37,7 @@
+      */
+     private static final long serialVersionUID = 2267930983939339510L;
+     /** Set to true when we are updating the ListSelectionModel. */
+-    protected boolean updatingListSelectionModel;
++    private boolean updatingListSelectionModel;
+     /** JTreeTable to perform updates on */
+     private final JTreeTable treeTable;
+ 
+@@ -122,7 +122,7 @@
+      */
+     private void updateSelectedPathIfRowIsSelected(int counter) {
+         if (listSelectionModel.isSelectedIndex(counter)) {
+-            final TreePath selPath = treeTable.tree.getPathForRow(counter);
++            final TreePath selPath = treeTable.getTree().getPathForRow(counter);
+ 
+             if (selPath != null) {
+                 addSelectionPath(selPath);

@@ -1,0 +1,26 @@
+diff --git a/host-controller/src/main/java/org/jboss/as/domain/controller/transformers/JSFSubsystemTransformers.java b/host-controller/src/main/java/org/jboss/as/domain/controller/transformers/JSFSubsystemTransformers.java
+index ddd7622..3b50005 100644
+--- a/host-controller/src/main/java/org/jboss/as/domain/controller/transformers/JSFSubsystemTransformers.java
++++ b/host-controller/src/main/java/org/jboss/as/domain/controller/transformers/JSFSubsystemTransformers.java
+@@ -117,7 +117,7 @@
+                 final String name = operation.require(NAME).asString();
+                 final ModelNode value = operation.get(ModelDescriptionConstants.VALUE);
+                 if (SLOT_ATTRIBUTE_NAME.equals(name)) {
+-                    if (value.isDefined() && value.equals(SLOT_DEFAULT_VALUE)) {
++                    if (value.isDefined() && SLOT_DEFAULT_VALUE.equals(value.asString())) {
+                         return DISCARD.transformOperation(context, address, operation);
+                     } else {
+                         return new TransformedOperation(operation,
+diff --git a/host-controller/src/main/java/org/jboss/as/domain/controller/transformers/JSFSubsystemTransformers.java b/host-controller/src/main/java/org/jboss/as/domain/controller/transformers/JSFSubsystemTransformers.java
+index ddd7622..3b50005 100644
+--- a/host-controller/src/main/java/org/jboss/as/domain/controller/transformers/JSFSubsystemTransformers.java
++++ b/host-controller/src/main/java/org/jboss/as/domain/controller/transformers/JSFSubsystemTransformers.java
+@@ -117,7 +117,7 @@
+                 final String name = operation.require(NAME).asString();
+                 final ModelNode value = operation.get(ModelDescriptionConstants.VALUE);
+                 if (SLOT_ATTRIBUTE_NAME.equals(name)) {
+-                    if (value.isDefined() && value.equals(SLOT_DEFAULT_VALUE)) {
++                    if (value.isDefined() && SLOT_DEFAULT_VALUE.equals(value.asString())) {
+                         return DISCARD.transformOperation(context, address, operation);
+                     } else {
+                         return new TransformedOperation(operation,

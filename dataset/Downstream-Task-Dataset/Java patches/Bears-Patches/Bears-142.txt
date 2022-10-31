@@ -1,0 +1,34 @@
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/history/handler/ActivityInstanceEndHandler.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/history/handler/ActivityInstanceEndHandler.java
+@@ -21,17 +25,36 @@ package org.activiti.engine.impl.history.handler;
+ 
+ /**
+  * @author Tom Baeyens
+  */
+ public class ActivityInstanceEndHandler implements ExecutionListener {
+-
+-  public void notify(DelegateExecution execution) {
+-    Context.getCommandContext().getHistoryManager()
+-      .recordActivityEnd((ExecutionEntity) execution);
+-  }
++    
++    public void notify(DelegateExecution execution) {
++        if (!isSourceTransitionNotExecutionActivityAndNonInterrupting((ExecutionEntity) execution)) {
++            Context.getCommandContext().getHistoryManager()
++                    .recordActivityEnd((ExecutionEntity) execution);
++        }
++    }
++    
++    private boolean isSourceTransitionNotExecutionActivityAndNonInterrupting(InterpretableExecution execution) {
++        TransitionImpl transition = execution.getTransition();
++        if (transition != null) {
++            ActivityBehavior activityBehavior = transition.getSource().getActivityBehavior();
++        
++            return (!(execution.getActivity().getId().equals(execution.getTransition().getSource().getId())) &&
++                    activityBehavior instanceof BoundaryEventActivityBehavior &&
++                    !(((BoundaryEventActivityBehavior) activityBehavior).isInterrupting()));
++        }
++        return false;
++    }
+ }
++

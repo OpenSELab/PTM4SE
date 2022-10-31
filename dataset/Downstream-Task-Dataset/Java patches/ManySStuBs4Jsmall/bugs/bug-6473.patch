@@ -1,0 +1,32 @@
+diff --git a/flink-streaming-connectors/flink-connector-kafka-0.9/src/main/java/org/apache/flink/streaming/connectors/kafka/internal/Kafka09Fetcher.java b/flink-streaming-connectors/flink-connector-kafka-0.9/src/main/java/org/apache/flink/streaming/connectors/kafka/internal/Kafka09Fetcher.java
+index 3c2cca3..ad7efa2 100644
+--- a/flink-streaming-connectors/flink-connector-kafka-0.9/src/main/java/org/apache/flink/streaming/connectors/kafka/internal/Kafka09Fetcher.java
++++ b/flink-streaming-connectors/flink-connector-kafka-0.9/src/main/java/org/apache/flink/streaming/connectors/kafka/internal/Kafka09Fetcher.java
+@@ -291,9 +291,9 @@
+ 		for (KafkaTopicPartitionState<TopicPartition> partition : partitions) {
+ 			// committed offsets through the KafkaConsumer need to be 1 more than the last processed offset.
+ 			// This does not affect Flink's checkpoints/saved state.
+-			Long offsetToCommit = offsets.get(partition.getKafkaTopicPartition()) + 1;
++			Long offsetToCommit = offsets.get(partition.getKafkaTopicPartition());
+ 			if (offsetToCommit != null) {
+-				offsetsToCommit.put(partition.getKafkaPartitionHandle(), new OffsetAndMetadata(offsetToCommit));
++				offsetsToCommit.put(partition.getKafkaPartitionHandle(), new OffsetAndMetadata(offsetToCommit + 1));
+ 				partition.setCommittedOffset(offsetToCommit);
+ 			}
+ 		}
+diff --git a/flink-streaming-connectors/flink-connector-kafka-0.9/src/main/java/org/apache/flink/streaming/connectors/kafka/internal/Kafka09Fetcher.java b/flink-streaming-connectors/flink-connector-kafka-0.9/src/main/java/org/apache/flink/streaming/connectors/kafka/internal/Kafka09Fetcher.java
+index 3c2cca3..ad7efa2 100644
+--- a/flink-streaming-connectors/flink-connector-kafka-0.9/src/main/java/org/apache/flink/streaming/connectors/kafka/internal/Kafka09Fetcher.java
++++ b/flink-streaming-connectors/flink-connector-kafka-0.9/src/main/java/org/apache/flink/streaming/connectors/kafka/internal/Kafka09Fetcher.java
+@@ -291,9 +291,9 @@
+ 		for (KafkaTopicPartitionState<TopicPartition> partition : partitions) {
+ 			// committed offsets through the KafkaConsumer need to be 1 more than the last processed offset.
+ 			// This does not affect Flink's checkpoints/saved state.
+-			Long offsetToCommit = offsets.get(partition.getKafkaTopicPartition()) + 1;
++			Long offsetToCommit = offsets.get(partition.getKafkaTopicPartition());
+ 			if (offsetToCommit != null) {
+-				offsetsToCommit.put(partition.getKafkaPartitionHandle(), new OffsetAndMetadata(offsetToCommit));
++				offsetsToCommit.put(partition.getKafkaPartitionHandle(), new OffsetAndMetadata(offsetToCommit + 1));
+ 				partition.setCommittedOffset(offsetToCommit);
+ 			}
+ 		}

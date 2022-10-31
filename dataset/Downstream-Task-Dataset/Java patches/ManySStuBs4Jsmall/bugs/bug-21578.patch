@@ -1,0 +1,32 @@
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
+index 04b3df8..3f613f7 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
+@@ -184,8 +184,9 @@
+ 			}
+ 			return managementServerProperties.getPort() == null
+ 					|| serverProperties.getPort() == null
+-					|| serverProperties.getPort().equals(
+-							managementServerProperties.getPort()) ? SAME : DIFFERENT;
++					&& managementServerProperties.getPort().equals(8080)
++					|| managementServerProperties.getPort().equals(
++							serverProperties.getPort()) ? SAME : DIFFERENT;
+ 		}
+ 	};
+ }
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
+index 04b3df8..3f613f7 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
+@@ -184,8 +184,9 @@
+ 			}
+ 			return managementServerProperties.getPort() == null
+ 					|| serverProperties.getPort() == null
+-					|| serverProperties.getPort().equals(
+-							managementServerProperties.getPort()) ? SAME : DIFFERENT;
++					&& managementServerProperties.getPort().equals(8080)
++					|| managementServerProperties.getPort().equals(
++							serverProperties.getPort()) ? SAME : DIFFERENT;
+ 		}
+ 	};
+ }

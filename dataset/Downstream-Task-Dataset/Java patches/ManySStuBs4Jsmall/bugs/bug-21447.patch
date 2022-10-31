@@ -1,0 +1,39 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java
+index b654481..3538df5 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java
+@@ -56,7 +56,7 @@
+ @ConditionalOnClass({ Mongo.class, MongoRepository.class })
+ @ConditionalOnMissingBean({ MongoRepositoryFactoryBean.class,
+ 		MongoRepositoryConfigurationExtension.class })
+-@ConditionalOnProperty(prefix = "spring.data.mongo.repositories", name = "enabled", havingValue = "true", matchIfMissing = true)
++@ConditionalOnProperty(prefix = "spring.data.mongodb.repositories", name = "enabled", havingValue = "true", matchIfMissing = true)
+ @Import(MongoRepositoriesAutoConfigureRegistrar.class)
+ @AutoConfigureAfter(MongoAutoConfiguration.class)
+ public class MongoRepositoriesAutoConfiguration {
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/data/mongo/MixedMongoRepositoriesAutoConfigurationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/data/mongo/MixedMongoRepositoriesAutoConfigurationTests.java
+index 291b6d3..e03c087 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/data/mongo/MixedMongoRepositoriesAutoConfigurationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/data/mongo/MixedMongoRepositoriesAutoConfigurationTests.java
+@@ -105,7 +105,7 @@
+ 		this.context = new AnnotationConfigApplicationContext();
+ 		EnvironmentTestUtils.addEnvironment(this.context,
+ 				"spring.datasource.initialize:false",
+-				"spring.data.mongo.repositories.enabled:false");
++				"spring.data.mongodb.repositories.enabled:false");
+ 		this.context.register(OverlapConfiguration.class, BaseConfiguration.class);
+ 		this.context.refresh();
+ 		assertNotNull(this.context.getBean(CityRepository.class));
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java
+index b654481..3538df5 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/data/mongo/MongoRepositoriesAutoConfiguration.java
+@@ -56,7 +56,7 @@
+ @ConditionalOnClass({ Mongo.class, MongoRepository.class })
+ @ConditionalOnMissingBean({ MongoRepositoryFactoryBean.class,
+ 		MongoRepositoryConfigurationExtension.class })
+-@ConditionalOnProperty(prefix = "spring.data.mongo.repositories", name = "enabled", havingValue = "true", matchIfMissing = true)
++@ConditionalOnProperty(prefix = "spring.data.mongodb.repositories", name = "enabled", havingValue = "true", matchIfMissing = true)
+ @Import(MongoRepositoriesAutoConfigureRegistrar.class)
+ @AutoConfigureAfter(MongoAutoConfiguration.class)
+ public class MongoRepositoriesAutoConfiguration {

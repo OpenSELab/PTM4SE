@@ -1,0 +1,57 @@
+diff --git a/src/cn/trinea/android/common/entity/HttpResponse.java b/src/cn/trinea/android/common/entity/HttpResponse.java
+index 8c3b0a0..33c8841 100644
+--- a/src/cn/trinea/android/common/entity/HttpResponse.java
++++ b/src/cn/trinea/android/common/entity/HttpResponse.java
+@@ -127,7 +127,7 @@
+     /**
+      * http cache-control in reponse header
+      * 
+-     * @return -1 represents http error or no cache-control in response headers
++     * @return -1 represents http error or no cache-control in response headers, or max-age in seconds
+      */
+     public int getCacheControlMaxAge() {
+         try {
+@@ -164,7 +164,7 @@
+     public long getExpiresInMillis() {
+         int maxAge = getCacheControlMaxAge();
+         if (maxAge != -1) {
+-            return System.currentTimeMillis() + maxAge;
++            return System.currentTimeMillis() + maxAge * 1000;
+         } else {
+             String expire = getExpiresHeader();
+             if (!StringUtils.isEmpty(expire)) {
+diff --git a/src/cn/trinea/android/common/util/HttpUtils.java b/src/cn/trinea/android/common/util/HttpUtils.java
+index 18c7d78..ee02a65 100644
+--- a/src/cn/trinea/android/common/util/HttpUtils.java
++++ b/src/cn/trinea/android/common/util/HttpUtils.java
+@@ -357,7 +357,7 @@
+      * parse gmt time to long
+      * 
+      * @param gmtTime likes Thu, 11 Apr 2013 10:20:30 GMT
+-     * @return -1 represents exception
++     * @return -1 represents exception otherwise time in  milliseconds
+      */
+     public static long parseGmtTime(String gmtTime) {
+         try {
+diff --git a/src/cn/trinea/android/common/entity/HttpResponse.java b/src/cn/trinea/android/common/entity/HttpResponse.java
+index 8c3b0a0..33c8841 100644
+--- a/src/cn/trinea/android/common/entity/HttpResponse.java
++++ b/src/cn/trinea/android/common/entity/HttpResponse.java
+@@ -127,7 +127,7 @@
+     /**
+      * http cache-control in reponse header
+      * 
+-     * @return -1 represents http error or no cache-control in response headers
++     * @return -1 represents http error or no cache-control in response headers, or max-age in seconds
+      */
+     public int getCacheControlMaxAge() {
+         try {
+@@ -164,7 +164,7 @@
+     public long getExpiresInMillis() {
+         int maxAge = getCacheControlMaxAge();
+         if (maxAge != -1) {
+-            return System.currentTimeMillis() + maxAge;
++            return System.currentTimeMillis() + maxAge * 1000;
+         } else {
+             String expire = getExpiresHeader();
+             if (!StringUtils.isEmpty(expire)) {

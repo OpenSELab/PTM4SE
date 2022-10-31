@@ -1,0 +1,18 @@
+--- a/src/main/java/org/springframework/data/util/ParameterizedTypeInformation.java
++++ b/src/main/java/org/springframework/data/util/ParameterizedTypeInformation.java
+@@ -181,6 +181,15 @@ class ParameterizedTypeInformation<T> extends ParentTypeAwareTypeInformation<T>
+        }
+ 
+        /* 
++        * (non-Javadoc)
++        * @see org.springframework.data.util.TypeDiscoverer#specialize(org.springframework.data.util.ClassTypeInformation)
++        */
++       @Override
++       public TypeInformation<?> specialize(ClassTypeInformation<?> type) {
++               return isResolvedCompletely() ? type : super.specialize(type);
++       }
++
++       /*
+         * (non-Javadoc)
+         * @see org.springframework.data.util.ParentTypeAwareTypeInformation#equals(java.lang.Object)
+         */

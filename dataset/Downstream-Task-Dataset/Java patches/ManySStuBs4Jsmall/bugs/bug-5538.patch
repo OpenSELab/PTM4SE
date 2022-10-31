@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index c3c8a2d..9ec06c1 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -1564,7 +1564,7 @@
+ 
+         // setup default thread pool for error handler
+         if (errorHandlerExecutorService == null || errorHandlerExecutorService.isShutdown()) {
+-            errorHandlerExecutorService = getExecutorServiceManager().newDefaultScheduledThreadPool(this, "ErrorHandlerRedeliveryTask");
++            errorHandlerExecutorService = getExecutorServiceManager().newDefaultScheduledThreadPool("ErrorHandlerRedeliveryThreadPool", "ErrorHandlerRedeliveryTask");
+         }
+ 
+         // start the route definitions before the routes is started
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index c3c8a2d..9ec06c1 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -1564,7 +1564,7 @@
+ 
+         // setup default thread pool for error handler
+         if (errorHandlerExecutorService == null || errorHandlerExecutorService.isShutdown()) {
+-            errorHandlerExecutorService = getExecutorServiceManager().newDefaultScheduledThreadPool(this, "ErrorHandlerRedeliveryTask");
++            errorHandlerExecutorService = getExecutorServiceManager().newDefaultScheduledThreadPool("ErrorHandlerRedeliveryThreadPool", "ErrorHandlerRedeliveryTask");
+         }
+ 
+         // start the route definitions before the routes is started

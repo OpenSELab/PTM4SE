@@ -1,0 +1,23 @@
+diff --git a/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java b/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
+index d7dbe74..9de53ce 100644
+--- a/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
++++ b/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
+@@ -70,12 +70,16 @@
+             "  private AutoOneOf_TaskResult() {} // There are no instances of this type.",
+             "",
+             "  static <V, T extends Throwable> TaskResult<V, T> value(V value) {",
+-            "    value.getClass();",
++            "    if (value == null) {",
++            "      throw new NullPointerException();",
++            "    }",
+             "    return new Impl_value<V, T>(value);",
+             "  }",
+             "",
+             "  static <V, T extends Throwable> TaskResult<V, T> exception(Throwable exception) {",
+-            "    exception.getClass();",
++            "    if (exception == null) {",
++            "      throw new NullPointerException();",
++            "    }",
+             "    return new Impl_exception<V, T>(exception);",
+             "  }",
+             "",

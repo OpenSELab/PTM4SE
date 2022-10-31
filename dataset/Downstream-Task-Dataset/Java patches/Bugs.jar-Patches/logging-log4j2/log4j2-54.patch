@@ -1,0 +1,17 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/helpers/FileUtils.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/helpers/FileUtils.java
+index 5752f77..2e38b52 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/helpers/FileUtils.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/helpers/FileUtils.java
+@@ -63,7 +63,11 @@ public final class FileUtils {
+             }
+         }
+         try {
+-            return new File(URLDecoder.decode(uri.toURL().getFile(), "UTF8"));
++            String fileName = uri.toURL().getFile();
++            if (new File(fileName).exists()) {
++                return new File(fileName);
++            }
++            return new File(URLDecoder.decode(fileName, "UTF8"));
+         } catch (final MalformedURLException ex) {
+             LOGGER.warn("Invalid URL " + uri, ex);
+         } catch (final UnsupportedEncodingException uee) {

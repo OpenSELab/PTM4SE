@@ -1,0 +1,56 @@
+diff --git a/connector/src/main/java/org/jboss/as/connector/services/workmanager/WildflyWorkWrapper.java b/connector/src/main/java/org/jboss/as/connector/services/workmanager/WildflyWorkWrapper.java
+index 08ac322..56b1f89 100644
+--- a/connector/src/main/java/org/jboss/as/connector/services/workmanager/WildflyWorkWrapper.java
++++ b/connector/src/main/java/org/jboss/as/connector/services/workmanager/WildflyWorkWrapper.java
+@@ -51,19 +51,20 @@
+         super(workManager, si, work, executionContext, workListener, startedLatch, completedLatch, startTime);
+     }
+ 
+-    protected void runWork(ExecutionContext ctx) throws WorkCompletedException {
++    @Override
++    protected void runWork() throws WorkCompletedException {
+         // if there is security and elytron is enabled, we need to let the context run the remainder of the work
+         // so the context can run the work as the specified Elytron identity
+         if (securityIntegration.getSecurityContext() != null &&
+                 ((CallbackImpl) workManager.getCallbackSecurity()).isElytronEnabled())
+             ((ElytronSecurityContext) securityIntegration.getSecurityContext()).runWork(() -> {
+                 try {
+-                    WildflyWorkWrapper.super.runWork(ctx);
++                    WildflyWorkWrapper.super.runWork();
+                 } catch (WorkCompletedException e) {
+                     e.printStackTrace();
+                 }
+             });
+         // delegate to super class if there is no elytron enabled
+-        else super.runWork(ctx);
++        else super.runWork();
+     }
+ }
+diff --git a/connector/src/main/java/org/jboss/as/connector/services/workmanager/WildflyWorkWrapper.java b/connector/src/main/java/org/jboss/as/connector/services/workmanager/WildflyWorkWrapper.java
+index 08ac322..56b1f89 100644
+--- a/connector/src/main/java/org/jboss/as/connector/services/workmanager/WildflyWorkWrapper.java
++++ b/connector/src/main/java/org/jboss/as/connector/services/workmanager/WildflyWorkWrapper.java
+@@ -51,19 +51,20 @@
+         super(workManager, si, work, executionContext, workListener, startedLatch, completedLatch, startTime);
+     }
+ 
+-    protected void runWork(ExecutionContext ctx) throws WorkCompletedException {
++    @Override
++    protected void runWork() throws WorkCompletedException {
+         // if there is security and elytron is enabled, we need to let the context run the remainder of the work
+         // so the context can run the work as the specified Elytron identity
+         if (securityIntegration.getSecurityContext() != null &&
+                 ((CallbackImpl) workManager.getCallbackSecurity()).isElytronEnabled())
+             ((ElytronSecurityContext) securityIntegration.getSecurityContext()).runWork(() -> {
+                 try {
+-                    WildflyWorkWrapper.super.runWork(ctx);
++                    WildflyWorkWrapper.super.runWork();
+                 } catch (WorkCompletedException e) {
+                     e.printStackTrace();
+                 }
+             });
+         // delegate to super class if there is no elytron enabled
+-        else super.runWork(ctx);
++        else super.runWork();
+     }
+ }

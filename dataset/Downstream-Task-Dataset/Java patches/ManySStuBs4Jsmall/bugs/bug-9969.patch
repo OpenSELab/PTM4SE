@@ -1,0 +1,28 @@
+diff --git a/src/jvm/clojure/lang/RT.java b/src/jvm/clojure/lang/RT.java
+index b247ccb..492df8d 100644
+--- a/src/jvm/clojure/lang/RT.java
++++ b/src/jvm/clojure/lang/RT.java
+@@ -502,8 +502,7 @@
+ 	else {
+ 		Class c = coll.getClass();
+ 		Class sc = c.getSuperclass();
+-		throw new ExceptionInfo("Don't know how to create ISeq from: " + c.getName(),
+-                                        map(Keyword.intern("instance"), coll));
++		throw new IllegalArgumentException("Don't know how to create ISeq from: " + c.getName());
+ 	}
+ }
+ 
+diff --git a/src/jvm/clojure/lang/RT.java b/src/jvm/clojure/lang/RT.java
+index b247ccb..492df8d 100644
+--- a/src/jvm/clojure/lang/RT.java
++++ b/src/jvm/clojure/lang/RT.java
+@@ -502,8 +502,7 @@
+ 	else {
+ 		Class c = coll.getClass();
+ 		Class sc = c.getSuperclass();
+-		throw new ExceptionInfo("Don't know how to create ISeq from: " + c.getName(),
+-                                        map(Keyword.intern("instance"), coll));
++		throw new IllegalArgumentException("Don't know how to create ISeq from: " + c.getName());
+ 	}
+ }
+ 

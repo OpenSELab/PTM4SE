@@ -1,0 +1,13 @@
+diff --git a/couchbase/src/main/java/com/yahoo/ycsb/db/CouchbaseClient.java b/couchbase/src/main/java/com/yahoo/ycsb/db/CouchbaseClient.java
+index fb29c45..d5179b3 100644
+--- a/couchbase/src/main/java/com/yahoo/ycsb/db/CouchbaseClient.java
++++ b/couchbase/src/main/java/com/yahoo/ycsb/db/CouchbaseClient.java
+@@ -291,7 +291,7 @@
+     if (useJson) {
+       try {
+         JsonNode json = JSON_MAPPER.readTree((String) source);
+-        boolean checkFields = fields != null && fields.size() > 0;
++        boolean checkFields = fields != null && !fields.isEmpty();
+         for (Iterator<Map.Entry<String, JsonNode>> jsonFields = json.fields(); jsonFields.hasNext();) {
+           Map.Entry<String, JsonNode> jsonField = jsonFields.next();
+           String name = jsonField.getKey();

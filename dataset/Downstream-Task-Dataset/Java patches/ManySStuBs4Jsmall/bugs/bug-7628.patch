@@ -1,0 +1,15 @@
+diff --git a/standalone-metastore/metastore-server/src/main/java/org/apache/hadoop/hive/metastore/HiveAlterHandler.java b/standalone-metastore/metastore-server/src/main/java/org/apache/hadoop/hive/metastore/HiveAlterHandler.java
+index 93ac74c..77b3a9e 100644
+--- a/standalone-metastore/metastore-server/src/main/java/org/apache/hadoop/hive/metastore/HiveAlterHandler.java
++++ b/standalone-metastore/metastore-server/src/main/java/org/apache/hadoop/hive/metastore/HiveAlterHandler.java
+@@ -366,8 +366,8 @@
+     } catch (NoSuchObjectException e) {
+       LOG.debug("Object not found in metastore ", e);
+       throw new InvalidOperationException(
+-          "Unable to change partition or table. Database " + dbname + " does not exist"
+-              + " Check metastore logs for detailed stack." + e.getMessage());
++          "Unable to change partition or table. Object " +  e.getMessage() + " does not exist."
++              + " Check metastore logs for detailed stack.");
+     } finally {
+       if (!success) {
+         LOG.error("Failed to alter table " + TableName.getQualified(catName, dbname, name));

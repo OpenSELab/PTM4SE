@@ -1,0 +1,32 @@
+diff --git a/components/camel-soap/src/test/java/org/apache/camel/dataformat/soap/SoapCxfServerTest.java b/components/camel-soap/src/test/java/org/apache/camel/dataformat/soap/SoapCxfServerTest.java
+index b276d9c..b81af73 100644
+--- a/components/camel-soap/src/test/java/org/apache/camel/dataformat/soap/SoapCxfServerTest.java
++++ b/components/camel-soap/src/test/java/org/apache/camel/dataformat/soap/SoapCxfServerTest.java
+@@ -74,10 +74,7 @@
+         ElementNameStrategy elNameStrat = new ServiceInterfaceStrategy(CustomerService.class, true);
+         SoapJaxbDataFormat soapDataFormat = new SoapJaxbDataFormat(jaxbPackage, elNameStrat);
+         from("direct:camelClient") //
+-            .onException(NoSuchCustomerException.class) //
+-                .handled(true) //
+-                .unmarshal(soapDataFormat) //
+-            .end().marshal(soapDataFormat) //
++            .marshal(soapDataFormat) //
+             .to("direct:cxfEndpoint") //
+             .unmarshal(soapDataFormat);
+     }
+diff --git a/components/camel-soap/src/test/java/org/apache/camel/dataformat/soap/SoapCxfServerTest.java b/components/camel-soap/src/test/java/org/apache/camel/dataformat/soap/SoapCxfServerTest.java
+index b276d9c..b81af73 100644
+--- a/components/camel-soap/src/test/java/org/apache/camel/dataformat/soap/SoapCxfServerTest.java
++++ b/components/camel-soap/src/test/java/org/apache/camel/dataformat/soap/SoapCxfServerTest.java
+@@ -74,10 +74,7 @@
+         ElementNameStrategy elNameStrat = new ServiceInterfaceStrategy(CustomerService.class, true);
+         SoapJaxbDataFormat soapDataFormat = new SoapJaxbDataFormat(jaxbPackage, elNameStrat);
+         from("direct:camelClient") //
+-            .onException(NoSuchCustomerException.class) //
+-                .handled(true) //
+-                .unmarshal(soapDataFormat) //
+-            .end().marshal(soapDataFormat) //
++            .marshal(soapDataFormat) //
+             .to("direct:cxfEndpoint") //
+             .unmarshal(soapDataFormat);
+     }

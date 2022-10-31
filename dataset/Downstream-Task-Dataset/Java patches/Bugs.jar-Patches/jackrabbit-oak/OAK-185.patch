@@ -1,0 +1,34 @@
+diff --git a/oak-auth-ldap/src/main/java/org/apache/jackrabbit/oak/security/authentication/ldap/impl/LdapIdentityProvider.java b/oak-auth-ldap/src/main/java/org/apache/jackrabbit/oak/security/authentication/ldap/impl/LdapIdentityProvider.java
+index e6b2ba4..512a1bf 100644
+--- a/oak-auth-ldap/src/main/java/org/apache/jackrabbit/oak/security/authentication/ldap/impl/LdapIdentityProvider.java
++++ b/oak-auth-ldap/src/main/java/org/apache/jackrabbit/oak/security/authentication/ldap/impl/LdapIdentityProvider.java
+@@ -702,7 +702,13 @@ public class LdapIdentityProvider implements ExternalIdentityProvider {
+             throws LdapInvalidAttributeValueException {
+         ExternalIdentityRef ref = new ExternalIdentityRef(entry.getDn().getName(), this.getName());
+         if (id == null) {
+-            id = entry.get(config.getUserConfig().getIdAttribute()).getString();
++            String idAttribute = config.getUserConfig().getIdAttribute();
++            Attribute attr = entry.get(idAttribute);
++            if (attr == null) {
++                throw new LdapInvalidAttributeValueException(ResultCodeEnum.CONSTRAINT_VIOLATION,
++                        "no value found for attribute '" + idAttribute + "' for entry " + entry);
++            }
++            id = attr.getString();
+         }
+         String path = config.getUserConfig().makeDnPath()
+                 ? createDNPath(entry.getDn())
+@@ -718,7 +724,13 @@ public class LdapIdentityProvider implements ExternalIdentityProvider {
+             throws LdapInvalidAttributeValueException {
+         ExternalIdentityRef ref = new ExternalIdentityRef(entry.getDn().getName(), this.getName());
+         if (name == null) {
+-            name = entry.get(config.getGroupConfig().getIdAttribute()).getString();
++            String idAttribute = config.getGroupConfig().getIdAttribute();
++            Attribute attr = entry.get(idAttribute);
++            if (attr == null) {
++                throw new LdapInvalidAttributeValueException(ResultCodeEnum.CONSTRAINT_VIOLATION,
++                        "no value found for attribute '" + idAttribute + "' for entry " + entry);
++            }
++            name = attr.getString();
+         }
+         String path = config.getGroupConfig().makeDnPath()
+                 ? createDNPath(entry.getDn())

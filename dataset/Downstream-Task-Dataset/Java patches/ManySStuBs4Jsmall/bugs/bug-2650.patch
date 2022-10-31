@@ -1,0 +1,38 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/indexer/ranges/EsIndexRangeService.java b/graylog2-server/src/main/java/org/graylog2/indexer/ranges/EsIndexRangeService.java
+index 8b0db99..f6db9cf 100644
+--- a/graylog2-server/src/main/java/org/graylog2/indexer/ranges/EsIndexRangeService.java
++++ b/graylog2-server/src/main/java/org/graylog2/indexer/ranges/EsIndexRangeService.java
+@@ -152,12 +152,12 @@
+         }
+ 
+         if (!r.isExists()) {
+-            throw new NotFoundException("Index [" + index + "] not found.");
++            throw new NotFoundException("Couldn't find index range for index " + index);
+         }
+ 
+         final IndexRange indexRange = parseSource(r.getIndex(), r.getSource());
+         if (indexRange == null) {
+-            throw new NotFoundException("Index [" + index + "] not found.");
++            throw new NotFoundException("Couldn't parse index range for index " + index);
+         }
+ 
+         return indexRange;
+diff --git a/graylog2-server/src/main/java/org/graylog2/indexer/ranges/EsIndexRangeService.java b/graylog2-server/src/main/java/org/graylog2/indexer/ranges/EsIndexRangeService.java
+index 8b0db99..f6db9cf 100644
+--- a/graylog2-server/src/main/java/org/graylog2/indexer/ranges/EsIndexRangeService.java
++++ b/graylog2-server/src/main/java/org/graylog2/indexer/ranges/EsIndexRangeService.java
+@@ -152,12 +152,12 @@
+         }
+ 
+         if (!r.isExists()) {
+-            throw new NotFoundException("Index [" + index + "] not found.");
++            throw new NotFoundException("Couldn't find index range for index " + index);
+         }
+ 
+         final IndexRange indexRange = parseSource(r.getIndex(), r.getSource());
+         if (indexRange == null) {
+-            throw new NotFoundException("Index [" + index + "] not found.");
++            throw new NotFoundException("Couldn't parse index range for index " + index);
+         }
+ 
+         return indexRange;

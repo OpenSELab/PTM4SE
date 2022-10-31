@@ -1,0 +1,24 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Component.java b/wicket-core/src/main/java/org/apache/wicket/Component.java
+index 62f1eba..e139f99 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Component.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Component.java
+@@ -4200,15 +4200,10 @@ public abstract class Component
+ 	 */
+ 	void internalMarkRendering(boolean setRenderingFlag)
+ 	{
+-		if (setRenderingFlag)
+-		{
+-			setFlag(FLAG_PREPARED_FOR_RENDER, false);
+-			setFlag(FLAG_RENDERING, true);
+-		}
+-		else
+-		{
+-			setFlag(FLAG_RENDERING, false);
+-		}
++		// WICKET-5460 no longer prepared for render
++		setFlag(FLAG_PREPARED_FOR_RENDER, false);
++
++		setFlag(FLAG_RENDERING, setRenderingFlag);
+ 	}
+ 
+ 	/**

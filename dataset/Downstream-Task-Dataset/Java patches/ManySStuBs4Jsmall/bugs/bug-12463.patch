@@ -1,0 +1,26 @@
+diff --git a/EssentialsGroupManager/src/org/anjocaido/groupmanager/data/User.java b/EssentialsGroupManager/src/org/anjocaido/groupmanager/data/User.java
+index 85b69f1..ee1623b 100644
+--- a/EssentialsGroupManager/src/org/anjocaido/groupmanager/data/User.java
++++ b/EssentialsGroupManager/src/org/anjocaido/groupmanager/data/User.java
+@@ -121,7 +121,7 @@
+         String defaultGroupName = getDataSource().getDefaultGroup().getName();
+         // if we are not in the default group
+         // or we are in the default group and the move is to a different group.
+-        boolean notify = (this.group != defaultGroupName) || ((this.group == defaultGroupName) && (group.getName() != defaultGroupName)) ;
++        boolean notify = (!this.group.equalsIgnoreCase(defaultGroupName)) || ((this.group.equalsIgnoreCase(defaultGroupName)) && (!group.getName().equalsIgnoreCase(defaultGroupName))) ;
+         this.group = group.getName();
+         flagAsChanged();
+         if (GroupManager.isLoaded()) {
+diff --git a/EssentialsGroupManager/src/org/anjocaido/groupmanager/data/User.java b/EssentialsGroupManager/src/org/anjocaido/groupmanager/data/User.java
+index 85b69f1..ee1623b 100644
+--- a/EssentialsGroupManager/src/org/anjocaido/groupmanager/data/User.java
++++ b/EssentialsGroupManager/src/org/anjocaido/groupmanager/data/User.java
+@@ -121,7 +121,7 @@
+         String defaultGroupName = getDataSource().getDefaultGroup().getName();
+         // if we are not in the default group
+         // or we are in the default group and the move is to a different group.
+-        boolean notify = (this.group != defaultGroupName) || ((this.group == defaultGroupName) && (group.getName() != defaultGroupName)) ;
++        boolean notify = (!this.group.equalsIgnoreCase(defaultGroupName)) || ((this.group.equalsIgnoreCase(defaultGroupName)) && (!group.getName().equalsIgnoreCase(defaultGroupName))) ;
+         this.group = group.getName();
+         flagAsChanged();
+         if (GroupManager.isLoaded()) {

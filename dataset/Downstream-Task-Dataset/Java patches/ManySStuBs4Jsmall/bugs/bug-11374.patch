@@ -1,0 +1,13 @@
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/SlidingTimeWindowReservoir.java b/metrics-core/src/main/java/io/dropwizard/metrics/SlidingTimeWindowReservoir.java
+index 573b196..dd571d2 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/SlidingTimeWindowReservoir.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/SlidingTimeWindowReservoir.java
+@@ -39,7 +39,7 @@
+      */
+     public SlidingTimeWindowReservoir(long window, TimeUnit windowUnit, Clock clock) {
+         this.clock = clock;
+-        this.measurements = new ConcurrentSkipListMap<Long, Long>();
++        this.measurements = new ConcurrentSkipListMap<>();
+         this.window = windowUnit.toNanos(window) * COLLISION_BUFFER;
+         this.lastTick = new AtomicLong(clock.getTick() * COLLISION_BUFFER);
+         this.count = new AtomicLong();

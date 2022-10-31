@@ -1,0 +1,48 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/MemStoreFlusher.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/MemStoreFlusher.java
+index 1f2f691..9300fc7 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/MemStoreFlusher.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/MemStoreFlusher.java
+@@ -350,7 +350,7 @@
+    */
+   private boolean flushRegion(final FlushRegionEntry fqe) {
+     HRegion region = fqe.region;
+-    if (!fqe.region.getRegionInfo().isMetaRegion() &&
++    if (!region.getRegionInfo().isMetaRegion() &&
+         isTooManyStoreFiles(region)) {
+       if (fqe.isMaximumWait(this.blockingWaitTime)) {
+         LOG.info("Waited " + (System.currentTimeMillis() - fqe.createTime) +
+@@ -367,8 +367,8 @@
+             try {
+               this.server.compactSplitThread.requestCompaction(region, getName());
+             }  catch (IOException e) {
+-              LOG.error("Cache flush failed" +
+-                (region != null ? (" for region " + Bytes.toStringBinary(region.getRegionName())) : ""),
++              LOG.error(
++                "Cache flush failed for region " + Bytes.toStringBinary(region.getRegionName()),
+                 RemoteExceptionHandler.checkIOException(e));
+             }
+           }
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/MemStoreFlusher.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/MemStoreFlusher.java
+index 1f2f691..9300fc7 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/MemStoreFlusher.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/MemStoreFlusher.java
+@@ -350,7 +350,7 @@
+    */
+   private boolean flushRegion(final FlushRegionEntry fqe) {
+     HRegion region = fqe.region;
+-    if (!fqe.region.getRegionInfo().isMetaRegion() &&
++    if (!region.getRegionInfo().isMetaRegion() &&
+         isTooManyStoreFiles(region)) {
+       if (fqe.isMaximumWait(this.blockingWaitTime)) {
+         LOG.info("Waited " + (System.currentTimeMillis() - fqe.createTime) +
+@@ -367,8 +367,8 @@
+             try {
+               this.server.compactSplitThread.requestCompaction(region, getName());
+             }  catch (IOException e) {
+-              LOG.error("Cache flush failed" +
+-                (region != null ? (" for region " + Bytes.toStringBinary(region.getRegionName())) : ""),
++              LOG.error(
++                "Cache flush failed for region " + Bytes.toStringBinary(region.getRegionName()),
+                 RemoteExceptionHandler.checkIOException(e));
+             }
+           }

@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index 8b48153..a224526 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -577,7 +577,7 @@
+         if (create) {
+             return getSession();
+         }
+-        return session;
++        return session == null && isNotNoOps() ? b.request.getSession(false) : null;
+     }
+ 
+     /**
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index 8b48153..a224526 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -577,7 +577,7 @@
+         if (create) {
+             return getSession();
+         }
+-        return session;
++        return session == null && isNotNoOps() ? b.request.getSession(false) : null;
+     }
+ 
+     /**

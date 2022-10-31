@@ -1,0 +1,49 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/AbstractComponentMapper.java b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/AbstractComponentMapper.java
+index b1480ee..efd77c6 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/AbstractComponentMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/AbstractComponentMapper.java
+@@ -130,9 +130,28 @@ public abstract class AbstractComponentMapper extends AbstractMapper implements
+ 	 */
+ 	protected Class<? extends IRequestablePage> getPageClass(String name)
+ 	{
+-		Args.notEmpty(name, "name");
++		String cleanedClassName = cleanClassName(name);
++		return WicketObjects.resolveClass(cleanedClassName);
++	}
++
++	/**
++	 * Cleans the class name from any extra information that may be there.
++	 *
++	 * @param className
++	 *              The raw class name parsed from the url
++	 * @return The cleaned class name
++	 */
++	protected String cleanClassName(String className)
++	{
++		Args.notEmpty(className, "className");
++
++		if (Strings.indexOf(className, ';') > -1)
++		{
++			// remove any path parameters set manually by the user. WICKET-5500
++			className = Strings.beforeFirst(className, ';');
++		}
+ 
+-		return WicketObjects.resolveClass(name);
++		return className;
+ 	}
+ 
+ 	/**
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PackageMapper.java b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PackageMapper.java
+index 41c6696..ad15d6d 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PackageMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PackageMapper.java
+@@ -139,7 +139,8 @@ public class PackageMapper extends AbstractBookmarkableMapper
+ 			PageComponentInfo info = getPageComponentInfo(url);
+ 
+ 			// load the page class
+-			String className = url.getSegments().get(mountSegments.length);
++			String name = url.getSegments().get(mountSegments.length);
++			String className = cleanClassName(name);
+ 
+ 			if (isValidClassName(className) == false)
+ 			{

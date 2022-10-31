@@ -1,0 +1,99 @@
+diff --git a/presto-geospatial/src/main/java/com/facebook/presto/plugin/geospatial/BingTileFunctions.java b/presto-geospatial/src/main/java/com/facebook/presto/plugin/geospatial/BingTileFunctions.java
+index d69d812..0884239 100644
+--- a/presto-geospatial/src/main/java/com/facebook/presto/plugin/geospatial/BingTileFunctions.java
++++ b/presto-geospatial/src/main/java/com/facebook/presto/plugin/geospatial/BingTileFunctions.java
+@@ -243,7 +243,8 @@
+ 
+         int totalTileCount = tileCountX * tileCountY;
+         checkCondition(totalTileCount <= 1_000_000,
+-                "The number of input tiles is too large (more than 1M) to compute a set of covering Bing tiles.");
++                "The number of tiles covering input rectangle exceeds the limit of 1M. Number of tiles: %d. Radius: %.1f km. Zoom level: %d.",
++                totalTileCount, radiusInKm, zoomLevel);
+ 
+         BlockBuilder blockBuilder = BIGINT.createBlockBuilder(null, totalTileCount);
+ 
+@@ -371,7 +372,7 @@
+         // XY coordinates start at (0,0) in the left upper corner and increase left to right and top to bottom
+         long tileCount = (long) (rightLowerTile.getX() - leftUpperTile.getX() + 1) * (rightLowerTile.getY() - leftUpperTile.getY() + 1);
+ 
+-        checkGeometryToBingTilesLimits(ogcGeometry, pointOrRectangle, tileCount);
++        checkGeometryToBingTilesLimits(ogcGeometry, envelope, pointOrRectangle, tileCount, zoomLevel);
+ 
+         BlockBuilder blockBuilder = BIGINT.createBlockBuilder(null, toIntExact(tileCount));
+         if (pointOrRectangle || zoomLevel <= OPTIMIZED_TILING_MIN_ZOOM_LEVEL) {
+@@ -427,10 +428,12 @@
+         return tile;
+     }
+ 
+-    private static void checkGeometryToBingTilesLimits(OGCGeometry ogcGeometry, boolean pointOrRectangle, long tileCount)
++    private static void checkGeometryToBingTilesLimits(OGCGeometry ogcGeometry, Envelope envelope, boolean pointOrRectangle, long tileCount, int zoomLevel)
+     {
+         if (pointOrRectangle) {
+-            checkCondition(tileCount <= 1_000_000, "The number of input tiles is too large (more than 1M) to compute a set of covering Bing tiles.");
++            checkCondition(tileCount <= 1_000_000, "The number of tiles covering input rectangle exceeds the limit of 1M. " +
++                    "Number of tiles: %d. Rectangle: xMin=%.2f, yMin=%.2f, xMax=%.2f, yMax=%.2f. Zoom level: %d.",
++                    tileCount, envelope.getXMin(), envelope.getYMin(), envelope.getXMax(), envelope.getYMax(), zoomLevel);
+         }
+         else {
+             checkCondition((int) tileCount == tileCount, "The zoom level is too high to compute a set of covering Bing tiles.");
+diff --git a/presto-geospatial/src/test/java/com/facebook/presto/plugin/geospatial/TestBingTileFunctions.java b/presto-geospatial/src/test/java/com/facebook/presto/plugin/geospatial/TestBingTileFunctions.java
+index d56e032..7db7450 100644
+--- a/presto-geospatial/src/test/java/com/facebook/presto/plugin/geospatial/TestBingTileFunctions.java
++++ b/presto-geospatial/src/test/java/com/facebook/presto/plugin/geospatial/TestBingTileFunctions.java
+@@ -239,7 +239,7 @@
+ 
+         // Too many tiles
+         assertInvalidFunction("bing_tiles_around(30.12, 60.0, 20, 100)",
+-                "The number of input tiles is too large (more than 1M) to compute a set of covering Bing tiles.");
++                "The number of tiles covering input rectangle exceeds the limit of 1M. Number of tiles: 36699364. Radius: 100.0 km. Zoom level: 20.");
+     }
+ 
+     @Test
+@@ -454,7 +454,8 @@
+         assertInvalidFunction("geometry_to_bing_tiles(ST_Point(60, 30.12), 40)", "Zoom level must be <= 23");
+ 
+         // Input rectangle too large
+-        assertInvalidFunction("geometry_to_bing_tiles(ST_Envelope(ST_GeometryFromText('LINESTRING (0 0, 80 80)')), 16)", "The number of input tiles is too large (more than 1M) to compute a set of covering Bing tiles.");
++        assertInvalidFunction("geometry_to_bing_tiles(ST_Envelope(ST_GeometryFromText('LINESTRING (0 0, 80 80)')), 16)",
++                "The number of tiles covering input rectangle exceeds the limit of 1M. Number of tiles: 370085804. Rectangle: xMin=0.00, yMin=0.00, xMax=80.00, yMax=80.00. Zoom level: 16.");
+         assertFunction("cardinality(geometry_to_bing_tiles(ST_Envelope(ST_GeometryFromText('LINESTRING (0 0, 80 80)')), 5))", BIGINT, 104L);
+ 
+         // Input polygon too complex
+diff --git a/presto-geospatial/src/main/java/com/facebook/presto/plugin/geospatial/BingTileFunctions.java b/presto-geospatial/src/main/java/com/facebook/presto/plugin/geospatial/BingTileFunctions.java
+index d69d812..0884239 100644
+--- a/presto-geospatial/src/main/java/com/facebook/presto/plugin/geospatial/BingTileFunctions.java
++++ b/presto-geospatial/src/main/java/com/facebook/presto/plugin/geospatial/BingTileFunctions.java
+@@ -243,7 +243,8 @@
+ 
+         int totalTileCount = tileCountX * tileCountY;
+         checkCondition(totalTileCount <= 1_000_000,
+-                "The number of input tiles is too large (more than 1M) to compute a set of covering Bing tiles.");
++                "The number of tiles covering input rectangle exceeds the limit of 1M. Number of tiles: %d. Radius: %.1f km. Zoom level: %d.",
++                totalTileCount, radiusInKm, zoomLevel);
+ 
+         BlockBuilder blockBuilder = BIGINT.createBlockBuilder(null, totalTileCount);
+ 
+@@ -371,7 +372,7 @@
+         // XY coordinates start at (0,0) in the left upper corner and increase left to right and top to bottom
+         long tileCount = (long) (rightLowerTile.getX() - leftUpperTile.getX() + 1) * (rightLowerTile.getY() - leftUpperTile.getY() + 1);
+ 
+-        checkGeometryToBingTilesLimits(ogcGeometry, pointOrRectangle, tileCount);
++        checkGeometryToBingTilesLimits(ogcGeometry, envelope, pointOrRectangle, tileCount, zoomLevel);
+ 
+         BlockBuilder blockBuilder = BIGINT.createBlockBuilder(null, toIntExact(tileCount));
+         if (pointOrRectangle || zoomLevel <= OPTIMIZED_TILING_MIN_ZOOM_LEVEL) {
+@@ -427,10 +428,12 @@
+         return tile;
+     }
+ 
+-    private static void checkGeometryToBingTilesLimits(OGCGeometry ogcGeometry, boolean pointOrRectangle, long tileCount)
++    private static void checkGeometryToBingTilesLimits(OGCGeometry ogcGeometry, Envelope envelope, boolean pointOrRectangle, long tileCount, int zoomLevel)
+     {
+         if (pointOrRectangle) {
+-            checkCondition(tileCount <= 1_000_000, "The number of input tiles is too large (more than 1M) to compute a set of covering Bing tiles.");
++            checkCondition(tileCount <= 1_000_000, "The number of tiles covering input rectangle exceeds the limit of 1M. " +
++                    "Number of tiles: %d. Rectangle: xMin=%.2f, yMin=%.2f, xMax=%.2f, yMax=%.2f. Zoom level: %d.",
++                    tileCount, envelope.getXMin(), envelope.getYMin(), envelope.getXMax(), envelope.getYMax(), zoomLevel);
+         }
+         else {
+             checkCondition((int) tileCount == tileCount, "The zoom level is too high to compute a set of covering Bing tiles.");

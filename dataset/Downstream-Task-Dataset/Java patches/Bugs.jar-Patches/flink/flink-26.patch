@@ -1,0 +1,24 @@
+diff --git a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/windowing/windowbuffer/SlidingGroupedPreReducer.java b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/windowing/windowbuffer/SlidingGroupedPreReducer.java
+index 0872c6e..09fadf9 100644
+--- a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/windowing/windowbuffer/SlidingGroupedPreReducer.java
++++ b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/windowing/windowbuffer/SlidingGroupedPreReducer.java
+@@ -143,6 +143,7 @@ public abstract class SlidingGroupedPreReducer<T> extends SlidingPreReducer<T> {
+ 	@Override
+ 	protected void resetCurrent() {
+ 		currentReducedMap = null;
++		elementsSinceLastPreAggregate = 0;
+ 	}
+ 
+ 	@Override
+diff --git a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/windowing/windowbuffer/SlidingTimePreReducer.java b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/windowing/windowbuffer/SlidingTimePreReducer.java
+index 7652d81..d84505c 100644
+--- a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/windowing/windowbuffer/SlidingTimePreReducer.java
++++ b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/windowing/windowbuffer/SlidingTimePreReducer.java
+@@ -89,6 +89,7 @@ public class SlidingTimePreReducer<T> extends SlidingPreReducer<T> {
+ 
+ 		if (toRemove > 0 && lastPreAggregateSize == null) {
+ 			currentReduced = null;
++			elementsSinceLastPreAggregate = 0;
+ 			toRemove = 0;
+ 		}
+ 	}

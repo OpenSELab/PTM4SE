@@ -1,0 +1,150 @@
+diff --git a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecLongTest.java b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecLongTest.java
+index 5ec20b8..4e1c468 100644
+--- a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecLongTest.java
++++ b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecLongTest.java
+@@ -51,7 +51,7 @@
+     protected RouteBuilder createRouteBuilder() throws Exception {
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+-                from("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec").process(new Processor() {
++                from("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec").process(new Processor() {
+                     public void process(Exchange exchange) throws Exception {
+                         assertEquals(70010, exchange.getIn().getBody().toString().length());
+                         MDM_T02 input = (MDM_T02)exchange.getIn().getBody(Message.class);
+@@ -77,7 +77,7 @@
+         }
+         message = message.substring(0, message.length() - 1);
+         assertEquals(70010, message.length());
+-        String out = (String)template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", message);
++        String out = (String)template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", message);
+         assertEquals("some response", out);
+         // END SNIPPET: e2
+     }
+diff --git a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecPlainStringTest.java b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecPlainStringTest.java
+index e65c9e2..3453e72 100644
+--- a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecPlainStringTest.java
++++ b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecPlainStringTest.java
+@@ -46,7 +46,7 @@
+         mock.expectedBodiesReceived("Bye World");
+ 
+         // send plain hello world as String
+-        Object out = template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", "Hello World");
++        Object out = template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", "Hello World");
+ 
+         assertMockEndpointsSatisfied();
+ 
+@@ -59,7 +59,7 @@
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+                 // START SNIPPET: e2
+-                from("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec")
++                from("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec")
+                     .process(new Processor() {
+                         public void process(Exchange exchange) throws Exception {
+                             // use plain String as message format
+diff --git a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecStandAndEndBytesTest.java b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecStandAndEndBytesTest.java
+index ce8333d..f3b33f1 100644
+--- a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecStandAndEndBytesTest.java
++++ b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecStandAndEndBytesTest.java
+@@ -52,7 +52,7 @@
+     protected RouteBuilder createRouteBuilder() throws Exception {
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+-                from("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec")
++                from("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec")
+                     .process(new Processor() {
+                         public void process(Exchange exchange) throws Exception {
+                             Message input = exchange.getIn().getBody(Message.class);
+@@ -79,7 +79,7 @@
+         in.append("\r");
+         in.append(line2);
+ 
+-        String out = (String)template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", in.toString());
++        String out = (String)template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", in.toString());
+ 
+         String[] lines = out.split("\r");
+         assertEquals("MSH|^~\\&|MYSENDER||||200701011539||ADR^A19||||123", lines[0]);
+diff --git a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecTest.java b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecTest.java
+index 91dc676..38ad6fa 100644
+--- a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecTest.java
++++ b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecTest.java
+@@ -49,7 +49,7 @@
+     protected RouteBuilder createRouteBuilder() throws Exception {
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+-                from("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec")
++                from("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec")
+                     .process(new Processor() {
+                         public void process(Exchange exchange) throws Exception {
+                             Message input = exchange.getIn().getBody(Message.class);
+@@ -77,7 +77,7 @@
+         in.append("\n");
+         in.append(line2);
+ 
+-        String out = (String)template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", in.toString());
++        String out = (String)template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", in.toString());
+         // END SNIPPET: e2
+ 
+         String[] lines = out.split("\r");
+diff --git a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7RouteTest.java b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7RouteTest.java
+index a15f1f7..9f06940 100644
+--- a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7RouteTest.java
++++ b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7RouteTest.java
+@@ -62,7 +62,7 @@
+         in.append("\n");
+         in.append(line2);
+ 
+-        String out = (String) template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", in.toString());
++        String out = (String) template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", in.toString());
+ 
+         String[] lines = out.split("\r");
+         assertEquals("MSH|^~\\&|MYSENDER||||200701011539||ADR^A19||||123", lines[0]);
+@@ -84,7 +84,7 @@
+         in.append("\n");
+         in.append(line2);
+ 
+-        String out = (String) template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", in.toString());
++        String out = (String) template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", in.toString());
+         String[] lines = out.split("\r");
+         assertEquals("MSH|^~\\&|MYSENDER||||200701011539||ADT^A01||||123", lines[0]);
+         assertEquals("PID|||123456||Doe^John", lines[1]);
+@@ -105,7 +105,7 @@
+         in.append("\n");
+         in.append(line2);
+ 
+-        template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", in.toString());
++        template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", in.toString());
+ 
+         assertMockEndpointsSatisfied();
+     }
+@@ -117,7 +117,7 @@
+                 // START SNIPPET: e1
+                 DataFormat hl7 = new HL7DataFormat();
+                 // we setup or HL7 listener on port 8888 (using the hl7codec) and in sync mode so we can return a response
+-                from("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec")
++                from("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec")
+                     // we use the HL7 data format to unmarshal from HL7 stream to the HAPI Message model
+                     // this ensures that the camel message has been enriched with hl7 specific headers to
+                     // make the routing much easier (see below)
+diff --git a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecLongTest.java b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecLongTest.java
+index 5ec20b8..4e1c468 100644
+--- a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecLongTest.java
++++ b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecLongTest.java
+@@ -51,7 +51,7 @@
+     protected RouteBuilder createRouteBuilder() throws Exception {
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+-                from("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec").process(new Processor() {
++                from("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec").process(new Processor() {
+                     public void process(Exchange exchange) throws Exception {
+                         assertEquals(70010, exchange.getIn().getBody().toString().length());
+                         MDM_T02 input = (MDM_T02)exchange.getIn().getBody(Message.class);
+@@ -77,7 +77,7 @@
+         }
+         message = message.substring(0, message.length() - 1);
+         assertEquals(70010, message.length());
+-        String out = (String)template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", message);
++        String out = (String)template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", message);
+         assertEquals("some response", out);
+         // END SNIPPET: e2
+     }

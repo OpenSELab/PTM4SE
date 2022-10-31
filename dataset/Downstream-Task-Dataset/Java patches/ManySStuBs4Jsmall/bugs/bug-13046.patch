@@ -1,0 +1,39 @@
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+index 2af8c3b..5b9dd48 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+@@ -5004,7 +5004,7 @@
+         computeActual("SELECT CAST(null AS array(foo))");
+     }
+ 
+-    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "\\Qline 1:21: '+' cannot be applied to varchar(2147483647), bigint\\E")
++    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "\\Qline 1:21: '+' cannot be applied to varchar, bigint\\E")
+     public void testInvalidTypeInfixOperator()
+     {
+         // Comment on why error message references varchar(214783647) instead of varchar(2) which seems expected result type for concatenation in expression.
+diff --git a/presto-tests/src/test/java/com/facebook/presto/tests/TestProcedureCall.java b/presto-tests/src/test/java/com/facebook/presto/tests/TestProcedureCall.java
+index f7b4aa1..9062ac7 100644
+--- a/presto-tests/src/test/java/com/facebook/presto/tests/TestProcedureCall.java
++++ b/presto-tests/src/test/java/com/facebook/presto/tests/TestProcedureCall.java
+@@ -83,7 +83,7 @@
+         assertCallFails("CALL test_args(x => 3, x => 4)", "line 1:24: Duplicate procedure argument: x");
+         assertCallFails("CALL test_args(t => 404)", "line 1:16: Unknown argument name: t");
+         assertCallFails("CALL test_nulls('hello', null)", "line 1:17: Cannot cast type bigint to varchar(5)");
+-        assertCallFails("CALL test_nulls(null, 123)", "line 1:23: Cannot cast type varchar(2147483647) to bigint");
++        assertCallFails("CALL test_nulls(null, 123)", "line 1:23: Cannot cast type varchar to bigint");
+     }
+ 
+     private void assertCall(@Language("SQL") String sql, String name, Object... arguments)
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+index 2af8c3b..5b9dd48 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+@@ -5004,7 +5004,7 @@
+         computeActual("SELECT CAST(null AS array(foo))");
+     }
+ 
+-    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "\\Qline 1:21: '+' cannot be applied to varchar(2147483647), bigint\\E")
++    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "\\Qline 1:21: '+' cannot be applied to varchar, bigint\\E")
+     public void testInvalidTypeInfixOperator()
+     {
+         // Comment on why error message references varchar(214783647) instead of varchar(2) which seems expected result type for concatenation in expression.

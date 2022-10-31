@@ -1,0 +1,19 @@
+diff --git a/test/com/google/javascript/jscomp/ES6ModuleLoaderFileSystemTest.java b/test/com/google/javascript/jscomp/ES6ModuleLoaderFileSystemTest.java
+index e4b499f..f3fb9fc 100644
+--- a/test/com/google/javascript/jscomp/ES6ModuleLoaderFileSystemTest.java
++++ b/test/com/google/javascript/jscomp/ES6ModuleLoaderFileSystemTest.java
+@@ -80,12 +80,12 @@
+         ImmutableList.of(in1, in2, in3),
+         new CompilerOptions());
+ 
+-    rootPath = tempFolder.getRoot().getPath() + "/";
++    rootPath = tempFolder.getRoot().getPath().replace(File.separatorChar, '/') + "/";
+     loader = ES6ModuleLoader.createNaiveLoader(compiler, rootPath);
+   }
+ 
+   private CompilerInput getInput(String s) {
+-    return compiler.getInput(new InputId(rootPath + s));
++    return compiler.getInput(new InputId((rootPath + s).replace('/', File.separatorChar)));
+   }
+ 
+   @Test

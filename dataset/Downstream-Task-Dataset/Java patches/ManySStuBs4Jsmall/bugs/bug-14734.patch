@@ -1,0 +1,46 @@
+diff --git a/guava-tests/test/com/google/common/reflect/ImmutableTypeToInstanceMapTest.java b/guava-tests/test/com/google/common/reflect/ImmutableTypeToInstanceMapTest.java
+index 51a05b2..b0dc8bf 100644
+--- a/guava-tests/test/com/google/common/reflect/ImmutableTypeToInstanceMapTest.java
++++ b/guava-tests/test/com/google/common/reflect/ImmutableTypeToInstanceMapTest.java
+@@ -101,7 +101,7 @@
+     assertEquals(ImmutableList.of(1), map.getInstance(type));
+   }
+ 
+-  public void testGeneriArrayType() {
++  public void testGenericArrayType() {
+     @SuppressWarnings("unchecked") // Trying to test generic array
+     ImmutableList<Integer>[] array = new ImmutableList[] {ImmutableList.of(1)};
+     TypeToken<ImmutableList<Integer>[]> type = new TypeToken<ImmutableList<Integer>[]>() {};
+@@ -110,7 +110,8 @@
+             .put(type, array)
+             .build();
+     assertEquals(1, map.size());
+-    assertThat(map.getInstance(type)).asList().containsExactly(array[0]);
++    // Redundant cast works around a javac bug.
++    assertThat((Iterable<?>[]) map.getInstance(type)).asList().containsExactly(array[0]);
+   }
+ 
+   public void testWildcardType() {
+diff --git a/guava-tests/test/com/google/common/reflect/ImmutableTypeToInstanceMapTest.java b/guava-tests/test/com/google/common/reflect/ImmutableTypeToInstanceMapTest.java
+index 51a05b2..b0dc8bf 100644
+--- a/guava-tests/test/com/google/common/reflect/ImmutableTypeToInstanceMapTest.java
++++ b/guava-tests/test/com/google/common/reflect/ImmutableTypeToInstanceMapTest.java
+@@ -101,7 +101,7 @@
+     assertEquals(ImmutableList.of(1), map.getInstance(type));
+   }
+ 
+-  public void testGeneriArrayType() {
++  public void testGenericArrayType() {
+     @SuppressWarnings("unchecked") // Trying to test generic array
+     ImmutableList<Integer>[] array = new ImmutableList[] {ImmutableList.of(1)};
+     TypeToken<ImmutableList<Integer>[]> type = new TypeToken<ImmutableList<Integer>[]>() {};
+@@ -110,7 +110,8 @@
+             .put(type, array)
+             .build();
+     assertEquals(1, map.size());
+-    assertThat(map.getInstance(type)).asList().containsExactly(array[0]);
++    // Redundant cast works around a javac bug.
++    assertThat((Iterable<?>[]) map.getInstance(type)).asList().containsExactly(array[0]);
+   }
+ 
+   public void testWildcardType() {

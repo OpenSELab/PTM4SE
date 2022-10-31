@@ -1,0 +1,31 @@
+diff --git a/src/main/java/io/mycat/backend/postgresql/PostgreSQLBackendConnection.java b/src/main/java/io/mycat/backend/postgresql/PostgreSQLBackendConnection.java
+index 4c25bf2..0d6e675 100644
+--- a/src/main/java/io/mycat/backend/postgresql/PostgreSQLBackendConnection.java
++++ b/src/main/java/io/mycat/backend/postgresql/PostgreSQLBackendConnection.java
+@@ -262,7 +262,7 @@
+ 
+ 	@Override
+ 	public void release() {
+-		if (metaDataSyned == false) {// indicate connection not normalfinished
++		if (!metaDataSyned) {// indicate connection not normalfinished
+ 										// ,and
+ 										// we can't know it's syn status ,so
+ 										// close
+@@ -309,7 +309,7 @@
+ 		// never executed modify sql,so auto commit
+ 		boolean expectAutocommit = !modifiedSQLExecuted || isFromSlaveDB()
+ 				|| clientAutoCommit;
+-		if (expectAutocommit == false && xaTxID != null && xaStatus == 0) {
++		if (!expectAutocommit && xaTxID != null && xaStatus == 0) {
+ 			clientTxIsoLation = Isolations.SERIALIZABLE;
+ 			xaCmd = "XA START " + xaTxID + ';';
+ 			currentXaTxId = xaTxID;
+@@ -492,7 +492,7 @@
+ 		private void updateConnectionInfo(PostgreSQLBackendConnection conn)
+ 
+ 		{
+-			conn.xaStatus = (xaStarted == true) ? 1 : 0;
++			conn.xaStatus = (xaStarted) ? 1 : 0;
+ 			if (schema != null) {
+ 				conn.schema = schema;
+ 				conn.oldSchema = conn.schema;

@@ -1,0 +1,13 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/BackTrackLineSearch.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/BackTrackLineSearch.java
+index 184246a..e440905 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/BackTrackLineSearch.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/BackTrackLineSearch.java
+@@ -215,7 +215,7 @@
+                 throw new IllegalArgumentException("Current step == oldStep");
+ 
+             // step
+-            candidateParameters = Shape.toOffsetZeroCopy(parameters,'f');   //Convention: f order for params and gradient flattening
++            candidateParameters = parameters.dup('f');
+             stepFunction.step(candidateParameters, searchDirection, step);
+             oldStep = step;
+ 

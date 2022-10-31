@@ -1,0 +1,44 @@
+diff --git a/src/main/java/org/scribe/extractors/TokenExtractorImpl.java b/src/main/java/org/scribe/extractors/TokenExtractorImpl.java
+index 501c018..2bc0aa0 100644
+--- a/src/main/java/org/scribe/extractors/TokenExtractorImpl.java
++++ b/src/main/java/org/scribe/extractors/TokenExtractorImpl.java
+@@ -22,7 +22,7 @@
+    */
+   public Token extract(String response)
+   {
+-    Preconditions.checkEmptyString(response, "Cant extract a token from null object or an empty string.");
++    Preconditions.checkEmptyString(response, "Response body is incorrect. Can't extract a token from an empty string");
+ 
+     Matcher matcher = Pattern.compile(TOKEN_REGEX).matcher(response);
+     if (matcher.matches())
+@@ -32,7 +32,7 @@
+       return new Token(token, secret);
+     } else
+     {
+-      throw new OAuthException("Could not find request token or secret in response: " + response, null);
++      throw new OAuthException("Response body is incorrect. Can't extract a token from this: '" + response + "'", null);
+     }
+   }
+ }
+diff --git a/src/main/java/org/scribe/extractors/TokenExtractorImpl.java b/src/main/java/org/scribe/extractors/TokenExtractorImpl.java
+index 501c018..2bc0aa0 100644
+--- a/src/main/java/org/scribe/extractors/TokenExtractorImpl.java
++++ b/src/main/java/org/scribe/extractors/TokenExtractorImpl.java
+@@ -22,7 +22,7 @@
+    */
+   public Token extract(String response)
+   {
+-    Preconditions.checkEmptyString(response, "Cant extract a token from null object or an empty string.");
++    Preconditions.checkEmptyString(response, "Response body is incorrect. Can't extract a token from an empty string");
+ 
+     Matcher matcher = Pattern.compile(TOKEN_REGEX).matcher(response);
+     if (matcher.matches())
+@@ -32,7 +32,7 @@
+       return new Token(token, secret);
+     } else
+     {
+-      throw new OAuthException("Could not find request token or secret in response: " + response, null);
++      throw new OAuthException("Response body is incorrect. Can't extract a token from this: '" + response + "'", null);
+     }
+   }
+ }

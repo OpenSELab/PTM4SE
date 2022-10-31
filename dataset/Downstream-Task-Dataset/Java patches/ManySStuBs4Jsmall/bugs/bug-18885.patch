@@ -1,0 +1,52 @@
+diff --git a/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoClientHandler.java b/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoClientHandler.java
+index cc8b143..21a598a 100644
+--- a/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoClientHandler.java
++++ b/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoClientHandler.java
+@@ -73,7 +73,7 @@
+         final ByteBuf byteBuf = message.data();
+         meter.mark(byteBuf.readableBytes());
+         final MessageBuf<Object> out = ctx.nextOutboundMessageBuffer();
+-        out.add(message);
++        out.add(message.retain());
+         ctx.flush();
+     }
+ 
+diff --git a/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoServerHandler.java b/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoServerHandler.java
+index b8c0767..fa17c44 100644
+--- a/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoServerHandler.java
++++ b/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoServerHandler.java
+@@ -50,7 +50,7 @@
+     public void messageReceived(final ChannelHandlerContext ctx,
+             final UdtMessage message) throws Exception {
+         final MessageBuf<Object> out = ctx.nextOutboundMessageBuffer();
+-        out.add(message);
++        out.add(message.retain());
+         ctx.flush();
+     }
+ }
+diff --git a/example/src/main/java/io/netty/example/udt/echo/rendevous/MsgEchoPeerHandler.java b/example/src/main/java/io/netty/example/udt/echo/rendevous/MsgEchoPeerHandler.java
+index ee39a3e..b3a9ba2 100644
+--- a/example/src/main/java/io/netty/example/udt/echo/rendevous/MsgEchoPeerHandler.java
++++ b/example/src/main/java/io/netty/example/udt/echo/rendevous/MsgEchoPeerHandler.java
+@@ -73,7 +73,7 @@
+         final ByteBuf byteBuf = message.data();
+         meter.mark(byteBuf.readableBytes());
+         final MessageBuf<Object> out = ctx.nextOutboundMessageBuffer();
+-        out.add(message);
++        out.add(message.retain());
+         ctx.flush();
+     }
+ 
+diff --git a/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoClientHandler.java b/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoClientHandler.java
+index cc8b143..21a598a 100644
+--- a/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoClientHandler.java
++++ b/example/src/main/java/io/netty/example/udt/echo/message/MsgEchoClientHandler.java
+@@ -73,7 +73,7 @@
+         final ByteBuf byteBuf = message.data();
+         meter.mark(byteBuf.readableBytes());
+         final MessageBuf<Object> out = ctx.nextOutboundMessageBuffer();
+-        out.add(message);
++        out.add(message.retain());
+         ctx.flush();
+     }
+ 

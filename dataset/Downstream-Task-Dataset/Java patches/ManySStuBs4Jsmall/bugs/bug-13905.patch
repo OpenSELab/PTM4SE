@@ -1,0 +1,134 @@
+diff --git a/test/com/google/javascript/jscomp/InlineVariablesTest.java b/test/com/google/javascript/jscomp/InlineVariablesTest.java
+index c654125..45038e6 100644
+--- a/test/com/google/javascript/jscomp/InlineVariablesTest.java
++++ b/test/com/google/javascript/jscomp/InlineVariablesTest.java
+@@ -811,35 +811,37 @@
+ 
+   public void testInlineCatchAlias1() {
+     test(
+-      "try {" +
+-      "} catch (e) {" +
+-      "  var y = e;" +
+-      "  g();" +
+-      "  y;y;" +
+-      "}",
+-      "try {" +
+-      "} catch (e) {" +
+-      "  g();" +
+-      "  e;e;" +
+-      "}"
+-      );
++        LINE_JOINER.join(
++            "try {",
++            "} catch (e) {",
++            "  var y = e;",
++            "  g();" ,
++            "  y;y;" ,
++            "}"),
++        LINE_JOINER.join(
++            "try {",
++            "} catch (e) {",
++            "  g();",
++            "  e;e;",
++            "}"));
+   }
+ 
+   public void testInlineCatchAlias2() {
+     test(
+-      "try {" +
+-      "} catch (e) {" +
+-      "  var y; y = e;" +
+-      "  g();" +
+-      "  y;y;" +
+-      "}",
+-      "try {" +
+-      "} catch (e) {" +
+-      "  e;" +
+-      "  g();" +
+-      "  e;e;" +
+-      "}"
+-      );
++        LINE_JOINER.join(
++            "try {",
++            "} catch (e) {",
++            "  var y; y = e;",
++            "  g();",
++            "  y;y;",
++            "}"),
++        LINE_JOINER.join(
++            "try {",
++            "} catch (e) {",
++            "  e;",
++            "  g();",
++            "  e;e;",
++            "}"));
+   }
+ 
+   public void testLocalsOnly1() {
+diff --git a/test/com/google/javascript/jscomp/InlineVariablesTest.java b/test/com/google/javascript/jscomp/InlineVariablesTest.java
+index c654125..45038e6 100644
+--- a/test/com/google/javascript/jscomp/InlineVariablesTest.java
++++ b/test/com/google/javascript/jscomp/InlineVariablesTest.java
+@@ -811,35 +811,37 @@
+ 
+   public void testInlineCatchAlias1() {
+     test(
+-      "try {" +
+-      "} catch (e) {" +
+-      "  var y = e;" +
+-      "  g();" +
+-      "  y;y;" +
+-      "}",
+-      "try {" +
+-      "} catch (e) {" +
+-      "  g();" +
+-      "  e;e;" +
+-      "}"
+-      );
++        LINE_JOINER.join(
++            "try {",
++            "} catch (e) {",
++            "  var y = e;",
++            "  g();" ,
++            "  y;y;" ,
++            "}"),
++        LINE_JOINER.join(
++            "try {",
++            "} catch (e) {",
++            "  g();",
++            "  e;e;",
++            "}"));
+   }
+ 
+   public void testInlineCatchAlias2() {
+     test(
+-      "try {" +
+-      "} catch (e) {" +
+-      "  var y; y = e;" +
+-      "  g();" +
+-      "  y;y;" +
+-      "}",
+-      "try {" +
+-      "} catch (e) {" +
+-      "  e;" +
+-      "  g();" +
+-      "  e;e;" +
+-      "}"
+-      );
++        LINE_JOINER.join(
++            "try {",
++            "} catch (e) {",
++            "  var y; y = e;",
++            "  g();",
++            "  y;y;",
++            "}"),
++        LINE_JOINER.join(
++            "try {",
++            "} catch (e) {",
++            "  e;",
++            "  g();",
++            "  e;e;",
++            "}"));
+   }
+ 
+   public void testLocalsOnly1() {

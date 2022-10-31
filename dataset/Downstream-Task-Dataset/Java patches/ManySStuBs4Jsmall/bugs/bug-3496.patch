@@ -1,0 +1,178 @@
+diff --git a/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/AbstractInterfaceConfig.java b/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/AbstractInterfaceConfig.java
+index 7338a1a..f6a38bb 100644
+--- a/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/AbstractInterfaceConfig.java
++++ b/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/AbstractInterfaceConfig.java
+@@ -272,23 +272,23 @@
+         if (ConfigUtils.isNotEmpty(local)) {
+             Class<?> localClass = ConfigUtils.isDefault(local) ? ReflectUtils.forName(interfaceClass.getName() + "Local") : ReflectUtils.forName(local);
+             if (!interfaceClass.isAssignableFrom(localClass)) {
+-                throw new IllegalStateException("The local implemention class " + localClass.getName() + " not implement interface " + interfaceClass.getName());
++                throw new IllegalStateException("The local implementation class " + localClass.getName() + " not implement interface " + interfaceClass.getName());
+             }
+             try {
+                 ReflectUtils.findConstructor(localClass, interfaceClass);
+             } catch (NoSuchMethodException e) {
+-                throw new IllegalStateException("No such constructor \"public " + localClass.getSimpleName() + "(" + interfaceClass.getName() + ")\" in local implemention class " + localClass.getName());
++                throw new IllegalStateException("No such constructor \"public " + localClass.getSimpleName() + "(" + interfaceClass.getName() + ")\" in local implementation class " + localClass.getName());
+             }
+         }
+         if (ConfigUtils.isNotEmpty(stub)) {
+             Class<?> localClass = ConfigUtils.isDefault(stub) ? ReflectUtils.forName(interfaceClass.getName() + "Stub") : ReflectUtils.forName(stub);
+             if (!interfaceClass.isAssignableFrom(localClass)) {
+-                throw new IllegalStateException("The local implemention class " + localClass.getName() + " not implement interface " + interfaceClass.getName());
++                throw new IllegalStateException("The local implementation class " + localClass.getName() + " not implement interface " + interfaceClass.getName());
+             }
+             try {
+                 ReflectUtils.findConstructor(localClass, interfaceClass);
+             } catch (NoSuchMethodException e) {
+-                throw new IllegalStateException("No such constructor \"public " + localClass.getSimpleName() + "(" + interfaceClass.getName() + ")\" in local implemention class " + localClass.getName());
++                throw new IllegalStateException("No such constructor \"public " + localClass.getSimpleName() + "(" + interfaceClass.getName() + ")\" in local implementation class " + localClass.getName());
+             }
+         }
+         if (ConfigUtils.isNotEmpty(mock)) {
+@@ -302,12 +302,12 @@
+             } else {
+                 Class<?> mockClass = ConfigUtils.isDefault(mock) ? ReflectUtils.forName(interfaceClass.getName() + "Mock") : ReflectUtils.forName(mock);
+                 if (!interfaceClass.isAssignableFrom(mockClass)) {
+-                    throw new IllegalStateException("The mock implemention class " + mockClass.getName() + " not implement interface " + interfaceClass.getName());
++                    throw new IllegalStateException("The mock implementation class " + mockClass.getName() + " not implement interface " + interfaceClass.getName());
+                 }
+                 try {
+                     mockClass.getConstructor(new Class<?>[0]);
+                 } catch (NoSuchMethodException e) {
+-                    throw new IllegalStateException("No such empty constructor \"public " + mockClass.getSimpleName() + "()\" in mock implemention class " + mockClass.getName());
++                    throw new IllegalStateException("No such empty constructor \"public " + mockClass.getSimpleName() + "()\" in mock implementation class " + mockClass.getName());
+                 }
+             }
+         }
+diff --git a/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/ServiceConfig.java b/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/ServiceConfig.java
+index 1d855b0..1b74943 100644
+--- a/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/ServiceConfig.java
++++ b/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/ServiceConfig.java
+@@ -279,7 +279,7 @@
+                 throw new IllegalStateException(e.getMessage(), e);
+             }
+             if (!interfaceClass.isAssignableFrom(localClass)) {
+-                throw new IllegalStateException("The local implemention class " + localClass.getName() + " not implement interface " + interfaceName);
++                throw new IllegalStateException("The local implementation class " + localClass.getName() + " not implement interface " + interfaceName);
+             }
+         }
+         if (stub != null) {
+@@ -293,7 +293,7 @@
+                 throw new IllegalStateException(e.getMessage(), e);
+             }
+             if (!interfaceClass.isAssignableFrom(stubClass)) {
+-                throw new IllegalStateException("The stub implemention class " + stubClass.getName() + " not implement interface " + interfaceName);
++                throw new IllegalStateException("The stub implementation class " + stubClass.getName() + " not implement interface " + interfaceName);
+             }
+         }
+         checkApplication();
+diff --git a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/proxy/wrapper/StubProxyFactoryWrapper.java b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/proxy/wrapper/StubProxyFactoryWrapper.java
+index d15fd5d..579b0f8 100644
+--- a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/proxy/wrapper/StubProxyFactoryWrapper.java
++++ b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/proxy/wrapper/StubProxyFactoryWrapper.java
+@@ -72,7 +72,7 @@
+                 try {
+                     Class<?> stubClass = ReflectUtils.forName(stub);
+                     if (!serviceType.isAssignableFrom(stubClass)) {
+-                        throw new IllegalStateException("The stub implemention class " + stubClass.getName() + " not implement interface " + serviceType.getName());
++                        throw new IllegalStateException("The stub implementation class " + stubClass.getName() + " not implement interface " + serviceType.getName());
+                     }
+                     try {
+                         Constructor<?> constructor = ReflectUtils.findConstructor(stubClass, serviceType);
+@@ -89,10 +89,10 @@
+                             }
+                         }
+                     } catch (NoSuchMethodException e) {
+-                        throw new IllegalStateException("No such constructor \"public " + stubClass.getSimpleName() + "(" + serviceType.getName() + ")\" in stub implemention class " + stubClass.getName(), e);
++                        throw new IllegalStateException("No such constructor \"public " + stubClass.getSimpleName() + "(" + serviceType.getName() + ")\" in stub implementation class " + stubClass.getName(), e);
+                     }
+                 } catch (Throwable t) {
+-                    LOGGER.error("Failed to create stub implemention class " + stub + " in consumer " + NetUtils.getLocalHost() + " use dubbo version " + Version.getVersion() + ", cause: " + t.getMessage(), t);
++                    LOGGER.error("Failed to create stub implementation class " + stub + " in consumer " + NetUtils.getLocalHost() + " use dubbo version " + Version.getVersion() + ", cause: " + t.getMessage(), t);
+                     // ignore
+                 }
+             }
+diff --git a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/support/MockInvoker.java b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/support/MockInvoker.java
+index e1be31f..15133b2 100644
+--- a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/support/MockInvoker.java
++++ b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/support/MockInvoker.java
+@@ -127,7 +127,7 @@
+                 Invoker<T> invoker = getInvoker(mock);
+                 return invoker.invoke(invocation);
+             } catch (Throwable t) {
+-                throw new RpcException("Failed to create mock implemention class " + mock, t);
++                throw new RpcException("Failed to create mock implementation class " + mock, t);
+             }
+         }
+     }
+@@ -166,11 +166,11 @@
+ 
+             Class<?> mockClass = ReflectUtils.forName(mockService);
+             if (!serviceType.isAssignableFrom(mockClass)) {
+-                throw new IllegalArgumentException("The mock implemention class " + mockClass.getName() + " not implement interface " + serviceType.getName());
++                throw new IllegalArgumentException("The mock implementation class " + mockClass.getName() + " not implement interface " + serviceType.getName());
+             }
+ 
+             if (!serviceType.isAssignableFrom(mockClass)) {
+-                throw new IllegalArgumentException("The mock implemention class " + mockClass.getName() + " not implement interface " + serviceType.getName());
++                throw new IllegalArgumentException("The mock implementation class " + mockClass.getName() + " not implement interface " + serviceType.getName());
+             }
+             try {
+                 T mockObject = (T) mockClass.newInstance();
+@@ -180,7 +180,7 @@
+                 }
+                 return invoker;
+             } catch (InstantiationException e) {
+-                throw new IllegalStateException("No such empty constructor \"public " + mockClass.getSimpleName() + "()\" in mock implemention class " + mockClass.getName(), e);
++                throw new IllegalStateException("No such empty constructor \"public " + mockClass.getSimpleName() + "()\" in mock implementation class " + mockClass.getName(), e);
+             } catch (IllegalAccessException e) {
+                 throw new IllegalStateException(e);
+             }
+diff --git a/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/AbstractInterfaceConfig.java b/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/AbstractInterfaceConfig.java
+index 7338a1a..f6a38bb 100644
+--- a/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/AbstractInterfaceConfig.java
++++ b/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/AbstractInterfaceConfig.java
+@@ -272,23 +272,23 @@
+         if (ConfigUtils.isNotEmpty(local)) {
+             Class<?> localClass = ConfigUtils.isDefault(local) ? ReflectUtils.forName(interfaceClass.getName() + "Local") : ReflectUtils.forName(local);
+             if (!interfaceClass.isAssignableFrom(localClass)) {
+-                throw new IllegalStateException("The local implemention class " + localClass.getName() + " not implement interface " + interfaceClass.getName());
++                throw new IllegalStateException("The local implementation class " + localClass.getName() + " not implement interface " + interfaceClass.getName());
+             }
+             try {
+                 ReflectUtils.findConstructor(localClass, interfaceClass);
+             } catch (NoSuchMethodException e) {
+-                throw new IllegalStateException("No such constructor \"public " + localClass.getSimpleName() + "(" + interfaceClass.getName() + ")\" in local implemention class " + localClass.getName());
++                throw new IllegalStateException("No such constructor \"public " + localClass.getSimpleName() + "(" + interfaceClass.getName() + ")\" in local implementation class " + localClass.getName());
+             }
+         }
+         if (ConfigUtils.isNotEmpty(stub)) {
+             Class<?> localClass = ConfigUtils.isDefault(stub) ? ReflectUtils.forName(interfaceClass.getName() + "Stub") : ReflectUtils.forName(stub);
+             if (!interfaceClass.isAssignableFrom(localClass)) {
+-                throw new IllegalStateException("The local implemention class " + localClass.getName() + " not implement interface " + interfaceClass.getName());
++                throw new IllegalStateException("The local implementation class " + localClass.getName() + " not implement interface " + interfaceClass.getName());
+             }
+             try {
+                 ReflectUtils.findConstructor(localClass, interfaceClass);
+             } catch (NoSuchMethodException e) {
+-                throw new IllegalStateException("No such constructor \"public " + localClass.getSimpleName() + "(" + interfaceClass.getName() + ")\" in local implemention class " + localClass.getName());
++                throw new IllegalStateException("No such constructor \"public " + localClass.getSimpleName() + "(" + interfaceClass.getName() + ")\" in local implementation class " + localClass.getName());
+             }
+         }
+         if (ConfigUtils.isNotEmpty(mock)) {
+@@ -302,12 +302,12 @@
+             } else {
+                 Class<?> mockClass = ConfigUtils.isDefault(mock) ? ReflectUtils.forName(interfaceClass.getName() + "Mock") : ReflectUtils.forName(mock);
+                 if (!interfaceClass.isAssignableFrom(mockClass)) {
+-                    throw new IllegalStateException("The mock implemention class " + mockClass.getName() + " not implement interface " + interfaceClass.getName());
++                    throw new IllegalStateException("The mock implementation class " + mockClass.getName() + " not implement interface " + interfaceClass.getName());
+                 }
+                 try {
+                     mockClass.getConstructor(new Class<?>[0]);
+                 } catch (NoSuchMethodException e) {
+-                    throw new IllegalStateException("No such empty constructor \"public " + mockClass.getSimpleName() + "()\" in mock implemention class " + mockClass.getName());
++                    throw new IllegalStateException("No such empty constructor \"public " + mockClass.getSimpleName() + "()\" in mock implementation class " + mockClass.getName());
+                 }
+             }
+         }

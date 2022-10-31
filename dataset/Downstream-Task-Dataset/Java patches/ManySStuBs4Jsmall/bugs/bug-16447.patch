@@ -1,0 +1,26 @@
+diff --git a/core-server/src/main/java/org/glassfish/jersey/server/wadl/config/WadlGeneratorLoader.java b/core-server/src/main/java/org/glassfish/jersey/server/wadl/config/WadlGeneratorLoader.java
+index a002e3a..afb27ef 100644
+--- a/core-server/src/main/java/org/glassfish/jersey/server/wadl/config/WadlGeneratorLoader.java
++++ b/core-server/src/main/java/org/glassfish/jersey/server/wadl/config/WadlGeneratorLoader.java
+@@ -163,7 +163,7 @@
+             throw new RuntimeException("Method " + methodName + " is no setter, it does not expect exactly one parameter, but " + method.getParameterTypes().length);
+         }
+         final Class<?> paramClazz = method.getParameterTypes()[0];
+-        if (paramClazz == propertyValue.getClass()) {
++        if (paramClazz.isAssignableFrom(propertyValue.getClass())) {
+             method.invoke(generator, propertyValue);
+         } else if (File.class.equals(paramClazz) && propertyValue instanceof String) {
+ 
+diff --git a/core-server/src/main/java/org/glassfish/jersey/server/wadl/config/WadlGeneratorLoader.java b/core-server/src/main/java/org/glassfish/jersey/server/wadl/config/WadlGeneratorLoader.java
+index a002e3a..afb27ef 100644
+--- a/core-server/src/main/java/org/glassfish/jersey/server/wadl/config/WadlGeneratorLoader.java
++++ b/core-server/src/main/java/org/glassfish/jersey/server/wadl/config/WadlGeneratorLoader.java
+@@ -163,7 +163,7 @@
+             throw new RuntimeException("Method " + methodName + " is no setter, it does not expect exactly one parameter, but " + method.getParameterTypes().length);
+         }
+         final Class<?> paramClazz = method.getParameterTypes()[0];
+-        if (paramClazz == propertyValue.getClass()) {
++        if (paramClazz.isAssignableFrom(propertyValue.getClass())) {
+             method.invoke(generator, propertyValue);
+         } else if (File.class.equals(paramClazz) && propertyValue instanceof String) {
+ 

@@ -1,0 +1,44 @@
+diff --git a/stratosphere-runtime/src/main/java/eu/stratosphere/runtime/fs/hdfs/DistributedFileSystem.java b/stratosphere-runtime/src/main/java/eu/stratosphere/runtime/fs/hdfs/DistributedFileSystem.java
+index 1b00f2b..835adcf 100644
+--- a/stratosphere-runtime/src/main/java/eu/stratosphere/runtime/fs/hdfs/DistributedFileSystem.java
++++ b/stratosphere-runtime/src/main/java/eu/stratosphere/runtime/fs/hdfs/DistributedFileSystem.java
+@@ -251,7 +251,7 @@
+ 					
+ 					if (initURI.getAuthority() == null) {
+ 						throw new IOException(getMissingAuthorityErrorPrefix(path) + "Either no default hdfs configuration was registered, " +
+-								"or the provided configuration contains no valid hdfs namenode address (fs.default.name) describing the hdfs namenode host and port.");
++								"or the provided configuration contains no valid hdfs namenode address (fs.default.name or fs.defaultFS) describing the hdfs namenode host and port.");
+ 					} else if (!initURI.getScheme().equalsIgnoreCase("hdfs")) {
+ 						throw new IOException(getMissingAuthorityErrorPrefix(path) + "Either no default hdfs configuration was registered, " +
+ 								"or the provided configuration describes a file system with scheme '" + initURI.getScheme() + "' other than the Hadoop Distributed File System (HDFS).");
+@@ -266,7 +266,7 @@
+ 					}
+ 				}
+ 				catch (IllegalArgumentException e) {
+-					throw new IOException(getMissingAuthorityErrorPrefix(path) + "The configuration contains an invalid hdfs default name (fs.default.name): " + configEntry);
++					throw new IOException(getMissingAuthorityErrorPrefix(path) + "The configuration contains an invalid hdfs default name (fs.default.name or fs.defaultFS): " + configEntry);
+ 				}
+ 			} 
+ 		}
+diff --git a/stratosphere-runtime/src/main/java/eu/stratosphere/runtime/fs/hdfs/DistributedFileSystem.java b/stratosphere-runtime/src/main/java/eu/stratosphere/runtime/fs/hdfs/DistributedFileSystem.java
+index 1b00f2b..835adcf 100644
+--- a/stratosphere-runtime/src/main/java/eu/stratosphere/runtime/fs/hdfs/DistributedFileSystem.java
++++ b/stratosphere-runtime/src/main/java/eu/stratosphere/runtime/fs/hdfs/DistributedFileSystem.java
+@@ -251,7 +251,7 @@
+ 					
+ 					if (initURI.getAuthority() == null) {
+ 						throw new IOException(getMissingAuthorityErrorPrefix(path) + "Either no default hdfs configuration was registered, " +
+-								"or the provided configuration contains no valid hdfs namenode address (fs.default.name) describing the hdfs namenode host and port.");
++								"or the provided configuration contains no valid hdfs namenode address (fs.default.name or fs.defaultFS) describing the hdfs namenode host and port.");
+ 					} else if (!initURI.getScheme().equalsIgnoreCase("hdfs")) {
+ 						throw new IOException(getMissingAuthorityErrorPrefix(path) + "Either no default hdfs configuration was registered, " +
+ 								"or the provided configuration describes a file system with scheme '" + initURI.getScheme() + "' other than the Hadoop Distributed File System (HDFS).");
+@@ -266,7 +266,7 @@
+ 					}
+ 				}
+ 				catch (IllegalArgumentException e) {
+-					throw new IOException(getMissingAuthorityErrorPrefix(path) + "The configuration contains an invalid hdfs default name (fs.default.name): " + configEntry);
++					throw new IOException(getMissingAuthorityErrorPrefix(path) + "The configuration contains an invalid hdfs default name (fs.default.name or fs.defaultFS): " + configEntry);
+ 				}
+ 			} 
+ 		}

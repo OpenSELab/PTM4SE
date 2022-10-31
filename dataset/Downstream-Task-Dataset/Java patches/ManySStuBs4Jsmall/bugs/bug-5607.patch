@@ -1,0 +1,13 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/issues/SplitterParallelIssueTest.java b/camel-core/src/test/java/org/apache/camel/issues/SplitterParallelIssueTest.java
+index 23c38a3..d1f95cb 100644
+--- a/camel-core/src/test/java/org/apache/camel/issues/SplitterParallelIssueTest.java
++++ b/camel-core/src/test/java/org/apache/camel/issues/SplitterParallelIssueTest.java
+@@ -61,7 +61,7 @@
+                             @Override
+                             public void process(Exchange exchange) throws Exception {
+                                 int num = exchange.getIn().getBody(int.class);
+-                                final long sleep = (long) (num * delay);
++                                final long sleep = num * delay;
+                                 log.info("Sleep for " + sleep + "ms");
+                                 Thread.sleep(sleep);
+                             }

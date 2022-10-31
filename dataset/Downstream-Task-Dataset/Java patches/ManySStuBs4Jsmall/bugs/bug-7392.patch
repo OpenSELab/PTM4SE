@@ -1,0 +1,26 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HMobStore.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HMobStore.java
+index d51fc11..569ad06 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HMobStore.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HMobStore.java
+@@ -404,7 +404,7 @@
+         if (zk.lockColumnFamily(getTableName().getNameAsString(), getFamily().getNameAsString())) {
+           try {
+             LOG.info("Obtain the lock for the store[" + this
+-                + "], forcing the delete markers to be retained");
++                + "], ready to perform the major compaction");
+             // check the sweeping node to find out whether the sweeping is in progress.
+             boolean hasSweeper = zk.isSweeperZNodeExist(getTableName().getNameAsString(),
+                 getFamily().getNameAsString());
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HMobStore.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HMobStore.java
+index d51fc11..569ad06 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HMobStore.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HMobStore.java
+@@ -404,7 +404,7 @@
+         if (zk.lockColumnFamily(getTableName().getNameAsString(), getFamily().getNameAsString())) {
+           try {
+             LOG.info("Obtain the lock for the store[" + this
+-                + "], forcing the delete markers to be retained");
++                + "], ready to perform the major compaction");
+             // check the sweeping node to find out whether the sweeping is in progress.
+             boolean hasSweeper = zk.isSweeperZNodeExist(getTableName().getNameAsString(),
+                 getFamily().getNameAsString());

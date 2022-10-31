@@ -1,0 +1,61 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/TreeTable.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/TreeTable.java
+index e72d771..971c521 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/TreeTable.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/TreeTable.java
+@@ -54,7 +54,7 @@
+  * @author Lars Kühne
+  * @noinspection ThisEscapedInObjectConstruction
+  */
+-public class TreeTable extends JTable {
++public final class TreeTable extends JTable {
+ 
+     private static final long serialVersionUID = -8493693409423365387L;
+     /** A subclass of JTree. */
+@@ -207,7 +207,7 @@
+      * Overridden to pass the new rowHeight to the tree.
+      */
+     @Override
+-    public final void setRowHeight(int newRowHeight) {
++    public void setRowHeight(int newRowHeight) {
+         super.setRowHeight(newRowHeight);
+         if (tree != null && tree.getRowHeight() != newRowHeight) {
+             tree.setRowHeight(getRowHeight());
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocPackageCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocPackageCheckTest.java
+index ea5ba11..d8a51a9 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocPackageCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocPackageCheckTest.java
+@@ -156,11 +156,9 @@
+     /**
+      * Using direct call to check here because there is no other way
+      * to reproduce exception with invalid canonical path.
+-     *
+-     * @throws Exception if error occurs
+      */
+     @Test
+-    public void testCheckstyleExceptionIfFailedToGetCanonicalPathToFile() throws Exception {
++    public void testCheckstyleExceptionIfFailedToGetCanonicalPathToFile() {
+         final JavadocPackageCheck check = new JavadocPackageCheck();
+         final File fileWithInvalidPath = new File("\u0000\u0000\u0000");
+         final FileText mockFileText = new FileText(fileWithInvalidPath, Collections.emptyList());
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/TreeTable.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/TreeTable.java
+index e72d771..971c521 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/TreeTable.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/TreeTable.java
+@@ -54,7 +54,7 @@
+  * @author Lars Kühne
+  * @noinspection ThisEscapedInObjectConstruction
+  */
+-public class TreeTable extends JTable {
++public final class TreeTable extends JTable {
+ 
+     private static final long serialVersionUID = -8493693409423365387L;
+     /** A subclass of JTree. */
+@@ -207,7 +207,7 @@
+      * Overridden to pass the new rowHeight to the tree.
+      */
+     @Override
+-    public final void setRowHeight(int newRowHeight) {
++    public void setRowHeight(int newRowHeight) {
+         super.setRowHeight(newRowHeight);
+         if (tree != null && tree.getRowHeight() != newRowHeight) {
+             tree.setRowHeight(getRowHeight());

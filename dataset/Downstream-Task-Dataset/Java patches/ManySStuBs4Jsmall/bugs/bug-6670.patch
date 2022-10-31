@@ -1,0 +1,26 @@
+diff --git a/stratosphere-addons/hadoop-compatibility/src/main/java/eu/stratosphere/hadoopcompat/datatypes/WritableWrapper.java b/stratosphere-addons/hadoop-compatibility/src/main/java/eu/stratosphere/hadoopcompat/datatypes/WritableWrapper.java
+index 61011d0..1de44ce 100644
+--- a/stratosphere-addons/hadoop-compatibility/src/main/java/eu/stratosphere/hadoopcompat/datatypes/WritableWrapper.java
++++ b/stratosphere-addons/hadoop-compatibility/src/main/java/eu/stratosphere/hadoopcompat/datatypes/WritableWrapper.java
+@@ -38,7 +38,7 @@
+ 		wrappedType = in.readUTF();
+ 		try {
+ 			Class wrClass = Class.forName(wrappedType);
+-			wrapped = InstantiationUtil.instantiate(wrClass, Writable.class);
++			wrapped = (Writable) InstantiationUtil.instantiate(wrClass, Writable.class);
+ 		} catch (ClassNotFoundException e) {
+ 			throw new RuntimeException("Error cerating the WritableWrapper");
+ 		}
+diff --git a/stratosphere-addons/hadoop-compatibility/src/main/java/eu/stratosphere/hadoopcompat/datatypes/WritableWrapper.java b/stratosphere-addons/hadoop-compatibility/src/main/java/eu/stratosphere/hadoopcompat/datatypes/WritableWrapper.java
+index 61011d0..1de44ce 100644
+--- a/stratosphere-addons/hadoop-compatibility/src/main/java/eu/stratosphere/hadoopcompat/datatypes/WritableWrapper.java
++++ b/stratosphere-addons/hadoop-compatibility/src/main/java/eu/stratosphere/hadoopcompat/datatypes/WritableWrapper.java
+@@ -38,7 +38,7 @@
+ 		wrappedType = in.readUTF();
+ 		try {
+ 			Class wrClass = Class.forName(wrappedType);
+-			wrapped = InstantiationUtil.instantiate(wrClass, Writable.class);
++			wrapped = (Writable) InstantiationUtil.instantiate(wrClass, Writable.class);
+ 		} catch (ClassNotFoundException e) {
+ 			throw new RuntimeException("Error cerating the WritableWrapper");
+ 		}

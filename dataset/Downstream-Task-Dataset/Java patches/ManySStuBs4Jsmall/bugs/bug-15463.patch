@@ -1,0 +1,39 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/topic/TopicStressTest.java b/hazelcast/src/test/java/com/hazelcast/topic/TopicStressTest.java
+index 6199859..5148cfb 100644
+--- a/hazelcast/src/test/java/com/hazelcast/topic/TopicStressTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/topic/TopicStressTest.java
+@@ -78,7 +78,7 @@
+         }
+     }
+ 
+-    @Test
++    @Test(timeout=RUNNING_TIME_SECONDS*2*1000)
+     public void test() throws Exception {
+         startLatch.countDown();
+         System.out.printf("Test is going to run for %s seconds\n", RUNNING_TIME_SECONDS);
+diff --git a/hazelcast/src/test/java/com/hazelcast/topic/impl/reliable/ReliableTopicStressTest.java b/hazelcast/src/test/java/com/hazelcast/topic/impl/reliable/ReliableTopicStressTest.java
+index d70e777..38fabc0 100644
+--- a/hazelcast/src/test/java/com/hazelcast/topic/impl/reliable/ReliableTopicStressTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/topic/impl/reliable/ReliableTopicStressTest.java
+@@ -45,7 +45,7 @@
+         topic = hz.getReliableTopic(topicConfig.getName());
+     }
+ 
+-    @Test
++    @Test(timeout=600000)
+     public void test() throws InterruptedException {
+         final StressMessageListener listener1 = new StressMessageListener(1);
+         topic.addMessageListener(listener1);
+diff --git a/hazelcast/src/test/java/com/hazelcast/topic/TopicStressTest.java b/hazelcast/src/test/java/com/hazelcast/topic/TopicStressTest.java
+index 6199859..5148cfb 100644
+--- a/hazelcast/src/test/java/com/hazelcast/topic/TopicStressTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/topic/TopicStressTest.java
+@@ -78,7 +78,7 @@
+         }
+     }
+ 
+-    @Test
++    @Test(timeout=RUNNING_TIME_SECONDS*2*1000)
+     public void test() throws Exception {
+         startLatch.countDown();
+         System.out.printf("Test is going to run for %s seconds\n", RUNNING_TIME_SECONDS);

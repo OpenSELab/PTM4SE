@@ -1,0 +1,43 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index fe83ca8..5530e1c 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -568,9 +568,7 @@
+                     Thread.currentThread().getContextClassLoader().loadClass(broadcasterCacheClassName).newInstance());
+         }
+ 
+-        logger.info("Using " + broadcasterClassName
+-                + " with a Thread Pool size of : "
+-                + BroadcasterConfig.numOfProcessor);
++        logger.info("Using " + broadcasterClassName);
+     }
+ 
+     /**
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java b/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
+index d1e9f5b..ec3aece 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
+@@ -81,7 +81,7 @@
+     }
+ 
+     protected void configExecutors() {
+-        executorService = Executors.newCachedThreadPool(new ThreadFactory(){
++        executorService = Executors.newSingleThreadExecutor(new ThreadFactory(){
+ 
+             private AtomicInteger count = new AtomicInteger();
+ 
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index fe83ca8..5530e1c 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -568,9 +568,7 @@
+                     Thread.currentThread().getContextClassLoader().loadClass(broadcasterCacheClassName).newInstance());
+         }
+ 
+-        logger.info("Using " + broadcasterClassName
+-                + " with a Thread Pool size of : "
+-                + BroadcasterConfig.numOfProcessor);
++        logger.info("Using " + broadcasterClassName);
+     }
+ 
+     /**

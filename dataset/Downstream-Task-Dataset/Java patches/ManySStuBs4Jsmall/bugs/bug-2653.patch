@@ -1,0 +1,13 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/indexer/results/ScrollResult.java b/graylog2-server/src/main/java/org/graylog2/indexer/results/ScrollResult.java
+index 988f6f5..79ae246 100644
+--- a/graylog2-server/src/main/java/org/graylog2/indexer/results/ScrollResult.java
++++ b/graylog2-server/src/main/java/org/graylog2/indexer/results/ScrollResult.java
+@@ -67,7 +67,7 @@
+             LOG.debug("[{}] Reached end of scroll results.", queryHash, getOriginalQuery());
+             return null;
+         }
+-        LOG.debug("[{}] New scroll id {}", queryHash, search.getScrollId());
++        LOG.debug("[{}][{}] New scroll id {}, number of hits in chunk: {}", queryHash, chunkId, search.getScrollId(), hits.getHits().length);
+         scrollId = search.getScrollId(); // save the id for the next request.
+ 
+         return new ScrollChunk(hits, fields, chunkId++);

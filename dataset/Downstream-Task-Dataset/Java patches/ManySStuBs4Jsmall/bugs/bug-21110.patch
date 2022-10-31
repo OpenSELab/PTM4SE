@@ -1,0 +1,42 @@
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityAutoConfigurationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityAutoConfigurationTests.java
+index 3bf16f4..85d8976 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityAutoConfigurationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityAutoConfigurationTests.java
+@@ -298,7 +298,8 @@
+ 		this.context.setServletContext(new MockServletContext());
+ 		this.context.register(SecurityAutoConfiguration.class);
+ 		this.context.refresh();
+-		String password = this.outputCapture.toString().split("Using default security password: ")[1].split("\n")[0];
++		String password = this.outputCapture.toString().split("Using default security password: ")[1]
++				.split("\n")[0].trim();
+ 		AuthenticationManager manager = this.context.getBean(AuthenticationManager.class);
+ 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+ 				"user", password);
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityFilterAutoConfigurationEarlyInitializationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityFilterAutoConfigurationEarlyInitializationTests.java
+index 8307a14..546fb6a 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityFilterAutoConfigurationEarlyInitializationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityFilterAutoConfigurationEarlyInitializationTests.java
+@@ -66,7 +66,8 @@
+ 			context.register(Config.class);
+ 			context.refresh();
+ 			int port = context.getWebServer().getPort();
+-			String password = this.outputCapture.toString().split("Using default security password: ")[1].split("\n")[0];
++			String password = this.outputCapture.toString().split("Using default security password: ")[1]
++					.split("\n")[0].trim();
+ 			new TestRestTemplate("user", password)
+ 					.getForEntity("http://localhost:" + port, Object.class);
+ 			// If early initialization occurred a ConverterNotFoundException is thrown
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityAutoConfigurationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityAutoConfigurationTests.java
+index 3bf16f4..85d8976 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityAutoConfigurationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/SecurityAutoConfigurationTests.java
+@@ -298,7 +298,8 @@
+ 		this.context.setServletContext(new MockServletContext());
+ 		this.context.register(SecurityAutoConfiguration.class);
+ 		this.context.refresh();
+-		String password = this.outputCapture.toString().split("Using default security password: ")[1].split("\n")[0];
++		String password = this.outputCapture.toString().split("Using default security password: ")[1]
++				.split("\n")[0].trim();
+ 		AuthenticationManager manager = this.context.getBean(AuthenticationManager.class);
+ 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+ 				"user", password);

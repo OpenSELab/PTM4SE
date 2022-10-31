@@ -1,0 +1,43 @@
+diff --git a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpOperations.java b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpOperations.java
+index a78c481..a9914f1 100644
+--- a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpOperations.java
++++ b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpOperations.java
+@@ -544,7 +544,7 @@
+             if (names == null) {
+                 return false;
+             }
+-            return (names.length >= 1);
++            return names.length >= 1;
+         } catch (IOException e) {
+             throw new GenericFileOperationFailedException(client.getReplyCode(), client.getReplyString(), e.getMessage(), e);
+         }
+diff --git a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/SftpOperations.java b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/SftpOperations.java
+index 60e643f..d2eb61a 100644
+--- a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/SftpOperations.java
++++ b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/SftpOperations.java
+@@ -722,7 +722,7 @@
+             if (files == null) {
+                 return false;
+             }
+-            return (files.size() >= 1);
++            return files.size() >= 1;
+         } catch (SftpException e) {
+             // or an exception can be thrown with id 2 which means file does not exists
+             if (ChannelSftp.SSH_FX_NO_SUCH_FILE == e.id) {
+diff --git a/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/sftp/SftpSetCipherTest.java b/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/sftp/SftpSetCipherTest.java
+index 87a5022..f53ad52 100644
+--- a/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/sftp/SftpSetCipherTest.java
++++ b/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/sftp/SftpSetCipherTest.java
+diff --git a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpOperations.java b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpOperations.java
+index a78c481..a9914f1 100644
+--- a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpOperations.java
++++ b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpOperations.java
+@@ -544,7 +544,7 @@
+             if (names == null) {
+                 return false;
+             }
+-            return (names.length >= 1);
++            return names.length >= 1;
+         } catch (IOException e) {
+             throw new GenericFileOperationFailedException(client.getReplyCode(), client.getReplyString(), e.getMessage(), e);
+         }

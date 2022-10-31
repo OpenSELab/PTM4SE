@@ -1,0 +1,34 @@
+diff --git a/src/com/google/javascript/jscomp/DefaultPassConfig.java b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+index dd62da1..7783b73 100644
+--- a/src/com/google/javascript/jscomp/DefaultPassConfig.java
++++ b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+@@ -213,9 +213,9 @@
+         checks.add(inferJsDocInfo);
+       }
+ 
+-      // We assume that only clients who don't run optimizations will try to
+-      // query the typed scope creator after the compile job.
+-      if (!options.preservesDetailedSourceInfo()) {
++      // We assume that only clients who are going to re-compile, or do in-depth static analysis,
++      // will need the typed scope creator after the compile job.
++      if (!options.preservesDetailedSourceInfo() && !options.allowsHotswapReplaceScript()) {
+         checks.add(clearTypedScopePass);
+       }
+     }
+diff --git a/src/com/google/javascript/jscomp/DefaultPassConfig.java b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+index dd62da1..7783b73 100644
+--- a/src/com/google/javascript/jscomp/DefaultPassConfig.java
++++ b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+@@ -213,9 +213,9 @@
+         checks.add(inferJsDocInfo);
+       }
+ 
+-      // We assume that only clients who don't run optimizations will try to
+-      // query the typed scope creator after the compile job.
+-      if (!options.preservesDetailedSourceInfo()) {
++      // We assume that only clients who are going to re-compile, or do in-depth static analysis,
++      // will need the typed scope creator after the compile job.
++      if (!options.preservesDetailedSourceInfo() && !options.allowsHotswapReplaceScript()) {
+         checks.add(clearTypedScopePass);
+       }
+     }

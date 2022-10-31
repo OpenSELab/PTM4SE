@@ -1,0 +1,22 @@
+diff --git a/components/camel-netty-http/src/test/java/org/apache/camel/component/netty/http/NettyHttpProducerBridgeTest.java b/components/camel-netty-http/src/test/java/org/apache/camel/component/netty/http/NettyHttpProducerBridgeTest.java
+index 95109f4..f6e454c 100644
+--- a/components/camel-netty-http/src/test/java/org/apache/camel/component/netty/http/NettyHttpProducerBridgeTest.java
++++ b/components/camel-netty-http/src/test/java/org/apache/camel/component/netty/http/NettyHttpProducerBridgeTest.java
+@@ -26,7 +26,7 @@
+ 
+     @Test
+     public void testProxy() throws Exception {
+-        String reply = template.requestBody("netty-http:http://0.0.0.0:" + port1 + "/foo", "World", String.class);
++        String reply = template.requestBody("netty-http:http://localhost:" + port1 + "/foo", "World", String.class);
+         assertEquals("Bye World", reply);
+     }
+ 
+@@ -39,7 +39,7 @@
+                 port2 = getNextPort();
+ 
+                 from("netty-http:http://0.0.0.0:" + port1 + "/foo")
+-                        .to("netty-http:http://0.0.0.0:" + port2 + "/bar?bridgeEndpoint=true&throwExceptionOnFailure=false");
++                        .to("netty-http:http://localhost:" + port2 + "/bar?bridgeEndpoint=true&throwExceptionOnFailure=false");
+ 
+                 from("netty-http:http://0.0.0.0:" + port2 + "/bar")
+                         .transform().simple("Bye ${body}");

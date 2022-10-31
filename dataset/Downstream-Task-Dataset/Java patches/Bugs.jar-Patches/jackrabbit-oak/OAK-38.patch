@@ -1,0 +1,51 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/ListRecord.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/ListRecord.java
+index df2735e..27b5cba 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/ListRecord.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/ListRecord.java
+@@ -57,8 +57,10 @@ class ListRecord extends Record {
+             int bucketIndex = index / bucketSize;
+             int bucketOffset = index % bucketSize;
+             Segment segment = getSegment();
+-            RecordId bucketId = segment.readRecordId(getOffset(0, bucketIndex));
+-            ListRecord bucket = new ListRecord(segment, bucketId, bucketSize);
++            RecordId id = segment.readRecordId(getOffset(0, bucketIndex));
++            ListRecord bucket = new ListRecord(
++                    segment, id,
++                    Math.min(bucketSize, size - bucketIndex * bucketSize));
+             return bucket.getEntry(bucketOffset);
+         }
+     }
+@@ -78,7 +80,7 @@ class ListRecord extends Record {
+                     list.add(id);
+                 } else {
+                     ListRecord bucket = new ListRecord(
+-                            segment, id, Math.min(bucketSize, size - offset));
++                            segment, id, Math.min(bucketSize, size - i));
+                     list.addAll(bucket.getEntries());
+                 }
+                 offset += Segment.RECORD_ID_BYTES;
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
+index a961cbf..aeb7e98 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
+@@ -340,6 +340,7 @@ public class SegmentWriter {
+ 
+ 
+     private synchronized RecordId writeListBucket(List<RecordId> bucket) {
++        checkArgument(bucket.size() > 1);
+         RecordId bucketId = prepare(RecordType.BUCKET, 0, bucket);
+         for (RecordId id : bucket) {
+             writeRecordId(id);
+@@ -516,7 +517,11 @@ public class SegmentWriter {
+             List<RecordId> nextLevel = Lists.newArrayList();
+             for (List<RecordId> bucket :
+                     Lists.partition(thisLevel, ListRecord.LEVEL_SIZE)) {
+-                nextLevel.add(writeListBucket(bucket));
++                if (bucket.size() > 1) {
++                    nextLevel.add(writeListBucket(bucket));
++                } else {
++                    nextLevel.add(bucket.get(0));
++                }
+             }
+             thisLevel = nextLevel;
+         }

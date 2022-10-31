@@ -1,0 +1,26 @@
+diff --git a/core/client/src/main/java/alluxio/client/netty/NettyUnderFileSystemFileReader.java b/core/client/src/main/java/alluxio/client/netty/NettyUnderFileSystemFileReader.java
+index 14b41f8..5cdc207 100644
+--- a/core/client/src/main/java/alluxio/client/netty/NettyUnderFileSystemFileReader.java
++++ b/core/client/src/main/java/alluxio/client/netty/NettyUnderFileSystemFileReader.java
+@@ -119,7 +119,7 @@
+       }
+       throw new IOException(e);
+     } finally {
+-      if (channel != null && listener != null) {
++      if (channel != null && listener != null && channel.isActive()) {
+         channel.pipeline().get(ClientHandler.class).removeListener(listener);
+       }
+       if (channel != null) {
+diff --git a/core/client/src/main/java/alluxio/client/netty/NettyUnderFileSystemFileReader.java b/core/client/src/main/java/alluxio/client/netty/NettyUnderFileSystemFileReader.java
+index 14b41f8..5cdc207 100644
+--- a/core/client/src/main/java/alluxio/client/netty/NettyUnderFileSystemFileReader.java
++++ b/core/client/src/main/java/alluxio/client/netty/NettyUnderFileSystemFileReader.java
+@@ -119,7 +119,7 @@
+       }
+       throw new IOException(e);
+     } finally {
+-      if (channel != null && listener != null) {
++      if (channel != null && listener != null && channel.isActive()) {
+         channel.pipeline().get(ClientHandler.class).removeListener(listener);
+       }
+       if (channel != null) {

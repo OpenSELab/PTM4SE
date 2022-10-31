@@ -1,0 +1,105 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/osgi/Activator.java b/camel-core/src/main/java/org/apache/camel/impl/osgi/Activator.java
+index eb40f1e..79799a0 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/osgi/Activator.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/osgi/Activator.java
+@@ -410,7 +410,7 @@
+     protected abstract static class BaseService {
+ 
+         protected final Bundle bundle;
+-        private ServiceRegistration<?> reg;
++        private ServiceRegistration reg;
+ 
+         protected BaseService(Bundle bundle) {
+             this.bundle = bundle;
+diff --git a/components/camel-core-osgi/src/main/java/org/apache/camel/core/osgi/OsgiCamelContextPublisher.java b/components/camel-core-osgi/src/main/java/org/apache/camel/core/osgi/OsgiCamelContextPublisher.java
+index 44e8661..10f07a9 100644
+--- a/components/camel-core-osgi/src/main/java/org/apache/camel/core/osgi/OsgiCamelContextPublisher.java
++++ b/components/camel-core-osgi/src/main/java/org/apache/camel/core/osgi/OsgiCamelContextPublisher.java
+@@ -43,7 +43,7 @@
+     public static final String CONTEXT_NAME_PROPERTY = "camel.context.name";
+ 
+     private final BundleContext bundleContext;
+-    private final Map<CamelContext, ServiceRegistration<?>> registrations = new ConcurrentHashMap<CamelContext, ServiceRegistration<?>>();
++    private final Map<CamelContext, ServiceRegistration> registrations = new ConcurrentHashMap<CamelContext, ServiceRegistration>();
+ 
+     public OsgiCamelContextPublisher(BundleContext bundleContext) {
+         this.bundleContext = bundleContext;
+@@ -60,11 +60,11 @@
+ 
+             log.debug("Registering CamelContext [{}] of in OSGi registry", props);
+ 
+-            ServiceRegistration<?> reg = bundleContext.registerService(CamelContext.class.getName(), context, props);
++            ServiceRegistration reg = bundleContext.registerService(CamelContext.class.getName(), context, props);
+             registrations.put(context, reg);
+         } else if (event instanceof CamelContextStoppingEvent) {
+             CamelContext context = ((CamelContextStoppingEvent) event).getContext();
+-            ServiceRegistration<?> reg = registrations.get(context);
++            ServiceRegistration reg = registrations.get(context);
+             if (reg != null) {
+                 if (log.isDebugEnabled()) {
+                     log.debug("Unregistering CamelContext [{}] from OSGi registry", context.getName());
+diff --git a/components/camel-eventadmin/src/main/java/org/apache/camel/component/eventadmin/Activator.java b/components/camel-eventadmin/src/main/java/org/apache/camel/component/eventadmin/Activator.java
+index 2c29e13..4bc40e4 100644
+--- a/components/camel-eventadmin/src/main/java/org/apache/camel/component/eventadmin/Activator.java
++++ b/components/camel-eventadmin/src/main/java/org/apache/camel/component/eventadmin/Activator.java
+@@ -30,7 +30,7 @@
+  */
+ public class Activator implements BundleActivator {
+ 
+-    private ServiceRegistration<?> registration;
++    private ServiceRegistration registration;
+ 
+     public void start(BundleContext bundleContext) throws Exception {
+         Dictionary<String, String> props = new Hashtable<String, String>();
+diff --git a/components/camel-eventadmin/src/main/java/org/apache/camel/component/eventadmin/EventAdminConsumer.java b/components/camel-eventadmin/src/main/java/org/apache/camel/component/eventadmin/EventAdminConsumer.java
+index e1d2e4c..1712aec 100644
+--- a/components/camel-eventadmin/src/main/java/org/apache/camel/component/eventadmin/EventAdminConsumer.java
++++ b/components/camel-eventadmin/src/main/java/org/apache/camel/component/eventadmin/EventAdminConsumer.java
+@@ -32,7 +32,7 @@
+ 
+     private static final transient Logger LOG = LoggerFactory.getLogger(EventAdminConsumer.class);
+     private final EventAdminEndpoint endpoint;
+-    private ServiceRegistration<?> registration;
++    private ServiceRegistration registration;
+     
+ 
+     public EventAdminConsumer(EventAdminEndpoint endpoint, Processor processor) {
+diff --git a/components/camel-paxlogging/src/main/java/org/apache/camel/component/paxlogging/Activator.java b/components/camel-paxlogging/src/main/java/org/apache/camel/component/paxlogging/Activator.java
+index 2061c45..c76fd98 100644
+--- a/components/camel-paxlogging/src/main/java/org/apache/camel/component/paxlogging/Activator.java
++++ b/components/camel-paxlogging/src/main/java/org/apache/camel/component/paxlogging/Activator.java
+@@ -29,7 +29,7 @@
+  */
+ public class Activator implements BundleActivator {
+ 
+-    private ServiceRegistration<?> registration;
++    private ServiceRegistration registration;
+ 
+     public void start(BundleContext bundleContext) throws Exception {
+         Dictionary<String, String> props = new Hashtable<String, String>();
+diff --git a/components/camel-paxlogging/src/main/java/org/apache/camel/component/paxlogging/PaxLoggingConsumer.java b/components/camel-paxlogging/src/main/java/org/apache/camel/component/paxlogging/PaxLoggingConsumer.java
+index a4ac2b6..3352007 100644
+--- a/components/camel-paxlogging/src/main/java/org/apache/camel/component/paxlogging/PaxLoggingConsumer.java
++++ b/components/camel-paxlogging/src/main/java/org/apache/camel/component/paxlogging/PaxLoggingConsumer.java
+@@ -45,7 +45,7 @@
+     private static final transient Logger LOG = LoggerFactory.getLogger(PaxLoggingConsumer.class);
+     private final PaxLoggingEndpoint endpoint;
+     private ExecutorService executor;
+-    private ServiceRegistration<?> registration;
++    private ServiceRegistration registration;
+ 
+     public PaxLoggingConsumer(PaxLoggingEndpoint endpoint, Processor processor) {
+         super(endpoint, processor);
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/osgi/Activator.java b/camel-core/src/main/java/org/apache/camel/impl/osgi/Activator.java
+index eb40f1e..79799a0 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/osgi/Activator.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/osgi/Activator.java
+@@ -410,7 +410,7 @@
+     protected abstract static class BaseService {
+ 
+         protected final Bundle bundle;
+-        private ServiceRegistration<?> reg;
++        private ServiceRegistration reg;
+ 
+         protected BaseService(Bundle bundle) {
+             this.bundle = bundle;

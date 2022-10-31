@@ -1,0 +1,39 @@
+diff --git a/flink-clients/src/main/java/org/apache/flink/client/program/ContextEnvironmentFactory.java b/flink-clients/src/main/java/org/apache/flink/client/program/ContextEnvironmentFactory.java
+index 64b1863..8c1d9eb 100644
+--- a/flink-clients/src/main/java/org/apache/flink/client/program/ContextEnvironmentFactory.java
++++ b/flink-clients/src/main/java/org/apache/flink/client/program/ContextEnvironmentFactory.java
+@@ -64,7 +64,7 @@
+ 	@Override
+ 	public ExecutionEnvironment createExecutionEnvironment() {
+ 		if (isDetached && lastEnvCreated != null) {
+-			throw new InvalidProgramException("Multiple enviornments cannot be created in detached mode");
++			throw new InvalidProgramException("Multiple environments cannot be created in detached mode");
+ 		}
+ 
+ 		lastEnvCreated = isDetached
+diff --git a/flink-yarn/src/main/java/org/apache/flink/yarn/AbstractYarnClusterDescriptor.java b/flink-yarn/src/main/java/org/apache/flink/yarn/AbstractYarnClusterDescriptor.java
+index ef266f0..9d504d3 100644
+--- a/flink-yarn/src/main/java/org/apache/flink/yarn/AbstractYarnClusterDescriptor.java
++++ b/flink-yarn/src/main/java/org/apache/flink/yarn/AbstractYarnClusterDescriptor.java
+@@ -1070,7 +1070,7 @@
+ 			LOG.info("The Flink YARN client has been started in detached mode. In order to stop " +
+ 					"Flink on YARN, use the following command or a YARN web interface to stop " +
+ 					"it:\nyarn application -kill " + appId + "\nPlease also note that the " +
+-					"temporary files of the YARN session in the home directoy will not be removed.");
++					"temporary files of the YARN session in the home directory will not be removed.");
+ 		}
+ 		// since deployment was successful, remove the hook
+ 		ShutdownHookUtil.removeShutdownHook(deploymentFailureHook, getClass().getSimpleName(), LOG);
+diff --git a/flink-clients/src/main/java/org/apache/flink/client/program/ContextEnvironmentFactory.java b/flink-clients/src/main/java/org/apache/flink/client/program/ContextEnvironmentFactory.java
+index 64b1863..8c1d9eb 100644
+--- a/flink-clients/src/main/java/org/apache/flink/client/program/ContextEnvironmentFactory.java
++++ b/flink-clients/src/main/java/org/apache/flink/client/program/ContextEnvironmentFactory.java
+@@ -64,7 +64,7 @@
+ 	@Override
+ 	public ExecutionEnvironment createExecutionEnvironment() {
+ 		if (isDetached && lastEnvCreated != null) {
+-			throw new InvalidProgramException("Multiple enviornments cannot be created in detached mode");
++			throw new InvalidProgramException("Multiple environments cannot be created in detached mode");
+ 		}
+ 
+ 		lastEnvCreated = isDetached

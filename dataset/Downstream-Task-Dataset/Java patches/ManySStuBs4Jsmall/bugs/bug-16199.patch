@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java b/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
+index 0e4adf5..938b8d0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
++++ b/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
+@@ -448,7 +448,7 @@
+             final Node att = atts.item(a);
+             final String value = getTextContent(att).trim();
+             if ("enabled".equalsIgnoreCase(att.getNodeName())) {
+-                join.getAwsConfig().setEnabled(true);
++                join.getAwsConfig().setEnabled(checkTrue(value));
+             } else if (att.getNodeName().equals("conn-timeout-seconds")) {
+                 join.getTcpIpConfig().setConnectionTimeoutSeconds(getIntegerValue("conn-timeout-seconds", value, 5));
+             }
+diff --git a/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java b/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
+index 0e4adf5..938b8d0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
++++ b/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
+@@ -448,7 +448,7 @@
+             final Node att = atts.item(a);
+             final String value = getTextContent(att).trim();
+             if ("enabled".equalsIgnoreCase(att.getNodeName())) {
+-                join.getAwsConfig().setEnabled(true);
++                join.getAwsConfig().setEnabled(checkTrue(value));
+             } else if (att.getNodeName().equals("conn-timeout-seconds")) {
+                 join.getTcpIpConfig().setConnectionTimeoutSeconds(getIntegerValue("conn-timeout-seconds", value, 5));
+             }

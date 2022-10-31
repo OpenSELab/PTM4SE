@@ -1,0 +1,26 @@
+diff --git a/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/JavaProgramTestBase.java b/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/JavaProgramTestBase.java
+index de536d8..9262ae6 100644
+--- a/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/JavaProgramTestBase.java
++++ b/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/JavaProgramTestBase.java
+@@ -210,7 +210,7 @@
+ 			e.printStackTrace();
+ 			Assert.fail("Error while calling the test program: " + e.getMessage());
+ 		} finally {
+-			CollectionTestEnvironment.unsetAsContext();
++			miniClusterResource.getTestEnvironment().setAsContext();
+ 		}
+ 
+ 		Assert.assertNotNull("The test program never triggered an execution.", this.latestExecutionResult);
+diff --git a/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/JavaProgramTestBase.java b/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/JavaProgramTestBase.java
+index de536d8..9262ae6 100644
+--- a/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/JavaProgramTestBase.java
++++ b/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/JavaProgramTestBase.java
+@@ -210,7 +210,7 @@
+ 			e.printStackTrace();
+ 			Assert.fail("Error while calling the test program: " + e.getMessage());
+ 		} finally {
+-			CollectionTestEnvironment.unsetAsContext();
++			miniClusterResource.getTestEnvironment().setAsContext();
+ 		}
+ 
+ 		Assert.assertNotNull("The test program never triggered an execution.", this.latestExecutionResult);

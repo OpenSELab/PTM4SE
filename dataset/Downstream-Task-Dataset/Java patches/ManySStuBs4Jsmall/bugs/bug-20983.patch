@@ -1,0 +1,17 @@
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/MapBinder.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/MapBinder.java
+index 7efdf05..01939e7 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/MapBinder.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/MapBinder.java
+@@ -83,10 +83,9 @@
+ 	}
+ 
+ 	@Override
+-	@SuppressWarnings("unchecked")
+-	protected Map<Object, Object> merge(Supplier<?> existing,
++	protected Map<Object, Object> merge(Supplier<Map<Object, Object>> existing,
+ 			Map<Object, Object> additional) {
+-		Map<Object, Object> existingMap = (Map<Object, Object>) existing.get();
++		Map<Object, Object> existingMap = existing.get();
+ 		if (existingMap == null) {
+ 			return additional;
+ 		}

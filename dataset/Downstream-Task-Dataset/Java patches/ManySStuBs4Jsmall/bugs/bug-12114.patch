@@ -1,0 +1,13 @@
+diff --git a/src/main/java/io/vertx/core/http/impl/HttpServerRequestImpl.java b/src/main/java/io/vertx/core/http/impl/HttpServerRequestImpl.java
+index 568a444..10950fb 100644
+--- a/src/main/java/io/vertx/core/http/impl/HttpServerRequestImpl.java
++++ b/src/main/java/io/vertx/core/http/impl/HttpServerRequestImpl.java
+@@ -364,7 +364,7 @@
+     synchronized (conn) {
+       if (decoder != null) {
+         try {
+-          decoder.offer(new DefaultHttpContent(data.getByteBuf().duplicate()));
++          decoder.offer(new DefaultHttpContent(data.getByteBuf()));
+         } catch (HttpPostRequestDecoder.ErrorDataDecoderException e) {
+           handleException(e);
+         }

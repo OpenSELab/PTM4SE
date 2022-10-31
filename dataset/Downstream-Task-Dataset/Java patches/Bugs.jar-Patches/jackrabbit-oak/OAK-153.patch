@@ -1,0 +1,244 @@
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/H2Persistence.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/H2Persistence.java
+index d6cb3b5..76030db 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/H2Persistence.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/H2Persistence.java
+@@ -70,6 +70,7 @@ public class H2Persistence implements GCPersistence {
+         try {
+             Statement stmt = con.createStatement();
+             stmt.execute("create table if not exists REVS(ID binary primary key, DATA binary, TIME timestamp)");
++            stmt.execute("create table if not exists NODES(ID binary primary key, DATA binary, TIME timestamp)");
+             stmt.execute("create table if not exists HEAD(ID binary) as select null");
+             stmt.execute("create sequence if not exists DATASTORE_ID");
+ /*
+@@ -86,7 +87,16 @@ public class H2Persistence implements GCPersistence {
+         cp.dispose();
+     }
+ 
+-    public Id readHead() throws Exception {
++    public Id[] readIds() throws Exception {
++        Id lastCommitId = null;
++        Id headId = readHead();
++        if (headId != null) {
++            lastCommitId = readLastCommitId();
++        }
++        return new Id[] { headId, lastCommitId };
++    }
++    
++    private Id readHead() throws Exception {
+         Connection con = cp.getConnection();
+         try {
+             PreparedStatement stmt = con.prepareStatement("select * from HEAD");
+@@ -102,6 +112,22 @@ public class H2Persistence implements GCPersistence {
+         }
+     }
+ 
++    private Id readLastCommitId() throws Exception {
++        Connection con = cp.getConnection();
++        try {
++            PreparedStatement stmt = con.prepareStatement("select MAX(ID) from REVS");
++            ResultSet rs = stmt.executeQuery();
++            byte[] rawId = null;
++            if (rs.next()) {
++                rawId = rs.getBytes(1);
++            }
++            stmt.close();
++            return rawId == null ? null : new Id(rawId); 
++        } finally {
++            con.close();
++        }
++    }
++
+     public void writeHead(Id id) throws Exception {
+         Connection con = cp.getConnection();
+         try {
+@@ -118,7 +144,7 @@ public class H2Persistence implements GCPersistence {
+         Id id = node.getId();
+         Connection con = cp.getConnection();
+         try {
+-            PreparedStatement stmt = con.prepareStatement("select DATA from REVS where ID = ?");
++            PreparedStatement stmt = con.prepareStatement("select DATA from NODES where ID = ?");
+             try {
+                 stmt.setBytes(1, id.getBytes());
+                 ResultSet rs = stmt.executeQuery();
+@@ -148,7 +174,7 @@ public class H2Persistence implements GCPersistence {
+         try {
+             PreparedStatement stmt = con
+                     .prepareStatement(
+-                            "insert into REVS (ID, DATA, TIME) select ?, ?, ? where not exists (select 1 from REVS where ID = ?)");
++                            "insert into NODES (ID, DATA, TIME) select ?, ?, ? where not exists (select 1 from NODES where ID = ?)");
+             try {
+                 stmt.setBytes(1, rawId);
+                 stmt.setBytes(2, bytes);
+@@ -212,7 +238,7 @@ public class H2Persistence implements GCPersistence {
+     public ChildNodeEntriesMap readCNEMap(Id id) throws NotFoundException, Exception {
+         Connection con = cp.getConnection();
+         try {
+-            PreparedStatement stmt = con.prepareStatement("select DATA from REVS where ID = ?");
++            PreparedStatement stmt = con.prepareStatement("select DATA from NODES where ID = ?");
+             try {
+                 stmt.setBytes(1, id.getBytes());
+                 ResultSet rs = stmt.executeQuery();
+@@ -241,7 +267,7 @@ public class H2Persistence implements GCPersistence {
+         try {
+             PreparedStatement stmt = con
+                     .prepareStatement(
+-                            "insert into REVS (ID, DATA, TIME) select ?, ?, ? where not exists (select 1 from REVS where ID = ?)");
++                            "insert into NODES (ID, DATA, TIME) select ?, ?, ? where not exists (select 1 from NODES where ID = ?)");
+             try {
+                 stmt.setBytes(1, rawId);
+                 stmt.setBytes(2, bytes);
+@@ -264,7 +290,7 @@ public class H2Persistence implements GCPersistence {
+     
+     @Override
+     public boolean markCommit(Id id) throws Exception {
+-        return touch(id, gcStart);
++        return touch("REVS", id, gcStart);
+     }
+ 
+     @Override
+@@ -292,22 +318,23 @@ public class H2Persistence implements GCPersistence {
+     
+     @Override
+     public boolean markNode(Id id) throws Exception {
+-        return touch(id, gcStart);
++        return touch("NODES", id, gcStart);
+     }
+ 
+     @Override
+     public boolean markCNEMap(Id id) throws Exception {
+-        return touch(id, gcStart);
++        return touch("NODES", id, gcStart);
+     }
+     
+-    private boolean touch(Id id, long timeMillis) throws Exception {
++    private boolean touch(String table, Id id, long timeMillis) throws Exception {
+         Timestamp ts = new Timestamp(timeMillis);
+ 
+         Connection con = cp.getConnection();
+         try {
+-            PreparedStatement stmt = con
+-                    .prepareStatement(
+-                            "update REVS set TIME = ? where ID = ? and TIME < ?");
++            PreparedStatement stmt = con.prepareStatement(
++                    String.format("update %s set TIME = ? where ID = ? and TIME < ?",
++                            table));
++                                    
+             try {
+                 stmt.setTimestamp(1, ts);
+                 stmt.setBytes(2, id.getBytes());
+@@ -324,20 +351,29 @@ public class H2Persistence implements GCPersistence {
+     @Override
+     public int sweep() throws Exception {
+         Timestamp ts = new Timestamp(gcStart);
++        int swept = 0;
+ 
+         Connection con = cp.getConnection();
+         try {
+-            PreparedStatement stmt = con
+-                    .prepareStatement(
+-                            "delete REVS where TIME < ?");
++            PreparedStatement stmt = con.prepareStatement("delete REVS where TIME < ?");
++            try {
++                stmt.setTimestamp(1, ts);
++                swept += stmt.executeUpdate();
++            } finally {
++                stmt.close();
++            }
++
++            stmt = con.prepareStatement("delete NODES where TIME < ?");
++            
+             try {
+                 stmt.setTimestamp(1, ts);
+-                return stmt.executeUpdate();
++                swept += stmt.executeUpdate();
+             } finally {
+                 stmt.close();
+             }
+         } finally {
+             con.close();
+         }
++        return swept;
+      }
+ }
+\ No newline at end of file
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/InMemPersistence.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/InMemPersistence.java
+index bba95fc..f8ddafe 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/InMemPersistence.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/InMemPersistence.java
+@@ -42,7 +42,6 @@ public class InMemPersistence implements GCPersistence {
+     private final Map<Id, byte[]> objects = Collections.synchronizedMap(new HashMap<Id, byte[]>());
+     private final Map<Id, byte[]> marked = Collections.synchronizedMap(new HashMap<Id, byte[]>());
+ 
+-    private Id head;
+     private long gcStart;
+ 
+     // TODO: make this configurable
+@@ -53,12 +52,13 @@ public class InMemPersistence implements GCPersistence {
+         // nothing to initialize
+     }
+     
+-    public Id readHead() {
+-        return head;
++    @Override
++    public Id[] readIds() throws Exception {
++        return new Id[2];
+     }
+ 
+     public void writeHead(Id id) {
+-        head = id;
++        
+     }
+ 
+     public void readNode(StoredNode node) throws NotFoundException, Exception {
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/Persistence.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/Persistence.java
+index dbb4253..45ca883 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/Persistence.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/persistence/Persistence.java
+@@ -36,7 +36,19 @@ public interface Persistence extends Closeable {
+ 
+     public void initialize(File homeDir) throws Exception;
+     
+-    Id readHead() throws Exception;
++    /**
++     * Return an array of ids, where the first is the head id (as stored
++     * with {@link #writeHead(Id)}) and the second is the highest commit
++     * id found or {@code null}.
++     * <p/>
++     * This method is not guaranteed to deliver "live" results, after
++     * something is written to the storage, so it should better be used
++     * once after initialization. 
++     * 
++     * @return array of ids
++     * @throws Exception if an error occurs
++     */
++    Id[] readIds() throws Exception;
+ 
+     void writeHead(Id id) throws Exception;
+ 
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/store/DefaultRevisionStore.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/store/DefaultRevisionStore.java
+index 1d71ff8..42b50a5 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/store/DefaultRevisionStore.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/store/DefaultRevisionStore.java
+@@ -134,7 +134,8 @@ public class DefaultRevisionStore extends AbstractRevisionStore implements
+         cache = Collections.synchronizedMap(SimpleLRUCache.<Id, Object> newInstance(initialCacheSize));
+ 
+         // make sure we've got a HEAD commit
+-        head = pm.readHead();
++        Id[] ids = pm.readIds();
++        head = ids[0];
+         if (head == null || head.getBytes().length == 0) {
+             // assume virgin repository
+             byte[] rawHead = Id.fromLong(commitCounter.incrementAndGet())
+@@ -148,7 +149,11 @@ public class DefaultRevisionStore extends AbstractRevisionStore implements
+             pm.writeCommit(head, initialCommit);
+             pm.writeHead(head);
+         } else {
+-            commitCounter.set(Long.parseLong(head.toString(), 16));
++            Id lastCommitId = head;
++            if (ids[1] != null && ids[1].compareTo(lastCommitId) > 0) {
++                lastCommitId = ids[1];
++            }
++            commitCounter.set(Long.parseLong(lastCommitId.toString(), 16));
+         }
+ 
+         if (gcpm != null) {

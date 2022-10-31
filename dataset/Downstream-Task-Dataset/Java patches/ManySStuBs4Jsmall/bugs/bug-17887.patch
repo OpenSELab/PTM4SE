@@ -1,0 +1,58 @@
+diff --git a/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java b/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
+index e3b13ab..7863c61 100644
+--- a/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
++++ b/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
+@@ -146,7 +146,7 @@
+     JDBC_TYPE_HANDLER_MAP.put(jdbcType, handler);
+   }
+ 
+-  public void register(Class<?> type, TypeHandler<?> handler) {
++  public <T> void register(Class<T> type, TypeHandler<? extends T> handler) {
+     MappedJdbcTypes mappedJdbcTypes = handler.getClass().getAnnotation(MappedJdbcTypes.class);
+     if (mappedJdbcTypes != null) {
+       for (JdbcType handledJdbcType : mappedJdbcTypes.value()) {
+@@ -157,12 +157,13 @@
+     }
+   }
+ 
+-  public void register(TypeHandler<?> handler) {
++  public <T> void register(TypeHandler<? extends T> handler) {
+     boolean mappedTypeFound = false;
+     MappedTypes mappedTypes = handler.getClass().getAnnotation(MappedTypes.class);
+     if (mappedTypes != null) {
+       for (Class<?> handledType : mappedTypes.value()) {
+-          register(handledType, handler);
++          // FIXME is there any way to make sure types are assignable?
++          register((Class<T>) handledType, handler);
+           mappedTypeFound = true;
+       }
+     }
+diff --git a/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java b/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
+index e3b13ab..7863c61 100644
+--- a/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
++++ b/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
+@@ -146,7 +146,7 @@
+     JDBC_TYPE_HANDLER_MAP.put(jdbcType, handler);
+   }
+ 
+-  public void register(Class<?> type, TypeHandler<?> handler) {
++  public <T> void register(Class<T> type, TypeHandler<? extends T> handler) {
+     MappedJdbcTypes mappedJdbcTypes = handler.getClass().getAnnotation(MappedJdbcTypes.class);
+     if (mappedJdbcTypes != null) {
+       for (JdbcType handledJdbcType : mappedJdbcTypes.value()) {
+@@ -157,12 +157,13 @@
+     }
+   }
+ 
+-  public void register(TypeHandler<?> handler) {
++  public <T> void register(TypeHandler<? extends T> handler) {
+     boolean mappedTypeFound = false;
+     MappedTypes mappedTypes = handler.getClass().getAnnotation(MappedTypes.class);
+     if (mappedTypes != null) {
+       for (Class<?> handledType : mappedTypes.value()) {
+-          register(handledType, handler);
++          // FIXME is there any way to make sure types are assignable?
++          register((Class<T>) handledType, handler);
+           mappedTypeFound = true;
+       }
+     }

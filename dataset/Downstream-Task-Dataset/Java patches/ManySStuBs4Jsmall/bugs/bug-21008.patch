@@ -1,0 +1,48 @@
+diff --git a/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/web/annotation/AbstractWebEndpointIntegrationTests.java b/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/web/annotation/AbstractWebEndpointIntegrationTests.java
+index a69aeaa..afdc9f8 100644
+--- a/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/web/annotation/AbstractWebEndpointIntegrationTests.java
++++ b/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/web/annotation/AbstractWebEndpointIntegrationTests.java
+@@ -168,7 +168,8 @@
+ 	public void readOperationWithMappingFailureProducesBadRequestResponse() {
+ 		load(QueryEndpointConfiguration.class, (client) -> {
+ 			WebTestClient.BodyContentSpec body = client.get().uri("/query?two=two")
+-					.exchange().expectStatus().isBadRequest().expectBody();
++					.accept(MediaType.APPLICATION_JSON).exchange().expectStatus()
++					.isBadRequest().expectBody();
+ 			validateErrorBody(body, HttpStatus.BAD_REQUEST, "/endpoints/query",
+ 					"Missing parameters: one");
+ 		});
+@@ -290,7 +291,8 @@
+ 	public void readOperationWithMissingRequiredParametersReturnsBadRequestResponse() {
+ 		load(RequiredParameterEndpointConfiguration.class, (client) -> {
+ 			WebTestClient.BodyContentSpec body = client.get().uri("/requiredparameters")
+-					.exchange().expectStatus().isBadRequest().expectBody();
++					.accept(MediaType.APPLICATION_JSON).exchange().expectStatus()
++					.isBadRequest().expectBody();
+ 			validateErrorBody(body, HttpStatus.BAD_REQUEST,
+ 					"/endpoints/requiredparameters", "Missing parameters: foo");
+ 		});
+diff --git a/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/web/annotation/AbstractWebEndpointIntegrationTests.java b/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/web/annotation/AbstractWebEndpointIntegrationTests.java
+index a69aeaa..afdc9f8 100644
+--- a/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/web/annotation/AbstractWebEndpointIntegrationTests.java
++++ b/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/web/annotation/AbstractWebEndpointIntegrationTests.java
+@@ -168,7 +168,8 @@
+ 	public void readOperationWithMappingFailureProducesBadRequestResponse() {
+ 		load(QueryEndpointConfiguration.class, (client) -> {
+ 			WebTestClient.BodyContentSpec body = client.get().uri("/query?two=two")
+-					.exchange().expectStatus().isBadRequest().expectBody();
++					.accept(MediaType.APPLICATION_JSON).exchange().expectStatus()
++					.isBadRequest().expectBody();
+ 			validateErrorBody(body, HttpStatus.BAD_REQUEST, "/endpoints/query",
+ 					"Missing parameters: one");
+ 		});
+@@ -290,7 +291,8 @@
+ 	public void readOperationWithMissingRequiredParametersReturnsBadRequestResponse() {
+ 		load(RequiredParameterEndpointConfiguration.class, (client) -> {
+ 			WebTestClient.BodyContentSpec body = client.get().uri("/requiredparameters")
+-					.exchange().expectStatus().isBadRequest().expectBody();
++					.accept(MediaType.APPLICATION_JSON).exchange().expectStatus()
++					.isBadRequest().expectBody();
+ 			validateErrorBody(body, HttpStatus.BAD_REQUEST,
+ 					"/endpoints/requiredparameters", "Missing parameters: foo");
+ 		});

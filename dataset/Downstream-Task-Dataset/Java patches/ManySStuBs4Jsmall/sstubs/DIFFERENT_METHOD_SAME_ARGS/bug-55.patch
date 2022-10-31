@@ -1,0 +1,100 @@
+diff --git a/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketReader.java b/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketReader.java
+index 5d9a07a..520f443 100644
+--- a/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketReader.java
++++ b/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketReader.java
+@@ -93,7 +93,7 @@
+    */
+   public static class Factory implements PacketReader.Factory {
+     private static final long READ_TIMEOUT_MS =
+-        Configuration.getLong(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS);
++        Configuration.getMs(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS);
+ 
+     private final FileSystemContext mContext;
+     private final WorkerNetAddress mAddress;
+diff --git a/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketWriter.java b/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketWriter.java
+index b637196..8e012f2 100644
+--- a/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketWriter.java
++++ b/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketWriter.java
+@@ -44,7 +44,7 @@
+   private static final long FILE_BUFFER_BYTES =
+       Configuration.getBytes(PropertyKey.USER_FILE_BUFFER_BYTES);
+   private static final long WRITE_TIMEOUT_MS =
+-      Configuration.getLong(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS);
++      Configuration.getMs(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS);
+ 
+   private final FileSystemContext mContext;
+   private final WorkerNetAddress mAddress;
+diff --git a/core/client/fs/src/main/java/alluxio/client/block/stream/NettyPacketReader.java b/core/client/fs/src/main/java/alluxio/client/block/stream/NettyPacketReader.java
+index 000e8e4..2fd4cbd 100644
+--- a/core/client/fs/src/main/java/alluxio/client/block/stream/NettyPacketReader.java
++++ b/core/client/fs/src/main/java/alluxio/client/block/stream/NettyPacketReader.java
+@@ -70,7 +70,7 @@
+   private static final int MAX_PACKETS_IN_FLIGHT =
+       Configuration.getInt(PropertyKey.USER_NETWORK_NETTY_READER_BUFFER_SIZE_PACKETS);
+   private static final long READ_TIMEOUT_MS =
+-      Configuration.getLong(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS);
++      Configuration.getMs(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS);
+ 
+   /** Special packet that indicates an exception is caught. */
+   private static final ByteBuf THROWABLE = Unpooled.buffer(0);
+diff --git a/core/client/fs/src/main/java/alluxio/client/file/FileSystemUtils.java b/core/client/fs/src/main/java/alluxio/client/file/FileSystemUtils.java
+index ebe31f4..6da189e 100644
+--- a/core/client/fs/src/main/java/alluxio/client/file/FileSystemUtils.java
++++ b/core/client/fs/src/main/java/alluxio/client/file/FileSystemUtils.java
+@@ -94,7 +94,7 @@
+           throws IOException, AlluxioException, InterruptedException {
+ 
+     final long deadline = System.currentTimeMillis() + tunit.toMillis(timeout);
+-    final long pollPeriod = Configuration.getLong(PropertyKey.USER_FILE_WAITCOMPLETED_POLL_MS);
++    final long pollPeriod = Configuration.getMs(PropertyKey.USER_FILE_WAITCOMPLETED_POLL_MS);
+     boolean completed = false;
+     long timeleft = deadline - System.currentTimeMillis();
+ 
+diff --git a/core/common/src/main/java/alluxio/PropertyKey.java b/core/common/src/main/java/alluxio/PropertyKey.java
+index 6a61c27..9f11f1f 100644
+--- a/core/common/src/main/java/alluxio/PropertyKey.java
++++ b/core/common/src/main/java/alluxio/PropertyKey.java
+@@ -529,7 +529,7 @@
+   public static final PropertyKey USER_NETWORK_NETTY_CHANNEL =
+       create(Name.USER_NETWORK_NETTY_CHANNEL, null);
+   public static final PropertyKey USER_NETWORK_NETTY_TIMEOUT_MS =
+-      create(Name.USER_NETWORK_NETTY_TIMEOUT_MS, "30sec");
++      create(Name.USER_NETWORK_NETTY_TIMEOUT_MS, 30000);
+   public static final PropertyKey USER_NETWORK_NETTY_WORKER_THREADS =
+       create(Name.USER_NETWORK_NETTY_WORKER_THREADS, 0);
+   public static final PropertyKey USER_NETWORK_NETTY_CHANNEL_POOL_SIZE_MAX =
+@@ -543,7 +543,7 @@
+   public static final PropertyKey USER_NETWORK_NETTY_WRITER_BUFFER_SIZE_PACKETS =
+       create(Name.USER_NETWORK_NETTY_WRITER_BUFFER_SIZE_PACKETS, 16);
+   public static final PropertyKey USER_NETWORK_NETTY_WRITER_CLOSE_TIMEOUT_MS =
+-      create(Name.USER_NETWORK_NETTY_WRITER_CLOSE_TIMEOUT_MS, "5min");
++      create(Name.USER_NETWORK_NETTY_WRITER_CLOSE_TIMEOUT_MS, 300000);
+   public static final PropertyKey USER_NETWORK_NETTY_READER_BUFFER_SIZE_PACKETS =
+       create(Name.USER_NETWORK_NETTY_READER_BUFFER_SIZE_PACKETS, 16);
+   public static final PropertyKey USER_NETWORK_NETTY_READER_CANCEL_ENABLED =
+diff --git a/core/server/worker/src/main/java/alluxio/worker/SessionCleaner.java b/core/server/worker/src/main/java/alluxio/worker/SessionCleaner.java
+index d122fbc..d777415 100644
+--- a/core/server/worker/src/main/java/alluxio/worker/SessionCleaner.java
++++ b/core/server/worker/src/main/java/alluxio/worker/SessionCleaner.java
+@@ -52,7 +52,7 @@
+     for (SessionCleanable sc : sessionCleanable) {
+       mSessionCleanables.add(sc);
+     }
+-    mCheckIntervalMs = Configuration.getInt(PropertyKey.WORKER_BLOCK_HEARTBEAT_INTERVAL_MS);
++    mCheckIntervalMs = (int) Configuration.getMs(PropertyKey.WORKER_BLOCK_HEARTBEAT_INTERVAL_MS);
+ 
+     mRunning = true;
+   }
+diff --git a/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketReader.java b/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketReader.java
+index 5d9a07a..520f443 100644
+--- a/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketReader.java
++++ b/core/client/fs/src/main/java/alluxio/client/block/stream/LocalFilePacketReader.java
+@@ -93,7 +93,7 @@
+    */
+   public static class Factory implements PacketReader.Factory {
+     private static final long READ_TIMEOUT_MS =
+-        Configuration.getLong(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS);
++        Configuration.getMs(PropertyKey.USER_NETWORK_NETTY_TIMEOUT_MS);
+ 
+     private final FileSystemContext mContext;
+     private final WorkerNetAddress mAddress;

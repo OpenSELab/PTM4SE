@@ -1,0 +1,44 @@
+diff --git a/deeplearning4j-scaleout/deeplearning4j-scaleout-parallelwrapper/src/main/java/org/deeplearning4j/parallelism/trainer/DefaultTrainer.java b/deeplearning4j-scaleout/deeplearning4j-scaleout-parallelwrapper/src/main/java/org/deeplearning4j/parallelism/trainer/DefaultTrainer.java
+index 83644e3..dcb9b3a 100644
+--- a/deeplearning4j-scaleout/deeplearning4j-scaleout-parallelwrapper/src/main/java/org/deeplearning4j/parallelism/trainer/DefaultTrainer.java
++++ b/deeplearning4j-scaleout/deeplearning4j-scaleout-parallelwrapper/src/main/java/org/deeplearning4j/parallelism/trainer/DefaultTrainer.java
+@@ -340,7 +340,7 @@
+ 
+                         // if we don't support cross-device stuff (like multi-gpu on windows) - sync back to host
+                         if (!Nd4j.getAffinityManager().isCrossDeviceAccessSupported()
+-                                        && iterationsCounter.incrementAndGet() % averagingFrequency == 0
++                                        && ( averagingFrequency == 0 || iterationsCounter.incrementAndGet() % averagingFrequency == 0)
+                                         && averagingRequired()) {
+                             // we ensure all operations are finished in this training round
+                             Nd4j.getExecutioner().commit();
+@@ -378,7 +378,7 @@
+ 
+                         // if we don't support cross-device stuff (like multi-gpu on windows) - sync back to host
+                         if (!Nd4j.getAffinityManager().isCrossDeviceAccessSupported()
+-                                        && iterationsCounter.incrementAndGet() % averagingFrequency == 0
++                                        && (averagingFrequency == 0 ||iterationsCounter.incrementAndGet() % averagingFrequency == 0)
+                                         && averagingRequired()) {
+                             // we ensure all operations are finished in this training round
+                             Nd4j.getExecutioner().commit();
+diff --git a/deeplearning4j-scaleout/deeplearning4j-scaleout-parallelwrapper/src/main/java/org/deeplearning4j/parallelism/trainer/DefaultTrainer.java b/deeplearning4j-scaleout/deeplearning4j-scaleout-parallelwrapper/src/main/java/org/deeplearning4j/parallelism/trainer/DefaultTrainer.java
+index 83644e3..dcb9b3a 100644
+--- a/deeplearning4j-scaleout/deeplearning4j-scaleout-parallelwrapper/src/main/java/org/deeplearning4j/parallelism/trainer/DefaultTrainer.java
++++ b/deeplearning4j-scaleout/deeplearning4j-scaleout-parallelwrapper/src/main/java/org/deeplearning4j/parallelism/trainer/DefaultTrainer.java
+@@ -340,7 +340,7 @@
+ 
+                         // if we don't support cross-device stuff (like multi-gpu on windows) - sync back to host
+                         if (!Nd4j.getAffinityManager().isCrossDeviceAccessSupported()
+-                                        && iterationsCounter.incrementAndGet() % averagingFrequency == 0
++                                        && ( averagingFrequency == 0 || iterationsCounter.incrementAndGet() % averagingFrequency == 0)
+                                         && averagingRequired()) {
+                             // we ensure all operations are finished in this training round
+                             Nd4j.getExecutioner().commit();
+@@ -378,7 +378,7 @@
+ 
+                         // if we don't support cross-device stuff (like multi-gpu on windows) - sync back to host
+                         if (!Nd4j.getAffinityManager().isCrossDeviceAccessSupported()
+-                                        && iterationsCounter.incrementAndGet() % averagingFrequency == 0
++                                        && (averagingFrequency == 0 ||iterationsCounter.incrementAndGet() % averagingFrequency == 0)
+                                         && averagingRequired()) {
+                             // we ensure all operations are finished in this training round
+                             Nd4j.getExecutioner().commit();

@@ -1,0 +1,16 @@
+diff --git a/testsuite/integration/src/test/java/org/jboss/as/test/integration/jpa/packaging/OrganisationBean.java b/testsuite/integration/src/test/java/org/jboss/as/test/integration/jpa/packaging/OrganisationBean.java
+index ba1dbc2..e6189f8 100644
+--- a/testsuite/integration/src/test/java/org/jboss/as/test/integration/jpa/packaging/OrganisationBean.java
++++ b/testsuite/integration/src/test/java/org/jboss/as/test/integration/jpa/packaging/OrganisationBean.java
+@@ -37,7 +37,10 @@
+     @PersistenceUnit(unitName = "mainPu")
+     private EntityManagerFactory entityManagerFactory;
+ 
+-    @PersistenceUnit
++    // AS7-2275 requires each PU reference to specify a persistence unit name, if there are
++    // multiple persistence unit definitions.
++    // as a workaround, specified the pu name
++    @PersistenceUnit(unitName = "mainPu")
+     private EntityManagerFactory defaultEntityManagerFactory;
+ 
+     public EntityManagerFactory getEntityManagerFactory() {

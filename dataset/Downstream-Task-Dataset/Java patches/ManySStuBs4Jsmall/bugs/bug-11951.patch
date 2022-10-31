@@ -1,0 +1,21 @@
+diff --git a/server/src/main/java/io/druid/initialization/Initialization.java b/server/src/main/java/io/druid/initialization/Initialization.java
+index 5a052b5..9783af6 100644
+--- a/server/src/main/java/io/druid/initialization/Initialization.java
++++ b/server/src/main/java/io/druid/initialization/Initialization.java
+@@ -113,14 +113,14 @@
+     }
+ 
+     for (String coordinate : config.getCoordinates()) {
+-      log.info("Loading extension[%s]", coordinate);
++      log.info("Loading extension[%s] for class[%s]", coordinate, clazz.getName());
+       try {
+         URLClassLoader loader = getClassLoaderForCoordinates(aether, coordinate);
+ 
+         final ServiceLoader<T> serviceLoader = ServiceLoader.load(clazz, loader);
+ 
+         for (T module : serviceLoader) {
+-          log.info("Adding extension module[%s]", module.getClass());
++          log.info("Adding extension module[%s] for class[%s]", module.getClass(), clazz.getName());
+           retVal.add(module);
+         }
+       }

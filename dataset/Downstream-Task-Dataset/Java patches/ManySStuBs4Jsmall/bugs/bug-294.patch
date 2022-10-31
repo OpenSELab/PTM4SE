@@ -1,0 +1,32 @@
+diff --git a/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java b/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
+index dbf4e41..27cd80b 100644
+--- a/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
++++ b/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
+@@ -540,8 +540,9 @@
+         if (SecurityUtils.isSecurityEnabled() && !root.getOwner().isEmpty()
+             && !root.getOwner().equals(serverOwner)) {
+           // user is not the previous owner
+-          throw new PermissionDeniedException(
+-              ExceptionMessage.PERMISSION_DENIED.getMessage("Unauthorized user on root"));
++          throw new PermissionDeniedException(ExceptionMessage.PERMISSION_DENIED.getMessage(String
++              .format("Unauthorized user on root. inode owner: %s current user: %s",
++                  root.getOwner(), serverOwner)));
+         }
+       }
+ 
+diff --git a/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java b/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
+index dbf4e41..27cd80b 100644
+--- a/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
++++ b/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
+@@ -540,8 +540,9 @@
+         if (SecurityUtils.isSecurityEnabled() && !root.getOwner().isEmpty()
+             && !root.getOwner().equals(serverOwner)) {
+           // user is not the previous owner
+-          throw new PermissionDeniedException(
+-              ExceptionMessage.PERMISSION_DENIED.getMessage("Unauthorized user on root"));
++          throw new PermissionDeniedException(ExceptionMessage.PERMISSION_DENIED.getMessage(String
++              .format("Unauthorized user on root. inode owner: %s current user: %s",
++                  root.getOwner(), serverOwner)));
+         }
+       }
+ 

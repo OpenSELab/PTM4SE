@@ -1,0 +1,28 @@
+diff --git a/dropwizard-core/src/main/java/com/yammer/dropwizard/assets/AssetServlet.java b/dropwizard-core/src/main/java/com/yammer/dropwizard/assets/AssetServlet.java
+index dbbb220..375c0b9 100644
+--- a/dropwizard-core/src/main/java/com/yammer/dropwizard/assets/AssetServlet.java
++++ b/dropwizard-core/src/main/java/com/yammer/dropwizard/assets/AssetServlet.java
+@@ -156,7 +156,8 @@
+     private CachedAsset loadAsset(String key) throws URISyntaxException, IOException {
+         Preconditions.checkArgument(key.startsWith(uriPath));
+         final String requestedResourcePath = CharMatcher.is('/').trimFrom(key.substring(uriPath.length()));
+-        final String absoluteRequestedResourcePath = this.resourcePath + requestedResourcePath;
++        final String absoluteRequestedResourcePath = CharMatcher.is('/').trimFrom(
++        		this.resourcePath + requestedResourcePath);
+         
+         URL requestedResourceURL = Resources.getResource(absoluteRequestedResourcePath);
+ 
+diff --git a/dropwizard-core/src/main/java/com/yammer/dropwizard/assets/AssetServlet.java b/dropwizard-core/src/main/java/com/yammer/dropwizard/assets/AssetServlet.java
+index dbbb220..375c0b9 100644
+--- a/dropwizard-core/src/main/java/com/yammer/dropwizard/assets/AssetServlet.java
++++ b/dropwizard-core/src/main/java/com/yammer/dropwizard/assets/AssetServlet.java
+@@ -156,7 +156,8 @@
+     private CachedAsset loadAsset(String key) throws URISyntaxException, IOException {
+         Preconditions.checkArgument(key.startsWith(uriPath));
+         final String requestedResourcePath = CharMatcher.is('/').trimFrom(key.substring(uriPath.length()));
+-        final String absoluteRequestedResourcePath = this.resourcePath + requestedResourcePath;
++        final String absoluteRequestedResourcePath = CharMatcher.is('/').trimFrom(
++        		this.resourcePath + requestedResourcePath);
+         
+         URL requestedResourceURL = Resources.getResource(absoluteRequestedResourcePath);
+ 

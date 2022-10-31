@@ -1,0 +1,44 @@
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/util/collections/MicroMap.java b/jdk-1.4/wicket/src/main/java/wicket/util/collections/MicroMap.java
+index c708f98..1253baa 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/util/collections/MicroMap.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/util/collections/MicroMap.java
+@@ -22,6 +22,7 @@ import java.util.AbstractSet;
+ import java.util.Collection;
+ import java.util.Iterator;
+ import java.util.Map;
++import java.util.NoSuchElementException;
+ import java.util.Set;
+ 
+ /**
+@@ -211,6 +212,10 @@ public final class MicroMap implements Map, Serializable
+ 
+ 					public Object next()
+ 					{
++						if (!hasNext())
++						{
++							throw new NoSuchElementException();
++						}
+ 						index++;
+ 
+ 						return key;
+@@ -241,6 +246,9 @@ public final class MicroMap implements Map, Serializable
+ 		{
+ 			public Object get(final int index)
+ 			{
++				if (index > size() - 1) {
++					throw new IndexOutOfBoundsException();
++				}
+ 				return value;
+ 			}
+ 
+@@ -269,6 +277,10 @@ public final class MicroMap implements Map, Serializable
+ 
+ 					public Object next()
+ 					{
++						if (!hasNext())
++						{
++							throw new NoSuchElementException();
++						}
+ 						index++;
+ 
+ 						return new Map.Entry()

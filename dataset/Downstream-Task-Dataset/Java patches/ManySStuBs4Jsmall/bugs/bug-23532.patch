@@ -1,0 +1,61 @@
+diff --git a/jmx/src/main/java/org/jboss/as/jmx/JmxMessages.java b/jmx/src/main/java/org/jboss/as/jmx/JmxMessages.java
+index fddc001..b8b9f82 100644
+--- a/jmx/src/main/java/org/jboss/as/jmx/JmxMessages.java
++++ b/jmx/src/main/java/org/jboss/as/jmx/JmxMessages.java
+@@ -390,7 +390,7 @@
+     @Message(id = 11361, value = "Not authorized to write attribute: '%s'")
+     JMRuntimeException notAuthorizedToWriteAttribute(String attributeName);
+ 
+-    @Message(id = 11362, value = "Not authorized to write attribute: '%s'")
++    @Message(id = 11362, value = "Not authorized to read attribute: '%s'")
+     JMRuntimeException notAuthorizedToReadAttribute(String attributeName);
+ 
+     @Message(id = 11363, value = "Not authorized to invoke operation: '%s'")
+diff --git a/testsuite/shared/src/main/java/org/jboss/as/test/integration/management/interfaces/JmxManagementInterface.java b/testsuite/shared/src/main/java/org/jboss/as/test/integration/management/interfaces/JmxManagementInterface.java
+index c7d2bac..39d843f 100644
+--- a/testsuite/shared/src/main/java/org/jboss/as/test/integration/management/interfaces/JmxManagementInterface.java
++++ b/testsuite/shared/src/main/java/org/jboss/as/test/integration/management/interfaces/JmxManagementInterface.java
+@@ -198,7 +198,7 @@
+                 // see RbacUtil.checkOperationResult for error codes
+                 // TODO could possibly use MBeanAttributeInfo#isReadable instead of error codes, but it's currently broken
+                 String message = e.getMessage();
+-                if (message.contains("14807") || message.contains("14883")) {
++                if (message.contains("14807") || message.contains("14883") || message.contains("11340")) {
+                     throw e;
+                 } else if (message.contains("13456")) {
+                     filtered.add(JmxInterfaceStringUtils.toDashCase(attributeName));
+diff --git a/testsuite/shared/src/main/java/org/jboss/as/test/integration/management/rbac/RbacUtil.java b/testsuite/shared/src/main/java/org/jboss/as/test/integration/management/rbac/RbacUtil.java
+index 38c81dd..e4ecdf8 100644
+--- a/testsuite/shared/src/main/java/org/jboss/as/test/integration/management/rbac/RbacUtil.java
++++ b/testsuite/shared/src/main/java/org/jboss/as/test/integration/management/rbac/RbacUtil.java
+@@ -109,7 +109,7 @@
+                     fail("Didn't fail: " + result.asString());
+                 }
+                 String failureDesc = result.get(FAILURE_DESCRIPTION).asString();
+-                if (!failureDesc.contains("14807") && !failureDesc.contains("14883")) {
++                if (!failureDesc.contains("14807") && !failureDesc.contains("14883") && !failureDesc.contains("11340")) {
+                     fail("Incorrect failure type: " + result.asString());
+                 }
+                 break;
+@@ -120,7 +120,7 @@
+                 }
+                 String failureDesc = result.get(FAILURE_DESCRIPTION).asString();
+                 if (failureDesc.contains("14807") || failureDesc.contains("14883")
+-                        || failureDesc.contains("13456")) {
++                        || failureDesc.contains("13456") || failureDesc.contains("11340")) {
+                     fail("Incorrect failure type: " + result.asString());
+                 }
+                 break;
+diff --git a/jmx/src/main/java/org/jboss/as/jmx/JmxMessages.java b/jmx/src/main/java/org/jboss/as/jmx/JmxMessages.java
+index fddc001..b8b9f82 100644
+--- a/jmx/src/main/java/org/jboss/as/jmx/JmxMessages.java
++++ b/jmx/src/main/java/org/jboss/as/jmx/JmxMessages.java
+@@ -390,7 +390,7 @@
+     @Message(id = 11361, value = "Not authorized to write attribute: '%s'")
+     JMRuntimeException notAuthorizedToWriteAttribute(String attributeName);
+ 
+-    @Message(id = 11362, value = "Not authorized to write attribute: '%s'")
++    @Message(id = 11362, value = "Not authorized to read attribute: '%s'")
+     JMRuntimeException notAuthorizedToReadAttribute(String attributeName);
+ 
+     @Message(id = 11363, value = "Not authorized to invoke operation: '%s'")

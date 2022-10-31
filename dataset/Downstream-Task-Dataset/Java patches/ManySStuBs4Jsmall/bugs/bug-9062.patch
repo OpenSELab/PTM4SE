@@ -1,0 +1,13 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheck.java
+index c11a9ce..47b4f0c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheck.java
+@@ -220,7 +220,7 @@
+         final DetailAST constantDefAST = findContainingConstantDef(ast);
+ 
+         if (constantDefAST == null) {
+-            if (!(ignoreFieldDeclaration && isFieldDeclaration(ast))) {
++            if (!ignoreFieldDeclaration || !isFieldDeclaration(ast)) {
+                 reportMagicNumber(ast);
+             }
+         }

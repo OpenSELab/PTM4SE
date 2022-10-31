@@ -1,0 +1,20 @@
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/DuplicateMapKeyException.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/DuplicateMapKeyException.java
+index 048ef20..d64879e 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/DuplicateMapKeyException.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/DuplicateMapKeyException.java
+@@ -26,13 +26,13 @@
+ 
+     public DuplicateMapKeyException(Block block, int position)
+     {
+-        super("Duplicate keys are not allowed");
++        super("Duplicate map keys are not allowed");
+         this.block = block;
+         this.position = position;
+     }
+ 
+     public String getDetailedMessage(Type keyType, ConnectorSession session)
+     {
+-        return format("Duplicate keys (%s) are not allowed", keyType.getObjectValue(session, block, position));
++        return format("Duplicate map keys (%s) are not allowed", keyType.getObjectValue(session, block, position));
+     }
+ }

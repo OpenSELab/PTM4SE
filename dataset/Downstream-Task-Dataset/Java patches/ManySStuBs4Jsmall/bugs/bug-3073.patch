@@ -1,0 +1,26 @@
+diff --git a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlEventParser.java b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlEventParser.java
+index e8ca45e..3c06ee6 100644
+--- a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlEventParser.java
++++ b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlEventParser.java
+@@ -651,7 +651,7 @@
+                 throw new CanalParseException("command : 'show master status' has an error! pls check. you need (at least one of) the SUPER,REPLICATION CLIENT privilege(s) for this operation");
+             }
+             EntryPosition endPosition = new EntryPosition(fields.get(0), Long.valueOf(fields.get(1)));
+-            if (isGTIDMode && fields.size() > 4) {
++            if (isGTIDMode() && fields.size() > 4) {
+                 endPosition.setGtid(fields.get(4));
+             }
+             return endPosition;
+diff --git a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlEventParser.java b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlEventParser.java
+index e8ca45e..3c06ee6 100644
+--- a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlEventParser.java
++++ b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/MysqlEventParser.java
+@@ -651,7 +651,7 @@
+                 throw new CanalParseException("command : 'show master status' has an error! pls check. you need (at least one of) the SUPER,REPLICATION CLIENT privilege(s) for this operation");
+             }
+             EntryPosition endPosition = new EntryPosition(fields.get(0), Long.valueOf(fields.get(1)));
+-            if (isGTIDMode && fields.size() > 4) {
++            if (isGTIDMode() && fields.size() > 4) {
+                 endPosition.setGtid(fields.get(4));
+             }
+             return endPosition;

@@ -1,0 +1,110 @@
+diff --git a/enterprise/ha/src/main/java/org/neo4j/kernel/ha/BranchDetectingTxVerifier.java b/enterprise/ha/src/main/java/org/neo4j/kernel/ha/BranchDetectingTxVerifier.java
+index 2960941..98951e7 100644
+--- a/enterprise/ha/src/main/java/org/neo4j/kernel/ha/BranchDetectingTxVerifier.java
++++ b/enterprise/ha/src/main/java/org/neo4j/kernel/ha/BranchDetectingTxVerifier.java
+@@ -30,6 +30,10 @@
+ import org.neo4j.kernel.impl.util.StringLogger;
+ import org.neo4j.kernel.logging.Logging;
+ 
++/**
++ * Used on the master to verify that slaves are using the same logical database as the master is running. This is done
++ * by verifying transaction checksums.
++ */
+ public class BranchDetectingTxVerifier implements TxChecksumVerifier
+ {
+     private final StringLogger logger;
+@@ -55,14 +59,16 @@
+             
+             if ( !match )
+             {
+-                throw new BranchedDataException( stringify( txId, masterId, checksum ) +
+-                        " doesn't match " + readChecksum );
++                throw new BranchedDataException(
++                        "The cluster contains two logically different versions of the database. " +
++                        "This will be automatically resolved. Details: " + stringify( txId, masterId, checksum ) +
++                        " does not match " + readChecksum );
+             }
+         }
+         catch ( IOException e )
+         {
+             logger.logMessage( "Couldn't verify checksum for " + stringify( txId, masterId, checksum ), e );
+-            throw new BranchedDataException( e );
++            throw new BranchedDataException( "Unable to perform a mandatory sanity check due to an IO error.", e );
+         }
+     }
+     
+diff --git a/enterprise/ha/src/main/java/org/neo4j/kernel/ha/cluster/SwitchToSlave.java b/enterprise/ha/src/main/java/org/neo4j/kernel/ha/cluster/SwitchToSlave.java
+index ddc5a86..e61c306 100644
+--- a/enterprise/ha/src/main/java/org/neo4j/kernel/ha/cluster/SwitchToSlave.java
++++ b/enterprise/ha/src/main/java/org/neo4j/kernel/ha/cluster/SwitchToSlave.java
+@@ -409,8 +409,8 @@
+         }
+         catch ( Exception e )
+         {
+-            throw new BranchedDataException( "Exception while getting master ID for txId "
+-                    + myLastCommittedTx + ".", e );
++            throw new BranchedDataException( "Unable to gather data for mandatory sanity check. Details: "+
++                    "Exception while getting master ID for txId " + myLastCommittedTx + ".", e );
+         }
+ 
+         HandshakeResult handshake;
+@@ -422,7 +422,8 @@
+         catch( BranchedDataException e )
+         {
+             // Rethrow wrapped in a branched data exception on our side, to clarify where the problem originates.
+-            throw new BranchedDataException( "Master detected branched data for this machine.", e );
++            throw new BranchedDataException( "The database stored on this machine has diverged from that " +
++                    "of the master. This will be automatically resolved.", e );
+         }
+         catch ( RuntimeException e )
+         {
+@@ -445,10 +446,10 @@
+         if ( myMaster.first() != XaLogicalLog.MASTER_ID_REPRESENTING_NO_MASTER &&
+                 (myMaster.first() != handshake.txAuthor() || myMaster.other() != handshake.txChecksum()) )
+         {
+-            String msg = "Branched data, I (machineId:" + config.get( ClusterSettings.server_id ) + ") think machineId for" +
+-                    " txId (" +
+-                    myLastCommittedTx + ") is " + myMaster + ", but master (machineId:" +
+-                    getServerId( availableMasterId ) + ") says that it's " + handshake;
++            String msg = "The cluster contains two logically different versions of the database.. This will be " +
++                    "automatically resolved. Details: I (machineId:" + config.get( ClusterSettings.server_id ) +
++                    ") think machineId for txId (" + myLastCommittedTx + ") is " + myMaster +
++                    ", but master (machineId:" + getServerId( availableMasterId ) + ") says that it's " + handshake;
+             throw new BranchedDataException( msg );
+         }
+         msgLog.logMessage( "Master id for last committed tx ok with highestTxId=" +
+diff --git a/enterprise/ha/src/main/java/org/neo4j/kernel/ha/BranchDetectingTxVerifier.java b/enterprise/ha/src/main/java/org/neo4j/kernel/ha/BranchDetectingTxVerifier.java
+index 2960941..98951e7 100644
+--- a/enterprise/ha/src/main/java/org/neo4j/kernel/ha/BranchDetectingTxVerifier.java
++++ b/enterprise/ha/src/main/java/org/neo4j/kernel/ha/BranchDetectingTxVerifier.java
+@@ -30,6 +30,10 @@
+ import org.neo4j.kernel.impl.util.StringLogger;
+ import org.neo4j.kernel.logging.Logging;
+ 
++/**
++ * Used on the master to verify that slaves are using the same logical database as the master is running. This is done
++ * by verifying transaction checksums.
++ */
+ public class BranchDetectingTxVerifier implements TxChecksumVerifier
+ {
+     private final StringLogger logger;
+@@ -55,14 +59,16 @@
+             
+             if ( !match )
+             {
+-                throw new BranchedDataException( stringify( txId, masterId, checksum ) +
+-                        " doesn't match " + readChecksum );
++                throw new BranchedDataException(
++                        "The cluster contains two logically different versions of the database. " +
++                        "This will be automatically resolved. Details: " + stringify( txId, masterId, checksum ) +
++                        " does not match " + readChecksum );
+             }
+         }
+         catch ( IOException e )
+         {
+             logger.logMessage( "Couldn't verify checksum for " + stringify( txId, masterId, checksum ), e );
+-            throw new BranchedDataException( e );
++            throw new BranchedDataException( "Unable to perform a mandatory sanity check due to an IO error.", e );
+         }
+     }
+     

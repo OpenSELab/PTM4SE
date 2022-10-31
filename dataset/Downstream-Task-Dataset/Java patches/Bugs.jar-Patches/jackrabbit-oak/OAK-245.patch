@@ -1,0 +1,46 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/commit/ValidatingHook.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/commit/ValidatingHook.java
+index b3d10b3..7840eca 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/commit/ValidatingHook.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/commit/ValidatingHook.java
+@@ -151,7 +151,19 @@ public class ValidatingHook implements CommitHook {
+ 
+         @Override
+         public void childNodeAdded(String name, NodeState after) {
+-            childNodeChanged(name, EMPTY_NODE, after);
++            if (NodeStateUtils.isHidden(name)) {
++                return;
++            }
++            if (exception == null) {
++                try {
++                    Validator v = validator.childNodeAdded(name, after);
++                    if (v != null) {
++                        validate(v, EMPTY_NODE, after);
++                    }
++                } catch (CommitFailedException e) {
++                    exception = e;
++                }
++            }
+         }
+ 
+         @Override
+@@ -175,7 +187,19 @@ public class ValidatingHook implements CommitHook {
+ 
+         @Override
+         public void childNodeDeleted(String name, NodeState before) {
+-            childNodeChanged(name, before, EMPTY_NODE);
++            if (NodeStateUtils.isHidden(name)) {
++                return;
++            }
++            if (exception == null) {
++                try {
++                    Validator v = validator.childNodeDeleted(name, before);
++                    if (v != null) {
++                        validate(v, before, EMPTY_NODE);
++                    }
++                } catch (CommitFailedException e) {
++                    exception = e;
++                }
++            }
+         }
+ 
+     }

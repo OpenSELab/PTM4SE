@@ -1,0 +1,21 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/VersionGarbageCollector.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/VersionGarbageCollector.java
+index 2f816d1..9b12714 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/VersionGarbageCollector.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/VersionGarbageCollector.java
+@@ -20,6 +20,7 @@
+ package org.apache.jackrabbit.oak.plugins.document;
+ 
+ import java.util.ArrayList;
++import java.util.Collections;
+ import java.util.EnumSet;
+ import java.util.List;
+ import java.util.Set;
+@@ -109,6 +110,8 @@ public class VersionGarbageCollector {
+             Utils.closeIfCloseable(itr);
+         }
+ 
++        Collections.sort(docIdsToDelete, PathComparator.INSTANCE);
++
+         if(log.isDebugEnabled()) {
+             StringBuilder sb = new StringBuilder("Deleted document with following ids were deleted as part of GC \n");
+             Joiner.on(StandardSystemProperty.LINE_SEPARATOR.value()).appendTo(sb, docIdsToDelete);

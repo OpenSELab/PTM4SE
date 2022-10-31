@@ -1,0 +1,52 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/StartTransactionTask.java b/presto-main/src/main/java/com/facebook/presto/execution/StartTransactionTask.java
+index 08aa38e..f78f430 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/StartTransactionTask.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/StartTransactionTask.java
+@@ -110,7 +110,7 @@
+                 return IsolationLevel.REPEATABLE_READ;
+             case READ_COMMITTED:
+                 return IsolationLevel.READ_COMMITTED;
+-            case READ_UNCOMMITED:
++            case READ_UNCOMMITTED:
+                 return IsolationLevel.READ_UNCOMMITTED;
+             default:
+                 throw new AssertionError("Unhandled isolation level: " + level);
+diff --git a/presto-parser/src/main/java/com/facebook/presto/sql/parser/AstBuilder.java b/presto-parser/src/main/java/com/facebook/presto/sql/parser/AstBuilder.java
+index 461f5ea..35ea852 100644
+--- a/presto-parser/src/main/java/com/facebook/presto/sql/parser/AstBuilder.java
++++ b/presto-parser/src/main/java/com/facebook/presto/sql/parser/AstBuilder.java
+@@ -277,7 +277,7 @@
+     @Override
+     public Node visitReadUncommitted(SqlBaseParser.ReadUncommittedContext context)
+     {
+-        return new Isolation(getLocation(context), Isolation.Level.READ_UNCOMMITED);
++        return new Isolation(getLocation(context), Isolation.Level.READ_UNCOMMITTED);
+     }
+ 
+     @Override
+diff --git a/presto-parser/src/main/java/com/facebook/presto/sql/tree/Isolation.java b/presto-parser/src/main/java/com/facebook/presto/sql/tree/Isolation.java
+index 0b7adef..1c7a6a3 100644
+--- a/presto-parser/src/main/java/com/facebook/presto/sql/tree/Isolation.java
++++ b/presto-parser/src/main/java/com/facebook/presto/sql/tree/Isolation.java
+@@ -30,7 +30,7 @@
+         SERIALIZABLE("SERIALIZABLE"),
+         REPEATABLE_READ("REPEATABLE READ"),
+         READ_COMMITTED("READ COMMITTED"),
+-        READ_UNCOMMITED("READ UNCOMMITED");
++        READ_UNCOMMITTED("READ UNCOMMITTED");
+ 
+         private final String text;
+ 
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/StartTransactionTask.java b/presto-main/src/main/java/com/facebook/presto/execution/StartTransactionTask.java
+index 08aa38e..f78f430 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/StartTransactionTask.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/StartTransactionTask.java
+@@ -110,7 +110,7 @@
+                 return IsolationLevel.REPEATABLE_READ;
+             case READ_COMMITTED:
+                 return IsolationLevel.READ_COMMITTED;
+-            case READ_UNCOMMITED:
++            case READ_UNCOMMITTED:
+                 return IsolationLevel.READ_UNCOMMITTED;
+             default:
+                 throw new AssertionError("Unhandled isolation level: " + level);

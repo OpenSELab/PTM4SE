@@ -1,0 +1,87 @@
+diff --git a/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java b/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
+index e872768..841ca74 100644
+--- a/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
++++ b/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
+@@ -139,7 +139,7 @@
+                     || indentInComment < expectedMinimalIndent && isWarnComment;
+         }
+ 
+-        throw new IllegalArgumentException();
++        throw new IllegalArgumentException("Cannot determine if commit is consistent");
+     }
+ 
+     private static int getLineStart(String line, final int tabWidth)
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounter.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounter.java
+index 767ef08..07040d3 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounter.java
+@@ -38,7 +38,7 @@
+      */
+     public SeverityLevelCounter(SeverityLevel level) {
+         if (level == null) {
+-            throw new IllegalArgumentException();
++            throw new IllegalArgumentException("'level' cannot be null");
+         }
+         this.level = level;
+     }
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/UtilsTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/UtilsTest.java
+index f3c6677..e14f103 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/UtilsTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/UtilsTest.java
+@@ -288,7 +288,7 @@
+ 
+             @Override
+             public void close() throws IOException {
+-                throw new IOException();
++                throw new IOException("Test IOException");
+             }
+         });
+     }
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounterTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounterTest.java
+index 2628ea7..c1d7cc7 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounterTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounterTest.java
+@@ -35,7 +35,7 @@
+         final SeverityLevelCounter counter = new SeverityLevelCounter(SeverityLevel.ERROR);
+         final AuditEvent event = new AuditEvent(this, "ATest.java", null);
+         assertEquals(0, counter.getCount());
+-        counter.addException(event, new IllegalStateException());
++        counter.addException(event, new IllegalStateException("Test IllegalStateException"));
+         assertEquals(1, counter.getCount());
+     }
+ 
+@@ -44,7 +44,7 @@
+         final SeverityLevelCounter counter = new SeverityLevelCounter(SeverityLevel.WARNING);
+         final AuditEvent event = new AuditEvent(this, "ATest.java", null);
+         assertEquals(0, counter.getCount());
+-        counter.addException(event, new IllegalStateException());
++        counter.addException(event, new IllegalStateException("Test IllegalStateException"));
+         assertEquals(0, counter.getCount());
+     }
+ }
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/indentation/IndentationCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/indentation/IndentationCheckTest.java
+index cbbad88..c917a63 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/indentation/IndentationCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/indentation/IndentationCheckTest.java
+@@ -154,7 +154,7 @@
+                     || indentInComment < expectedMinimalIndent && isWarnComment;
+         }
+ 
+-        throw new IllegalArgumentException();
++        throw new IllegalStateException();
+     }
+ 
+     private static int getLineStart(String line, final int tabWidth) {
+diff --git a/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java b/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
+index e872768..841ca74 100644
+--- a/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
++++ b/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
+@@ -139,7 +139,7 @@
+                     || indentInComment < expectedMinimalIndent && isWarnComment;
+         }
+ 
+-        throw new IllegalArgumentException();
++        throw new IllegalArgumentException("Cannot determine if commit is consistent");
+     }
+ 
+     private static int getLineStart(String line, final int tabWidth)

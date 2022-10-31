@@ -1,0 +1,26 @@
+diff --git a/storm-core/src/jvm/backtype/storm/messaging/netty/StormServerHandler.java b/storm-core/src/jvm/backtype/storm/messaging/netty/StormServerHandler.java
+index 8b93e31..bf9b79e 100644
+--- a/storm-core/src/jvm/backtype/storm/messaging/netty/StormServerHandler.java
++++ b/storm-core/src/jvm/backtype/storm/messaging/netty/StormServerHandler.java
+@@ -60,7 +60,7 @@
+ 
+     @Override
+     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+-        e.getCause().printStackTrace();
++        LOG.error("server errors in handling the request", e.getCause());
+         server.closeChannel(e.getChannel());
+     }
+ }
+diff --git a/storm-core/src/jvm/backtype/storm/messaging/netty/StormServerHandler.java b/storm-core/src/jvm/backtype/storm/messaging/netty/StormServerHandler.java
+index 8b93e31..bf9b79e 100644
+--- a/storm-core/src/jvm/backtype/storm/messaging/netty/StormServerHandler.java
++++ b/storm-core/src/jvm/backtype/storm/messaging/netty/StormServerHandler.java
+@@ -60,7 +60,7 @@
+ 
+     @Override
+     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+-        e.getCause().printStackTrace();
++        LOG.error("server errors in handling the request", e.getCause());
+         server.closeChannel(e.getChannel());
+     }
+ }

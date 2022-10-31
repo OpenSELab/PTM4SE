@@ -1,0 +1,26 @@
+diff --git a/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java b/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+index 0b6fa21..867d56c 100644
+--- a/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
++++ b/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+@@ -2130,7 +2130,7 @@
+             INDArray linear = linearView();
+             for(int i = 0; i < linear.length(); i++,count = count >= vector.length() - 1 ? 0 : count + 1) {
+                 double val = vector.getDouble(count);
+-                double linearI = linearView.getDouble(i);
++                double linearI = linearView().getDouble(i);
+                 switch (operation) {
+                     case 'a':
+                         linear.putScalar(i, val + linearI);
+diff --git a/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java b/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+index 0b6fa21..867d56c 100644
+--- a/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
++++ b/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+@@ -2130,7 +2130,7 @@
+             INDArray linear = linearView();
+             for(int i = 0; i < linear.length(); i++,count = count >= vector.length() - 1 ? 0 : count + 1) {
+                 double val = vector.getDouble(count);
+-                double linearI = linearView.getDouble(i);
++                double linearI = linearView().getDouble(i);
+                 switch (operation) {
+                     case 'a':
+                         linear.putScalar(i, val + linearI);

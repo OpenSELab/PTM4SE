@@ -1,0 +1,82 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/security/access/AccessController.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/security/access/AccessController.java
+index 48464f6..94f1419 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/security/access/AccessController.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/security/access/AccessController.java
+@@ -1958,7 +1958,7 @@
+   }
+ 
+   /**
+-   * Verifies user has WRITE privileges on
++   * Verifies user has CREATE privileges on
+    * the Column Families involved in the bulkLoadHFile
+    * request. Specific Column Write privileges are presently
+    * ignored.
+@@ -2015,11 +2015,11 @@
+                                  PrepareBulkLoadRequest request) throws IOException {
+     RegionCoprocessorEnvironment e = ctx.getEnvironment();
+ 
+-    AuthResult authResult = hasSomeAccess(e, "prePrepareBulkLoad", Action.WRITE);
++    AuthResult authResult = hasSomeAccess(e, "prePrepareBulkLoad", Action.CREATE);
+     logResult(authResult);
+     if (!authResult.isAllowed()) {
+       throw new AccessDeniedException("Insufficient permissions (table=" +
+-        e.getRegion().getTableDesc().getTableName() + ", action=WRITE)");
++        e.getRegion().getTableDesc().getTableName() + ", action=CREATE)");
+     }
+   }
+ 
+@@ -2035,11 +2035,11 @@
+                                  CleanupBulkLoadRequest request) throws IOException {
+     RegionCoprocessorEnvironment e = ctx.getEnvironment();
+ 
+-    AuthResult authResult = hasSomeAccess(e, "preCleanupBulkLoad", Action.WRITE);
++    AuthResult authResult = hasSomeAccess(e, "preCleanupBulkLoad", Action.CREATE);
+     logResult(authResult);
+     if (!authResult.isAllowed()) {
+       throw new AccessDeniedException("Insufficient permissions (table=" +
+-        e.getRegion().getTableDesc().getTableName() + ", action=WRITE)");
++        e.getRegion().getTableDesc().getTableName() + ", action=CREATE)");
+     }
+   }
+ 
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/security/access/AccessController.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/security/access/AccessController.java
+index 48464f6..94f1419 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/security/access/AccessController.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/security/access/AccessController.java
+@@ -1958,7 +1958,7 @@
+   }
+ 
+   /**
+-   * Verifies user has WRITE privileges on
++   * Verifies user has CREATE privileges on
+    * the Column Families involved in the bulkLoadHFile
+    * request. Specific Column Write privileges are presently
+    * ignored.
+@@ -2015,11 +2015,11 @@
+                                  PrepareBulkLoadRequest request) throws IOException {
+     RegionCoprocessorEnvironment e = ctx.getEnvironment();
+ 
+-    AuthResult authResult = hasSomeAccess(e, "prePrepareBulkLoad", Action.WRITE);
++    AuthResult authResult = hasSomeAccess(e, "prePrepareBulkLoad", Action.CREATE);
+     logResult(authResult);
+     if (!authResult.isAllowed()) {
+       throw new AccessDeniedException("Insufficient permissions (table=" +
+-        e.getRegion().getTableDesc().getTableName() + ", action=WRITE)");
++        e.getRegion().getTableDesc().getTableName() + ", action=CREATE)");
+     }
+   }
+ 
+@@ -2035,11 +2035,11 @@
+                                  CleanupBulkLoadRequest request) throws IOException {
+     RegionCoprocessorEnvironment e = ctx.getEnvironment();
+ 
+-    AuthResult authResult = hasSomeAccess(e, "preCleanupBulkLoad", Action.WRITE);
++    AuthResult authResult = hasSomeAccess(e, "preCleanupBulkLoad", Action.CREATE);
+     logResult(authResult);
+     if (!authResult.isAllowed()) {
+       throw new AccessDeniedException("Insufficient permissions (table=" +
+-        e.getRegion().getTableDesc().getTableName() + ", action=WRITE)");
++        e.getRegion().getTableDesc().getTableName() + ", action=CREATE)");
+     }
+   }
+ 

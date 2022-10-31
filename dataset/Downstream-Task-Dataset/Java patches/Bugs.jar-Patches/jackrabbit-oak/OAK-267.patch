@@ -1,0 +1,36 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/AccessControlConfigurationImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/AccessControlConfigurationImpl.java
+index aa7b8d8..7531580 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/AccessControlConfigurationImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/AccessControlConfigurationImpl.java
+@@ -70,7 +70,8 @@ public class AccessControlConfigurationImpl extends SecurityConfiguration.Defaul
+         return new CommitHookProvider() {
+             @Override
+             public CommitHook getCommitHook(String workspaceName) {
+-                return new CompositeHook(new PermissionHook(workspaceName), new VersionablePathHook(workspaceName));
++                //FIXME return new CompositeHook(new PermissionHook(workspaceName), new VersionablePathHook(workspaceName));
++                return new CompositeHook(new VersionablePathHook(workspaceName));
+             }
+         };
+     }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/privilege/PrivilegeDefinitionStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/privilege/PrivilegeDefinitionStore.java
+index 6ae510c..2fa44f7 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/privilege/PrivilegeDefinitionStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/privilege/PrivilegeDefinitionStore.java
+@@ -38,6 +38,8 @@ import org.apache.jackrabbit.oak.util.TreeUtil;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
++import static com.google.common.base.Preconditions.checkNotNull;
++
+ /**
+  * Reads and writes privilege definitions from and to the repository content
+  * without applying any validation.
+@@ -110,7 +112,7 @@ public class PrivilegeDefinitionStore implements PrivilegeConstants {
+         }
+         PrivilegeBits bits = PrivilegeBits.getInstance();
+         for (String privilegeName : privilegeNames) {
+-            Tree defTree = privilegesTree.getChild(privilegeName);
++            Tree defTree = privilegesTree.getChild(checkNotNull(privilegeName));
+             if (defTree != null) {
+                 bits.add(PrivilegeBits.getInstance(defTree));
+             }

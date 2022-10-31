@@ -1,0 +1,26 @@
+diff --git a/server/src/main/java/io/druid/server/coordinator/CoordinatorDynamicConfig.java b/server/src/main/java/io/druid/server/coordinator/CoordinatorDynamicConfig.java
+index 395646a..ea0c15f 100644
+--- a/server/src/main/java/io/druid/server/coordinator/CoordinatorDynamicConfig.java
++++ b/server/src/main/java/io/druid/server/coordinator/CoordinatorDynamicConfig.java
+@@ -55,7 +55,7 @@
+     this.emitBalancingStats = emitBalancingStats;
+     this.balancerComputeThreads = Math.min(
+         Math.max(balancerComputeThreads, 1),
+-        Runtime.getRuntime().availableProcessors() - 1
++        Math.max(Runtime.getRuntime().availableProcessors() - 1, 1)
+     );
+   }
+ 
+diff --git a/server/src/main/java/io/druid/server/coordinator/CoordinatorDynamicConfig.java b/server/src/main/java/io/druid/server/coordinator/CoordinatorDynamicConfig.java
+index 395646a..ea0c15f 100644
+--- a/server/src/main/java/io/druid/server/coordinator/CoordinatorDynamicConfig.java
++++ b/server/src/main/java/io/druid/server/coordinator/CoordinatorDynamicConfig.java
+@@ -55,7 +55,7 @@
+     this.emitBalancingStats = emitBalancingStats;
+     this.balancerComputeThreads = Math.min(
+         Math.max(balancerComputeThreads, 1),
+-        Runtime.getRuntime().availableProcessors() - 1
++        Math.max(Runtime.getRuntime().availableProcessors() - 1, 1)
+     );
+   }
+ 

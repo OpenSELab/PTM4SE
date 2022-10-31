@@ -1,0 +1,52 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
+index b6348f3..6484958 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
+@@ -194,7 +194,7 @@
+                 new HashSet<String>(), Thread.currentThread().getContextClassLoader());
+         c.setModuleFactory(factory);
+ 
+-        c.setFileExtensions(null);
++        c.setFileExtensions((String[]) null);
+         c.setFileExtensions(new String[]{".java", "xml"});
+ 
+         try {
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/UtilsTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/UtilsTest.java
+index 09b490f..56911e6 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/UtilsTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/UtilsTest.java
+@@ -76,7 +76,7 @@
+         final String[] fileExtensions = {"java"};
+         File file = new File("file.pdf");
+         assertFalse(Utils.fileExtensionMatches(file, fileExtensions));
+-        assertTrue(Utils.fileExtensionMatches(file, null));
++        assertTrue(Utils.fileExtensionMatches(file, (String[]) null));
+         file = new File("file.java");
+         assertTrue(Utils.fileExtensionMatches(file, fileExtensions));
+         file = new File("file.");
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/sizes/FileLengthCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/sizes/FileLengthCheckTest.java
+index f4a735e..f98cb10 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/sizes/FileLengthCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/sizes/FileLengthCheckTest.java
+@@ -99,7 +99,7 @@
+         check.setFileExtensions(".java");
+         assertEquals("extension should be the same", ".java", check.getFileExtensions()[0]);
+         try {
+-            check.setFileExtensions(null);
++            check.setFileExtensions((String[]) null);
+             fail();
+         }
+         catch (IllegalArgumentException ex) {
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
+index b6348f3..6484958 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
+@@ -194,7 +194,7 @@
+                 new HashSet<String>(), Thread.currentThread().getContextClassLoader());
+         c.setModuleFactory(factory);
+ 
+-        c.setFileExtensions(null);
++        c.setFileExtensions((String[]) null);
+         c.setFileExtensions(new String[]{".java", "xml"});
+ 
+         try {

@@ -1,0 +1,14 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
+index 6468779..3f46102 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
+@@ -255,8 +255,7 @@
+             if (parent.getType() == TokenTypes.CLASS_DEF) {
+                 final DetailAST classModifiers =
+                     parent.findFirstToken(TokenTypes.MODIFIERS);
+-                checkFinal |=
+-                    classModifiers.branchContains(TokenTypes.FINAL);
++                checkFinal = checkFinal || classModifiers.branchContains(TokenTypes.FINAL);
+                 break;
+             }
+             if (parent.getType() == TokenTypes.LITERAL_NEW) {

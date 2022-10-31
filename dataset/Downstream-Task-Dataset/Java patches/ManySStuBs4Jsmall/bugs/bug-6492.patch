@@ -1,0 +1,73 @@
+diff --git a/flink-core/src/test/java/org/apache/flink/util/InstantiationUtilTest.java b/flink-core/src/test/java/org/apache/flink/util/InstantiationUtilTest.java
+index b369763..cf27ca2 100644
+--- a/flink-core/src/test/java/org/apache/flink/util/InstantiationUtilTest.java
++++ b/flink-core/src/test/java/org/apache/flink/util/InstantiationUtilTest.java
+@@ -182,12 +182,12 @@
+ 		}
+ 	}
+ 	
+-	private static final class WritableType implements IOReadableWritable {
++	public static final class WritableType implements IOReadableWritable {
+ 		
+ 		private int aInt;
+ 		private long aLong;
+ 		
+-		private WritableType() {
++		public WritableType() {
+ 			Random rnd = new Random();
+ 			this.aInt = rnd.nextInt();
+ 			this.aLong = rnd.nextLong();
+diff --git a/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/ExecutionGraphRestartTest.java b/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/ExecutionGraphRestartTest.java
+index c12f346..12b866e 100644
+--- a/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/ExecutionGraphRestartTest.java
++++ b/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/ExecutionGraphRestartTest.java
+@@ -286,7 +286,7 @@
+ 			new JobID(),
+ 			"TestJob",
+ 			new Configuration(),
+-			ExecutionConfigTest.getSerializedConfig(),
++			new SerializedValue<>(new ExecutionConfig()),
+ 			AkkaUtils.getDefaultTimeout(),
+ 			// We want to manually control the restart and delay
+ 			new FixedDelayRestartStrategy(Integer.MAX_VALUE, Long.MAX_VALUE));
+@@ -703,7 +703,7 @@
+ 			new JobID(),
+ 			"Test job",
+ 			new Configuration(),
+-			ExecutionConfigTest.getSerializedConfig(),
++			new SerializedValue<>(new ExecutionConfig()),
+ 			AkkaUtils.getDefaultTimeout(),
+ 			controllableRestartStrategy);
+ 
+diff --git a/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/TestBaseUtils.java b/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/TestBaseUtils.java
+index 6acc653..c51e666 100644
+--- a/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/TestBaseUtils.java
++++ b/flink-test-utils-parent/flink-test-utils/src/main/java/org/apache/flink/test/util/TestBaseUtils.java
+@@ -87,7 +87,7 @@
+ 
+ 	protected static final String DEFAULT_AKKA_STARTUP_TIMEOUT = "60 s";
+ 
+-	protected static FiniteDuration DEFAULT_TIMEOUT = new FiniteDuration(DEFAULT_AKKA_ASK_TIMEOUT, TimeUnit.SECONDS);
++	public static FiniteDuration DEFAULT_TIMEOUT = new FiniteDuration(DEFAULT_AKKA_ASK_TIMEOUT, TimeUnit.SECONDS);
+ 
+ 	// ------------------------------------------------------------------------
+ 	
+diff --git a/flink-core/src/test/java/org/apache/flink/util/InstantiationUtilTest.java b/flink-core/src/test/java/org/apache/flink/util/InstantiationUtilTest.java
+index b369763..cf27ca2 100644
+--- a/flink-core/src/test/java/org/apache/flink/util/InstantiationUtilTest.java
++++ b/flink-core/src/test/java/org/apache/flink/util/InstantiationUtilTest.java
+@@ -182,12 +182,12 @@
+ 		}
+ 	}
+ 	
+-	private static final class WritableType implements IOReadableWritable {
++	public static final class WritableType implements IOReadableWritable {
+ 		
+ 		private int aInt;
+ 		private long aLong;
+ 		
+-		private WritableType() {
++		public WritableType() {
+ 			Random rnd = new Random();
+ 			this.aInt = rnd.nextInt();
+ 			this.aLong = rnd.nextLong();

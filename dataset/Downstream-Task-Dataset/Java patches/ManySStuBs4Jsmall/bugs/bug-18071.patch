@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/profiler/modifier/tomcat/interceptors/StandardHostValveInvokeInterceptor.java b/src/main/java/com/profiler/modifier/tomcat/interceptors/StandardHostValveInvokeInterceptor.java
+index bff0ec9..568d590 100644
+--- a/src/main/java/com/profiler/modifier/tomcat/interceptors/StandardHostValveInvokeInterceptor.java
++++ b/src/main/java/com/profiler/modifier/tomcat/interceptors/StandardHostValveInvokeInterceptor.java
+@@ -52,7 +52,7 @@
+ 			Trace.recordRpcName("TOMCAT", requestURL);
+ 			Trace.recordEndPoint(request.getProtocol() + ":" + request.getLocalName() + ":" + request.getLocalPort());
+ 			Trace.recordAttibute("http.url", request.getRequestURI());
+-			if (!org.apache.commons.lang.StringUtils.isEmpty(parameters)) {
++			if (parameters != null && parameters.length() > 0) {
+ 				Trace.recordAttibute("http.params", parameters);
+ 			}
+ 			Trace.record(Annotation.ServerRecv);
+diff --git a/src/main/java/com/profiler/modifier/tomcat/interceptors/StandardHostValveInvokeInterceptor.java b/src/main/java/com/profiler/modifier/tomcat/interceptors/StandardHostValveInvokeInterceptor.java
+index bff0ec9..568d590 100644
+--- a/src/main/java/com/profiler/modifier/tomcat/interceptors/StandardHostValveInvokeInterceptor.java
++++ b/src/main/java/com/profiler/modifier/tomcat/interceptors/StandardHostValveInvokeInterceptor.java
+@@ -52,7 +52,7 @@
+ 			Trace.recordRpcName("TOMCAT", requestURL);
+ 			Trace.recordEndPoint(request.getProtocol() + ":" + request.getLocalName() + ":" + request.getLocalPort());
+ 			Trace.recordAttibute("http.url", request.getRequestURI());
+-			if (!org.apache.commons.lang.StringUtils.isEmpty(parameters)) {
++			if (parameters != null && parameters.length() > 0) {
+ 				Trace.recordAttibute("http.params", parameters);
+ 			}
+ 			Trace.record(Annotation.ServerRecv);

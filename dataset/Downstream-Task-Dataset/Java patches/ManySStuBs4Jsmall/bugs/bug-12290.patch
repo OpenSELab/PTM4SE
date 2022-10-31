@@ -1,0 +1,58 @@
+diff --git a/Essentials/src/com/earth2me/essentials/Trade.java b/Essentials/src/com/earth2me/essentials/Trade.java
+index 3d51c5a..1a03a01 100644
+--- a/Essentials/src/com/earth2me/essentials/Trade.java
++++ b/Essentials/src/com/earth2me/essentials/Trade.java
+@@ -169,7 +169,7 @@
+ 			{
+ 				throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+ 			}
+-			user.getInventory().removeItem(getItemStack().clone());
++			user.getInventory().removeItem(getItemStack());
+ 			user.updateInventory();
+ 		}
+ 		if (command != null)
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandhat.java b/Essentials/src/com/earth2me/essentials/commands/Commandhat.java
+index 703d8e5..cb10466 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandhat.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandhat.java
+@@ -39,12 +39,12 @@
+ 		{
+ 			if (user.getItemInHand().getType() != Material.AIR)
+ 			{
+-				final ItemStack hand = user.getItemInHand();
++				final ItemStack hand = user.getItemInHand().clone();
+ 				if (hand.getType().getMaxDurability() == 0)
+ 				{
+ 					final PlayerInventory inv = user.getInventory();
+ 					final ItemStack head = inv.getHelmet();
+-					inv.removeItem(hand.clone());
++					inv.removeItem(hand);
+ 					inv.setHelmet(hand);
+ 					inv.setItemInHand(head);
+ 					user.sendMessage(_("hatPlaced"));
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandsell.java b/Essentials/src/com/earth2me/essentials/commands/Commandsell.java
+index b238361..a7b1ae3 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandsell.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandsell.java
+@@ -157,7 +157,7 @@
+ 			// This should never happen.
+ 			throw new IllegalStateException("Trying to remove more items than are available.");
+ 		}
+-		user.getInventory().removeItem(ris.clone());
++		user.getInventory().removeItem(ris);
+ 		user.updateInventory();
+ 		Trade.log("Command", "Sell", "Item", user.getName(), new Trade(ris, ess), user.getName(), new Trade(worth * amount, ess), user.getLocation(), ess);
+ 		user.giveMoney(worth * amount);
+diff --git a/Essentials/src/com/earth2me/essentials/Trade.java b/Essentials/src/com/earth2me/essentials/Trade.java
+index 3d51c5a..1a03a01 100644
+--- a/Essentials/src/com/earth2me/essentials/Trade.java
++++ b/Essentials/src/com/earth2me/essentials/Trade.java
+@@ -169,7 +169,7 @@
+ 			{
+ 				throw new ChargeException(_("missingItems", getItemStack().getAmount(), getItemStack().getType().toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+ 			}
+-			user.getInventory().removeItem(getItemStack().clone());
++			user.getInventory().removeItem(getItemStack());
+ 			user.updateInventory();
+ 		}
+ 		if (command != null)

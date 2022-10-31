@@ -1,0 +1,58 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandessentials.java b/Essentials/src/com/earth2me/essentials/commands/Commandessentials.java
+index 507298a..14bbf5e 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandessentials.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandessentials.java
+@@ -44,7 +44,7 @@
+ 	{
+ 		sender.sendMessage("Essentials " + ess.getDescription().getVersion());
+ 		sender.sendMessage("/<command> <reload/debug>");
+-		sender.sendMessage("Essentials blocked the following commands, due to command conflicts:");
++		sender.sendMessage(_("blockList"));
+ 		final StringBuilder disabledCommands = new StringBuilder();
+ 		for (Map.Entry<String, String> entry : ess.getAlternativeCommandsHandler().disabledCommands().entrySet())
+ 		{
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandspawnmob.java b/Essentials/src/com/earth2me/essentials/commands/Commandspawnmob.java
+index 2c14661..60b99b2 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandspawnmob.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandspawnmob.java
+@@ -64,11 +64,11 @@
+ 
+ 		if (ess.getSettings().getProtectPreventSpawn(mob.getType().toString().toLowerCase(Locale.ENGLISH)))
+ 		{
+-			throw new Exception(_("unableToSpawnMob"));
++			throw new Exception(_("disabledToSpawnMob"));
+ 		}
+ 		if (!user.isAuthorized("essentials.spawnmob." + mob.name.toLowerCase()))
+ 		{
+-			throw new Exception(_("unableToSpawnMob"));
++			throw new Exception(_("noPermToSpawnMob"));
+ 		}
+ 
+ 		final Block block = Util.getTarget(user).getBlock();
+@@ -98,11 +98,11 @@
+ 
+ 			if (ess.getSettings().getProtectPreventSpawn(mobMount.getType().toString().toLowerCase(Locale.ENGLISH)))
+ 			{
+-				throw new Exception(_("unableToSpawnMob"));
++				throw new Exception(_("disabledToSpawnMob"));
+ 			}
+ 			if (!user.isAuthorized("essentials.spawnmob." + mobMount.name.toLowerCase()))
+ 			{
+-				throw new Exception(_("unableToSpawnMob"));
++				throw new Exception(_("noPermToSpawnMob"));
+ 			}
+ 			try
+ 			{
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandessentials.java b/Essentials/src/com/earth2me/essentials/commands/Commandessentials.java
+index 507298a..14bbf5e 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandessentials.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandessentials.java
+@@ -44,7 +44,7 @@
+ 	{
+ 		sender.sendMessage("Essentials " + ess.getDescription().getVersion());
+ 		sender.sendMessage("/<command> <reload/debug>");
+-		sender.sendMessage("Essentials blocked the following commands, due to command conflicts:");
++		sender.sendMessage(_("blockList"));
+ 		final StringBuilder disabledCommands = new StringBuilder();
+ 		for (Map.Entry<String, String> entry : ess.getAlternativeCommandsHandler().disabledCommands().entrySet())
+ 		{

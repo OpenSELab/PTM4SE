@@ -1,0 +1,25 @@
+--- a/src/org/traccar/protocol/Pt502ProtocolDecoder.java
++++ b/src/org/traccar/protocol/Pt502ProtocolDecoder.java
+@@ -43,9 +43,9 @@ public class Pt502ProtocolDecoder extends BaseProtocolDecoder {
+             .number("(d+),")                     // id
+             .number("(dd)(dd)(dd).(ddd),")       // time (hhmmss.sss)
+             .expression("([AV]),")               // validity
+-            .number("(dd)(dd.dddd),")            // latitude
++            .number("(d+)(dd.dddd),")            // latitude
+             .expression("([NS]),")
+-            .number("(ddd)(dd.dddd),")           // longitude
++            .number("(d+)(dd.dddd),")            // longitude
+             .expression("([EW]),")
+             .number("(d+.d+)?,")                 // speed
+             .number("(d+.d+)?,")                 // course
+@@ -83,9 +83,7 @@ public class Pt502ProtocolDecoder extends BaseProtocolDecoder {
+     protected Object decode(
+             Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+ 
+-        String sentence = (String) msg;
+-
+-        Parser parser = new Parser(PATTERN, sentence);
++        Parser parser = new Parser(PATTERN, (String) msg);
+         if (!parser.matches()) {
+             return null;
+         }

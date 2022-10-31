@@ -1,0 +1,42 @@
+diff --git a/jpa/hibernate3/src/main/java/org/jboss/as/jpa/hibernate3/HibernateAnnotationScanner.java b/jpa/hibernate3/src/main/java/org/jboss/as/jpa/hibernate3/HibernateAnnotationScanner.java
+index 04fc383..fc38315 100644
+--- a/jpa/hibernate3/src/main/java/org/jboss/as/jpa/hibernate3/HibernateAnnotationScanner.java
++++ b/jpa/hibernate3/src/main/java/org/jboss/as/jpa/hibernate3/HibernateAnnotationScanner.java
+@@ -77,7 +77,8 @@
+             }
+             Index index = getJarFileIndex(jartoScan, pu);
+             if (index == null) {
+-                throw new RuntimeException("Missing annotation index to scan entity classes");
++                throw new RuntimeException("Missing annotation index to scan entity classes.  jar '" +
++                    jartoScan.getPath() +"' not found in index '" + pu.getAnnotationIndex().keySet() +"'");
+             }
+             if (jartoScan == null) {
+                 throw new IllegalArgumentException("Null jar to scan url");
+diff --git a/jpa/hibernate4/src/main/java/org/jboss/as/jpa/hibernate4/HibernateAnnotationScanner.java b/jpa/hibernate4/src/main/java/org/jboss/as/jpa/hibernate4/HibernateAnnotationScanner.java
+index 1d328ea..77db077 100644
+--- a/jpa/hibernate4/src/main/java/org/jboss/as/jpa/hibernate4/HibernateAnnotationScanner.java
++++ b/jpa/hibernate4/src/main/java/org/jboss/as/jpa/hibernate4/HibernateAnnotationScanner.java
+@@ -120,7 +120,8 @@
+         }
+         Index index = getJarFileIndex(jartoScan, pu);
+         if (index == null) {
+-            throw new RuntimeException("Missing annotation index to scan entity classes");
++            throw new RuntimeException("Missing annotation index to scan entity classes.  jar '" +
++                jartoScan.getPath() +"' not found in index '" + pu.getAnnotationIndex().keySet() +"'");
+         }
+         if (jartoScan == null) {
+             throw new IllegalArgumentException("Null jar to scan url");
+diff --git a/jpa/hibernate3/src/main/java/org/jboss/as/jpa/hibernate3/HibernateAnnotationScanner.java b/jpa/hibernate3/src/main/java/org/jboss/as/jpa/hibernate3/HibernateAnnotationScanner.java
+index 04fc383..fc38315 100644
+--- a/jpa/hibernate3/src/main/java/org/jboss/as/jpa/hibernate3/HibernateAnnotationScanner.java
++++ b/jpa/hibernate3/src/main/java/org/jboss/as/jpa/hibernate3/HibernateAnnotationScanner.java
+@@ -77,7 +77,8 @@
+             }
+             Index index = getJarFileIndex(jartoScan, pu);
+             if (index == null) {
+-                throw new RuntimeException("Missing annotation index to scan entity classes");
++                throw new RuntimeException("Missing annotation index to scan entity classes.  jar '" +
++                    jartoScan.getPath() +"' not found in index '" + pu.getAnnotationIndex().keySet() +"'");
+             }
+             if (jartoScan == null) {
+                 throw new IllegalArgumentException("Null jar to scan url");

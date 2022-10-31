@@ -1,0 +1,26 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/metastore/SemiTransactionalHiveMetastore.java b/presto-hive/src/main/java/com/facebook/presto/hive/metastore/SemiTransactionalHiveMetastore.java
+index 6e3b2fc..1bbe0ba 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/metastore/SemiTransactionalHiveMetastore.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/metastore/SemiTransactionalHiveMetastore.java
+@@ -1070,7 +1070,7 @@
+         private void prepareDropPartition(SchemaTableName schemaTableName, List<String> partitionValues)
+         {
+             metastoreDeleteOperations.add(new IrreversibleMetastoreOperation(
+-                    format("drop partition %s.%s %s", schemaTableName, schemaTableName.getTableName(), partitionValues),
++                    format("drop partition %s.%s %s", schemaTableName.getSchemaName(), schemaTableName.getTableName(), partitionValues),
+                     () -> delegate.dropPartition(schemaTableName.getSchemaName(), schemaTableName.getTableName(), partitionValues, true)));
+         }
+ 
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/metastore/SemiTransactionalHiveMetastore.java b/presto-hive/src/main/java/com/facebook/presto/hive/metastore/SemiTransactionalHiveMetastore.java
+index 6e3b2fc..1bbe0ba 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/metastore/SemiTransactionalHiveMetastore.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/metastore/SemiTransactionalHiveMetastore.java
+@@ -1070,7 +1070,7 @@
+         private void prepareDropPartition(SchemaTableName schemaTableName, List<String> partitionValues)
+         {
+             metastoreDeleteOperations.add(new IrreversibleMetastoreOperation(
+-                    format("drop partition %s.%s %s", schemaTableName, schemaTableName.getTableName(), partitionValues),
++                    format("drop partition %s.%s %s", schemaTableName.getSchemaName(), schemaTableName.getTableName(), partitionValues),
+                     () -> delegate.dropPartition(schemaTableName.getSchemaName(), schemaTableName.getTableName(), partitionValues, true)));
+         }
+ 

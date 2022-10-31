@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/CMap.java b/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
+index ea62257..725944d 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
+@@ -1005,7 +1005,7 @@
+             if (owner != null && !partition.isMigrating()) {
+                 boolean owned = owner.localMember();
+                 if (owned) {
+-                    if (store != null && record.isDirty()) {
++                    if (store != null && writeDelayMillis > 0 && record.isDirty()) {
+                         if (now > record.getWriteTime()) {
+                             recordsDirty.add(record);
+                             record.setDirty(false);
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/CMap.java b/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
+index ea62257..725944d 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
+@@ -1005,7 +1005,7 @@
+             if (owner != null && !partition.isMigrating()) {
+                 boolean owned = owner.localMember();
+                 if (owned) {
+-                    if (store != null && record.isDirty()) {
++                    if (store != null && writeDelayMillis > 0 && record.isDirty()) {
+                         if (now > record.getWriteTime()) {
+                             recordsDirty.add(record);
+                             record.setDirty(false);

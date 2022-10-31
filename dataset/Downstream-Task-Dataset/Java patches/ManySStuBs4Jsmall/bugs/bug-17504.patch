@@ -1,0 +1,26 @@
+diff --git a/gdx/src/com/badlogic/gdx/physics/box2d/World.java b/gdx/src/com/badlogic/gdx/physics/box2d/World.java
+index 1b34f97..deefd51 100644
+--- a/gdx/src/com/badlogic/gdx/physics/box2d/World.java
++++ b/gdx/src/com/badlogic/gdx/physics/box2d/World.java
+@@ -165,7 +165,7 @@
+ 			this.fixtures.remove(body.getFixtureList().get(i).addr).setUserData(null);
+ 		}
+ 		for (int i = 0; i < body.getJointList().size(); i++)
+-			this.joints.remove(body.getJointList().get(i).joint.addr);
++			destroyJoint(body.getJointList().get(i).joint);
+ 		jniDestroyBody(addr, body.addr);
+ 		freeBodies.free(body);
+ 	}
+diff --git a/gdx/src/com/badlogic/gdx/physics/box2d/World.java b/gdx/src/com/badlogic/gdx/physics/box2d/World.java
+index 1b34f97..deefd51 100644
+--- a/gdx/src/com/badlogic/gdx/physics/box2d/World.java
++++ b/gdx/src/com/badlogic/gdx/physics/box2d/World.java
+@@ -165,7 +165,7 @@
+ 			this.fixtures.remove(body.getFixtureList().get(i).addr).setUserData(null);
+ 		}
+ 		for (int i = 0; i < body.getJointList().size(); i++)
+-			this.joints.remove(body.getJointList().get(i).joint.addr);
++			destroyJoint(body.getJointList().get(i).joint);
+ 		jniDestroyBody(addr, body.addr);
+ 		freeBodies.free(body);
+ 	}

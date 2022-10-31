@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/jboss/netty/channel/socket/nio/NioServerSocketPipelineSink.java b/src/main/java/org/jboss/netty/channel/socket/nio/NioServerSocketPipelineSink.java
+index 890d624..c5a3dbd 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/nio/NioServerSocketPipelineSink.java
++++ b/src/main/java/org/jboss/netty/channel/socket/nio/NioServerSocketPipelineSink.java
+@@ -201,7 +201,7 @@
+         public void run() {
+             for (;;) {
+                 try {
+-                    SocketChannel acceptedSocket = channel.socket.accept();
++                    SocketChannel acceptedSocket = channel.socket.socket().accept().getChannel();
+                     try {
+                         ChannelPipeline pipeline =
+                             channel.getConfig().getPipelineFactory().getPipeline();
+diff --git a/src/main/java/org/jboss/netty/channel/socket/nio/NioServerSocketPipelineSink.java b/src/main/java/org/jboss/netty/channel/socket/nio/NioServerSocketPipelineSink.java
+index 890d624..c5a3dbd 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/nio/NioServerSocketPipelineSink.java
++++ b/src/main/java/org/jboss/netty/channel/socket/nio/NioServerSocketPipelineSink.java
+@@ -201,7 +201,7 @@
+         public void run() {
+             for (;;) {
+                 try {
+-                    SocketChannel acceptedSocket = channel.socket.accept();
++                    SocketChannel acceptedSocket = channel.socket.socket().accept().getChannel();
+                     try {
+                         ChannelPipeline pipeline =
+                             channel.getConfig().getPipelineFactory().getPipeline();

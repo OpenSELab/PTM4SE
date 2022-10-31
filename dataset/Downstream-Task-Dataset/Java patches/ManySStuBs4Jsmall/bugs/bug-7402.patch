@@ -1,0 +1,32 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
+index 0503c5c..3d8be89 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
+@@ -1096,8 +1096,9 @@
+                   + this.server.getConfiguration().getLong(ALREADY_IN_TRANSITION_WAITTIME,
+                     DEFAULT_ALREADY_IN_TRANSITION_WAITTIME);
+               } else {
+-                maxWaitTime = this.server.getConfiguration().
+-                  getLong("hbase.regionserver.rpc.startup.waittime", 60000);
++                maxWaitTime = EnvironmentEdgeManager.currentTimeMillis()
++                  + this.server.getConfiguration().getLong(
++                    "hbase.regionserver.rpc.startup.waittime", 60000);
+               }
+             }
+             try {
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
+index 0503c5c..3d8be89 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
+@@ -1096,8 +1096,9 @@
+                   + this.server.getConfiguration().getLong(ALREADY_IN_TRANSITION_WAITTIME,
+                     DEFAULT_ALREADY_IN_TRANSITION_WAITTIME);
+               } else {
+-                maxWaitTime = this.server.getConfiguration().
+-                  getLong("hbase.regionserver.rpc.startup.waittime", 60000);
++                maxWaitTime = EnvironmentEdgeManager.currentTimeMillis()
++                  + this.server.getConfiguration().getLong(
++                    "hbase.regionserver.rpc.startup.waittime", 60000);
+               }
+             }
+             try {

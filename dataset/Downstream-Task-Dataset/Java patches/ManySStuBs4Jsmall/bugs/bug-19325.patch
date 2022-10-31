@@ -1,0 +1,243 @@
+diff --git a/bundles/binding/org.openhab.binding.tacmi/src/main/java/org/openhab/binding/tacmi/internal/TACmiBinding.java b/bundles/binding/org.openhab.binding.tacmi/src/main/java/org/openhab/binding/tacmi/internal/TACmiBinding.java
+index 4b1763a..82fa783 100644
+--- a/bundles/binding/org.openhab.binding.tacmi/src/main/java/org/openhab/binding/tacmi/internal/TACmiBinding.java
++++ b/bundles/binding/org.openhab.binding.tacmi/src/main/java/org/openhab/binding/tacmi/internal/TACmiBinding.java
+@@ -108,7 +108,7 @@
+         try {
+             clientSocket = new DatagramSocket(cmiPort);
+         } catch (SocketException e) {
+-            logger.error("Failed to create Socket for receiving UDP packts from CMI");
++            logger.error("Failed to create Socket for receiving UDP packets from CMI");
+             setProperlyConfigured(true);
+             return;
+         }
+diff --git a/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/AbstractDatagramChannelBinding.java b/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/AbstractDatagramChannelBinding.java
+index 3053b43..fa41853 100644
+--- a/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/AbstractDatagramChannelBinding.java
++++ b/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/AbstractDatagramChannelBinding.java
+@@ -1047,7 +1047,7 @@
+                     try {
+                         Thread.sleep(50);
+                     } catch (InterruptedException e) {
+-                        logger.warn("An Exception occurred while waiting waiting during a blocking buffer write");
++                        logger.warn("An Exception occurred while waiting during a blocking buffer write");
+                     }
+                 }
+ 
+diff --git a/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/AbstractSocketChannelBinding.java b/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/AbstractSocketChannelBinding.java
+index 71b4496..afaacf1 100644
+--- a/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/AbstractSocketChannelBinding.java
++++ b/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/AbstractSocketChannelBinding.java
+@@ -1067,7 +1067,7 @@
+                     try {
+                         Thread.sleep(100);
+                     } catch (InterruptedException e) {
+-                        logger.warn("Exception occurred while waiting waiting during a blocking buffer write");
++                        logger.warn("Exception occurred while waiting during a blocking buffer write");
+                     }
+                 }
+ 
+diff --git a/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/protocol/internal/TCPBinding.java b/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/protocol/internal/TCPBinding.java
+index 65592d6..020c8d1 100644
+--- a/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/protocol/internal/TCPBinding.java
++++ b/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/protocol/internal/TCPBinding.java
+@@ -185,7 +185,7 @@
+                 timeOut = Integer.parseInt((timeOutString));
+             } else {
+                 logger.info(
+-                        "The maximum time out for blocking write operations will be set to the default vaulue of {}",
++                        "The maximum time out for blocking write operations will be set to the default value of {}",
+                         timeOut);
+             }
+ 
+@@ -193,7 +193,7 @@
+             if (StringUtils.isNotBlank(blockingString)) {
+                 blocking = Boolean.parseBoolean((blockingString));
+             } else {
+-                logger.info("The blocking nature of read/write operations will be set to the default vaulue of {}",
++                logger.info("The blocking nature of read/write operations will be set to the default value of {}",
+                         blocking);
+             }
+ 
+@@ -201,7 +201,7 @@
+             if (StringUtils.isNotBlank(preambleString)) {
+                 preAmble = StringEscapeUtils.unescapeJava(preambleString);
+             } else {
+-                logger.info("The preamble for all write operations will be set to the default vaulue of \"{}\"",
++                logger.info("The preamble for all write operations will be set to the default value of \"{}\"",
+                         preAmble);
+             }
+ 
+@@ -209,7 +209,7 @@
+             if (StringUtils.isNotBlank(postambleString)) {
+                 postAmble = StringEscapeUtils.unescapeJava(postambleString);
+             } else {
+-                logger.info("The postamble for all write operations will be set to the default vaulue of \"{}\"",
++                logger.info("The postamble for all write operations will be set to the default value of \"{}\"",
+                         postAmble);
+             }
+ 
+@@ -217,7 +217,7 @@
+             if (StringUtils.isNotBlank(updatewithresponseString)) {
+                 updateWithResponse = Boolean.parseBoolean((updatewithresponseString));
+             } else {
+-                logger.info("Updating states with returned values will be set to the default vaulue of {}",
++                logger.info("Updating states with returned values will be set to the default value of {}",
+                         updateWithResponse);
+             }
+ 
+@@ -225,7 +225,7 @@
+             if (StringUtils.isNotBlank(charsetString)) {
+                 charset = charsetString;
+             } else {
+-                logger.info("The characterset will be set to the default vaulue of {}", charset);
++                logger.info("The characterset will be set to the default value of {}", charset);
+             }
+ 
+         }
+diff --git a/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/protocol/internal/UDPBinding.java b/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/protocol/internal/UDPBinding.java
+index 9826ca3..66e2e8d 100644
+--- a/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/protocol/internal/UDPBinding.java
++++ b/bundles/binding/org.openhab.binding.tcp/src/main/java/org/openhab/binding/tcp/protocol/internal/UDPBinding.java
+@@ -185,7 +185,7 @@
+                 timeOut = Integer.parseInt((timeOutString));
+             } else {
+                 logger.info(
+-                        "The maximum time out for blocking write operations will be set to the default vaulue of {}",
++                        "The maximum time out for blocking write operations will be set to the default value of {}",
+                         timeOut);
+             }
+ 
+@@ -193,7 +193,7 @@
+             if (StringUtils.isNotBlank(blockingString)) {
+                 blocking = Boolean.parseBoolean((blockingString));
+             } else {
+-                logger.info("The blocking nature of read/write operations will be set to the default vaulue of {}",
++                logger.info("The blocking nature of read/write operations will be set to the default value of {}",
+                         blocking);
+             }
+ 
+@@ -205,7 +205,7 @@
+                     preAmble = preambleString;
+                 }
+             } else {
+-                logger.info("The preamble for all write operations will be set to the default vaulue of {}", preAmble);
++                logger.info("The preamble for all write operations will be set to the default value of {}", preAmble);
+             }
+ 
+             String postambleString = (String) config.get("postamble");
+@@ -216,7 +216,7 @@
+                     postAmble = postambleString;
+                 }
+             } else {
+-                logger.info("The postamble for all write operations will be set to the default vaulue of {}",
++                logger.info("The postamble for all write operations will be set to the default value of {}",
+                         postAmble);
+             }
+ 
+@@ -224,7 +224,7 @@
+             if (StringUtils.isNotBlank(updatewithresponseString)) {
+                 updateWithResponse = Boolean.parseBoolean((updatewithresponseString));
+             } else {
+-                logger.info("Updating states with returned values will be set to the default vaulue of {}",
++                logger.info("Updating states with returned values will be set to the default value of {}",
+                         updateWithResponse);
+             }
+ 
+@@ -232,7 +232,7 @@
+             if (StringUtils.isNotBlank(charsetString)) {
+                 charset = charsetString;
+             } else {
+-                logger.info("The characterset will be set to the default vaulue of {}", charset);
++                logger.info("The characterset will be set to the default value of {}", charset);
+             }
+ 
+         }
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickdImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickdImpl.java
+index 3f891cf..2315f7a 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickdImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickdImpl.java
+@@ -794,7 +794,7 @@
+                         try {
+                             Thread.sleep(1000);
+                         } catch (InterruptedException e1) {
+-                            logger.debug("connect interrupt recieved: {}:{}", host, port);
++                            logger.debug("connect interrupt received: {}:{}", host, port);
+                             interrupt();
+                         }
+                     } catch (UnknownHostException e) {
+@@ -806,7 +806,7 @@
+                         try {
+                             Thread.sleep(1000);
+                         } catch (InterruptedException e1) {
+-                            logger.debug("connect interrupt recieved: {}:{}", host, port);
++                            logger.debug("connect interrupt received: {}:{}", host, port);
+                             interrupt();
+                         }
+                     }
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MServoImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MServoImpl.java
+index 0f65d2d..36e3ce4 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MServoImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MServoImpl.java
+@@ -1168,7 +1168,7 @@
+         }
+         if (newPosition > max) {
+             if (this.targetPosition < newPosition) {
+-                logger.debug("setting value to max speed {}, which is lower then target speed {}", max, newPosition);
++                logger.debug("setting value to max speed {}, which is lower than target speed {}", max, newPosition);
+                 newPosition = max;
+             } else {
+                 logger.debug("max value already reached {}", max);
+@@ -1176,7 +1176,7 @@
+             }
+         } else if (newPosition < min) {
+             if (this.targetPosition > newPosition) {
+-                logger.debug("setting velocity to min speed {}, which is higher then target speed {}", min,
++                logger.debug("setting velocity to min speed {}, which is higher than target speed {}", min,
+                         newPosition);
+                 newPosition = min;
+             } else {
+@@ -1198,7 +1198,7 @@
+         Short min = getMinPosition();
+         if (newPosition > max) {
+             if (this.targetPosition < newPosition) {
+-                logger.debug("setting value to max speed {}, which is lower then target speed {}", max, newPosition);
++                logger.debug("setting value to max speed {}, which is lower than target speed {}", max, newPosition);
+                 newPosition = max;
+             } else {
+                 logger.debug("max value already reached {}", max);
+@@ -1206,7 +1206,7 @@
+             }
+         } else if (newPosition < min) {
+             if (this.targetPosition > newPosition) {
+-                logger.debug("setting velocity to min speed {}, which is higher then target speed {}", min,
++                logger.debug("setting velocity to min speed {}, which is higher than target speed {}", min,
+                         newPosition);
+                 newPosition = min;
+             } else {
+diff --git a/bundles/binding/org.openhab.binding.vdr/src/main/java/org/openhab/binding/vdr/internal/VDRConnection.java b/bundles/binding/org.openhab.binding.vdr/src/main/java/org/openhab/binding/vdr/internal/VDRConnection.java
+index bc65c8e..f136aef 100644
+--- a/bundles/binding/org.openhab.binding.vdr/src/main/java/org/openhab/binding/vdr/internal/VDRConnection.java
++++ b/bundles/binding/org.openhab.binding.vdr/src/main/java/org/openhab/binding/vdr/internal/VDRConnection.java
+@@ -61,7 +61,7 @@
+             logger.debug("Try to send VDR command: {}", cmd.getCommand());
+ 
+             res = connection.send(cmd);
+-            logger.debug("Recived Message from VDR: {}", res.getMessage());
++            logger.debug("Received Message from VDR: {}", res.getMessage());
+         } catch (Exception e) {
+             logger.error("Could not connect to VDR on {}: {}", mIp + ":" + mPort, e);
+         } finally {
+diff --git a/bundles/binding/org.openhab.binding.tacmi/src/main/java/org/openhab/binding/tacmi/internal/TACmiBinding.java b/bundles/binding/org.openhab.binding.tacmi/src/main/java/org/openhab/binding/tacmi/internal/TACmiBinding.java
+index 4b1763a..82fa783 100644
+--- a/bundles/binding/org.openhab.binding.tacmi/src/main/java/org/openhab/binding/tacmi/internal/TACmiBinding.java
++++ b/bundles/binding/org.openhab.binding.tacmi/src/main/java/org/openhab/binding/tacmi/internal/TACmiBinding.java
+@@ -108,7 +108,7 @@
+         try {
+             clientSocket = new DatagramSocket(cmiPort);
+         } catch (SocketException e) {
+-            logger.error("Failed to create Socket for receiving UDP packts from CMI");
++            logger.error("Failed to create Socket for receiving UDP packets from CMI");
+             setProperlyConfigured(true);
+             return;
+         }

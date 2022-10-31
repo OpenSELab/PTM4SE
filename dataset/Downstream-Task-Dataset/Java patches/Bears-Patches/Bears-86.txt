@@ -1,0 +1,35 @@
+--- a/src/main/java/org/springframework/data/web/ProxyingHandlerMethodArgumentResolver.java
++++ b/src/main/java/org/springframework/data/web/ProxyingHandlerMethodArgumentResolver.java
+@@ -90,7 +97,31 @@ public class ProxyingHandlerMethodArgumentResolver extends ModelAttributeMethodP
+ 	 */
+ 	@Override
+ 	public boolean supportsParameter(MethodParameter parameter) {
+-		return parameter.getParameterType().isInterface();
++
++		Class<?> type = parameter.getParameterType();
++
++		if (!type.isInterface()) {
++			return false;
++		}
++
++		// Annotated parameter
++		if (parameter.getParameterAnnotation(ProjectedPayload.class) != null) {
++			return true;
++		}
++
++		// Annotated type
++		if (AnnotatedElementUtils.findMergedAnnotation(type, ProjectedPayload.class) != null) {
++			return true;
++		}
++
++		// Fallback for only user defined interfaces
++		for (String prefix : IGNORED_PACKAGES) {
++			if (ClassUtils.getPackageName(type).startsWith(prefix)) {
++				return false;
++			}
++		}
++
++		return true;
+ 	}
+ 
+ 	/* 

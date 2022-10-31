@@ -1,0 +1,83 @@
+diff --git a/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/process/ExecutionVariableCollectionResource.java b/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/process/ExecutionVariableCollectionResource.java
+index bbc9896..0407266 100644
+--- a/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/process/ExecutionVariableCollectionResource.java
++++ b/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/process/ExecutionVariableCollectionResource.java
+@@ -115,7 +115,7 @@
+         
+         RestVariable[] restVariables = getConverterService().toObject(representation, RestVariable[].class, this);
+         if(restVariables == null || restVariables.length == 0) {
+-          throw new ActivitiIllegalArgumentException("Request didn't cantain a list of variables to create.");
++          throw new ActivitiIllegalArgumentException("Request didn't contain a list of variables to create.");
+         }
+         
+         RestVariableScope sharedScope = null;
+diff --git a/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/task/TaskVariableCollectionResource.java b/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/task/TaskVariableCollectionResource.java
+index 8e76aa7..e3bbdb7 100644
+--- a/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/task/TaskVariableCollectionResource.java
++++ b/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/task/TaskVariableCollectionResource.java
+@@ -86,7 +86,7 @@
+         
+         RestVariable[] restVariables = getConverterService().toObject(representation, RestVariable[].class, this);
+         if(restVariables == null || restVariables.length == 0) {
+-          throw new ActivitiIllegalArgumentException("Request didn't cantain a list of variables to create.");
++          throw new ActivitiIllegalArgumentException("Request didn't contain a list of variables to create.");
+         }
+         
+         RestVariableScope sharedScope = null;
+diff --git a/modules/activiti-rest/src/test/java/org/activiti/rest/service/api/runtime/ProcessInstanceVariablesCollectionResourceTest.java b/modules/activiti-rest/src/test/java/org/activiti/rest/service/api/runtime/ProcessInstanceVariablesCollectionResourceTest.java
+index 8aefb20..d7fe882 100644
+--- a/modules/activiti-rest/src/test/java/org/activiti/rest/service/api/runtime/ProcessInstanceVariablesCollectionResourceTest.java
++++ b/modules/activiti-rest/src/test/java/org/activiti/rest/service/api/runtime/ProcessInstanceVariablesCollectionResourceTest.java
+@@ -257,7 +257,7 @@
+         fail("Exception expected");
+       } catch (ResourceException expected) {
+         assertEquals(Status.CLIENT_ERROR_BAD_REQUEST, expected.getStatus());
+-        assertEquals("Request didn't cantain a list of variables to create.", expected.getStatus().getDescription());
++        assertEquals("Request didn't contain a list of variables to create.", expected.getStatus().getDescription());
+       }
+       
+       // Test passing in object instead of array
+@@ -267,7 +267,7 @@
+         fail("Exception expected");
+       } catch (ResourceException expected) {
+         assertEquals(Status.CLIENT_ERROR_BAD_REQUEST, expected.getStatus());
+-        assertEquals("Request didn't cantain a list of variables to create.", expected.getStatus().getDescription());
++        assertEquals("Request didn't contain a list of variables to create.", expected.getStatus().getDescription());
+       }
+   }
+   
+diff --git a/modules/activiti-rest/src/test/java/org/activiti/rest/service/api/runtime/TaskVariablesCollectionResourceTest.java b/modules/activiti-rest/src/test/java/org/activiti/rest/service/api/runtime/TaskVariablesCollectionResourceTest.java
+index f3ffc97..91d4899 100644
+--- a/modules/activiti-rest/src/test/java/org/activiti/rest/service/api/runtime/TaskVariablesCollectionResourceTest.java
++++ b/modules/activiti-rest/src/test/java/org/activiti/rest/service/api/runtime/TaskVariablesCollectionResourceTest.java
+@@ -400,7 +400,7 @@
+         fail("Exception expected");
+       } catch (ResourceException expected) {
+         assertEquals(Status.CLIENT_ERROR_BAD_REQUEST, expected.getStatus());
+-        assertEquals("Request didn't cantain a list of variables to create.", expected.getStatus().getDescription());
++        assertEquals("Request didn't contain a list of variables to create.", expected.getStatus().getDescription());
+       }
+       
+       // Test passing in object instead of array
+@@ -410,7 +410,7 @@
+         fail("Exception expected");
+       } catch (ResourceException expected) {
+         assertEquals(Status.CLIENT_ERROR_BAD_REQUEST, expected.getStatus());
+-        assertEquals("Request didn't cantain a list of variables to create.", expected.getStatus().getDescription());
++        assertEquals("Request didn't contain a list of variables to create.", expected.getStatus().getDescription());
+       }
+     } finally {
+       // Clean adhoc-tasks even if test fails
+diff --git a/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/process/ExecutionVariableCollectionResource.java b/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/process/ExecutionVariableCollectionResource.java
+index bbc9896..0407266 100644
+--- a/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/process/ExecutionVariableCollectionResource.java
++++ b/modules/activiti-rest/src/main/java/org/activiti/rest/service/api/runtime/process/ExecutionVariableCollectionResource.java
+@@ -115,7 +115,7 @@
+         
+         RestVariable[] restVariables = getConverterService().toObject(representation, RestVariable[].class, this);
+         if(restVariables == null || restVariables.length == 0) {
+-          throw new ActivitiIllegalArgumentException("Request didn't cantain a list of variables to create.");
++          throw new ActivitiIllegalArgumentException("Request didn't contain a list of variables to create.");
+         }
+         
+         RestVariableScope sharedScope = null;

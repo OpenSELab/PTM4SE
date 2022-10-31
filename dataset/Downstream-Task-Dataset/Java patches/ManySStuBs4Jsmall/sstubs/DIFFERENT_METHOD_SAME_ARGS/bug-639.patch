@@ -1,0 +1,84 @@
+diff --git a/dropwizard-core/src/main/java/com/yammer/dropwizard/tasks/TaskServlet.java b/dropwizard-core/src/main/java/com/yammer/dropwizard/tasks/TaskServlet.java
+index d8650ba..4ac5449 100644
+--- a/dropwizard-core/src/main/java/com/yammer/dropwizard/tasks/TaskServlet.java
++++ b/dropwizard-core/src/main/java/com/yammer/dropwizard/tasks/TaskServlet.java
+@@ -33,7 +33,7 @@
+     public TaskServlet(Iterable<Task> tasks) {
+         final ImmutableMap.Builder<String, Task> builder = ImmutableMap.builder();
+         for (Task task : tasks) {
+-            builder.put("/tasks/" + task.getName(), task);
++            builder.put("/" + task.getName(), task);
+         }
+         this.tasks = builder.build();
+     }
+@@ -41,7 +41,7 @@
+     @Override
+     protected void doPost(HttpServletRequest req,
+                           HttpServletResponse resp) throws ServletException, IOException {
+-        final Task task = tasks.get(req.getServletPath());
++        final Task task = tasks.get(req.getPathInfo());
+         if (task != null) {
+             try {
+                 resp.setContentType(MediaType.TEXT_PLAIN);
+diff --git a/dropwizard-core/src/test/java/com/yammer/dropwizard/tasks/tests/TaskServletTest.java b/dropwizard-core/src/test/java/com/yammer/dropwizard/tasks/tests/TaskServletTest.java
+index 3c6ad40..9a6d8c1 100644
+--- a/dropwizard-core/src/test/java/com/yammer/dropwizard/tasks/tests/TaskServletTest.java
++++ b/dropwizard-core/src/test/java/com/yammer/dropwizard/tasks/tests/TaskServletTest.java
+@@ -35,7 +35,7 @@
+     @Test
+     public void returnsA404WhenNotFound() throws Exception {
+         when(request.getMethod()).thenReturn("POST");
+-        when(request.getServletPath()).thenReturn("/tasks/test");
++        when(request.getPathInfo()).thenReturn("/test");
+ 
+         servlet.service(request, response);
+ 
+@@ -47,7 +47,7 @@
+         final PrintWriter output = mock(PrintWriter.class);
+ 
+         when(request.getMethod()).thenReturn("POST");
+-        when(request.getServletPath()).thenReturn("/tasks/gc");
++        when(request.getPathInfo()).thenReturn("/gc");
+         when(request.getParameterNames()).thenReturn(Collections.enumeration(ImmutableList.<String>of()));
+         when(response.getWriter()).thenReturn(output);
+ 
+@@ -61,7 +61,7 @@
+         final PrintWriter output = mock(PrintWriter.class);
+ 
+         when(request.getMethod()).thenReturn("POST");
+-        when(request.getServletPath()).thenReturn("/tasks/gc");
++        when(request.getPathInfo()).thenReturn("/gc");
+         when(request.getParameterNames()).thenReturn(Collections.enumeration(ImmutableList.of("runs")));
+         when(request.getParameterValues("runs")).thenReturn(new String[]{"1"});
+         when(response.getWriter()).thenReturn(output);
+@@ -75,7 +75,7 @@
+     @SuppressWarnings("unchecked")
+     public void returnsA500OnExceptions() throws Exception {
+         when(request.getMethod()).thenReturn("POST");
+-        when(request.getServletPath()).thenReturn("/tasks/gc");
++        when(request.getPathInfo()).thenReturn("/gc");
+         when(request.getParameterNames()).thenReturn(Collections.enumeration(ImmutableList.<String>of()));
+ 
+         final RuntimeException ex = new RuntimeException("whoops");
+diff --git a/dropwizard-core/src/main/java/com/yammer/dropwizard/tasks/TaskServlet.java b/dropwizard-core/src/main/java/com/yammer/dropwizard/tasks/TaskServlet.java
+index d8650ba..4ac5449 100644
+--- a/dropwizard-core/src/main/java/com/yammer/dropwizard/tasks/TaskServlet.java
++++ b/dropwizard-core/src/main/java/com/yammer/dropwizard/tasks/TaskServlet.java
+@@ -33,7 +33,7 @@
+     public TaskServlet(Iterable<Task> tasks) {
+         final ImmutableMap.Builder<String, Task> builder = ImmutableMap.builder();
+         for (Task task : tasks) {
+-            builder.put("/tasks/" + task.getName(), task);
++            builder.put("/" + task.getName(), task);
+         }
+         this.tasks = builder.build();
+     }
+@@ -41,7 +41,7 @@
+     @Override
+     protected void doPost(HttpServletRequest req,
+                           HttpServletResponse resp) throws ServletException, IOException {
+-        final Task task = tasks.get(req.getServletPath());
++        final Task task = tasks.get(req.getPathInfo());
+         if (task != null) {
+             try {
+                 resp.setContentType(MediaType.TEXT_PLAIN);

@@ -1,0 +1,154 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/model/rest/RestConfigurationDefinition.java b/camel-core/src/main/java/org/apache/camel/model/rest/RestConfigurationDefinition.java
+index 0e8c170..797b06a 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/rest/RestConfigurationDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/rest/RestConfigurationDefinition.java
+@@ -16,9 +16,14 @@
+  */
+ package org.apache.camel.model.rest;
+ 
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
+ import javax.xml.bind.annotation.XmlAccessType;
+ import javax.xml.bind.annotation.XmlAccessorType;
+ import javax.xml.bind.annotation.XmlAttribute;
++import javax.xml.bind.annotation.XmlElementRef;
+ import javax.xml.bind.annotation.XmlRootElement;
+ 
+ import org.apache.camel.CamelContext;
+@@ -41,10 +46,8 @@ public class RestConfigurationDefinition {
+     @XmlAttribute
+     private String port;
+ 
+-    // TODO: get properties to work with JAXB in the XSD model
+-
+-//    @XmlElementRef
+-//    private List<PropertyDefinition> properties = new ArrayList<PropertyDefinition>();
++    @XmlElementRef
++    private List<RestPropertyDefinition> properties = new ArrayList<RestPropertyDefinition>();
+ 
+     public String getComponent() {
+         return component;
+@@ -70,6 +73,14 @@ public class RestConfigurationDefinition {
+         this.port = port;
+     }
+ 
++    public List<RestPropertyDefinition> getProperties() {
++        return properties;
++    }
++
++    public void setProperties(List<RestPropertyDefinition> properties) {
++        this.properties = properties;
++    }
++
+     // Fluent API
+     //-------------------------------------------------------------------------
+ 
+@@ -97,10 +108,10 @@ public class RestConfigurationDefinition {
+     }
+ 
+     public RestConfigurationDefinition property(String key, String value) {
+-        /*PropertyDefinition prop = new PropertyDefinition();
++        RestPropertyDefinition prop = new RestPropertyDefinition();
+         prop.setKey(key);
+         prop.setValue(value);
+-        getProperties().add(prop);*/
++        getProperties().add(prop);
+         return this;
+     }
+ 
+@@ -116,26 +127,25 @@ public class RestConfigurationDefinition {
+      */
+     public RestConfiguration asRestConfiguration(CamelContext context) throws Exception {
+         RestConfiguration answer = new RestConfiguration();
+-        if (getComponent() != null) {
+-            answer.setComponent(CamelContextHelper.parseText(context, getComponent()));
++        if (component != null) {
++            answer.setComponent(CamelContextHelper.parseText(context, component));
+         }
+-        if (getHost() != null) {
+-            answer.setHost(CamelContextHelper.parseText(context, getHost()));
++        if (host != null) {
++            answer.setHost(CamelContextHelper.parseText(context, host));
+         }
+-        if (getPort() != null) {
+-            answer.setPort(CamelContextHelper.parseInteger(context, getPort()));
++        if (port != null) {
++            answer.setPort(CamelContextHelper.parseInteger(context, port));
+         }
+-        /*if (!properties.isEmpty()) {
++        if (!properties.isEmpty()) {
+             Map<String, Object> props = new HashMap<String, Object>();
+-            for (PropertyDefinition prop : properties) {
++            for (RestPropertyDefinition prop : properties) {
+                 String key = prop.getKey();
+                 String value = CamelContextHelper.parseText(context, prop.getValue());
+                 props.put(key, value);
+             }
+             answer.setProperties(props);
+-        }*/
++        }
+         return answer;
+-
+     }
+ 
+ }
+diff --git a/camel-core/src/main/java/org/apache/camel/model/rest/RestPropertyDefinition.java b/camel-core/src/main/java/org/apache/camel/model/rest/RestPropertyDefinition.java
+new file mode 100644
+index 0000000..e1d5897
+--- /dev/null
++++ b/camel-core/src/main/java/org/apache/camel/model/rest/RestPropertyDefinition.java
+@@ -0,0 +1,52 @@
++/**
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.camel.model.rest;
++
++import javax.xml.bind.annotation.XmlAccessType;
++import javax.xml.bind.annotation.XmlAccessorType;
++import javax.xml.bind.annotation.XmlAttribute;
++import javax.xml.bind.annotation.XmlRootElement;
++
++/**
++ * Represents the XML type for &lt;restProperty&gt;.
++ */
++@XmlRootElement(name = "restProperty")
++@XmlAccessorType(XmlAccessType.FIELD)
++public class RestPropertyDefinition {
++
++    @XmlAttribute(required = true)
++    String key;
++
++    @XmlAttribute(required = true)
++    String value;
++
++    public void setKey(String key) {
++        this.key = key;
++    }
++    
++    public String getKey() {
++        return key;
++    }
++    
++    public void setValue(String value) {
++        this.value = value;
++    }
++    
++    public String getValue() {
++        return value;
++    }
++}

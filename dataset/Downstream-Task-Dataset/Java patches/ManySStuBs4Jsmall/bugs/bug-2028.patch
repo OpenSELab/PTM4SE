@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/SessionSupport.java b/modules/cpr/src/main/java/org/atmosphere/cpr/SessionSupport.java
+index 76e0c1b..73ad391 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/SessionSupport.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/SessionSupport.java
+@@ -41,7 +41,7 @@
+             HttpSession s = se.getSession();
+             for (Broadcaster b : BroadcasterFactory.getDefault().lookupAll()) {
+                 for (AtmosphereResource r : b.getAtmosphereResources()) {
+-                    if (r.session().getId().equals(s.getId())) {
++                    if (r.session() != null && r.session().getId().equals(s.getId())) {
+                         AtmosphereResourceImpl.class.cast(r).session(null);
+                     }
+                 }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/SessionSupport.java b/modules/cpr/src/main/java/org/atmosphere/cpr/SessionSupport.java
+index 76e0c1b..73ad391 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/SessionSupport.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/SessionSupport.java
+@@ -41,7 +41,7 @@
+             HttpSession s = se.getSession();
+             for (Broadcaster b : BroadcasterFactory.getDefault().lookupAll()) {
+                 for (AtmosphereResource r : b.getAtmosphereResources()) {
+-                    if (r.session().getId().equals(s.getId())) {
++                    if (r.session() != null && r.session().getId().equals(s.getId())) {
+                         AtmosphereResourceImpl.class.cast(r).session(null);
+                     }
+                 }

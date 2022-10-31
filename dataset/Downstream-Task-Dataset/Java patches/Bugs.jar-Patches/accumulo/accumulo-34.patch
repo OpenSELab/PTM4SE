@@ -1,0 +1,18 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/data/Mutation.java b/core/src/main/java/org/apache/accumulo/core/data/Mutation.java
+index 407dbc0..56ae7a6 100644
+--- a/core/src/main/java/org/apache/accumulo/core/data/Mutation.java
++++ b/core/src/main/java/org/apache/accumulo/core/data/Mutation.java
+@@ -223,6 +223,13 @@ public class Mutation implements Writable {
+     this.data = ByteBufferUtil.toBytes(tmutation.data);
+     this.entries = tmutation.entries;
+     this.values = ByteBufferUtil.toBytesList(tmutation.values);
++    
++    if (this.row == null) {
++      throw new IllegalArgumentException("null row");
++    }
++    if (this.data == null) {
++      throw new IllegalArgumentException("null serialized data");
++    }
+   }
+   
+   public Mutation(Mutation m) {

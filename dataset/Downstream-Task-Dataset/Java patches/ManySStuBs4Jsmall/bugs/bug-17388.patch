@@ -1,0 +1,26 @@
+diff --git a/gdx/src/com/esotericsoftware/tablelayout/BaseTableLayout.java b/gdx/src/com/esotericsoftware/tablelayout/BaseTableLayout.java
+index c24f8ba..c582c96 100644
+--- a/gdx/src/com/esotericsoftware/tablelayout/BaseTableLayout.java
++++ b/gdx/src/com/esotericsoftware/tablelayout/BaseTableLayout.java
+@@ -780,7 +780,7 @@
+ 			float extraWidth = 0;
+ 			for (int column = c.column, nn = column + c.colspan; column < nn; column++)
+ 				extraWidth += columnWeightedWidth[column] - columnWidth[column];
+-			extraWidth -= c.computedPadLeft + c.computedPadRight;
++			extraWidth -= Math.max(0, c.computedPadLeft + c.computedPadRight);
+ 
+ 			extraWidth /= c.colspan;
+ 			if (extraWidth > 0) {
+diff --git a/gdx/src/com/esotericsoftware/tablelayout/BaseTableLayout.java b/gdx/src/com/esotericsoftware/tablelayout/BaseTableLayout.java
+index c24f8ba..c582c96 100644
+--- a/gdx/src/com/esotericsoftware/tablelayout/BaseTableLayout.java
++++ b/gdx/src/com/esotericsoftware/tablelayout/BaseTableLayout.java
+@@ -780,7 +780,7 @@
+ 			float extraWidth = 0;
+ 			for (int column = c.column, nn = column + c.colspan; column < nn; column++)
+ 				extraWidth += columnWeightedWidth[column] - columnWidth[column];
+-			extraWidth -= c.computedPadLeft + c.computedPadRight;
++			extraWidth -= Math.max(0, c.computedPadLeft + c.computedPadRight);
+ 
+ 			extraWidth /= c.colspan;
+ 			if (extraWidth > 0) {

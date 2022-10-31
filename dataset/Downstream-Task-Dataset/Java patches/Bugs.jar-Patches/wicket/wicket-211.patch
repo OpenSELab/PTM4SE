@@ -1,0 +1,27 @@
+diff --git a/wicket-datetime/src/main/java/org/apache/wicket/extensions/yui/calendar/DateTimeField.java b/wicket-datetime/src/main/java/org/apache/wicket/extensions/yui/calendar/DateTimeField.java
+index 2534f48..13b9cb8 100644
+--- a/wicket-datetime/src/main/java/org/apache/wicket/extensions/yui/calendar/DateTimeField.java
++++ b/wicket-datetime/src/main/java/org/apache/wicket/extensions/yui/calendar/DateTimeField.java
+@@ -435,19 +435,15 @@ public class DateTimeField extends FormComponentPanel<Date>
+ 		}
+ 		else
+ 		{
+-			MutableDateTime mDate;
++			MutableDateTime mDate = new MutableDateTime(modelObject);
+ 			// convert date to the client's time zone if we have that info
+ 			TimeZone zone = getClientTimeZone();
+ 			if (zone != null)
+ 			{
+-				mDate = new MutableDateTime(modelObject, DateTimeZone.forTimeZone(zone));
+-			}
+-			else
+-			{
+-				mDate = new MutableDateTime(modelObject);
++				mDate.setZone(DateTimeZone.forTimeZone(zone));
+ 			}
+ 
+-			date = mDate.toDate();
++			date = mDate.toDateTime().toLocalDate().toDate();
+ 
+ 			if (use12HourFormat)
+ 			{

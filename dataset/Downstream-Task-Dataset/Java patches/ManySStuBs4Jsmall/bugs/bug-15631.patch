@@ -1,0 +1,22 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
+index 074b61e..f3c3323 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
+@@ -168,7 +168,7 @@
+         while (iter.hasNext()) {
+             final Map.Entry<Integer, ClientInvocation> entry = iter.next();
+             final ClientInvocation invocation = entry.getValue();
+-            if (invocation.getSendConnection().equals(connection)) {
++            if (connection.equals(invocation.getSendConnection())) {
+                 iter.remove();
+                 invocation.notify(responseCtor.createNew(null));
+                 eventHandlerMap.remove(entry.getKey());
+@@ -177,7 +177,7 @@
+         final Iterator<ClientInvocation> iterator = eventHandlerMap.values().iterator();
+         while (iterator.hasNext()) {
+             final ClientInvocation invocation = iterator.next();
+-            if (invocation.getSendConnection().equals(connection)) {
++            if (connection.equals(invocation.getSendConnection())) {
+                 iterator.remove();
+                 invocation.notify(responseCtor.createNew(null));
+             }

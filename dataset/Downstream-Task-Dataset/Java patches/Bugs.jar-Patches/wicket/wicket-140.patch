@@ -1,0 +1,1552 @@
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/Component.java b/jdk-1.4/wicket/src/main/java/wicket/Component.java
+index cd19915..a360e4f 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/Component.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/Component.java
+@@ -662,7 +662,7 @@ public abstract class Component implements IClusterable
+ 	 */
+ 	public final void debug(final String message)
+ 	{
+-		getPage().getFeedbackMessages().debug(this, message);
++		Session.get().getFeedbackMessages().debug(this, message);
+ 	}
+ 
+ 	/**
+@@ -685,7 +685,7 @@ public abstract class Component implements IClusterable
+ 	 */
+ 	public final void error(final Serializable message)
+ 	{
+-		getPage().getFeedbackMessages().error(this, message);
++		Session.get().getFeedbackMessages().error(this, message);
+ 	}
+ 
+ 	/**
+@@ -696,7 +696,7 @@ public abstract class Component implements IClusterable
+ 	 */
+ 	public final void fatal(final String message)
+ 	{
+-		getPage().getFeedbackMessages().fatal(this, message);
++		Session.get().getFeedbackMessages().fatal(this, message);
+ 	}
+ 
+ 	/**
+@@ -825,7 +825,7 @@ public abstract class Component implements IClusterable
+ 	 */
+ 	public final FeedbackMessage getFeedbackMessage()
+ 	{
+-		return getPage().getFeedbackMessages().messageForComponent(this);
++		return Session.get().getFeedbackMessages().messageForComponent(this);
+ 	}
+ 
+ 	/**
+@@ -1216,7 +1216,7 @@ public abstract class Component implements IClusterable
+ 	 */
+ 	public final boolean hasErrorMessage()
+ 	{
+-		return getPage().getFeedbackMessages().hasErrorMessageFor(this);
++		return Session.get().getFeedbackMessages().hasErrorMessageFor(this);
+ 	}
+ 
+ 	/**
+@@ -1224,7 +1224,7 @@ public abstract class Component implements IClusterable
+ 	 */
+ 	public final boolean hasFeedbackMessage()
+ 	{
+-		return getPage().getFeedbackMessages().hasMessageFor(this);
++		return Session.get().getFeedbackMessages().hasMessageFor(this);
+ 	}
+ 
+ 	/**
+@@ -1235,7 +1235,7 @@ public abstract class Component implements IClusterable
+ 	 */
+ 	public final void info(final String message)
+ 	{
+-		getPage().getFeedbackMessages().info(this, message);
++		Session.get().getFeedbackMessages().info(this, message);
+ 	}
+ 
+ 	/**
+@@ -2376,7 +2376,7 @@ public abstract class Component implements IClusterable
+ 	 */
+ 	public final void warn(final String message)
+ 	{
+-		getPage().getFeedbackMessages().warn(this, message);
++		Session.get().getFeedbackMessages().warn(this, message);
+ 	}
+ 
+ 	/**
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/Page.java b/jdk-1.4/wicket/src/main/java/wicket/Page.java
+index c67365c..24c9a2c 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/Page.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/Page.java
+@@ -25,7 +25,6 @@ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+ 
+ import wicket.authorization.UnauthorizedActionException;
+-import wicket.feedback.FeedbackMessages;
+ import wicket.feedback.IFeedback;
+ import wicket.markup.MarkupException;
+ import wicket.markup.MarkupStream;
+@@ -134,6 +133,12 @@ import wicket.version.undo.Change;
+  */
+ public abstract class Page extends MarkupContainer implements IRedirectListener, IPageMapEntry
+ {
++	/**
++	 * When passed to {@link Page#getVersion(int)} the latest page version is
++	 * returned.
++	 */
++	public static final int LATEST_VERSION = -1;
++
+ 	private static final long serialVersionUID = 1L;
+ 
+ 	/**
+@@ -141,12 +146,6 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	 */
+ 	private static final ConcurrentHashMap pageClassToBookmarkableCache = new ConcurrentHashMap();
+ 
+-	/**
+-	 * When passed to {@link Page#getVersion(int)} the latest page version is
+-	 * returned.
+-	 */
+-	public static final int LATEST_VERSION = -1;
+-
+ 	/** True if this page is currently rendering. */
+ 	private static final short FLAG_IS_RENDERING = FLAG_RESERVED2;
+ 
+@@ -165,9 +164,6 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	/** Used to create page-unique numbers */
+ 	private short autoIndex;
+ 
+-	/** Feedback messages for this page */
+-	private FeedbackMessages feedbackMessages;
+-
+ 	/** Numeric version of this page's id */
+ 	private short numericId;
+ 
+@@ -284,27 +280,57 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 
+ 
+ 	/**
++	 * Adds a component to the set of rendered components.
++	 * 
++	 * @param component
++	 *            The component that was rendered
++	 */
++	public final void componentRendered(final Component component)
++	{
++		// Inform the page that this component rendered
++		if (Application.get().getDebugSettings().getComponentUseCheck())
++		{
++			if (renderedComponents == null)
++			{
++				renderedComponents = new HashSet();
++			}
++			if (renderedComponents.add(component) == false)
++			{
++				throw new MarkupException(
++						"The component "
++								+ component
++								+ " has the same wicket:id as another component already added at the same level");
++			}
++			if (log.isDebugEnabled())
++			{
++				log.debug("Rendered " + component);
++			}
++		}
++	}
++
++	/**
+ 	 * Detaches any attached models referenced by this page.
+ 	 */
+ 	public void detachModels()
+ 	{
+-//		// visit all this page's children to detach the models
+-//		visitChildren(new IVisitor()
+-//		{
+-//			public Object component(Component component)
+-//			{
+-//				try
+-//				{
+-//					// detach any models of the component
+-//					component.detachModels();
+-//				}
+-//				catch (Exception e) // catch anything; we MUST detach all models
+-//				{
+-//					log.error("detaching models of component " + component + " failed:", e);
+-//				}
+-//				return IVisitor.CONTINUE_TRAVERSAL;
+-//			}
+-//		});
++		// // visit all this page's children to detach the models
++		// visitChildren(new IVisitor()
++		// {
++		// public Object component(Component component)
++		// {
++		// try
++		// {
++		// // detach any models of the component
++		// component.detachModels();
++		// }
++		// catch (Exception e) // catch anything; we MUST detach all models
++		// {
++		// log.error("detaching models of component " + component + " failed:",
++		// e);
++		// }
++		// return IVisitor.CONTINUE_TRAVERSAL;
++		// }
++		// });
+ 
+ 		super.detachModels();
+ 	}
+@@ -318,88 +344,6 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	}
+ 
+ 	/**
+-	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL IT.
+-	 */
+-	public final void renderPage()
+-	{
+-		// first try to check if the page can be rendered:
+-		if (!isActionAuthorized(RENDER))
+-		{
+-			if (log.isDebugEnabled())
+-			{
+-				log.debug("Page not allowed to render: " + this);
+-			}
+-			throw new UnauthorizedActionException(this, Component.RENDER);
+-		}
+-
+-		// Make sure it is really empty
+-		renderedComponents = null;
+-
+-		// Reset it to stateless so that it can be tested again
+-		this.stateless = null;
+-
+-		// Set form component values from cookies
+-		setFormComponentValuesFromCookies();
+-
+-		// First, give priority to IFeedback instances, as they have to
+-		// collect their messages before components like ListViews
+-		// remove any child components
+-		visitChildren(IFeedback.class, new IVisitor()
+-		{
+-			public Object component(Component component)
+-			{
+-				((IFeedback)component).updateFeedback();
+-				component.attach();
+-				return IVisitor.CONTINUE_TRAVERSAL;
+-			}
+-		});
+-
+-		if (this instanceof IFeedback)
+-		{
+-			((IFeedback)this).updateFeedback();
+-		}
+-
+-		// Now, do the initialization for the other components
+-		attach();
+-
+-		// Visit all this page's children to reset markup streams and check
+-		// rendering authorization, as appropriate. We set any result; positive
+-		// or negative as a temporary boolean in the components, and when a
+-		// authorization exception is thrown it will block the rendering of this
+-		// page
+-
+-		// first the page itself
+-		setRenderAllowed(isActionAuthorized(RENDER));
+-		// children of the page
+-		visitChildren(new IVisitor()
+-		{
+-			public Object component(final Component component)
+-			{
+-				// Find out if this component can be rendered
+-				final boolean renderAllowed = component.isActionAuthorized(RENDER);
+-
+-				// Authorize rendering
+-				component.setRenderAllowed(renderAllowed);
+-				return IVisitor.CONTINUE_TRAVERSAL;
+-			}
+-		});
+-
+-		// Handle request by rendering page
+-		render(null);
+-
+-		// Check rendering if it happened fully
+-		checkRendering(this);
+-
+-		if (!isPageStateless())
+-		{
+-			// trigger creation of the actual session in case it was deferred
+-			Session.get().getSessionStore().getSessionId(RequestCycle.get().getRequest(), true);
+-			// Add/touch the response page in the session (its pagemap).
+-			getSession().touch(this);
+-		}
+-	}
+-
+-	/**
+ 	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL.
+ 	 * 
+ 	 * This method is called when a component was rendered standalone. If it is
+@@ -432,6 +376,14 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	}
+ 
+ 	/**
++	 * @return The current ajax version number of this page.
++	 */
++	public final int getAjaxVersionNumber()
++	{
++		return versionManager == null ? 0 : versionManager.getAjaxVersionNumber();
++	}
++
++	/**
+ 	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL IT.
+ 	 * 
+ 	 * Get a page unique number, which will be increased with each call.
+@@ -455,42 +407,6 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	}
+ 
+ 	/**
+-	 * @return The current ajax version number of this page. 
+-	 */
+-	public final int getAjaxVersionNumber()
+-	{
+-		return versionManager == null ? 0 : versionManager.getAjaxVersionNumber();
+-	}
+-	
+-	/**
+-	 * This returns a page instance that is rollbacked the number of versions
+-	 * that is specified compared to the current page.
+-	 * 
+-	 * This is a rollback including ajax versions. 
+-	 * 
+-	 * @param numberOfVersions to rollback
+-	 * @return
+-	 */
+-	public final Page rollbackPage(int numberOfVersions)
+-	{
+-		Page page =  versionManager == null? this : versionManager.rollbackPage(numberOfVersions);
+-		getSession().touch(page);
+-		return page;
+-	}
+-	/**
+-	 * @return Returns feedback messages from all components in this page
+-	 *         (including the page itself).
+-	 */
+-	public final FeedbackMessages getFeedbackMessages()
+-	{
+-		if (feedbackMessages == null)
+-		{
+-			feedbackMessages = new FeedbackMessages();
+-		}
+-		return feedbackMessages;
+-	}
+-
+-	/**
+ 	 * @see wicket.Component#getId()
+ 	 */
+ 	public final String getId()
+@@ -610,7 +526,8 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 				}
+ 
+ 				// If we went all the way back to the original page
+-				if (page != null && page.getCurrentVersionNumber() == 0 && page.getAjaxVersionNumber() == 0)
++				if (page != null && page.getCurrentVersionNumber() == 0
++						&& page.getAjaxVersionNumber() == 0)
+ 				{
+ 					// remove version info
+ 					page.versionManager = null;
+@@ -659,6 +576,28 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	}
+ 
+ 	/**
++	 * Call this method when the current (ajax) request shouldn't merge the
++	 * changes that are happening to the page with the previous version.
++	 * 
++	 * This is for example needed when you want to redirect to this page in an
++	 * ajax request and then you do want to version normally..
++	 * 
++	 * This method doesn't do anything if the getRequest().mergeVersion doesn't
++	 * return true.
++	 */
++	public final void ignoreVersionMerge()
++	{
++		if (getRequest().mergeVersion())
++		{
++			mayTrackChangesFor(this, null);
++			if (versionManager != null)
++			{
++				versionManager.ignoreVersionMerge();
++			}
++		}
++	}
++
++	/**
+ 	 * Bookmarkable page can be instantiated using a bookmarkable URL.
+ 	 * 
+ 	 * @return Returns true if the page is bookmarkable.
+@@ -714,16 +653,6 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	}
+ 
+ 	/**
+-	 * Set page stateless
+-	 * 
+-	 * @param stateless
+-	 */
+-	void setPageStateless(Boolean stateless)
+-	{
+-		this.stateless = stateless;
+-	}
+-
+-	/**
+ 	 * Gets whether the page is stateless. Components on stateless page must not
+ 	 * render any statefull urls, and components on statefull page must not
+ 	 * render any stateless urls. Statefull urls are urls, which refer to a
+@@ -827,288 +756,117 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	}
+ 
+ 	/**
+-	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL.
+-	 * 
+-	 * Set the id for this Page. This method is called by PageMap when a Page is
+-	 * added because the id, which is assigned by PageMap, is not known until
+-	 * this time.
+-	 * 
+-	 * @param id
+-	 *            The id
++	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL IT.
+ 	 */
+-	public final void setNumericId(final int id)
++	public final void renderPage()
+ 	{
+-		this.numericId = (short)id;
+-	}
++		// first try to check if the page can be rendered:
++		if (!isActionAuthorized(RENDER))
++		{
++			if (log.isDebugEnabled())
++			{
++				log.debug("Page not allowed to render: " + this);
++			}
++			throw new UnauthorizedActionException(this, Component.RENDER);
++		}
+ 
+-	/**
+-	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL.
+-	 * 
+-	 * This method is called when a component will be rendered standalone.
+-	 * 
+-	 * @param component
+-	 * 
+-	 */
+-	public final void startComponentRender(Component component)
+-	{
++		// Make sure it is really empty
+ 		renderedComponents = null;
+-	}
+ 
+-	/**
+-	 * Get the string representation of this container.
+-	 * 
+-	 * @return String representation of this container
+-	 */
+-	public String toString()
+-	{
+-		if(versionManager != null)
++		// Reset it to stateless so that it can be tested again
++		this.stateless = null;
++
++		// Set form component values from cookies
++		setFormComponentValuesFromCookies();
++
++		// First, give priority to IFeedback instances, as they have to
++		// collect their messages before components like ListViews
++		// remove any child components
++		visitChildren(IFeedback.class, new IVisitor()
+ 		{
+-			return "[Page class = " + getClass().getName() + ", id = " + getId() + 
+-				", version = " + versionManager.getCurrentVersionNumber()  + ", ajax = " + 
+-				versionManager.getAjaxVersionNumber() + "]";	
+-		}
+-		else
++			public Object component(Component component)
++			{
++				((IFeedback)component).updateFeedback();
++				component.attach();
++				return IVisitor.CONTINUE_TRAVERSAL;
++			}
++		});
++
++		if (this instanceof IFeedback)
+ 		{
+-			return "[Page class = " + getClass().getName() + ", id = " + getId() + ", version = " + 0 + "]";
++			((IFeedback)this).updateFeedback();
+ 		}
+-	}
+ 
+-	/**
+-	 * Set-up response with appropriate content type, locale and encoding. The
+-	 * locale is set equal to the session's locale. The content type header
+-	 * contains information about the markup type (@see #getMarkupType()) and
+-	 * the encoding. The response (and request) encoding is determined by an
+-	 * application setting (@see
+-	 * ApplicationSettings#getResponseRequestEncoding()). In addition, if the
+-	 * page's markup contains a xml declaration like &lt?xml ... ?&gt; an xml
+-	 * declaration with proper encoding information is written to the output as
+-	 * well, provided it is not disabled by an applicaton setting (@see
+-	 * ApplicationSettings#getStripXmlDeclarationFromOutput()).
+-	 * <p>
+-	 * Note: Prior to Wicket 1.1 the output encoding was determined by the
+-	 * page's markup encoding. Because this caused uncertainties about the
+-	 * /request/ encoding, it has been changed in favour of the new, much safer,
+-	 * approach. Please see the Wiki for more details.
+-	 */
+-	protected void configureResponse()
+-	{
+-		// Get the response and application
+-		final RequestCycle cycle = getRequestCycle();
+-		final Application application = cycle.getApplication();
+-		final Response response = cycle.getResponse();
+-
+-		// Determine encoding
+-		final String encoding = application.getRequestCycleSettings().getResponseRequestEncoding();
+-
+-		// Set content type based on markup type for page
+-		response.setContentType("text/" + getMarkupType() + "; charset=" + encoding);
+-
+-		// Write out an xml declaration if the markup stream and settings allow
+-		final MarkupStream markupStream = findMarkupStream();
+-		if ((markupStream != null) && (markupStream.getXmlDeclaration() != null)
+-				&& (application.getMarkupSettings().getStripXmlDeclarationFromOutput() == false))
+-		{
+-			response.write("<?xml version='1.0' encoding='");
+-			response.write(encoding);
+-			response.write("'?>");
+-		}
+-
+-		// Set response locale from session locale
+-		response.setLocale(getSession().getLocale());
+-	}
+-
+-	/**
+-	 * @see wicket.Component#onDetach()
+-	 */
+-	protected void onDetach()
+-	{
+-		if (log.isDebugEnabled())
+-		{
+-			log.debug("ending request for page " + this + ", request " + getRequest());
+-		}
++		// Now, do the initialization for the other components
++		attach();
+ 
+-		endVersion();
+-		
+-		super.onDetach();
+-	}
++		// Visit all this page's children to reset markup streams and check
++		// rendering authorization, as appropriate. We set any result; positive
++		// or negative as a temporary boolean in the components, and when a
++		// authorization exception is thrown it will block the rendering of this
++		// page
+ 
+-	/**
+-	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL OR
+-	 * OVERRIDE.
+-	 * 
+-	 * @see wicket.Component#internalOnModelChanged()
+-	 */
+-	protected final void internalOnModelChanged()
+-	{
+-		visitChildren(new Component.IVisitor()
++		// first the page itself
++		setRenderAllowed(isActionAuthorized(RENDER));
++		// children of the page
++		visitChildren(new IVisitor()
+ 		{
+ 			public Object component(final Component component)
+ 			{
+-				// If form component is using form model
+-				if (component.sameRootModel(Page.this))
+-				{
+-					component.modelChanged();
+-				}
++				// Find out if this component can be rendered
++				final boolean renderAllowed = component.isActionAuthorized(RENDER);
++
++				// Authorize rendering
++				component.setRenderAllowed(renderAllowed);
+ 				return IVisitor.CONTINUE_TRAVERSAL;
+ 			}
+ 		});
+-	}
+-
+-	/**
+-	 * @return Factory method that creates a version manager for this Page
+-	 */
+-	protected final IPageVersionManager newVersionManager()
+-	{
+-		return null;
+-	}
+ 
+-	/**
+-	 * Renders this container to the given response object.
+-	 * 
+-	 * @param markupStream
+-	 */
+-	protected void onRender(final MarkupStream markupStream)
+-	{
+-		// Set page's associated markup stream
+-		final MarkupStream associatedMarkupStream = getAssociatedMarkupStream(true);
+-		setMarkupStream(associatedMarkupStream);
+-
+-		// Configure response object with locale and content type
+-		configureResponse();
+-
+-		// Render all the page's markup
+-		setFlag(FLAG_IS_RENDERING, true);
+-		try
+-		{
+-			renderAll(associatedMarkupStream);
+-		}
+-		finally
+-		{
+-			setFlag(FLAG_IS_RENDERING, false);
+-		}
+-	}
++		// Handle request by rendering page
++		render(null);
+ 
+-	/**
+-	 * A component was added.
+-	 * 
+-	 * @param component
+-	 *            The component that was added
+-	 */
+-	final void componentAdded(final Component component)
+-	{
+-		checkHierarchyChange(component);
++		// Check rendering if it happened fully
++		checkRendering(this);
+ 
+-		dirty();
+-		if (mayTrackChangesFor(component, component.getParent()))
++		if (!isPageStateless())
+ 		{
+-			versionManager.componentAdded(component);
++			// trigger creation of the actual session in case it was deferred
++			Session.get().getSessionStore().getSessionId(RequestCycle.get().getRequest(), true);
++			// Add/touch the response page in the session (its pagemap).
++			getSession().touch(this);
+ 		}
+ 	}
+ 
+ 	/**
+-	 * A component's model changed.
++	 * This returns a page instance that is rollbacked the number of versions
++	 * that is specified compared to the current page.
+ 	 * 
+-	 * @param component
+-	 *            The component whose model is about to change
+-	 */
+-	final void componentModelChanging(final Component component)
+-	{
+-		checkHierarchyChange(component);
+-
+-		dirty();
+-		if (mayTrackChangesFor(component, null))
+-		{
+-			versionManager.componentModelChanging(component);
+-		}
+-	}
+-
+-	/**
+-	 * A component was removed.
++	 * This is a rollback including ajax versions.
+ 	 * 
+-	 * @param component
+-	 *            The component that was removed
++	 * @param numberOfVersions
++	 *            to rollback
++	 * @return
+ 	 */
+-	final void componentRemoved(final Component component)
++	public final Page rollbackPage(int numberOfVersions)
+ 	{
+-		checkHierarchyChange(component);
+-
+-		dirty();
+-		if (mayTrackChangesFor(component, component.getParent()))
+-		{
+-			versionManager.componentRemoved(component);
+-		}
++		Page page = versionManager == null ? this : versionManager.rollbackPage(numberOfVersions);
++		getSession().touch(page);
++		return page;
+ 	}
+ 
+ 	/**
+-	 * Adds a component to the set of rendered components.
++	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL.
+ 	 * 
+-	 * @param component
+-	 *            The component that was rendered
+-	 */
+-	public final void componentRendered(final Component component)
+-	{
+-		// Inform the page that this component rendered
+-		if (Application.get().getDebugSettings().getComponentUseCheck())
+-		{
+-			if (renderedComponents == null)
+-			{
+-				renderedComponents = new HashSet();
+-			}
+-			if (renderedComponents.add(component) == false)
+-			{
+-				throw new MarkupException(
+-						"The component "
+-								+ component
+-								+ " has the same wicket:id as another component already added at the same level");
+-			}
+-			if (log.isDebugEnabled())
+-			{
+-				log.debug("Rendered " + component);
+-			}
+-		}
+-	}
+-
+-	final void componentStateChanging(final Component component, Change change)
+-	{
+-		checkHierarchyChange(component);
+-
+-		dirty();
+-		if (mayTrackChangesFor(component, null))
+-		{
+-			versionManager.componentStateChanging(change);
+-		}
+-	}
+-
+-	/**
+-	 * Sets values for form components based on cookie values in the request.
++	 * Set the id for this Page. This method is called by PageMap when a Page is
++	 * added because the id, which is assigned by PageMap, is not known until
++	 * this time.
+ 	 * 
++	 * @param id
++	 *            The id
+ 	 */
+-	final void setFormComponentValuesFromCookies()
+-	{
+-		// Visit all Forms contained in the page
+-		visitChildren(Form.class, new Component.IVisitor()
+-		{
+-			// For each FormComponent found on the Page (not Form)
+-			public Object component(final Component component)
+-			{
+-				((Form)component).loadPersistentFormComponentValues();
+-				return CONTINUE_TRAVERSAL;
+-			}
+-		});
+-	}
+-
+-	/**
+-	 * @param pageMap
+-	 *            Sets this page into the page map with the given name. If the
+-	 *            page map does not yet exist, it is automatically created.
+-	 */
+-	final void setPageMap(final IPageMap pageMap)
++	public final void setNumericId(final int id)
+ 	{
+-		// Save transient reference to pagemap
+-		this.pageMap = pageMap;
+-
+-		// Save name for restoring transient
+-		this.pageMapName = pageMap.getName();
++		this.numericId = (short)id;
+ 	}
+ 
+ 	/**
+@@ -1131,21 +889,37 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	}
+ 
+ 	/**
+-	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL OR
+-	 * OVERRIDE.
++	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL.
++	 * 
++	 * This method is called when a component will be rendered standalone.
++	 * 
++	 * @param component
+ 	 * 
+-	 * @param map
+ 	 */
+-	protected final void moveToPageMap(IPageMap map)
++	public final void startComponentRender(Component component)
+ 	{
+-		// TODO post 1.2 shouldn't we remove this page from the pagemap/session
+-		// if it would be in there?
+-		// This should be done if the page was not cloned first, but shouldn't
+-		// be done if it was cloned..
+-		setPageMap(map);
+-		numericId = (short)map.nextId();
++		renderedComponents = null;
+ 	}
+ 
++	/**
++	 * Get the string representation of this container.
++	 * 
++	 * @return String representation of this container
++	 */
++	public String toString()
++	{
++		if (versionManager != null)
++		{
++			return "[Page class = " + getClass().getName() + ", id = " + getId() + ", version = "
++					+ versionManager.getCurrentVersionNumber() + ", ajax = "
++					+ versionManager.getAjaxVersionNumber() + "]";
++		}
++		else
++		{
++			return "[Page class = " + getClass().getName() + ", id = " + getId() + ", version = "
++					+ 0 + "]";
++		}
++	}
+ 
+ 	/**
+ 	 * Checks whether the hierarchy may be changed at all, and throws an
+@@ -1253,7 +1027,7 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 		// this effectively means that change tracking begins after the
+ 		// first request to a page completes.
+ 		setFlag(FLAG_TRACK_CHANGES, true);
+-		
++
+ 		// If a new version was created
+ 		if (getFlag(FLAG_NEW_VERSION))
+ 		{
+@@ -1362,24 +1136,238 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 	}
+ 
+ 	/**
+-	 * Call this method when the current (ajax) request shouldn't merge 
+-	 * the changes that are happening to the page with the previous version. 
+-	 * 
+-	 * This is for example needed when you want to redirect to this 
+-	 * page in an ajax request and then you do want to version normally.. 
++	 * Set-up response with appropriate content type, locale and encoding. The
++	 * locale is set equal to the session's locale. The content type header
++	 * contains information about the markup type (@see #getMarkupType()) and
++	 * the encoding. The response (and request) encoding is determined by an
++	 * application setting (@see
++	 * ApplicationSettings#getResponseRequestEncoding()). In addition, if the
++	 * page's markup contains a xml declaration like &lt?xml ... ?&gt; an xml
++	 * declaration with proper encoding information is written to the output as
++	 * well, provided it is not disabled by an applicaton setting (@see
++	 * ApplicationSettings#getStripXmlDeclarationFromOutput()).
++	 * <p>
++	 * Note: Prior to Wicket 1.1 the output encoding was determined by the
++	 * page's markup encoding. Because this caused uncertainties about the
++	 * /request/ encoding, it has been changed in favour of the new, much safer,
++	 * approach. Please see the Wiki for more details.
++	 */
++	protected void configureResponse()
++	{
++		// Get the response and application
++		final RequestCycle cycle = getRequestCycle();
++		final Application application = cycle.getApplication();
++		final Response response = cycle.getResponse();
++
++		// Determine encoding
++		final String encoding = application.getRequestCycleSettings().getResponseRequestEncoding();
++
++		// Set content type based on markup type for page
++		response.setContentType("text/" + getMarkupType() + "; charset=" + encoding);
++
++		// Write out an xml declaration if the markup stream and settings allow
++		final MarkupStream markupStream = findMarkupStream();
++		if ((markupStream != null) && (markupStream.getXmlDeclaration() != null)
++				&& (application.getMarkupSettings().getStripXmlDeclarationFromOutput() == false))
++		{
++			response.write("<?xml version='1.0' encoding='");
++			response.write(encoding);
++			response.write("'?>");
++		}
++
++		// Set response locale from session locale
++		response.setLocale(getSession().getLocale());
++	}
++
++	/**
++	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL OR
++	 * OVERRIDE.
+ 	 * 
+-	 * This method doesn't do anything if the getRequest().mergeVersion
+-	 * doesn't return true.
++	 * @see wicket.Component#internalOnModelChanged()
+ 	 */
+-	public final void ignoreVersionMerge()
++	protected final void internalOnModelChanged()
+ 	{
+-		if (getRequest().mergeVersion())
++		visitChildren(new Component.IVisitor()
+ 		{
+-			mayTrackChangesFor(this, null);
+-			if (versionManager != null)
++			public Object component(final Component component)
+ 			{
+-				versionManager.ignoreVersionMerge();
++				// If form component is using form model
++				if (component.sameRootModel(Page.this))
++				{
++					component.modelChanged();
++				}
++				return IVisitor.CONTINUE_TRAVERSAL;
+ 			}
++		});
++	}
++
++	/**
++	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT CALL OR
++	 * OVERRIDE.
++	 * 
++	 * @param map
++	 */
++	protected final void moveToPageMap(IPageMap map)
++	{
++		// TODO post 1.2 shouldn't we remove this page from the pagemap/session
++		// if it would be in there?
++		// This should be done if the page was not cloned first, but shouldn't
++		// be done if it was cloned..
++		setPageMap(map);
++		numericId = (short)map.nextId();
++	}
++
++	/**
++	 * @return Factory method that creates a version manager for this Page
++	 */
++	protected final IPageVersionManager newVersionManager()
++	{
++		return null;
++	}
++
++	/**
++	 * @see wicket.Component#onDetach()
++	 */
++	protected void onDetach()
++	{
++		if (log.isDebugEnabled())
++		{
++			log.debug("ending request for page " + this + ", request " + getRequest());
++		}
++
++		endVersion();
++
++		super.onDetach();
++	}
++
++	/**
++	 * Renders this container to the given response object.
++	 * 
++	 * @param markupStream
++	 */
++	protected void onRender(final MarkupStream markupStream)
++	{
++		// Set page's associated markup stream
++		final MarkupStream associatedMarkupStream = getAssociatedMarkupStream(true);
++		setMarkupStream(associatedMarkupStream);
++
++		// Configure response object with locale and content type
++		configureResponse();
++
++		// Render all the page's markup
++		setFlag(FLAG_IS_RENDERING, true);
++		try
++		{
++			renderAll(associatedMarkupStream);
+ 		}
++		finally
++		{
++			setFlag(FLAG_IS_RENDERING, false);
++		}
++	}
++
++
++	/**
++	 * A component was added.
++	 * 
++	 * @param component
++	 *            The component that was added
++	 */
++	final void componentAdded(final Component component)
++	{
++		checkHierarchyChange(component);
++
++		dirty();
++		if (mayTrackChangesFor(component, component.getParent()))
++		{
++			versionManager.componentAdded(component);
++		}
++	}
++
++	/**
++	 * A component's model changed.
++	 * 
++	 * @param component
++	 *            The component whose model is about to change
++	 */
++	final void componentModelChanging(final Component component)
++	{
++		checkHierarchyChange(component);
++
++		dirty();
++		if (mayTrackChangesFor(component, null))
++		{
++			versionManager.componentModelChanging(component);
++		}
++	}
++
++	/**
++	 * A component was removed.
++	 * 
++	 * @param component
++	 *            The component that was removed
++	 */
++	final void componentRemoved(final Component component)
++	{
++		checkHierarchyChange(component);
++
++		dirty();
++		if (mayTrackChangesFor(component, component.getParent()))
++		{
++			versionManager.componentRemoved(component);
++		}
++	}
++
++	final void componentStateChanging(final Component component, Change change)
++	{
++		checkHierarchyChange(component);
++
++		dirty();
++		if (mayTrackChangesFor(component, null))
++		{
++			versionManager.componentStateChanging(change);
++		}
++	}
++
++	/**
++	 * Sets values for form components based on cookie values in the request.
++	 * 
++	 */
++	final void setFormComponentValuesFromCookies()
++	{
++		// Visit all Forms contained in the page
++		visitChildren(Form.class, new Component.IVisitor()
++		{
++			// For each FormComponent found on the Page (not Form)
++			public Object component(final Component component)
++			{
++				((Form)component).loadPersistentFormComponentValues();
++				return CONTINUE_TRAVERSAL;
++			}
++		});
++	}
++
++	/**
++	 * @param pageMap
++	 *            Sets this page into the page map with the given name. If the
++	 *            page map does not yet exist, it is automatically created.
++	 */
++	final void setPageMap(final IPageMap pageMap)
++	{
++		// Save transient reference to pagemap
++		this.pageMap = pageMap;
++
++		// Save name for restoring transient
++		this.pageMapName = pageMap.getName();
++	}
++
++	/**
++	 * Set page stateless
++	 * 
++	 * @param stateless
++	 */
++	void setPageStateless(Boolean stateless)
++	{
++		this.stateless = stateless;
+ 	}
+ }
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/RequestCycle.java b/jdk-1.4/wicket/src/main/java/wicket/RequestCycle.java
+index 9db2282..b8e00a5 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/RequestCycle.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/RequestCycle.java
+@@ -886,7 +886,7 @@ public abstract class RequestCycle
+ 		// remove any rendered feedback messages from the session
+ 		try
+ 		{
+-			session.cleanupFeedbackMessages();
++			session.cleanupRenderedFeedbackMessages();
+ 		}
+ 		catch (RuntimeException re)
+ 		{
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/Session.java b/jdk-1.4/wicket/src/main/java/wicket/Session.java
+index ae82d31..0e88aed 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/Session.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/Session.java
+@@ -37,7 +37,6 @@ import wicket.feedback.FeedbackMessage;
+ import wicket.feedback.FeedbackMessages;
+ import wicket.request.ClientInfo;
+ import wicket.session.ISessionStore;
+-import wicket.util.concurrent.CopyOnWriteArrayList;
+ import wicket.util.convert.IConverter;
+ import wicket.util.lang.Objects;
+ import wicket.util.string.Strings;
+@@ -167,7 +166,7 @@ public abstract class Session implements IClusterable, IConverterLocator
+ 
+ 	/** A store for touched pages for one request */
+ 	private static final ThreadLocal touchedPages = new ThreadLocal();
+-	
++
+ 	/** Logging object */
+ 	private static final Log log = LogFactory.getLog(Session.class);
+ 
+@@ -199,7 +198,7 @@ public abstract class Session implements IClusterable, IConverterLocator
+ 	private String style;
+ 
+ 	/** feedback messages */
+-	private FeedbackMessages feedbackMessages = new FeedbackMessages(new CopyOnWriteArrayList());
++	private FeedbackMessages feedbackMessages = new FeedbackMessages();
+ 
+ 	private transient Map pageMapsUsedInRequest;
+ 
+@@ -827,7 +826,7 @@ public abstract class Session implements IClusterable, IConverterLocator
+ 		// to the pagemap when the session does it update/detaches.
+ 		// all the pages are then detached
+ 		List lst = (List)touchedPages.get();
+-		if(lst == null)
++		if (lst == null)
+ 		{
+ 			lst = new ArrayList();
+ 			touchedPages.set(lst);
+@@ -910,7 +909,7 @@ public abstract class Session implements IClusterable, IConverterLocator
+ 	 * 
+ 	 * @return the converter
+ 	 */
+-	public final IConverter getConverter(Class/*<?>*/ type)
++	public final IConverter getConverter(Class/* <?> */type)
+ 	{
+ 		if (converterSupplier == null)
+ 		{
+@@ -1060,7 +1059,7 @@ public abstract class Session implements IClusterable, IConverterLocator
+ 	protected void update()
+ 	{
+ 		List lst = (List)touchedPages.get();
+-		if(lst != null)
++		if (lst != null)
+ 		{
+ 			for (int i = 0; i < lst.size(); i++)
+ 			{
+@@ -1069,7 +1068,7 @@ public abstract class Session implements IClusterable, IConverterLocator
+ 			}
+ 			touchedPages.set(null);
+ 		}
+-		
++
+ 		// If state is dirty
+ 		if (dirty)
+ 		{
+@@ -1133,7 +1132,7 @@ public abstract class Session implements IClusterable, IConverterLocator
+ 	 * Removes any rendered feedback messages as well as compacts memory. This
+ 	 * method is usually called at the end of the request cycle processing.
+ 	 */
+-	final void cleanupFeedbackMessages()
++	final void cleanupRenderedFeedbackMessages()
+ 	{
+ 		int size = feedbackMessages.size();
+ 		feedbackMessages.clearRendered();
+@@ -1146,6 +1145,26 @@ public abstract class Session implements IClusterable, IConverterLocator
+ 	}
+ 
+ 	/**
++	 * Cleans up any unrendered, dangling feedback messages there may be. This
++	 * implementation calls {@link FeedbackMessages#clearComponentSpecific()} to
++	 * aggresively ensure there won't be memory leaks. Clients can override this
++	 * method to e.g. call {@link FeedbackMessages#clearPageSpecific(Page)}.
++	 * <p>
++	 * This method should be called from by the framework right before a even
++	 * handler is called. There is no need for clients to call this method
++	 * directly
++	 * </p>
++	 * 
++	 * @param page
++	 *            any current page (the page on which the event handler is that
++	 *            is about to be processed)
++	 */
++	public void cleanupFeedbackMessages(Page page)
++	{
++		feedbackMessages.clearComponentSpecific();
++	}
++
++	/**
+ 	 * @param page
+ 	 *            The page to add to dirty objects list
+ 	 */
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/feedback/FeedbackMessages.java b/jdk-1.4/wicket/src/main/java/wicket/feedback/FeedbackMessages.java
+index 7da2662..719e177 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/feedback/FeedbackMessages.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/feedback/FeedbackMessages.java
+@@ -27,6 +27,7 @@ import org.apache.commons.logging.LogFactory;
+ 
+ import wicket.Component;
+ import wicket.IClusterable;
++import wicket.Page;
+ import wicket.util.concurrent.CopyOnWriteArrayList;
+ import wicket.util.string.StringList;
+ 
+@@ -58,24 +59,37 @@ public final class FeedbackMessages implements IClusterable
+ 	 */
+ 	public FeedbackMessages()
+ 	{
+-		messages = new ArrayList();
++		messages = new CopyOnWriteArrayList();
+ 	}
+ 
+ 	/**
+-	 * Call this constructor if you want to replace the internal
+-	 * store with another implemention then the default (ArrayList). 
+-	 * This could be a {@link CopyOnWriteArrayList} if this feedbackmessages 
+-	 * instance is used by multiply threads.
++	 * Call this constructor if you want to replace the internal store with
++	 * another implemention then the default (ArrayList). This could be a
++	 * {@link CopyOnWriteArrayList} if this feedbackmessages instance is used by
++	 * multiply threads.
+ 	 * 
+-	 * @param messagesList 
++	 * @param messagesList
+ 	 * 
+ 	 */
+ 	public FeedbackMessages(List messagesList)
+ 	{
+-		if(messagesList == null) throw new IllegalArgumentException("messages list can't be null");
++		if (messagesList == null)
++			throw new IllegalArgumentException("messages list can't be null");
+ 		messages = messagesList;
+ 	}
+-	
++
++	/**
++	 * Adds a message
++	 * 
++	 * @param reporter
++	 * @param message
++	 * @param level
++	 */
++	public final void add(Component reporter, String message, int level)
++	{
++		add(new FeedbackMessage(reporter, message, level));
++	}
++
+ 	/**
+ 	 * Clears any existing messages
+ 	 */
+@@ -85,13 +99,50 @@ public final class FeedbackMessages implements IClusterable
+ 	}
+ 
+ 	/**
+-	 * Gets the number of messages
++	 * Clears any messages specifically for components. This is an aggressive
++	 * cleanup to ensure there won't be a memory leak in session.
++	 */
++	public final void clearComponentSpecific()
++	{
++		for (int i = messages.size() - 1; i >= 0; i--)
++		{
++			final FeedbackMessage msg = (FeedbackMessage)messages.get(i);
++			Component reporter = msg.getReporter();
++			if (reporter != null)
++			{
++				messages.remove(i);
++			}
++		}
++		trimToSize();
++	}
++
++	/**
++	 * Clears any messages specifically for components on the provided page.
+ 	 * 
+-	 * @return the number of messages
++	 * @param page
++	 *            The page to clear messages for
+ 	 */
+-	public final int size()
++	public final void clearPageSpecific(Page page)
+ 	{
+-		return messages.size();
++		if (page == null)
++		{
++			return;
++		}
++
++		for (int i = messages.size() - 1; i >= 0; i--)
++		{
++			final FeedbackMessage msg = (FeedbackMessage)messages.get(i);
++			Component reporter = msg.getReporter();
++			if (reporter != null)
++			{
++				Page reporterPage = (Page)reporter.findParent(Page.class);
++				if (reporterPage != null && reporterPage.equals(page))
++				{
++					messages.remove(i);
++				}
++			}
++		}
++		trimToSize();
+ 	}
+ 
+ 	/**
+@@ -99,7 +150,7 @@ public final class FeedbackMessages implements IClusterable
+ 	 */
+ 	public final void clearRendered()
+ 	{
+-		for(int i = messages.size() - 1; i >= 0; i--)
++		for (int i = messages.size() - 1; i >= 0; i--)
+ 		{
+ 			final FeedbackMessage msg = (FeedbackMessage)messages.get(i);
+ 			if (msg.isRendered())
+@@ -226,6 +277,16 @@ public final class FeedbackMessages implements IClusterable
+ 	}
+ 
+ 	/**
++	 * Gets an iterator over stored messages
++	 * 
++	 * @return iterator over stored messages
++	 */
++	public final Iterator iterator()
++	{
++		return messages.iterator();
++	}
++
++	/**
+ 	 * Looks up a message for the given component.
+ 	 * 
+ 	 * @param component
+@@ -275,6 +336,16 @@ public final class FeedbackMessages implements IClusterable
+ 	}
+ 
+ 	/**
++	 * Gets the number of messages
++	 * 
++	 * @return the number of messages
++	 */
++	public final int size()
++	{
++		return messages.size();
++	}
++
++	/**
+ 	 * @see java.lang.Object#toString()
+ 	 */
+ 	public String toString()
+@@ -283,6 +354,17 @@ public final class FeedbackMessages implements IClusterable
+ 	}
+ 
+ 	/**
++	 * Frees any unnecessary internal storage
++	 */
++	public final void trimToSize()
++	{
++		if (messages instanceof ArrayList)
++		{
++			((ArrayList)messages).trimToSize();
++		}
++	}
++
++	/**
+ 	 * Adds a new ui message with level WARNING to the current messages.
+ 	 * 
+ 	 * @param reporter
+@@ -296,16 +378,6 @@ public final class FeedbackMessages implements IClusterable
+ 	}
+ 
+ 	/**
+-	 * Adds a message
+-	 * @param reporter
+-	 * @param message
+-	 * @param level
+-	 */
+-	public final void add(Component reporter, String message, int level) {
+-		add(new FeedbackMessage(reporter, message, level));
+-	}
+-	
+-	/**
+ 	 * Adds a message.
+ 	 * 
+ 	 * @param message
+@@ -319,25 +391,4 @@ public final class FeedbackMessages implements IClusterable
+ 		}
+ 		messages.add(message);
+ 	}
+-
+-	/**
+-	 * Gets an iterator over stored messages
+-	 * 
+-	 * @return iterator over stored messages
+-	 */
+-	public final Iterator iterator()
+-	{
+-		return messages.iterator();
+-	}
+-
+-	/**
+-	 * Frees any unnecessary internal storage
+-	 */
+-	public final void trimToSize()
+-	{
+-		if(messages instanceof ArrayList)
+-		{
+-			((ArrayList)messages).trimToSize();
+-		}
+-	}
+ }
+\ No newline at end of file
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/feedback/FeedbackMessagesModel.java b/jdk-1.4/wicket/src/main/java/wicket/feedback/FeedbackMessagesModel.java
+index 7b52300..82f39b2 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/feedback/FeedbackMessagesModel.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/feedback/FeedbackMessagesModel.java
+@@ -17,13 +17,13 @@
+ package wicket.feedback;
+ 
+ import java.io.Serializable;
+-import java.util.ArrayList;
+ import java.util.Collections;
+ import java.util.Comparator;
+ import java.util.List;
+ 
+ import wicket.Component;
+ import wicket.Page;
++import wicket.Session;
+ import wicket.model.IModel;
+ 
+ /**
+@@ -51,8 +51,9 @@ public class FeedbackMessagesModel implements IModel
+ 	 * Constructor. Creates a model for all feedback messages on the page.
+ 	 * 
+ 	 * @param component
+-	 *            The component where the page will be get from for which messages will be displayed 
+-	 *            usually the same page as the one feedbackpanel is attached to
++	 *            The component where the page will be get from for which
++	 *            messages will be displayed usually the same page as the one
++	 *            feedbackpanel is attached to
+ 	 */
+ 	public FeedbackMessagesModel(Component component)
+ 	{
+@@ -87,7 +88,7 @@ public class FeedbackMessagesModel implements IModel
+ 	{
+ 		return filter;
+ 	}
+-	
++
+ 	/**
+ 	 * @return The current sorting comparator
+ 	 */
+@@ -104,13 +105,7 @@ public class FeedbackMessagesModel implements IModel
+ 		if (messages == null)
+ 		{
+ 			// Get filtered messages from page where component lives
+-			List pageMessages = component.getPage().getFeedbackMessages().messages(filter);
+-
+-			List sessionMessages = component.getSession().getFeedbackMessages().messages(filter);
+-
+-			messages = new ArrayList(pageMessages.size() + sessionMessages.size());
+-			messages.addAll(pageMessages);
+-			messages.addAll(sessionMessages);
++			messages = Session.get().getFeedbackMessages().messages(filter);
+ 
+ 			// Sort the list before returning it
+ 			if (sortingComparator != null)
+@@ -164,7 +159,7 @@ public class FeedbackMessagesModel implements IModel
+ 	{
+ 		return messages;
+ 	}
+-	
++
+ 	/**
+ 	 * 
+ 	 * @see wicket.model.IModel#setObject(java.lang.Object)
+@@ -172,7 +167,7 @@ public class FeedbackMessagesModel implements IModel
+ 	public void setObject(Object object)
+ 	{
+ 	}
+-	
++
+ 	/**
+ 	 * 
+ 	 * @see wicket.model.IDetachable#detach()
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/markup/html/form/validation/FormComponentFeedbackBorder.java b/jdk-1.4/wicket/src/main/java/wicket/markup/html/form/validation/FormComponentFeedbackBorder.java
+index 2198c9e..5d4f34a 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/markup/html/form/validation/FormComponentFeedbackBorder.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/markup/html/form/validation/FormComponentFeedbackBorder.java
+@@ -16,6 +16,7 @@
+  */
+ package wicket.markup.html.form.validation;
+ 
++import wicket.Session;
+ import wicket.feedback.ContainerFeedbackMessageFilter;
+ import wicket.feedback.IFeedback;
+ import wicket.feedback.IFeedbackMessageFilter;
+@@ -87,7 +88,7 @@ public class FormComponentFeedbackBorder extends Border implements IFeedback
+ 	public void updateFeedback()
+ 	{
+ 		// Get the messages for the current page
+-		visible = getPage().getFeedbackMessages().messages(getMessagesFilter()).size() != 0;
++		visible = Session.get().getFeedbackMessages().messages(getMessagesFilter()).size() != 0;
+ 	}
+ 
+ 	/**
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/markup/html/form/validation/FormComponentFeedbackIndicator.java b/jdk-1.4/wicket/src/main/java/wicket/markup/html/form/validation/FormComponentFeedbackIndicator.java
+index 0653181..bb76fee 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/markup/html/form/validation/FormComponentFeedbackIndicator.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/markup/html/form/validation/FormComponentFeedbackIndicator.java
+@@ -17,6 +17,7 @@
+ package wicket.markup.html.form.validation;
+ 
+ import wicket.Component;
++import wicket.Session;
+ import wicket.feedback.ComponentFeedbackMessageFilter;
+ import wicket.feedback.IFeedback;
+ import wicket.feedback.IFeedbackMessageFilter;
+@@ -36,7 +37,7 @@ import wicket.model.IModel;
+ public class FormComponentFeedbackIndicator extends Panel implements IFeedback
+ {
+ 	private static final long serialVersionUID = 1L;
+-	
++
+ 	/** The message filter for this indicator component */
+ 	private IFeedbackMessageFilter filter;
+ 
+@@ -74,7 +75,7 @@ public class FormComponentFeedbackIndicator extends Panel implements IFeedback
+ 	public void updateFeedback()
+ 	{
+ 		// Get the messages for the current page
+-		setVisible(getPage().getFeedbackMessages().hasMessage(getFeedbackMessageFilter()));
++		setVisible(Session.get().getFeedbackMessages().hasMessage(getFeedbackMessageFilter()));
+ 	}
+ 
+ 	/**
+diff --git a/jdk-1.4/wicket/src/main/java/wicket/request/target/component/listener/AbstractListenerInterfaceRequestTarget.java b/jdk-1.4/wicket/src/main/java/wicket/request/target/component/listener/AbstractListenerInterfaceRequestTarget.java
+index 7d8fb92..ed88751 100644
+--- a/jdk-1.4/wicket/src/main/java/wicket/request/target/component/listener/AbstractListenerInterfaceRequestTarget.java
++++ b/jdk-1.4/wicket/src/main/java/wicket/request/target/component/listener/AbstractListenerInterfaceRequestTarget.java
+@@ -21,6 +21,7 @@ import wicket.Component;
+ import wicket.Page;
+ import wicket.RequestCycle;
+ import wicket.RequestListenerInterface;
++import wicket.Session;
+ import wicket.request.RequestParameters;
+ import wicket.request.target.IEventProcessor;
+ import wicket.request.target.component.PageRequestTarget;
+@@ -189,7 +190,7 @@ public abstract class AbstractListenerInterfaceRequestTarget extends PageRequest
+ 		requestCycle.setUpdateSession(true);
+ 
+ 		// Clear all feedback messages if it isn't a redirect
+-		getPage().getFeedbackMessages().clear();
++		Session.get().cleanupFeedbackMessages(getPage());
+ 
+ 		getPage().startComponentRender(getTarget());
+ 

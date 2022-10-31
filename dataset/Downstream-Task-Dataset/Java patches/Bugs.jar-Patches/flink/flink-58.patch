@@ -1,0 +1,70 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
+index 9085483..a03f0bf 100755
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
+@@ -51,6 +51,7 @@ import org.apache.flink.runtime.jobgraph.JobStatus;
+ import org.apache.flink.runtime.jobgraph.JobVertexID;
+ import org.apache.flink.runtime.jobgraph.ScheduleMode;
+ import org.apache.flink.runtime.jobmanager.RecoveryMode;
++import org.apache.flink.runtime.jobmanager.scheduler.CoLocationGroup;
+ import org.apache.flink.runtime.jobmanager.scheduler.Scheduler;
+ import org.apache.flink.runtime.messages.ExecutionGraphMessages;
+ import org.apache.flink.runtime.taskmanager.TaskExecutionState;
+@@ -76,6 +77,8 @@ import java.util.HashMap;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Map;
++import java.util.Collection;
++import java.util.HashSet;
+ import java.util.NoSuchElementException;
+ import java.util.UUID;
+ import java.util.concurrent.Callable;
+@@ -147,7 +150,7 @@ public class ExecutionGraph implements Serializable {
+ 
+ 	/** All vertices, in the order in which they were created **/
+ 	private final List<ExecutionJobVertex> verticesInCreationOrder;
+-
++	
+ 	/** All intermediate results that are part of this graph */
+ 	private final ConcurrentHashMap<IntermediateDataSetID, IntermediateResult> intermediateResults;
+ 
+@@ -719,7 +722,7 @@ public class ExecutionGraph implements Serializable {
+ 							res.getId(), res, previousDataSet));
+ 				}
+ 			}
+-
++			
+ 			this.verticesInCreationOrder.add(ejv);
+ 		}
+ 	}
+@@ -849,7 +852,16 @@ public class ExecutionGraph implements Serializable {
+ 
+ 				this.currentExecutions.clear();
+ 
++				Collection<CoLocationGroup> colGroups = new HashSet<>();
++				
+ 				for (ExecutionJobVertex jv : this.verticesInCreationOrder) {
++					
++					CoLocationGroup cgroup = jv.getCoLocationGroup();
++					if(cgroup != null && !colGroups.contains(cgroup)){
++						cgroup.resetConstraints();
++						colGroups.add(cgroup);
++					}
++					
+ 					jv.resetForNewExecution();
+ 				}
+ 
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionJobVertex.java b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionJobVertex.java
+index 93ae7c1..bc368ab 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionJobVertex.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionJobVertex.java
+@@ -362,9 +362,6 @@ public class ExecutionJobVertex implements Serializable {
+ 			if (slotSharingGroup != null) {
+ 				slotSharingGroup.clearTaskAssignment();
+ 			}
+-			if (coLocationGroup != null) {
+-				coLocationGroup.resetConstraints();
+-			}
+ 			
+ 			// reset vertices one by one. if one reset fails, the "vertices in final state"
+ 			// fields will be consistent to handle triggered cancel calls

@@ -1,0 +1,26 @@
+diff --git a/core/client/fs/src/main/java/alluxio/client/file/RetryHandlingFileSystemMasterClient.java b/core/client/fs/src/main/java/alluxio/client/file/RetryHandlingFileSystemMasterClient.java
+index 6088c16..c96bf67 100644
+--- a/core/client/fs/src/main/java/alluxio/client/file/RetryHandlingFileSystemMasterClient.java
++++ b/core/client/fs/src/main/java/alluxio/client/file/RetryHandlingFileSystemMasterClient.java
+@@ -182,7 +182,7 @@
+   public synchronized List<URIStatus> listStatus(final AlluxioURI path,
+       final ListStatusOptions options) throws IOException {
+     return retryRPC(() -> {
+-      List<URIStatus> result = new ArrayList<URIStatus>();
++      List<URIStatus> result = new ArrayList<>();
+       for (alluxio.thrift.FileInfo fileInfo : mClient.listStatus(path.getPath(), options.toThrift())
+           .getFileInfoList()) {
+         result.add(new URIStatus(ThriftUtils.fromThrift(fileInfo)));
+diff --git a/core/client/fs/src/main/java/alluxio/client/file/RetryHandlingFileSystemMasterClient.java b/core/client/fs/src/main/java/alluxio/client/file/RetryHandlingFileSystemMasterClient.java
+index 6088c16..c96bf67 100644
+--- a/core/client/fs/src/main/java/alluxio/client/file/RetryHandlingFileSystemMasterClient.java
++++ b/core/client/fs/src/main/java/alluxio/client/file/RetryHandlingFileSystemMasterClient.java
+@@ -182,7 +182,7 @@
+   public synchronized List<URIStatus> listStatus(final AlluxioURI path,
+       final ListStatusOptions options) throws IOException {
+     return retryRPC(() -> {
+-      List<URIStatus> result = new ArrayList<URIStatus>();
++      List<URIStatus> result = new ArrayList<>();
+       for (alluxio.thrift.FileInfo fileInfo : mClient.listStatus(path.getPath(), options.toThrift())
+           .getFileInfoList()) {
+         result.add(new URIStatus(ThriftUtils.fromThrift(fileInfo)));

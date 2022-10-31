@@ -1,0 +1,36 @@
+diff --git a/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java b/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
+index 2893fb4..95c95a0 100644
+--- a/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
++++ b/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
+@@ -178,8 +178,11 @@
+             "      return exception.hashCode();",
+             "    }",
+             "  }");
+-    Compilation compilation
+-        = javac().withProcessors(new AutoOneOfProcessor()).compile(javaFileObject);
++    Compilation compilation =
++        javac()
++            .withProcessors(new AutoOneOfProcessor())
++            .withOptions("-Xlint:-processing", "-implicit:none")
++            .compile(javaFileObject);
+     assertThat(compilation)
+         .succeededWithoutWarnings();
+     assertThat(compilation)
+diff --git a/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java b/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
+index 2893fb4..95c95a0 100644
+--- a/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
++++ b/value/src/test/java/com/google/auto/value/processor/AutoOneOfCompilationTest.java
+@@ -178,8 +178,11 @@
+             "      return exception.hashCode();",
+             "    }",
+             "  }");
+-    Compilation compilation
+-        = javac().withProcessors(new AutoOneOfProcessor()).compile(javaFileObject);
++    Compilation compilation =
++        javac()
++            .withProcessors(new AutoOneOfProcessor())
++            .withOptions("-Xlint:-processing", "-implicit:none")
++            .compile(javaFileObject);
+     assertThat(compilation)
+         .succeededWithoutWarnings();
+     assertThat(compilation)

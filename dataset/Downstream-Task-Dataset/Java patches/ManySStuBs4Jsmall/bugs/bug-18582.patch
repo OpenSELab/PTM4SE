@@ -1,0 +1,26 @@
+diff --git a/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java b/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java
+index 6de1dd2..46aa97a 100644
+--- a/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java
++++ b/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java
+@@ -805,7 +805,7 @@
+ 
+         void fireChildReadComplete() {
+             assert eventLoop().inEventLoop();
+-            assert readStatus == ReadStatus.IN_PROGRESS;
++            assert readStatus != ReadStatus.IDLE;
+             unsafe.notifyReadComplete(unsafe.recvBufAllocHandle());
+         }
+ 
+diff --git a/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java b/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java
+index 6de1dd2..46aa97a 100644
+--- a/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java
++++ b/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java
+@@ -805,7 +805,7 @@
+ 
+         void fireChildReadComplete() {
+             assert eventLoop().inEventLoop();
+-            assert readStatus == ReadStatus.IN_PROGRESS;
++            assert readStatus != ReadStatus.IDLE;
+             unsafe.notifyReadComplete(unsafe.recvBufAllocHandle());
+         }
+ 

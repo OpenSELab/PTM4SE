@@ -1,0 +1,57 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/protocol/http/WebApplication.java b/wicket-core/src/main/java/org/apache/wicket/protocol/http/WebApplication.java
+index 52d41ca..0ff49bc 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/protocol/http/WebApplication.java
++++ b/wicket-core/src/main/java/org/apache/wicket/protocol/http/WebApplication.java
+@@ -876,10 +876,12 @@ public abstract class WebApplication extends Application
+ 	}
+ 
+ 	/**
+-	 * 
+-	 * @param sessionId
++	 * Retrieves a stored buffered response for a given sessionId and url.
++	 *
+ 	 * @param url
+-	 * @return buffered response
++	 *          The url used as a key
++	 * @return the stored buffered response. {@code null} if there is no stored response for the given url
++	 * @see org.apache.wicket.settings.IRequestCycleSettings.RenderStrategy#REDIRECT_TO_BUFFER
+ 	 */
+ 	public BufferedWebResponse getAndRemoveBufferedResponse(String sessionId, Url url)
+ 	{
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java b/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
+index aee0104..00a8ea2 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
+@@ -86,12 +86,7 @@ public class WebPageRenderer extends PageRenderer
+ 
+ 		WebApplication.get().storeBufferedResponse(getSessionId(), url, response);
+ 	}
+-
+-	protected BufferedWebResponse getAndRemoveBufferedResponse(Url url)
+-	{
+-		return WebApplication.get().getAndRemoveBufferedResponse(getSessionId(), url);
+-	}
+-
++	
+ 	/**
+ 	 * Renders page to a {@link BufferedWebResponse}. All URLs in page will be rendered relative to
+ 	 * <code>targetUrl</code>
+@@ -195,17 +190,7 @@ public class WebPageRenderer extends PageRenderer
+ 		// 3 rendering strategies and two kind of requests (ajax and normal)
+ 		//
+ 
+-		// try to get an already rendered buffered response for current URL
+-		BufferedWebResponse bufferedResponse = getAndRemoveBufferedResponse(currentUrl);
+-
+-		if (bufferedResponse != null)
+-		{
+-			logger
+-				.warn("The Buffered response should be handled by BufferedResponseRequestHandler");
+-			// if there is saved response for this URL render it
+-			bufferedResponse.writeTo((WebResponse)requestCycle.getResponse());
+-		}
+-		else if (shouldRenderPageAndWriteResponse(requestCycle, currentUrl, targetUrl))
++		if (shouldRenderPageAndWriteResponse(requestCycle, currentUrl, targetUrl))
+ 		{
+ 			BufferedWebResponse response = renderPage(currentUrl, requestCycle);
+ 			if (response != null)

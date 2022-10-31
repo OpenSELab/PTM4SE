@@ -1,0 +1,69 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Component.java b/wicket-core/src/main/java/org/apache/wicket/Component.java
+index 33c515d..13b32cb 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Component.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Component.java
+@@ -941,6 +941,11 @@ public abstract class Component
+ 		try
+ 		{
+ 			setFlag(FLAG_AFTER_RENDERING, true);
++
++			// always detach children because components can be attached
++			// independently of their parents
++			onAfterRenderChildren();
++
+ 			onAfterRender();
+ 			getApplication().getComponentOnAfterRenderListeners().onAfterRender(this);
+ 			if (getFlag(FLAG_AFTER_RENDERING))
+@@ -950,9 +955,6 @@ public abstract class Component
+ 					getClass().getName() +
+ 					" has not called super.onAfterRender() in the override of onAfterRender() method");
+ 			}
+-			// always detach children because components can be attached
+-			// independently of their parents
+-			onAfterRenderChildren();
+ 		}
+ 		finally
+ 		{
+@@ -2852,10 +2854,7 @@ public abstract class Component
+ 	 */
+ 	public Component setMarkupId(String markupId)
+ 	{
+-		if (markupId != null && Strings.isEmpty(markupId))
+-		{
+-			throw new IllegalArgumentException("Markup id cannot be an empty string");
+-		}
++		Args.notEmpty(markupId, "markupId");
+ 
+ 		// TODO check if an automatic id has already been generated or getmarkupid() called
+ 		// previously and throw an illegalstateexception because something else might be depending
+@@ -4112,6 +4111,10 @@ public abstract class Component
+ 			setFlag(FLAG_PREPARED_FOR_RENDER, false);
+ 			setFlag(FLAG_RENDERING, true);
+ 		}
++		else
++		{
++			setFlag(FLAG_RENDERING, false);
++		}
+ 	}
+ 
+ 	/**
+diff --git a/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java b/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
+index 37986ff..056d483 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
+@@ -1835,13 +1835,11 @@ public abstract class MarkupContainer extends Component implements Iterable<Comp
+ 	@Override
+ 	protected void onAfterRenderChildren()
+ 	{
+-		// Loop through child components
+ 		for (Component child : this)
+ 		{
+-			// Call end request on the child
+-			child.afterRender();
++			// set RENDERING_FLAG to false for auto-component's children (like Enclosure)
++			child.markRendering(false);
+ 		}
+-
+ 		super.onAfterRenderChildren();
+ 	}
+ 

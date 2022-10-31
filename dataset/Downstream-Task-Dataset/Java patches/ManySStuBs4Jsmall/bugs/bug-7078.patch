@@ -1,0 +1,22 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/BPOfferService.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/BPOfferService.java
+index 316168c..4ca9225 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/BPOfferService.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/BPOfferService.java
+@@ -146,7 +146,7 @@
+     return false;
+   }
+   
+-  String getBlockPoolId() {
++  synchronized String getBlockPoolId() {
+     if (bpNSInfo != null) {
+       return bpNSInfo.getBlockPoolID();
+     } else {
+@@ -161,7 +161,7 @@
+   }
+   
+   @Override
+-  public String toString() {
++  public synchronized String toString() {
+     if (bpNSInfo == null) {
+       // If we haven't yet connected to our NN, we don't yet know our
+       // own block pool ID.

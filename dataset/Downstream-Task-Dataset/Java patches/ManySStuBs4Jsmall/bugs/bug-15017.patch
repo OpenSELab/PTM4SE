@@ -1,0 +1,26 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocation.java b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocation.java
+index 48600f9..58aac2b 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocation.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocation.java
+@@ -242,7 +242,7 @@
+         try {
+             execute();
+         } catch (RejectedExecutionException e) {
+-            clientInvocationFuture.complete(exception);
++            clientInvocationFuture.complete(new HazelcastClientNotActiveException("Client is shutting down", exception));
+         }
+ 
+     }
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocation.java b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocation.java
+index 48600f9..58aac2b 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocation.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocation.java
+@@ -242,7 +242,7 @@
+         try {
+             execute();
+         } catch (RejectedExecutionException e) {
+-            clientInvocationFuture.complete(exception);
++            clientInvocationFuture.complete(new HazelcastClientNotActiveException("Client is shutting down", exception));
+         }
+ 
+     }

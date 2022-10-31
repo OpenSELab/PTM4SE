@@ -1,0 +1,226 @@
+diff --git a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
+index cc9a107..811bf8a 100644
+--- a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
++++ b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
+@@ -137,7 +137,7 @@
+ 				collectRecordData(input2));
+ 			
+ 			final JoinFunction matcher = new RecordMatchRemovingJoin(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			generator1.reset();
+@@ -231,7 +231,7 @@
+ 			input2 = new UnionIterator<Record>(inList2);
+ 			
+ 			final JoinFunction matcher = new RecordMatchRemovingJoin(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			BuildFirstHashMatchIterator<Record, Record, Record> iterator = 
+ 					new BuildFirstHashMatchIterator<Record, Record, Record>(
+@@ -273,7 +273,7 @@
+ 				collectRecordData(input2));
+ 			
+ 			final JoinFunction matcher = new RecordMatchRemovingJoin(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			generator1.reset();
+@@ -367,7 +367,7 @@
+ 			input2 = new UnionIterator<Record>(inList2);
+ 			
+ 			final JoinFunction matcher = new RecordMatchRemovingJoin(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			BuildSecondHashMatchIterator<Record, Record, Record> iterator = 
+ 				new BuildSecondHashMatchIterator<Record, Record, Record>(
+@@ -408,7 +408,7 @@
+ 				collectRecordData(input2));
+ 			
+ 			final GenericJoiner<IntPair, Record, Record> matcher = new RecordIntPairMatchRemovingMatcher(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			input1 = new UniformIntPairGenerator(500, 40, false);
+@@ -455,7 +455,7 @@
+ 				collectRecordData(input2));
+ 			
+ 			final GenericJoiner<IntPair, Record, Record> matcher = new RecordIntPairMatchRemovingMatcher(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			input1 = new UniformIntPairGenerator(500, 40, false);
+diff --git a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/ReOpenableHashTableITCase.java b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/ReOpenableHashTableITCase.java
+index fdbabcb..dbe8bc1 100644
+--- a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/ReOpenableHashTableITCase.java
++++ b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/ReOpenableHashTableITCase.java
+@@ -225,7 +225,7 @@
+ 		
+ 		final JoinFunction firstMatcher = new RecordMatchRemovingJoin(expectedFirstMatchesMap);
+ 		
+-		final Collector<Record> collector = new DiscardingOutputCollector();
++		final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 
+ 		// reset the generators
+ 		bgen.reset();
+diff --git a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/sort/SortMergeMatchIteratorITCase.java b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/sort/SortMergeMatchIteratorITCase.java
+index 90846db..9c88c40 100644
+--- a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/sort/SortMergeMatchIteratorITCase.java
++++ b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/sort/SortMergeMatchIteratorITCase.java
+@@ -130,7 +130,7 @@
+ 			
+ 			final JoinFunction matcher = new MatchRemovingMatcher(expectedMatchesMap);
+ 			
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			generator1.reset();
+@@ -221,7 +221,7 @@
+ 			
+ 			final JoinFunction matcher = new MatchRemovingMatcher(expectedMatchesMap);
+ 			
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			
+ 			// we create this sort-merge iterator with little memory for the block-nested-loops fall-back to make sure it
+diff --git a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/CombineTaskTest.java b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/CombineTaskTest.java
+index dc214ba..029fdb9 100644
+--- a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/CombineTaskTest.java
++++ b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/CombineTaskTest.java
+@@ -93,7 +93,7 @@
+ 		
+ 		addInput(new UniformRecordGenerator(keyCnt, valCnt, false));
+ 		addInputComparator(this.comparator);
+-		setOutput(new DiscardingOutputCollector());
++		setOutput(new DiscardingOutputCollector<Record>());
+ 		
+ 		getTaskConfig().setDriverStrategy(DriverStrategy.SORTED_GROUP_COMBINE);
+ 		getTaskConfig().setMemoryDriver(COMBINE_MEM);
+@@ -117,7 +117,7 @@
+ 	{
+ 		addInput(new DelayingInfinitiveInputIterator(100));
+ 		addInputComparator(this.comparator);
+-		setOutput(new DiscardingOutputCollector());
++		setOutput(new DiscardingOutputCollector<Record>());
+ 		
+ 		getTaskConfig().setDriverStrategy(DriverStrategy.SORTED_GROUP_COMBINE);
+ 		getTaskConfig().setMemoryDriver(COMBINE_MEM);
+diff --git a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/MapTaskTest.java b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/MapTaskTest.java
+index 90da3cc..3e89b29 100644
+--- a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/MapTaskTest.java
++++ b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/MapTaskTest.java
+@@ -68,7 +68,7 @@
+ 		final int valCnt = 20;
+ 		
+ 		addInput(new UniformRecordGenerator(keyCnt, valCnt, false));
+-		setOutput(new DiscardingOutputCollector());
++		setOutput(new DiscardingOutputCollector<Record>());
+ 		
+ 		final CollectorMapDriver<Record, Record> testTask = new CollectorMapDriver<Record, Record>();
+ 		try {
+@@ -85,7 +85,7 @@
+ 	@Test
+ 	public void testCancelMapTask() {
+ 		addInput(new InfiniteInputIterator());
+-		setOutput(new DiscardingOutputCollector());
++		setOutput(new DiscardingOutputCollector<Record>());
+ 		
+ 		final CollectorMapDriver<Record, Record> testTask = new CollectorMapDriver<Record, Record>();
+ 		
+diff --git a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/util/HashVsSortMiniBenchmark.java b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/util/HashVsSortMiniBenchmark.java
+index 3e03b37..39d3dd2 100644
+--- a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/util/HashVsSortMiniBenchmark.java
++++ b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/task/util/HashVsSortMiniBenchmark.java
+@@ -122,7 +122,7 @@
+ 			final TestData.GeneratorIterator input2 = new TestData.GeneratorIterator(generator2, INPUT_2_SIZE);
+ 			
+ 			final JoinFunction matcher = new NoOpMatcher();
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 			
+ 			long start = System.nanoTime();
+ 			
+@@ -173,7 +173,7 @@
+ 			
+ 			final JoinFunction matcher = new NoOpMatcher();
+ 			
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 			
+ 			long start = System.nanoTime();
+ 			
+@@ -212,7 +212,7 @@
+ 			
+ 			final JoinFunction matcher = new NoOpMatcher();
+ 			
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 			
+ 			long start = System.nanoTime();
+ 			
+diff --git a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
+index cc9a107..811bf8a 100644
+--- a/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
++++ b/stratosphere-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
+@@ -137,7 +137,7 @@
+ 				collectRecordData(input2));
+ 			
+ 			final JoinFunction matcher = new RecordMatchRemovingJoin(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			generator1.reset();
+@@ -231,7 +231,7 @@
+ 			input2 = new UnionIterator<Record>(inList2);
+ 			
+ 			final JoinFunction matcher = new RecordMatchRemovingJoin(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			BuildFirstHashMatchIterator<Record, Record, Record> iterator = 
+ 					new BuildFirstHashMatchIterator<Record, Record, Record>(
+@@ -273,7 +273,7 @@
+ 				collectRecordData(input2));
+ 			
+ 			final JoinFunction matcher = new RecordMatchRemovingJoin(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			generator1.reset();
+@@ -367,7 +367,7 @@
+ 			input2 = new UnionIterator<Record>(inList2);
+ 			
+ 			final JoinFunction matcher = new RecordMatchRemovingJoin(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			BuildSecondHashMatchIterator<Record, Record, Record> iterator = 
+ 				new BuildSecondHashMatchIterator<Record, Record, Record>(
+@@ -408,7 +408,7 @@
+ 				collectRecordData(input2));
+ 			
+ 			final GenericJoiner<IntPair, Record, Record> matcher = new RecordIntPairMatchRemovingMatcher(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			input1 = new UniformIntPairGenerator(500, 40, false);
+@@ -455,7 +455,7 @@
+ 				collectRecordData(input2));
+ 			
+ 			final GenericJoiner<IntPair, Record, Record> matcher = new RecordIntPairMatchRemovingMatcher(expectedMatchesMap);
+-			final Collector<Record> collector = new DiscardingOutputCollector();
++			final Collector<Record> collector = new DiscardingOutputCollector<Record>();
+ 	
+ 			// reset the generators
+ 			input1 = new UniformIntPairGenerator(500, 40, false);

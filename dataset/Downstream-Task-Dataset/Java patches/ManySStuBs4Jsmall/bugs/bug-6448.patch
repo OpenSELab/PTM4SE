@@ -1,0 +1,57 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/query/QueryableStateClient.java b/flink-runtime/src/main/java/org/apache/flink/runtime/query/QueryableStateClient.java
+index 7ba3199..5d9db19 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/query/QueryableStateClient.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/query/QueryableStateClient.java
+@@ -92,7 +92,7 @@
+ 	private final ConcurrentMap<Tuple2<JobID, String>, Future<KvStateLocation>> lookupCache =
+ 			new ConcurrentHashMap<>();
+ 
+-	/** This is != null, iff we started the actor system. */
++	/** This is != null, if we started the actor system. */
+ 	private final ActorSystem actorSystem;
+ 
+ 	/**
+@@ -210,7 +210,7 @@
+ 			try {
+ 				actorSystem.shutdown();
+ 			} catch (Throwable t) {
+-				LOG.error("Failed to shut down ActorSystem");
++				LOG.error("Failed to shut down ActorSystem", t);
+ 			}
+ 		}
+ 	}
+diff --git a/flink-yarn/src/main/java/org/apache/flink/yarn/YarnFlinkApplicationMasterRunner.java b/flink-yarn/src/main/java/org/apache/flink/yarn/YarnFlinkApplicationMasterRunner.java
+index 21e6e45..4c935f1 100644
+--- a/flink-yarn/src/main/java/org/apache/flink/yarn/YarnFlinkApplicationMasterRunner.java
++++ b/flink-yarn/src/main/java/org/apache/flink/yarn/YarnFlinkApplicationMasterRunner.java
+@@ -66,7 +66,7 @@
+  * It starts actor system and the actors for {@link JobManagerRunner}
+  * and {@link YarnResourceManager}.
+  *
+- * The JobMasnagerRunner start a {@link org.apache.flink.runtime.jobmaster.JobMaster}
++ * The JobManagerRunner start a {@link org.apache.flink.runtime.jobmaster.JobMaster}
+  * JobMaster handles Flink job execution, while the YarnResourceManager handles container
+  * allocation and failure detection.
+  */
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/query/QueryableStateClient.java b/flink-runtime/src/main/java/org/apache/flink/runtime/query/QueryableStateClient.java
+index 7ba3199..5d9db19 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/query/QueryableStateClient.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/query/QueryableStateClient.java
+@@ -92,7 +92,7 @@
+ 	private final ConcurrentMap<Tuple2<JobID, String>, Future<KvStateLocation>> lookupCache =
+ 			new ConcurrentHashMap<>();
+ 
+-	/** This is != null, iff we started the actor system. */
++	/** This is != null, if we started the actor system. */
+ 	private final ActorSystem actorSystem;
+ 
+ 	/**
+@@ -210,7 +210,7 @@
+ 			try {
+ 				actorSystem.shutdown();
+ 			} catch (Throwable t) {
+-				LOG.error("Failed to shut down ActorSystem");
++				LOG.error("Failed to shut down ActorSystem", t);
+ 			}
+ 		}
+ 	}

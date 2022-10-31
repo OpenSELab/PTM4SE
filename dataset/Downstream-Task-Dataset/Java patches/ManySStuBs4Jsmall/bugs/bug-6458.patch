@@ -1,0 +1,22 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/Task.java b/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/Task.java
+index aaed9c7..a408990 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/Task.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/Task.java
+@@ -717,7 +717,7 @@
+ 						else {
+ 							if (transitionState(current, ExecutionState.FAILED, t)) {
+ 								// proper failure of the task. record the exception as the root cause
+-								String errorMessage = String.format("Execution of {} ({}) failed.", taskNameWithSubtask, executionId);
++								String errorMessage = String.format("Execution of %s (%s) failed.", taskNameWithSubtask, executionId);
+ 								failureCause = t;
+ 								cancelInvokable();
+ 
+@@ -1074,7 +1074,7 @@
+ 							resultPartitionId,
+ 							ExecutionState.RUNNING);
+ 					} else if (throwable instanceof PartitionProducerDisposedException) {
+-						String msg = String.format("Producer {} of partition {} disposed. Cancelling execution.",
++						String msg = String.format("Producer %s of partition %s disposed. Cancelling execution.",
+ 							resultPartitionId.getProducerId(), resultPartitionId.getPartitionId());
+ 						LOG.info(msg, throwable);
+ 						cancelExecution();

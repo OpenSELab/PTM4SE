@@ -1,0 +1,38 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultScheduledPollConsumerScheduler.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultScheduledPollConsumerScheduler.java
+index c132cad..729ee75 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultScheduledPollConsumerScheduler.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultScheduledPollConsumerScheduler.java
+@@ -156,17 +156,15 @@ public class DefaultScheduledPollConsumerScheduler extends org.apache.camel.supp
+     protected void doStop() throws Exception {
+         if (future != null) {
+             LOG.debug("This consumer is stopping, so cancelling scheduled task: " + future);
+-            future.cancel(false);
++            future.cancel(true);
+             future = null;
+         }
+-    }
+ 
+-    @Override
+-    protected void doShutdown() throws Exception {
+         if (shutdownExecutor && scheduledExecutorService != null) {
+             getCamelContext().getExecutorServiceManager().shutdownNow(scheduledExecutorService);
+             scheduledExecutorService = null;
+             future = null;
+         }
+     }
++
+ }
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/ScheduledPollConsumer.java b/camel-core/src/main/java/org/apache/camel/impl/ScheduledPollConsumer.java
+index 5d080e2..e300d49 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/ScheduledPollConsumer.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/ScheduledPollConsumer.java
+@@ -514,7 +514,8 @@ public abstract class ScheduledPollConsumer extends DefaultConsumer implements R
+ 
+     @Override
+     protected void doStop() throws Exception {
+-        ServiceHelper.stopService(scheduler);
++        scheduler.unscheduleTask();
++        ServiceHelper.stopAndShutdownServices(scheduler);
+ 
+         // clear counters
+         backoffCounter = 0;

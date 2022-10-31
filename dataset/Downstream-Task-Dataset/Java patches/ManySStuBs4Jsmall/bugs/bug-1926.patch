@@ -1,0 +1,26 @@
+diff --git a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+index 464fe29..c4b52cb 100755
+--- a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
++++ b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+@@ -675,7 +675,7 @@
+                 bc = r.getBroadcaster();
+             }
+ 
+-            if (response.getEntity() instanceof Broadcastable) {
++            if (response.getEntity() == null && response.getEntity() instanceof Broadcastable) {
+                 Broadcastable b = (Broadcastable) response.getEntity();
+                 bc = b.getBroadcaster();
+                 response.setEntity(b.getResponseMessage());
+diff --git a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+index 464fe29..c4b52cb 100755
+--- a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
++++ b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+@@ -675,7 +675,7 @@
+                 bc = r.getBroadcaster();
+             }
+ 
+-            if (response.getEntity() instanceof Broadcastable) {
++            if (response.getEntity() == null && response.getEntity() instanceof Broadcastable) {
+                 Broadcastable b = (Broadcastable) response.getEntity();
+                 bc = b.getBroadcaster();
+                 response.setEntity(b.getResponseMessage());

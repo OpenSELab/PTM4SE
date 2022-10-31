@@ -1,0 +1,28 @@
+diff --git a/presto-resource-group-managers/src/main/java/com/facebook/presto/resourceGroups/AbstractResourceConfigurationManager.java b/presto-resource-group-managers/src/main/java/com/facebook/presto/resourceGroups/AbstractResourceConfigurationManager.java
+index 42f35ff..ff9cb6d 100644
+--- a/presto-resource-group-managers/src/main/java/com/facebook/presto/resourceGroups/AbstractResourceConfigurationManager.java
++++ b/presto-resource-group-managers/src/main/java/com/facebook/presto/resourceGroups/AbstractResourceConfigurationManager.java
+@@ -183,7 +183,8 @@
+         if (match.getSchedulingWeight().isPresent()) {
+             group.setSchedulingWeight(match.getSchedulingWeight().get());
+         }
+-        if (match.getJmxExport().isPresent()) {
++        // if the new and current values do not differ an exception is thrown
++        if (match.getJmxExport().isPresent() && match.getJmxExport().get() != group.getJmxExport()) {
+             group.setJmxExport(match.getJmxExport().get());
+         }
+         if (match.getSoftCpuLimit().isPresent() || match.getHardCpuLimit().isPresent()) {
+diff --git a/presto-resource-group-managers/src/main/java/com/facebook/presto/resourceGroups/AbstractResourceConfigurationManager.java b/presto-resource-group-managers/src/main/java/com/facebook/presto/resourceGroups/AbstractResourceConfigurationManager.java
+index 42f35ff..ff9cb6d 100644
+--- a/presto-resource-group-managers/src/main/java/com/facebook/presto/resourceGroups/AbstractResourceConfigurationManager.java
++++ b/presto-resource-group-managers/src/main/java/com/facebook/presto/resourceGroups/AbstractResourceConfigurationManager.java
+@@ -183,7 +183,8 @@
+         if (match.getSchedulingWeight().isPresent()) {
+             group.setSchedulingWeight(match.getSchedulingWeight().get());
+         }
+-        if (match.getJmxExport().isPresent()) {
++        // if the new and current values do not differ an exception is thrown
++        if (match.getJmxExport().isPresent() && match.getJmxExport().get() != group.getJmxExport()) {
+             group.setJmxExport(match.getJmxExport().get());
+         }
+         if (match.getSoftCpuLimit().isPresent() || match.getHardCpuLimit().isPresent()) {

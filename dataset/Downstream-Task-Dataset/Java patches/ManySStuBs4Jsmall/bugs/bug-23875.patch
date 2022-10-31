@@ -1,0 +1,26 @@
+diff --git a/server/src/main/java/org/jboss/as/server/RuntimeExpressionResolver.java b/server/src/main/java/org/jboss/as/server/RuntimeExpressionResolver.java
+index a22e278..446dcb6 100644
+--- a/server/src/main/java/org/jboss/as/server/RuntimeExpressionResolver.java
++++ b/server/src/main/java/org/jboss/as/server/RuntimeExpressionResolver.java
+@@ -41,7 +41,7 @@
+         String expression = node.asString();
+         if (expression.length() > 3) {
+             expression = expression.substring(2, expression.length() -2);
+-            if ( vaultReader.isVaultFormat(expression)) {
++            if (vaultReader != null && vaultReader.isVaultFormat(expression)) {
+                 node.set(vaultReader.retrieveFromVault(expression));
+             }
+         }
+diff --git a/server/src/main/java/org/jboss/as/server/RuntimeExpressionResolver.java b/server/src/main/java/org/jboss/as/server/RuntimeExpressionResolver.java
+index a22e278..446dcb6 100644
+--- a/server/src/main/java/org/jboss/as/server/RuntimeExpressionResolver.java
++++ b/server/src/main/java/org/jboss/as/server/RuntimeExpressionResolver.java
+@@ -41,7 +41,7 @@
+         String expression = node.asString();
+         if (expression.length() > 3) {
+             expression = expression.substring(2, expression.length() -2);
+-            if ( vaultReader.isVaultFormat(expression)) {
++            if (vaultReader != null && vaultReader.isVaultFormat(expression)) {
+                 node.set(vaultReader.retrieveFromVault(expression));
+             }
+         }

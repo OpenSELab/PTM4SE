@@ -1,0 +1,48 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/RpcServer.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/RpcServer.java
+index 4c72714..1c65a2b 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/RpcServer.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/RpcServer.java
+@@ -1719,7 +1719,8 @@
+             responder, totalRequestSize, null);
+         ByteArrayOutputStream responseBuffer = new ByteArrayOutputStream();
+         setupResponse(responseBuffer, callTooBig, new CallQueueTooBigException(),
+-          "Call queue is full, is hbase.ipc.server.max.callqueue.size too small?");
++          "Call queue is full on " + getListenerAddress() +
++          ", is hbase.ipc.server.max.callqueue.size too small?");
+         responder.doRespond(callTooBig);
+         return;
+       }
+@@ -1745,7 +1746,8 @@
+             buf, offset, buf.length);
+         }
+       } catch (Throwable t) {
+-        String msg = "Unable to read call parameter from client " + getHostAddress();
++        String msg = getListenerAddress() + " is unable to read call parameter from client " +
++            getHostAddress();
+         LOG.warn(msg, t);
+ 
+         // probably the hbase hadoop version does not match the running hadoop version
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/RpcServer.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/RpcServer.java
+index 4c72714..1c65a2b 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/RpcServer.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/RpcServer.java
+@@ -1719,7 +1719,8 @@
+             responder, totalRequestSize, null);
+         ByteArrayOutputStream responseBuffer = new ByteArrayOutputStream();
+         setupResponse(responseBuffer, callTooBig, new CallQueueTooBigException(),
+-          "Call queue is full, is hbase.ipc.server.max.callqueue.size too small?");
++          "Call queue is full on " + getListenerAddress() +
++          ", is hbase.ipc.server.max.callqueue.size too small?");
+         responder.doRespond(callTooBig);
+         return;
+       }
+@@ -1745,7 +1746,8 @@
+             buf, offset, buf.length);
+         }
+       } catch (Throwable t) {
+-        String msg = "Unable to read call parameter from client " + getHostAddress();
++        String msg = getListenerAddress() + " is unable to read call parameter from client " +
++            getHostAddress();
+         LOG.warn(msg, t);
+ 
+         // probably the hbase hadoop version does not match the running hadoop version

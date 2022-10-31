@@ -1,0 +1,82 @@
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/BaseDataSetIterator.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/BaseDataSetIterator.java
+index bb5aad4..97a668f 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/BaseDataSetIterator.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/BaseDataSetIterator.java
+@@ -95,7 +95,7 @@
+ 
+     @Override
+     public boolean hasNext() {
+-        return iter.hasNext();
++        return preloadedDataSet != null || iter.hasNext();
+     }
+ 
+     @Override
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PathSparkDataSetIterator.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PathSparkDataSetIterator.java
+index d98e94b..94ccc97 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PathSparkDataSetIterator.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PathSparkDataSetIterator.java
+@@ -70,7 +70,8 @@
+         try (FSDataInputStream inputStream = fileSystem.open(new Path(path), BUFFER_SIZE)) {
+             ds.load(inputStream);
+         } catch (IOException e) {
+-            throw new RuntimeException(e);
++            throw new RuntimeException("Error loading DataSet at path " + path + " - DataSet may be corrupt or invalid." +
++                    " Spark DataSets can be validated using org.deeplearning4j.spark.util.data.SparkDataValidation", e);
+         }
+ 
+         cursor++;
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PathSparkMultiDataSetIterator.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PathSparkMultiDataSetIterator.java
+index 66ce9f7..b291945 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PathSparkMultiDataSetIterator.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PathSparkMultiDataSetIterator.java
+@@ -104,7 +104,8 @@
+         try (FSDataInputStream inputStream = fileSystem.open(new Path(path), BUFFER_SIZE)) {
+             ds.load(inputStream);
+         } catch (IOException e) {
+-            throw new RuntimeException(e);
++            throw new RuntimeException("Error loading MultiDataSet at path " + path + " - DataSet may be corrupt or invalid." +
++                    " Spark MultiDataSets can be validated using org.deeplearning4j.spark.util.data.SparkDataValidation", e);
+         }
+ 
+         return ds;
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PortableDataStreamDataSetIterator.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PortableDataStreamDataSetIterator.java
+index 9dfad27..a2bfc39 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PortableDataStreamDataSetIterator.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PortableDataStreamDataSetIterator.java
+@@ -56,7 +56,8 @@
+         try (InputStream is = pds.open()) {
+             ds.load(is);
+         } catch (IOException e) {
+-            throw new RuntimeException(e);
++            throw new RuntimeException("Error loading DataSet at path " + pds.getPath() + " - DataSet may be corrupt or invalid." +
++                    " Spark DataSets can be validated using org.deeplearning4j.spark.util.data.SparkDataValidation", e);
+         }
+         cursor++;
+         return ds;
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PortableDataStreamMultiDataSetIterator.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PortableDataStreamMultiDataSetIterator.java
+index c9251fc..5b281fa 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PortableDataStreamMultiDataSetIterator.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/PortableDataStreamMultiDataSetIterator.java
+@@ -77,7 +77,8 @@
+         try (InputStream is = pds.open()) {
+             ds.load(is);
+         } catch (IOException e) {
+-            throw new RuntimeException(e);
++            throw new RuntimeException("Error loading MultiDataSet at path " + pds.getPath() + " - MultiDataSet may be corrupt or invalid." +
++                    " Spark MultiDataSets can be validated using org.deeplearning4j.spark.util.data.SparkDataValidation", e);
+         }
+ 
+         if (preprocessor != null)
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/BaseDataSetIterator.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/BaseDataSetIterator.java
+index bb5aad4..97a668f 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/BaseDataSetIterator.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/iterator/BaseDataSetIterator.java
+@@ -95,7 +95,7 @@
+ 
+     @Override
+     public boolean hasNext() {
+-        return iter.hasNext();
++        return preloadedDataSet != null || iter.hasNext();
+     }
+ 
+     @Override

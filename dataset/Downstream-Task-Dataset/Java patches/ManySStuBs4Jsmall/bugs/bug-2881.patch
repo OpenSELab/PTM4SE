@@ -1,0 +1,26 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/indexer/IndexHelper.java b/graylog2-server/src/main/java/org/graylog2/indexer/IndexHelper.java
+index c1972a2..d219618 100644
+--- a/graylog2-server/src/main/java/org/graylog2/indexer/IndexHelper.java
++++ b/graylog2-server/src/main/java/org/graylog2/indexer/IndexHelper.java
+@@ -97,7 +97,7 @@
+             from = Tools.getUTCTimestamp()-range.getRange();
+         }
+ 
+-        String fromDate = Tools.buildElasticSearchTimeFormat(Tools.dateTimeFromDouble(from));
++        String fromDate = Tools.buildElasticSearchTimeFormat(new DateTime(from*1000L));
+         return FilterBuilders.rangeFilter("timestamp")
+                 .gte(fromDate);
+     }
+diff --git a/graylog2-server/src/main/java/org/graylog2/indexer/IndexHelper.java b/graylog2-server/src/main/java/org/graylog2/indexer/IndexHelper.java
+index c1972a2..d219618 100644
+--- a/graylog2-server/src/main/java/org/graylog2/indexer/IndexHelper.java
++++ b/graylog2-server/src/main/java/org/graylog2/indexer/IndexHelper.java
+@@ -97,7 +97,7 @@
+             from = Tools.getUTCTimestamp()-range.getRange();
+         }
+ 
+-        String fromDate = Tools.buildElasticSearchTimeFormat(Tools.dateTimeFromDouble(from));
++        String fromDate = Tools.buildElasticSearchTimeFormat(new DateTime(from*1000L));
+         return FilterBuilders.rangeFilter("timestamp")
+                 .gte(fromDate);
+     }

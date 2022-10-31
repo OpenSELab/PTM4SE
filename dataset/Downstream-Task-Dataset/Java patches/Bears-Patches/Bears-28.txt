@@ -1,0 +1,52 @@
+--- a/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
++++ b/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
+@@ -1188,7 +1188,7 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 	@SuppressWarnings("rawtypes")
+ 	public <T> void visitCtNewArray(CtNewArray<T> newArray) {
+ 		enterCtExpression(newArray);
+
++		elementPrinterHelper.writeComment(newArray, CommentOffset.BEFORE);
+ 		boolean isNotInAnnotation;
+ 		try {
+ 			isNotInAnnotation = (newArray.getParent(CtAnnotationType.class) == null) && (newArray.getParent(CtAnnotation.class) == null);
+@@ -1244,8 +1244,11 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 					elementPrinterHelper.writeComment(e, CommentOffset.AFTER);
+ 				}
+ 			}
++
++			elementPrinterHelper.writeComment(newArray, CommentOffset.INSIDE);
+ 			printer.write(" }");
+ 		}
++		elementPrinterHelper.writeComment(newArray, CommentOffset.AFTER);
+ 		exitCtExpression(newArray);
+ 	}
+ 
+--- a/src/main/java/spoon/reflect/visitor/printer/ElementPrinterHelper.java
++++ b/src/main/java/spoon/reflect/visitor/printer/ElementPrinterHelper.java
+@@ -336,7 +336,8 @@ public class ElementPrinterHelper {
+ 			}
+ 			final int line = element.getPosition().getLine();
+ 			final int sourceEnd = element.getPosition().getSourceEnd();
+-			if (offset == CommentOffset.BEFORE && (comment.getPosition().getLine() < line || sourceEnd >= comment.getPosition().getSourceEnd())) {
++			final int sourceStart = element.getPosition().getSourceStart();
++			if (offset == CommentOffset.BEFORE && (comment.getPosition().getLine() < line || (sourceStart <= comment.getPosition().getSourceStart() && sourceEnd >= comment.getPosition().getSourceEnd()))) {
+ 				commentsToPrint.add(comment);
+ 			} else if (offset == CommentOffset.AFTER && comment.getPosition().getSourceStart() > sourceEnd) {
+ 				commentsToPrint.add(comment);
+diff --git a/src/main/java/spoon/support/compiler/jdt/JDTCommentBuilder.java b/src/main/java/spoon/support/compiler/jdt/JDTCommentBuilder.java
+index d5473f1..1b643a1 100644
+--- a/src/main/java/spoon/support/compiler/jdt/JDTCommentBuilder.java
++++ b/src/main/java/spoon/support/compiler/jdt/JDTCommentBuilder.java
+@@ -157,7 +158,11 @@ class JDTCommentBuilder {
+ 			if (isAfter) {
+ 				distance = Math.abs(element.getPosition().getSourceEnd() - comment.getPosition().getSourceStart());
+ 			}
+-			if (distance < smallDistance && (!isAfter || element.getPosition().getEndLine() == comment.getPosition().getLine())) {
++
++			int elementEndLine = element.getPosition().getEndLine();
++			int commentLine = comment.getPosition().getLine();
++
++			if (distance < smallDistance && (!isAfter || elementEndLine == commentLine)) {
+ 				best = element;
+ 				smallDistance = distance;
+ 			}

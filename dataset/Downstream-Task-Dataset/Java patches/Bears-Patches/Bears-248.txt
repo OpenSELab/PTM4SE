@@ -1,0 +1,17 @@
+--- a/vertx-web-client/src/main/java/io/vertx/ext/web/client/impl/HttpContext.java
++++ b/vertx-web-client/src/main/java/io/vertx/ext/web/client/impl/HttpContext.java
+@@ -195,11 +195,11 @@ public class HttpContext<T> {
+             fail(ar.cause());
+           }
+         });
++        return;
+       }
+-    } else {
+-      this.clientResponse = clientResponse;
+-      fire(ClientPhase.RECEIVE_RESPONSE);
+     }
++    this.clientResponse = clientResponse;
++    fire(ClientPhase.RECEIVE_RESPONSE);
+   }
+ 
+   /**

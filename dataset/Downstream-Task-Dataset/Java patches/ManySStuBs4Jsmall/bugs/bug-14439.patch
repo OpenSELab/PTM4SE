@@ -1,0 +1,32 @@
+diff --git a/test/com/google/javascript/jscomp/PeepholeSubstituteAlternateSyntaxTest.java b/test/com/google/javascript/jscomp/PeepholeSubstituteAlternateSyntaxTest.java
+index ea73010..98e44ae 100644
+--- a/test/com/google/javascript/jscomp/PeepholeSubstituteAlternateSyntaxTest.java
++++ b/test/com/google/javascript/jscomp/PeepholeSubstituteAlternateSyntaxTest.java
+@@ -445,9 +445,9 @@
+     fold("x = new Array(Array(1, '2', 3, '4'))", "x = [[1, '2', 3, '4']]");
+     fold("x = Array(Array(1, '2', 3, '4'))", "x = [[1, '2', 3, '4']]");
+     fold("x = new Array(Object(), Array(\"abc\", Object(), Array(Array())))",
+-         "x = [{}, [\"abc\", {}, [[]]]");
++         "x = [{}, [\"abc\", {}, [[]]]]");
+     fold("x = new Array(Object(), Array(\"abc\", Object(), Array(Array())))",
+-         "x = [{}, [\"abc\", {}, [[]]]");
++         "x = [{}, [\"abc\", {}, [[]]]]");
+ 
+     disableNormalize();
+     // Cannot fold above when not normalized
+diff --git a/test/com/google/javascript/jscomp/PeepholeSubstituteAlternateSyntaxTest.java b/test/com/google/javascript/jscomp/PeepholeSubstituteAlternateSyntaxTest.java
+index ea73010..98e44ae 100644
+--- a/test/com/google/javascript/jscomp/PeepholeSubstituteAlternateSyntaxTest.java
++++ b/test/com/google/javascript/jscomp/PeepholeSubstituteAlternateSyntaxTest.java
+@@ -445,9 +445,9 @@
+     fold("x = new Array(Array(1, '2', 3, '4'))", "x = [[1, '2', 3, '4']]");
+     fold("x = Array(Array(1, '2', 3, '4'))", "x = [[1, '2', 3, '4']]");
+     fold("x = new Array(Object(), Array(\"abc\", Object(), Array(Array())))",
+-         "x = [{}, [\"abc\", {}, [[]]]");
++         "x = [{}, [\"abc\", {}, [[]]]]");
+     fold("x = new Array(Object(), Array(\"abc\", Object(), Array(Array())))",
+-         "x = [{}, [\"abc\", {}, [[]]]");
++         "x = [{}, [\"abc\", {}, [[]]]]");
+ 
+     disableNormalize();
+     // Cannot fold above when not normalized

@@ -1,0 +1,17 @@
+diff --git a/src/test/java/com/ning/http/client/async/RemoteSiteTest.java b/src/test/java/com/ning/http/client/async/RemoteSiteTest.java
+index 9fa9331..dfc41b1 100644
+--- a/src/test/java/com/ning/http/client/async/RemoteSiteTest.java
++++ b/src/test/java/com/ning/http/client/async/RemoteSiteTest.java
+@@ -152,9 +152,10 @@
+         }
+     }
+ 
+-    @Test(groups = "async", enabled = false)
++    @Test
+     public void asyncStatusHEADContentLenghtTest() throws Throwable {
+-        NettyAsyncHttpProvider n = new NettyAsyncHttpProvider(new AsyncHttpClientConfig.Builder().build());
++        NettyAsyncHttpProvider n = new NettyAsyncHttpProvider(
++                new AsyncHttpClientConfig.Builder().setFollowRedirects(true).build());
+ 
+         final CountDownLatch l = new CountDownLatch(1);
+         Request request = new RequestBuilder(RequestType.HEAD)

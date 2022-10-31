@@ -1,0 +1,78 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
+index 9d0245d..9d46baf 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
+@@ -147,6 +147,11 @@ public class Form<T> extends WebMarkupContainer implements IFormSubmitListener
+ 	private static final String HIDDEN_DIV_START = "<div style=\"width:0px;height:0px;position:absolute;left:-100px;top:-100px;overflow:hidden\">";
+ 
+ 	/**
++	 * The value of HTMLFormElement's <code>enctype</code> attribute needed for file uploading.
++	 */
++	public static final String ENCTYPE_MULTIPART_FORM_DATA = "multipart/form-data";
++
++	/**
+ 	 * Visitor used for validation
+ 	 * 
+ 	 * @author Igor Vaynberg (ivaynberg)
+@@ -1540,7 +1545,7 @@ public class Form<T> extends WebMarkupContainer implements IFormSubmitListener
+ 					tag.put("method", METHOD_POST.toLowerCase(Locale.ENGLISH));
+ 				}
+ 
+-				tag.put("enctype", "multipart/form-data");
++				tag.put("enctype", ENCTYPE_MULTIPART_FORM_DATA);
+ 				//
+ 				// require the application-encoding for multipart/form-data to be sure to
+ 				// get multipart-uploaded characters with the proper encoding on the following
+@@ -1555,7 +1560,7 @@ public class Form<T> extends WebMarkupContainer implements IFormSubmitListener
+ 			{
+ 				// sanity check
+ 				String enctype = (String)tag.getAttributes().get("enctype");
+-				if ("multipart/form-data".equalsIgnoreCase(enctype))
++				if (ENCTYPE_MULTIPART_FORM_DATA.equalsIgnoreCase(enctype))
+ 				{
+ 					// though not set explicitly in Java, this is a multipart
+ 					// form
+diff --git a/wicket-core/src/main/java/org/apache/wicket/protocol/http/WebApplication.java b/wicket-core/src/main/java/org/apache/wicket/protocol/http/WebApplication.java
+index 42ab5d1..117947d 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/protocol/http/WebApplication.java
++++ b/wicket-core/src/main/java/org/apache/wicket/protocol/http/WebApplication.java
+@@ -44,6 +44,7 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+ import org.apache.wicket.markup.html.WebPage;
+ import org.apache.wicket.markup.html.form.AutoLabelResolver;
+ import org.apache.wicket.markup.html.form.AutoLabelTextResolver;
++import org.apache.wicket.markup.html.form.Form;
+ import org.apache.wicket.markup.html.pages.AccessDeniedPage;
+ import org.apache.wicket.markup.html.pages.InternalErrorPage;
+ import org.apache.wicket.markup.html.pages.PageExpiredErrorPage;
+@@ -79,6 +80,7 @@ import org.apache.wicket.util.lang.Args;
+ import org.apache.wicket.util.lang.PackageName;
+ import org.apache.wicket.util.string.Strings;
+ import org.apache.wicket.util.time.Duration;
++import org.apache.wicket.util.upload.FileUploadException;
+ import org.apache.wicket.util.watch.IModificationWatcher;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+@@ -486,6 +488,23 @@ public abstract class WebApplication extends Application
+ 
+ 		WebRequest webRequest = newWebRequest(servletRequest, filterPath);
+ 
++		String contentType = servletRequest.getContentType();
++		String method = servletRequest.getMethod();
++
++		if (webRequest instanceof ServletWebRequest && Form.METHOD_POST.equalsIgnoreCase(method) &&
++				Strings.isEmpty(contentType) == false && contentType.toLowerCase().startsWith(Form.ENCTYPE_MULTIPART_FORM_DATA))
++		{
++			try
++			{
++				return ((ServletWebRequest)webRequest).newMultipartWebRequest(
++					getApplicationSettings().getDefaultMaximumUploadSize(), "externalForm");
++			}
++			catch (FileUploadException e)
++			{
++				throw new RuntimeException(e);
++			}
++		}
++
+ 		return webRequest;
+ 	}
+ 

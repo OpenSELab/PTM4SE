@@ -1,0 +1,26 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
+index 10c4ee7..eca179b 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
+@@ -272,7 +272,7 @@
+     public static Deserializer getDeserializer(Properties schema)
+     {
+         String name = schema.getProperty(SERIALIZATION_LIB);
+-        checkArgument(name != null, "missing property: %s", SERIALIZATION_LIB);
++        checkArgument(name != null, "Table or partition is missing Hive deserializer property: %s", SERIALIZATION_LIB);
+ 
+         Deserializer deserializer = createDeserializer(getDeserializerClass(name));
+         initializeDeserializer(deserializer, schema);
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
+index 10c4ee7..eca179b 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
+@@ -272,7 +272,7 @@
+     public static Deserializer getDeserializer(Properties schema)
+     {
+         String name = schema.getProperty(SERIALIZATION_LIB);
+-        checkArgument(name != null, "missing property: %s", SERIALIZATION_LIB);
++        checkArgument(name != null, "Table or partition is missing Hive deserializer property: %s", SERIALIZATION_LIB);
+ 
+         Deserializer deserializer = createDeserializer(getDeserializerClass(name));
+         initializeDeserializer(deserializer, schema);

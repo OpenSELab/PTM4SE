@@ -1,0 +1,156 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/namepath/JcrNameParser.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/namepath/JcrNameParser.java
+index 205a754..ebc7c08 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/namepath/JcrNameParser.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/namepath/JcrNameParser.java
+@@ -92,7 +92,6 @@ public final class JcrNameParser {
+         String prefix;
+         int nameStart = 0;
+         int state = STATE_PREFIX_START;
+-        boolean trailingSpaces = false;
+ 
+         for (int i = 0; i < len; i++) {
+             char c = jcrName.charAt(i);
+@@ -101,10 +100,6 @@ public final class JcrNameParser {
+                     listener.error("Prefix must not be empty");
+                     return false;
+                 } else if (state == STATE_PREFIX) {
+-                    if (trailingSpaces) {
+-                        listener.error("Trailing spaces not allowed");
+-                        return false;
+-                    }
+                     prefix = jcrName.substring(0, i);
+                     if (!XMLChar.isValidNCName(prefix)) {
+                         listener.error("Invalid name prefix: "+ prefix);
+@@ -117,14 +112,7 @@ public final class JcrNameParser {
+                     listener.error("'" + c + "' not allowed in name");
+                     return false;
+                 }
+-                trailingSpaces = false;
+-            } else if (c == ' ') {
+-                if (state == STATE_PREFIX_START || state == STATE_NAME_START) {
+-                    listener.error("'" + c + "' not valid name start");
+-                    return false;
+-                }
+-                trailingSpaces = true;
+-            } else if (Character.isWhitespace(c) || c == '[' || c == ']' || c == '*' || c == '|') {
++            } else if (c == '[' || c == ']' || c == '*' || c == '|') {
+                 listener.error("'" + c + "' not allowed in name");
+                 return false;
+             } else if (c == '/') {
+@@ -134,7 +122,6 @@ public final class JcrNameParser {
+                     listener.error("'" + c + "' not allowed in name");
+                     return false;
+                 }
+-                trailingSpaces = false;
+             } else if (c == '{') {
+                 if (state == STATE_PREFIX_START) {
+                     state = STATE_URI_START;
+@@ -147,7 +134,6 @@ public final class JcrNameParser {
+                     state = STATE_NAME;
+                     nameStart = i;
+                 }
+-                trailingSpaces = false;
+             } else if (c == '}') {
+                 if (state == STATE_URI_START || state == STATE_URI) {
+                     String tmp = jcrName.substring(1, i);
+@@ -178,7 +164,6 @@ public final class JcrNameParser {
+                     state = STATE_NAME;
+                     nameStart = i;
+                 }
+-                trailingSpaces = false;
+             } else {
+                 if (state == STATE_PREFIX_START) {
+                     state = STATE_PREFIX; // prefix start
+@@ -188,7 +173,6 @@ public final class JcrNameParser {
+                 } else if (state == STATE_URI_START) {
+                     state = STATE_URI;
+                 }
+-                trailingSpaces = false;
+             }
+         }
+ 
+@@ -203,10 +187,6 @@ public final class JcrNameParser {
+             listener.error("Local name must not be empty");
+             return false;
+         }
+-        if (trailingSpaces) {
+-            listener.error("Trailing spaces not allowed");
+-            return false;
+-        }
+ 
+         return listener.name(jcrName, index);
+     }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/namepath/JcrPathParser.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/namepath/JcrPathParser.java
+index b63958a..54c1c9e 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/namepath/JcrPathParser.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/namepath/JcrPathParser.java
+@@ -80,11 +80,7 @@ public final class JcrPathParser {
+         while (pos <= len) {
+             char c = pos == len ? EOF : jcrPath.charAt(pos);
+             pos++;
+-            // special check for whitespace
+-            if (c != ' ' && Character.isWhitespace(c)) {
+-                c = '\t';
+-            }
+-            
++
+             switch (c) {
+                 case '/':
+                 case EOF:
+@@ -205,24 +201,6 @@ public final class JcrPathParser {
+                     }
+                     break;
+ 
+-                case ' ':
+-                    if (state == STATE_PREFIX_START || state == STATE_NAME_START) {
+-                        listener.error('\'' + jcrPath + "' is not a valid path. '" + c +
+-                                "' not valid name start");
+-                        return false;
+-                    } else if (state == STATE_INDEX_END) {
+-                        listener.error('\'' + jcrPath + "' is not a valid path. '" + c +
+-                                "' not valid after index. '/' expected.");
+-                        return false;
+-                    } else if (state == STATE_DOT || state == STATE_DOTDOT) {
+-                        state = STATE_PREFIX;
+-                    }
+-                    break;
+-
+-                case '\t':
+-                    listener.error('\'' + jcrPath + "' is not a valid path. " +
+-                            "Whitespace not a allowed in name.");
+-                    return false;
+                 case '*':
+                 case '|':
+                     listener.error('\'' + jcrPath + "' is not a valid path. '" + c +
+@@ -257,7 +235,7 @@ public final class JcrPathParser {
+                         return false;
+                     }
+             }
+-            wasSlash = c == ' ';
++            wasSlash = c == '/';
+         }
+         return true;
+     }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/name/Namespaces.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/name/Namespaces.java
+index 3b4219c..d0d1e26 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/name/Namespaces.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/name/Namespaces.java
+@@ -244,10 +244,14 @@ public class Namespaces implements NamespaceConstants {
+ 
+         for (int i = 0; i < local.length(); i++) {
+             char ch = local.charAt(i);
+-            if (i == 0 && Character.isWhitespace(ch)) {
+-                return false; // leading whitespace
+-            } else if (i == local.length() - 1 && Character.isWhitespace(ch)) {
+-                return false; // trailing whitespace
++            if (Character.isSpaceChar(ch)) {
++                if (i == 0) {
++                    return false; // leading whitespace
++                } else if (i == local.length() - 1) {
++                    return false; // trailing whitespace
++                } else if (ch != ' ') {
++                    return false; // only spaces are allowed as whitespace
++                }
+             } else if ("/:[]|*".indexOf(ch) != -1) { // TODO: XMLChar check
+                 return false; // invalid name character
+             }

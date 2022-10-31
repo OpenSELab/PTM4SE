@@ -1,0 +1,28 @@
+diff --git a/Essentials/src/com/earth2me/essentials/Mob.java b/Essentials/src/com/earth2me/essentials/Mob.java
+index 5565cde..049f7b8 100644
+--- a/Essentials/src/com/earth2me/essentials/Mob.java
++++ b/Essentials/src/com/earth2me/essentials/Mob.java
+@@ -76,8 +76,7 @@
+ 
+ 	public LivingEntity spawn(final Player player, final Server server, final Location loc) throws MobException
+ 	{
+-
+-		final LivingEntity entity = player.getWorld().spawnCreature(loc, this.bukkitType);
++		final LivingEntity entity = player.getWorld().spawn(loc, (Class<? extends LivingEntity>)this.bukkitType.getEntityClass());
+ 		if (entity == null)
+ 		{
+ 			logger.log(Level.WARNING, _("unableToSpawnMob"));
+diff --git a/Essentials/src/com/earth2me/essentials/Mob.java b/Essentials/src/com/earth2me/essentials/Mob.java
+index 5565cde..049f7b8 100644
+--- a/Essentials/src/com/earth2me/essentials/Mob.java
++++ b/Essentials/src/com/earth2me/essentials/Mob.java
+@@ -76,8 +76,7 @@
+ 
+ 	public LivingEntity spawn(final Player player, final Server server, final Location loc) throws MobException
+ 	{
+-
+-		final LivingEntity entity = player.getWorld().spawnCreature(loc, this.bukkitType);
++		final LivingEntity entity = player.getWorld().spawn(loc, (Class<? extends LivingEntity>)this.bukkitType.getEntityClass());
+ 		if (entity == null)
+ 		{
+ 			logger.log(Level.WARNING, _("unableToSpawnMob"));

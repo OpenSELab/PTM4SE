@@ -1,0 +1,26 @@
+diff --git a/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java b/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
+index ea74ba0..20d8037 100644
+--- a/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
++++ b/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
+@@ -66,7 +66,7 @@
+         // if the poll hit a timeout, retake the remaining processors
+         // so join() can guarantee the threads are finished
+         if (i > 0) {
+-          for ( ; i > 0; --i) {
++          for ( ; i > leftover.size(); --i) {
+             idleProcessors.take();
+           }
+           return leftover;
+diff --git a/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java b/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
+index ea74ba0..20d8037 100644
+--- a/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
++++ b/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
+@@ -66,7 +66,7 @@
+         // if the poll hit a timeout, retake the remaining processors
+         // so join() can guarantee the threads are finished
+         if (i > 0) {
+-          for ( ; i > 0; --i) {
++          for ( ; i > leftover.size(); --i) {
+             idleProcessors.take();
+           }
+           return leftover;

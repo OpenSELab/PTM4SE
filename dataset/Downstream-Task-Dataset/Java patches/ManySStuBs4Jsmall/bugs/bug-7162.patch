@@ -1,0 +1,13 @@
+diff --git a/hadoop-mapreduce-project/src/test/mapred/org/apache/hadoop/mapreduce/security/TestTokenCache.java b/hadoop-mapreduce-project/src/test/mapred/org/apache/hadoop/mapreduce/security/TestTokenCache.java
+index 768c4d8..355f03f 100644
+--- a/hadoop-mapreduce-project/src/test/mapred/org/apache/hadoop/mapreduce/security/TestTokenCache.java
++++ b/hadoop-mapreduce-project/src/test/mapred/org/apache/hadoop/mapreduce/security/TestTokenCache.java
+@@ -288,7 +288,7 @@
+     // this token is keyed by hostname:port key.
+     String fs_addr = 
+       SecurityUtil.buildDTServiceName(p1.toUri(), NameNode.DEFAULT_PORT);
+-    Token<DelegationTokenIdentifier> nnt = TokenCache.getDelegationToken(
++    Token<DelegationTokenIdentifier> nnt = (Token<DelegationTokenIdentifier>)TokenCache.getDelegationToken(
+         credentials, fs_addr);
+     System.out.println("dt for " + p1 + "(" + fs_addr + ")" + " = " +  nnt);
+     assertNotNull("Token for nn is null", nnt);

@@ -1,0 +1,85 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeState.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeState.java
+index 4b83da9..9cf769b 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeState.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeState.java
+@@ -168,18 +168,7 @@ public class DocumentNodeState extends AbstractNodeState implements CacheValue {
+     @Nonnull
+     @Override
+     public NodeState getChildNode(@Nonnull String name) {
+-        if (!hasChildren) {
+-            checkValidName(name);
+-            return EmptyNodeState.MISSING_NODE;
+-        }
+-        String p = PathUtils.concat(getPath(), name);
+-        DocumentNodeState child = store.getNode(p, lastRevision);
+-        if (child == null) {
+-            checkValidName(name);
+-            return EmptyNodeState.MISSING_NODE;
+-        } else {
+-            return child;
+-        }
++        return getChildNode(name, lastRevision);
+     }
+ 
+     @Override
+@@ -282,6 +271,23 @@ public class DocumentNodeState extends AbstractNodeState implements CacheValue {
+         return super.compareAgainstBaseState(base, diff);
+     }
+ 
++    @Nonnull
++    NodeState getChildNode(@Nonnull String name,
++                           @Nonnull Revision revision) {
++        if (!hasChildren) {
++            checkValidName(name);
++            return EmptyNodeState.MISSING_NODE;
++        }
++        String p = PathUtils.concat(getPath(), name);
++        DocumentNodeState child = store.getNode(p, checkNotNull(revision));
++        if (child == null) {
++            checkValidName(name);
++            return EmptyNodeState.MISSING_NODE;
++        } else {
++            return child;
++        }
++    }
++
+     void setProperty(String propertyName, String value) {
+         if (value == null) {
+             properties.remove(propertyName);
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+index 1087f53..1ed7072 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+@@ -1905,14 +1905,14 @@ public final class DocumentNodeStore
+                     while (t.read() != '}') {
+                         // skip properties
+                     }
+-                    NodeState child = getNode(concat(node.getPath(), name), nodeRev);
+-                    continueComparison = diff.childNodeAdded(name, child);
++                    continueComparison = diff.childNodeAdded(name,
++                            node.getChildNode(name, nodeRev));
+                     break;
+                 }
+                 case '-': {
+                     String name = unshareString(t.readString());
+-                    NodeState child = getNode(concat(base.getPath(), name), baseRev);
+-                    continueComparison = diff.childNodeDeleted(name, child);
++                    continueComparison = diff.childNodeDeleted(name,
++                            base.getChildNode(name, baseRev));
+                     break;
+                 }
+                 case '^': {
+@@ -1920,10 +1920,9 @@ public final class DocumentNodeStore
+                     t.read(':');
+                     if (t.matches('{')) {
+                         t.read('}');
+-                        NodeState nodeChild = getNode(concat(node.getPath(), name), nodeRev);
+-                        NodeState baseChild = getNode(concat(base.getPath(), name), baseRev);
+-                        continueComparison = diff.childNodeChanged(
+-                                name, baseChild, nodeChild);
++                        continueComparison = diff.childNodeChanged(name,
++                                base.getChildNode(name, baseRev),
++                                node.getChildNode(name, nodeRev));
+                     } else if (t.matches('[')) {
+                         // ignore multi valued property
+                         while (t.read() != ']') {

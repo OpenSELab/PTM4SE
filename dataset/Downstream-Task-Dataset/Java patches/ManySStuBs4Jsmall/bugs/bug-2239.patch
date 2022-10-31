@@ -1,0 +1,50 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index ed3236f..0de8545 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -402,9 +402,9 @@
+                 }
+ 
+                 public String getInitParameter(String name) {
+-                    String param = sc.getInitParameter(name);
++                    String param = initParams.get(name);
+                     if (param == null) {
+-                        return initParams.get(name);
++                        return sc.getInitParameter(name);
+                     }
+                     return param;
+                 }
+@@ -414,7 +414,7 @@
+                     while (en.hasMoreElements()) {
+                         String name = (String) en.nextElement();
+                         if (!initParams.containsKey(name)) {
+-                            initParams.put(name, name);
++                            initParams.put(name, sc.getInitParameter(name));
+                         }
+                     }
+                     return Collections.enumeration(initParams.keySet());
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index ed3236f..0de8545 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -402,9 +402,9 @@
+                 }
+ 
+                 public String getInitParameter(String name) {
+-                    String param = sc.getInitParameter(name);
++                    String param = initParams.get(name);
+                     if (param == null) {
+-                        return initParams.get(name);
++                        return sc.getInitParameter(name);
+                     }
+                     return param;
+                 }
+@@ -414,7 +414,7 @@
+                     while (en.hasMoreElements()) {
+                         String name = (String) en.nextElement();
+                         if (!initParams.containsKey(name)) {
+-                            initParams.put(name, name);
++                            initParams.put(name, sc.getInitParameter(name));
+                         }
+                     }
+                     return Collections.enumeration(initParams.keySet());

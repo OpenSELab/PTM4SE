@@ -1,0 +1,42 @@
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/AuditableInterceptor.java b/api/src/main/java/org/openmrs/api/db/hibernate/AuditableInterceptor.java
+index f67126d..beb36c9 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/AuditableInterceptor.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/AuditableInterceptor.java
+@@ -66,6 +66,7 @@
+ 	 * @should set the dateChanged field
+ 	 * @should set the changedBy field
+ 	 * @should be called when saving an Auditable
++	 * @should not enter into recursion on entity
+ 	 * @see org.hibernate.EmptyInterceptor#onFlushDirty(java.lang.Object, java.io.Serializable,
+ 	 *      java.lang.Object[], java.lang.Object[], java.lang.String[], org.hibernate.type.Type[])
+ 	 */
+@@ -78,7 +79,7 @@
+ 		
+ 		if (entity instanceof Auditable && propertyNames != null) {
+ 			if (log.isDebugEnabled())
+-				log.debug("Setting changed by fields on " + entity);
++				log.debug("Setting changed by fields on " + entity.getClass());
+ 			
+ 			if (setValue(currentState, propertyNames, "changedBy", Context.getAuthenticatedUser(), false)) {
+ 				objectWasChanged = true;
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/AuditableInterceptor.java b/api/src/main/java/org/openmrs/api/db/hibernate/AuditableInterceptor.java
+index f67126d..beb36c9 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/AuditableInterceptor.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/AuditableInterceptor.java
+@@ -66,6 +66,7 @@
+ 	 * @should set the dateChanged field
+ 	 * @should set the changedBy field
+ 	 * @should be called when saving an Auditable
++	 * @should not enter into recursion on entity
+ 	 * @see org.hibernate.EmptyInterceptor#onFlushDirty(java.lang.Object, java.io.Serializable,
+ 	 *      java.lang.Object[], java.lang.Object[], java.lang.String[], org.hibernate.type.Type[])
+ 	 */
+@@ -78,7 +79,7 @@
+ 		
+ 		if (entity instanceof Auditable && propertyNames != null) {
+ 			if (log.isDebugEnabled())
+-				log.debug("Setting changed by fields on " + entity);
++				log.debug("Setting changed by fields on " + entity.getClass());
+ 			
+ 			if (setValue(currentState, propertyNames, "changedBy", Context.getAuthenticatedUser(), false)) {
+ 				objectWasChanged = true;

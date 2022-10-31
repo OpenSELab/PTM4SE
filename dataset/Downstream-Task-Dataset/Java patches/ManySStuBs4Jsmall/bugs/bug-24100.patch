@@ -1,0 +1,80 @@
+diff --git a/src/main/java/redis/clients/jedis/Jedis.java b/src/main/java/redis/clients/jedis/Jedis.java
+index 959b418..f035176 100644
+--- a/src/main/java/redis/clients/jedis/Jedis.java
++++ b/src/main/java/redis/clients/jedis/Jedis.java
+@@ -2102,7 +2102,7 @@
+     client.zrangeByScore(key, min, max, offset, count);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }
+@@ -2114,7 +2114,7 @@
+     client.zrangeByScore(key, min, max, offset, count);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }
+@@ -2247,7 +2247,7 @@
+     checkIsInMultiOrPipeline();
+     List<String> membersWithScores = client.getMultiBulkReply();
+     if (membersWithScores == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     if (membersWithScores.isEmpty()) {
+       return Collections.emptySet();
+@@ -2266,7 +2266,7 @@
+     client.zrevrangeByScore(key, max, min);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }
+diff --git a/src/main/java/redis/clients/jedis/Jedis.java b/src/main/java/redis/clients/jedis/Jedis.java
+index 959b418..f035176 100644
+--- a/src/main/java/redis/clients/jedis/Jedis.java
++++ b/src/main/java/redis/clients/jedis/Jedis.java
+@@ -2102,7 +2102,7 @@
+     client.zrangeByScore(key, min, max, offset, count);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }
+@@ -2114,7 +2114,7 @@
+     client.zrangeByScore(key, min, max, offset, count);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }
+@@ -2247,7 +2247,7 @@
+     checkIsInMultiOrPipeline();
+     List<String> membersWithScores = client.getMultiBulkReply();
+     if (membersWithScores == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     if (membersWithScores.isEmpty()) {
+       return Collections.emptySet();
+@@ -2266,7 +2266,7 @@
+     client.zrevrangeByScore(key, max, min);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }

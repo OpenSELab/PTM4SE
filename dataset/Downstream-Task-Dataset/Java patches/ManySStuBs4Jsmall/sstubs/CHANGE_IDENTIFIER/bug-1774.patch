@@ -1,0 +1,52 @@
+diff --git a/src/com/google/javascript/jscomp/VariableReferenceCheck.java b/src/com/google/javascript/jscomp/VariableReferenceCheck.java
+index b1601b6..84acd32 100644
+--- a/src/com/google/javascript/jscomp/VariableReferenceCheck.java
++++ b/src/com/google/javascript/jscomp/VariableReferenceCheck.java
+@@ -44,7 +44,7 @@
+       "JSC_REFERENCE_BEFORE_DECLARE",
+       "Variable referenced before declaration: {0}");
+ 
+-  static final DiagnosticType REDECLARED_VARIABLE = DiagnosticType.error(
++  static final DiagnosticType REDECLARED_VARIABLE = DiagnosticType.warning(
+       "JSC_REDECLARED_VARIABLE",
+       "Redeclared variable: {0}");
+ 
+diff --git a/test/com/google/javascript/jscomp/Es6VariableReferenceCheckTest.java b/test/com/google/javascript/jscomp/Es6VariableReferenceCheckTest.java
+index b64b2de..b708fd0 100644
+--- a/test/com/google/javascript/jscomp/Es6VariableReferenceCheckTest.java
++++ b/test/com/google/javascript/jscomp/Es6VariableReferenceCheckTest.java
+@@ -367,7 +367,7 @@
+    * Expects the JS to generate one bad-read warning.
+    */
+   private void assertRedeclare(String js) {
+-    testError(js, VariableReferenceCheck.REDECLARED_VARIABLE);
++    testWarning(js, VariableReferenceCheck.REDECLARED_VARIABLE);
+   }
+ 
+   /**
+diff --git a/test/com/google/javascript/jscomp/VariableReferenceCheckTest.java b/test/com/google/javascript/jscomp/VariableReferenceCheckTest.java
+index 1529276..2156b95 100644
+--- a/test/com/google/javascript/jscomp/VariableReferenceCheckTest.java
++++ b/test/com/google/javascript/jscomp/VariableReferenceCheckTest.java
+@@ -259,7 +259,7 @@
+    * Expects the JS to generate one bad-read error.
+    */
+   private void assertRedeclare(String js) {
+-    testError(js, VariableReferenceCheck.REDECLARED_VARIABLE);
++    testWarning(js, VariableReferenceCheck.REDECLARED_VARIABLE);
+   }
+ 
+   /**
+diff --git a/src/com/google/javascript/jscomp/VariableReferenceCheck.java b/src/com/google/javascript/jscomp/VariableReferenceCheck.java
+index b1601b6..84acd32 100644
+--- a/src/com/google/javascript/jscomp/VariableReferenceCheck.java
++++ b/src/com/google/javascript/jscomp/VariableReferenceCheck.java
+@@ -44,7 +44,7 @@
+       "JSC_REFERENCE_BEFORE_DECLARE",
+       "Variable referenced before declaration: {0}");
+ 
+-  static final DiagnosticType REDECLARED_VARIABLE = DiagnosticType.error(
++  static final DiagnosticType REDECLARED_VARIABLE = DiagnosticType.warning(
+       "JSC_REDECLARED_VARIABLE",
+       "Redeclared variable: {0}");
+ 

@@ -1,0 +1,26 @@
+diff --git a/community/kernel/src/test/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPoolRaceTestIT.java b/community/kernel/src/test/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPoolRaceTestIT.java
+index 5323a7d..e609f95 100644
+--- a/community/kernel/src/test/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPoolRaceTestIT.java
++++ b/community/kernel/src/test/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPoolRaceTestIT.java
+@@ -143,7 +143,7 @@
+             {
+                 while ( mailbox.get() == null )
+                 {
+-                    long id = random.nextLong() % maxId;
++                    long id = Math.abs(random.nextLong() % maxId);
+                     PersistenceWindow window = pwp.acquire( id, OperationType.WRITE );
+                     window.getOffsettedBuffer( id ).put( (byte) (0xFF & random.nextInt()) );
+                     pwp.release( window );
+diff --git a/community/kernel/src/test/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPoolRaceTestIT.java b/community/kernel/src/test/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPoolRaceTestIT.java
+index 5323a7d..e609f95 100644
+--- a/community/kernel/src/test/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPoolRaceTestIT.java
++++ b/community/kernel/src/test/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPoolRaceTestIT.java
+@@ -143,7 +143,7 @@
+             {
+                 while ( mailbox.get() == null )
+                 {
+-                    long id = random.nextLong() % maxId;
++                    long id = Math.abs(random.nextLong() % maxId);
+                     PersistenceWindow window = pwp.acquire( id, OperationType.WRITE );
+                     window.getOffsettedBuffer( id ).put( (byte) (0xFF & random.nextInt()) );
+                     pwp.release( window );

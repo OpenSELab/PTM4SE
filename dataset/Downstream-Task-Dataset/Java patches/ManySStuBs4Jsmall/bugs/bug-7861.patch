@@ -1,0 +1,34 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetInputFormat.java b/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetInputFormat.java
+index 51b5082..0391229 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetInputFormat.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetInputFormat.java
+@@ -31,9 +31,10 @@
+  *
+  * A Parquet InputFormat for Hive (with the deprecated package mapred)
+  *
++ * NOTE: With HIVE-9235 we removed "implements VectorizedParquetInputFormat" since all data types
++ *       are not currently supported.  Removing the interface turns off vectorization.
+  */
+-public class MapredParquetInputFormat extends FileInputFormat<Void, ArrayWritable>
+-    implements VectorizedInputFormatInterface {
++public class MapredParquetInputFormat extends FileInputFormat<Void, ArrayWritable> {
+ 
+   private static final Log LOG = LogFactory.getLog(MapredParquetInputFormat.class);
+ 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetInputFormat.java b/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetInputFormat.java
+index 51b5082..0391229 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetInputFormat.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/MapredParquetInputFormat.java
+@@ -31,9 +31,10 @@
+  *
+  * A Parquet InputFormat for Hive (with the deprecated package mapred)
+  *
++ * NOTE: With HIVE-9235 we removed "implements VectorizedParquetInputFormat" since all data types
++ *       are not currently supported.  Removing the interface turns off vectorization.
+  */
+-public class MapredParquetInputFormat extends FileInputFormat<Void, ArrayWritable>
+-    implements VectorizedInputFormatInterface {
++public class MapredParquetInputFormat extends FileInputFormat<Void, ArrayWritable> {
+ 
+   private static final Log LOG = LogFactory.getLog(MapredParquetInputFormat.class);
+ 

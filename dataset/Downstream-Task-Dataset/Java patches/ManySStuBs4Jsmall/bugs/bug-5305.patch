@@ -1,0 +1,22 @@
+diff --git a/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyRestRedirectTest.java b/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyRestRedirectTest.java
+index 81acf89..487e13e 100644
+--- a/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyRestRedirectTest.java
++++ b/tests/camel-itest/src/test/java/org/apache/camel/itest/jetty/JettyRestRedirectTest.java
+@@ -28,7 +28,7 @@
+     private int port;
+ 
+     @Test
+-    public void testClasspath() throws Exception {
++    public void testRedirectInvocation() throws Exception {
+         String response = template.requestBody("http4://localhost:" + port + "/metadata/profile/tag", "<hello>Camel</hello>", String.class);
+         assertEquals("It should support the redirect out of box.", "Mock profile", response);
+     }
+@@ -40,7 +40,7 @@
+ 
+         return new RouteBuilder() {
+             public void configure() {
+-                restConfiguration().component("jetty").scheme("http").port(port);
++                restConfiguration().component("jetty").host("localhost").scheme("http").port(port);
+                 rest("/metadata/profile")
+                     .get("/{id}").to("direct:profileLookup")
+                     .post("/tag").to("direct:tag");

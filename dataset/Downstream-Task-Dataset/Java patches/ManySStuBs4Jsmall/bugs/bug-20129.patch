@@ -1,0 +1,22 @@
+diff --git a/api/src/test/java/org/openmrs/api/db/hibernate/ImmutableEntityInterceptorTest.java b/api/src/test/java/org/openmrs/api/db/hibernate/ImmutableEntityInterceptorTest.java
+index 1bcb94c..e893bba 100644
+--- a/api/src/test/java/org/openmrs/api/db/hibernate/ImmutableEntityInterceptorTest.java
++++ b/api/src/test/java/org/openmrs/api/db/hibernate/ImmutableEntityInterceptorTest.java
+@@ -70,7 +70,7 @@
+ 		String[] currentState = new String[] { "new" };
+ 		ImmutableEntityInterceptor interceptor = new SomeImmutableEntityInterceptor();
+ 		expectedException.expect(APIException.class);
+-		expectedException.expectMessage(is(Context.getMessageSourceService().getMessage("editing.fields.not.allowed", new Object[] { Order.class.getSimpleName() },  null)));
++		expectedException.expectMessage(is(Context.getMessageSourceService().getMessage("editing.fields.not.allowed", new Object[] { "[immutable]", Order.class.getSimpleName() },  null)));
+ 		interceptor.onFlushDirty(new Order(), null, currentState, previousState, propertyNames, null);
+ 	}
+ 	
+@@ -100,7 +100,7 @@
+ 		String[] currentState = new String[] { "new" };
+ 		ImmutableEntityInterceptor interceptor = new SomeImmutableEntityInterceptor();
+ 		expectedException.expect(APIException.class);
+-		expectedException.expectMessage(is(Context.getMessageSourceService().getMessage("editing.fields.not.allowed", new Object[] { Order.class.getSimpleName() },  null)));
++		expectedException.expectMessage(is(Context.getMessageSourceService().getMessage("editing.fields.not.allowed", new Object[] { "[immutable]", Order.class.getSimpleName() },  null)));
+ 		Order order = new Order();
+ 		order.setVoided(true);
+ 		interceptor.onFlushDirty(order, null, currentState, previousState, propertyNames, null);

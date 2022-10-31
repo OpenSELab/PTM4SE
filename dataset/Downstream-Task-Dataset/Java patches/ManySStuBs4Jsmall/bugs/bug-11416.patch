@@ -1,0 +1,25 @@
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedExecutorService.java b/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedExecutorService.java
+index f7a923b..379f253 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedExecutorService.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedExecutorService.java
+@@ -98,7 +98,7 @@
+     public <T> Future<T> submit(Callable<T> task) {
+         submitted.mark();
+         try {
+-            return delegate.submit(new InstrumentedCallable<T>(task));
++            return delegate.submit(new InstrumentedCallable<>(task));
+         } catch (RejectedExecutionException e) {
+             rejected.mark();
+             throw e;
+@@ -166,9 +166,9 @@
+     }
+ 
+     private <T> Collection<? extends Callable<T>> instrument(Collection<? extends Callable<T>> tasks) {
+-        final List<InstrumentedCallable<T>> instrumented = new ArrayList<InstrumentedCallable<T>>(tasks.size());
++        final List<InstrumentedCallable<T>> instrumented = new ArrayList<>(tasks.size());
+         for (Callable<T> task : tasks) {
+-            instrumented.add(new InstrumentedCallable<T>(task));
++            instrumented.add(new InstrumentedCallable<>(task));
+         }
+         return instrumented;
+     }

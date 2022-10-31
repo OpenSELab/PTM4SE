@@ -1,0 +1,13 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Component.java b/wicket-core/src/main/java/org/apache/wicket/Component.java
+index 9a72a11..c1d1826 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Component.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Component.java
+@@ -4544,6 +4544,7 @@ public abstract class Component
+ 	@Override
+ 	public boolean canCallListenerInterfaceAfterExpiry()
+ 	{
+-		return getApplication().getPageSettings().getCallListenerInterfaceAfterExpiry();
++        	return getApplication().getPageSettings()
++        		.getCallListenerInterfaceAfterExpiry() || isStateless();
+ 	}
+ }

@@ -1,0 +1,60 @@
+diff --git a/app/controllers/SessionsController.java b/app/controllers/SessionsController.java
+index 61055d8..67e7299 100644
+--- a/app/controllers/SessionsController.java
++++ b/app/controllers/SessionsController.java
+@@ -60,14 +60,14 @@
+             if (destination != null && !destination.isEmpty()) {
+                 return redirect(destination);
+             } else {
+-                return redirect("/");
++                return redirect(routes.StartpageController.redirect());
+             }
+         }
+         if (session("username") != null && !session("username").isEmpty()) {
+             if (destination != null && !destination.isEmpty()) {
+                 return redirect(destination);
+             } else {
+-                return redirect("/");
++                return redirect(routes.StartpageController.redirect());
+             }
+         }
+         checkServerConnections();
+@@ -140,7 +140,7 @@
+         }
+         SecurityUtils.getSubject().logout();
+ 		session().clear();
+-		return redirect("/login");
++		return redirect(routes.StartpageController.redirect());
+ 	}
+ 
+     private class SessionResponse {
+diff --git a/app/controllers/SessionsController.java b/app/controllers/SessionsController.java
+index 61055d8..67e7299 100644
+--- a/app/controllers/SessionsController.java
++++ b/app/controllers/SessionsController.java
+@@ -60,14 +60,14 @@
+             if (destination != null && !destination.isEmpty()) {
+                 return redirect(destination);
+             } else {
+-                return redirect("/");
++                return redirect(routes.StartpageController.redirect());
+             }
+         }
+         if (session("username") != null && !session("username").isEmpty()) {
+             if (destination != null && !destination.isEmpty()) {
+                 return redirect(destination);
+             } else {
+-                return redirect("/");
++                return redirect(routes.StartpageController.redirect());
+             }
+         }
+         checkServerConnections();
+@@ -140,7 +140,7 @@
+         }
+         SecurityUtils.getSubject().logout();
+ 		session().clear();
+-		return redirect("/login");
++		return redirect(routes.StartpageController.redirect());
+ 	}
+ 
+     private class SessionResponse {

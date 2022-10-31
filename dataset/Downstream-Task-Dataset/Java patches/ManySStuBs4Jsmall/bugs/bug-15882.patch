@@ -1,0 +1,39 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/transaction/TransactionOptions.java b/hazelcast/src/main/java/com/hazelcast/transaction/TransactionOptions.java
+index 79fe574..27e1c4f 100644
+--- a/hazelcast/src/main/java/com/hazelcast/transaction/TransactionOptions.java
++++ b/hazelcast/src/main/java/com/hazelcast/transaction/TransactionOptions.java
+@@ -100,7 +100,7 @@
+      */
+     public TransactionOptions setTimeout(long timeout, TimeUnit timeUnit) {
+         if (timeout < 0) {
+-            throw new IllegalArgumentException("Timeout must be positive!");
++            throw new IllegalArgumentException("Timeout can not be negative!");
+         }
+         if (timeUnit == null) {
+             throw new IllegalArgumentException("timeunit can't be null");
+diff --git a/hazelcast/src/main/java/com/hazelcast/transaction/impl/TransactionImpl.java b/hazelcast/src/main/java/com/hazelcast/transaction/impl/TransactionImpl.java
+index 248a4c7..1052c46 100644
+--- a/hazelcast/src/main/java/com/hazelcast/transaction/impl/TransactionImpl.java
++++ b/hazelcast/src/main/java/com/hazelcast/transaction/impl/TransactionImpl.java
+@@ -414,7 +414,7 @@
+     public boolean setTimeoutMillis(long timeoutMillis) {
+ 
+         if (timeoutMillis < 0) {
+-            throw new IllegalArgumentException("Timeout must be positive!");
++            throw new IllegalArgumentException("Timeout can not be negative!");
+         }
+ 
+         if (state == NO_TXN && getTimeoutMillis() != timeoutMillis) {
+diff --git a/hazelcast/src/main/java/com/hazelcast/transaction/TransactionOptions.java b/hazelcast/src/main/java/com/hazelcast/transaction/TransactionOptions.java
+index 79fe574..27e1c4f 100644
+--- a/hazelcast/src/main/java/com/hazelcast/transaction/TransactionOptions.java
++++ b/hazelcast/src/main/java/com/hazelcast/transaction/TransactionOptions.java
+@@ -100,7 +100,7 @@
+      */
+     public TransactionOptions setTimeout(long timeout, TimeUnit timeUnit) {
+         if (timeout < 0) {
+-            throw new IllegalArgumentException("Timeout must be positive!");
++            throw new IllegalArgumentException("Timeout can not be negative!");
+         }
+         if (timeUnit == null) {
+             throw new IllegalArgumentException("timeunit can't be null");

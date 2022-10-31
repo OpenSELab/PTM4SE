@@ -1,0 +1,106 @@
+diff --git a/community/server/src/main/java/org/neo4j/server/RoundRobinJobScheduler.java b/community/server/src/main/java/org/neo4j/server/RoundRobinJobScheduler.java
+index 6f9de2a..632f872 100644
+--- a/community/server/src/main/java/org/neo4j/server/RoundRobinJobScheduler.java
++++ b/community/server/src/main/java/org/neo4j/server/RoundRobinJobScheduler.java
+@@ -30,9 +30,9 @@
+ 
+     private List<ScheduledJob> scheduledJobs = new LinkedList<ScheduledJob>();
+ 
+-    public void scheduleAtFixedRate( Runnable job, String jobName, long period )
++    public void scheduleAtFixedRate( Runnable job, String jobName, long delay, long period )
+     {
+-        ScheduledJob scheduledJob = new ScheduledJob( job, jobName, period );
++        ScheduledJob scheduledJob = new ScheduledJob( job, jobName, delay, period );
+         scheduledJobs.add( scheduledJob );
+     }
+ 
+diff --git a/community/server/src/main/java/org/neo4j/server/rrd/JobScheduler.java b/community/server/src/main/java/org/neo4j/server/rrd/JobScheduler.java
+index 3517ec4..3fefab7 100644
+--- a/community/server/src/main/java/org/neo4j/server/rrd/JobScheduler.java
++++ b/community/server/src/main/java/org/neo4j/server/rrd/JobScheduler.java
+@@ -21,5 +21,5 @@
+ 
+ public interface JobScheduler
+ {
+-    void scheduleAtFixedRate( Runnable job, String jobName, long period );
++    void scheduleAtFixedRate( Runnable job, String jobName, long delay, long period );
+ }
+diff --git a/community/server/src/main/java/org/neo4j/server/rrd/RrdFactory.java b/community/server/src/main/java/org/neo4j/server/rrd/RrdFactory.java
+index 5e83669..4b0c68b 100644
+--- a/community/server/src/main/java/org/neo4j/server/rrd/RrdFactory.java
++++ b/community/server/src/main/java/org/neo4j/server/rrd/RrdFactory.java
+@@ -97,7 +97,10 @@
+ 
+         scheduler.scheduleAtFixedRate(
+                 new RrdJob( new RrdSamplerImpl( sample, primitives ) ),
+-                RRD_THREAD_NAME + "[primitives]", SECONDS.toSeconds( 3 ) );
++                RRD_THREAD_NAME + "[primitives]",
++                SECONDS.toMillis( 0 ),
++                SECONDS.toMillis( 3 )
++        );
+ 
+         scheduler.scheduleAtFixedRate(
+                 new RrdJob( new RrdSamplerImpl( sample, usage )
+@@ -109,7 +112,10 @@
+                         super.updateSample();
+                     }
+                 } ),
+-                RRD_THREAD_NAME + "[usage]", SECONDS.toSeconds( 60 ) );
++                RRD_THREAD_NAME + "[usage]",
++                SECONDS.toMillis( 1 ),
++                SECONDS.toMillis( 60 )
++        );
+         return rrdb;
+     }
+ 
+diff --git a/community/server/src/main/java/org/neo4j/server/rrd/ScheduledJob.java b/community/server/src/main/java/org/neo4j/server/rrd/ScheduledJob.java
+index c823578..7a5a013 100644
+--- a/community/server/src/main/java/org/neo4j/server/rrd/ScheduledJob.java
++++ b/community/server/src/main/java/org/neo4j/server/rrd/ScheduledJob.java
+@@ -29,7 +29,7 @@
+     private Timer timer;
+     private Logger logger = Logger.getLogger( ScheduledJob.class );
+ 
+-    public ScheduledJob( final Runnable job, String name, long period )
++    public ScheduledJob( final Runnable job, String name, long delay, long period )
+     {
+         timer = new Timer( name );
+         TimerTask runJob = new TimerTask()
+@@ -45,7 +45,7 @@
+                 }
+             }
+         };
+-        timer.scheduleAtFixedRate( runJob, 0, period );
++        timer.scheduleAtFixedRate( runJob, delay, period );
+     }
+ 
+     public void cancel()
+diff --git a/community/server/src/test/java/org/neo4j/server/rrd/RrdFactoryTest.java b/community/server/src/test/java/org/neo4j/server/rrd/RrdFactoryTest.java
+index 8fb2050..0f6349a 100644
+--- a/community/server/src/test/java/org/neo4j/server/rrd/RrdFactoryTest.java
++++ b/community/server/src/test/java/org/neo4j/server/rrd/RrdFactoryTest.java
+@@ -139,7 +139,7 @@
+     private static class NullJobScheduler implements JobScheduler
+     {
+         @Override
+-        public void scheduleAtFixedRate( Runnable job, String name, long period )
++        public void scheduleAtFixedRate( Runnable job, String name, long delay, long period )
+         {
+ 
+         }
+diff --git a/community/server/src/main/java/org/neo4j/server/RoundRobinJobScheduler.java b/community/server/src/main/java/org/neo4j/server/RoundRobinJobScheduler.java
+index 6f9de2a..632f872 100644
+--- a/community/server/src/main/java/org/neo4j/server/RoundRobinJobScheduler.java
++++ b/community/server/src/main/java/org/neo4j/server/RoundRobinJobScheduler.java
+@@ -30,9 +30,9 @@
+ 
+     private List<ScheduledJob> scheduledJobs = new LinkedList<ScheduledJob>();
+ 
+-    public void scheduleAtFixedRate( Runnable job, String jobName, long period )
++    public void scheduleAtFixedRate( Runnable job, String jobName, long delay, long period )
+     {
+-        ScheduledJob scheduledJob = new ScheduledJob( job, jobName, period );
++        ScheduledJob scheduledJob = new ScheduledJob( job, jobName, delay, period );
+         scheduledJobs.add( scheduledJob );
+     }
+ 

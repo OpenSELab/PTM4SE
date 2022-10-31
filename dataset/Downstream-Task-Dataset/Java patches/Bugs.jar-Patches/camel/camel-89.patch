@@ -1,0 +1,220 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/api/management/mbean/ManagedBacklogDebuggerMBean.java b/camel-core/src/main/java/org/apache/camel/api/management/mbean/ManagedBacklogDebuggerMBean.java
+index 02d2d96..036ef3d 100644
+--- a/camel-core/src/main/java/org/apache/camel/api/management/mbean/ManagedBacklogDebuggerMBean.java
++++ b/camel-core/src/main/java/org/apache/camel/api/management/mbean/ManagedBacklogDebuggerMBean.java
+@@ -53,11 +53,23 @@ public interface ManagedBacklogDebuggerMBean {
+     @ManagedOperation(description = "Resume running from the suspended breakpoint at the given node id")
+     void resumeBreakpoint(String nodeId);
+ 
+-    @ManagedOperation(description = "Updates the message body on the suspended breakpoint at the given node id")
+-    void setMessageBodyOnBreakpoint(String nodeId, String body);
++    @ManagedOperation(description = "Updates the message body (uses same type as old body) on the suspended breakpoint at the given node id")
++    void setMessageBodyOnBreakpoint(String nodeId, Object body);
+ 
+-    @ManagedOperation(description = "Updates/adds the message header on the suspended breakpoint at the given node id")
+-    void setMessageHeaderOnBreakpoint(String nodeId, String headerName, String value);
++    @ManagedOperation(description = "Updates the message body (with a new type) on the suspended breakpoint at the given node id")
++    void setMessageBodyOnBreakpoint(String nodeId, Object body, String type);
++
++    @ManagedOperation(description = "Removes the message body on the suspended breakpoint at the given node id")
++    void removeMessageBodyOnBreakpoint(String nodeId);
++
++    @ManagedOperation(description = "Updates/adds the message header (uses same type as old header value) on the suspended breakpoint at the given node id")
++    void setMessageHeaderOnBreakpoint(String nodeId, String headerName, Object value);
++
++    @ManagedOperation(description = "Removes the message header on the suspended breakpoint at the given node id")
++    void removeMessageHeaderOnBreakpoint(String nodeId, String headerName);
++
++    @ManagedOperation(description = "Updates/adds the message header (with a new type) on the suspended breakpoint at the given node id")
++    void setMessageHeaderOnBreakpoint(String nodeId, String headerName, Object value, String type);
+ 
+     @ManagedOperation(description = "Resume running any suspended breakpoints, and exits step mode")
+     void resumeAll();
+diff --git a/camel-core/src/main/java/org/apache/camel/management/mbean/ManagedBacklogDebugger.java b/camel-core/src/main/java/org/apache/camel/management/mbean/ManagedBacklogDebugger.java
+index 33f1310..9f3a94c 100644
+--- a/camel-core/src/main/java/org/apache/camel/management/mbean/ManagedBacklogDebugger.java
++++ b/camel-core/src/main/java/org/apache/camel/management/mbean/ManagedBacklogDebugger.java
+@@ -19,10 +19,12 @@ package org.apache.camel.management.mbean;
+ import java.util.Set;
+ 
+ import org.apache.camel.CamelContext;
++import org.apache.camel.NoTypeConversionAvailableException;
+ import org.apache.camel.api.management.ManagedResource;
+ import org.apache.camel.api.management.mbean.ManagedBacklogDebuggerMBean;
+ import org.apache.camel.processor.interceptor.BacklogDebugger;
+ import org.apache.camel.spi.ManagementStrategy;
++import org.apache.camel.util.ObjectHelper;
+ 
+ @ManagedResource(description = "Managed BacklogDebugger")
+ public class ManagedBacklogDebugger implements ManagedBacklogDebuggerMBean {
+@@ -91,12 +93,42 @@ public class ManagedBacklogDebugger implements ManagedBacklogDebuggerMBean {
+         backlogDebugger.resumeBreakpoint(nodeId);
+     }
+ 
+-    public void setMessageBodyOnBreakpoint(String nodeId, String body) {
++    public void setMessageBodyOnBreakpoint(String nodeId, Object body) {
+         backlogDebugger.setMessageBodyOnBreakpoint(nodeId, body);
+     }
+ 
+-    public void setMessageHeaderOnBreakpoint(String nodeId, String headerName, String value) {
+-        backlogDebugger.setMessageHeaderOnBreakpoint(nodeId, headerName, value);
++    public void setMessageBodyOnBreakpoint(String nodeId, Object body, String type) {
++        try {
++            Class<?> classType = camelContext.getClassResolver().resolveMandatoryClass(type);
++            backlogDebugger.setMessageBodyOnBreakpoint(nodeId, body, classType);
++        } catch (ClassNotFoundException e) {
++            throw ObjectHelper.wrapRuntimeCamelException(e);
++        }
++    }
++
++    public void removeMessageBodyOnBreakpoint(String nodeId) {
++        backlogDebugger.removeMessageBodyOnBreakpoint(nodeId);
++    }
++
++    public void setMessageHeaderOnBreakpoint(String nodeId, String headerName, Object value) {
++        try {
++            backlogDebugger.setMessageHeaderOnBreakpoint(nodeId, headerName, value);
++        } catch (NoTypeConversionAvailableException e) {
++            throw ObjectHelper.wrapRuntimeCamelException(e);
++        }
++    }
++
++    public void setMessageHeaderOnBreakpoint(String nodeId, String headerName, Object value, String type) {
++        try {
++            Class<?> classType = camelContext.getClassResolver().resolveMandatoryClass(type);
++            backlogDebugger.setMessageHeaderOnBreakpoint(nodeId, headerName, value, classType);
++        } catch (Exception e) {
++            throw ObjectHelper.wrapRuntimeCamelException(e);
++        }
++    }
++
++    public void removeMessageHeaderOnBreakpoint(String nodeId, String headerName) {
++        backlogDebugger.removeMessageHeaderOnBreakpoint(nodeId, headerName);
+     }
+ 
+     public void resumeAll() {
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/interceptor/BacklogDebugger.java b/camel-core/src/main/java/org/apache/camel/processor/interceptor/BacklogDebugger.java
+index 3c2e290..571b174 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/interceptor/BacklogDebugger.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/interceptor/BacklogDebugger.java
+@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicLong;
+ import org.apache.camel.CamelContext;
+ import org.apache.camel.Exchange;
+ import org.apache.camel.LoggingLevel;
++import org.apache.camel.NoTypeConversionAvailableException;
+ import org.apache.camel.Predicate;
+ import org.apache.camel.Processor;
+ import org.apache.camel.api.management.mbean.BacklogTracerEventMessage;
+@@ -268,26 +269,105 @@ public class BacklogDebugger extends ServiceSupport implements InterceptStrategy
+         }
+     }
+ 
+-    public void setMessageBodyOnBreakpoint(String nodeId, String body) {
++    public void setMessageBodyOnBreakpoint(String nodeId, Object body) {
+         SuspendedExchange se = suspendedBreakpoints.get(nodeId);
+         if (se != null) {
+-            logger.log("Breakpoint at node " + nodeId + " is updating message body on exchangeId: " + se.getExchange().getExchangeId() + " with new body: " + body);
++            boolean remove = body == null;
++            if (remove) {
++                removeMessageBodyOnBreakpoint(nodeId);
++            } else {
++                Class oldType;
++                if (se.getExchange().hasOut()) {
++                    oldType = se.getExchange().getOut().getBody() != null ? se.getExchange().getOut().getBody().getClass() : null;
++                } else {
++                    oldType = se.getExchange().getIn().getBody() != null ? se.getExchange().getIn().getBody().getClass() : null;
++                }
++                setMessageBodyOnBreakpoint(nodeId, body, oldType);
++            }
++        }
++    }
++
++    public void setMessageBodyOnBreakpoint(String nodeId, Object body, Class type) {
++        SuspendedExchange se = suspendedBreakpoints.get(nodeId);
++        if (se != null) {
++            boolean remove = body == null;
++            if (remove) {
++                removeMessageBodyOnBreakpoint(nodeId);
++            } else {
++                logger.log("Breakpoint at node " + nodeId + " is updating message body on exchangeId: " + se.getExchange().getExchangeId() + " with new body: " + body);
++                if (se.getExchange().hasOut()) {
++                    // preserve type
++                    if (type != null) {
++                        se.getExchange().getOut().setBody(body, type);
++                    } else {
++                        se.getExchange().getOut().setBody(body);
++                    }
++                } else {
++                    if (type != null) {
++                        se.getExchange().getIn().setBody(body, type);
++                    } else {
++                        se.getExchange().getIn().setBody(body);
++                    }
++                }
++            }
++        }
++    }
++
++    public void removeMessageBodyOnBreakpoint(String nodeId) {
++        SuspendedExchange se = suspendedBreakpoints.get(nodeId);
++        if (se != null) {
++            logger.log("Breakpoint at node " + nodeId + " is removing message body on exchangeId: " + se.getExchange().getExchangeId());
+             if (se.getExchange().hasOut()) {
+-                se.getExchange().getOut().setBody(body);
++                se.getExchange().getOut().setBody(null);
+             } else {
+-                se.getExchange().getIn().setBody(body);
++                se.getExchange().getIn().setBody(null);
+             }
+         }
+     }
+ 
+-    public void setMessageHeaderOnBreakpoint(String nodeId, String headerName, String value) {
++    public void setMessageHeaderOnBreakpoint(String nodeId, String headerName, Object value) throws NoTypeConversionAvailableException {
++        SuspendedExchange se = suspendedBreakpoints.get(nodeId);
++        if (se != null) {
++            Class oldType;
++            if (se.getExchange().hasOut()) {
++                oldType = se.getExchange().getOut().getHeader(headerName) != null ? se.getExchange().getOut().getHeader(headerName).getClass() : null;
++            } else {
++                oldType = se.getExchange().getIn().getHeader(headerName) != null ? se.getExchange().getIn().getHeader(headerName).getClass() : null;
++            }
++            setMessageHeaderOnBreakpoint(nodeId, headerName, value, oldType);
++        }
++    }
++
++    public void setMessageHeaderOnBreakpoint(String nodeId, String headerName, Object value, Class type) throws NoTypeConversionAvailableException {
+         SuspendedExchange se = suspendedBreakpoints.get(nodeId);
+         if (se != null) {
+             logger.log("Breakpoint at node " + nodeId + " is updating message header on exchangeId: " + se.getExchange().getExchangeId() + " with header: " + headerName + " and value: " + value);
+             if (se.getExchange().hasOut()) {
+-                se.getExchange().getOut().setHeader(headerName, value);
++                if (type != null) {
++                    Object convertedValue = se.getExchange().getContext().getTypeConverter().mandatoryConvertTo(type, se.getExchange(), value);
++                    se.getExchange().getOut().setHeader(headerName, convertedValue);
++                } else {
++                    se.getExchange().getOut().setHeader(headerName, value);
++                }
++            } else {
++                if (type != null) {
++                    Object convertedValue = se.getExchange().getContext().getTypeConverter().mandatoryConvertTo(type, se.getExchange(), value);
++                    se.getExchange().getIn().setHeader(headerName, convertedValue);
++                } else {
++                    se.getExchange().getIn().setHeader(headerName, value);
++                }
++            }
++        }
++    }
++
++    public void removeMessageHeaderOnBreakpoint(String nodeId, String headerName) {
++        SuspendedExchange se = suspendedBreakpoints.get(nodeId);
++        if (se != null) {
++            logger.log("Breakpoint at node " + nodeId + " is removing message header on exchangeId: " + se.getExchange().getExchangeId() + " with header: " + headerName);
++            if (se.getExchange().hasOut()) {
++                se.getExchange().getOut().removeHeader(headerName);
+             } else {
+-                se.getExchange().getIn().setHeader(headerName, value);
++                se.getExchange().getIn().removeHeader(headerName);
+             }
+         }
+     }

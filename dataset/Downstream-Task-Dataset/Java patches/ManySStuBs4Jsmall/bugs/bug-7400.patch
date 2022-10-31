@@ -1,0 +1,26 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/coprocessor/CoprocessorHost.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/coprocessor/CoprocessorHost.java
+index 0c28295..064a68f 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/coprocessor/CoprocessorHost.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/coprocessor/CoprocessorHost.java
+@@ -481,7 +481,7 @@
+   }
+ 
+   protected void abortServer(final String coprocessorName, final Throwable e) {
+-    String message = "The coprocessor " + coprocessorName + " threw an unexpected exception";
++    String message = "The coprocessor " + coprocessorName + " threw " + e.toString();
+     LOG.error(message, e);
+     if (abortable != null) {
+       abortable.abort(message, e);
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/coprocessor/CoprocessorHost.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/coprocessor/CoprocessorHost.java
+index 0c28295..064a68f 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/coprocessor/CoprocessorHost.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/coprocessor/CoprocessorHost.java
+@@ -481,7 +481,7 @@
+   }
+ 
+   protected void abortServer(final String coprocessorName, final Throwable e) {
+-    String message = "The coprocessor " + coprocessorName + " threw an unexpected exception";
++    String message = "The coprocessor " + coprocessorName + " threw " + e.toString();
+     LOG.error(message, e);
+     if (abortable != null) {
+       abortable.abort(message, e);

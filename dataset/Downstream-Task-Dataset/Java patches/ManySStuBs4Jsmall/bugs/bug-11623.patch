@@ -1,0 +1,26 @@
+diff --git a/processing/src/main/java/io/druid/segment/incremental/IncrementalIndexStorageAdapter.java b/processing/src/main/java/io/druid/segment/incremental/IncrementalIndexStorageAdapter.java
+index 56a0e10..64acece 100644
+--- a/processing/src/main/java/io/druid/segment/incremental/IncrementalIndexStorageAdapter.java
++++ b/processing/src/main/java/io/druid/segment/incremental/IncrementalIndexStorageAdapter.java
+@@ -707,7 +707,7 @@
+     {
+       IncrementalIndex.DimensionDesc dimensionDesc = index.getDimension(dimension);
+       if (dimensionDesc == null) {
+-        return new BooleanValueMatcher(false);
++        return new BooleanValueMatcher(predicate.apply(null));
+       }
+       final int dimIndex = dimensionDesc.getIndex();
+       final IncrementalIndex.DimDim dimDim = dimensionDesc.getValues();
+diff --git a/processing/src/main/java/io/druid/segment/incremental/IncrementalIndexStorageAdapter.java b/processing/src/main/java/io/druid/segment/incremental/IncrementalIndexStorageAdapter.java
+index 56a0e10..64acece 100644
+--- a/processing/src/main/java/io/druid/segment/incremental/IncrementalIndexStorageAdapter.java
++++ b/processing/src/main/java/io/druid/segment/incremental/IncrementalIndexStorageAdapter.java
+@@ -707,7 +707,7 @@
+     {
+       IncrementalIndex.DimensionDesc dimensionDesc = index.getDimension(dimension);
+       if (dimensionDesc == null) {
+-        return new BooleanValueMatcher(false);
++        return new BooleanValueMatcher(predicate.apply(null));
+       }
+       final int dimIndex = dimensionDesc.getIndex();
+       final IncrementalIndex.DimDim dimDim = dimensionDesc.getValues();

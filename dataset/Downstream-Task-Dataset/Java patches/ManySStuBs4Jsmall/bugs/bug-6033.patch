@@ -1,0 +1,39 @@
+diff --git a/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssConverterTest.java b/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssConverterTest.java
+index e4d1f2d..a65fb45 100644
+--- a/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssConverterTest.java
++++ b/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssConverterTest.java
+@@ -28,7 +28,7 @@
+                 // START SNIPPET: ex
+                 from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1000").convertBodyTo(String.class).to("mock:marshal");
+                 // END SNIPPET: ex
+-                from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1000").convertBodyTo(String.class).convertBodyTo(SyndFeed.class).to("mock:unmarshal");
++                from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1500").convertBodyTo(String.class).convertBodyTo(SyndFeed.class).to("mock:unmarshal");
+             }
+         };
+     }
+diff --git a/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssDataFormatTest.java b/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssDataFormatTest.java
+index c897a5b..51aca4c 100644
+--- a/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssDataFormatTest.java
++++ b/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssDataFormatTest.java
+@@ -60,7 +60,7 @@
+                 // START SNIPPET: ex
+                 from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1000").marshal().rss().to("mock:marshal");
+                 // END SNIPPET: ex
+-                from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1000").marshal().rss().unmarshal().rss().to("mock:unmarshal");
++                from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1500").marshal().rss().unmarshal().rss().to("mock:unmarshal");
+             }
+         };
+     }
+diff --git a/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssConverterTest.java b/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssConverterTest.java
+index e4d1f2d..a65fb45 100644
+--- a/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssConverterTest.java
++++ b/components/camel-rss/src/test/java/org/apache/camel/dataformat/rss/RssConverterTest.java
+@@ -28,7 +28,7 @@
+                 // START SNIPPET: ex
+                 from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1000").convertBodyTo(String.class).to("mock:marshal");
+                 // END SNIPPET: ex
+-                from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1000").convertBodyTo(String.class).convertBodyTo(SyndFeed.class).to("mock:unmarshal");
++                from("rss:file:src/test/data/rss20.xml?splitEntries=false&consumer.delay=1500").convertBodyTo(String.class).convertBodyTo(SyndFeed.class).to("mock:unmarshal");
+             }
+         };
+     }

@@ -1,0 +1,101 @@
+diff --git a/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestImageRecordReader.java b/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestImageRecordReader.java
+index 665f88c..4541fe7 100644
+--- a/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestImageRecordReader.java
++++ b/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestImageRecordReader.java
+@@ -109,7 +109,7 @@
+ 
+         //Idea: labels order should be consistent regardless of input file order
+         File f = testDir.newFolder();
+-        new ClassPathResource("datavec-data-image/testimages").copyDirectory(f);
++        new ClassPathResource("datavec-data-image/testimages/").copyDirectory(f);
+         File f0 = new File(f, "/class0/0.jpg");
+         File f1 = new File(f, "/class1/A.jpg");
+ 
+@@ -264,7 +264,7 @@
+         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
+         ImageRecordReader rr = new ImageRecordReader(32, 32, 3, labelMaker);
+         File parent = testDir.newFolder();
+-        new ClassPathResource("datavec-data-image/testimages/class0").copyDirectory(parent);
++        new ClassPathResource("datavec-data-image/testimages/class0/").copyDirectory(parent);
+         int numFiles = parent.list().length;
+         rr.initialize(new FileSplit(parent));
+         CountingListener counting = new CountingListener(new LogRecordListener());
+diff --git a/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestObjectDetectionRecordReader.java b/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestObjectDetectionRecordReader.java
+index fba6044..82e81c3 100644
+--- a/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestObjectDetectionRecordReader.java
++++ b/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestObjectDetectionRecordReader.java
+@@ -60,7 +60,7 @@
+         ImageObjectLabelProvider lp = new TestImageObjectDetectionLabelProvider();
+ 
+         File f = testDir.newFolder();
+-        new ClassPathResource("datavec-data-image/objdetect").copyDirectory(f);
++        new ClassPathResource("datavec-data-image/objdetect/").copyDirectory(f);
+ 
+         String path = new File(f, "000012.jpg").getParent();
+ 
+diff --git a/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/objdetect/TestVocLabelProvider.java b/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/objdetect/TestVocLabelProvider.java
+index 0f615d5..3733380 100644
+--- a/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/objdetect/TestVocLabelProvider.java
++++ b/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/objdetect/TestVocLabelProvider.java
+@@ -38,7 +38,7 @@
+     public void testVocLabelProvider() throws Exception {
+ 
+         File f = testDir.newFolder();
+-        new ClassPathResource("datavec-data-image/voc/2007").copyDirectory(f);
++        new ClassPathResource("datavec-data-image/voc/2007/").copyDirectory(f);
+ 
+         String path = f.getAbsolutePath();  //new ClassPathResource("voc/2007/JPEGImages/000005.jpg").getFile().getParentFile().getParent();
+ 
+diff --git a/datavec/datavec-data/datavec-data-nlp/src/test/java/org/datavec/nlp/reader/TfidfRecordReaderTest.java b/datavec/datavec-data/datavec-data-nlp/src/test/java/org/datavec/nlp/reader/TfidfRecordReaderTest.java
+index 1d28cbf..78943c4 100644
+--- a/datavec/datavec-data/datavec-data-nlp/src/test/java/org/datavec/nlp/reader/TfidfRecordReaderTest.java
++++ b/datavec/datavec-data/datavec-data-nlp/src/test/java/org/datavec/nlp/reader/TfidfRecordReaderTest.java
+@@ -51,7 +51,7 @@
+         vectorizer.initialize(conf);
+         TfidfRecordReader reader = new TfidfRecordReader();
+         File f = testDir.newFolder();
+-        new ClassPathResource("datavec-data-nlp/labeled").copyDirectory(f);
++        new ClassPathResource("datavec-data-nlp/labeled/").copyDirectory(f);
+         reader.initialize(conf, new FileSplit(f));
+         int count = 0;
+         int[] labelAssertions = new int[3];
+@@ -77,7 +77,7 @@
+         vectorizer.initialize(conf);
+         TfidfRecordReader reader = new TfidfRecordReader();
+         File f = testDir.newFolder();
+-        new ClassPathResource("datavec-data-nlp/labeled").copyDirectory(f);
++        new ClassPathResource("datavec-data-nlp/labeled/").copyDirectory(f);
+         reader.initialize(conf, new FileSplit(f));
+ 
+         while (reader.hasNext()) {
+@@ -97,7 +97,7 @@
+         vectorizer.initialize(conf);
+         TfidfRecordReader reader = new TfidfRecordReader();
+         File f = testDir.newFolder();
+-        new ClassPathResource("datavec-data-nlp/labeled").copyDirectory(f);
++        new ClassPathResource("datavec-data-nlp/labeled/").copyDirectory(f);
+         reader.initialize(conf, new FileSplit(f));
+ 
+         Record record = reader.nextRecord();
+diff --git a/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestImageRecordReader.java b/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestImageRecordReader.java
+index 665f88c..4541fe7 100644
+--- a/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestImageRecordReader.java
++++ b/datavec/datavec-data/datavec-data-image/src/test/java/org/datavec/image/recordreader/TestImageRecordReader.java
+@@ -109,7 +109,7 @@
+ 
+         //Idea: labels order should be consistent regardless of input file order
+         File f = testDir.newFolder();
+-        new ClassPathResource("datavec-data-image/testimages").copyDirectory(f);
++        new ClassPathResource("datavec-data-image/testimages/").copyDirectory(f);
+         File f0 = new File(f, "/class0/0.jpg");
+         File f1 = new File(f, "/class1/A.jpg");
+ 
+@@ -264,7 +264,7 @@
+         ParentPathLabelGenerator labelMaker = new ParentPathLabelGenerator();
+         ImageRecordReader rr = new ImageRecordReader(32, 32, 3, labelMaker);
+         File parent = testDir.newFolder();
+-        new ClassPathResource("datavec-data-image/testimages/class0").copyDirectory(parent);
++        new ClassPathResource("datavec-data-image/testimages/class0/").copyDirectory(parent);
+         int numFiles = parent.list().length;
+         rr.initialize(new FileSplit(parent));
+         CountingListener counting = new CountingListener(new LogRecordListener());

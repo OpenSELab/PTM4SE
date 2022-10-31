@@ -1,0 +1,159 @@
+diff --git a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/BulkIterationNode.java b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/BulkIterationNode.java
+index 3d95c22..556e2e3 100644
+--- a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/BulkIterationNode.java
++++ b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/BulkIterationNode.java
+@@ -28,7 +28,6 @@ import org.apache.flink.api.common.ExecutionMode;
+ import org.apache.flink.api.common.operators.SemanticProperties;
+ import org.apache.flink.api.common.operators.SemanticProperties.EmptySemanticProperties;
+ import org.apache.flink.api.common.operators.base.BulkIterationBase;
+-import org.apache.flink.api.common.operators.util.FieldList;
+ import org.apache.flink.optimizer.CompilerException;
+ import org.apache.flink.optimizer.DataStatistics;
+ import org.apache.flink.optimizer.traversals.InterestingPropertyVisitor;
+@@ -48,6 +47,7 @@ import org.apache.flink.optimizer.plan.NamedChannel;
+ import org.apache.flink.optimizer.plan.PlanNode;
+ import org.apache.flink.optimizer.plan.SingleInputPlanNode;
+ import org.apache.flink.optimizer.plan.PlanNode.FeedbackPropertiesMeetRequirementsReport;
++import org.apache.flink.optimizer.util.NoOpUnaryUdfOp;
+ import org.apache.flink.runtime.operators.DriverStrategy;
+ import org.apache.flink.util.Visitor;
+ 
+@@ -273,7 +273,7 @@ public class BulkIterationNode extends SingleInputNode implements IterationNode
+ 		this.openBranches = (result == null || result.isEmpty()) ? Collections.<UnclosedBranchDescriptor>emptyList() : result;
+ 	}
+ 
+-
++	@SuppressWarnings("unchecked")
+ 	@Override
+ 	protected void instantiateCandidate(OperatorDescriptorSingle dps, Channel in, List<Set<? extends NamedChannel>> broadcastPlanChannels, 
+ 			List<PlanNode> target, CostEstimator estimator, RequestedGlobalProperties globPropsReq, RequestedLocalProperties locPropsReq)
+@@ -321,8 +321,10 @@ public class BulkIterationNode extends SingleInputNode implements IterationNode
+ 					Channel toNoOp = new Channel(candidate);
+ 					globPropsReq.parameterizeChannel(toNoOp, false, rootConnection.getDataExchangeMode(), false);
+ 					locPropsReq.parameterizeChannel(toNoOp);
+-					
+-					UnaryOperatorNode rebuildPropertiesNode = new UnaryOperatorNode("Rebuild Partial Solution Properties", FieldList.EMPTY_LIST);
++
++					NoOpUnaryUdfOp noOpUnaryUdfOp = new NoOpUnaryUdfOp<>();
++					noOpUnaryUdfOp.setInput(candidate.getProgramOperator());
++					UnaryOperatorNode rebuildPropertiesNode = new UnaryOperatorNode("Rebuild Partial Solution Properties", noOpUnaryUdfOp, true);
+ 					rebuildPropertiesNode.setParallelism(candidate.getParallelism());
+ 					
+ 					SingleInputPlanNode rebuildPropertiesPlanNode = new SingleInputPlanNode(rebuildPropertiesNode, "Rebuild Partial Solution Properties", toNoOp, DriverStrategy.UNARY_NO_OP);
+@@ -343,8 +345,10 @@ public class BulkIterationNode extends SingleInputNode implements IterationNode
+ 					planDeleter.remove();
+ 				}
+ 			}
++
++			candidates.addAll(newCandidates);
+ 		}
+-		
++
+ 		if (candidates.isEmpty()) {
+ 			return;
+ 		}
+diff --git a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/UnaryOperatorNode.java b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/UnaryOperatorNode.java
+index 0c48033..0ec0264 100644
+--- a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/UnaryOperatorNode.java
++++ b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/UnaryOperatorNode.java
+@@ -18,10 +18,12 @@
+ 
+ package org.apache.flink.optimizer.dag;
+ 
++import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.List;
+ 
+ import org.apache.flink.api.common.operators.SemanticProperties;
++import org.apache.flink.api.common.operators.SingleInputOperator;
+ import org.apache.flink.api.common.operators.SingleInputSemanticProperties;
+ import org.apache.flink.api.common.operators.util.FieldSet;
+ import org.apache.flink.optimizer.DataStatistics;
+@@ -30,11 +32,17 @@ import org.apache.flink.optimizer.operators.OperatorDescriptorSingle;
+ 
+ public class UnaryOperatorNode extends SingleInputNode {
+ 	
+-	private final List<OperatorDescriptorSingle> operator;
++	private final List<OperatorDescriptorSingle> operators;
+ 	
+ 	private final String name;
+ 
++	public UnaryOperatorNode(String name, SingleInputOperator<?, ?, ?> operator, boolean onDynamicPath) {
++		super(operator);
+ 
++		this.name = name;
++		this.operators = new ArrayList<>();
++		this.onDynamicPath = onDynamicPath;
++	}
+ 	
+ 	public UnaryOperatorNode(String name, FieldSet keys, OperatorDescriptorSingle ... operators) {
+ 		this(name, keys, Arrays.asList(operators));
+@@ -43,13 +51,13 @@ public class UnaryOperatorNode extends SingleInputNode {
+ 	public UnaryOperatorNode(String name, FieldSet keys, List<OperatorDescriptorSingle> operators) {
+ 		super(keys);
+ 		
+-		this.operator = operators;
++		this.operators = operators;
+ 		this.name = name;
+ 	}
+ 
+ 	@Override
+ 	protected List<OperatorDescriptorSingle> getPossibleProperties() {
+-		return this.operator;
++		return this.operators;
+ 	}
+ 
+ 	@Override
+diff --git a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/WorksetIterationNode.java b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/WorksetIterationNode.java
+index 15b9a50..7969a94 100644
+--- a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/WorksetIterationNode.java
++++ b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/WorksetIterationNode.java
+@@ -52,6 +52,7 @@ import org.apache.flink.optimizer.plan.WorksetIterationPlanNode;
+ import org.apache.flink.optimizer.plan.WorksetPlanNode;
+ import org.apache.flink.optimizer.plan.PlanNode.FeedbackPropertiesMeetRequirementsReport;
+ import org.apache.flink.optimizer.util.NoOpBinaryUdfOp;
++import org.apache.flink.optimizer.util.NoOpUnaryUdfOp;
+ import org.apache.flink.runtime.operators.DriverStrategy;
+ import org.apache.flink.runtime.operators.shipping.ShipStrategyType;
+ import org.apache.flink.runtime.operators.util.LocalStrategy;
+@@ -307,7 +308,8 @@ public class WorksetIterationNode extends TwoInputNode implements IterationNode
+ 		this.nextWorkset.accept(InterestingPropertiesClearer.INSTANCE);
+ 		this.solutionSetDelta.accept(InterestingPropertiesClearer.INSTANCE);
+ 	}
+-	
++
++	@SuppressWarnings("unchecked")
+ 	@Override
+ 	protected void instantiate(OperatorDescriptorDual operator, Channel solutionSetIn, Channel worksetIn,
+ 			List<Set<? extends NamedChannel>> broadcastPlanChannels, List<PlanNode> target, CostEstimator estimator,
+@@ -367,9 +369,14 @@ public class WorksetIterationNode extends TwoInputNode implements IterationNode
+ 					globPropsReqWorkset.parameterizeChannel(toNoOp, false,
+ 															nextWorksetRootConnection.getDataExchangeMode(), false);
+ 					locPropsReqWorkset.parameterizeChannel(toNoOp);
+-					
+-					UnaryOperatorNode rebuildWorksetPropertiesNode = new UnaryOperatorNode("Rebuild Workset Properties",
+-																							FieldList.EMPTY_LIST);
++
++					NoOpUnaryUdfOp noOpUnaryUdfOp = new NoOpUnaryUdfOp<>();
++					noOpUnaryUdfOp.setInput(candidate.getProgramOperator());
++
++					UnaryOperatorNode rebuildWorksetPropertiesNode = new UnaryOperatorNode(
++						"Rebuild Workset Properties",
++						noOpUnaryUdfOp,
++						true);
+ 					
+ 					rebuildWorksetPropertiesNode.setParallelism(candidate.getParallelism());
+ 					
+diff --git a/flink-optimizer/src/main/java/org/apache/flink/optimizer/util/NoOpUnaryUdfOp.java b/flink-optimizer/src/main/java/org/apache/flink/optimizer/util/NoOpUnaryUdfOp.java
+index cc4a4d6..8537b9c 100644
+--- a/flink-optimizer/src/main/java/org/apache/flink/optimizer/util/NoOpUnaryUdfOp.java
++++ b/flink-optimizer/src/main/java/org/apache/flink/optimizer/util/NoOpUnaryUdfOp.java
+@@ -36,7 +36,7 @@ public class NoOpUnaryUdfOp<OUT> extends SingleInputOperator<OUT, OUT, NoOpFunct
+ 	@SuppressWarnings("rawtypes")
+ 	public static final NoOpUnaryUdfOp INSTANCE = new NoOpUnaryUdfOp();
+ 	
+-	private NoOpUnaryUdfOp() {
++	public NoOpUnaryUdfOp() {
+ 		// pass null here because we override getOutputType to return type
+ 		// of input operator
+ 		super(new UserCodeClassWrapper<NoOpFunction>(NoOpFunction.class), null, "");

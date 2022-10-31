@@ -1,0 +1,42 @@
+diff --git a/wicket/src/main/java/wicket/Session.java b/wicket/src/main/java/wicket/Session.java
+index 0a64238..1de82b7 100644
+--- a/wicket/src/main/java/wicket/Session.java
++++ b/wicket/src/main/java/wicket/Session.java
+@@ -16,8 +16,6 @@
+  */
+ package wicket;
+ 
+-import java.io.ByteArrayOutputStream;
+-import java.io.ObjectOutputStream;
+ import java.io.Serializable;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+@@ -41,7 +39,6 @@ import wicket.feedback.FeedbackMessages;
+ import wicket.request.ClientInfo;
+ import wicket.session.ISessionStore;
+ import wicket.util.convert.IConverter;
+-import wicket.util.lang.Bytes;
+ import wicket.util.lang.Objects;
+ import wicket.util.string.Strings;
+ import wicket.util.time.Duration;
+@@ -1036,20 +1033,6 @@ public abstract class Session implements Serializable, IConverterLocator
+ 				}
+ 			}
+ 		}
+-		String valueTypeName = (value != null ? value.getClass().getName() : "null");
+-		try
+-		{
+-			final ByteArrayOutputStream out = new ByteArrayOutputStream();
+-			new ObjectOutputStream(out).writeObject(value);
+-			log.debug("Stored attribute " + name + "{ " + valueTypeName + "} with size: "
+-					+ Bytes.bytes(out.size()));
+-		}
+-		catch (Exception e)
+-		{
+-			throw new WicketRuntimeException(
+-					"Internal error cloning object. Make sure all dependent objects implement Serializable. Class: "
+-							+ valueTypeName, e);
+-		}
+ 
+ 		// Set the actual attribute
+ 		store.setAttribute(request, name, value);

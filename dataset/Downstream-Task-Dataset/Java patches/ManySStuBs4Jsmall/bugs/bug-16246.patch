@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/LocallyOwnedMap.java b/hazelcast/src/main/java/com/hazelcast/impl/LocallyOwnedMap.java
+index 201a5e4..02b62c0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/LocallyOwnedMap.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/LocallyOwnedMap.java
+@@ -68,7 +68,7 @@
+             for (Map.Entry<Object, Record> entry : entries) {
+                 Object key = entry.getKey();
+                 Record record = entry.getValue();
+-                if (!record.isActive() || !record.isValid(now)) {
++                if (record == null || !record.isActive() || !record.isValid(now)) {
+                     lsKeysToRemove.add(key);
+                 }
+             }
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/LocallyOwnedMap.java b/hazelcast/src/main/java/com/hazelcast/impl/LocallyOwnedMap.java
+index 201a5e4..02b62c0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/LocallyOwnedMap.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/LocallyOwnedMap.java
+@@ -68,7 +68,7 @@
+             for (Map.Entry<Object, Record> entry : entries) {
+                 Object key = entry.getKey();
+                 Record record = entry.getValue();
+-                if (!record.isActive() || !record.isValid(now)) {
++                if (record == null || !record.isActive() || !record.isValid(now)) {
+                     lsKeysToRemove.add(key);
+                 }
+             }

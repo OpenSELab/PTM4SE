@@ -1,0 +1,67 @@
+diff --git a/storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java b/storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java
+index f878cf0..fc427a8 100644
+--- a/storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java
++++ b/storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java
+@@ -2546,10 +2546,10 @@
+ 
+     @VisibleForTesting
+     static void validateTopologyWorkerMaxHeapSizeConfigs(
+-        Map<String, Object> stormConf, StormTopology topology) {
++        Map<String, Object> stormConf, StormTopology topology, double defaultWorkerMaxHeapSizeMB) {
+         double largestMemReq = getMaxExecutorMemoryUsageForTopo(topology, stormConf);
+         double topologyWorkerMaxHeapSize =
+-            ObjectReader.getDouble(stormConf.get(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB), 768.0);
++            ObjectReader.getDouble(stormConf.get(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB), defaultWorkerMaxHeapSizeMB);
+         if (topologyWorkerMaxHeapSize < largestMemReq) {
+             throw new IllegalArgumentException(
+                 "Topology will not be able to be successfully scheduled: Config "
+@@ -2626,7 +2626,8 @@
+                   Config.TOPOLOGY_BLOBSTORE_MAP + " = " + blobMap);
+                 }
+             }
+-            validateTopologyWorkerMaxHeapSizeConfigs(topoConf, topology);
++            validateTopologyWorkerMaxHeapSizeConfigs(topoConf, topology,
++                    ObjectReader.getDouble(conf.get(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB)));
+             Utils.validateTopologyBlobStoreMap(topoConf, blobStore);
+             long uniqueNum = submittedCount.incrementAndGet();
+             String topoId = topoName + "-" + uniqueNum + "-" + Time.currentTimeSecs();
+diff --git a/storm-server/src/test/java/org/apache/storm/daemon/nimbus/NimbusTest.java b/storm-server/src/test/java/org/apache/storm/daemon/nimbus/NimbusTest.java
+index 4274b45..60ff2d7 100644
+--- a/storm-server/src/test/java/org/apache/storm/daemon/nimbus/NimbusTest.java
++++ b/storm-server/src/test/java/org/apache/storm/daemon/nimbus/NimbusTest.java
+@@ -48,7 +48,7 @@
+         config1.put(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB, 128.0);
+         config1.put(Config.TOPOLOGY_COMPONENT_RESOURCES_ONHEAP_MEMORY_MB, 129.0);
+         try {
+-            Nimbus.validateTopologyWorkerMaxHeapSizeConfigs(config1, stormTopology1);
++            Nimbus.validateTopologyWorkerMaxHeapSizeConfigs(config1, stormTopology1, 768.0);
+             fail("Expected exception not thrown");
+         } catch (IllegalArgumentException e) {
+             //Expected...
+diff --git a/storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java b/storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java
+index f878cf0..fc427a8 100644
+--- a/storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java
++++ b/storm-server/src/main/java/org/apache/storm/daemon/nimbus/Nimbus.java
+@@ -2546,10 +2546,10 @@
+ 
+     @VisibleForTesting
+     static void validateTopologyWorkerMaxHeapSizeConfigs(
+-        Map<String, Object> stormConf, StormTopology topology) {
++        Map<String, Object> stormConf, StormTopology topology, double defaultWorkerMaxHeapSizeMB) {
+         double largestMemReq = getMaxExecutorMemoryUsageForTopo(topology, stormConf);
+         double topologyWorkerMaxHeapSize =
+-            ObjectReader.getDouble(stormConf.get(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB), 768.0);
++            ObjectReader.getDouble(stormConf.get(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB), defaultWorkerMaxHeapSizeMB);
+         if (topologyWorkerMaxHeapSize < largestMemReq) {
+             throw new IllegalArgumentException(
+                 "Topology will not be able to be successfully scheduled: Config "
+@@ -2626,7 +2626,8 @@
+                   Config.TOPOLOGY_BLOBSTORE_MAP + " = " + blobMap);
+                 }
+             }
+-            validateTopologyWorkerMaxHeapSizeConfigs(topoConf, topology);
++            validateTopologyWorkerMaxHeapSizeConfigs(topoConf, topology,
++                    ObjectReader.getDouble(conf.get(Config.TOPOLOGY_WORKER_MAX_HEAP_SIZE_MB)));
+             Utils.validateTopologyBlobStoreMap(topoConf, blobStore);
+             long uniqueNum = submittedCount.incrementAndGet();
+             String topoId = topoName + "-" + uniqueNum + "-" + Time.currentTimeSecs();

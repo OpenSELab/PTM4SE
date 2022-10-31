@@ -1,0 +1,35 @@
+diff --git a/maven-aether-provider/src/main/java/org/apache/maven/repository/internal/DefaultArtifactDescriptorReader.java b/maven-aether-provider/src/main/java/org/apache/maven/repository/internal/DefaultArtifactDescriptorReader.java
+index 380a607..59a955d 100644
+--- a/maven-aether-provider/src/main/java/org/apache/maven/repository/internal/DefaultArtifactDescriptorReader.java
++++ b/maven-aether-provider/src/main/java/org/apache/maven/repository/internal/DefaultArtifactDescriptorReader.java
+@@ -275,6 +275,7 @@ private Model loadPom( RepositorySystemSession session, ArtifactDescriptorReques
+         Set<String> visited = new LinkedHashSet<String>();
+         for ( Artifact artifact = request.getArtifact();; )
+         {
++            Artifact pomArtifact = ArtifactDescriptorUtils.toPomArtifact( artifact );
+             try
+             {
+                 VersionRequest versionRequest =
+@@ -283,6 +284,13 @@ private Model loadPom( RepositorySystemSession session, ArtifactDescriptorReques
+                 VersionResult versionResult = versionResolver.resolveVersion( session, versionRequest );
+ 
+                 artifact = artifact.setVersion( versionResult.getVersion() );
++
++                versionRequest =
++                    new VersionRequest( pomArtifact, request.getRepositories(), request.getRequestContext() );
++                versionRequest.setTrace( trace );
++                versionResult = versionResolver.resolveVersion( session, versionRequest );
++
++                pomArtifact = pomArtifact.setVersion( versionResult.getVersion() );
+             }
+             catch ( VersionResolutionException e )
+             {
+@@ -303,8 +311,6 @@ private Model loadPom( RepositorySystemSession session, ArtifactDescriptorReques
+                 throw new ArtifactDescriptorException( result );
+             }
+ 
+-            Artifact pomArtifact = ArtifactDescriptorUtils.toPomArtifact( artifact );
+-
+             ArtifactResult resolveResult;
+             try
+             {

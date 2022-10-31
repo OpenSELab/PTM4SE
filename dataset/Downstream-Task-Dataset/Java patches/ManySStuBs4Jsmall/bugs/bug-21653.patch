@@ -1,0 +1,28 @@
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/TestAuthorizationCodeAccessTokenProvider.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/TestAuthorizationCodeAccessTokenProvider.java
+index b8e8082..5c2d858 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/TestAuthorizationCodeAccessTokenProvider.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/TestAuthorizationCodeAccessTokenProvider.java
+@@ -93,7 +93,8 @@
+ 		assertEquals("authorization_code", params.getFirst("grant_type"));
+ 		assertEquals("foo", params.getFirst("code"));
+ 		assertEquals("http://anywhere.com", params.getFirst("redirect_uri"));
+-		assertEquals("bar", params.getFirst("state"));
++		// State is not set in token request
++		assertEquals(null, params.getFirst("state"));
+ 	}
+ 
+ }
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/TestAuthorizationCodeAccessTokenProvider.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/TestAuthorizationCodeAccessTokenProvider.java
+index b8e8082..5c2d858 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/TestAuthorizationCodeAccessTokenProvider.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/client/token/grant/code/TestAuthorizationCodeAccessTokenProvider.java
+@@ -93,7 +93,8 @@
+ 		assertEquals("authorization_code", params.getFirst("grant_type"));
+ 		assertEquals("foo", params.getFirst("code"));
+ 		assertEquals("http://anywhere.com", params.getFirst("redirect_uri"));
+-		assertEquals("bar", params.getFirst("state"));
++		// State is not set in token request
++		assertEquals(null, params.getFirst("state"));
+ 	}
+ 
+ }

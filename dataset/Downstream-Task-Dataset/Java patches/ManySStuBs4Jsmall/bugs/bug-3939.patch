@@ -1,0 +1,39 @@
+diff --git a/tool/src/org/antlr/v4/semantics/SymbolChecks.java b/tool/src/org/antlr/v4/semantics/SymbolChecks.java
+index db0039d..bbc7a3e 100644
+--- a/tool/src/org/antlr/v4/semantics/SymbolChecks.java
++++ b/tool/src/org/antlr/v4/semantics/SymbolChecks.java
+@@ -201,7 +201,7 @@
+ 					errMgr.grammarError(
+ 						ErrorType.ARG_RETVAL_CONFLICT,
+ 						g.fileName,
+-						((GrammarAST) r.ast.getChild(0)).token,
++						r.args.get(key).token != null ? r.args.get(key).token : ((GrammarAST) r.ast.getChild(0)).token,
+ 						key,
+ 						r.name);
+ 				}
+diff --git a/tool/test/org/antlr/v4/test/TestSymbolIssues.java b/tool/test/org/antlr/v4/test/TestSymbolIssues.java
+index 5921b5e..1c00238 100644
+--- a/tool/test/org/antlr/v4/test/TestSymbolIssues.java
++++ b/tool/test/org/antlr/v4/test/TestSymbolIssues.java
+@@ -97,7 +97,7 @@
+ 
+         // YIELDS
+         "error(72): D.g4:4:21: label j conflicts with rule a's return value or parameter with same name\n" +
+-		"error(76): D.g4:6:0: rule b's argument i conflicts a return value with same name\n"
++		"error(76): D.g4:6:6: rule b's argument i conflicts a return value with same name\n"
+     };
+ 
+ 	static String[] E = {
+diff --git a/tool/src/org/antlr/v4/semantics/SymbolChecks.java b/tool/src/org/antlr/v4/semantics/SymbolChecks.java
+index db0039d..bbc7a3e 100644
+--- a/tool/src/org/antlr/v4/semantics/SymbolChecks.java
++++ b/tool/src/org/antlr/v4/semantics/SymbolChecks.java
+@@ -201,7 +201,7 @@
+ 					errMgr.grammarError(
+ 						ErrorType.ARG_RETVAL_CONFLICT,
+ 						g.fileName,
+-						((GrammarAST) r.ast.getChild(0)).token,
++						r.args.get(key).token != null ? r.args.get(key).token : ((GrammarAST) r.ast.getChild(0)).token,
+ 						key,
+ 						r.name);
+ 				}

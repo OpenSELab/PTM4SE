@@ -1,0 +1,169 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/RecipientListProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/RecipientListProcessor.java
+index 1087da6..db6af86 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/RecipientListProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/RecipientListProcessor.java
+@@ -17,12 +17,11 @@
+ package org.apache.camel.processor;
+ 
+ import java.io.UnsupportedEncodingException;
+-import java.net.URI;
++import java.net.MalformedURLException;
+ import java.net.URISyntaxException;
+ import java.util.ArrayList;
+ import java.util.Iterator;
+ import java.util.List;
+-import java.util.Map;
+ import java.util.concurrent.ExecutorService;
+ 
+ import org.apache.camel.CamelContext;
+@@ -34,6 +33,7 @@ import org.apache.camel.Producer;
+ import org.apache.camel.impl.ProducerCache;
+ import org.apache.camel.processor.aggregate.AggregationStrategy;
+ import org.apache.camel.spi.RouteContext;
++import org.apache.camel.util.EndpointHelper;
+ import org.apache.camel.util.ExchangeHelper;
+ import org.apache.camel.util.MessageHelper;
+ import org.apache.camel.util.ServiceHelper;
+@@ -191,7 +191,7 @@ public class RecipientListProcessor extends MulticastProcessor {
+             ExchangePattern pattern;
+             try {
+                 endpoint = resolveEndpoint(exchange, recipient);
+-                pattern = resolveExchangePattern(exchange, recipient);
++                pattern = resolveExchangePattern(recipient);
+                 producer = producerCache.acquireProducer(endpoint);
+             } catch (Exception e) {
+                 if (isIgnoreInvalidEndpoints()) {
+@@ -254,18 +254,13 @@ public class RecipientListProcessor extends MulticastProcessor {
+         return ExchangeHelper.resolveEndpoint(exchange, recipient);
+     }
+ 
+-    protected ExchangePattern resolveExchangePattern(Exchange exchange, Object recipient) throws UnsupportedEncodingException, URISyntaxException {
++    protected ExchangePattern resolveExchangePattern(Object recipient) throws UnsupportedEncodingException, URISyntaxException, MalformedURLException {
+         // trim strings as end users might have added spaces between separators
+         if (recipient instanceof String) {
+             String s = ((String) recipient).trim();
+             // see if exchangePattern is a parameter in the url
+             s = URISupport.normalizeUri(s);
+-            URI url = new URI(s);
+-            Map<String, Object> parameters = URISupport.parseParameters(url);
+-            String pattern = (String) parameters.get("exchangePattern");
+-            if (pattern != null) {
+-                return ExchangePattern.asEnum(pattern);
+-            }
++            return EndpointHelper.resolveExchangePatternFromUrl(s);
+         }
+         return null;
+     }
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/SendProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/SendProcessor.java
+index d8e8803..efd6a60 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/SendProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/SendProcessor.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.camel.processor;
+ 
++import java.net.URISyntaxException;
+ import java.util.HashMap;
+ 
+ import org.apache.camel.AsyncCallback;
+@@ -33,6 +34,7 @@ import org.apache.camel.impl.ProducerCache;
+ import org.apache.camel.support.ServiceSupport;
+ import org.apache.camel.util.AsyncProcessorConverterHelper;
+ import org.apache.camel.util.AsyncProcessorHelper;
++import org.apache.camel.util.EndpointHelper;
+ import org.apache.camel.util.EventHelper;
+ import org.apache.camel.util.ObjectHelper;
+ import org.apache.camel.util.ServiceHelper;
+@@ -53,6 +55,7 @@ public class SendProcessor extends ServiceSupport implements AsyncProcessor, Tra
+     protected ProducerCache producerCache;
+     protected AsyncProcessor producer;
+     protected Endpoint destination;
++    protected ExchangePattern destinationExchangePattern;
+     protected final boolean unhandleException;
+ 
+     public SendProcessor(Endpoint destination) {
+@@ -69,6 +72,12 @@ public class SendProcessor extends ServiceSupport implements AsyncProcessor, Tra
+         this.camelContext = destination.getCamelContext();
+         this.pattern = pattern;
+         this.unhandleException = unhandleException;
++        try {
++            this.destinationExchangePattern = null;
++            this.destinationExchangePattern = EndpointHelper.resolveExchangePatternFromUrl(destination.getEndpointUri());
++        } catch (URISyntaxException e) {
++            throw ObjectHelper.wrapRuntimeCamelException(e);
++        }
+         ObjectHelper.notNull(this.camelContext, "camelContext");
+     }
+ 
+@@ -133,11 +142,9 @@ public class SendProcessor extends ServiceSupport implements AsyncProcessor, Tra
+                     }
+                 });
+             } catch (Throwable throwable) {
+-                if (exchange != null) {
+-                    exchange.setException(throwable);
+-                    checkException(exchange);
+-                }
+-
++                exchange.setException(throwable);
++                checkException(exchange);
++                callback.done(sync);
+             }
+ 
+             return sync;
+@@ -180,7 +187,10 @@ public class SendProcessor extends ServiceSupport implements AsyncProcessor, Tra
+     }
+ 
+     protected Exchange configureExchange(Exchange exchange, ExchangePattern pattern) {
+-        if (pattern != null) {
++        // destination exchange pattern overrides pattern
++        if (destinationExchangePattern != null) {
++            exchange.setPattern(destinationExchangePattern);
++        } else if (pattern != null) {
+             exchange.setPattern(pattern);
+         }
+         // set property which endpoint we send to
+diff --git a/camel-core/src/main/java/org/apache/camel/util/EndpointHelper.java b/camel-core/src/main/java/org/apache/camel/util/EndpointHelper.java
+index 9df3ca2..18181b3 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/EndpointHelper.java
++++ b/camel-core/src/main/java/org/apache/camel/util/EndpointHelper.java
+@@ -16,6 +16,8 @@
+  */
+ package org.apache.camel.util;
+ 
++import java.net.URI;
++import java.net.URISyntaxException;
+ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collections;
+@@ -29,6 +31,7 @@ import org.apache.camel.CamelContext;
+ import org.apache.camel.DelegateEndpoint;
+ import org.apache.camel.Endpoint;
+ import org.apache.camel.Exchange;
++import org.apache.camel.ExchangePattern;
+ import org.apache.camel.Message;
+ import org.apache.camel.PollingConsumer;
+ import org.apache.camel.Processor;
+@@ -486,5 +489,22 @@ public final class EndpointHelper {
+         sb.append("\n</messages>");
+         return sb.toString();
+     }
+-    
++
++    /**
++     * Attempts to resolve if the url has an <tt>exchangePattern</tt> option configured
++     *
++     * @param url the url
++     * @return the exchange pattern, or <tt>null</tt> if the url has no <tt>exchangePattern</tt> configured.
++     * @throws URISyntaxException is thrown if uri is invalid
++     */
++    public static ExchangePattern resolveExchangePatternFromUrl(String url) throws URISyntaxException {
++        URI uri = new URI(url);
++        Map<String, Object> parameters = URISupport.parseParameters(uri);
++        String pattern = (String) parameters.get("exchangePattern");
++        if (pattern != null) {
++            return ExchangePattern.asEnum(pattern);
++        }
++        return null;
++    }
++
+ }

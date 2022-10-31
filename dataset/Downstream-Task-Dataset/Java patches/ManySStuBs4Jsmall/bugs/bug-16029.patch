@@ -1,0 +1,26 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/spi/ProxyManager.java b/hazelcast-client/src/main/java/com/hazelcast/client/spi/ProxyManager.java
+index 223e6d1..d7ae624 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/spi/ProxyManager.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/spi/ProxyManager.java
+@@ -204,7 +204,7 @@
+     private void initialize(ClientProxy clientProxy) {
+         final ClientCreateRequest request = new ClientCreateRequest(clientProxy.getName(), clientProxy.getServiceName());
+         try {
+-            client.getInvocationService().invokeOnRandomTarget(request);
++            client.getInvocationService().invokeOnRandomTarget(request).get();
+         } catch (Exception e) {
+             ExceptionUtil.rethrow(e);
+         }
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/spi/ProxyManager.java b/hazelcast-client/src/main/java/com/hazelcast/client/spi/ProxyManager.java
+index 223e6d1..d7ae624 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/spi/ProxyManager.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/spi/ProxyManager.java
+@@ -204,7 +204,7 @@
+     private void initialize(ClientProxy clientProxy) {
+         final ClientCreateRequest request = new ClientCreateRequest(clientProxy.getName(), clientProxy.getServiceName());
+         try {
+-            client.getInvocationService().invokeOnRandomTarget(request);
++            client.getInvocationService().invokeOnRandomTarget(request).get();
+         } catch (Exception e) {
+             ExceptionUtil.rethrow(e);
+         }

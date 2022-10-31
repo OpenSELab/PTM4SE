@@ -1,0 +1,13 @@
+--- a/src/org/traccar/protocol/H02ProtocolDecoder.java
++++ b/src/org/traccar/protocol/H02ProtocolDecoder.java
+@@ -184,7 +184,9 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
+             .number("(d+),")
+             .number("(d+)#")
+             .or()
+-            .any()
++            .expression(",.*")
++            .or()
++            .text("#")
+             .groupEnd()
+             .compile();
+ 

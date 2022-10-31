@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/OutputLayer.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/OutputLayer.java
+index ecd105d..9159ede 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/OutputLayer.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/OutputLayer.java
+@@ -195,7 +195,7 @@
+         INDArray output  = output(input);
+         assert !Nd4j.hasInvalidNumber(output) : "Invalid number on output!";
+         if(conf.getLossFunction() != LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY)
+-            return  LossFunctions.score(input,conf.getLossFunction(),transform(input),conf.getL2(),conf.isUseRegularization());
++            return  LossFunctions.score(output,conf.getLossFunction(),labels,conf.getL2(),conf.isUseRegularization());
+ 
+         return  LossFunctions.score(labels,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
+ 
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/OutputLayer.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/OutputLayer.java
+index ecd105d..9159ede 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/OutputLayer.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/OutputLayer.java
+@@ -195,7 +195,7 @@
+         INDArray output  = output(input);
+         assert !Nd4j.hasInvalidNumber(output) : "Invalid number on output!";
+         if(conf.getLossFunction() != LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY)
+-            return  LossFunctions.score(input,conf.getLossFunction(),transform(input),conf.getL2(),conf.isUseRegularization());
++            return  LossFunctions.score(output,conf.getLossFunction(),labels,conf.getL2(),conf.isUseRegularization());
+ 
+         return  LossFunctions.score(labels,conf.getLossFunction(),output,conf.getL2(),conf.isUseRegularization());
+ 

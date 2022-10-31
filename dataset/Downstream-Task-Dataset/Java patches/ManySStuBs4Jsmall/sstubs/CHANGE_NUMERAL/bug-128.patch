@@ -1,0 +1,101 @@
+diff --git a/src/main/java/com/alibaba/druid/VERSION.java b/src/main/java/com/alibaba/druid/VERSION.java
+index 0588114..d68f267 100644
+--- a/src/main/java/com/alibaba/druid/VERSION.java
++++ b/src/main/java/com/alibaba/druid/VERSION.java
+@@ -19,7 +19,7 @@
+ 
+     public final static int MajorVersion    = 1;
+     public final static int MinorVersion    = 1;
+-    public final static int RevisionVersion = 2;
++    public final static int RevisionVersion = 3;
+ 
+     public static String getVersionNumber() {
+         return VERSION.MajorVersion + "." + VERSION.MinorVersion + "." + VERSION.RevisionVersion;
+diff --git a/src/main/java/com/alibaba/druid/sql/ast/statement/SQLJoinTableSource.java b/src/main/java/com/alibaba/druid/sql/ast/statement/SQLJoinTableSource.java
+index d50f5b0..81c7f0c 100644
+--- a/src/main/java/com/alibaba/druid/sql/ast/statement/SQLJoinTableSource.java
++++ b/src/main/java/com/alibaba/druid/sql/ast/statement/SQLJoinTableSource.java
+@@ -466,48 +466,6 @@
+         return right.containsAlias(alias_a) && left.containsAlias(alias_b);
+     }
+ 
+-    /**
+-     * a, b left join c ->
+-     */
+-//    public boolean addCondition(SQLBinaryOpExpr condition, JoinType joinType) {
+-//        if (this.left == null || this.right == null) {
+-//            return false;
+-//        }
+-//
+-//        if (!(condition.getLeft() instanceof SQLPropertyExpr
+-//                && condition.getRight() instanceof SQLPropertyExpr)) {
+-//            return false;
+-//        }
+-//
+-//        SQLPropertyExpr left = (SQLPropertyExpr) condition.getLeft();
+-//        SQLPropertyExpr right = (SQLPropertyExpr) condition.getRight();
+-//
+-//        String leftOwner = left.getOwnernName();
+-//        String rightOwner = right.getOwnernName();
+-//
+-//        if (this.left.containsAlias(leftOwner) && this.right.containsAlias(rightOwner)) {
+-//            if (this.joinType == joinType) {
+-//                this.addConditionnIfAbsent(condition);
+-//                return true;
+-//            }
+-//
+-//            if (this.joinType == null || this.joinType == JoinType.COMMA) {
+-//                this.joinType = joinType;
+-//                this.addConditionnIfAbsent(condition);
+-//                return true;
+-//            }
+-//
+-//            if (this.joinType == JoinType.LEFT_OUTER_JOIN && joinType == JoinType.RIGHT_OUTER_JOIN) {
+-//                if (this.left instanceof SQLJoinTableSource && ((SQLJoinTableSource) this.left).joinType == JoinType.COMMA) {
+-//                    SQLJoinTableSource leftJoin = (SQLJoinTableSource) this.left;
+-//
+-//                }
+-//            }
+-//        }
+-//
+-//        return false;
+-//    }
+-//
+     public boolean conditionContainsTable(String alias) {
+         if (condition == null) {
+             return false;
+diff --git a/src/main/java/com/alibaba/druid/util/FnvHash.java b/src/main/java/com/alibaba/druid/util/FnvHash.java
+index 4430db9..0503dff 100644
+--- a/src/main/java/com/alibaba/druid/util/FnvHash.java
++++ b/src/main/java/com/alibaba/druid/util/FnvHash.java
+@@ -51,7 +51,7 @@
+     }
+ 
+     /**
+-     * lower & normalized & fnv_1a_64
++     * lower and normalized and fnv_1a_64
+      * @param name
+      * @return
+      */
+@@ -184,7 +184,7 @@
+     }
+ 
+     /**
+-     * normalized & lower & fnv1a_64_hash
++     * normalized and lower and fnv1a_64_hash
+      * @param owner
+      * @param name
+      * @return
+diff --git a/src/main/java/com/alibaba/druid/VERSION.java b/src/main/java/com/alibaba/druid/VERSION.java
+index 0588114..d68f267 100644
+--- a/src/main/java/com/alibaba/druid/VERSION.java
++++ b/src/main/java/com/alibaba/druid/VERSION.java
+@@ -19,7 +19,7 @@
+ 
+     public final static int MajorVersion    = 1;
+     public final static int MinorVersion    = 1;
+-    public final static int RevisionVersion = 2;
++    public final static int RevisionVersion = 3;
+ 
+     public static String getVersionNumber() {
+         return VERSION.MajorVersion + "." + VERSION.MinorVersion + "." + VERSION.RevisionVersion;

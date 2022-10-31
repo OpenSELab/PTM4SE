@@ -1,0 +1,13 @@
+diff --git a/src/com/hazelcast/impl/ConcurrentMapManager.java b/src/com/hazelcast/impl/ConcurrentMapManager.java
+index 01cbfb8..6e4eda2 100644
+--- a/src/com/hazelcast/impl/ConcurrentMapManager.java
++++ b/src/com/hazelcast/impl/ConcurrentMapManager.java
+@@ -2182,7 +2182,7 @@
+         Record createNewRecord(Data key, Data value) {
+             int blockId = getBlockId(key);
+             Record rec = new Record(name, blockId, key, value);
+-            Block ownerBlock = blocks[blockId];
++            Block ownerBlock = getOrCreateBlock(blockId);
+             if (thisAddress.equals(ownerBlock.getRealOwner())) {
+                 ownedEntryCount++;
+             }

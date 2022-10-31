@@ -1,0 +1,49 @@
+diff --git a/src/cn/trinea/android/common/service/impl/FileNameRuleImageUrl.java b/src/cn/trinea/android/common/service/impl/FileNameRuleImageUrl.java
+index b566ab2..c0e75b7 100644
+--- a/src/cn/trinea/android/common/service/impl/FileNameRuleImageUrl.java
++++ b/src/cn/trinea/android/common/service/impl/FileNameRuleImageUrl.java
+@@ -32,11 +32,11 @@
+         }
+ 
+         String ext = (fileExtension == null ? FileUtils.getFileExtension(imageUrl) : fileExtension);
+-        String fileName = (imageUrl.length() >= MAX_FILE_NAME_LENGTH
++        String fileName = (imageUrl.length() > MAX_FILE_NAME_LENGTH
+             ? imageUrl.substring(imageUrl.length() - MAX_FILE_NAME_LENGTH, imageUrl.length()) : imageUrl).replaceAll("[\\W]",
+                                                                                                                      "_");
+         return StringUtils.isEmpty(ext) ? fileName
+-            : (new StringBuilder().append(fileName).append(".").append(ext).toString());
++            : (new StringBuilder().append(fileName).append(".").append(ext.replaceAll("[\\W]", "_")).toString());
+     }
+ 
+     public FileNameRuleImageUrl setFileExtension(String fileExtension) {
+diff --git a/src/cn/trinea/android/common/util/ListUtils.java b/src/cn/trinea/android/common/util/ListUtils.java
+index 467d4cd..c1cd141 100644
+--- a/src/cn/trinea/android/common/util/ListUtils.java
++++ b/src/cn/trinea/android/common/util/ListUtils.java
+@@ -14,7 +14,7 @@
+     public static final String DEFAULT_JOIN_SEPARATOR = ",";
+ 
+     public static <V> int getSize(List<V> sourceList) {
+-        return ListUtils.isEmpty(sourceList) ? 0 : sourceList.size();
++        return sourceList == null ? 0 : sourceList.size();
+     }
+ 
+     /**
+diff --git a/src/cn/trinea/android/common/service/impl/FileNameRuleImageUrl.java b/src/cn/trinea/android/common/service/impl/FileNameRuleImageUrl.java
+index b566ab2..c0e75b7 100644
+--- a/src/cn/trinea/android/common/service/impl/FileNameRuleImageUrl.java
++++ b/src/cn/trinea/android/common/service/impl/FileNameRuleImageUrl.java
+@@ -32,11 +32,11 @@
+         }
+ 
+         String ext = (fileExtension == null ? FileUtils.getFileExtension(imageUrl) : fileExtension);
+-        String fileName = (imageUrl.length() >= MAX_FILE_NAME_LENGTH
++        String fileName = (imageUrl.length() > MAX_FILE_NAME_LENGTH
+             ? imageUrl.substring(imageUrl.length() - MAX_FILE_NAME_LENGTH, imageUrl.length()) : imageUrl).replaceAll("[\\W]",
+                                                                                                                      "_");
+         return StringUtils.isEmpty(ext) ? fileName
+-            : (new StringBuilder().append(fileName).append(".").append(ext).toString());
++            : (new StringBuilder().append(fileName).append(".").append(ext.replaceAll("[\\W]", "_")).toString());
+     }
+ 
+     public FileNameRuleImageUrl setFileExtension(String fileExtension) {

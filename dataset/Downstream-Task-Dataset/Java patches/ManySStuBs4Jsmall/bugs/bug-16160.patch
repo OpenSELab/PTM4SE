@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/query/Predicates.java b/hazelcast/src/main/java/com/hazelcast/query/Predicates.java
+index db91000..5a38b63 100644
+--- a/hazelcast/src/main/java/com/hazelcast/query/Predicates.java
++++ b/hazelcast/src/main/java/com/hazelcast/query/Predicates.java
+@@ -544,7 +544,7 @@
+                 return value == null || value == IndexImpl.NULL;
+             }
+             value = convert(mapEntry, value);
+-            return value.equals(entryValue);
++            return value != null && value.equals(entryValue);
+         }
+ 
+         public void writeData(ObjectDataOutput out) throws IOException {
+diff --git a/hazelcast/src/main/java/com/hazelcast/query/Predicates.java b/hazelcast/src/main/java/com/hazelcast/query/Predicates.java
+index db91000..5a38b63 100644
+--- a/hazelcast/src/main/java/com/hazelcast/query/Predicates.java
++++ b/hazelcast/src/main/java/com/hazelcast/query/Predicates.java
+@@ -544,7 +544,7 @@
+                 return value == null || value == IndexImpl.NULL;
+             }
+             value = convert(mapEntry, value);
+-            return value.equals(entryValue);
++            return value != null && value.equals(entryValue);
+         }
+ 
+         public void writeData(ObjectDataOutput out) throws IOException {

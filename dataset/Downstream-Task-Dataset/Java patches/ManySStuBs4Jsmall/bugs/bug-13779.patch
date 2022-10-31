@@ -1,0 +1,13 @@
+diff --git a/src/com/google/javascript/jscomp/ijs/CheckIjsWarningsGuard.java b/src/com/google/javascript/jscomp/ijs/CheckIjsWarningsGuard.java
+index ea96e9e..16a2a60 100644
+--- a/src/com/google/javascript/jscomp/ijs/CheckIjsWarningsGuard.java
++++ b/src/com/google/javascript/jscomp/ijs/CheckIjsWarningsGuard.java
+@@ -27,7 +27,7 @@
+ 
+   @Override
+   public CheckLevel level(JSError error) {
+-    if (error.sourceName.endsWith(".i.js")) {
++    if (error.sourceName != null && error.sourceName.endsWith(".i.js")) {
+       return CheckLevel.WARNING;
+     }
+     return null;

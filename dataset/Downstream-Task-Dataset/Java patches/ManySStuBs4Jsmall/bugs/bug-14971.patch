@@ -1,0 +1,13 @@
+diff --git a/core/src/com/google/inject/spi/Elements.java b/core/src/com/google/inject/spi/Elements.java
+index 44d49ff..6129255 100644
+--- a/core/src/com/google/inject/spi/Elements.java
++++ b/core/src/com/google/inject/spi/Elements.java
+@@ -325,7 +325,7 @@
+     }
+ 
+     public RecordingBinder withSource(final Object source) {            
+-      return new RecordingBinder(this, source, null);
++      return source == this.source ? this : new RecordingBinder(this, source, null);
+     }
+ 
+     public RecordingBinder skipSources(Class... classesToSkip) {

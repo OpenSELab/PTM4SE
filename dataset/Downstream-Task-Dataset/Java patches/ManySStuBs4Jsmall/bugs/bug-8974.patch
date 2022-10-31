@@ -1,0 +1,39 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
+index 9389dc9..5dec86a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
+@@ -265,7 +265,7 @@
+ 
+             return astType == TokenTypes.VARIABLE_DEF
+                 && varType.getFirstChild().getType() == TokenTypes.ARRAY_DECLARATOR
+-                && "ObjectStreafield".equals(varType.getFirstChild().getText());
++                && "ObjectStreamField".equals(varType.getFirstChild().getText());
+         }
+     },
+ 
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfoTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfoTest.java
+index 211f91a..ba1ef59 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfoTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfoTest.java
+@@ -297,7 +297,7 @@
+         ast.setFirstChild(astChild);
+         final DetailAST astChild2 = new DetailAST();
+         astChild2.setType(TokenTypes.ARRAY_DECLARATOR);
+-        astChild2.setText("ObjectStreafield");
++        astChild2.setText("ObjectStreamField");
+         astChild.setFirstChild(astChild2);
+ 
+         final int[] validTypes = {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
+index 9389dc9..5dec86a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
+@@ -265,7 +265,7 @@
+ 
+             return astType == TokenTypes.VARIABLE_DEF
+                 && varType.getFirstChild().getType() == TokenTypes.ARRAY_DECLARATOR
+-                && "ObjectStreafield".equals(varType.getFirstChild().getText());
++                && "ObjectStreamField".equals(varType.getFirstChild().getText());
+         }
+     },
+ 

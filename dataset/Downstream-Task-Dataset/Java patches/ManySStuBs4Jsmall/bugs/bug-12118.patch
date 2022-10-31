@@ -1,0 +1,28 @@
+diff --git a/src/main/java/io/vertx/core/impl/launcher/commands/Watcher.java b/src/main/java/io/vertx/core/impl/launcher/commands/Watcher.java
+index c19ce71..a53dc09 100644
+--- a/src/main/java/io/vertx/core/impl/launcher/commands/Watcher.java
++++ b/src/main/java/io/vertx/core/impl/launcher/commands/Watcher.java
+@@ -269,7 +269,8 @@
+         } else {
+           ExecUtils.addArgument(command, "sh");
+           ExecUtils.addArgument(command, "-c");
+-          ExecUtils.addArgument(command, cmd);
++          // Do not add quote to the given command:
++          command.add(cmd);
+         }
+ 
+         final Process process = new ProcessBuilder(command)
+diff --git a/src/main/java/io/vertx/core/impl/launcher/commands/Watcher.java b/src/main/java/io/vertx/core/impl/launcher/commands/Watcher.java
+index c19ce71..a53dc09 100644
+--- a/src/main/java/io/vertx/core/impl/launcher/commands/Watcher.java
++++ b/src/main/java/io/vertx/core/impl/launcher/commands/Watcher.java
+@@ -269,7 +269,8 @@
+         } else {
+           ExecUtils.addArgument(command, "sh");
+           ExecUtils.addArgument(command, "-c");
+-          ExecUtils.addArgument(command, cmd);
++          // Do not add quote to the given command:
++          command.add(cmd);
+         }
+ 
+         final Process process = new ProcessBuilder(command)

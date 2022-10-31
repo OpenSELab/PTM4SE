@@ -1,0 +1,40 @@
+diff --git a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
+index 461ea4d..2595728 100644
+--- a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
++++ b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
+@@ -189,7 +189,7 @@
+ 	 */
+ 	private void poll() {
+ 		if (invalidCredentials || this.myqOnlineData == null) {
+-			logger.debug("Invalid Account Credentials");
++			logger.trace("Invalid Account Credentials");
+ 			return;
+ 		}
+ 
+@@ -278,7 +278,7 @@
+ 	@Override
+ 	public void internalReceiveCommand(String itemName, Command command) {
+ 		super.internalReceiveCommand(itemName, command);
+-		logger.debug("MyQ binding received command '{}' for item '{}'",
++		logger.trace("MyQ binding received command '{}' for item '{}'",
+ 				command, itemName);
+ 		if (myqOnlineData != null) {
+ 			computeCommandForItem(command, itemName);
+@@ -357,7 +357,7 @@
+ 		if (pollFuture != null && !pollFuture.isCancelled())
+ 			pollFuture.cancel(false);
+ 
+-		logger.debug("rapidRefreshFuture scheduleing for {} millis", millis);
++		logger.trace("rapidRefreshFuture scheduleing for {} millis", millis);
+ 		// start polling at the RAPID_REFRESH_SECS interval
+ 		pollFuture = pollService.scheduleAtFixedRate(new Runnable() {
+ 			@Override
+@@ -374,7 +374,7 @@
+ 		// stop rapid polling after MAX_RAPID_REFRESH_SECS
+ 		pollResetFuture = pollService.schedule(new Runnable() {
+ 			public void run() {
+-				logger.debug("rapidRefreshFutureEnd stopping");
++				logger.trace("rapidRefreshFutureEnd stopping");
+ 				schedulePoll(refreshInterval);
+ 			}
+ 		}, MAX_RAPID_REFRESH, TimeUnit.MILLISECONDS);

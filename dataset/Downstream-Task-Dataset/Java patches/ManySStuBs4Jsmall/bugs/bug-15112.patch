@@ -1,0 +1,306 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/cache/impl/ClientCacheStatisticsImpl.java b/hazelcast-client/src/main/java/com/hazelcast/client/cache/impl/ClientCacheStatisticsImpl.java
+index 946afb3..10f25cf 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/cache/impl/ClientCacheStatisticsImpl.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/cache/impl/ClientCacheStatisticsImpl.java
+@@ -48,7 +48,7 @@
+     @Override
+     public NearCacheStats getNearCacheStatistics() {
+         if (nearCacheStats == null) {
+-            throw new UnsupportedOperationException("Near-cache is not enabled.");
++            throw new UnsupportedOperationException("Near Cache is not enabled.");
+ 
+         }
+         return nearCacheStats;
+diff --git a/hazelcast-client/src/test/java/com/hazelcast/client/cache/impl/nearcache/invalidation/ClientCacheNearCacheSmokeTest.java b/hazelcast-client/src/test/java/com/hazelcast/client/cache/impl/nearcache/invalidation/ClientCacheNearCacheSmokeTest.java
+index 57b00fc..391c428 100644
+--- a/hazelcast-client/src/test/java/com/hazelcast/client/cache/impl/nearcache/invalidation/ClientCacheNearCacheSmokeTest.java
++++ b/hazelcast-client/src/test/java/com/hazelcast/client/cache/impl/nearcache/invalidation/ClientCacheNearCacheSmokeTest.java
+@@ -63,7 +63,7 @@
+     HazelcastInstance server1;
+ 
+     @Before
+-    public void setUp() throws Exception {
++    public void setUp() {
+         NearCacheConfig nearCacheConfig = newNearCacheConfig();
+         nearCacheConfig.setInvalidateOnChange(true);
+ 
+@@ -101,7 +101,7 @@
+     }
+ 
+     @Test
+-    public void smoke_near_cache_population() throws Exception {
++    public void smoke_near_cache_population() {
+         int cacheSize = 1000;
+ 
+         // 1. populate server side cache
+@@ -109,15 +109,15 @@
+             serverCache1.put(i, i);
+         }
+ 
+-        // 2. add client with near cache
++        // 2. add client with Near Cache
+         clientCache = createCacheFromNewClient();
+ 
+-        // 3. populate client near cache
++        // 3. populate client Near Cache
+         for (int i = 0; i < cacheSize; i++) {
+             assertNotNull(clientCache.get(i));
+         }
+ 
+-        // 4. assert number of entries in client near cache
++        // 4. assert number of entries in client Near Cache
+         assertEquals(cacheSize, ((NearCachedClientCacheProxy) clientCache).getNearCache().size());
+     }
+ 
+diff --git a/hazelcast-client/src/test/java/com/hazelcast/client/map/impl/nearcache/ClientMapNearCacheTest.java b/hazelcast-client/src/test/java/com/hazelcast/client/map/impl/nearcache/ClientMapNearCacheTest.java
+index 4d8c63b..a53f694 100644
+--- a/hazelcast-client/src/test/java/com/hazelcast/client/map/impl/nearcache/ClientMapNearCacheTest.java
++++ b/hazelcast-client/src/test/java/com/hazelcast/client/map/impl/nearcache/ClientMapNearCacheTest.java
+@@ -110,7 +110,7 @@
+             nodeMap.put(i, i);
+         }
+ 
+-        // 3. add client with near cache
++        // 3. add client with Near Cache
+         NearCacheConfig nearCacheConfig = newNearCacheConfig()
+                 .setInvalidateOnChange(true)
+                 .setName(mapName);
+@@ -120,13 +120,13 @@
+ 
+         HazelcastInstance client = hazelcastFactory.newHazelcastClient(clientConfig);
+ 
+-        // 4. populate client near cache
++        // 4. populate client Near Cache
+         final IMap<Integer, Integer> clientMap = client.getMap(mapName);
+         for (int i = 0; i < mapSize; i++) {
+             assertNotNull(clientMap.get(i));
+         }
+ 
+-        // 5. assert number of entries in client near cache
++        // 5. assert number of entries in client Near Cache
+         assertEquals(mapSize, ((NearCachedClientMapProxy) clientMap).getNearCache().size());
+     }
+ 
+@@ -1127,7 +1127,7 @@
+             public void run() {
+                 NearCache<Object, Object> nearCache = ((NearCachedClientMapProxy<Integer, Integer>) clientMap).getNearCache();
+                 for (int i = 0; i < 1000; i++) {
+-                    assertNull("Near-cache should be empty", nearCache.get(i));
++                    assertNull("Near Cache should be empty", nearCache.get(i));
+                 }
+             }
+         });
+@@ -1156,7 +1156,7 @@
+             public void run() {
+                 NearCache<Object, Object> nearCache = ((NearCachedClientMapProxy<Integer, Integer>) clientMap).getNearCache();
+                 for (int i = 0; i < 1000; i++) {
+-                    assertNull("Near-cache should be empty", nearCache.get(i));
++                    assertNull("Near Cache should be empty", nearCache.get(i));
+                 }
+             }
+         });
+diff --git a/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheStatisticsImpl.java b/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheStatisticsImpl.java
+index 9d47f8b..5c7a7ff 100644
+--- a/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheStatisticsImpl.java
++++ b/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheStatisticsImpl.java
+@@ -428,7 +428,7 @@
+ 
+     @Override
+     public NearCacheStats getNearCacheStatistics() {
+-        throw new UnsupportedOperationException("Near-Cache is not supported at server");
++        throw new UnsupportedOperationException("Near Cache is not supported at server");
+     }
+ 
+     @Override
+diff --git a/hazelcast/src/main/java/com/hazelcast/client/ClientEngine.java b/hazelcast/src/main/java/com/hazelcast/client/ClientEngine.java
+index 611aa1f..9a28769 100644
+--- a/hazelcast/src/main/java/com/hazelcast/client/ClientEngine.java
++++ b/hazelcast/src/main/java/com/hazelcast/client/ClientEngine.java
+@@ -92,7 +92,7 @@
+      * An e.g. Operating system committedVirtualMemorySize path would be: os.committedVirtualMemorySize
+      *
+      * The statistics key names can be one of the following (Used IMap named <example.fastmap> and ICache Named
+-     * <StatTestCacheName> and assuming that the near cache is configured):
++     * <StatTestCacheName> and assuming that the Near Cache is configured):
+      *
+      * clientType
+      * clusterConnectionTimestamp
+diff --git a/hazelcast/src/main/java/com/hazelcast/config/Config.java b/hazelcast/src/main/java/com/hazelcast/config/Config.java
+index 2e442ee..ba02df3 100644
+--- a/hazelcast/src/main/java/com/hazelcast/config/Config.java
++++ b/hazelcast/src/main/java/com/hazelcast/config/Config.java
+@@ -359,7 +359,7 @@
+      * If there is config found by the name, it will return the configuration
+      * with the name {@code default}.
+      * For non-default configurations and on-heap maps, it will also
+-     * initialise the the near-cache eviction if not previously set.
++     * initialise the the Near Cache eviction if not previously set.
+      *
+      * @param name name of the map config
+      * @return the map configuration
+diff --git a/hazelcast/src/main/java/com/hazelcast/internal/config/ConfigValidator.java b/hazelcast/src/main/java/com/hazelcast/internal/config/ConfigValidator.java
+index 9a1e6c6..d82529b 100644
+--- a/hazelcast/src/main/java/com/hazelcast/internal/config/ConfigValidator.java
++++ b/hazelcast/src/main/java/com/hazelcast/internal/config/ConfigValidator.java
+@@ -122,7 +122,7 @@
+ 
+         EvictionConfig.MaxSizePolicy maxSizePolicy = nearCacheConfig.getEvictionConfig().getMaximumSizePolicy();
+         if (!SUPPORTED_ON_HEAP_NEAR_CACHE_MAXSIZE_POLICIES.contains(maxSizePolicy)) {
+-            throw new IllegalArgumentException(format("Near cache maximum size policy %s cannot be used with %s storage."
++            throw new IllegalArgumentException(format("Near Cache maximum size policy %s cannot be used with %s storage."
+                             + " Supported maximum size policies are: %s",
+                     maxSizePolicy, inMemoryFormat, SUPPORTED_ON_HEAP_NEAR_CACHE_MAXSIZE_POLICIES));
+         }
+diff --git a/hazelcast/src/main/java/com/hazelcast/internal/nearcache/impl/invalidation/RepairingTask.java b/hazelcast/src/main/java/com/hazelcast/internal/nearcache/impl/invalidation/RepairingTask.java
+index b43da27..e3387ec 100644
+--- a/hazelcast/src/main/java/com/hazelcast/internal/nearcache/impl/invalidation/RepairingTask.java
++++ b/hazelcast/src/main/java/com/hazelcast/internal/nearcache/impl/invalidation/RepairingTask.java
+@@ -198,7 +198,7 @@
+ 
+     /**
+      * Synchronously makes initial population of partition uuids & sequences.
+-     * This initialization is done for every near-cached data structure.
++     * This initialization is done for every data structure with Near Cache.
+      */
+     private void initRepairingHandler(RepairingHandler handler) {
+         logger.finest("Initializing repairing handler");
+diff --git a/hazelcast/src/main/java/com/hazelcast/internal/nearcache/impl/store/AbstractNearCacheRecordStore.java b/hazelcast/src/main/java/com/hazelcast/internal/nearcache/impl/store/AbstractNearCacheRecordStore.java
+index 3ae396b..f2cd9cb 100644
+--- a/hazelcast/src/main/java/com/hazelcast/internal/nearcache/impl/store/AbstractNearCacheRecordStore.java
++++ b/hazelcast/src/main/java/com/hazelcast/internal/nearcache/impl/store/AbstractNearCacheRecordStore.java
+@@ -438,7 +438,7 @@
+ 
+     private void initInvalidationMetaData(R record, K key, Data keyData) {
+         if (staleReadDetector == ALWAYS_FRESH) {
+-            // means invalidation event creation is disabled for this near cache.
++            // means invalidation event creation is disabled for this Near Cache
+             return;
+         }
+ 
+diff --git a/hazelcast/src/test/java/com/hazelcast/internal/nearcache/NearCacheTestSupport.java b/hazelcast/src/test/java/com/hazelcast/internal/nearcache/NearCacheTestSupport.java
+index 790a406..edac38a 100644
+--- a/hazelcast/src/test/java/com/hazelcast/internal/nearcache/NearCacheTestSupport.java
++++ b/hazelcast/src/test/java/com/hazelcast/internal/nearcache/NearCacheTestSupport.java
+@@ -273,7 +273,7 @@
+         @Override
+         public String get(Integer key) {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+             String value = expectedKeyValueMappings.get(key);
+             latestKeyOnGet = key;
+@@ -289,7 +289,7 @@
+         @Override
+         public void put(Integer key, Data keyData, String value) {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+             expectedKeyValueMappings.put(key, value);
+             latestKeyOnPut = key;
+@@ -299,7 +299,7 @@
+         @Override
+         public boolean remove(Integer key) {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+             boolean result = expectedKeyValueMappings.remove(key) != null;
+             latestKeyOnRemove = key;
+@@ -310,7 +310,7 @@
+         @Override
+         public void clear() {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+             expectedKeyValueMappings.clear();
+             clearCalled = true;
+@@ -319,7 +319,7 @@
+         @Override
+         public void destroy() {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+             expectedKeyValueMappings.clear();
+             expectedKeyValueMappings = null;
+@@ -340,7 +340,7 @@
+         @Override
+         public int size() {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+             latestSize = expectedKeyValueMappings.size();
+             return latestSize;
+@@ -349,7 +349,7 @@
+         @Override
+         public void doExpiration() {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+             doExpirationCalled = true;
+         }
+@@ -357,7 +357,7 @@
+         @Override
+         public void doEvictionIfRequired() {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+             doEvictionIfRequiredCalled = true;
+         }
+@@ -365,7 +365,7 @@
+         @Override
+         public void doEviction() {
+             if (expectedKeyValueMappings == null) {
+-                throw new IllegalStateException("Near-Cache is already destroyed");
++                throw new IllegalStateException("Near Cache is already destroyed");
+             }
+         }
+ 
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/impl/nearcache/NearCacheTest.java b/hazelcast/src/test/java/com/hazelcast/map/impl/nearcache/NearCacheTest.java
+index fc4b69b..eef2ad9 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/impl/nearcache/NearCacheTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/impl/nearcache/NearCacheTest.java
+@@ -891,7 +891,7 @@
+             nodeMap.put(i, i);
+         }
+ 
+-        // 3. add client with near cache
++        // 3. add client with Near Cache
+         NearCacheConfig nearCacheConfig = newNearCacheConfig();
+         nearCacheConfig.setInvalidateOnChange(true);
+         nearCacheConfig.setCacheLocalEntries(true);
+@@ -902,13 +902,13 @@
+ 
+         HazelcastInstance client = factory.newHazelcastInstance(nearCachedConfig);
+ 
+-        // 4. populate near cache
++        // 4. populate Near Cache
+         final IMap<Integer, Integer> nearCachedMap = client.getMap(mapName);
+         for (int i = 0; i < mapSize; i++) {
+             assertNotNull(nearCachedMap.get(i));
+         }
+ 
+-        // 5. assert number of entries in client near cache
++        // 5. assert number of entries in client Near Cache
+         assertEquals(mapSize, ((NearCachedMapProxyImpl) nearCachedMap).getNearCache().size());
+     }
+ }
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/cache/impl/ClientCacheStatisticsImpl.java b/hazelcast-client/src/main/java/com/hazelcast/client/cache/impl/ClientCacheStatisticsImpl.java
+index 946afb3..10f25cf 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/cache/impl/ClientCacheStatisticsImpl.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/cache/impl/ClientCacheStatisticsImpl.java
+@@ -48,7 +48,7 @@
+     @Override
+     public NearCacheStats getNearCacheStatistics() {
+         if (nearCacheStats == null) {
+-            throw new UnsupportedOperationException("Near-cache is not enabled.");
++            throw new UnsupportedOperationException("Near Cache is not enabled.");
+ 
+         }
+         return nearCacheStats;

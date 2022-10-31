@@ -1,0 +1,26 @@
+diff --git a/src/main/java/io/vertx/core/impl/ContextImpl.java b/src/main/java/io/vertx/core/impl/ContextImpl.java
+index 68826d4..2303d21 100644
+--- a/src/main/java/io/vertx/core/impl/ContextImpl.java
++++ b/src/main/java/io/vertx/core/impl/ContextImpl.java
+@@ -75,7 +75,7 @@
+ 
+   protected ContextImpl(VertxInternal vertx, EventLoop eventLoop, WorkerPool internalBlockingPool, WorkerPool workerPool, String deploymentID, JsonObject config,
+                         ClassLoader tccl) {
+-    if (DISABLE_TCCL && !tccl.getClass().getName().equals("sun.misc.Launcher$AppClassLoader")) {
++    if (DISABLE_TCCL && tccl != ClassLoader.getSystemClassLoader()) {
+       log.warn("You have disabled TCCL checks but you have a custom TCCL to set.");
+     }
+     this.deploymentID = deploymentID;
+diff --git a/src/main/java/io/vertx/core/impl/ContextImpl.java b/src/main/java/io/vertx/core/impl/ContextImpl.java
+index 68826d4..2303d21 100644
+--- a/src/main/java/io/vertx/core/impl/ContextImpl.java
++++ b/src/main/java/io/vertx/core/impl/ContextImpl.java
+@@ -75,7 +75,7 @@
+ 
+   protected ContextImpl(VertxInternal vertx, EventLoop eventLoop, WorkerPool internalBlockingPool, WorkerPool workerPool, String deploymentID, JsonObject config,
+                         ClassLoader tccl) {
+-    if (DISABLE_TCCL && !tccl.getClass().getName().equals("sun.misc.Launcher$AppClassLoader")) {
++    if (DISABLE_TCCL && tccl != ClassLoader.getSystemClassLoader()) {
+       log.warn("You have disabled TCCL checks but you have a custom TCCL to set.");
+     }
+     this.deploymentID = deploymentID;

@@ -1,0 +1,26 @@
+--- a/src/main/java/hu/oe/nik/szfmv/Main.java
++++ b/src/main/java/hu/oe/nik/szfmv/Main.java
+@@ -32,10 +32,6 @@ public class Main {
+ 
+         // create the world
+         World w = new World(worldWidth, worldHeight);
+-        //create detector
+-        Detector d = Detector.getDetector();
+-        //set detector's list
+-        d.setWorldObjects(w.getWorldObjects());
+         // create an automated car
+         AutomatedCar car = new AutomatedCar(carX, carY, "car_2_white.png");
+         // add car to the world
+--- a/src/main/java/hu/oe/nik/szfmv/environment/World.java
++++ b/src/main/java/hu/oe/nik/szfmv/environment/World.java
+@@ -26,6 +27,10 @@ public class World implements IWorld {
+         this.width = width;
+         this.height = height;
+         this.build("src/main/resources/test.xml");
++        //create detector
++        d = Detector.getDetector();
++        //set detector's list
++        d.setWorldObjects(getWorldObjects());
+     }
+ 
+     public int getWidth() {

@@ -1,0 +1,13 @@
+diff --git a/core/src/test/java/cucumber/runtime/formatter/JUnitFormatterTest.java b/core/src/test/java/cucumber/runtime/formatter/JUnitFormatterTest.java
+index 9819e9e..d4dba19 100644
+--- a/core/src/test/java/cucumber/runtime/formatter/JUnitFormatterTest.java
++++ b/core/src/test/java/cucumber/runtime/formatter/JUnitFormatterTest.java
+@@ -119,7 +119,7 @@
+         String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                 "<testsuite failures=\"0\" name=\"cucumber.runtime.formatter.JUnitFormatter\" skipped=\"1\" tests=\"1\" time=\"0.003\">\n" +
+                 "    <testcase classname=\"feature name\" name=\"scenario name\" time=\"0.003\">\n" +
+-                "        <skipped message=\"" + stackTrace.replace("\n\t", "&#10;&#9;") + "\"><![CDATA[" +
++                "        <skipped message=\"" + stackTrace.replace("\n\t", "&#10;&#9;").replaceAll("\r", "&#13;") + "\"><![CDATA[" +
+                 "Given first step............................................................skipped\n" +
+                 "When second step............................................................skipped\n" +
+                 "Then third step.............................................................skipped\n" +

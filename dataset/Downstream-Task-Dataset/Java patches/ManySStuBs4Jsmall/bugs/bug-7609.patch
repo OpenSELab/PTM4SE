@@ -1,0 +1,34 @@
+diff --git a/src/java/org/apache/hadoop/hbase/Shell.java b/src/java/org/apache/hadoop/hbase/Shell.java
+index 9f6a4be..eb42c2d 100644
+--- a/src/java/org/apache/hadoop/hbase/Shell.java
++++ b/src/java/org/apache/hadoop/hbase/Shell.java
+@@ -115,10 +115,10 @@
+ 
+         long end = System.currentTimeMillis();
+         if (rs != null) {
+-          if (rs != null && rs.getType() > -1)
++          if (rs != null && rs.getType() > Constants.ERROR_CODE)
+             System.out.println(rs.getMsg() +
+               executeTime((rs.getType() == 1), start, end));
+-          else if (rs.getType() == -9)           
++          else if (rs.getType() == Constants.ERROR_CODE)           
+             System.out.println(rs.getMsg());
+         }
+         queryStr = new StringBuilder();
+diff --git a/src/java/org/apache/hadoop/hbase/Shell.java b/src/java/org/apache/hadoop/hbase/Shell.java
+index 9f6a4be..eb42c2d 100644
+--- a/src/java/org/apache/hadoop/hbase/Shell.java
++++ b/src/java/org/apache/hadoop/hbase/Shell.java
+@@ -115,10 +115,10 @@
+ 
+         long end = System.currentTimeMillis();
+         if (rs != null) {
+-          if (rs != null && rs.getType() > -1)
++          if (rs != null && rs.getType() > Constants.ERROR_CODE)
+             System.out.println(rs.getMsg() +
+               executeTime((rs.getType() == 1), start, end));
+-          else if (rs.getType() == -9)           
++          else if (rs.getType() == Constants.ERROR_CODE)           
+             System.out.println(rs.getMsg());
+         }
+         queryStr = new StringBuilder();

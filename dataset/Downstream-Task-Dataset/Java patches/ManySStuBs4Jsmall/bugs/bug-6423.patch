@@ -1,0 +1,36 @@
+diff --git a/flink-tests/src/test/java/org/apache/flink/test/example/client/JobRetrievalITCase.java b/flink-tests/src/test/java/org/apache/flink/test/example/client/JobRetrievalITCase.java
+index 6ce4f76..39eeccb 100644
+--- a/flink-tests/src/test/java/org/apache/flink/test/example/client/JobRetrievalITCase.java
++++ b/flink-tests/src/test/java/org/apache/flink/test/example/client/JobRetrievalITCase.java
+@@ -132,7 +132,12 @@
+ 		}
+ 	}
+ 
+-	private static class SemaphoreInvokable extends AbstractInvokable {
++	/**
++	 * Invokable that waits on {@link #lock} to be released and finishes afterwards.
++	 *
++	 * <p>NOTE: needs to be <tt>public</tt> so that a task can be run with this!
++	 */
++	public static class SemaphoreInvokable extends AbstractInvokable {
+ 
+ 		@Override
+ 		public void invoke() throws Exception {
+diff --git a/flink-tests/src/test/java/org/apache/flink/test/example/client/JobRetrievalITCase.java b/flink-tests/src/test/java/org/apache/flink/test/example/client/JobRetrievalITCase.java
+index 6ce4f76..39eeccb 100644
+--- a/flink-tests/src/test/java/org/apache/flink/test/example/client/JobRetrievalITCase.java
++++ b/flink-tests/src/test/java/org/apache/flink/test/example/client/JobRetrievalITCase.java
+@@ -132,7 +132,12 @@
+ 		}
+ 	}
+ 
+-	private static class SemaphoreInvokable extends AbstractInvokable {
++	/**
++	 * Invokable that waits on {@link #lock} to be released and finishes afterwards.
++	 *
++	 * <p>NOTE: needs to be <tt>public</tt> so that a task can be run with this!
++	 */
++	public static class SemaphoreInvokable extends AbstractInvokable {
+ 
+ 		@Override
+ 		public void invoke() throws Exception {

@@ -1,0 +1,14 @@
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
+index de09878..5f1693f 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-resourcemanager/src/test/java/org/apache/hadoop/yarn/server/resourcemanager/applicationsmanager/TestAMRestart.java
+@@ -386,7 +386,8 @@
+     ApplicationState appState =
+         memStore.getState().getApplicationState().get(app1.getApplicationId());
+     // AM should be restarted even though max-am-attempt is 1.
+-    MockAM am2 = MockRM.launchAndRegisterAM(app1, rm1, nm1);
++    MockAM am2 =
++        rm1.waitForNewAMToLaunchAndRegister(app1.getApplicationId(), 2, nm1);
+     RMAppAttempt attempt2 = app1.getCurrentAppAttempt();
+     Assert.assertTrue(((RMAppAttemptImpl) attempt2).mayBeLastAttempt());
+ 

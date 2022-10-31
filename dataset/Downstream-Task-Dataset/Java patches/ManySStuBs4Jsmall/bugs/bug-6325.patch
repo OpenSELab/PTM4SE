@@ -1,0 +1,44 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/concurrent/FutureUtils.java b/flink-runtime/src/main/java/org/apache/flink/runtime/concurrent/FutureUtils.java
+index d4a65de..41effc1 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/concurrent/FutureUtils.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/concurrent/FutureUtils.java
+@@ -200,7 +200,7 @@
+ 						} else {
+ 							if (retries > 0 && retryPredicate.test(throwable)) {
+ 								final ScheduledFuture<?> scheduledFuture = scheduledExecutor.schedule(
+-									() -> retryOperationWithDelay(resultFuture, operation, retries - 1, retryDelay, retryPredicate, scheduledExecutor),
++									(Runnable) () -> retryOperationWithDelay(resultFuture, operation, retries - 1, retryDelay, retryPredicate, scheduledExecutor),
+ 									retryDelay.toMilliseconds(),
+ 									TimeUnit.MILLISECONDS);
+ 
+@@ -282,7 +282,7 @@
+ 							resultFuture.complete(t);
+ 						} else if (deadline.hasTimeLeft()) {
+ 							final ScheduledFuture<?> scheduledFuture = scheduledExecutor.schedule(
+-								() -> retrySuccessfulOperationWithDelay(resultFuture, operation, retryDelay, deadline, acceptancePredicate, scheduledExecutor),
++								(Runnable) () -> retrySuccessfulOperationWithDelay(resultFuture, operation, retryDelay, deadline, acceptancePredicate, scheduledExecutor),
+ 								retryDelay.toMilliseconds(),
+ 								TimeUnit.MILLISECONDS);
+ 
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/concurrent/FutureUtils.java b/flink-runtime/src/main/java/org/apache/flink/runtime/concurrent/FutureUtils.java
+index d4a65de..41effc1 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/concurrent/FutureUtils.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/concurrent/FutureUtils.java
+@@ -200,7 +200,7 @@
+ 						} else {
+ 							if (retries > 0 && retryPredicate.test(throwable)) {
+ 								final ScheduledFuture<?> scheduledFuture = scheduledExecutor.schedule(
+-									() -> retryOperationWithDelay(resultFuture, operation, retries - 1, retryDelay, retryPredicate, scheduledExecutor),
++									(Runnable) () -> retryOperationWithDelay(resultFuture, operation, retries - 1, retryDelay, retryPredicate, scheduledExecutor),
+ 									retryDelay.toMilliseconds(),
+ 									TimeUnit.MILLISECONDS);
+ 
+@@ -282,7 +282,7 @@
+ 							resultFuture.complete(t);
+ 						} else if (deadline.hasTimeLeft()) {
+ 							final ScheduledFuture<?> scheduledFuture = scheduledExecutor.schedule(
+-								() -> retrySuccessfulOperationWithDelay(resultFuture, operation, retryDelay, deadline, acceptancePredicate, scheduledExecutor),
++								(Runnable) () -> retrySuccessfulOperationWithDelay(resultFuture, operation, retryDelay, deadline, acceptancePredicate, scheduledExecutor),
+ 								retryDelay.toMilliseconds(),
+ 								TimeUnit.MILLISECONDS);
+ 

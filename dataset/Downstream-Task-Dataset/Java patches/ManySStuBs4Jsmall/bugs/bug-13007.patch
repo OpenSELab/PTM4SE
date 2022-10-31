@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/TaskContext.java b/presto-main/src/main/java/com/facebook/presto/operator/TaskContext.java
+index 51ed5e9..e977802 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/TaskContext.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/TaskContext.java
+@@ -327,7 +327,7 @@
+         }
+ 
+         long startNanos = this.startNanos.get();
+-        if (startNanos < createNanos) {
++        if (startNanos == 0) {
+             startNanos = System.nanoTime();
+         }
+         Duration queuedTime = new Duration(startNanos - createNanos, NANOSECONDS);
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/TaskContext.java b/presto-main/src/main/java/com/facebook/presto/operator/TaskContext.java
+index 51ed5e9..e977802 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/TaskContext.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/TaskContext.java
+@@ -327,7 +327,7 @@
+         }
+ 
+         long startNanos = this.startNanos.get();
+-        if (startNanos < createNanos) {
++        if (startNanos == 0) {
+             startNanos = System.nanoTime();
+         }
+         Duration queuedTime = new Duration(startNanos - createNanos, NANOSECONDS);

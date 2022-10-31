@@ -1,0 +1,26 @@
+diff --git a/webservices/server-integration/src/main/java/org/jboss/as/webservices/injection/WSHandlerChainAnnotationProcessor.java b/webservices/server-integration/src/main/java/org/jboss/as/webservices/injection/WSHandlerChainAnnotationProcessor.java
+index 4f0f076..139890a 100644
+--- a/webservices/server-integration/src/main/java/org/jboss/as/webservices/injection/WSHandlerChainAnnotationProcessor.java
++++ b/webservices/server-integration/src/main/java/org/jboss/as/webservices/injection/WSHandlerChainAnnotationProcessor.java
+@@ -74,7 +74,7 @@
+         }
+         // wars define resource roots
+         AttachmentList<ResourceRoot> resourceRoots = unit.getAttachment(RESOURCE_ROOTS);
+-        if (EjbDeploymentMarker.isEjbDeployment(unit)) {
++        if (!unit.getName().endsWith(".war") && EjbDeploymentMarker.isEjbDeployment(unit)) {
+             // ejb archives don't define resource roots, using root resource
+             resourceRoots = new AttachmentList<ResourceRoot>(ResourceRoot.class);
+             final ResourceRoot root = unit.getAttachment(DEPLOYMENT_ROOT);
+diff --git a/webservices/server-integration/src/main/java/org/jboss/as/webservices/injection/WSHandlerChainAnnotationProcessor.java b/webservices/server-integration/src/main/java/org/jboss/as/webservices/injection/WSHandlerChainAnnotationProcessor.java
+index 4f0f076..139890a 100644
+--- a/webservices/server-integration/src/main/java/org/jboss/as/webservices/injection/WSHandlerChainAnnotationProcessor.java
++++ b/webservices/server-integration/src/main/java/org/jboss/as/webservices/injection/WSHandlerChainAnnotationProcessor.java
+@@ -74,7 +74,7 @@
+         }
+         // wars define resource roots
+         AttachmentList<ResourceRoot> resourceRoots = unit.getAttachment(RESOURCE_ROOTS);
+-        if (EjbDeploymentMarker.isEjbDeployment(unit)) {
++        if (!unit.getName().endsWith(".war") && EjbDeploymentMarker.isEjbDeployment(unit)) {
+             // ejb archives don't define resource roots, using root resource
+             resourceRoots = new AttachmentList<ResourceRoot>(ResourceRoot.class);
+             final ResourceRoot root = unit.getAttachment(DEPLOYMENT_ROOT);

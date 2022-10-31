@@ -1,0 +1,22 @@
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemRootResourceDefinition.java b/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemRootResourceDefinition.java
+index 6f84482..e5af18a 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemRootResourceDefinition.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemRootResourceDefinition.java
+@@ -66,7 +66,7 @@
+                     .setXmlName(EJB3SubsystemXMLAttribute.DEFAULT_ACCESS_TIMEOUT.getLocalName())
+                     .setDefaultValue(new ModelNode().set(5000)) // TODO: this should come from component description
+                     .setAllowExpression(true) // we allow expression for setting a timeout value
+-                    .setValidator(new LongRangeValidator(1, Integer.MAX_VALUE, false, false))
++                    .setValidator(new LongRangeValidator(1, Integer.MAX_VALUE, true, true))
+                     .setFlags(AttributeAccess.Flag.RESTART_NONE)
+                     .build();
+ 
+@@ -75,7 +75,7 @@
+                     .setXmlName(EJB3SubsystemXMLAttribute.DEFAULT_ACCESS_TIMEOUT.getLocalName())
+                     .setDefaultValue(new ModelNode().set(5000)) // TODO: this should come from component description
+                     .setAllowExpression(true) // we allow expression for setting a timeout value
+-                    .setValidator(new LongRangeValidator(1, Integer.MAX_VALUE, false, false))
++                    .setValidator(new LongRangeValidator(1, Integer.MAX_VALUE, true, true))
+                     .setFlags(AttributeAccess.Flag.RESTART_NONE)
+                     .build();
+     public static final SimpleAttributeDefinition DEFAULT_SFSB_CACHE =

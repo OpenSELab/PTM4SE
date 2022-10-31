@@ -1,0 +1,88 @@
+diff --git a/itest/src/edu/stanford/nlp/international/spanish/SpanishTokenizerITest.java b/itest/src/edu/stanford/nlp/international/spanish/SpanishTokenizerITest.java
+index 7ab73fd..7b0c5ad 100644
+--- a/itest/src/edu/stanford/nlp/international/spanish/SpanishTokenizerITest.java
++++ b/itest/src/edu/stanford/nlp/international/spanish/SpanishTokenizerITest.java
+@@ -64,7 +64,7 @@
+       { "12", "km", "/", "h" },
+       { "Los", "hombres", "sentados", "están", "muy", "guapos", "." },
+       { "Hizo", "abrir", "los", "." },
+-      { "sal", "os", "=RRB=", "=LRB=", "1", "de" },  // ["sal", "os"] is probably a mistake, but it's what we now get....
++      { "salos", "=RRB=", "=LRB=", "1", "de" },
+   };
+ 
+ 
+diff --git a/src/edu/stanford/nlp/util/Execution.java b/src/edu/stanford/nlp/util/Execution.java
+index e5724e5..e9c3a81 100644
+--- a/src/edu/stanford/nlp/util/Execution.java
++++ b/src/edu/stanford/nlp/util/Execution.java
+@@ -25,10 +25,10 @@
+  *     import edu.stanford.nlp.util.Execution.Option
+  *
+  *     class Props {
+- *       &#64;Option(name="anIntOption", required=false, gloss="This is an int")
+- *       public static int anIntOption = 7; // default value is 7
++ *       &#64;Option(name="anIntOption", required=false)
++ *       public static int anIntOption = 7 // default value is 7
+  *       &#64;Option(name="anotherOption", required=false)
+- *       public static File aCastableOption = new File("/foo");
++ *       public static File aCastableOption = new File("/foo")
+  *     }
+  *   </code>
+  * </pre>
+@@ -42,34 +42,6 @@
+  *   If your default classpath has many classes in it, you can select a subset of them
+  *   by using {@link Execution#fillOptions(Class[], java.util.Properties)}, or some variant.
+  * </p>
+- *
+- * <p>
+- *   A complete toy example looks like this:
+- * </p>
+- *
+- * <pre>
+- *   <code>
+- *     import java.util.Properties;
+- *
+- *     import edu.stanford.nlp.util.Execution;
+- *     import edu.stanford.nlp.util.StringUtils;
+- *
+- *     public class Foo {
+- *
+- *       &#64;Execution.Option(name="bar", gloss="This is a string option.", required=true)
+- *       private static String BAR = null;
+- *
+- *       public static void main(String[] args) {
+- *         // Parse the arguments
+- *         Properties props = StringUtils.argsToProperties(args);
+- *         Execution.fillOptions(new Class[]{ Foo.class, Execution.class }, props);
+- *
+- *         System.err.println(INPUT);
+- *       }
+- *     }
+- *   </code>
+- * </pre>
+- *
+  */
+ public class Execution {
+ 
+@@ -473,7 +445,7 @@
+       }
+       // (fill the field)
+       if (target != null) {
+-        // (case: declared option)
++        // (case: declared option)z
+         fillField(class2object.get(target.getDeclaringClass()), target, value);
+       } else if (ensureAllOptions) {
+         // (case: undeclared option)
+diff --git a/itest/src/edu/stanford/nlp/international/spanish/SpanishTokenizerITest.java b/itest/src/edu/stanford/nlp/international/spanish/SpanishTokenizerITest.java
+index 7ab73fd..7b0c5ad 100644
+--- a/itest/src/edu/stanford/nlp/international/spanish/SpanishTokenizerITest.java
++++ b/itest/src/edu/stanford/nlp/international/spanish/SpanishTokenizerITest.java
+@@ -64,7 +64,7 @@
+       { "12", "km", "/", "h" },
+       { "Los", "hombres", "sentados", "están", "muy", "guapos", "." },
+       { "Hizo", "abrir", "los", "." },
+-      { "sal", "os", "=RRB=", "=LRB=", "1", "de" },  // ["sal", "os"] is probably a mistake, but it's what we now get....
++      { "salos", "=RRB=", "=LRB=", "1", "de" },
+   };
+ 
+ 

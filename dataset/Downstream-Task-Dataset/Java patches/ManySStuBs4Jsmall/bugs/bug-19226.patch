@@ -1,0 +1,74 @@
+diff --git a/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/connection/OneWireConnection.java b/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/connection/OneWireConnection.java
+index ae911a6..89b5776 100644
+--- a/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/connection/OneWireConnection.java
++++ b/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/connection/OneWireConnection.java
+@@ -318,7 +318,7 @@
+                     reconnect();
+                 }
+             } catch (IOException ioe) {
+-                logger.error("couldn't establish network connection while read attempt {} '{}'" + " ip:port={}:{}",
++                logger.error("couldn't establish network connection while read attempt {} '{}' ip:port={}:{}",
+                         lvAttempt, lvDevicePropertyPath, cvIp, cvPort, ioe);
+                 reconnect();
+             } catch (NumberFormatException lvNumberFormatException) {
+@@ -355,7 +355,7 @@
+                         lvAttempt, oe);
+                 reconnect();
+             } catch (IOException ioe) {
+-                logger.error("Couldn't establish network connection while write attempt {} to '{}'" + " ip:port={}:{}",
++                logger.error("Couldn't establish network connection while write attempt {} to '{}' ip:port={}:{}",
+                         lvAttempt, pvDevicePropertyPath, cvIp, cvPort, ioe);
+                 reconnect();
+             } finally {
+diff --git a/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/deviceproperties/AbstractOneWireDevicePropertyBindingConfig.java b/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/deviceproperties/AbstractOneWireDevicePropertyBindingConfig.java
+index 2442896..5162293 100644
+--- a/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/deviceproperties/AbstractOneWireDevicePropertyBindingConfig.java
++++ b/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/deviceproperties/AbstractOneWireDevicePropertyBindingConfig.java
+@@ -210,8 +210,8 @@
+         Type lvType = convertReadValueToUnmodifiedType(pvReadValue);
+ 
+         for (OneWireTypeModifier lvTypeModifier : getTypeModifieryList()) {
+-            logger.debug("type of " + getDevicePropertyPath() + " before modifier:" + lvTypeModifier.getModifierName()
+-                    + "type=" + lvType.toString());
++            logger.debug("type of {} before modifier:{} type={}", getDevicePropertyPath(),
++                    lvTypeModifier.getModifierName(), lvType);
+             lvType = lvTypeModifier.modify4Read(lvType);
+             logger.debug("type of {} after modifier:{} type={}", getDevicePropertyPath(),
+                     lvTypeModifier.getModifierName(), lvType);
+diff --git a/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/deviceproperties/AbstractOneWireDevicePropertyWritableBindingConfig.java b/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/deviceproperties/AbstractOneWireDevicePropertyWritableBindingConfig.java
+index 86bc521..99eed94 100644
+--- a/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/deviceproperties/AbstractOneWireDevicePropertyWritableBindingConfig.java
++++ b/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/deviceproperties/AbstractOneWireDevicePropertyWritableBindingConfig.java
+@@ -38,8 +38,8 @@
+      */
+     public String convertTypeToString(Type pvType) {
+         for (OneWireTypeModifier lvTypeModifier : getTypeModifieryList()) {
+-            logger.debug("type of " + getDevicePropertyPath() + " before modifier:" + lvTypeModifier.getModifierName()
+-                    + "type=" + pvType.toString());
++            logger.debug("type of {} before modifier:{} type={}", getDevicePropertyPath(),
++                    lvTypeModifier.getModifierName(), pvType);
+             pvType = lvTypeModifier.modify4Write(pvType);
+             logger.debug("type of {} after modifier:{} type={}", getDevicePropertyPath(),
+                     lvTypeModifier.getModifierName(), pvType);
+diff --git a/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/connection/OneWireConnection.java b/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/connection/OneWireConnection.java
+index ae911a6..89b5776 100644
+--- a/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/connection/OneWireConnection.java
++++ b/bundles/binding/org.openhab.binding.onewire/src/main/java/org/openhab/binding/onewire/internal/connection/OneWireConnection.java
+@@ -318,7 +318,7 @@
+                     reconnect();
+                 }
+             } catch (IOException ioe) {
+-                logger.error("couldn't establish network connection while read attempt {} '{}'" + " ip:port={}:{}",
++                logger.error("couldn't establish network connection while read attempt {} '{}' ip:port={}:{}",
+                         lvAttempt, lvDevicePropertyPath, cvIp, cvPort, ioe);
+                 reconnect();
+             } catch (NumberFormatException lvNumberFormatException) {
+@@ -355,7 +355,7 @@
+                         lvAttempt, oe);
+                 reconnect();
+             } catch (IOException ioe) {
+-                logger.error("Couldn't establish network connection while write attempt {} to '{}'" + " ip:port={}:{}",
++                logger.error("Couldn't establish network connection while write attempt {} to '{}' ip:port={}:{}",
+                         lvAttempt, pvDevicePropertyPath, cvIp, cvPort, ioe);
+                 reconnect();
+             } finally {

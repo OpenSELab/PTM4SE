@@ -1,0 +1,77 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/admin/TableOperationsImpl.java b/core/src/main/java/org/apache/accumulo/core/client/admin/TableOperationsImpl.java
+index c35d7fa..ea4f311 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/admin/TableOperationsImpl.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/admin/TableOperationsImpl.java
+@@ -190,11 +190,7 @@ public class TableOperationsImpl extends TableOperationsHelper {
+     
+     List<ByteBuffer> args = Arrays.asList(ByteBuffer.wrap(tableName.getBytes()), ByteBuffer.wrap(timeType.name().getBytes()));
+     
+-    Map<String,String> opts;
+-    if (limitVersion) {
+-      opts = IteratorUtil.generateInitialTableProperties();
+-    } else
+-      opts = Collections.emptyMap();
++    Map<String,String> opts = IteratorUtil.generateInitialTableProperties(limitVersion);
+     
+     try {
+       doTableOperation(TableOperation.CREATE, args, opts);
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/mock/MockTable.java b/core/src/main/java/org/apache/accumulo/core/client/mock/MockTable.java
+index f558822..9289608 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/mock/MockTable.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/mock/MockTable.java
+@@ -88,9 +88,9 @@ public class MockTable {
+   private TimeType timeType;
+   SortedSet<Text> splits = new TreeSet<Text>();
+   
+-  MockTable(boolean useVersions, TimeType timeType) {
++  MockTable(boolean limitVersion, TimeType timeType) {
+     this.timeType = timeType;
+-    settings = IteratorUtil.generateInitialTableProperties();
++    settings = IteratorUtil.generateInitialTableProperties(limitVersion);
+     for (Entry<String,String> entry : AccumuloConfiguration.getDefaultConfiguration()) {
+       String key = entry.getKey();
+       if (key.startsWith(Property.TABLE_PREFIX.getKey()))
+diff --git a/core/src/main/java/org/apache/accumulo/core/iterators/IteratorUtil.java b/core/src/main/java/org/apache/accumulo/core/iterators/IteratorUtil.java
+index 172fa63..9b1ca69 100644
+--- a/core/src/main/java/org/apache/accumulo/core/iterators/IteratorUtil.java
++++ b/core/src/main/java/org/apache/accumulo/core/iterators/IteratorUtil.java
+@@ -63,13 +63,22 @@ public class IteratorUtil {
+     
+   }
+   
+-  public static Map<String,String> generateInitialTableProperties() {
++  /**
++   * Generate the initial (default) properties for a table
++   * @param limitVersion
++   *   include a VersioningIterator at priority 20 that retains a single version of a given K/V pair.
++   * @return A map of Table properties
++   */
++  public static Map<String,String> generateInitialTableProperties(boolean limitVersion) {
+     TreeMap<String,String> props = new TreeMap<String,String>();
+     
+-    for (IteratorScope iterScope : IteratorScope.values()) {
+-      props.put(Property.TABLE_ITERATOR_PREFIX + iterScope.name() + ".vers", "20," + VersioningIterator.class.getName());
+-      props.put(Property.TABLE_ITERATOR_PREFIX + iterScope.name() + ".vers.opt.maxVersions", "1");
++    if (limitVersion) {
++        for (IteratorScope iterScope : IteratorScope.values()) {
++          props.put(Property.TABLE_ITERATOR_PREFIX + iterScope.name() + ".vers", "20," + VersioningIterator.class.getName());
++          props.put(Property.TABLE_ITERATOR_PREFIX + iterScope.name() + ".vers.opt.maxVersions", "1");
++        }
+     }
++    
+     return props;
+   }
+   
+diff --git a/core/src/main/java/org/apache/accumulo/core/util/shell/commands/CreateTableCommand.java b/core/src/main/java/org/apache/accumulo/core/util/shell/commands/CreateTableCommand.java
+index 83829a9..f2495cc 100644
+--- a/core/src/main/java/org/apache/accumulo/core/util/shell/commands/CreateTableCommand.java
++++ b/core/src/main/java/org/apache/accumulo/core/util/shell/commands/CreateTableCommand.java
+@@ -110,7 +110,7 @@ public class CreateTableCommand extends Command {
+     // context
+     
+     if (cl.hasOption(createTableNoDefaultIters.getOpt())) {
+-      for (String key : IteratorUtil.generateInitialTableProperties().keySet()) {
++      for (String key : IteratorUtil.generateInitialTableProperties(true).keySet()) {
+         shellState.getConnector().tableOperations().removeProperty(tableName, key);
+       }
+     }

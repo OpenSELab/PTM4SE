@@ -1,0 +1,83 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandenchant.java b/Essentials/src/com/earth2me/essentials/commands/Commandenchant.java
+index 75759b8..1eb895b 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandenchant.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandenchant.java
+@@ -36,7 +36,7 @@
+ 			for (Map.Entry<String, Enchantment> entry : Enchantments.entrySet())
+ 			{
+ 				final String enchantmentName = entry.getValue().getName().toLowerCase(Locale.ENGLISH);
+-				if (enchantmentslist.contains(enchantmentName) || (user.isAuthorized("essentials.enchant." + enchantmentName) && entry.getValue().canEnchantItem(stack)))
++				if (enchantmentslist.contains(enchantmentName) || (user.isAuthorized("essentials.enchantments." + enchantmentName) && entry.getValue().canEnchantItem(stack)))
+ 				{
+ 					enchantmentslist.add(entry.getKey());
+ 					//enchantmentslist.add(enchantmentName);
+@@ -58,7 +58,7 @@
+ 			}
+ 		}
+ 
+-		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && user.isAuthorized("essentials.enchant.allowunsafe");
++		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && user.isAuthorized("essentials.enchantments.allowunsafe");
+ 		
+ 		final MetaItemStack metaStack = new MetaItemStack(stack);
+ 		final Enchantment enchantment = metaStack.getEnchantment(user, args[0]);
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandgive.java b/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
+index f31a318..d7c6fea 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
+@@ -73,7 +73,7 @@
+ 		{
+ 			MetaItemStack metaStack = new MetaItemStack(stack);
+ 			boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments();			
+-			if (allowUnsafe && sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.enchant.allowunsafe"))
++			if (allowUnsafe && sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.enchantments.allowunsafe"))
+ 			{
+ 				allowUnsafe = false;
+ 			}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commanditem.java b/Essentials/src/com/earth2me/essentials/commands/Commanditem.java
+index 0ff65fb..09a56eb 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commanditem.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commanditem.java
+@@ -58,7 +58,7 @@
+ 		if (args.length > 2)
+ 		{
+ 			MetaItemStack metaStack = new MetaItemStack(stack);
+-			final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && user.isAuthorized("essentials.enchant.allowunsafe");
++			final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && user.isAuthorized("essentials.enchantments.allowunsafe");
+ 			
+ 			metaStack.parseStringMeta(user, allowUnsafe, args, 2, ess);
+ 			
+diff --git a/Essentials/src/com/earth2me/essentials/signs/SignEnchant.java b/Essentials/src/com/earth2me/essentials/signs/SignEnchant.java
+index bf92a17..c0079fc 100644
+--- a/Essentials/src/com/earth2me/essentials/signs/SignEnchant.java
++++ b/Essentials/src/com/earth2me/essentials/signs/SignEnchant.java
+@@ -49,7 +49,7 @@
+ 			sign.setLine(2, "§c<enchant>");
+ 			throw new SignException(ex.getMessage(), ex);
+ 		}
+-		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && player.isAuthorized("essentials.enchant.allowunsafe");
++		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && player.isAuthorized("essentials.enchantments.allowunsafe");
+ 		if (level < 0 || (!allowUnsafe && level > enchantment.getMaxLevel()))
+ 		{
+ 			level = enchantment.getMaxLevel();
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandenchant.java b/Essentials/src/com/earth2me/essentials/commands/Commandenchant.java
+index 75759b8..1eb895b 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandenchant.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandenchant.java
+@@ -36,7 +36,7 @@
+ 			for (Map.Entry<String, Enchantment> entry : Enchantments.entrySet())
+ 			{
+ 				final String enchantmentName = entry.getValue().getName().toLowerCase(Locale.ENGLISH);
+-				if (enchantmentslist.contains(enchantmentName) || (user.isAuthorized("essentials.enchant." + enchantmentName) && entry.getValue().canEnchantItem(stack)))
++				if (enchantmentslist.contains(enchantmentName) || (user.isAuthorized("essentials.enchantments." + enchantmentName) && entry.getValue().canEnchantItem(stack)))
+ 				{
+ 					enchantmentslist.add(entry.getKey());
+ 					//enchantmentslist.add(enchantmentName);
+@@ -58,7 +58,7 @@
+ 			}
+ 		}
+ 
+-		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && user.isAuthorized("essentials.enchant.allowunsafe");
++		final boolean allowUnsafe = ess.getSettings().allowUnsafeEnchantments() && user.isAuthorized("essentials.enchantments.allowunsafe");
+ 		
+ 		final MetaItemStack metaStack = new MetaItemStack(stack);
+ 		final Enchantment enchantment = metaStack.getEnchantment(user, args[0]);

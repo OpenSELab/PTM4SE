@@ -1,0 +1,39 @@
+diff --git a/components/camel-atom/src/test/java/org/apache/camel/component/atom/AtomGoodBlogsTest.java b/components/camel-atom/src/test/java/org/apache/camel/component/atom/AtomGoodBlogsTest.java
+index 3ebe1a0..b31b826 100644
+--- a/components/camel-atom/src/test/java/org/apache/camel/component/atom/AtomGoodBlogsTest.java
++++ b/components/camel-atom/src/test/java/org/apache/camel/component/atom/AtomGoodBlogsTest.java
+@@ -77,7 +77,7 @@
+                 from("atom:file:src/test/data/feed.atom?splitEntries=true&consumer.delay=1000").to("seda:feeds");
+ 
+                 // From the feeds we filter each blot entry by using our blog service class
+-                from("seda:feeds").filter().method("blogService", "goodBlog").to("seda:goodBlogs");
++                from("seda:feeds").filter().method("blogService", "isGoodBlog").to("seda:goodBlogs");
+ 
+                 // And the good blogs is moved to a mock queue as this sample is also used for unit testing
+                 // this is one of the strengths in Camel that you can also use the mock endpoint for your
+diff --git a/components/camel-jms/src/test/java/org/apache/camel/component/jms/JmsRouteWithInOnlyAndMultipleAcksTest.java b/components/camel-jms/src/test/java/org/apache/camel/component/jms/JmsRouteWithInOnlyAndMultipleAcksTest.java
+index 9a7e581..53c2c23 100644
+--- a/components/camel-jms/src/test/java/org/apache/camel/component/jms/JmsRouteWithInOnlyAndMultipleAcksTest.java
++++ b/components/camel-jms/src/test/java/org/apache/camel/component/jms/JmsRouteWithInOnlyAndMultipleAcksTest.java
+@@ -113,7 +113,7 @@
+         public MyOrderServiceNotificationWithAckBean(String id) {
+             this.id = id;
+         }
+-        public String handleOrder(String body) {
++        public String handleOrderNotificationWithAck(String body) {
+             return "Ack-" + id + ":" + body;
+         }
+     }
+diff --git a/components/camel-atom/src/test/java/org/apache/camel/component/atom/AtomGoodBlogsTest.java b/components/camel-atom/src/test/java/org/apache/camel/component/atom/AtomGoodBlogsTest.java
+index 3ebe1a0..b31b826 100644
+--- a/components/camel-atom/src/test/java/org/apache/camel/component/atom/AtomGoodBlogsTest.java
++++ b/components/camel-atom/src/test/java/org/apache/camel/component/atom/AtomGoodBlogsTest.java
+@@ -77,7 +77,7 @@
+                 from("atom:file:src/test/data/feed.atom?splitEntries=true&consumer.delay=1000").to("seda:feeds");
+ 
+                 // From the feeds we filter each blot entry by using our blog service class
+-                from("seda:feeds").filter().method("blogService", "goodBlog").to("seda:goodBlogs");
++                from("seda:feeds").filter().method("blogService", "isGoodBlog").to("seda:goodBlogs");
+ 
+                 // And the good blogs is moved to a mock queue as this sample is also used for unit testing
+                 // this is one of the strengths in Camel that you can also use the mock endpoint for your

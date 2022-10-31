@@ -1,0 +1,31 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/model/XmlParseTest.java b/camel-core/src/test/java/org/apache/camel/model/XmlParseTest.java
+index 6bf8d4e..218e182 100644
+--- a/camel-core/src/test/java/org/apache/camel/model/XmlParseTest.java
++++ b/camel-core/src/test/java/org/apache/camel/model/XmlParseTest.java
+@@ -148,7 +148,7 @@
+         RouteDefinition route = assertOneRoute("routingSlip.xml");
+         assertFrom(route, "seda:a");
+         RoutingSlipDefinition node = assertOneProcessorInstanceOf(RoutingSlipDefinition.class, route);
+-        assertEquals("destinations", node.getHeaderName());
++        assertEquals("destinations", node.getExpression().getExpression());
+         assertEquals(RoutingSlipDefinition.DEFAULT_DELIMITER, node.getUriDelimiter());
+     }
+ 
+@@ -156,7 +156,7 @@
+         RouteDefinition route = assertOneRoute("routingSlipHeaderSet.xml");
+         assertFrom(route, "seda:a");
+         RoutingSlipDefinition node = assertOneProcessorInstanceOf(RoutingSlipDefinition.class, route);
+-        assertEquals("theRoutingSlipHeader", node.getHeaderName());
++        assertEquals("theRoutingSlipHeader", node.getExpression().getExpression());
+         assertEquals(RoutingSlipDefinition.DEFAULT_DELIMITER, node.getUriDelimiter());
+     }
+ 
+@@ -164,7 +164,7 @@
+         RouteDefinition route = assertOneRoute("routingSlipHeaderAndDelimiterSet.xml");
+         assertFrom(route, "seda:a");
+         RoutingSlipDefinition node = assertOneProcessorInstanceOf(RoutingSlipDefinition.class, route);
+-        assertEquals("theRoutingSlipHeader", node.getHeaderName());
++        assertEquals("theRoutingSlipHeader", node.getExpression().getExpression());
+         assertEquals("#", node.getUriDelimiter());
+     }
+ 

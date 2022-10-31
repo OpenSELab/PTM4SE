@@ -1,0 +1,22 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/tools/DFSAdmin.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/tools/DFSAdmin.java
+index 86e7d77..dd5a0e3 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/tools/DFSAdmin.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/tools/DFSAdmin.java
+@@ -82,7 +82,7 @@
+       super(fs.getConf());
+       if (!(fs instanceof DistributedFileSystem)) {
+         throw new IllegalArgumentException("FileSystem " + fs.getUri() + 
+-            " is not a distributed file system");
++            " is not an HDFS file system");
+       }
+       this.dfs = (DistributedFileSystem)fs;
+     }
+@@ -286,7 +286,7 @@
+     FileSystem fs = getFS();
+     if (!(fs instanceof DistributedFileSystem)) {
+       throw new IllegalArgumentException("FileSystem " + fs.getUri() + 
+-      " is not a distributed file system");
++      " is not an HDFS file system");
+     }
+     return (DistributedFileSystem)fs;
+   }

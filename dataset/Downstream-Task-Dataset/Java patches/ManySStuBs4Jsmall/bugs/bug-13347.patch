@@ -1,0 +1,44 @@
+diff --git a/src/main/java/com/facebook/presto/block/Cursors.java b/src/main/java/com/facebook/presto/block/Cursors.java
+index 851b26c..7ce10bd 100644
+--- a/src/main/java/com/facebook/presto/block/Cursors.java
++++ b/src/main/java/com/facebook/presto/block/Cursors.java
+@@ -24,7 +24,7 @@
+     {
+         AdvanceResult result = cursor.advanceNextValue();
+         if (result == MUST_YIELD) {
+-            throw new IllegalStateException("Cursor must yield but support yield is not supported here");
++            throw new IllegalStateException("Cursor requested caller to yield but yield is not supported here");
+         }
+         return result != FINISHED;
+     }
+@@ -33,7 +33,7 @@
+     {
+         AdvanceResult result = cursor.advanceToPosition(position);
+         if (result == MUST_YIELD) {
+-            throw new IllegalStateException("Cursor must yield but support yield is not supported here");
++            throw new IllegalStateException("Cursor requested caller to yield but yield is not supported here");
+         }
+         return result != FINISHED;
+     }
+diff --git a/src/main/java/com/facebook/presto/block/Cursors.java b/src/main/java/com/facebook/presto/block/Cursors.java
+index 851b26c..7ce10bd 100644
+--- a/src/main/java/com/facebook/presto/block/Cursors.java
++++ b/src/main/java/com/facebook/presto/block/Cursors.java
+@@ -24,7 +24,7 @@
+     {
+         AdvanceResult result = cursor.advanceNextValue();
+         if (result == MUST_YIELD) {
+-            throw new IllegalStateException("Cursor must yield but support yield is not supported here");
++            throw new IllegalStateException("Cursor requested caller to yield but yield is not supported here");
+         }
+         return result != FINISHED;
+     }
+@@ -33,7 +33,7 @@
+     {
+         AdvanceResult result = cursor.advanceToPosition(position);
+         if (result == MUST_YIELD) {
+-            throw new IllegalStateException("Cursor must yield but support yield is not supported here");
++            throw new IllegalStateException("Cursor requested caller to yield but yield is not supported here");
+         }
+         return result != FINISHED;
+     }

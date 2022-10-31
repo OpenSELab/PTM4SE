@@ -1,0 +1,26 @@
+diff --git a/kafka/src/main/java/com/alibaba/otter/canal/kafka/producer/CanalKafkaStarter.java b/kafka/src/main/java/com/alibaba/otter/canal/kafka/producer/CanalKafkaStarter.java
+index e88f935..0eedfa7 100644
+--- a/kafka/src/main/java/com/alibaba/otter/canal/kafka/producer/CanalKafkaStarter.java
++++ b/kafka/src/main/java/com/alibaba/otter/canal/kafka/producer/CanalKafkaStarter.java
+@@ -121,7 +121,7 @@
+                     Message message = server.getWithoutAck(clientIdentity, kafkaProperties.getCanalBatchSize()); // 获取指定数量的数据
+                     long batchId = message.getId();
+                     try {
+-                        int size = message.getEntries().size();
++                        int size = message.isRaw() ?  message.getRawEntries().size() : message.getEntries().size();
+                         if (batchId != -1 && size != 0) {
+                             if (!StringUtils.isEmpty(destination.getTopic())) {
+                                 Topic topic = new Topic();
+diff --git a/kafka/src/main/java/com/alibaba/otter/canal/kafka/producer/CanalKafkaStarter.java b/kafka/src/main/java/com/alibaba/otter/canal/kafka/producer/CanalKafkaStarter.java
+index e88f935..0eedfa7 100644
+--- a/kafka/src/main/java/com/alibaba/otter/canal/kafka/producer/CanalKafkaStarter.java
++++ b/kafka/src/main/java/com/alibaba/otter/canal/kafka/producer/CanalKafkaStarter.java
+@@ -121,7 +121,7 @@
+                     Message message = server.getWithoutAck(clientIdentity, kafkaProperties.getCanalBatchSize()); // 获取指定数量的数据
+                     long batchId = message.getId();
+                     try {
+-                        int size = message.getEntries().size();
++                        int size = message.isRaw() ?  message.getRawEntries().size() : message.getEntries().size();
+                         if (batchId != -1 && size != 0) {
+                             if (!StringUtils.isEmpty(destination.getTopic())) {
+                                 Topic topic = new Topic();

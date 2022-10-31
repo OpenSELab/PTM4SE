@@ -1,0 +1,13 @@
+diff --git a/components/camel-spring/src/test/java/org/apache/camel/component/xslt/XsltIncludeRelativeOtherTest.java b/components/camel-spring/src/test/java/org/apache/camel/component/xslt/XsltIncludeRelativeOtherTest.java
+index 9ad8b13..6ff4556 100644
+--- a/components/camel-spring/src/test/java/org/apache/camel/component/xslt/XsltIncludeRelativeOtherTest.java
++++ b/components/camel-spring/src/test/java/org/apache/camel/component/xslt/XsltIncludeRelativeOtherTest.java
+@@ -29,7 +29,7 @@
+         MockEndpoint mock = getMockEndpoint("mock:result");
+         mock.expectedMessageCount(1);
+         // the include file has the span style so check that its there
+-        mock.message(0).constant("<span style=\"color:yellow;\">48</span>");
++        mock.message(0).body().contains("<span style=\"color:yellow;\">48</span>");
+ 
+         assertMockEndpointsSatisfied();
+     }

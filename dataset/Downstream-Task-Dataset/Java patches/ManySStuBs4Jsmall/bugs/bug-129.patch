@@ -1,0 +1,44 @@
+diff --git a/modules/activiti-engine/src/test/java/org/activiti/engine/test/api/runtime/RuntimeServiceTest.java b/modules/activiti-engine/src/test/java/org/activiti/engine/test/api/runtime/RuntimeServiceTest.java
+index fd0ba81..feb0a39 100644
+--- a/modules/activiti-engine/src/test/java/org/activiti/engine/test/api/runtime/RuntimeServiceTest.java
++++ b/modules/activiti-engine/src/test/java/org/activiti/engine/test/api/runtime/RuntimeServiceTest.java
+@@ -125,7 +125,7 @@
+     processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", "456", CollectionUtil.singletonMap("var", "value"));
+     assertNotNull(processInstance);
+     assertEquals(2, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+-    assertEquals("var", runtimeService.getVariable(processInstance.getId(), "var"));
++    assertEquals("value", runtimeService.getVariable(processInstance.getId(), "var"));
+     
+     // by id
+     processInstance = runtimeService.startProcessInstanceById(processDefinition.getId(), "789");
+@@ -136,7 +136,7 @@
+     processInstance = runtimeService.startProcessInstanceById(processDefinition.getId(), "101123", CollectionUtil.singletonMap("var", "value2"));
+     assertNotNull(processInstance);
+     assertEquals(4, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+-    assertEquals("var", runtimeService.getVariable(processInstance.getId(), "var"));
++    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "var"));
+   }
+   
+   @Deployment(resources={
+diff --git a/modules/activiti-engine/src/test/java/org/activiti/engine/test/api/runtime/RuntimeServiceTest.java b/modules/activiti-engine/src/test/java/org/activiti/engine/test/api/runtime/RuntimeServiceTest.java
+index fd0ba81..feb0a39 100644
+--- a/modules/activiti-engine/src/test/java/org/activiti/engine/test/api/runtime/RuntimeServiceTest.java
++++ b/modules/activiti-engine/src/test/java/org/activiti/engine/test/api/runtime/RuntimeServiceTest.java
+@@ -125,7 +125,7 @@
+     processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", "456", CollectionUtil.singletonMap("var", "value"));
+     assertNotNull(processInstance);
+     assertEquals(2, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+-    assertEquals("var", runtimeService.getVariable(processInstance.getId(), "var"));
++    assertEquals("value", runtimeService.getVariable(processInstance.getId(), "var"));
+     
+     // by id
+     processInstance = runtimeService.startProcessInstanceById(processDefinition.getId(), "789");
+@@ -136,7 +136,7 @@
+     processInstance = runtimeService.startProcessInstanceById(processDefinition.getId(), "101123", CollectionUtil.singletonMap("var", "value2"));
+     assertNotNull(processInstance);
+     assertEquals(4, runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count());
+-    assertEquals("var", runtimeService.getVariable(processInstance.getId(), "var"));
++    assertEquals("value2", runtimeService.getVariable(processInstance.getId(), "var"));
+   }
+   
+   @Deployment(resources={

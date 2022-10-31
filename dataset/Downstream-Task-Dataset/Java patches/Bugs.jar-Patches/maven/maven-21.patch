@@ -1,0 +1,42 @@
+diff --git a/maven-compat/src/main/java/org/apache/maven/repository/legacy/DefaultWagonManager.java b/maven-compat/src/main/java/org/apache/maven/repository/legacy/DefaultWagonManager.java
+index 00e7f38..0b4f3ae 100644
+--- a/maven-compat/src/main/java/org/apache/maven/repository/legacy/DefaultWagonManager.java
++++ b/maven-compat/src/main/java/org/apache/maven/repository/legacy/DefaultWagonManager.java
+@@ -46,6 +46,7 @@ import org.codehaus.plexus.PlexusContainer;
+ import org.codehaus.plexus.component.annotations.Component;
+ import org.codehaus.plexus.component.annotations.Requirement;
+ import org.codehaus.plexus.component.repository.exception.ComponentLifecycleException;
++import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
+ import org.codehaus.plexus.logging.Logger;
+ import org.codehaus.plexus.util.FileUtils;
+ 
+@@ -67,9 +68,6 @@ public class DefaultWagonManager
+     @Requirement
+     private PlexusContainer container;
+ 
+-    @Requirement(role = Wagon.class)
+-    private Map<String, Wagon> wagons;
+-
+     @Requirement
+     private UpdateCheckManager updateCheckManager;
+ 
+@@ -686,11 +684,16 @@ public class DefaultWagonManager
+         }
+ 
+         String hint = protocol.toLowerCase( java.util.Locale.ENGLISH );
+-        Wagon wagon = (Wagon) wagons.get( hint );
+ 
+-        if ( wagon == null )
++        Wagon wagon;
++        try
++        {
++            wagon = container.lookup( Wagon.class, hint );
++        }
++        catch ( ComponentLookupException e )
+         {
+-            throw new UnsupportedProtocolException( "Cannot find wagon which supports the requested protocol: " + protocol );
++            throw new UnsupportedProtocolException( "Cannot find wagon which supports the requested protocol: "
++                + protocol, e );
+         }
+ 
+         return wagon;

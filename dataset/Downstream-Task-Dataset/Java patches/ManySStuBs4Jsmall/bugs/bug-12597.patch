@@ -1,0 +1,26 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
+index 6b67380..67997b1 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
+@@ -389,7 +389,7 @@
+             configuration = copy(configuration); // Some SerDes (e.g. Avro) modify passed configuration
+             deserializer.initialize(configuration, schema);
+         }
+-        catch (SerDeException e) {
++        catch (SerDeException | RuntimeException e) {
+             throw new RuntimeException("error initializing deserializer: " + deserializer.getClass().getName(), e);
+         }
+     }
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
+index 6b67380..67997b1 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveUtil.java
+@@ -389,7 +389,7 @@
+             configuration = copy(configuration); // Some SerDes (e.g. Avro) modify passed configuration
+             deserializer.initialize(configuration, schema);
+         }
+-        catch (SerDeException e) {
++        catch (SerDeException | RuntimeException e) {
+             throw new RuntimeException("error initializing deserializer: " + deserializer.getClass().getName(), e);
+         }
+     }

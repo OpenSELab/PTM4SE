@@ -1,0 +1,22 @@
+diff --git a/community/server/src/main/java/org/neo4j/server/rrd/ScheduledJob.java b/community/server/src/main/java/org/neo4j/server/rrd/ScheduledJob.java
+index c823578..7a5a013 100644
+--- a/community/server/src/main/java/org/neo4j/server/rrd/ScheduledJob.java
++++ b/community/server/src/main/java/org/neo4j/server/rrd/ScheduledJob.java
+@@ -29,7 +29,7 @@
+     private Timer timer;
+     private Logger logger = Logger.getLogger( ScheduledJob.class );
+ 
+-    public ScheduledJob( final Runnable job, String name, long period )
++    public ScheduledJob( final Runnable job, String name, long delay, long period )
+     {
+         timer = new Timer( name );
+         TimerTask runJob = new TimerTask()
+@@ -45,7 +45,7 @@
+                 }
+             }
+         };
+-        timer.scheduleAtFixedRate( runJob, 0, period );
++        timer.scheduleAtFixedRate( runJob, delay, period );
+     }
+ 
+     public void cancel()

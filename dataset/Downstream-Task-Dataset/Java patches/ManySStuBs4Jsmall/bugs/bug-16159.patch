@@ -1,0 +1,38 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/query/impl/UnsortedIndexStore.java b/hazelcast/src/main/java/com/hazelcast/query/impl/UnsortedIndexStore.java
+index 73b696b..f25f6eb 100644
+--- a/hazelcast/src/main/java/com/hazelcast/query/impl/UnsortedIndexStore.java
++++ b/hazelcast/src/main/java/com/hazelcast/query/impl/UnsortedIndexStore.java
+@@ -34,7 +34,7 @@
+             }
+             return;
+         }
+-        if (trend == -1) {
++        if (trend < 0) {
+             Comparable oldFrom = from;
+             from = to;
+             to = oldFrom;
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/finalTest/QueryTest.java b/hazelcast/src/test/java/com/hazelcast/map/finalTest/QueryTest.java
+index a623dad..85aefa5 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/finalTest/QueryTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/finalTest/QueryTest.java
+@@ -654,7 +654,6 @@
+         assertTrue(tookWithIndex < (tookWithout / 2));
+     }
+ 
+-    // todo fails
+     @Test
+     public void testNullIndexing() {
+         Config cfg = new Config();
+diff --git a/hazelcast/src/main/java/com/hazelcast/query/impl/UnsortedIndexStore.java b/hazelcast/src/main/java/com/hazelcast/query/impl/UnsortedIndexStore.java
+index 73b696b..f25f6eb 100644
+--- a/hazelcast/src/main/java/com/hazelcast/query/impl/UnsortedIndexStore.java
++++ b/hazelcast/src/main/java/com/hazelcast/query/impl/UnsortedIndexStore.java
+@@ -34,7 +34,7 @@
+             }
+             return;
+         }
+-        if (trend == -1) {
++        if (trend < 0) {
+             Comparable oldFrom = from;
+             from = to;
+             to = oldFrom;

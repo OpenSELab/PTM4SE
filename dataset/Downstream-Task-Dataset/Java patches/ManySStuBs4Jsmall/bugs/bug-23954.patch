@@ -1,0 +1,52 @@
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/jms/AS7BindingRegistry.java b/messaging/src/main/java/org/jboss/as/messaging/jms/AS7BindingRegistry.java
+index bd30561..4d06eec 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/jms/AS7BindingRegistry.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/jms/AS7BindingRegistry.java
+@@ -80,7 +80,7 @@
+             throw new IllegalArgumentException("Binding to " + name + " isn't allowed, since it belongs to a unknown/unsupported jndi name context");
+         }
+         // create the binding service
+-        final BinderService binderService = new BinderService(name);
++        final BinderService binderService = new BinderService(jndiBinding.relativeJndiName);
+         container.addService(jndiBinding.jndiContextServiceName.append(jndiBinding.relativeJndiName), binderService)
+                 .addDependency(jndiBinding.jndiContextServiceName, NamingStore.class, binderService.getNamingStoreInjector())
+                 .addInjection(binderService.getManagedObjectInjector(), new ValueManagedReferenceFactory(Values.immediateValue(obj)))
+diff --git a/testsuite/spec/src/main/java/org/jboss/as/test/spec/ejb3/mdb/ReplyingMDB.java b/testsuite/spec/src/main/java/org/jboss/as/test/spec/ejb3/mdb/ReplyingMDB.java
+index c76136a..9eca48b 100644
+--- a/testsuite/spec/src/main/java/org/jboss/as/test/spec/ejb3/mdb/ReplyingMDB.java
++++ b/testsuite/spec/src/main/java/org/jboss/as/test/spec/ejb3/mdb/ReplyingMDB.java
+@@ -40,7 +40,7 @@
+  * @author <a href="mailto:cdewolf@redhat.com">Carlo de Wolf</a>
+  */
+ @MessageDriven(activationConfig = {
+-        @ActivationConfigProperty(propertyName = "destination", propertyValue = "java:jboss/queue/test")
++        @ActivationConfigProperty(propertyName = "destination", propertyValue = "java:jboss/jms/queue/test")
+ })
+ public class ReplyingMDB implements MessageListener {
+     @Resource(lookup = "java:/JmsXA")
+diff --git a/testsuite/spec/src/test/java/org/jboss/as/test/spec/ejb3/mdb/JMSMessageDrivenBeanTestCase.java b/testsuite/spec/src/test/java/org/jboss/as/test/spec/ejb3/mdb/JMSMessageDrivenBeanTestCase.java
+index 9d59f76..e960fc7 100644
+--- a/testsuite/spec/src/test/java/org/jboss/as/test/spec/ejb3/mdb/JMSMessageDrivenBeanTestCase.java
++++ b/testsuite/spec/src/test/java/org/jboss/as/test/spec/ejb3/mdb/JMSMessageDrivenBeanTestCase.java
+@@ -71,7 +71,7 @@
+             final QueueReceiver receiver = session.createReceiver(replyDestination);
+             final Message message = session.createTextMessage("Test");
+             message.setJMSReplyTo(replyDestination);
+-            final Destination destination = (Destination) ctx.lookup("java:jboss/queue/test");
++            final Destination destination = (Destination) ctx.lookup("java:jboss/jms/queue/test");
+             final MessageProducer producer = session.createProducer(destination);
+             producer.send(message);
+             producer.close();
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/jms/AS7BindingRegistry.java b/messaging/src/main/java/org/jboss/as/messaging/jms/AS7BindingRegistry.java
+index bd30561..4d06eec 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/jms/AS7BindingRegistry.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/jms/AS7BindingRegistry.java
+@@ -80,7 +80,7 @@
+             throw new IllegalArgumentException("Binding to " + name + " isn't allowed, since it belongs to a unknown/unsupported jndi name context");
+         }
+         // create the binding service
+-        final BinderService binderService = new BinderService(name);
++        final BinderService binderService = new BinderService(jndiBinding.relativeJndiName);
+         container.addService(jndiBinding.jndiContextServiceName.append(jndiBinding.relativeJndiName), binderService)
+                 .addDependency(jndiBinding.jndiContextServiceName, NamingStore.class, binderService.getNamingStoreInjector())
+                 .addInjection(binderService.getManagedObjectInjector(), new ValueManagedReferenceFactory(Values.immediateValue(obj)))

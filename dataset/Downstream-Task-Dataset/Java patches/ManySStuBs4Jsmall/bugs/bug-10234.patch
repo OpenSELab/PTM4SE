@@ -1,0 +1,13 @@
+diff --git a/clojure/src/test/java/cucumber/runtime/clojure/ClojureSnippetTest.java b/clojure/src/test/java/cucumber/runtime/clojure/ClojureSnippetTest.java
+index 0420d7e..a786fff 100644
+--- a/clojure/src/test/java/cucumber/runtime/clojure/ClojureSnippetTest.java
++++ b/clojure/src/test/java/cucumber/runtime/clojure/ClojureSnippetTest.java
+@@ -20,7 +20,7 @@
+         Step step = new Step(NO_COMMENTS, "Given ", "I have 4 cukes in my \"big\" belly", 0, null, null);
+         String snippet = new SnippetGenerator(new ClojureSnippet()).getSnippet(step);
+         String expected = "" +
+-                "(Given #\"^I have (\\d+) cukes in my \"([^\"]*)\" belly$\" [arg1, arg2]\n" +
++                "(Given #\"^I have (\\d+) cukes in my \\\"([^\\\"]*)\\\" belly$\" [arg1 arg2]\n" +
+                 "  (comment  Express the Regexp above with the code you wish you had  )\n" +
+                 "  (throw (cucumber.runtime.PendingException.)))\n";
+         assertEquals(expected, snippet);

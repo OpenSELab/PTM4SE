@@ -1,0 +1,91 @@
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/AggregateBinder.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/AggregateBinder.java
+index 8ab8970..677b159 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/AggregateBinder.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/AggregateBinder.java
+@@ -60,7 +60,7 @@
+ 		if (result == null || value == null) {
+ 			return result;
+ 		}
+-		return merge(value, (T) result);
++		return merge((Supplier<T>) value, (T) result);
+ 	}
+ 
+ 	/**
+@@ -79,7 +79,7 @@
+ 	 * @param additional the additional elements to merge
+ 	 * @return the merged result
+ 	 */
+-	protected abstract T merge(Supplier<?> existing, T additional);
++	protected abstract T merge(Supplier<T> existing, T additional);
+ 
+ 	/**
+ 	 * Return the context being used by this binder.
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/ArrayBinder.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/ArrayBinder.java
+index 057542f..517438e 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/ArrayBinder.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/ArrayBinder.java
+@@ -56,7 +56,7 @@
+ 	}
+ 
+ 	@Override
+-	protected Object merge(Supplier<?> existing, Object additional) {
++	protected Object merge(Supplier<Object> existing, Object additional) {
+ 		return additional;
+ 	}
+ 
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/CollectionBinder.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/CollectionBinder.java
+index ad735cf..cfd887d 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/CollectionBinder.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/CollectionBinder.java
+@@ -55,10 +55,9 @@
+ 	}
+ 
+ 	@Override
+-	@SuppressWarnings("unchecked")
+-	protected Collection<Object> merge(Supplier<?> existing,
++	protected Collection<Object> merge(Supplier<Collection<Object>> existing,
+ 			Collection<Object> additional) {
+-		Collection<Object> existingCollection = (Collection<Object>) existing.get();
++		Collection<Object> existingCollection = existing.get();
+ 		if (existingCollection == null) {
+ 			return additional;
+ 		}
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/MapBinder.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/MapBinder.java
+index 7efdf05..01939e7 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/MapBinder.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/MapBinder.java
+@@ -83,10 +83,9 @@
+ 	}
+ 
+ 	@Override
+-	@SuppressWarnings("unchecked")
+-	protected Map<Object, Object> merge(Supplier<?> existing,
++	protected Map<Object, Object> merge(Supplier<Map<Object, Object>> existing,
+ 			Map<Object, Object> additional) {
+-		Map<Object, Object> existingMap = (Map<Object, Object>) existing.get();
++		Map<Object, Object> existingMap = existing.get();
+ 		if (existingMap == null) {
+ 			return additional;
+ 		}
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/AggregateBinder.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/AggregateBinder.java
+index 8ab8970..677b159 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/AggregateBinder.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/AggregateBinder.java
+@@ -60,7 +60,7 @@
+ 		if (result == null || value == null) {
+ 			return result;
+ 		}
+-		return merge(value, (T) result);
++		return merge((Supplier<T>) value, (T) result);
+ 	}
+ 
+ 	/**
+@@ -79,7 +79,7 @@
+ 	 * @param additional the additional elements to merge
+ 	 * @return the merged result
+ 	 */
+-	protected abstract T merge(Supplier<?> existing, T additional);
++	protected abstract T merge(Supplier<T> existing, T additional);
+ 
+ 	/**
+ 	 * Return the context being used by this binder.

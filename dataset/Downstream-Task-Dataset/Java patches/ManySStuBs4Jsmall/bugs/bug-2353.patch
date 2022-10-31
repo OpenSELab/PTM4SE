@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index f9be5e3..32c6694 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -1000,7 +1000,7 @@
+             for (String className : possibleAtmosphereHandlersCandidate) {
+                 try {
+                     className = className.replace('\\', '/');
+-                    className = className.replaceFirst("^.*/(WEB-INF|target)/(test-)?classes/(.*)\\.class", "$3");
++                    className = className.replaceFirst("^.*/(WEB-INF|target)/(test-)?classes/(.*)\\.class", "$3").replace("/",".");
+                     Class<?> clazz = classloader.loadClass(className);
+ 
+                     if (AtmosphereHandler.class.isAssignableFrom(clazz)) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index f9be5e3..32c6694 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -1000,7 +1000,7 @@
+             for (String className : possibleAtmosphereHandlersCandidate) {
+                 try {
+                     className = className.replace('\\', '/');
+-                    className = className.replaceFirst("^.*/(WEB-INF|target)/(test-)?classes/(.*)\\.class", "$3");
++                    className = className.replaceFirst("^.*/(WEB-INF|target)/(test-)?classes/(.*)\\.class", "$3").replace("/",".");
+                     Class<?> clazz = classloader.loadClass(className);
+ 
+                     if (AtmosphereHandler.class.isAssignableFrom(clazz)) {

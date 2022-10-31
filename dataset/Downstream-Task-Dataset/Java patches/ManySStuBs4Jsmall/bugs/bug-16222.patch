@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ascii/rest/HttpGetCommandProcessor.java b/hazelcast/src/main/java/com/hazelcast/impl/ascii/rest/HttpGetCommandProcessor.java
+index a3b3fc0..e5699e3 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ascii/rest/HttpGetCommandProcessor.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ascii/rest/HttpGetCommandProcessor.java
+@@ -70,7 +70,7 @@
+             command.send204();
+         } else {
+             if (value instanceof byte[]) {
+-                command.setResponse(null, (byte[]) value);
++                command.setResponse(HttpCommand.CONTENT_TYPE_BINARY, (byte[]) value);
+             } else if (value instanceof RestValue) {
+                 RestValue restValue = (RestValue) value;
+                 command.setResponse(restValue.getContentType(), restValue.getValue());
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ascii/rest/HttpGetCommandProcessor.java b/hazelcast/src/main/java/com/hazelcast/impl/ascii/rest/HttpGetCommandProcessor.java
+index a3b3fc0..e5699e3 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ascii/rest/HttpGetCommandProcessor.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ascii/rest/HttpGetCommandProcessor.java
+@@ -70,7 +70,7 @@
+             command.send204();
+         } else {
+             if (value instanceof byte[]) {
+-                command.setResponse(null, (byte[]) value);
++                command.setResponse(HttpCommand.CONTENT_TYPE_BINARY, (byte[]) value);
+             } else if (value instanceof RestValue) {
+                 RestValue restValue = (RestValue) value;
+                 command.setResponse(restValue.getContentType(), restValue.getValue());

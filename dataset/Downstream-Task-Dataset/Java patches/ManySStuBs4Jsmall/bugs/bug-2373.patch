@@ -1,0 +1,32 @@
+diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
+index 4bf7998..8681987 100644
+--- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
++++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
+@@ -131,8 +131,9 @@
+      * @return true if command was registered, false otherwise.
+      */
+     private synchronized boolean register(String label, Command command, boolean isAlias) {
+-        if (isAlias && knownCommands.containsKey(label)) {
+-            // Request is for an alias and it conflicts with a existing command or previous alias ignore it
++        if ((command instanceof VanillaCommand || isAlias) && knownCommands.containsKey(label)) {
++            // Request is for an alias/fallback command and it conflicts with
++            // a existing command or previous alias ignore it
+             // Note: This will mean it gets removed from the commands list of active aliases
+             return false;
+         }
+diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
+index 4bf7998..8681987 100644
+--- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
++++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
+@@ -131,8 +131,9 @@
+      * @return true if command was registered, false otherwise.
+      */
+     private synchronized boolean register(String label, Command command, boolean isAlias) {
+-        if (isAlias && knownCommands.containsKey(label)) {
+-            // Request is for an alias and it conflicts with a existing command or previous alias ignore it
++        if ((command instanceof VanillaCommand || isAlias) && knownCommands.containsKey(label)) {
++            // Request is for an alias/fallback command and it conflicts with
++            // a existing command or previous alias ignore it
+             // Note: This will mean it gets removed from the commands list of active aliases
+             return false;
+         }

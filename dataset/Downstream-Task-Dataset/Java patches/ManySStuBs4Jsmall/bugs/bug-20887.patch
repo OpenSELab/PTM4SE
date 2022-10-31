@@ -1,0 +1,42 @@
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafReactiveAutoConfigurationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafReactiveAutoConfigurationTests.java
+index 0575b61..e737391 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafReactiveAutoConfigurationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafReactiveAutoConfigurationTests.java
+@@ -225,7 +225,8 @@
+ 						new TestingAuthenticationToken("alice", "admin")));
+ 		IContext attrs = new SpringWebFluxContext(exchange);
+ 		String result = engine.process("security-dialect", attrs);
+-		assertThat(result).isEqualTo("<html><body><div>alice</div></body></html>\n");
++		assertThat(result).isEqualTo(
++				"<html><body><div>alice</div></body></html>" + System.lineSeparator());
+ 	}
+ 
+ 	@Test
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
+index 92a1edc..df39633 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
+@@ -229,7 +229,8 @@
+ 			SecurityContextHolder.setContext(new SecurityContextImpl(
+ 					new TestingAuthenticationToken("alice", "admin")));
+ 			String result = engine.process("security-dialect", attrs);
+-			assertThat(result).isEqualTo("<html><body><div>alice</div></body></html>\n");
++			assertThat(result).isEqualTo("<html><body><div>alice</div></body></html>"
++					+ System.lineSeparator());
+ 		}
+ 		finally {
+ 			SecurityContextHolder.clearContext();
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafReactiveAutoConfigurationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafReactiveAutoConfigurationTests.java
+index 0575b61..e737391 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafReactiveAutoConfigurationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafReactiveAutoConfigurationTests.java
+@@ -225,7 +225,8 @@
+ 						new TestingAuthenticationToken("alice", "admin")));
+ 		IContext attrs = new SpringWebFluxContext(exchange);
+ 		String result = engine.process("security-dialect", attrs);
+-		assertThat(result).isEqualTo("<html><body><div>alice</div></body></html>\n");
++		assertThat(result).isEqualTo(
++				"<html><body><div>alice</div></body></html>" + System.lineSeparator());
+ 	}
+ 
+ 	@Test

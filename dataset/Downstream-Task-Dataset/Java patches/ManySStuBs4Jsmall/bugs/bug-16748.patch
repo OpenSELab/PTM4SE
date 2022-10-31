@@ -1,0 +1,96 @@
+diff --git a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSApplication.java b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSApplication.java
+index d0293d7..4d649c4 100755
+--- a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSApplication.java
++++ b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSApplication.java
+@@ -387,7 +387,7 @@
+ 
+ 		// if it fails to get an existing dictionary, create a new one.
+ 		if (nsDictionary == null) {
+-			nsDictionary = (NSMutableDictionary<NSString, NSObject>)NSMutableDictionary.alloc();
++			nsDictionary = (NSMutableDictionary<NSString, NSObject>)NSMutableDictionary.alloc().init();
+ 			nsDictionary.writeToFileAtomically(path, false);
+ 		}
+ 		return new IOSPreferences(nsDictionary, finalPath.getAbsolutePath());
+diff --git a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSAudio.java b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSAudio.java
+index 7fcaa75..e6f79bf 100755
+--- a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSAudio.java
++++ b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSAudio.java
+@@ -58,7 +58,7 @@
+ 	@Override
+ 	public Music newMusic (FileHandle fileHandle) {
+ 		String path = fileHandle.file().getPath().replace('\\', '/');
+-		OALAudioTrack track = OALAudioTrack.alloc();
++		OALAudioTrack track = OALAudioTrack.alloc().init();
+ 		if (track != null) {
+ 			if (track.preloadFile(path)) {
+ 				return new IOSMusic(track);
+diff --git a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSInput.java b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSInput.java
+index c9fc9b9..54eef47 100755
+--- a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSInput.java
++++ b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSInput.java
+@@ -88,7 +88,7 @@
+ 	}
+ 
+ 	void setupPeripherals () {
+-		motionManager = CMMotionManager.alloc();
++		motionManager = CMMotionManager.alloc().init();
+ 		setupAccelerometer();
+ 		setupCompass();
+ 		UIDevice device = UIDevice.currentDevice();
+@@ -109,7 +109,7 @@
+ 					updateAccelerometer(cmAccelerometerData);
+ 				}
+ 			};
+-			motionManager.startAccelerometerUpdatesToQueueWithHandler(NSOperationQueue.alloc(), handler);
++			motionManager.startAccelerometerUpdatesToQueueWithHandler(NSOperationQueue.alloc().init(), handler);
+ 		}
+ 	}
+ 	
+@@ -126,7 +126,7 @@
+ 			}
+ 		};
+ 
+-		motionManager.startMagnetometerUpdatesToQueueWithHandler(NSOperationQueue.alloc(), handler);
++		motionManager.startMagnetometerUpdatesToQueueWithHandler(NSOperationQueue.alloc().init(), handler);
+ 	}
+ 	
+ 	private void updateAccelerometer (CMAccelerometerData data) {
+@@ -428,7 +428,7 @@
+ 		};
+ 
+ 		// build the view
+-		final UIAlertView uiAlertView = UIAlertView.alloc();
++		final UIAlertView uiAlertView = UIAlertView.alloc().init();
+ 		uiAlertView.setTitle(title);
+ 		uiAlertView.addButtonWithTitle("Cancel");
+ 		uiAlertView.addButtonWithTitle("Ok");
+diff --git a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSPreferences.java b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSPreferences.java
+index 8cc85f8..ffb0def 100755
+--- a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSPreferences.java
++++ b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSPreferences.java
+@@ -184,7 +184,7 @@
+ 
+ 	@Override
+ 	public void flush () {
+-		NSAutoreleasePool pool = NSAutoreleasePool.alloc();
++		NSAutoreleasePool pool = NSAutoreleasePool.alloc().init();
+ 		if (!nsDictionary.writeToFileAtomically(file.getAbsolutePath(), false)) {
+ 			Gdx.app.debug("IOSPreferences", "Failed to write NSDictionary to file " + file);
+ 		}
+diff --git a/extensions/gdx-setup/src/com/badlogic/gdx/setup/GdxSetupUI.java b/extensions/gdx-setup/src/com/badlogic/gdx/setup/GdxSetupUI.java
+index b8b9a90..fa01e93 100644
+--- a/extensions/gdx-setup/src/com/badlogic/gdx/setup/GdxSetupUI.java
++++ b/extensions/gdx-setup/src/com/badlogic/gdx/setup/GdxSetupUI.java
+diff --git a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSApplication.java b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSApplication.java
+index d0293d7..4d649c4 100755
+--- a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSApplication.java
++++ b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSApplication.java
+@@ -387,7 +387,7 @@
+ 
+ 		// if it fails to get an existing dictionary, create a new one.
+ 		if (nsDictionary == null) {
+-			nsDictionary = (NSMutableDictionary<NSString, NSObject>)NSMutableDictionary.alloc();
++			nsDictionary = (NSMutableDictionary<NSString, NSObject>)NSMutableDictionary.alloc().init();
+ 			nsDictionary.writeToFileAtomically(path, false);
+ 		}
+ 		return new IOSPreferences(nsDictionary, finalPath.getAbsolutePath());

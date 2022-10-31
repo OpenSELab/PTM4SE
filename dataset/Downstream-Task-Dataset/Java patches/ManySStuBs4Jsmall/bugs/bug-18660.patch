@@ -1,0 +1,26 @@
+diff --git a/common/src/main/java/io/netty/util/ResourceLeakDetector.java b/common/src/main/java/io/netty/util/ResourceLeakDetector.java
+index f85513a..a13b59a 100644
+--- a/common/src/main/java/io/netty/util/ResourceLeakDetector.java
++++ b/common/src/main/java/io/netty/util/ResourceLeakDetector.java
+@@ -221,7 +221,7 @@
+         }
+ 
+         if (level.ordinal() < Level.PARANOID.ordinal()) {
+-            if ((leakCheckCnt ++ & mask) == 0) {
++            if ((++ leakCheckCnt & mask) == 0) {
+                 reportLeak(level);
+                 return new DefaultResourceLeak(obj);
+             } else {
+diff --git a/common/src/main/java/io/netty/util/ResourceLeakDetector.java b/common/src/main/java/io/netty/util/ResourceLeakDetector.java
+index f85513a..a13b59a 100644
+--- a/common/src/main/java/io/netty/util/ResourceLeakDetector.java
++++ b/common/src/main/java/io/netty/util/ResourceLeakDetector.java
+@@ -221,7 +221,7 @@
+         }
+ 
+         if (level.ordinal() < Level.PARANOID.ordinal()) {
+-            if ((leakCheckCnt ++ & mask) == 0) {
++            if ((++ leakCheckCnt & mask) == 0) {
+                 reportLeak(level);
+                 return new DefaultResourceLeak(obj);
+             } else {

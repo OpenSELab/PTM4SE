@@ -1,0 +1,26 @@
+diff --git a/presto-bytecode/src/main/java/com/facebook/presto/bytecode/CompilerUtils.java b/presto-bytecode/src/main/java/com/facebook/presto/bytecode/CompilerUtils.java
+index 8d9b396..7b1657f 100644
+--- a/presto-bytecode/src/main/java/com/facebook/presto/bytecode/CompilerUtils.java
++++ b/presto-bytecode/src/main/java/com/facebook/presto/bytecode/CompilerUtils.java
+@@ -98,7 +98,7 @@
+             try {
+                 classDefinition.visit(ADD_FAKE_LINE_NUMBER ? new AddFakeLineNumberClassVisitor(cw) : cw);
+             }
+-            catch (IndexOutOfBoundsException e) {
++            catch (IndexOutOfBoundsException | NegativeArraySizeException e) {
+                 Printer printer = new Textifier();
+                 StringWriter stringWriter = new StringWriter();
+                 TraceClassVisitor tcv = new TraceClassVisitor(null, printer, new PrintWriter(stringWriter));
+diff --git a/presto-bytecode/src/main/java/com/facebook/presto/bytecode/CompilerUtils.java b/presto-bytecode/src/main/java/com/facebook/presto/bytecode/CompilerUtils.java
+index 8d9b396..7b1657f 100644
+--- a/presto-bytecode/src/main/java/com/facebook/presto/bytecode/CompilerUtils.java
++++ b/presto-bytecode/src/main/java/com/facebook/presto/bytecode/CompilerUtils.java
+@@ -98,7 +98,7 @@
+             try {
+                 classDefinition.visit(ADD_FAKE_LINE_NUMBER ? new AddFakeLineNumberClassVisitor(cw) : cw);
+             }
+-            catch (IndexOutOfBoundsException e) {
++            catch (IndexOutOfBoundsException | NegativeArraySizeException e) {
+                 Printer printer = new Textifier();
+                 StringWriter stringWriter = new StringWriter();
+                 TraceClassVisitor tcv = new TraceClassVisitor(null, printer, new PrintWriter(stringWriter));

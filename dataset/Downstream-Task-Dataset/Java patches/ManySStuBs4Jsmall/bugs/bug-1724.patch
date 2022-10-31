@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+index 9726073..ba96e01 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+@@ -2089,7 +2089,7 @@
+                         return;
+                     }
+ 
+-                    boolean redirectEnabled = request.isRedirectEnabled() ? true : config.isRedirectEnabled();
++                    boolean redirectEnabled = request.isRedirectOverrideSet()? request.isRedirectEnabled() : config.isRedirectEnabled();
+                     if (redirectEnabled && (statusCode == 302 || statusCode == 301 || statusCode == 307)) {
+ 
+                         if (future.incrementAndGetCurrentRedirectCount() < config.getMaxRedirects()) {
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+index 9726073..ba96e01 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+@@ -2089,7 +2089,7 @@
+                         return;
+                     }
+ 
+-                    boolean redirectEnabled = request.isRedirectEnabled() ? true : config.isRedirectEnabled();
++                    boolean redirectEnabled = request.isRedirectOverrideSet()? request.isRedirectEnabled() : config.isRedirectEnabled();
+                     if (redirectEnabled && (statusCode == 302 || statusCode == 301 || statusCode == 307)) {
+ 
+                         if (future.incrementAndGetCurrentRedirectCount() < config.getMaxRedirects()) {

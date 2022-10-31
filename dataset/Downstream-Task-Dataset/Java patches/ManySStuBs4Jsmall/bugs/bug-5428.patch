@@ -1,0 +1,38 @@
+diff --git a/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Configuration.java b/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Configuration.java
+index 3e28e34..245de3c 100644
+--- a/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Configuration.java
++++ b/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Configuration.java
+@@ -38,7 +38,7 @@
+     private Mina2TextLineDelimiter textlineDelimiter;
+     private ProtocolCodecFactory codec;
+     private String encoding;
+-    private long timeout = 3000;
++    private long timeout = 30000;
+     private boolean lazySessionCreation = true;
+     private boolean transferExchange;
+     private boolean minaLogger;
+diff --git a/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Producer.java b/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Producer.java
+index 139e3a8..a5c9c3c 100644
+--- a/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Producer.java
++++ b/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Producer.java
+@@ -313,7 +313,6 @@
+             connector.getFilterChain().addFirst("sslFilter", new SslFilter(configuration.getSslContextParameters().createSSLContext(), configuration.isAutoStartTls()));
+         }
+         configureCodecFactory("Mina2Producer", connector);
+-        // set connect timeout to mina in seconds
+         connector.setConnectTimeoutMillis(timeout);
+     }
+ 
+diff --git a/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Configuration.java b/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Configuration.java
+index 3e28e34..245de3c 100644
+--- a/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Configuration.java
++++ b/components/camel-mina2/src/main/java/org/apache/camel/component/mina2/Mina2Configuration.java
+@@ -38,7 +38,7 @@
+     private Mina2TextLineDelimiter textlineDelimiter;
+     private ProtocolCodecFactory codec;
+     private String encoding;
+-    private long timeout = 3000;
++    private long timeout = 30000;
+     private boolean lazySessionCreation = true;
+     private boolean transferExchange;
+     private boolean minaLogger;

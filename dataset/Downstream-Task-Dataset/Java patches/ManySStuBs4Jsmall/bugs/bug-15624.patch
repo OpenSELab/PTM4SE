@@ -1,0 +1,66 @@
+diff --git a/hazelcast-client-new/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java b/hazelcast-client-new/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
+index 3b28504..0ca05de 100644
+--- a/hazelcast-client-new/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
++++ b/hazelcast-client-new/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
+@@ -167,7 +167,7 @@
+         while (iter.hasNext()) {
+             final Map.Entry<Integer, ClientInvocation> entry = iter.next();
+             final ClientInvocation invocation = entry.getValue();
+-            if (invocation.getSendConnection().equals(connection)) {
++            if (connection.equals(invocation.getSendConnection())) {
+                 iter.remove();
+                 invocation.notifyException(responseCtor.createNew(null));
+                 eventHandlerMap.remove(entry.getKey());
+@@ -176,7 +176,7 @@
+         final Iterator<ClientInvocation> iterator = eventHandlerMap.values().iterator();
+         while (iterator.hasNext()) {
+             final ClientInvocation invocation = iterator.next();
+-            if (invocation.getSendConnection().equals(connection)) {
++            if (connection.equals(invocation.getSendConnection())) {
+                 iterator.remove();
+                 invocation.notifyException(responseCtor.createNew(null));
+             }
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
+index 074b61e..f3c3323 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
+@@ -168,7 +168,7 @@
+         while (iter.hasNext()) {
+             final Map.Entry<Integer, ClientInvocation> entry = iter.next();
+             final ClientInvocation invocation = entry.getValue();
+-            if (invocation.getSendConnection().equals(connection)) {
++            if (connection.equals(invocation.getSendConnection())) {
+                 iter.remove();
+                 invocation.notify(responseCtor.createNew(null));
+                 eventHandlerMap.remove(entry.getKey());
+@@ -177,7 +177,7 @@
+         final Iterator<ClientInvocation> iterator = eventHandlerMap.values().iterator();
+         while (iterator.hasNext()) {
+             final ClientInvocation invocation = iterator.next();
+-            if (invocation.getSendConnection().equals(connection)) {
++            if (connection.equals(invocation.getSendConnection())) {
+                 iterator.remove();
+                 invocation.notify(responseCtor.createNew(null));
+             }
+diff --git a/hazelcast-client-new/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java b/hazelcast-client-new/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
+index 3b28504..0ca05de 100644
+--- a/hazelcast-client-new/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
++++ b/hazelcast-client-new/src/main/java/com/hazelcast/client/spi/impl/ClientInvocationServiceSupport.java
+@@ -167,7 +167,7 @@
+         while (iter.hasNext()) {
+             final Map.Entry<Integer, ClientInvocation> entry = iter.next();
+             final ClientInvocation invocation = entry.getValue();
+-            if (invocation.getSendConnection().equals(connection)) {
++            if (connection.equals(invocation.getSendConnection())) {
+                 iter.remove();
+                 invocation.notifyException(responseCtor.createNew(null));
+                 eventHandlerMap.remove(entry.getKey());
+@@ -176,7 +176,7 @@
+         final Iterator<ClientInvocation> iterator = eventHandlerMap.values().iterator();
+         while (iterator.hasNext()) {
+             final ClientInvocation invocation = iterator.next();
+-            if (invocation.getSendConnection().equals(connection)) {
++            if (connection.equals(invocation.getSendConnection())) {
+                 iterator.remove();
+                 invocation.notifyException(responseCtor.createNew(null));
+             }

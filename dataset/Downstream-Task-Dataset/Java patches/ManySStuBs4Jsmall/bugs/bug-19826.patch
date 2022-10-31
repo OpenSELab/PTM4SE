@@ -1,0 +1,28 @@
+diff --git a/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java b/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
+index 8957b25..25f6ea5 100644
+--- a/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
++++ b/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
+@@ -301,7 +301,8 @@
+ 		try {
+ 			statement = connection.createStatement();
+ 			sqlCmd = new String("INSERT INTO " + tableName + " (TIME, VALUE) VALUES(NOW(),'"
+-					+ item.getState().toString() + "');");
++					+ item.getState().toString() + "') ON DUPLICATE KEY UPDATE VALUE='"
++					+ item.getState().toString() + "';");
+ 			statement.executeUpdate(sqlCmd);
+ 
+ 			logger.debug("mySQL: Stored item '{}' as '{}'[{}] in SQL database at {}.", item.getName(), item.getState()
+diff --git a/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java b/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
+index 8957b25..25f6ea5 100644
+--- a/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
++++ b/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
+@@ -301,7 +301,8 @@
+ 		try {
+ 			statement = connection.createStatement();
+ 			sqlCmd = new String("INSERT INTO " + tableName + " (TIME, VALUE) VALUES(NOW(),'"
+-					+ item.getState().toString() + "');");
++					+ item.getState().toString() + "') ON DUPLICATE KEY UPDATE VALUE='"
++					+ item.getState().toString() + "';");
+ 			statement.executeUpdate(sqlCmd);
+ 
+ 			logger.debug("mySQL: Stored item '{}' as '{}'[{}] in SQL database at {}.", item.getName(), item.getState()

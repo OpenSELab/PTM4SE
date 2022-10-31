@@ -1,0 +1,44 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java b/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
+index bad3f44..01b2629 100644
+--- a/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
++++ b/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
+@@ -51,7 +51,7 @@
+             context.start();
+             fail();
+         } catch (FailedToCreateRouteException e) {
+-            assertTrue(e.getMessage().startsWith("Failed to create route route2 at: >>> To[mock:result?foo=bar] <<< in route: Route[[From[direct:start]] -> [To[mock:result?foo=bar]]] because of"));
++            assertTrue(e.getMessage(), e.getMessage().startsWith("Failed to create route route2 at: >>> To[mock:result?foo=bar] <<< in route: Route[[From[direct://start]] -> [To[mock:result?foo=bar]]] because of"));
+         }
+     }
+ 
+@@ -67,7 +67,7 @@
+             });
+             context.start();
+         } catch (FailedToCreateRouteException e) {
+-            assertTrue(e.getMessage().startsWith("Failed to create route route3 at: >>> Bean[ref:] <<< in route: Route[[From[direct:start]] -> [To[mock:foo], Bean[ref:]]] because of"));
++            assertTrue(e.getMessage(), e.getMessage().startsWith("Failed to create route route3 at: >>> Bean[ref:] <<< in route: Route[[From[direct://start]] -> [To[mock:foo], Bean[ref:]]] because of"));
+         }
+     }
+ 
+diff --git a/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java b/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
+index bad3f44..01b2629 100644
+--- a/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
++++ b/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
+@@ -51,7 +51,7 @@
+             context.start();
+             fail();
+         } catch (FailedToCreateRouteException e) {
+-            assertTrue(e.getMessage().startsWith("Failed to create route route2 at: >>> To[mock:result?foo=bar] <<< in route: Route[[From[direct:start]] -> [To[mock:result?foo=bar]]] because of"));
++            assertTrue(e.getMessage(), e.getMessage().startsWith("Failed to create route route2 at: >>> To[mock:result?foo=bar] <<< in route: Route[[From[direct://start]] -> [To[mock:result?foo=bar]]] because of"));
+         }
+     }
+ 
+@@ -67,7 +67,7 @@
+             });
+             context.start();
+         } catch (FailedToCreateRouteException e) {
+-            assertTrue(e.getMessage().startsWith("Failed to create route route3 at: >>> Bean[ref:] <<< in route: Route[[From[direct:start]] -> [To[mock:foo], Bean[ref:]]] because of"));
++            assertTrue(e.getMessage(), e.getMessage().startsWith("Failed to create route route3 at: >>> Bean[ref:] <<< in route: Route[[From[direct://start]] -> [To[mock:foo], Bean[ref:]]] because of"));
+         }
+     }
+ 

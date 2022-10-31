@@ -1,0 +1,26 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/DefaultMarkupSourcingStrategy.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/DefaultMarkupSourcingStrategy.java
+index 6ba5b61..f1749af 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/DefaultMarkupSourcingStrategy.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/DefaultMarkupSourcingStrategy.java
+@@ -21,6 +21,7 @@ import org.apache.wicket.MarkupContainer;
+ import org.apache.wicket.markup.ComponentTag;
+ import org.apache.wicket.markup.IMarkupFragment;
+ import org.apache.wicket.markup.MarkupStream;
++import org.apache.wicket.markup.resolver.IComponentResolver;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+@@ -95,8 +96,11 @@ public final class DefaultMarkupSourcingStrategy extends AbstractMarkupSourcingS
+ 		{
+ 			return markup;
+ 		}
+-
+-		markup = searchMarkupInTransparentResolvers(container, child);
++		
++		if(!(child instanceof IComponentResolver)) 
++		{
++			markup = searchMarkupInTransparentResolvers(container, child);
++		}
+ 		
+ 		return markup;
+ 	}

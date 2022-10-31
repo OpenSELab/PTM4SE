@@ -1,0 +1,442 @@
+diff --git a/lib/rhino/src/org/mozilla/javascript/IRFactory.java b/lib/rhino/src/org/mozilla/javascript/IRFactory.java
+index f409ba4..2340864 100644
+--- a/lib/rhino/src/org/mozilla/javascript/IRFactory.java
++++ b/lib/rhino/src/org/mozilla/javascript/IRFactory.java
+@@ -2243,7 +2243,7 @@
+             return ALWAYS_TRUE_BOOLEAN;
+           case Token.NUMBER: {
+             double num = node.getDouble();
+-            if (num == num && num != 0.0) {
++            if (!Double.isNaN(num) && num != 0.0) {
+                 return ALWAYS_TRUE_BOOLEAN;
+             } else {
+                 return ALWAYS_FALSE_BOOLEAN;
+diff --git a/lib/rhino/src/org/mozilla/javascript/Interpreter.java b/lib/rhino/src/org/mozilla/javascript/Interpreter.java
+index 485ae7c..cc89e05 100644
+--- a/lib/rhino/src/org/mozilla/javascript/Interpreter.java
++++ b/lib/rhino/src/org/mozilla/javascript/Interpreter.java
+@@ -3033,12 +3033,12 @@
+             return false;
+         } else if (x == UniqueTag.DOUBLE_MARK) {
+             double d = frame.sDbl[i];
+-            return d == d && d != 0.0;
++            return !Double.isNaN(d) && d != 0.0;
+         } else if (x == null || x == Undefined.instance) {
+             return false;
+         } else if (x instanceof Number) {
+             double d = ((Number)x).doubleValue();
+-            return (d == d && d != 0.0);
++            return (!Double.isNaN(d) && d != 0.0);
+         } else if (x instanceof Boolean) {
+             return ((Boolean)x).booleanValue();
+         } else {
+diff --git a/lib/rhino/src/org/mozilla/javascript/NativeArray.java b/lib/rhino/src/org/mozilla/javascript/NativeArray.java
+index 2fccaa0..d370591 100644
+--- a/lib/rhino/src/org/mozilla/javascript/NativeArray.java
++++ b/lib/rhino/src/org/mozilla/javascript/NativeArray.java
+@@ -365,7 +365,7 @@
+     }
+ 
+     private static long toArrayIndex(double d) {
+-        if (d == d) {
++        if (!Double.isNaN(d)) {
+             long index = ScriptRuntime.toUint32(d);
+             if (index == d && index != 4294967295L) {
+                 return index;
+diff --git a/lib/rhino/src/org/mozilla/javascript/NativeDate.java b/lib/rhino/src/org/mozilla/javascript/NativeDate.java
+index ea00a90..e104829 100644
+--- a/lib/rhino/src/org/mozilla/javascript/NativeDate.java
++++ b/lib/rhino/src/org/mozilla/javascript/NativeDate.java
+@@ -181,7 +181,7 @@
+                 Object tv = ScriptRuntime.toPrimitive(o, ScriptRuntime.NumberClass);
+                 if (tv instanceof Number) {
+                     double d = ((Number) tv).doubleValue();
+-                    if (d != d || Double.isInfinite(d)) {
++                    if (Double.isNaN(d) || Double.isInfinite(d)) {
+                         return null;
+                     }
+                 }
+@@ -220,7 +220,7 @@
+           case Id_toString:
+           case Id_toTimeString:
+           case Id_toDateString:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 return date_format(t, id);
+             }
+             return js_NaN_date_str;
+@@ -228,13 +228,13 @@
+           case Id_toLocaleString:
+           case Id_toLocaleTimeString:
+           case Id_toLocaleDateString:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 return toLocale_helper(t, id);
+             }
+             return js_NaN_date_str;
+ 
+           case Id_toUTCString:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 return js_toUTCString(t);
+             }
+             return js_NaN_date_str;
+@@ -249,7 +249,7 @@
+           case Id_getYear:
+           case Id_getFullYear:
+           case Id_getUTCFullYear:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 if (id != Id_getUTCFullYear) t = LocalTime(t);
+                 t = YearFromTime(t);
+                 if (id == Id_getYear) {
+@@ -266,7 +266,7 @@
+ 
+           case Id_getMonth:
+           case Id_getUTCMonth:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 if (id == Id_getMonth) t = LocalTime(t);
+                 t = MonthFromTime(t);
+             }
+@@ -274,7 +274,7 @@
+ 
+           case Id_getDate:
+           case Id_getUTCDate:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 if (id == Id_getDate) t = LocalTime(t);
+                 t = DateFromTime(t);
+             }
+@@ -282,7 +282,7 @@
+ 
+           case Id_getDay:
+           case Id_getUTCDay:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 if (id == Id_getDay) t = LocalTime(t);
+                 t = WeekDay(t);
+             }
+@@ -290,7 +290,7 @@
+ 
+           case Id_getHours:
+           case Id_getUTCHours:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 if (id == Id_getHours) t = LocalTime(t);
+                 t = HourFromTime(t);
+             }
+@@ -298,7 +298,7 @@
+ 
+           case Id_getMinutes:
+           case Id_getUTCMinutes:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 if (id == Id_getMinutes) t = LocalTime(t);
+                 t = MinFromTime(t);
+             }
+@@ -306,7 +306,7 @@
+ 
+           case Id_getSeconds:
+           case Id_getUTCSeconds:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 if (id == Id_getSeconds) t = LocalTime(t);
+                 t = SecFromTime(t);
+             }
+@@ -314,14 +314,14 @@
+ 
+           case Id_getMilliseconds:
+           case Id_getUTCMilliseconds:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 if (id == Id_getMilliseconds) t = LocalTime(t);
+                 t = msFromTime(t);
+             }
+             return ScriptRuntime.wrapNumber(t);
+ 
+           case Id_getTimezoneOffset:
+-            if (t == t) {
++            if (!Double.isNaN(t)) {
+                 t = (t - LocalTime(t)) / msPerMinute;
+             }
+             return ScriptRuntime.wrapNumber(t);
+@@ -357,10 +357,10 @@
+             {
+                 double year = ScriptRuntime.toNumber(args, 0);
+ 
+-                if (year != year || Double.isInfinite(year)) {
++                if (Double.isNaN(year) || Double.isInfinite(year)) {
+                     t = ScriptRuntime.NaN;
+                 } else {
+-                    if (t != t) {
++                    if (Double.isNaN(t)) {
+                         t = 0;
+                     } else {
+                         t = LocalTime(t);
+@@ -388,7 +388,7 @@
+     }
+ 
+     private String toISOString() {
+-        if (date == date) {
++        if (!Double.isNaN(date)) {
+             synchronized (isoFormat) {
+                 return isoFormat.format(new Date((long) date));
+             }
+@@ -714,7 +714,7 @@
+ 
+     private static double TimeClip(double d)
+     {
+-        if (d != d ||
++        if (Double.isNaN(d) ||
+             d == Double.POSITIVE_INFINITY ||
+             d == Double.NEGATIVE_INFINITY ||
+             Math.abs(d) > HalfTimeDomain)
+@@ -756,7 +756,7 @@
+         for (loop = 0; loop < MAXARGS; loop++) {
+             if (loop < args.length) {
+                 d = ScriptRuntime.toNumber(args[loop]);
+-                if (d != d || Double.isInfinite(d)) {
++                if (Double.isNaN(d) || Double.isInfinite(d)) {
+                     return ScriptRuntime.NaN;
+                 }
+                 array[loop] = ScriptRuntime.toInteger(args[loop]);
+@@ -1265,7 +1265,7 @@
+         double result;
+ 
+         /* just return NaN if the date is already NaN */
+-        if (date != date)
++        if (Double.isNaN(date))
+             return date;
+ 
+         /* Satisfy the ECMA rule that if a function is called with
+@@ -1380,7 +1380,7 @@
+ 
+         /* return NaN if date is NaN and we're not setting the year,
+          * If we are, use 0 as the time. */
+-        if (date != date) {
++        if (Double.isNaN(date)) {
+             if (args.length < 3) {
+                 return ScriptRuntime.NaN;
+             } else {
+diff --git a/lib/rhino/src/org/mozilla/javascript/NativeGlobal.java b/lib/rhino/src/org/mozilla/javascript/NativeGlobal.java
+index 9cedd7a..03c1adb 100644
+--- a/lib/rhino/src/org/mozilla/javascript/NativeGlobal.java
++++ b/lib/rhino/src/org/mozilla/javascript/NativeGlobal.java
+@@ -161,7 +161,7 @@
+                         result = false;
+                     } else {
+                         double d = ScriptRuntime.toNumber(args[0]);
+-                        result = (d == d
++                        result = (!Double.isNaN(d)
+                                   && d != Double.POSITIVE_INFINITY
+                                   && d != Double.NEGATIVE_INFINITY);
+                     }
+@@ -175,7 +175,7 @@
+                         result = true;
+                     } else {
+                         double d = ScriptRuntime.toNumber(args[0]);
+-                        result = (d != d);
++                        result = (Double.isNaN(d));
+                     }
+                     return ScriptRuntime.wrapBoolean(result);
+                 }
+@@ -390,7 +390,7 @@
+         int mask = URL_XALPHAS | URL_XPALPHAS | URL_PATH;
+         if (args.length > 1) { // the 'mask' argument.  Non-ECMA.
+             double d = ScriptRuntime.toNumber(args[1]);
+-            if (d != d || ((mask = (int) d) != d) ||
++            if (Double.isNaN(d) || ((mask = (int) d) != d) ||
+                 0 != (mask & ~(URL_XALPHAS | URL_XPALPHAS | URL_PATH)))
+             {
+                 throw Context.reportRuntimeError0("msg.bad.esc.mask");
+diff --git a/lib/rhino/src/org/mozilla/javascript/NativeJSON.java b/lib/rhino/src/org/mozilla/javascript/NativeJSON.java
+index 1337d91..b342ca7 100644
+--- a/lib/rhino/src/org/mozilla/javascript/NativeJSON.java
++++ b/lib/rhino/src/org/mozilla/javascript/NativeJSON.java
+@@ -307,7 +307,7 @@
+ 
+         if (value instanceof Number) {
+             double d = ((Number) value).doubleValue();
+-            if (d == d && d != Double.POSITIVE_INFINITY &&
++            if (!Double.isNaN(d) && d != Double.POSITIVE_INFINITY &&
+                 d != Double.NEGATIVE_INFINITY)
+             {
+                 return ScriptRuntime.toString(value);
+diff --git a/lib/rhino/src/org/mozilla/javascript/NativeMath.java b/lib/rhino/src/org/mozilla/javascript/NativeMath.java
+index 2119b7a..40dc4d7 100644
+--- a/lib/rhino/src/org/mozilla/javascript/NativeMath.java
++++ b/lib/rhino/src/org/mozilla/javascript/NativeMath.java
+@@ -105,7 +105,7 @@
+             case Id_acos:
+             case Id_asin:
+                 x = ScriptRuntime.toNumber(args, 0);
+-                if (x == x && -1.0 <= x && x <= 1.0) {
++                if (!Double.isNaN(x) && -1.0 <= x && x <= 1.0) {
+                     x = (methodId == Id_acos) ? Math.acos(x) : Math.asin(x);
+                 } else {
+                     x = Double.NaN;
+@@ -158,7 +158,7 @@
+                     ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
+                 for (int i = 0; i != args.length; ++i) {
+                     double d = ScriptRuntime.toNumber(args[i]);
+-                    if (d != d) {
++                    if (Double.isNaN(d)) {
+                         x = d; // NaN
+                         break;
+                     }
+@@ -182,7 +182,7 @@
+ 
+             case Id_round:
+                 x = ScriptRuntime.toNumber(args, 0);
+-                if (x == x && x != Double.POSITIVE_INFINITY
++                if (!Double.isNaN(x) && x != Double.POSITIVE_INFINITY
+                     && x != Double.NEGATIVE_INFINITY)
+                 {
+                     // Round only finite x
+@@ -225,7 +225,7 @@
+     // See Ecma 15.8.2.13
+     private double js_pow(double x, double y) {
+         double result;
+-        if (y != y) {
++        if (Double.isNaN(y)) {
+             // y is NaN, result is always NaN
+             result = y;
+         } else if (y == 0) {
+@@ -246,7 +246,7 @@
+             }
+         } else {
+             result = Math.pow(x, y);
+-            if (result != result) {
++            if (Double.isNaN(result)) {
+                 // Check for broken Java implementations that gives NaN
+                 // when they should return something else
+                 if (y == Double.POSITIVE_INFINITY) {
+diff --git a/lib/rhino/src/org/mozilla/javascript/NativeString.java b/lib/rhino/src/org/mozilla/javascript/NativeString.java
+index 3ee77a0..478668e 100644
+--- a/lib/rhino/src/org/mozilla/javascript/NativeString.java
++++ b/lib/rhino/src/org/mozilla/javascript/NativeString.java
+@@ -484,7 +484,7 @@
+         String search = ScriptRuntime.toString(args, 0);
+         double end = ScriptRuntime.toNumber(args, 1);
+ 
+-        if (end != end || end > target.length())
++        if (Double.isNaN(end) || end > target.length())
+             end = target.length();
+         else if (end < 0)
+             end = 0;
+diff --git a/lib/rhino/src/org/mozilla/javascript/ScriptRuntime.java b/lib/rhino/src/org/mozilla/javascript/ScriptRuntime.java
+index 0fd297a..5b37dfc 100644
+--- a/lib/rhino/src/org/mozilla/javascript/ScriptRuntime.java
++++ b/lib/rhino/src/org/mozilla/javascript/ScriptRuntime.java
+@@ -298,7 +298,7 @@
+ 
+     public static Number wrapNumber(double x)
+     {
+-        if (x != x) {
++        if (Double.isNaN(x)) {
+             return ScriptRuntime.NaNobj;
+         }
+         return new Double(x);
+@@ -320,7 +320,7 @@
+                 return ((CharSequence) val).length() != 0;
+             if (val instanceof Number) {
+                 double d = ((Number) val).doubleValue();
+-                return (d == d && d != 0.0);
++                return (!Double.isNaN(d) && d != 0.0);
+             }
+             if (val instanceof Scriptable) {
+                 if (val instanceof ScriptableObject &&
+@@ -785,7 +785,7 @@
+     }
+ 
+     public static String numberToString(double d, int base) {
+-        if (d != d)
++        if (Double.isNaN(d))
+             return "NaN";
+         if (d == Double.POSITIVE_INFINITY)
+             return "Infinity";
+@@ -1070,7 +1070,7 @@
+     // convenience method
+     public static double toInteger(double d) {
+         // if it's NaN
+-        if (d != d)
++        if (Double.isNaN(d))
+             return +0.0;
+ 
+         if (d == 0.0 ||
+@@ -1112,7 +1112,7 @@
+             return id;
+         }
+ 
+-        if (d != d
++        if (Double.isNaN(d)
+             || d == Double.POSITIVE_INFINITY
+             || d == Double.NEGATIVE_INFINITY)
+         {
+@@ -1142,7 +1142,7 @@
+             return l & 0xffffffffL;
+         }
+ 
+-        if (d != d
++        if (Double.isNaN(d)
+             || d == Double.POSITIVE_INFINITY
+             || d == Double.NEGATIVE_INFINITY)
+         {
+@@ -1174,7 +1174,7 @@
+             return (char)i;
+         }
+ 
+-        if (d != d
++        if (Double.isNaN(d)
+             || d == Double.POSITIVE_INFINITY
+             || d == Double.NEGATIVE_INFINITY)
+         {
+@@ -2910,7 +2910,7 @@
+             }
+             // NaN check
+             double d = ((Number)x).doubleValue();
+-            return d == d;
++            return !Double.isNaN(d);
+         }
+         if (x == null || x == Undefined.instance) {
+             return false;
+diff --git a/lib/rhino/src/org/mozilla/javascript/optimizer/Codegen.java b/lib/rhino/src/org/mozilla/javascript/optimizer/Codegen.java
+index 4e18d5d..b484f70 100644
+--- a/lib/rhino/src/org/mozilla/javascript/optimizer/Codegen.java
++++ b/lib/rhino/src/org/mozilla/javascript/optimizer/Codegen.java
+@@ -1072,7 +1072,7 @@
+                     "org/mozilla/javascript/optimizer/OptRuntime",
+                     "minusOneObj", "Ljava/lang/Double;");
+ 
+-        } else if (num != num) {
++        } else if (Double.isNaN(num)) {
+             cfw.add(ByteCode.GETSTATIC,
+                     "org/mozilla/javascript/ScriptRuntime",
+                     "NaNobj", "Ljava/lang/Double;");
+diff --git a/lib/rhino/src/org/mozilla/javascript/optimizer/OptRuntime.java b/lib/rhino/src/org/mozilla/javascript/optimizer/OptRuntime.java
+index 8bbbccf..c409b39 100644
+--- a/lib/rhino/src/org/mozilla/javascript/optimizer/OptRuntime.java
++++ b/lib/rhino/src/org/mozilla/javascript/optimizer/OptRuntime.java
+@@ -151,7 +151,7 @@
+             return oneObj;
+         } else if (num == -1.0) {
+             return minusOneObj;
+-        } else if (num != num) {
++        } else if (Double.isNaN(num)) {
+             return NaNobj;
+         }
+         return new Double(num);
+diff --git a/lib/rhino/src/org/mozilla/javascript/IRFactory.java b/lib/rhino/src/org/mozilla/javascript/IRFactory.java
+index f409ba4..2340864 100644
+--- a/lib/rhino/src/org/mozilla/javascript/IRFactory.java
++++ b/lib/rhino/src/org/mozilla/javascript/IRFactory.java
+@@ -2243,7 +2243,7 @@
+             return ALWAYS_TRUE_BOOLEAN;
+           case Token.NUMBER: {
+             double num = node.getDouble();
+-            if (num == num && num != 0.0) {
++            if (!Double.isNaN(num) && num != 0.0) {
+                 return ALWAYS_TRUE_BOOLEAN;
+             } else {
+                 return ALWAYS_FALSE_BOOLEAN;

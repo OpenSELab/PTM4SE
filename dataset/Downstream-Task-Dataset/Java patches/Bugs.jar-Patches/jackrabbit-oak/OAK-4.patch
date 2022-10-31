@@ -1,0 +1,15 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/FullTextSearchImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/FullTextSearchImpl.java
+index d22c83b..2cf9cef 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/FullTextSearchImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/FullTextSearchImpl.java
+@@ -184,6 +184,10 @@ public class FullTextSearchImpl extends ConstraintImpl {
+             appendString(buff, p);
+         } else {
+             String path = selector.currentPath();
++            if (!PathUtils.denotesRoot(path)) {
++                appendString(buff,
++                        PropertyValues.newString(PathUtils.getName(path)));
++            }
+             if (relativePath != null) {
+                 path = PathUtils.concat(path, relativePath);
+             }

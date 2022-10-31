@@ -1,0 +1,28 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/eval/ROC.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/eval/ROC.java
+index e20ec4b..525b79f 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/eval/ROC.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/eval/ROC.java
+@@ -198,7 +198,8 @@
+                 INDArray newProbAndLabel = Nd4j.create(new int[]{newSize, 2}, 'c');
+                 if(exampleCount > 0) {
+                     //If statement to handle edge case: no examples, but we need to re-allocate right away
+-                    newProbAndLabel.assign(probAndLabel.get(NDArrayIndex.interval(0, exampleCount), NDArrayIndex.all()));
++                    newProbAndLabel.get(NDArrayIndex.interval(0, exampleCount), NDArrayIndex.all())
++                            .assign(probAndLabel.get(NDArrayIndex.interval(0, exampleCount), NDArrayIndex.all()));
+                 }
+                 probAndLabel = newProbAndLabel;
+             }
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/eval/ROC.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/eval/ROC.java
+index e20ec4b..525b79f 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/eval/ROC.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/eval/ROC.java
+@@ -198,7 +198,8 @@
+                 INDArray newProbAndLabel = Nd4j.create(new int[]{newSize, 2}, 'c');
+                 if(exampleCount > 0) {
+                     //If statement to handle edge case: no examples, but we need to re-allocate right away
+-                    newProbAndLabel.assign(probAndLabel.get(NDArrayIndex.interval(0, exampleCount), NDArrayIndex.all()));
++                    newProbAndLabel.get(NDArrayIndex.interval(0, exampleCount), NDArrayIndex.all())
++                            .assign(probAndLabel.get(NDArrayIndex.interval(0, exampleCount), NDArrayIndex.all()));
+                 }
+                 probAndLabel = newProbAndLabel;
+             }

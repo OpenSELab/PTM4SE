@@ -1,0 +1,21 @@
+diff --git a/processing/src/main/java/io/druid/query/metadata/SegmentAnalyzer.java b/processing/src/main/java/io/druid/query/metadata/SegmentAnalyzer.java
+index d9c3145..e9f70d3 100644
+--- a/processing/src/main/java/io/druid/query/metadata/SegmentAnalyzer.java
++++ b/processing/src/main/java/io/druid/query/metadata/SegmentAnalyzer.java
+@@ -143,7 +143,7 @@
+ 
+     final Function<Object, Long> inputSizeFn = serde.inputSizeFn();
+     if (inputSizeFn == null) {
+-      return ColumnAnalysis.error("noSizeFn");
++      return new ColumnAnalysis(typeName, 0, null, null);
+     }
+ 
+     final int length = column.getLength();
+@@ -152,6 +152,6 @@
+       size += inputSizeFn.apply(complexColumn.getRowValue(i));
+     }
+ 
+-    return new ColumnAnalysis(capabilities.getType().name(), size, null, null);
++    return new ColumnAnalysis(typeName, size, null, null);
+   }
+ }

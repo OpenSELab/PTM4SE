@@ -1,0 +1,61 @@
+diff --git a/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/MimeMailService.java b/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/MimeMailService.java
+index 23a11e1..93d0145 100644
+--- a/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/MimeMailService.java
++++ b/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/MimeMailService.java
+@@ -48,7 +48,7 @@
+ 
+ 			helper.setTo("springside3.demo@gmail.com");
+ 			helper.setFrom("springside3.demo@gmail.com");
+-			helper.setSubject("User Changed");
++			helper.setSubject("用户修改通知");
+ 
+ 			String content = generateContent(userName);
+ 			helper.setText(content, true);
+diff --git a/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/SimpleMailService.java b/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/SimpleMailService.java
+index 519e136..e81db61 100644
+--- a/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/SimpleMailService.java
++++ b/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/SimpleMailService.java
+@@ -26,7 +26,7 @@
+ 		SimpleMailMessage msg = new SimpleMailMessage();
+ 		msg.setFrom("springside3.demo@gmail.com");
+ 		msg.setTo("springside3.demo@gmail.com");
+-		msg.setSubject("User Changed");
++		msg.setSubject("用户修改通知");
+ 
+ 		//将用户名与当期日期格式化到邮件内容的字符串模板
+ 		String content = String.format(textTemplate, userName, new Date());
+diff --git a/examples/showcase/src/test/java/org/springside/examples/showcase/mail/MailServiceTest.java b/examples/showcase/src/test/java/org/springside/examples/showcase/mail/MailServiceTest.java
+index d4c12ad..967b131 100644
+--- a/examples/showcase/src/test/java/org/springside/examples/showcase/mail/MailServiceTest.java
++++ b/examples/showcase/src/test/java/org/springside/examples/showcase/mail/MailServiceTest.java
+@@ -44,7 +44,7 @@
+ 		MimeMessage message = messages[messages.length - 1];
+ 
+ 		assertEquals("springside3.demo@gmail.com", message.getFrom()[0].toString());
+-		assertEquals("User Changed", message.getSubject());
++		assertEquals("用户修改通知", message.getSubject());
+ 		//text格式内容
+ 		System.out.println(message.getContent());
+ 		assertTrue(((String) message.getContent()).contains("被修改"));
+@@ -60,7 +60,7 @@
+ 		MimeMessage message = messages[messages.length - 1];
+ 
+ 		assertEquals("springside3.demo@gmail.com", message.getFrom()[0].toString());
+-		assertEquals("User Changed", message.getSubject());
++		assertEquals("用户修改通知", message.getSubject());
+ 
+ 		MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
+ 
+diff --git a/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/MimeMailService.java b/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/MimeMailService.java
+index 23a11e1..93d0145 100644
+--- a/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/MimeMailService.java
++++ b/examples/showcase/src/main/java/org/springside/examples/showcase/utilities/email/MimeMailService.java
+@@ -48,7 +48,7 @@
+ 
+ 			helper.setTo("springside3.demo@gmail.com");
+ 			helper.setFrom("springside3.demo@gmail.com");
+-			helper.setSubject("User Changed");
++			helper.setSubject("用户修改通知");
+ 
+ 			String content = generateContent(userName);
+ 			helper.setText(content, true);

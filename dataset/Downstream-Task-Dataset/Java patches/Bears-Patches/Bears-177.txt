@@ -1,0 +1,24 @@
+--- a/byte-buddy-dep/src/main/java/net/bytebuddy/pool/TypePool.java
++++ b/byte-buddy-dep/src/main/java/net/bytebuddy/pool/TypePool.java
+@@ -7503,8 +7513,20 @@ public interface TypePool {
+                 }
+ 
+                 @Override
++                public void visitAnnotableParameterCount(int count, boolean visible) {
++                    if (visible) {
++                        visibleParameterShift = Type.getMethodType(descriptor).getArgumentTypes().length - count;
++                    } else {
++                        invisibleParameterShift = Type.getMethodType(descriptor).getArgumentTypes().length - count;
++                    }
++                }
++
++                @Override
+                 public AnnotationVisitor visitParameterAnnotation(int index, String descriptor, boolean visible) {
+-                    return new AnnotationExtractor(descriptor, index, parameterAnnotationTokens, new ComponentTypeLocator.ForAnnotationProperty(Default.this, descriptor));
++                    return new AnnotationExtractor(descriptor,
++                            index + (visible ? visibleParameterShift : invisibleParameterShift),
++                            parameterAnnotationTokens,
++                            new ComponentTypeLocator.ForAnnotationProperty(Default.this, descriptor));
+                 }
+ 
+                 @Override

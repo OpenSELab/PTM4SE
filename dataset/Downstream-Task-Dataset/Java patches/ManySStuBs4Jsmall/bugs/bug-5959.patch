@@ -1,0 +1,236 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/RuntimeConfiguration.java b/camel-core/src/main/java/org/apache/camel/RuntimeConfiguration.java
+index 6100dfd..beb8896 100644
+--- a/camel-core/src/main/java/org/apache/camel/RuntimeConfiguration.java
++++ b/camel-core/src/main/java/org/apache/camel/RuntimeConfiguration.java
+@@ -38,7 +38,7 @@
+      *
+      * @return true if stream cache is enabled
+      */
+-    boolean isStreamCaching();
++    Boolean isStreamCaching();
+ 
+     /**
+      * Sets whether tracing is enabled or not (default is disabled).
+@@ -54,7 +54,7 @@
+      *
+      * @return true if tracing is enabled
+      */
+-    boolean isTracing();
++    Boolean isTracing();
+ 
+     /**
+      * Sets whether handle fault is enabled or not (default is disabled).
+@@ -70,7 +70,7 @@
+      *
+      * @return true if tracing is enabled
+      */
+-    boolean isHandleFault();
++    Boolean isHandleFault();
+ 
+     /**
+      * Sets a delay value in millis that a message is delayed at every step it takes in the route path,
+@@ -80,7 +80,7 @@
+      *
+      * @param delay delay in millis
+      */
+-    void setDelayer(long delay);
++    void setDelayer(Long delay);
+ 
+     /**
+      * Gets the delay value
+@@ -105,7 +105,7 @@
+      *
+      * @return true if should auto start
+      */
+-    boolean isAutoStartup();
++    Boolean isAutoStartup();
+ 
+     /**
+      * Sets the option to use when shutting down routes.
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index 47bc430..23fc90a 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -831,7 +831,7 @@
+         this.streamCache = cache;
+     }
+ 
+-    public boolean isStreamCaching() {
++    public Boolean isStreamCaching() {
+         return streamCache;
+     }
+ 
+@@ -839,11 +839,11 @@
+         this.trace = tracing;
+     }
+ 
+-    public boolean isTracing() {
++    public Boolean isTracing() {
+         return trace;
+     }
+ 
+-    public boolean isHandleFault() {
++    public Boolean isHandleFault() {
+         return handleFault;
+     }
+ 
+@@ -855,7 +855,7 @@
+         return delay;
+     }
+ 
+-    public void setDelayer(long delay) {
++    public void setDelayer(Long delay) {
+         this.delay = delay;
+     }
+ 
+@@ -1405,7 +1405,7 @@
+         this.autoStartup = autoStartup;
+     }
+ 
+-    public boolean isAutoStartup() {
++    public Boolean isAutoStartup() {
+         return autoStartup != null && autoStartup;
+     }
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultRouteContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultRouteContext.java
+index 5beb2b5..84c193d 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultRouteContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultRouteContext.java
+@@ -226,7 +226,7 @@
+         this.trace = tracing;
+     }
+ 
+-    public boolean isTracing() {
++    public Boolean isTracing() {
+         if (trace != null) {
+             return trace;
+         } else {
+@@ -239,7 +239,7 @@
+         this.stramCache = cache;
+     }
+ 
+-    public boolean isStreamCaching() {
++    public Boolean isStreamCaching() {
+         if (stramCache != null) {
+             return stramCache;
+         } else {
+@@ -252,7 +252,7 @@
+         this.handleFault = handleFault;
+     }
+ 
+-    public boolean isHandleFault() {
++    public Boolean isHandleFault() {
+         if (handleFault != null) {
+             return handleFault;
+         } else {
+@@ -261,7 +261,7 @@
+         }
+     }
+ 
+-    public void setDelayer(long delay) {
++    public void setDelayer(Long delay) {
+         this.delay = delay;
+     }
+ 
+@@ -278,7 +278,7 @@
+         this.autoStartup = autoStartup;
+     }
+ 
+-    public boolean isAutoStartup() {
++    public Boolean isAutoStartup() {
+         if (autoStartup != null) {
+             return autoStartup;
+         }
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/DelayerPerRouteTest.java b/camel-core/src/test/java/org/apache/camel/processor/DelayerPerRouteTest.java
+index ca4dbc2..63c9ebf 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/DelayerPerRouteTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/DelayerPerRouteTest.java
+@@ -39,7 +39,7 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                context.setDelayer(2000);
++                context.setDelayer(2000L);
+ 
+                 from("seda:a").delayer(1000).to("mock:result");
+ 
+diff --git a/components/camel-spring/src/test/java/org/apache/camel/spring/config/CamelContextAutoStartupTest.java b/components/camel-spring/src/test/java/org/apache/camel/spring/config/CamelContextAutoStartupTest.java
+index 4fc1130..05ae7c1 100644
+--- a/components/camel-spring/src/test/java/org/apache/camel/spring/config/CamelContextAutoStartupTest.java
++++ b/components/camel-spring/src/test/java/org/apache/camel/spring/config/CamelContextAutoStartupTest.java
+@@ -37,7 +37,7 @@
+         SpringCamelContext camel = (SpringCamelContext) ac.getBean("myCamel");
+         assertEquals("myCamel", camel.getName());
+         assertEquals(false, camel.isStarted());
+-        assertEquals(false, camel.isAutoStartup());
++        assertEquals(Boolean.FALSE, camel.isAutoStartup());
+         assertEquals(0, camel.getRoutes().size());
+ 
+         // now start Camel
+@@ -47,7 +47,7 @@
+         // now its started
+         assertEquals(true, camel.isStarted());
+         // but auto startup is still fasle
+-        assertEquals(false, camel.isAutoStartup());
++        assertEquals(Boolean.FALSE, camel.isAutoStartup());
+         // but now we have one route
+         assertEquals(1, camel.getRoutes().size());
+ 
+@@ -66,7 +66,7 @@
+         SpringCamelContext camel = (SpringCamelContext) ac.getBean("myCamel");
+         assertEquals("myCamel", camel.getName());
+         assertEquals(true, camel.isStarted());
+-        assertEquals(true, camel.isAutoStartup());
++        assertEquals(Boolean.TRUE, camel.isAutoStartup());
+         assertEquals(1, camel.getRoutes().size());
+ 
+         // send a message to the route and see that it works
+diff --git a/camel-core/src/main/java/org/apache/camel/RuntimeConfiguration.java b/camel-core/src/main/java/org/apache/camel/RuntimeConfiguration.java
+index 6100dfd..beb8896 100644
+--- a/camel-core/src/main/java/org/apache/camel/RuntimeConfiguration.java
++++ b/camel-core/src/main/java/org/apache/camel/RuntimeConfiguration.java
+@@ -38,7 +38,7 @@
+      *
+      * @return true if stream cache is enabled
+      */
+-    boolean isStreamCaching();
++    Boolean isStreamCaching();
+ 
+     /**
+      * Sets whether tracing is enabled or not (default is disabled).
+@@ -54,7 +54,7 @@
+      *
+      * @return true if tracing is enabled
+      */
+-    boolean isTracing();
++    Boolean isTracing();
+ 
+     /**
+      * Sets whether handle fault is enabled or not (default is disabled).
+@@ -70,7 +70,7 @@
+      *
+      * @return true if tracing is enabled
+      */
+-    boolean isHandleFault();
++    Boolean isHandleFault();
+ 
+     /**
+      * Sets a delay value in millis that a message is delayed at every step it takes in the route path,
+@@ -80,7 +80,7 @@
+      *
+      * @param delay delay in millis
+      */
+-    void setDelayer(long delay);
++    void setDelayer(Long delay);
+ 
+     /**
+      * Gets the delay value
+@@ -105,7 +105,7 @@
+      *
+      * @return true if should auto start
+      */
+-    boolean isAutoStartup();
++    Boolean isAutoStartup();
+ 
+     /**
+      * Sets the option to use when shutting down routes.

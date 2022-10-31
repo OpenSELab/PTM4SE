@@ -1,0 +1,66 @@
+diff --git a/flink-core/src/main/java/org/apache/flink/metrics/MetricRegistry.java b/flink-core/src/main/java/org/apache/flink/metrics/MetricRegistry.java
+index 09beef6..dafa3bd 100644
+--- a/flink-core/src/main/java/org/apache/flink/metrics/MetricRegistry.java
++++ b/flink-core/src/main/java/org/apache/flink/metrics/MetricRegistry.java
+@@ -74,13 +74,13 @@
+ 	 * Creates a new MetricRegistry and starts the configured reporter.
+ 	 */
+ 	public MetricRegistry(Configuration config) {
+-		// first parse the scopeName formats, these are needed for all reporters
++		// first parse the scope formats, these are needed for all reporters
+ 		ScopeFormats scopeFormats;
+ 		try {
+ 			scopeFormats = createScopeConfig(config);
+ 		}
+ 		catch (Exception e) {
+-			LOG.warn("Failed to parse scopeName format, using default scopeName formats", e);
++			LOG.warn("Failed to parse scope format, using default scope formats", e);
+ 			scopeFormats = new ScopeFormats();
+ 		}
+ 		this.scopeFormats = scopeFormats;
+diff --git a/flink-core/src/main/java/org/apache/flink/metrics/reporter/JMXReporter.java b/flink-core/src/main/java/org/apache/flink/metrics/reporter/JMXReporter.java
+index 90a4fcf..bdaf68a 100644
+--- a/flink-core/src/main/java/org/apache/flink/metrics/reporter/JMXReporter.java
++++ b/flink-core/src/main/java/org/apache/flink/metrics/reporter/JMXReporter.java
+@@ -208,7 +208,7 @@
+ 			nameBuilder.append(x);
+ 			nameBuilder.append("=");
+ 
+-			// write scopeName component
++			// write scope component
+ 			nameBuilder.append(replaceInvalidChars(scopeComponents[x]));
+ 			nameBuilder.append(",");
+ 		}
+diff --git a/flink-core/src/test/java/org/apache/flink/metrics/MetricRegistryTest.java b/flink-core/src/test/java/org/apache/flink/metrics/MetricRegistryTest.java
+index 77acd3c..42464ed 100644
+--- a/flink-core/src/test/java/org/apache/flink/metrics/MetricRegistryTest.java
++++ b/flink-core/src/test/java/org/apache/flink/metrics/MetricRegistryTest.java
+@@ -157,7 +157,7 @@
+ 	}
+ 
+ 	/**
+-	 * Verifies that the scopeName configuration is properly extracted.
++	 * Verifies that the scope configuration is properly extracted.
+ 	 */
+ 	@Test
+ 	public void testScopeConfig() {
+diff --git a/flink-core/src/main/java/org/apache/flink/metrics/MetricRegistry.java b/flink-core/src/main/java/org/apache/flink/metrics/MetricRegistry.java
+index 09beef6..dafa3bd 100644
+--- a/flink-core/src/main/java/org/apache/flink/metrics/MetricRegistry.java
++++ b/flink-core/src/main/java/org/apache/flink/metrics/MetricRegistry.java
+@@ -74,13 +74,13 @@
+ 	 * Creates a new MetricRegistry and starts the configured reporter.
+ 	 */
+ 	public MetricRegistry(Configuration config) {
+-		// first parse the scopeName formats, these are needed for all reporters
++		// first parse the scope formats, these are needed for all reporters
+ 		ScopeFormats scopeFormats;
+ 		try {
+ 			scopeFormats = createScopeConfig(config);
+ 		}
+ 		catch (Exception e) {
+-			LOG.warn("Failed to parse scopeName format, using default scopeName formats", e);
++			LOG.warn("Failed to parse scope format, using default scope formats", e);
+ 			scopeFormats = new ScopeFormats();
+ 		}
+ 		this.scopeFormats = scopeFormats;

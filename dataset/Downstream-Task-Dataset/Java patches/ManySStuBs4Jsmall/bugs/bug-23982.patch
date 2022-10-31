@@ -1,0 +1,39 @@
+diff --git a/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/AbstractDataSourceAdd.java b/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/AbstractDataSourceAdd.java
+index 9e75af0..2cc257a 100644
+--- a/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/AbstractDataSourceAdd.java
++++ b/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/AbstractDataSourceAdd.java
+@@ -116,7 +116,7 @@
+                      ModelNode node = operation.require(DATASOURCE_DRIVER);
+                     final String driverName = node.asString();
+                     final ServiceName driverServiceName = ServiceName.JBOSS.append("jdbc-driver",
+-                            driverName.replaceAll(".", "_"));
++                            driverName.replaceAll("\\.", "_"));
+                     if (driverServiceName != null) {
+                         dataSourceServiceBuilder.addDependency(driverServiceName, Driver.class,
+                                 dataSourceService.getDriverInjector());
+diff --git a/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/JdbcDriverAdd.java b/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/JdbcDriverAdd.java
+index 1f24f49..d94e680 100644
+--- a/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/JdbcDriverAdd.java
++++ b/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/JdbcDriverAdd.java
+@@ -158,7 +158,7 @@
+                     InstalledDriver driverMetadata = new InstalledDriver(driverName, moduleId, driver.getClass().getName(),
+                             xaDataSourceClassName, majorVer, minorVer, compliant);
+                     DriverService driverService = new DriverService(driverMetadata, driver);
+-                    target.addService(ServiceName.JBOSS.append("jdbc-driver", driverName.replaceAll(".", "_")), driverService)
++                    target.addService(ServiceName.JBOSS.append("jdbc-driver", driverName.replaceAll("\\.", "_")), driverService)
+                             .addDependency(ConnectorServices.JDBC_DRIVER_REGISTRY_SERVICE, DriverRegistry.class,
+                                     driverService.getDriverRegistryServiceInjector())
+                             .setInitialMode(ServiceController.Mode.ACTIVE).install();
+diff --git a/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/AbstractDataSourceAdd.java b/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/AbstractDataSourceAdd.java
+index 9e75af0..2cc257a 100644
+--- a/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/AbstractDataSourceAdd.java
++++ b/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/AbstractDataSourceAdd.java
+@@ -116,7 +116,7 @@
+                      ModelNode node = operation.require(DATASOURCE_DRIVER);
+                     final String driverName = node.asString();
+                     final ServiceName driverServiceName = ServiceName.JBOSS.append("jdbc-driver",
+-                            driverName.replaceAll(".", "_"));
++                            driverName.replaceAll("\\.", "_"));
+                     if (driverServiceName != null) {
+                         dataSourceServiceBuilder.addDependency(driverServiceName, Driver.class,
+                                 dataSourceService.getDriverInjector());

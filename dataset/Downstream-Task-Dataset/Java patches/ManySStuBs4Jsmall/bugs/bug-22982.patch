@@ -1,0 +1,26 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+index 1e0ae01..9f60193 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+@@ -193,7 +193,7 @@
+                 for (String templateName : config.apiTemplateFiles().keySet()) {
+ 
+                     String filename = config.apiFilename(templateName, tag);
+-                    if (!config.shouldOverwrite(filename)) {
++                    if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                         continue;
+                     }
+ 
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+index 1e0ae01..9f60193 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+@@ -193,7 +193,7 @@
+                 for (String templateName : config.apiTemplateFiles().keySet()) {
+ 
+                     String filename = config.apiFilename(templateName, tag);
+-                    if (!config.shouldOverwrite(filename)) {
++                    if (!config.shouldOverwrite(filename) && new File(filename).exists()) {
+                         continue;
+                     }
+ 

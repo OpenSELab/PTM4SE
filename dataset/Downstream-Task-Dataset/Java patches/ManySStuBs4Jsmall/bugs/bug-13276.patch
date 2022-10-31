@@ -1,0 +1,14 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/SubPlanBuilder.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/SubPlanBuilder.java
+index 0837a45..e99600f 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/SubPlanBuilder.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/SubPlanBuilder.java
+@@ -55,7 +55,8 @@
+ 
+     public boolean isDistributed()
+     {
+-        return distribution != PlanDistribution.NONE;
++        return (distribution != PlanDistribution.NONE) &&
++                (distribution != PlanDistribution.COORDINATOR_ONLY);
+     }
+ 
+     public PlanDistribution getDistribution()

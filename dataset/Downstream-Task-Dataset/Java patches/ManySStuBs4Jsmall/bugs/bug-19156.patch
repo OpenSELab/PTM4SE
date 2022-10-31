@@ -1,0 +1,42 @@
+diff --git a/src/main/java/org/jboss/netty/handler/codec/frame/LengthFieldPrepender.java b/src/main/java/org/jboss/netty/handler/codec/frame/LengthFieldPrepender.java
+index b076b1b..c4f6236 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/frame/LengthFieldPrepender.java
++++ b/src/main/java/org/jboss/netty/handler/codec/frame/LengthFieldPrepender.java
+@@ -80,14 +80,14 @@
+         case 2:
+             if (length >= 65536) {
+                 throw new IllegalArgumentException(
+-                        "length does not fit into a byte: " + length);
++                        "length does not fit into a short integer: " + length);
+             }
+             header.writeShort((short) length);
+             break;
+         case 3:
+             if (length >= 16777216) {
+                 throw new IllegalArgumentException(
+-                        "length does not fit into a byte: " + length);
++                        "length does not fit into a medium integer: " + length);
+             }
+             header.writeMedium(length);
+             break;
+diff --git a/src/main/java/org/jboss/netty/handler/codec/frame/LengthFieldPrepender.java b/src/main/java/org/jboss/netty/handler/codec/frame/LengthFieldPrepender.java
+index b076b1b..c4f6236 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/frame/LengthFieldPrepender.java
++++ b/src/main/java/org/jboss/netty/handler/codec/frame/LengthFieldPrepender.java
+@@ -80,14 +80,14 @@
+         case 2:
+             if (length >= 65536) {
+                 throw new IllegalArgumentException(
+-                        "length does not fit into a byte: " + length);
++                        "length does not fit into a short integer: " + length);
+             }
+             header.writeShort((short) length);
+             break;
+         case 3:
+             if (length >= 16777216) {
+                 throw new IllegalArgumentException(
+-                        "length does not fit into a byte: " + length);
++                        "length does not fit into a medium integer: " + length);
+             }
+             header.writeMedium(length);
+             break;

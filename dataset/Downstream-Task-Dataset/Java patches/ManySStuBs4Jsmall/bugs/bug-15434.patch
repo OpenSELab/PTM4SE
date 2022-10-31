@@ -1,0 +1,39 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/impl/HazelcastClientInstanceImpl.java b/hazelcast-client/src/main/java/com/hazelcast/client/impl/HazelcastClientInstanceImpl.java
+index c881b6b..b303127 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/impl/HazelcastClientInstanceImpl.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/impl/HazelcastClientInstanceImpl.java
+@@ -128,7 +128,7 @@
+ public class HazelcastClientInstanceImpl implements HazelcastInstance, SerializationServiceSupport {
+ 
+     private static final AtomicInteger CLIENT_ID = new AtomicInteger();
+-    private static final short protocolVersion = 1;
++    private static final short protocolVersion = ClientMessage.VERSION;
+ 
+     private final ClientProperties clientProperties;
+     private final int id = CLIENT_ID.getAndIncrement();
+diff --git a/hazelcast/src/main/java/com/hazelcast/client/impl/protocol/ClientMessage.java b/hazelcast/src/main/java/com/hazelcast/client/impl/protocol/ClientMessage.java
+index 582a38d..8619ab8 100644
+--- a/hazelcast/src/main/java/com/hazelcast/client/impl/protocol/ClientMessage.java
++++ b/hazelcast/src/main/java/com/hazelcast/client/impl/protocol/ClientMessage.java
+@@ -64,7 +64,7 @@
+     /**
+      * Current protocol version
+      */
+-    public static final short VERSION = 0;
++    public static final short VERSION = 1;
+ 
+     /**
+      * Begin Flag
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/impl/HazelcastClientInstanceImpl.java b/hazelcast-client/src/main/java/com/hazelcast/client/impl/HazelcastClientInstanceImpl.java
+index c881b6b..b303127 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/impl/HazelcastClientInstanceImpl.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/impl/HazelcastClientInstanceImpl.java
+@@ -128,7 +128,7 @@
+ public class HazelcastClientInstanceImpl implements HazelcastInstance, SerializationServiceSupport {
+ 
+     private static final AtomicInteger CLIENT_ID = new AtomicInteger();
+-    private static final short protocolVersion = 1;
++    private static final short protocolVersion = ClientMessage.VERSION;
+ 
+     private final ClientProperties clientProperties;
+     private final int id = CLIENT_ID.getAndIncrement();

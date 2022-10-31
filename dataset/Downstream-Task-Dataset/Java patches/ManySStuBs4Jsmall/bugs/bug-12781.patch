@@ -1,0 +1,26 @@
+diff --git a/presto-jdbc/src/test/java/com/facebook/presto/jdbc/TestPrestoDriver.java b/presto-jdbc/src/test/java/com/facebook/presto/jdbc/TestPrestoDriver.java
+index 20c10a5..7b10bbd 100644
+--- a/presto-jdbc/src/test/java/com/facebook/presto/jdbc/TestPrestoDriver.java
++++ b/presto-jdbc/src/test/java/com/facebook/presto/jdbc/TestPrestoDriver.java
+@@ -1497,7 +1497,7 @@
+         });
+ 
+         // make sure the query timed out
+-        assertTrue(queryFinished.await(2, SECONDS));
++        queryFinished.await();
+         assertNotNull(queryFailure.get());
+         assertContains(queryFailure.get().getMessage(), "Query exceeded maximum time limit of 1.00s");
+ 
+diff --git a/presto-jdbc/src/test/java/com/facebook/presto/jdbc/TestPrestoDriver.java b/presto-jdbc/src/test/java/com/facebook/presto/jdbc/TestPrestoDriver.java
+index 20c10a5..7b10bbd 100644
+--- a/presto-jdbc/src/test/java/com/facebook/presto/jdbc/TestPrestoDriver.java
++++ b/presto-jdbc/src/test/java/com/facebook/presto/jdbc/TestPrestoDriver.java
+@@ -1497,7 +1497,7 @@
+         });
+ 
+         // make sure the query timed out
+-        assertTrue(queryFinished.await(2, SECONDS));
++        queryFinished.await();
+         assertNotNull(queryFailure.get());
+         assertContains(queryFailure.get().getMessage(), "Query exceeded maximum time limit of 1.00s");
+ 

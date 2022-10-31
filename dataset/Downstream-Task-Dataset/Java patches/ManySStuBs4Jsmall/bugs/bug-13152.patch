@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/connector/ConnectorManager.java b/presto-main/src/main/java/com/facebook/presto/connector/ConnectorManager.java
+index 55a85f3..7c2cf95 100644
+--- a/presto-main/src/main/java/com/facebook/presto/connector/ConnectorManager.java
++++ b/presto-main/src/main/java/com/facebook/presto/connector/ConnectorManager.java
+@@ -98,7 +98,7 @@
+     @PreDestroy
+     public void stop()
+     {
+-        if (stopped.compareAndSet(false, true)) {
++        if (stopped.getAndSet(true)) {
+             return;
+         }
+ 
+diff --git a/presto-main/src/main/java/com/facebook/presto/connector/ConnectorManager.java b/presto-main/src/main/java/com/facebook/presto/connector/ConnectorManager.java
+index 55a85f3..7c2cf95 100644
+--- a/presto-main/src/main/java/com/facebook/presto/connector/ConnectorManager.java
++++ b/presto-main/src/main/java/com/facebook/presto/connector/ConnectorManager.java
+@@ -98,7 +98,7 @@
+     @PreDestroy
+     public void stop()
+     {
+-        if (stopped.compareAndSet(false, true)) {
++        if (stopped.getAndSet(true)) {
+             return;
+         }
+ 

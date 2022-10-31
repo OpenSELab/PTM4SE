@@ -1,0 +1,26 @@
+diff --git a/src/main/java/redis/clients/jedis/JedisClusterCommand.java b/src/main/java/redis/clients/jedis/JedisClusterCommand.java
+index ca6eb76..231a5ab 100644
+--- a/src/main/java/redis/clients/jedis/JedisClusterCommand.java
++++ b/src/main/java/redis/clients/jedis/JedisClusterCommand.java
+@@ -72,7 +72,7 @@
+ 	    connection = null;
+ 
+ 	    // retry with random connection
+-	    return runWithRetries(key, redirections--, true, asking);
++	    return runWithRetries(key, redirections - 1, true, asking);
+ 	} catch (JedisRedirectionException jre) {
+ 	    if (jre instanceof JedisAskDataException) {
+ 		asking = true;
+diff --git a/src/main/java/redis/clients/jedis/JedisClusterCommand.java b/src/main/java/redis/clients/jedis/JedisClusterCommand.java
+index ca6eb76..231a5ab 100644
+--- a/src/main/java/redis/clients/jedis/JedisClusterCommand.java
++++ b/src/main/java/redis/clients/jedis/JedisClusterCommand.java
+@@ -72,7 +72,7 @@
+ 	    connection = null;
+ 
+ 	    // retry with random connection
+-	    return runWithRetries(key, redirections--, true, asking);
++	    return runWithRetries(key, redirections - 1, true, asking);
+ 	} catch (JedisRedirectionException jre) {
+ 	    if (jre instanceof JedisAskDataException) {
+ 		asking = true;

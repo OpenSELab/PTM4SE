@@ -1,0 +1,40 @@
+diff --git a/guava-tests/test/com/google/common/util/concurrent/FakeTimeLimiterTest.java b/guava-tests/test/com/google/common/util/concurrent/FakeTimeLimiterTest.java
+index 79b6b6c..a0e0634 100644
+--- a/guava-tests/test/com/google/common/util/concurrent/FakeTimeLimiterTest.java
++++ b/guava-tests/test/com/google/common/util/concurrent/FakeTimeLimiterTest.java
+@@ -53,7 +53,7 @@
+     Exception exception = new SampleCheckedException();
+     try {
+       timeLimiter.callWithTimeout(callableThrowing(exception), DELAY_MS, TimeUnit.MILLISECONDS);
+-      fail("Excpected ExecutionException");
++      fail("Expected ExecutionException");
+     } catch (ExecutionException e) {
+       assertThat(e.getCause()).isEqualTo(exception);
+     }
+@@ -63,7 +63,7 @@
+     Exception exception = new RuntimeException("test");
+     try {
+       timeLimiter.callWithTimeout(callableThrowing(exception), DELAY_MS, TimeUnit.MILLISECONDS);
+-      fail("Excpected UncheckedExecutionException");
++      fail("Expected UncheckedExecutionException");
+     } catch (UncheckedExecutionException e) {
+       assertThat(e.getCause()).isEqualTo(exception);
+     }
+@@ -85,7 +85,7 @@
+     RuntimeException exception = new RuntimeException("test");
+     try {
+       timeLimiter.runWithTimeout(runnableThrowing(exception), DELAY_MS, TimeUnit.MILLISECONDS);
+-      fail("Excpected UncheckedExecutionException");
++      fail("Expected UncheckedExecutionException");
+     } catch (UncheckedExecutionException e) {
+       assertThat(e.getCause()).isEqualTo(exception);
+     }
+@@ -96,7 +96,7 @@
+     try {
+       timeLimiter.runUninterruptiblyWithTimeout(
+           runnableThrowing(exception), DELAY_MS, TimeUnit.MILLISECONDS);
+-      fail("Excpected UncheckedExecutionException");
++      fail("Expected UncheckedExecutionException");
+     } catch (UncheckedExecutionException e) {
+       assertThat(e.getCause()).isEqualTo(exception);
+     }

@@ -1,0 +1,270 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index efc0aa3..89cf238 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -584,7 +584,7 @@
+                 }
+             }
+             // interfaces (intermediate models)
+-            if (allDefinitions != null) {
++            if (allDefinitions != null && composed.getInterfaces() != null) {
+                 for (RefModel _interface : composed.getInterfaces()) {
+                     final String interfaceRef = toModelName(_interface.getSimpleRef());
+                     final Model interfaceModel = allDefinitions.get(interfaceRef);
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/ApiClient.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/ApiClient.java
+index c4b1153..d468a50 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/ApiClient.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/ApiClient.java
+@@ -39,7 +39,7 @@
+ import io.swagger.client.auth.ApiKeyAuth;
+ import io.swagger.client.auth.OAuth;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class ApiClient {
+   private Map<String, Client> hostMap = new HashMap<String, Client>();
+   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/ApiException.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/ApiException.java
+index 649e413..d4b75ae 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/ApiException.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/ApiException.java
+@@ -3,7 +3,7 @@
+ import java.util.Map;
+ import java.util.List;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class ApiException extends Exception {
+   private int code = 0;
+   private Map<String, List<String>> responseHeaders = null;
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/Configuration.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/Configuration.java
+index e7837fa..5ad2bfb 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/Configuration.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/Configuration.java
+@@ -1,6 +1,6 @@
+ package io.swagger.client;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class Configuration {
+   private static ApiClient defaultApiClient = new ApiClient();
+ 
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/JSON.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/JSON.java
+index 19c2420..13acc71 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/JSON.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/JSON.java
+@@ -6,7 +6,7 @@
+ 
+ import java.io.IOException;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class JSON {
+   private ObjectMapper mapper;
+ 
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/Pair.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/Pair.java
+index 78c15c6..11bed77 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/Pair.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/Pair.java
+@@ -1,6 +1,6 @@
+ package io.swagger.client;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class Pair {
+     private String name = "";
+     private String value = "";
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/StringUtil.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/StringUtil.java
+index 2348914..d00d8e4 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/StringUtil.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/StringUtil.java
+@@ -1,6 +1,6 @@
+ package io.swagger.client;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class StringUtil {
+   /**
+    * Check if the given array contains the given value (with case-insensitive comparison).
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/TypeRef.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/TypeRef.java
+index a0ebe35..818a1b9 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/TypeRef.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/TypeRef.java
+@@ -3,7 +3,7 @@
+ import java.lang.reflect.ParameterizedType;
+ import java.lang.reflect.Type;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class TypeRef<T> {
+     private final Type type;
+ 
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/PetApi.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/PetApi.java
+index ca9111f..a1512a0 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/PetApi.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/PetApi.java
+@@ -17,7 +17,7 @@
+ import java.util.Map;
+ import java.util.HashMap;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class PetApi {
+   private ApiClient apiClient;
+ 
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/StoreApi.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/StoreApi.java
+index f0628c5..7a012f3 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/StoreApi.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/StoreApi.java
+@@ -17,7 +17,7 @@
+ import java.util.Map;
+ import java.util.HashMap;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class StoreApi {
+   private ApiClient apiClient;
+ 
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/UserApi.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/UserApi.java
+index 3412c56..28f1624 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/UserApi.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/api/UserApi.java
+@@ -17,7 +17,7 @@
+ import java.util.Map;
+ import java.util.HashMap;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class UserApi {
+   private ApiClient apiClient;
+ 
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/ApiKeyAuth.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/ApiKeyAuth.java
+index 69d80c7..3d081ca 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/ApiKeyAuth.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/ApiKeyAuth.java
+@@ -5,7 +5,7 @@
+ import java.util.Map;
+ import java.util.List;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class ApiKeyAuth implements Authentication {
+   private final String location;
+   private final String paramName;
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/Authentication.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/Authentication.java
+index 0c25486..1c914f2 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/Authentication.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/Authentication.java
+@@ -5,7 +5,7 @@
+ import java.util.Map;
+ import java.util.List;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public interface Authentication {
+   /** Apply authentication settings to header and query params. */
+   void applyToParams(List<Pair> queryParams, Map<String, String> headerParams);
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/HttpBasicAuth.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/HttpBasicAuth.java
+index 19dfa96..68466d0 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/HttpBasicAuth.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/HttpBasicAuth.java
+@@ -8,7 +8,7 @@
+ import java.io.UnsupportedEncodingException;
+ import javax.xml.bind.DatatypeConverter;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class HttpBasicAuth implements Authentication {
+   private String username;
+   private String password;
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/OAuth.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/OAuth.java
+index ef89432..996922d 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/OAuth.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/auth/OAuth.java
+@@ -5,7 +5,7 @@
+ import java.util.Map;
+ import java.util.List;
+ 
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class OAuth implements Authentication {
+   @Override
+   public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams) {
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Category.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Category.java
+index ea615a5..8e49fe2 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Category.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Category.java
+@@ -9,7 +9,7 @@
+ 
+ 
+ @ApiModel(description = "")
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class Category   {
+   
+   private Long id = null;
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Order.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Order.java
+index b51be0c..083a6e8 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Order.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Order.java
+@@ -10,7 +10,7 @@
+ 
+ 
+ @ApiModel(description = "")
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class Order   {
+   
+   private Long id = null;
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Pet.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Pet.java
+index aca4848..a55f3d7 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Pet.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Pet.java
+@@ -12,7 +12,7 @@
+ 
+ 
+ @ApiModel(description = "")
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class Pet   {
+   
+   private Long id = null;
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Tag.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Tag.java
+index 98ff0c4..7d11278 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Tag.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/Tag.java
+@@ -9,7 +9,7 @@
+ 
+ 
+ @ApiModel(description = "")
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class Tag   {
+   
+   private Long id = null;
+diff --git a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/User.java b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/User.java
+index f4a8014..2331a90 100644
+--- a/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/User.java
++++ b/samples/client/petstore/java/default/src/main/java/io/swagger/client/model/User.java
+@@ -9,7 +9,7 @@
+ 
+ 
+ @ApiModel(description = "")
+-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-09-30T16:27:52.437+08:00")
++@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2015-10-01T23:05:28.119+08:00")
+ public class User   {
+   
+   private Long id = null;
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index efc0aa3..89cf238 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -584,7 +584,7 @@
+                 }
+             }
+             // interfaces (intermediate models)
+-            if (allDefinitions != null) {
++            if (allDefinitions != null && composed.getInterfaces() != null) {
+                 for (RefModel _interface : composed.getInterfaces()) {
+                     final String interfaceRef = toModelName(_interface.getSimpleRef());
+                     final Model interfaceModel = allDefinitions.get(interfaceRef);

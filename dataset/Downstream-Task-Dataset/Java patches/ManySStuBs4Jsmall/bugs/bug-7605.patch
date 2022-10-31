@@ -1,0 +1,46 @@
+diff --git a/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java b/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+index cb749a0..bdd6aaa 100644
+--- a/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
++++ b/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+@@ -373,7 +373,7 @@
+       for (int tries = 0; true; tries++) {
+         if (tries >= numRetries) {
+           throw new NoServerForRegionException("Unable to find region for " 
+-            + row + " after " + numRetries + " tries.");
++            + Bytes.toString(row) + " after " + numRetries + " tries.");
+         }
+ 
+         try{
+@@ -491,7 +491,8 @@
+       HRegionLocation rl = tableLocations.get(row);
+       if (rl != null) {
+         if (LOG.isDebugEnabled()) {
+-          LOG.debug("Cache hit in table locations for row <" + row +
++          LOG.debug("Cache hit in table locations for row <" +
++            Bytes.toString(row) +
+             "> and tableName " + Bytes.toString(tableName) +
+             ": location server " + rl.getServerAddress() +
+             ", location region name " +
+diff --git a/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java b/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+index cb749a0..bdd6aaa 100644
+--- a/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
++++ b/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+@@ -373,7 +373,7 @@
+       for (int tries = 0; true; tries++) {
+         if (tries >= numRetries) {
+           throw new NoServerForRegionException("Unable to find region for " 
+-            + row + " after " + numRetries + " tries.");
++            + Bytes.toString(row) + " after " + numRetries + " tries.");
+         }
+ 
+         try{
+@@ -491,7 +491,8 @@
+       HRegionLocation rl = tableLocations.get(row);
+       if (rl != null) {
+         if (LOG.isDebugEnabled()) {
+-          LOG.debug("Cache hit in table locations for row <" + row +
++          LOG.debug("Cache hit in table locations for row <" +
++            Bytes.toString(row) +
+             "> and tableName " + Bytes.toString(tableName) +
+             ": location server " + rl.getServerAddress() +
+             ", location region name " +

@@ -1,0 +1,70 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/interceptor/StreamCaching.java b/camel-core/src/main/java/org/apache/camel/processor/interceptor/StreamCaching.java
+index e272b71..a98caa3 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/interceptor/StreamCaching.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/interceptor/StreamCaching.java
+@@ -24,7 +24,7 @@
+ /**
+  * {@link InterceptStrategy} implementation to configure stream caching on a RouteContext
+  */
+-public class StreamCaching implements InterceptStrategy {
++public final class StreamCaching implements InterceptStrategy {
+     
+     /*
+      * Hide constructor -- instances will be created through static enable() methods
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/AggregatorTest.java b/camel-core/src/test/java/org/apache/camel/processor/AggregatorTest.java
+index dbebb3e..28d9023 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/AggregatorTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/AggregatorTest.java
+@@ -88,7 +88,7 @@
+ 
+                 from("seda:header").setHeader("visited", constant(true)).aggregate(header("cheese")).to("mock:result");
+ 
+-                // in this sample we aggregate using our own startegy with a completion predicate
++                // in this sample we aggregate using our own strategy with a completion predicate
+                 // stating that the aggregated header is equal to 5.
+                 from("direct:predicate").aggregate(header("cheese"), new MyAggregationStrategy()).
+                     completedPredicate(header("aggregated").isEqualTo(5)).to("mock:result");
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/SplitterTest.java b/camel-core/src/test/java/org/apache/camel/processor/SplitterTest.java
+index f75642f..2bb6ad1 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/SplitterTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/SplitterTest.java
+@@ -58,7 +58,7 @@
+         }
+     }
+ 
+-    public void testSpliterWithAggregationStrategy() throws Exception {
++    public void testSplitterWithAggregationStrategy() throws Exception {
+         MockEndpoint resultEndpoint = getMockEndpoint("mock:result");
+         resultEndpoint.expectedBodiesReceived("James", "Guillaume", "Hiram", "Rob", "Roman");
+ 
+@@ -122,7 +122,7 @@
+         assertEquals(4, numbersFound.size());
+     }
+ 
+-    public void testSpliterWithAggregationStrategyParallel() throws Exception {
++    public void testSplitterWithAggregationStrategyParallel() throws Exception {
+         MockEndpoint resultEndpoint = getMockEndpoint("mock:result");
+         resultEndpoint.expectedMessageCount(5);
+ 
+@@ -141,7 +141,7 @@
+         assertEquals((Integer)5, result.getProperty("aggregated", Integer.class));
+     }
+     
+-    public void testSpliterWithAggregationStrategyParallelStreaming() throws Exception {
++    public void testSplitterWithAggregationStrategyParallelStreaming() throws Exception {
+         MockEndpoint resultEndpoint = getMockEndpoint("mock:result");
+         resultEndpoint.expectedMessageCount(5);
+         resultEndpoint.expectedBodiesReceivedInAnyOrder("James", "Guillaume", "Hiram", "Rob", "Roman");
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/interceptor/StreamCaching.java b/camel-core/src/main/java/org/apache/camel/processor/interceptor/StreamCaching.java
+index e272b71..a98caa3 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/interceptor/StreamCaching.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/interceptor/StreamCaching.java
+@@ -24,7 +24,7 @@
+ /**
+  * {@link InterceptStrategy} implementation to configure stream caching on a RouteContext
+  */
+-public class StreamCaching implements InterceptStrategy {
++public final class StreamCaching implements InterceptStrategy {
+     
+     /*
+      * Hide constructor -- instances will be created through static enable() methods

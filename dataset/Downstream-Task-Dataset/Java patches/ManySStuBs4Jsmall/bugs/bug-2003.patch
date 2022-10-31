@@ -1,0 +1,116 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/annotation/AtmosphereHandlerServiceProcessor.java b/modules/cpr/src/main/java/org/atmosphere/annotation/AtmosphereHandlerServiceProcessor.java
+index a763738..207973e 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/annotation/AtmosphereHandlerServiceProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/annotation/AtmosphereHandlerServiceProcessor.java
+@@ -74,7 +74,7 @@
+                 IntrospectionUtils.addProperty(handler, nv[0], nv[1]);
+             }
+ 
+-            framework.addAtmosphereHandler(a.path(), handler, framework.getBroadcasterFactory().lookup(a.broadcaster(), true), l);
++            framework.addAtmosphereHandler(a.path(), handler, framework.getBroadcasterFactory().lookup(a.broadcaster(), a.path(), true), l);
+             framework.setBroadcasterCacheClassName(a.broadcasterCache().getName());
+         } catch (Throwable e) {
+             logger.warn("", e);
+diff --git a/modules/cpr/src/main/java/org/atmosphere/annotation/ManagedServiceProcessor.java b/modules/cpr/src/main/java/org/atmosphere/annotation/ManagedServiceProcessor.java
+index 58602ac..a7021d3 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/annotation/ManagedServiceProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/annotation/ManagedServiceProcessor.java
+@@ -65,7 +65,7 @@
+                     logger.warn("", e);
+                 }
+             }
+-            framework.addAtmosphereHandler(a.path(), handler, framework.getBroadcasterFactory().lookup(a.broadcaster(), true), l);
++            framework.addAtmosphereHandler(a.path(), handler, framework.getBroadcasterFactory().lookup(a.broadcaster(), a.path(), true), l);
+         } catch (Throwable e) {
+             logger.warn("", e);
+         }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/annotation/MeteorServiceProcessor.java b/modules/cpr/src/main/java/org/atmosphere/annotation/MeteorServiceProcessor.java
+index 6a788d9..d672b3e 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/annotation/MeteorServiceProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/annotation/MeteorServiceProcessor.java
+@@ -70,7 +70,7 @@
+             if (m.path().contains("{")) {
+                 framework.interceptors().add(new MeteorServiceInterceptor());
+             }
+-            framework.addAtmosphereHandler(mapping, r, framework.getBroadcasterFactory().lookup(m.broadcaster(), true), l);
++            framework.addAtmosphereHandler(mapping, r, framework.getBroadcasterFactory().lookup(m.broadcaster(), m.path(), true), l);
+             framework.setBroadcasterCacheClassName(m.broadcasterCache().getName());
+         } catch (Throwable e) {
+             logger.warn("", e);
+diff --git a/modules/cpr/src/main/java/org/atmosphere/config/managed/AtmosphereHandlerServiceInterceptor.java b/modules/cpr/src/main/java/org/atmosphere/config/managed/AtmosphereHandlerServiceInterceptor.java
+index 3386405..aeddd34 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/config/managed/AtmosphereHandlerServiceInterceptor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/config/managed/AtmosphereHandlerServiceInterceptor.java
+@@ -97,10 +97,10 @@
+                         boolean singleton = w.atmosphereHandler.getClass().getAnnotation(Singleton.class) != null;
+                         if (!singleton) {
+                             config.framework().addAtmosphereHandler(path, config.framework().newClassInstance(w.atmosphereHandler.getClass()),
+-                                    config.getBroadcasterFactory().lookup(m.broadcaster(), true), w.interceptors);
++                                    config.getBroadcasterFactory().lookup(m.broadcaster(), path, true), w.interceptors);
+                         } else {
+                             config.framework().addAtmosphereHandler(path, w.atmosphereHandler,
+-                                    config.getBroadcasterFactory().lookup(m.broadcaster(), true), w.interceptors);
++                                    config.getBroadcasterFactory().lookup(m.broadcaster(), path, true), w.interceptors);
+                         }
+                         request.setAttribute(FrameworkConfig.NEW_MAPPING, "true");
+                     } catch (Throwable e) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedServiceInterceptor.java b/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedServiceInterceptor.java
+index d4f45af..d56bb5d 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedServiceInterceptor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedServiceInterceptor.java
+@@ -119,10 +119,10 @@
+                                     ManagedAtmosphereHandler h = new ManagedAtmosphereHandler();
+                                     h.configure(config, config.framework().newClassInstance(ap.target().getClass()));
+                                     config.framework().addAtmosphereHandler(path, h,
+-                                            config.getBroadcasterFactory().lookup(a.broadcaster(), true), w.interceptors);
++                                            config.getBroadcasterFactory().lookup(a.broadcaster(), path, true), w.interceptors);
+                                 } else {
+                                     config.framework().addAtmosphereHandler(path, w.atmosphereHandler,
+-                                            config.getBroadcasterFactory().lookup(a.broadcaster(), true), w.interceptors);
++                                            config.getBroadcasterFactory().lookup(a.broadcaster(), path, true), w.interceptors);
+                                 }
+                                 request.setAttribute(FrameworkConfig.NEW_MAPPING, "true");
+                             } catch (Throwable e) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/config/managed/MeteorServiceInterceptor.java b/modules/cpr/src/main/java/org/atmosphere/config/managed/MeteorServiceInterceptor.java
+index eb11b0b..4a6f8f2 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/config/managed/MeteorServiceInterceptor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/config/managed/MeteorServiceInterceptor.java
+@@ -119,10 +119,10 @@
+                                     r.setServlet(config.framework().newClassInstance(s.getClass()));
+                                     r.init(config);
+                                     config.framework().addAtmosphereHandler(path, r,
+-                                            config.getBroadcasterFactory().lookup(m.broadcaster(), true), w.interceptors);
++                                            config.getBroadcasterFactory().lookup(m.broadcaster(), path, true), w.interceptors);
+                                 } else {
+                                     config.framework().addAtmosphereHandler(path, w.atmosphereHandler,
+-                                            config.getBroadcasterFactory().lookup(m.broadcaster(), true), w.interceptors);
++                                            config.getBroadcasterFactory().lookup(m.broadcaster(), path, true), w.interceptors);
+                                 }
+                                 request.setAttribute(FrameworkConfig.NEW_MAPPING, "true");
+                             } catch (Throwable e) {
+diff --git a/modules/cpr/src/test/java/org/atmosphere/cpr/WebSocketHandlerTest.java b/modules/cpr/src/test/java/org/atmosphere/cpr/WebSocketHandlerTest.java
+index 7f29a94..4f7b786 100644
+--- a/modules/cpr/src/test/java/org/atmosphere/cpr/WebSocketHandlerTest.java
++++ b/modules/cpr/src/test/java/org/atmosphere/cpr/WebSocketHandlerTest.java
+@@ -187,7 +187,7 @@
+     private void registerWebSocketHandler(String path, WebSocketHandler w) {
+         WebSocketProcessorFactory.getDefault()
+                 .getWebSocketProcessor(framework).registerWebSocketHandler(path,
+-                new WebSocketProcessor.WebSocketHandlerProxy(framework.getBroadcasterFactory().lookup("/*", true).getClass(), w));
++                new WebSocketProcessor.WebSocketHandlerProxy(framework.getBroadcasterFactory().lookup(path, true).getClass(), w));
+     }
+ 
+ 
+diff --git a/modules/cpr/src/main/java/org/atmosphere/annotation/AtmosphereHandlerServiceProcessor.java b/modules/cpr/src/main/java/org/atmosphere/annotation/AtmosphereHandlerServiceProcessor.java
+index a763738..207973e 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/annotation/AtmosphereHandlerServiceProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/annotation/AtmosphereHandlerServiceProcessor.java
+@@ -74,7 +74,7 @@
+                 IntrospectionUtils.addProperty(handler, nv[0], nv[1]);
+             }
+ 
+-            framework.addAtmosphereHandler(a.path(), handler, framework.getBroadcasterFactory().lookup(a.broadcaster(), true), l);
++            framework.addAtmosphereHandler(a.path(), handler, framework.getBroadcasterFactory().lookup(a.broadcaster(), a.path(), true), l);
+             framework.setBroadcasterCacheClassName(a.broadcasterCache().getName());
+         } catch (Throwable e) {
+             logger.warn("", e);

@@ -1,0 +1,15 @@
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/StringFormattedMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/StringFormattedMessage.java
+index f6007e4..4c8429a 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/StringFormattedMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/StringFormattedMessage.java
+@@ -133,7 +133,9 @@ public class StringFormattedMessage implements Message {
+         stringArgs = new String[argArray.length];
+         int i = 0;
+         for (final Object obj : argArray) {
+-            stringArgs[i] = obj.toString();
++            final String string = obj.toString();
++            stringArgs[i] = string;
++            out.writeUTF(string);
+             ++i;
+         }
+     }

@@ -1,0 +1,26 @@
+diff --git a/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwGraphics.java b/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwGraphics.java
+index 75842a6..a9383bd 100644
+--- a/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwGraphics.java
++++ b/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwGraphics.java
+@@ -126,7 +126,7 @@
+ 		boolean mouseCaptured = window != 0 && glfwGetInputMode(window, GLFW_CURSOR_MODE) == GLFW_CURSOR_CAPTURED;
+ 
+ 		long oldWindow = window;
+-		long newWindow = glfwCreateWindow(width, height, title, fullscreen ? fullscreenMonitor : 0, oldWindow);
++		long newWindow = glfwCreateWindow(width + (fullscreen ? 0 : -1), height, title, fullscreen ? fullscreenMonitor : 0, oldWindow);
+ 		if (newWindow == 0) return false;
+ 		if (oldWindow != 0) glfwDestroyWindow(oldWindow);
+ 		window = newWindow;
+diff --git a/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwGraphics.java b/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwGraphics.java
+index 75842a6..a9383bd 100644
+--- a/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwGraphics.java
++++ b/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwGraphics.java
+@@ -126,7 +126,7 @@
+ 		boolean mouseCaptured = window != 0 && glfwGetInputMode(window, GLFW_CURSOR_MODE) == GLFW_CURSOR_CAPTURED;
+ 
+ 		long oldWindow = window;
+-		long newWindow = glfwCreateWindow(width, height, title, fullscreen ? fullscreenMonitor : 0, oldWindow);
++		long newWindow = glfwCreateWindow(width + (fullscreen ? 0 : -1), height, title, fullscreen ? fullscreenMonitor : 0, oldWindow);
+ 		if (newWindow == 0) return false;
+ 		if (oldWindow != 0) glfwDestroyWindow(oldWindow);
+ 		window = newWindow;

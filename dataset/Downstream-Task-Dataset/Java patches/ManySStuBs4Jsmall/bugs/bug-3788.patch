@@ -1,0 +1,39 @@
+diff --git a/tool/src/org/antlr/v4/analysis/LeftRecursiveRuleAnalyzer.java b/tool/src/org/antlr/v4/analysis/LeftRecursiveRuleAnalyzer.java
+index 3304f77..98a1a82 100644
+--- a/tool/src/org/antlr/v4/analysis/LeftRecursiveRuleAnalyzer.java
++++ b/tool/src/org/antlr/v4/analysis/LeftRecursiveRuleAnalyzer.java
+@@ -137,7 +137,7 @@
+ 		}
+ 
+ 		if ( altAssociativity.get(alt)!=null && altAssociativity.get(alt)!=assoc ) {
+-			tool.errMgr.toolError(ErrorType.ALL_OPS_NEED_SAME_ASSOC, alt);
++			tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "all operators of alt " + alt + " of left-recursive rule must have same associativity");
+ 		}
+ 		altAssociativity.put(alt, assoc);
+ 
+diff --git a/tool/src/org/antlr/v4/tool/ErrorType.java b/tool/src/org/antlr/v4/tool/ErrorType.java
+index 0c79a25..c67c6fd 100644
+--- a/tool/src/org/antlr/v4/tool/ErrorType.java
++++ b/tool/src/org/antlr/v4/tool/ErrorType.java
+@@ -429,6 +429,8 @@
+ 	 * <p>
+ 	 * all operators of alt <em>alt</em> of left-recursive rule must have same
+ 	 * associativity</p>
++	 *
++	 * @deprecated This warning is no longer applicable with the current syntax for specifying associativity.
+ 	 */
+ 	ALL_OPS_NEED_SAME_ASSOC(118, "all operators of alt <arg> of left-recursive rule must have same associativity", ErrorSeverity.WARNING),
+ 	/**
+diff --git a/tool/src/org/antlr/v4/analysis/LeftRecursiveRuleAnalyzer.java b/tool/src/org/antlr/v4/analysis/LeftRecursiveRuleAnalyzer.java
+index 3304f77..98a1a82 100644
+--- a/tool/src/org/antlr/v4/analysis/LeftRecursiveRuleAnalyzer.java
++++ b/tool/src/org/antlr/v4/analysis/LeftRecursiveRuleAnalyzer.java
+@@ -137,7 +137,7 @@
+ 		}
+ 
+ 		if ( altAssociativity.get(alt)!=null && altAssociativity.get(alt)!=assoc ) {
+-			tool.errMgr.toolError(ErrorType.ALL_OPS_NEED_SAME_ASSOC, alt);
++			tool.errMgr.toolError(ErrorType.INTERNAL_ERROR, "all operators of alt " + alt + " of left-recursive rule must have same associativity");
+ 		}
+ 		altAssociativity.put(alt, assoc);
+ 

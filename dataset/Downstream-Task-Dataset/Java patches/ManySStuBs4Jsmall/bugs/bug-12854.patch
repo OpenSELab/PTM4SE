@@ -1,0 +1,26 @@
+diff --git a/presto-orc/src/main/java/com/facebook/presto/orc/zstd/FseTableReader.java b/presto-orc/src/main/java/com/facebook/presto/orc/zstd/FseTableReader.java
+index 9a98b03..11977c4 100644
+--- a/presto-orc/src/main/java/com/facebook/presto/orc/zstd/FseTableReader.java
++++ b/presto-orc/src/main/java/com/facebook/presto/orc/zstd/FseTableReader.java
+@@ -48,7 +48,7 @@
+         int remaining = (1 << tableLog) + 1;
+         threshold = 1 << tableLog;
+ 
+-        while ((remaining > 1) && symbolNumber < maxSymbol) {
++        while (remaining > 1 && symbolNumber <= maxSymbol) {
+             if (previousIsZero) {
+                 int n0 = symbolNumber;
+                 while ((bitStream & 0xFFFF) == 0xFFFF) {
+diff --git a/presto-orc/src/main/java/com/facebook/presto/orc/zstd/FseTableReader.java b/presto-orc/src/main/java/com/facebook/presto/orc/zstd/FseTableReader.java
+index 9a98b03..11977c4 100644
+--- a/presto-orc/src/main/java/com/facebook/presto/orc/zstd/FseTableReader.java
++++ b/presto-orc/src/main/java/com/facebook/presto/orc/zstd/FseTableReader.java
+@@ -48,7 +48,7 @@
+         int remaining = (1 << tableLog) + 1;
+         threshold = 1 << tableLog;
+ 
+-        while ((remaining > 1) && symbolNumber < maxSymbol) {
++        while (remaining > 1 && symbolNumber <= maxSymbol) {
+             if (previousIsZero) {
+                 int n0 = symbolNumber;
+                 while ((bitStream & 0xFFFF) == 0xFFFF) {

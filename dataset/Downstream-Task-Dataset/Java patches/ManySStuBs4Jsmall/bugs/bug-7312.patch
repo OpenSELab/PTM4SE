@@ -1,0 +1,16 @@
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationTableBase.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationTableBase.java
+index aa5cfed..83fdad7 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationTableBase.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/replication/TestReplicationTableBase.java
+@@ -54,9 +54,9 @@
+     utility = new HBaseTestingUtility();
+     utility.startMiniZKCluster();
+     conf = utility.getConfiguration();
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesType",
++    conf.setClass("hbase.region.replica.replication.replicationQueues.class",
+       TableBasedReplicationQueuesImpl.class, ReplicationQueues.class);
+-    conf.setClass("hbase.region.replica.replication.ReplicationQueuesClientType",
++    conf.setClass("hbase.region.replica.replication.replicationQueuesClient.class",
+       TableBasedReplicationQueuesClientImpl.class, ReplicationQueuesClient.class);
+     zkw = HBaseTestingUtility.getZooKeeperWatcher(utility);
+     utility.waitFor(0, TIME_OUT_MILLIS, new Waiter.ExplainingPredicate<Exception>() {

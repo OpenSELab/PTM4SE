@@ -1,0 +1,26 @@
+diff --git a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/kernel/KernelFunctionLoader.java b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/kernel/KernelFunctionLoader.java
+index 6a8ab86..b192738 100644
+--- a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/kernel/KernelFunctionLoader.java
++++ b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/kernel/KernelFunctionLoader.java
+@@ -307,7 +307,7 @@
+         String[] commands = {"bash","-c","make && /usr/bin/make install"};
+         ProcessBuilder probuilder = new ProcessBuilder(commands);
+         //You can set up your work directory
+-        probuilder.directory(new File("/tmp/nd4j-kernels"));
++        probuilder.directory(new File(System.getProperty("java.io.tmpdir") + File.separator + "nd4j-kernels"));
+ 
+         Process process = probuilder.start();
+         //Read out dir output
+diff --git a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/kernel/KernelFunctionLoader.java b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/kernel/KernelFunctionLoader.java
+index 6a8ab86..b192738 100644
+--- a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/kernel/KernelFunctionLoader.java
++++ b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/kernel/KernelFunctionLoader.java
+@@ -307,7 +307,7 @@
+         String[] commands = {"bash","-c","make && /usr/bin/make install"};
+         ProcessBuilder probuilder = new ProcessBuilder(commands);
+         //You can set up your work directory
+-        probuilder.directory(new File("/tmp/nd4j-kernels"));
++        probuilder.directory(new File(System.getProperty("java.io.tmpdir") + File.separator + "nd4j-kernels"));
+ 
+         Process process = probuilder.start();
+         //Read out dir output

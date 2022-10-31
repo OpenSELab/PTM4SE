@@ -1,0 +1,26 @@
+diff --git a/webmagic-core/src/main/java/us/codecraft/webmagic/Spider.java b/webmagic-core/src/main/java/us/codecraft/webmagic/Spider.java
+index 68b2e11..7f075b1 100644
+--- a/webmagic-core/src/main/java/us/codecraft/webmagic/Spider.java
++++ b/webmagic-core/src/main/java/us/codecraft/webmagic/Spider.java
+@@ -401,7 +401,7 @@
+         Page page = downloader.download(request, this);
+         if (page == null) {
+             sleep(site.getSleepTime());
+-            throw new IllegalStateException("download error");
++            onError(request);
+         }
+         // for cycle retry
+         if (page.isNeedCycleRetry()) {
+diff --git a/webmagic-core/src/main/java/us/codecraft/webmagic/Spider.java b/webmagic-core/src/main/java/us/codecraft/webmagic/Spider.java
+index 68b2e11..7f075b1 100644
+--- a/webmagic-core/src/main/java/us/codecraft/webmagic/Spider.java
++++ b/webmagic-core/src/main/java/us/codecraft/webmagic/Spider.java
+@@ -401,7 +401,7 @@
+         Page page = downloader.download(request, this);
+         if (page == null) {
+             sleep(site.getSleepTime());
+-            throw new IllegalStateException("download error");
++            onError(request);
+         }
+         // for cycle retry
+         if (page.isNeedCycleRetry()) {

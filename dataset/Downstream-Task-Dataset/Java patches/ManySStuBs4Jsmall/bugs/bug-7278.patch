@@ -1,0 +1,26 @@
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/client/TestAsyncRegionAdminApi.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/client/TestAsyncRegionAdminApi.java
+index 04bd224..5ec405e 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/client/TestAsyncRegionAdminApi.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/client/TestAsyncRegionAdminApi.java
+@@ -358,7 +358,7 @@
+       throws IOException, InterruptedException {
+     HTableDescriptor desc = new HTableDescriptor(tableName);
+     desc.addFamily(new HColumnDescriptor(FAMILY));
+-    admin.createTable(desc, Bytes.toBytes("A"), Bytes.toBytes("Z"), 5);
++    admin.createTable(desc, Bytes.toBytes("A"), Bytes.toBytes("Z"), 5).get();
+ 
+     // wait till the table is assigned
+     HMaster master = TEST_UTIL.getHBaseCluster().getMaster();
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/client/TestAsyncRegionAdminApi.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/client/TestAsyncRegionAdminApi.java
+index 04bd224..5ec405e 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/client/TestAsyncRegionAdminApi.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/client/TestAsyncRegionAdminApi.java
+@@ -358,7 +358,7 @@
+       throws IOException, InterruptedException {
+     HTableDescriptor desc = new HTableDescriptor(tableName);
+     desc.addFamily(new HColumnDescriptor(FAMILY));
+-    admin.createTable(desc, Bytes.toBytes("A"), Bytes.toBytes("Z"), 5);
++    admin.createTable(desc, Bytes.toBytes("A"), Bytes.toBytes("Z"), 5).get();
+ 
+     // wait till the table is assigned
+     HMaster master = TEST_UTIL.getHBaseCluster().getMaster();

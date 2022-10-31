@@ -1,0 +1,39 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+index 4479a3f..996f40d 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+@@ -106,7 +106,7 @@
+      */
+     Action action(AtmosphereRequest req, AtmosphereResponse res) throws IOException, ServletException {
+ 
+-        if (Utils.isWebSocketProxied(req) || (Utils.webSocketEnabled(req) && !supportWebSocket())) {
++        if (!Utils.webSocketProtocol(req) || (Utils.webSocketEnabled(req) && !supportWebSocket())) {
+             res.setStatus(501);
+             res.addHeader(X_ATMOSPHERE_ERROR, "Websocket protocol not supported");
+             res.flushBuffer();
+diff --git a/modules/cpr/src/main/java/org/atmosphere/util/Utils.java b/modules/cpr/src/main/java/org/atmosphere/util/Utils.java
+index ccf7648..aa3edfc 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/util/Utils.java
++++ b/modules/cpr/src/main/java/org/atmosphere/util/Utils.java
+@@ -74,7 +74,7 @@
+         }
+     }
+ 
+-    public static boolean isWebSocketProxied(HttpServletRequest request) {
++    public static boolean webSocketProtocol(HttpServletRequest request) {
+         Enumeration<String> connection = request.getHeaders("Connection");
+         if (connection == null || !connection.hasMoreElements()) {
+             connection = request.getHeaders("connection");
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+index 4479a3f..996f40d 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+@@ -106,7 +106,7 @@
+      */
+     Action action(AtmosphereRequest req, AtmosphereResponse res) throws IOException, ServletException {
+ 
+-        if (Utils.isWebSocketProxied(req) || (Utils.webSocketEnabled(req) && !supportWebSocket())) {
++        if (!Utils.webSocketProtocol(req) || (Utils.webSocketEnabled(req) && !supportWebSocket())) {
+             res.setStatus(501);
+             res.addHeader(X_ATMOSPHERE_ERROR, "Websocket protocol not supported");
+             res.flushBuffer();

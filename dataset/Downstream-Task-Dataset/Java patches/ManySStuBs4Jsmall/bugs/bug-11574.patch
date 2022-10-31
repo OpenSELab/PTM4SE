@@ -1,0 +1,66 @@
+diff --git a/extensions-core/druid-kerberos/src/main/java/io/druid/security/kerberos/DruidKerberosAuthenticationHandler.java b/extensions-core/druid-kerberos/src/main/java/io/druid/security/kerberos/DruidKerberosAuthenticationHandler.java
+index 50fe3b0..4b58e18 100644
+--- a/extensions-core/druid-kerberos/src/main/java/io/druid/security/kerberos/DruidKerberosAuthenticationHandler.java
++++ b/extensions-core/druid-kerberos/src/main/java/io/druid/security/kerberos/DruidKerberosAuthenticationHandler.java
+@@ -106,9 +106,7 @@
+       }
+ 
+       for (String spnegoPrincipal : spnegoPrincipals) {
+-        log.info("Login using keytab {}, for principal {}",
+-                 keytab, spnegoPrincipal
+-        );
++        log.info("Login using keytab %s, for principal %s", keytab, spnegoPrincipal);
+         final KerberosAuthenticator.DruidKerberosConfiguration kerberosConfiguration =
+             new KerberosAuthenticator.DruidKerberosConfiguration(keytab, spnegoPrincipal);
+         final LoginContext loginContext =
+@@ -117,7 +115,7 @@
+           loginContext.login();
+         }
+         catch (LoginException le) {
+-          log.warn(le, "Failed to login as [{}]", spnegoPrincipal);
++          log.warn(le, "Failed to login as [%s]", spnegoPrincipal);
+           throw new AuthenticationException(le);
+         }
+         loginContexts.add(loginContext);
+@@ -201,7 +199,7 @@
+                 String userName = kerberosName.getShortName();
+                 token = new AuthenticationToken(userName, clientPrincipal, getType());
+                 response.setStatus(HttpServletResponse.SC_OK);
+-                log.trace("SPNEGO completed for principal [{}]", clientPrincipal);
++                log.trace("SPNEGO completed for principal [%s]", clientPrincipal);
+               }
+             }
+             finally {
+diff --git a/extensions-core/druid-kerberos/src/main/java/io/druid/security/kerberos/DruidKerberosAuthenticationHandler.java b/extensions-core/druid-kerberos/src/main/java/io/druid/security/kerberos/DruidKerberosAuthenticationHandler.java
+index 50fe3b0..4b58e18 100644
+--- a/extensions-core/druid-kerberos/src/main/java/io/druid/security/kerberos/DruidKerberosAuthenticationHandler.java
++++ b/extensions-core/druid-kerberos/src/main/java/io/druid/security/kerberos/DruidKerberosAuthenticationHandler.java
+@@ -106,9 +106,7 @@
+       }
+ 
+       for (String spnegoPrincipal : spnegoPrincipals) {
+-        log.info("Login using keytab {}, for principal {}",
+-                 keytab, spnegoPrincipal
+-        );
++        log.info("Login using keytab %s, for principal %s", keytab, spnegoPrincipal);
+         final KerberosAuthenticator.DruidKerberosConfiguration kerberosConfiguration =
+             new KerberosAuthenticator.DruidKerberosConfiguration(keytab, spnegoPrincipal);
+         final LoginContext loginContext =
+@@ -117,7 +115,7 @@
+           loginContext.login();
+         }
+         catch (LoginException le) {
+-          log.warn(le, "Failed to login as [{}]", spnegoPrincipal);
++          log.warn(le, "Failed to login as [%s]", spnegoPrincipal);
+           throw new AuthenticationException(le);
+         }
+         loginContexts.add(loginContext);
+@@ -201,7 +199,7 @@
+                 String userName = kerberosName.getShortName();
+                 token = new AuthenticationToken(userName, clientPrincipal, getType());
+                 response.setStatus(HttpServletResponse.SC_OK);
+-                log.trace("SPNEGO completed for principal [{}]", clientPrincipal);
++                log.trace("SPNEGO completed for principal [%s]", clientPrincipal);
+               }
+             }
+             finally {

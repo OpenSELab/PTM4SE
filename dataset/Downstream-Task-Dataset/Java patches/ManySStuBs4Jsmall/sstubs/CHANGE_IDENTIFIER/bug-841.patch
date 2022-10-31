@@ -1,0 +1,13 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/GetImageServlet.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/GetImageServlet.java
+index dcec0ef..dfe1c6a 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/GetImageServlet.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/GetImageServlet.java
+@@ -157,7 +157,7 @@
+               
+               // We may have lost our ticket since last checkpoint, log in again, just in case
+               if (UserGroupInformation.isSecurityEnabled()) {
+-                UserGroupInformation.getCurrentUser().reloginFromKeytab();
++                UserGroupInformation.getCurrentUser().checkTGTAndReloginFromKeytab();
+               }
+               
+               // issue a HTTP get request to download the new fsimage 

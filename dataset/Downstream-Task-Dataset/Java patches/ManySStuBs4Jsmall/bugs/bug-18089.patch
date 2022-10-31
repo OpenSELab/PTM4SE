@@ -1,0 +1,93 @@
+diff --git a/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreCopyClient.java b/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreCopyClient.java
+index c1a933f..8f3d959 100644
+--- a/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreCopyClient.java
++++ b/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreCopyClient.java
+@@ -230,11 +230,11 @@
+             private int totalFiles;
+ 
+             @Override
+-            public int write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
++            public long write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
+                               boolean hasData ) throws IOException
+             {
+                 console.log( "Copying " + path );
+-                int written = actual.write( path, data, temporaryBuffer, hasData );
++                long written = actual.write( path, data, temporaryBuffer, hasData );
+                 console.log( "Copied  " + path + " " + bytes( written ) );
+                 totalFiles++;
+                 return written;
+diff --git a/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreWriter.java b/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreWriter.java
+index 8c133d1..90ea319 100644
+--- a/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreWriter.java
++++ b/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreWriter.java
+@@ -29,7 +29,7 @@
+     // "hasData" is an effect of the block format not supporting a zero length block
+     // whereas a neostore file may actually be 0 bytes we'll have to keep track
+     // of that special case.
+-    int write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer, boolean hasData )
++    long write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer, boolean hasData )
+             throws IOException;
+ 
+     @Override
+diff --git a/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToFileStoreWriter.java b/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToFileStoreWriter.java
+index d7a0410..8d77f54 100644
+--- a/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToFileStoreWriter.java
++++ b/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToFileStoreWriter.java
+@@ -36,7 +36,7 @@
+     }
+ 
+     @Override
+-    public int write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
++    public long write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
+             boolean hasData ) throws IOException
+     {
+         try
+@@ -47,7 +47,7 @@
+             file.getParentFile().mkdirs();
+             try ( RandomAccessFile randomAccessFile = new RandomAccessFile( file, "rw" ) )
+             {
+-                int totalWritten = 0;
++                long totalWritten = 0;
+                 if ( hasData )
+                 {
+                     FileChannel channel = randomAccessFile.getChannel();
+diff --git a/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToNetworkStoreWriter.java b/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToNetworkStoreWriter.java
+index 78ac2c9..537e72d 100644
+--- a/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToNetworkStoreWriter.java
++++ b/enterprise/com/src/main/java/org/neo4j/com/storecopy/ToNetworkStoreWriter.java
+@@ -42,7 +42,7 @@
+     }
+ 
+     @Override
+-    public int write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
++    public long write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
+             boolean hasData ) throws IOException
+     {
+         char[] chars = path.toCharArray();
+@@ -51,7 +51,7 @@
+         targetBuffer.writeByte( hasData ? 1 : 0 );
+         // TODO Make use of temporaryBuffer?
+         BlockLogBuffer buffer = new BlockLogBuffer( targetBuffer, bufferMonitor );
+-        int totalWritten = 2 + chars.length*2 + 1;
++        long totalWritten = 2 + chars.length*2 + 1;
+         if ( hasData )
+         {
+             totalWritten += buffer.write( data );
+diff --git a/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreCopyClient.java b/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreCopyClient.java
+index c1a933f..8f3d959 100644
+--- a/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreCopyClient.java
++++ b/enterprise/com/src/main/java/org/neo4j/com/storecopy/StoreCopyClient.java
+@@ -230,11 +230,11 @@
+             private int totalFiles;
+ 
+             @Override
+-            public int write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
++            public long write( String path, ReadableByteChannel data, ByteBuffer temporaryBuffer,
+                               boolean hasData ) throws IOException
+             {
+                 console.log( "Copying " + path );
+-                int written = actual.write( path, data, temporaryBuffer, hasData );
++                long written = actual.write( path, data, temporaryBuffer, hasData );
+                 console.log( "Copied  " + path + " " + bytes( written ) );
+                 totalFiles++;
+                 return written;

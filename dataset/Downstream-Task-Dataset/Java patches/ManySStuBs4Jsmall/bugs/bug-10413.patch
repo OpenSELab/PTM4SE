@@ -1,0 +1,28 @@
+diff --git a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
+index 5d55d0c..6baf1ea 100644
+--- a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
++++ b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
+@@ -115,7 +115,8 @@
+             case 3:
+                 return InputType.recurrent(shape[1]);
+             case 4:
+-                return InputType.convolutional(shape[2], shape[3], shape[1]);
++                // TODO: make sure to cover TF/NHWC and TH/NCHW orderings
++                return InputType.convolutional(shape[1], shape[2], shape[3]);
+             default:
+                 throw new UnsupportedOperationException(
+                         "Cannot infer input type for reshape array " + Arrays.toString(shape));
+diff --git a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
+index 5d55d0c..6baf1ea 100644
+--- a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
++++ b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
+@@ -115,7 +115,8 @@
+             case 3:
+                 return InputType.recurrent(shape[1]);
+             case 4:
+-                return InputType.convolutional(shape[2], shape[3], shape[1]);
++                // TODO: make sure to cover TF/NHWC and TH/NCHW orderings
++                return InputType.convolutional(shape[1], shape[2], shape[3]);
+             default:
+                 throw new UnsupportedOperationException(
+                         "Cannot infer input type for reshape array " + Arrays.toString(shape));

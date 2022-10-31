@@ -1,0 +1,31 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/analyzer/StatementAnalyzer.java b/presto-main/src/main/java/com/facebook/presto/sql/analyzer/StatementAnalyzer.java
+index f763af6..4470a22 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/analyzer/StatementAnalyzer.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/analyzer/StatementAnalyzer.java
+@@ -944,7 +944,7 @@
+                 analysis.addCoercion(expression, BOOLEAN, false);
+             }
+ 
+-            Analyzer.verifyNoAggregatesOrWindowFunctions(metadata.getFunctionRegistry(), expression, "JOIN");
++            Analyzer.verifyNoAggregatesOrWindowFunctions(metadata.getFunctionRegistry(), expression, "JOIN clause");
+ 
+             // expressionInterpreter/optimizer only understands a subset of expression types
+             // TODO: remove this when the new expression tree is implemented
+@@ -1514,7 +1514,7 @@
+                 groupByExpression = groupingColumn;
+             }
+ 
+-            Analyzer.verifyNoAggregatesOrWindowFunctions(metadata.getFunctionRegistry(), groupByExpression, "GROUP BY");
++            Analyzer.verifyNoAggregatesOrWindowFunctions(metadata.getFunctionRegistry(), groupByExpression, "GROUP BY clause");
+             Type type = analysis.getType(groupByExpression);
+             if (!type.isComparable()) {
+                 throw new SemanticException(TYPE_MISMATCH, node, "%s is not comparable, and therefore cannot be used in GROUP BY", type);
+@@ -1631,7 +1631,7 @@
+ 
+     public void analyzeWhere(Node node, Scope scope, Expression predicate)
+     {
+-        Analyzer.verifyNoAggregatesOrWindowFunctions(metadata.getFunctionRegistry(), predicate, "WHERE");
++        Analyzer.verifyNoAggregatesOrWindowFunctions(metadata.getFunctionRegistry(), predicate, "WHERE clause");
+ 
+         ExpressionAnalysis expressionAnalysis = analyzeExpression(predicate, scope);
+         analysis.recordSubqueries(node, expressionAnalysis);

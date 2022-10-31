@@ -1,0 +1,125 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/data/ArrayByteSequence.java b/core/src/main/java/org/apache/accumulo/core/data/ArrayByteSequence.java
+index d9ddc67..d040139 100644
+--- a/core/src/main/java/org/apache/accumulo/core/data/ArrayByteSequence.java
++++ b/core/src/main/java/org/apache/accumulo/core/data/ArrayByteSequence.java
+@@ -21,6 +21,8 @@ import static com.google.common.base.Charsets.UTF_8;
+ import java.io.Serializable;
+ import java.nio.ByteBuffer;
+ 
++import org.apache.accumulo.core.util.ByteBufferUtil;
++
+ public class ArrayByteSequence extends ByteSequence implements Serializable {
+ 
+   private static final long serialVersionUID = 1L;
+@@ -52,15 +54,14 @@ public class ArrayByteSequence extends ByteSequence implements Serializable {
+   }
+ 
+   public ArrayByteSequence(ByteBuffer buffer) {
+-    this.length = buffer.remaining();
+-
+     if (buffer.hasArray()) {
+       this.data = buffer.array();
+-      this.offset = buffer.position();
++      this.offset = buffer.position() + buffer.arrayOffset();
++      this.length = buffer.remaining();
+     } else {
+-      this.data = new byte[length];
+       this.offset = 0;
+-      buffer.get(data);
++      this.data = ByteBufferUtil.toBytes(buffer);
++      this.length = data.length;
+     }
+   }
+ 
+@@ -118,6 +119,7 @@ public class ArrayByteSequence extends ByteSequence implements Serializable {
+     return copy;
+   }
+ 
++  @Override
+   public String toString() {
+     return new String(data, offset, length, UTF_8);
+   }
+diff --git a/core/src/main/java/org/apache/accumulo/core/util/ByteBufferUtil.java b/core/src/main/java/org/apache/accumulo/core/util/ByteBufferUtil.java
+index be5cddf..cdde05c 100644
+--- a/core/src/main/java/org/apache/accumulo/core/util/ByteBufferUtil.java
++++ b/core/src/main/java/org/apache/accumulo/core/util/ByteBufferUtil.java
+@@ -31,7 +31,15 @@ public class ByteBufferUtil {
+   public static byte[] toBytes(ByteBuffer buffer) {
+     if (buffer == null)
+       return null;
+-    return Arrays.copyOfRange(buffer.array(), buffer.position(), buffer.limit());
++    if (buffer.hasArray()) {
++      // did not use buffer.get() because it changes the position
++      return Arrays.copyOfRange(buffer.array(), buffer.position() + buffer.arrayOffset(), buffer.limit() + buffer.arrayOffset());
++    } else {
++      byte[] data = new byte[buffer.remaining()];
++      // duplicate inorder to avoid changing position
++      buffer.duplicate().get(data);
++      return data;
++    }
+   }
+ 
+   public static List<ByteBuffer> toByteBuffers(Collection<byte[]> bytesList) {
+@@ -47,23 +55,32 @@ public class ByteBufferUtil {
+   public static List<byte[]> toBytesList(Collection<ByteBuffer> bytesList) {
+     if (bytesList == null)
+       return null;
+-    ArrayList<byte[]> result = new ArrayList<byte[]>();
++    ArrayList<byte[]> result = new ArrayList<byte[]>(bytesList.size());
+     for (ByteBuffer bytes : bytesList) {
+       result.add(toBytes(bytes));
+     }
+     return result;
+   }
+ 
+-  public static Text toText(ByteBuffer bytes) {
+-    if (bytes == null)
++  public static Text toText(ByteBuffer byteBuffer) {
++    if (byteBuffer == null)
+       return null;
+-    Text result = new Text();
+-    result.set(bytes.array(), bytes.position(), bytes.remaining());
+-    return result;
++
++    if (byteBuffer.hasArray()) {
++      Text result = new Text();
++      result.set(byteBuffer.array(), byteBuffer.arrayOffset() + byteBuffer.position(), byteBuffer.remaining());
++      return result;
++    } else {
++      return new Text(toBytes(byteBuffer));
++    }
+   }
+ 
+   public static String toString(ByteBuffer bytes) {
+-    return new String(bytes.array(), bytes.position(), bytes.remaining(), UTF_8);
++    if (bytes.hasArray()) {
++      return new String(bytes.array(), bytes.arrayOffset() + bytes.position(), bytes.remaining(), UTF_8);
++    } else {
++      return new String(toBytes(bytes), UTF_8);
++    }
+   }
+ 
+   public static ByteBuffer toByteBuffers(ByteSequence bs) {
+@@ -73,7 +90,6 @@ public class ByteBufferUtil {
+     if (bs.isBackedByArray()) {
+       return ByteBuffer.wrap(bs.getBackingArray(), bs.offset(), bs.length());
+     } else {
+-      // TODO create more efficient impl
+       return ByteBuffer.wrap(bs.toArray());
+     }
+   }
+diff --git a/core/src/main/java/org/apache/accumulo/core/util/UnsynchronizedBuffer.java b/core/src/main/java/org/apache/accumulo/core/util/UnsynchronizedBuffer.java
+index f353613..b776553 100644
+--- a/core/src/main/java/org/apache/accumulo/core/util/UnsynchronizedBuffer.java
++++ b/core/src/main/java/org/apache/accumulo/core/util/UnsynchronizedBuffer.java
+@@ -122,8 +122,8 @@ public class UnsynchronizedBuffer {
+         offset = buffer.arrayOffset() + buffer.position();
+         data = buffer.array();
+       } else {
+-        data = new byte[buffer.remaining()];
+-        buffer.get(data);
++        offset = 0;
++        data = ByteBufferUtil.toBytes(buffer);
+       }
+     }
+ 

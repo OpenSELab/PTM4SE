@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/websocket/DefaultWebSocketProcessor.java b/modules/cpr/src/main/java/org/atmosphere/websocket/DefaultWebSocketProcessor.java
+index 2c94fee..5f5975c 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/websocket/DefaultWebSocketProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/websocket/DefaultWebSocketProcessor.java
+@@ -156,7 +156,7 @@
+ 
+         // We must dispatch to execute AtmosphereInterceptor
+         dispatch(webSocket, request, response);
+-        if (handlers.size() != 0 && REFLECTOR_ATMOSPHEREHANDLER.equals(r.getAtmosphereHandler())){
++        if (handlers.size() != 0 && !REFLECTOR_ATMOSPHEREHANDLER.getClass().isAssignableFrom(r.getAtmosphereHandler().getClass())){
+             WebSocketHandlerProxy handler = mapper.map(request, handlers);
+             if (handler == null) {
+                 logger.debug("No WebSocketHandler maps request for {} with mapping {}", request.getRequestURI(), handlers);
+diff --git a/modules/cpr/src/main/java/org/atmosphere/websocket/DefaultWebSocketProcessor.java b/modules/cpr/src/main/java/org/atmosphere/websocket/DefaultWebSocketProcessor.java
+index 2c94fee..5f5975c 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/websocket/DefaultWebSocketProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/websocket/DefaultWebSocketProcessor.java
+@@ -156,7 +156,7 @@
+ 
+         // We must dispatch to execute AtmosphereInterceptor
+         dispatch(webSocket, request, response);
+-        if (handlers.size() != 0 && REFLECTOR_ATMOSPHEREHANDLER.equals(r.getAtmosphereHandler())){
++        if (handlers.size() != 0 && !REFLECTOR_ATMOSPHEREHANDLER.getClass().isAssignableFrom(r.getAtmosphereHandler().getClass())){
+             WebSocketHandlerProxy handler = mapper.map(request, handlers);
+             if (handler == null) {
+                 logger.debug("No WebSocketHandler maps request for {} with mapping {}", request.getRequestURI(), handlers);

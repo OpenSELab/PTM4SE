@@ -1,0 +1,71 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+index b4aae75..2c72ff4 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+@@ -2084,9 +2084,9 @@ public final class DocumentNodeStore
+     BackgroundWriteStats backgroundWrite() {
+         return unsavedLastRevisions.persist(this, new UnsavedModifications.Snapshot() {
+             @Override
+-            public void acquiring() {
++            public void acquiring(Revision mostRecent) {
+                 if (store.create(JOURNAL,
+-                        singletonList(changes.asUpdateOp(getHeadRevision())))) {
++                        singletonList(changes.asUpdateOp(mostRecent)))) {
+                     changes = JOURNAL.newDocument(getDocumentStore());
+                 }
+             }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/LastRevRecoveryAgent.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/LastRevRecoveryAgent.java
+index 69e8fe7..25f0390 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/LastRevRecoveryAgent.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/LastRevRecoveryAgent.java
+@@ -235,7 +235,7 @@ public class LastRevRecoveryAgent {
+             unsaved.persist(nodeStore, new UnsavedModifications.Snapshot() {
+ 
+                 @Override
+-                public void acquiring() {
++                public void acquiring(Revision mostRecent) {
+                     if (lastRootRev == null) {
+                         // this should never happen - when unsaved has no changes
+                         // that is reflected in the 'map' to be empty - in that
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UnsavedModifications.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UnsavedModifications.java
+index d5f6c1e..1d06fa7 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UnsavedModifications.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UnsavedModifications.java
+@@ -159,7 +159,7 @@ class UnsavedModifications {
+         time = clock.getTime();
+         Map<String, Revision> pending;
+         try {
+-            snapshot.acquiring();
++            snapshot.acquiring(getMostRecentRevision());
+             pending = Maps.newTreeMap(PathComparator.INSTANCE);
+             pending.putAll(map);
+         } finally {
+@@ -234,14 +234,26 @@ class UnsavedModifications {
+         return map.toString();
+     }
+ 
++    private Revision getMostRecentRevision() {
++        // use revision of root document
++        Revision rev = map.get("/");
++        // otherwise find most recent
++        if (rev == null) {
++            for (Revision r : map.values()) {
++                rev = Utils.max(rev, r);
++            }
++        }
++        return rev;
++    }
++
+     public interface Snapshot {
+ 
+         Snapshot IGNORE = new Snapshot() {
+             @Override
+-            public void acquiring() {
++            public void acquiring(Revision mostRecent) {
+             }
+         };
+ 
+-        void acquiring();
++        void acquiring(Revision mostRecent);
+     }
+ }

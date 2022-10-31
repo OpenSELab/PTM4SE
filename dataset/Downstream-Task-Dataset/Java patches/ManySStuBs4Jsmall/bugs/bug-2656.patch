@@ -1,0 +1,55 @@
+diff --git a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/RolesService.java b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/RolesService.java
+index eff3287..752680f 100644
+--- a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/RolesService.java
++++ b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/RolesService.java
+@@ -82,13 +82,13 @@
+         }
+     }
+ 
+-    public RoleResponse updateRole(RoleResponse role) {
++    public RoleResponse updateRole(String oldRoleName, RoleResponse role) {
+         try {
+-            final RoleResponse response = api.path(routes.RolesResource().update(role.name()), RoleResponse.class).body(
++            final RoleResponse response = api.path(routes.RolesResource().update(oldRoleName), RoleResponse.class).body(
+                     role).execute();
+             return response;
+         } catch (APIException | IOException e) {
+-            log.error("Unable to update role " + role.name(), e);
++            log.error("Unable to update role " + oldRoleName, e);
+         }
+         return null;
+     }
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/roles/RolesResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/roles/RolesResource.java
+index 0a7c246..be303d8 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/roles/RolesResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/roles/RolesResource.java
+@@ -141,7 +141,7 @@
+         final Role roleToUpdate = roleService.load(name);
+ 
+         roleToUpdate.setName(role.name());
+-        roleToUpdate.setDescription(role.description().get());
++        roleToUpdate.setDescription(role.description().orNull());
+         roleToUpdate.setPermissions(role.permissions());
+         try {
+             roleService.save(roleToUpdate);
+diff --git a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/RolesService.java b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/RolesService.java
+index eff3287..752680f 100644
+--- a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/RolesService.java
++++ b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/RolesService.java
+@@ -82,13 +82,13 @@
+         }
+     }
+ 
+-    public RoleResponse updateRole(RoleResponse role) {
++    public RoleResponse updateRole(String oldRoleName, RoleResponse role) {
+         try {
+-            final RoleResponse response = api.path(routes.RolesResource().update(role.name()), RoleResponse.class).body(
++            final RoleResponse response = api.path(routes.RolesResource().update(oldRoleName), RoleResponse.class).body(
+                     role).execute();
+             return response;
+         } catch (APIException | IOException e) {
+-            log.error("Unable to update role " + role.name(), e);
++            log.error("Unable to update role " + oldRoleName, e);
+         }
+         return null;
+     }

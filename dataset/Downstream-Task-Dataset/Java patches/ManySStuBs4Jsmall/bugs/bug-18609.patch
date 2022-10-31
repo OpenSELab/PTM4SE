@@ -1,0 +1,74 @@
+diff --git a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverClientSubnetTest.java b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverClientSubnetTest.java
+index 36cc440..7b2c569 100644
+--- a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverClientSubnetTest.java
++++ b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverClientSubnetTest.java
+@@ -63,6 +63,7 @@
+                 .nameServerProvider(
+                         new SingletonDnsServerAddressStreamProvider(SocketUtils.socketAddress("8.8.8.8", 53)))
+                 .maxQueriesPerResolve(1)
+-                .optResourceEnabled(false);
++                .optResourceEnabled(false)
++                .ndots(1);
+     }
+ }
+diff --git a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
+index 0a1a935..33a793b 100644
+--- a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
++++ b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverTest.java
+@@ -298,7 +298,8 @@
+                 .channelType(NioDatagramChannel.class)
+                 .maxQueriesPerResolve(1)
+                 .decodeIdn(decodeToUnicode)
+-                .optResourceEnabled(false);
++                .optResourceEnabled(false)
++                .ndots(1);
+ 
+         if (dnsServerAddressStreamProvider == null) {
+             builder.nameServerProvider(new SingletonDnsServerAddressStreamProvider(dnsServer.localAddress()));
+@@ -821,7 +822,8 @@
+                     .resolvedAddressTypes(ResolvedAddressTypes.IPV4_ONLY)
+                     .channelType(NioDatagramChannel.class)
+                     .queryTimeoutMillis(1000) // We expect timeouts if startDnsServer1 is false
+-                    .optResourceEnabled(false);
++                    .optResourceEnabled(false)
++                    .ndots(1);
+ 
+             builder.nameServerProvider(new SequentialDnsServerAddressStreamProvider(dnsServer1Address,
+                     dnsServer2.localAddress()));
+@@ -867,7 +869,8 @@
+                     .resolvedAddressTypes(ResolvedAddressTypes.IPV6_PREFERRED)
+                     .dnsQueryLifecycleObserverFactory(lifecycleObserverFactory)
+                     .channelType(NioDatagramChannel.class)
+-                    .optResourceEnabled(false);
++                    .optResourceEnabled(false)
++                    .ndots(1);
+ 
+             builder.nameServerProvider(new SequentialDnsServerAddressStreamProvider(dnsServer1.localAddress(),
+                     dnsServer2.localAddress()));
+diff --git a/resolver-dns/src/test/java/io/netty/resolver/dns/SearchDomainTest.java b/resolver-dns/src/test/java/io/netty/resolver/dns/SearchDomainTest.java
+index 4ef2dd1..4086906 100644
+--- a/resolver-dns/src/test/java/io/netty/resolver/dns/SearchDomainTest.java
++++ b/resolver-dns/src/test/java/io/netty/resolver/dns/SearchDomainTest.java
+@@ -48,7 +48,8 @@
+             .channelType(NioDatagramChannel.class)
+             .nameServerProvider(new SingletonDnsServerAddressStreamProvider(dnsServer.localAddress()))
+             .maxQueriesPerResolve(1)
+-            .optResourceEnabled(false);
++            .optResourceEnabled(false)
++            .ndots(1);
+     }
+ 
+     private TestDnsServer dnsServer;
+diff --git a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverClientSubnetTest.java b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverClientSubnetTest.java
+index 36cc440..7b2c569 100644
+--- a/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverClientSubnetTest.java
++++ b/resolver-dns/src/test/java/io/netty/resolver/dns/DnsNameResolverClientSubnetTest.java
+@@ -63,6 +63,7 @@
+                 .nameServerProvider(
+                         new SingletonDnsServerAddressStreamProvider(SocketUtils.socketAddress("8.8.8.8", 53)))
+                 .maxQueriesPerResolve(1)
+-                .optResourceEnabled(false);
++                .optResourceEnabled(false)
++                .ndots(1);
+     }
+ }

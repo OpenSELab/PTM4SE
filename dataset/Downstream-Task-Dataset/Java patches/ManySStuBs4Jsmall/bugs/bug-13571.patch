@@ -1,0 +1,36 @@
+diff --git a/ImportAPI/src/org/gephi/io/importer/impl/ImportContainerImpl.java b/ImportAPI/src/org/gephi/io/importer/impl/ImportContainerImpl.java
+index 23a77de..b883bb0 100644
+--- a/ImportAPI/src/org/gephi/io/importer/impl/ImportContainerImpl.java
++++ b/ImportAPI/src/org/gephi/io/importer/impl/ImportContainerImpl.java
+@@ -435,11 +435,11 @@
+             for (NodeDraftImpl node : nodeMap.values()) {
+                 boolean issue = false;
+ 
+-                if (timeIntervalMin != null && node.getTimeInterval().getLow() < timeIntervalMin) {
++                if (timeIntervalMin != null && node.getTimeInterval() != null && node.getTimeInterval().getLow() < timeIntervalMin) {
+                     node.setTimeInterval((TimeInterval) DynamicUtilities.fitToInterval(node.getTimeInterval(), timeIntervalMin, node.getTimeInterval().getHigh()));
+                     issue = true;
+                 }
+-                if (timeIntervalMax != null && node.getTimeInterval().getHigh() > timeIntervalMax) {
++                if (timeIntervalMax != null && node.getTimeInterval() != null && node.getTimeInterval().getHigh() > timeIntervalMax) {
+                     node.setTimeInterval((TimeInterval) DynamicUtilities.fitToInterval(node.getTimeInterval(), node.getTimeInterval().getLow(), timeIntervalMax));
+                     issue = true;
+                 }
+diff --git a/ImportAPI/src/org/gephi/io/importer/impl/ImportContainerImpl.java b/ImportAPI/src/org/gephi/io/importer/impl/ImportContainerImpl.java
+index 23a77de..b883bb0 100644
+--- a/ImportAPI/src/org/gephi/io/importer/impl/ImportContainerImpl.java
++++ b/ImportAPI/src/org/gephi/io/importer/impl/ImportContainerImpl.java
+@@ -435,11 +435,11 @@
+             for (NodeDraftImpl node : nodeMap.values()) {
+                 boolean issue = false;
+ 
+-                if (timeIntervalMin != null && node.getTimeInterval().getLow() < timeIntervalMin) {
++                if (timeIntervalMin != null && node.getTimeInterval() != null && node.getTimeInterval().getLow() < timeIntervalMin) {
+                     node.setTimeInterval((TimeInterval) DynamicUtilities.fitToInterval(node.getTimeInterval(), timeIntervalMin, node.getTimeInterval().getHigh()));
+                     issue = true;
+                 }
+-                if (timeIntervalMax != null && node.getTimeInterval().getHigh() > timeIntervalMax) {
++                if (timeIntervalMax != null && node.getTimeInterval() != null && node.getTimeInterval().getHigh() > timeIntervalMax) {
+                     node.setTimeInterval((TimeInterval) DynamicUtilities.fitToInterval(node.getTimeInterval(), node.getTimeInterval().getLow(), timeIntervalMax));
+                     issue = true;
+                 }

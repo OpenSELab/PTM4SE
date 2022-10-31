@@ -1,0 +1,28 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceBuilder.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceBuilder.java
+index be6c24d..3a617a8 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceBuilder.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceBuilder.java
+@@ -75,7 +75,8 @@
+ 	}
+ 
+ 	private void maybeGetDriverClassName() {
+-		if (!this.properties.containsKey("driverClassName")) {
++		if (!this.properties.containsKey("driverClassName")
++				&& this.properties.containsKey("url")) {
+ 			String cls = this.driverClassNameProvider.getDriverClassName(this.properties
+ 					.get("url"));
+ 			this.properties.put("driverClassName", cls);
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceBuilder.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceBuilder.java
+index be6c24d..3a617a8 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceBuilder.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jdbc/DataSourceBuilder.java
+@@ -75,7 +75,8 @@
+ 	}
+ 
+ 	private void maybeGetDriverClassName() {
+-		if (!this.properties.containsKey("driverClassName")) {
++		if (!this.properties.containsKey("driverClassName")
++				&& this.properties.containsKey("url")) {
+ 			String cls = this.driverClassNameProvider.getDriverClassName(this.properties
+ 					.get("url"));
+ 			this.properties.put("driverClassName", cls);

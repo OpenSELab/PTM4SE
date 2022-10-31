@@ -1,0 +1,18 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/model/AbstractPropertyModel.java b/wicket/src/main/java/org/apache/wicket/model/AbstractPropertyModel.java
+index b95679c..6df54fa 100644
+--- a/wicket/src/main/java/org/apache/wicket/model/AbstractPropertyModel.java
++++ b/wicket/src/main/java/org/apache/wicket/model/AbstractPropertyModel.java
+@@ -247,8 +247,11 @@ public abstract class AbstractPropertyModel<T>
+ 		{
+ 			try
+ 			{
+-				return PropertyResolver.getPropertyClass(expression,
+-					((IObjectClassAwareModel<?>)this.target).getObjectClass());
++				Class<?> targetClass = ((IObjectClassAwareModel<?>)this.target).getObjectClass();
++				if (targetClass != null)
++				{
++					return PropertyResolver.getPropertyClass(expression, targetClass);
++				}
+ 			}
+ 			catch (WicketRuntimeException e)
+ 			{

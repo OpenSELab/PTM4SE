@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/management/ManagedThrottlerTest.java b/camel-core/src/test/java/org/apache/camel/management/ManagedThrottlerTest.java
+index b88fb3b..30a95d8 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/ManagedThrottlerTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/ManagedThrottlerTest.java
+@@ -63,7 +63,7 @@
+         Long last = (Long) mbeanServer.getAttribute(routeName, "LastProcessingTime");
+         Long total = (Long) mbeanServer.getAttribute(routeName, "TotalProcessingTime");
+ 
+-        assertTrue("Should take at most 1.5 sec: was " + total, total < 1500);
++        assertTrue("Should take at most 2.0 sec: was " + total, total < 2000);
+ 
+         // change the throttler using JMX
+         mbeanServer.setAttribute(throttlerName, new Attribute("MaximumRequestsPerPeriod", (long) 2));
+diff --git a/camel-core/src/test/java/org/apache/camel/management/ManagedThrottlerTest.java b/camel-core/src/test/java/org/apache/camel/management/ManagedThrottlerTest.java
+index b88fb3b..30a95d8 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/ManagedThrottlerTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/ManagedThrottlerTest.java
+@@ -63,7 +63,7 @@
+         Long last = (Long) mbeanServer.getAttribute(routeName, "LastProcessingTime");
+         Long total = (Long) mbeanServer.getAttribute(routeName, "TotalProcessingTime");
+ 
+-        assertTrue("Should take at most 1.5 sec: was " + total, total < 1500);
++        assertTrue("Should take at most 2.0 sec: was " + total, total < 2000);
+ 
+         // change the throttler using JMX
+         mbeanServer.setAttribute(throttlerName, new Attribute("MaximumRequestsPerPeriod", (long) 2));

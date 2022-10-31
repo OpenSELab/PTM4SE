@@ -1,0 +1,22 @@
+diff --git a/EssentialsGroupManager/src/org/anjocaido/groupmanager/GlobalGroups.java b/EssentialsGroupManager/src/org/anjocaido/groupmanager/GlobalGroups.java
+index a84666b..cc8181d 100644
+--- a/EssentialsGroupManager/src/org/anjocaido/groupmanager/GlobalGroups.java
++++ b/EssentialsGroupManager/src/org/anjocaido/groupmanager/GlobalGroups.java
+@@ -161,7 +161,7 @@
+ 					Object element;
+ 
+ 					// Permission nodes
+-					element = GGroups.get("groups." + groupName + ".permissions");
++					element = ((Map<String, Object>)allGroups.get(groupName)).get("permissions");
+ 
+ 					if (element != null)
+ 						if (element instanceof List) {
+@@ -180,7 +180,7 @@
+ 							throw new IllegalArgumentException("Unknown type of permission node for global group:  " + groupName);
+ 
+ 					// Info nodes
+-					element = GGroups.get("groups." + groupName + ".info");
++					element = ((Map<String, Object>)allGroups.get(groupName)).get("info");
+ 
+ 					if (element != null)
+ 						if (element instanceof MemorySection) {

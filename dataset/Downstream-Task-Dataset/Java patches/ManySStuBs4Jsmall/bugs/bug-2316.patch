@@ -1,0 +1,39 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+index 56b203f..04e4857 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+@@ -160,7 +160,7 @@
+ 
+         boolean webSocketEnabled = false;
+         if (req.getHeaders("Connection") != null && req.getHeaders("Connection").hasMoreElements()) {
+-            String[] e = req.getHeaders("Connection").nextElement().split(",");
++            String[] e = req.getHeaders("Connection").nextElement().toString().split(",");
+             for (String upgrade : e) {
+                 if (upgrade.equalsIgnoreCase("Upgrade")) {
+                     webSocketEnabled = true;
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+index 65fe792..39751aa 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+@@ -275,7 +275,7 @@
+         if (!event.isResumedOnTimeout()) {
+ 
+             if (req.getHeaders("Connection") != null && req.getHeaders("Connection").hasMoreElements()) {
+-                String[] e = req.getHeaders("Connection").nextElement().split(",");
++                String[] e = req.getHeaders("Connection").nextElement().toString().split(",");
+                 for (String upgrade : e) {
+                     if (upgrade.trim().equalsIgnoreCase(WEBSOCKET_UPGRADE)) {
+                         if (writeHeaders && !cometSupport.supportWebSocket()) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+index 56b203f..04e4857 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+@@ -160,7 +160,7 @@
+ 
+         boolean webSocketEnabled = false;
+         if (req.getHeaders("Connection") != null && req.getHeaders("Connection").hasMoreElements()) {
+-            String[] e = req.getHeaders("Connection").nextElement().split(",");
++            String[] e = req.getHeaders("Connection").nextElement().toString().split(",");
+             for (String upgrade : e) {
+                 if (upgrade.equalsIgnoreCase("Upgrade")) {
+                     webSocketEnabled = true;

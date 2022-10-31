@@ -1,0 +1,26 @@
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/timerservice/TimerImpl.java b/ejb3/src/main/java/org/jboss/as/ejb3/timerservice/TimerImpl.java
+index 2ad4c6f..0f9e03d 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/timerservice/TimerImpl.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/timerservice/TimerImpl.java
+@@ -388,7 +388,7 @@
+      * @return
+      */
+     public boolean isActive() {
+-        return timerService.isStarted() && !isCanceled() && !isExpired() && timerService.isScheduled(getId());
++        return timerService.isStarted() && !isCanceled() && !isExpired() && (timerService.isScheduled(getId()) || timerState == TimerState.CREATED);
+     }
+ 
+     /**
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/timerservice/TimerImpl.java b/ejb3/src/main/java/org/jboss/as/ejb3/timerservice/TimerImpl.java
+index 2ad4c6f..0f9e03d 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/timerservice/TimerImpl.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/timerservice/TimerImpl.java
+@@ -388,7 +388,7 @@
+      * @return
+      */
+     public boolean isActive() {
+-        return timerService.isStarted() && !isCanceled() && !isExpired() && timerService.isScheduled(getId());
++        return timerService.isStarted() && !isCanceled() && !isExpired() && (timerService.isScheduled(getId()) || timerState == TimerState.CREATED);
+     }
+ 
+     /**

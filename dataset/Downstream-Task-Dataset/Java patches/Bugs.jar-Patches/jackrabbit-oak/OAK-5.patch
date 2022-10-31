@@ -1,0 +1,15 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/ContentMirrorStoreStrategy.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/ContentMirrorStoreStrategy.java
+index 433bac3..97a3408 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/ContentMirrorStoreStrategy.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/ContentMirrorStoreStrategy.java
+@@ -164,7 +164,9 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+             int i = 0;
+             for (String p : values) {
+                 if (count > max && i > 3) {
+-                    count = count / size / i;
++                    // the total count is extrapolated from the the number 
++                    // of values counted so far to the total number of values
++                    count = count * size / i;
+                     break;
+                 }
+                 NodeState s = index.getChildNode(p);

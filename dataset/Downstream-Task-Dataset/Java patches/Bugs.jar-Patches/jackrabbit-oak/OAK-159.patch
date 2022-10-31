@@ -1,0 +1,31 @@
+diff --git a/oak-commons/src/main/java/org/apache/jackrabbit/oak/commons/PathUtils.java b/oak-commons/src/main/java/org/apache/jackrabbit/oak/commons/PathUtils.java
+index 6201804..883f197 100644
+--- a/oak-commons/src/main/java/org/apache/jackrabbit/oak/commons/PathUtils.java
++++ b/oak-commons/src/main/java/org/apache/jackrabbit/oak/commons/PathUtils.java
+@@ -16,10 +16,11 @@
+  */
+ package org.apache.jackrabbit.oak.commons;
+ 
+-import javax.annotation.Nonnull;
+ import java.util.Iterator;
+ import java.util.NoSuchElementException;
+ 
++import javax.annotation.Nonnull;
++
+ /**
+  * Utility methods to parse a path.
+  * <p/>
+@@ -288,7 +289,12 @@ public class PathUtils {
+         if (ancestor.isEmpty() || path.isEmpty()) {
+             return false;
+         }
+-        if (!denotesRoot(ancestor)) {
++        if (denotesRoot(ancestor)) {
++            if (denotesRoot(path)) {
++                return false;
++            }
++        }
++        else {
+             ancestor += "/";
+         }
+         return path.startsWith(ancestor);

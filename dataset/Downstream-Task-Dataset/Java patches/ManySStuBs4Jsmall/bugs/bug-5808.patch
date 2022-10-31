@@ -1,0 +1,14 @@
+diff --git a/components/camel-spring/src/test/java/org/apache/camel/spring/xml/SpringXmlRouteBuilderTest.java b/components/camel-spring/src/test/java/org/apache/camel/spring/xml/SpringXmlRouteBuilderTest.java
+index 45004c6..429d342 100644
+--- a/components/camel-spring/src/test/java/org/apache/camel/spring/xml/SpringXmlRouteBuilderTest.java
++++ b/components/camel-spring/src/test/java/org/apache/camel/spring/xml/SpringXmlRouteBuilderTest.java
+@@ -100,7 +100,8 @@
+ 
+     protected List<Route> getRoutesFromContext(String classpathConfigFile) {
+         applicationContext = new ClassPathXmlApplicationContext(classpathConfigFile);
+-        SpringCamelContext context = applicationContext.getBeansOfType(SpringCamelContext.class).values().iterator().next();
++        // must type cast to work with Spring 2.5.x
++        SpringCamelContext context = (SpringCamelContext) applicationContext.getBeansOfType(SpringCamelContext.class).values().iterator().next();
+         assertNotNull("No Camel Context in file: " + classpathConfigFile, context);
+         List<Route> routes = context.getRoutes();
+         assertNotNull("No routes available for context: " + context.getName() + " in file: " + classpathConfigFile, routes);

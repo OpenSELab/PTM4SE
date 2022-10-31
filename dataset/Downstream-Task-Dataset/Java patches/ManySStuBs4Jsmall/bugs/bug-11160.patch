@@ -1,0 +1,26 @@
+diff --git a/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java b/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
+index ccec726..7dc2b7d 100644
+--- a/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
++++ b/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
+@@ -106,7 +106,7 @@
+ 
+     private ArgumentParser buildParser(JarLocation location) {
+         final String usage = "java -jar " + location;
+-        final ArgumentParser p = ArgumentParsers.newArgumentParser(usage, false);
++        final ArgumentParser p = ArgumentParsers.newFor(usage).addHelp(false).build();
+         p.version(location.getVersion().orElse(
+                 "No application version detected. Add a Implementation-Version " +
+                         "entry to your JAR's manifest to enable this."));
+diff --git a/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java b/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
+index ccec726..7dc2b7d 100644
+--- a/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
++++ b/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
+@@ -106,7 +106,7 @@
+ 
+     private ArgumentParser buildParser(JarLocation location) {
+         final String usage = "java -jar " + location;
+-        final ArgumentParser p = ArgumentParsers.newArgumentParser(usage, false);
++        final ArgumentParser p = ArgumentParsers.newFor(usage).addHelp(false).build();
+         p.version(location.getVersion().orElse(
+                 "No application version detected. Add a Implementation-Version " +
+                         "entry to your JAR's manifest to enable this."));

@@ -1,0 +1,32 @@
+diff --git a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/dbsync/LogEventConvert.java b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/dbsync/LogEventConvert.java
+index 603f454..cc092d4 100644
+--- a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/dbsync/LogEventConvert.java
++++ b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/dbsync/LogEventConvert.java
+@@ -623,8 +623,9 @@
+                 if (column.getIsNull() && newValue == null) {
+                     // 如果全是null
+                     return false;
+-                } else if (newValue != null && column.getValue().equals(newValue)) {
+-                    // 如果不围null，并且相等
++                } else if (newValue != null && (!column.getIsNull() && column.getValue().equals(newValue))) {
++                    // fixed issue #135, old column is Null
++                    // 如果不为null，并且相等
+                     return false;
+                 }
+             }
+diff --git a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/dbsync/LogEventConvert.java b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/dbsync/LogEventConvert.java
+index 603f454..cc092d4 100644
+--- a/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/dbsync/LogEventConvert.java
++++ b/parse/src/main/java/com/alibaba/otter/canal/parse/inbound/mysql/dbsync/LogEventConvert.java
+@@ -623,8 +623,9 @@
+                 if (column.getIsNull() && newValue == null) {
+                     // 如果全是null
+                     return false;
+-                } else if (newValue != null && column.getValue().equals(newValue)) {
+-                    // 如果不围null，并且相等
++                } else if (newValue != null && (!column.getIsNull() && column.getValue().equals(newValue))) {
++                    // fixed issue #135, old column is Null
++                    // 如果不为null，并且相等
+                     return false;
+                 }
+             }

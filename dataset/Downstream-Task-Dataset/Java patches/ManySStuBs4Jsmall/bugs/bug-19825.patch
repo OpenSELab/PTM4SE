@@ -1,0 +1,26 @@
+diff --git a/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/calc/MoonCalc.java b/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/calc/MoonCalc.java
+index ea30a13..1e52695 100644
+--- a/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/calc/MoonCalc.java
++++ b/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/calc/MoonCalc.java
+@@ -144,7 +144,7 @@
+ 		}
+ 
+ 		double moonJd = Math.floor(DateTimeUtils.midnightDateToJulianDate(calendar)) - 2400000.0;
+-		moonJd -= ((calendar.getTimeZone().getRawOffset() + calendar.getTimeZone().getDSTSavings()) / 60000.0) / 1440.0;
++		moonJd -= ((calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET)) / 60000.0) / 1440.0;
+ 
+ 		double sphi = SN(phi);
+ 		double cphi = CS(phi);
+diff --git a/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/calc/MoonCalc.java b/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/calc/MoonCalc.java
+index ea30a13..1e52695 100644
+--- a/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/calc/MoonCalc.java
++++ b/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/calc/MoonCalc.java
+@@ -144,7 +144,7 @@
+ 		}
+ 
+ 		double moonJd = Math.floor(DateTimeUtils.midnightDateToJulianDate(calendar)) - 2400000.0;
+-		moonJd -= ((calendar.getTimeZone().getRawOffset() + calendar.getTimeZone().getDSTSavings()) / 60000.0) / 1440.0;
++		moonJd -= ((calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET)) / 60000.0) / 1440.0;
+ 
+ 		double sphi = SN(phi);
+ 		double cphi = CS(phi);

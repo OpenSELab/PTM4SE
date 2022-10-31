@@ -1,0 +1,14 @@
+diff --git a/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/autoconfigure/SpringIntegrationCompilerAutoConfiguration.java b/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/autoconfigure/SpringIntegrationCompilerAutoConfiguration.java
+index 75e930b..256f407 100644
+--- a/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/autoconfigure/SpringIntegrationCompilerAutoConfiguration.java
++++ b/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/autoconfigure/SpringIntegrationCompilerAutoConfiguration.java
+@@ -32,7 +32,8 @@
+ 
+ 	@Override
+ 	public boolean matches(ClassNode classNode) {
+-		return AstUtils.hasAtLeastOneAnnotation(classNode, "EnableIntegration");
++		return AstUtils.hasAtLeastOneAnnotation(classNode, "EnableIntegration")
++				|| AstUtils.hasAtLeastOneAnnotation(classNode, "MessageEndpoint");
+ 	}
+ 
+ 	@Override

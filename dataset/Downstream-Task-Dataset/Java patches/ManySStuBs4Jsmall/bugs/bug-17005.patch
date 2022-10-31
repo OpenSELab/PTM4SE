@@ -1,0 +1,47 @@
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/FileWrapper.java b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/FileWrapper.java
+index 50f24f2..6b2332a 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/FileWrapper.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/FileWrapper.java
+@@ -459,10 +459,10 @@
+ 	}
+ 
+ 	/** @throw GdxRuntimeException if this file handle is a {@link FileType#Classpath} or {@link FileType#Internal} file. */
+-	public void mkdirs () {
++	public boolean mkdirs () {
+ 		if (type == FileType.Classpath) throw new GdxRuntimeException("Cannot mkdirs with a classpath file: " + file);
+ 		if (type == FileType.Internal) throw new GdxRuntimeException("Cannot mkdirs with an internal file: " + file);
+-		file().mkdirs();
++		return file().mkdirs();
+ 	}
+ 
+ 	/** Returns true if the file exists. On Android, a {@link FileType#Classpath} or {@link FileType#Internal} handle to a directory
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
+index 63d0d38..ddf304f 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
+@@ -229,7 +229,7 @@
+ 			String[] tokens = paths.split(",");
+ 			String path = null;
+ 			for(String token: tokens) {
+-				if(new FileWrapper(token).exists()) {
++				if (new FileWrapper(token).exists() || new FileWrapper(token).mkdirs()) {
+ 					path = token;
+ 				}
+ 			}
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/FileWrapper.java b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/FileWrapper.java
+index 50f24f2..6b2332a 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/FileWrapper.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/FileWrapper.java
+@@ -459,10 +459,10 @@
+ 	}
+ 
+ 	/** @throw GdxRuntimeException if this file handle is a {@link FileType#Classpath} or {@link FileType#Internal} file. */
+-	public void mkdirs () {
++	public boolean mkdirs () {
+ 		if (type == FileType.Classpath) throw new GdxRuntimeException("Cannot mkdirs with a classpath file: " + file);
+ 		if (type == FileType.Internal) throw new GdxRuntimeException("Cannot mkdirs with an internal file: " + file);
+-		file().mkdirs();
++		return file().mkdirs();
+ 	}
+ 
+ 	/** Returns true if the file exists. On Android, a {@link FileType#Classpath} or {@link FileType#Internal} handle to a directory

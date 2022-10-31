@@ -1,0 +1,26 @@
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index 8543df8..3ed3664 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -4687,7 +4687,7 @@
+ 				{
+ 				Symbol field = (Symbol) s.first();
+ 				Class k = tagClass(tagOf(field));
+-				Object val = Reflector.getInstanceField(value, field.name);
++				Object val = Reflector.getInstanceField(value, munge(field.name));
+ 				emitValue(val, gen);
+ 
+ 				if(k.isPrimitive())
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index 8543df8..3ed3664 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -4687,7 +4687,7 @@
+ 				{
+ 				Symbol field = (Symbol) s.first();
+ 				Class k = tagClass(tagOf(field));
+-				Object val = Reflector.getInstanceField(value, field.name);
++				Object val = Reflector.getInstanceField(value, munge(field.name));
+ 				emitValue(val, gen);
+ 
+ 				if(k.isPrimitive())

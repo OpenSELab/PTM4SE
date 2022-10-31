@@ -1,0 +1,16 @@
+diff --git a/core/src/main/java/org/apache/logging/log4j/core/config/BaseConfiguration.java b/core/src/main/java/org/apache/logging/log4j/core/config/BaseConfiguration.java
+index dcdb988..8821f76 100644
+--- a/core/src/main/java/org/apache/logging/log4j/core/config/BaseConfiguration.java
++++ b/core/src/main/java/org/apache/logging/log4j/core/config/BaseConfiguration.java
+@@ -206,9 +206,9 @@ public class BaseConfiguration extends AbstractFilterable implements Configurati
+             setToDefault();
+             return;
+         } else if (!setRoot) {
+-            LOGGER.warn("No Root logger was configured, using default");
++            LOGGER.warn("No Root logger was configured, creating default ERROR-level Root logger with Console appender");
+             setToDefault();
+-            return;
++            // return; // LOG4J2-219: creating default root=ok, but don't exclude configured Loggers
+         }
+ 
+         for (final Map.Entry<String, LoggerConfig> entry : loggers.entrySet()) {

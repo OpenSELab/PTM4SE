@@ -1,0 +1,466 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java b/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java
+index 038dd3f..721974d 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java
+@@ -332,8 +332,8 @@
+             + "fails to construct aggregation for the partition "),
+   ANALYZE_TABLE_PARTIALSCAN_AUTOGATHER(10233, "Analyze partialscan is not allowed " +
+             "if hive.stats.autogather is set to false"),
+-  PARTITION_VALUE_NOT_CONTINUOUS(10234, "Parition values specifed are not continuous." +
+-            " A subpartition value is specified without specififying the parent partition's value"),
++  PARTITION_VALUE_NOT_CONTINUOUS(10234, "Partition values specified are not continuous." +
++            " A subpartition value is specified without specifying the parent partition's value"),
+   TABLES_INCOMPATIBLE_SCHEMAS(10235, "Tables have incompatible schemas and their partitions " +
+             " cannot be exchanged."),
+ 
+@@ -440,7 +440,7 @@
+   CANNOT_DROP_INDEX(10317, "Error while dropping index"),
+   INVALID_AST_TREE(10318, "Internal error : Invalid AST"),
+   ERROR_SERIALIZE_METASTORE(10319, "Error while serializing the metastore objects"),
+-  IO_ERROR(10320, "Error while peforming IO operation "),
++  IO_ERROR(10320, "Error while performing IO operation "),
+   ERROR_SERIALIZE_METADATA(10321, "Error while serializing the metadata"),
+   INVALID_LOAD_TABLE_FILE_WORK(10322, "Invalid Load Table Work or Load File Work"),
+   CLASSPATH_ERROR(10323, "Classpath error"),
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/ArchiveUtils.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/ArchiveUtils.java
+index be38b9a..6381a21 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/ArchiveUtils.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/ArchiveUtils.java
+@@ -87,7 +87,7 @@
+         }
+         if (!itrPsKeys.next().toLowerCase().equals(
+             fs.getName().toLowerCase())) {
+-          throw new HiveException("Invalid partition specifiation: "
++          throw new HiveException("Invalid partition specification: "
+               + partSpec);
+         }
+         prefixFields.add(fs);
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
+index b12fa9b..2bc90a5 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
+@@ -992,7 +992,7 @@
+ 
+       break;
+     default:
+-      console.printError("Unsupported Alter commnad");
++      console.printError("Unsupported Alter command");
+       return 1;
+     }
+ 
+@@ -1691,7 +1691,7 @@
+         if (ret != 0) {
+           throw new HiveException("Error while copying files from archive, return code=" + ret);
+         } else {
+-          console.printInfo("Succefully Copied " + copySource + " to " + copyDest);
++          console.printInfo("Successfully Copied " + copySource + " to " + copyDest);
+         }
+ 
+         console.printInfo("Moving " + tmpPath + " to " + intermediateExtractedDir);
+@@ -2633,7 +2633,7 @@
+     os.write(separator);
+     os.writeBytes("Transaction ID");
+     os.write(separator);
+-    os.writeBytes("Last Hearbeat");
++    os.writeBytes("Last Heartbeat");
+     os.write(separator);
+     os.writeBytes("Acquired At");
+     os.write(separator);
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
+index 5ef901f..28d4789 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
+@@ -489,7 +489,7 @@
+     this.maxPartitions = dpCtx.getMaxPartitionsPerNode();
+ 
+     assert numDynParts == dpColNames.size()
+-        : "number of dynamic paritions should be the same as the size of DP mapping";
++        : "number of dynamic partitions should be the same as the size of DP mapping";
+ 
+     if (dpColNames != null && dpColNames.size() > 0) {
+       this.bDynParts = true;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/ReduceSinkOperator.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/ReduceSinkOperator.java
+index 4eea6b9..9f8acc9 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/ReduceSinkOperator.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/ReduceSinkOperator.java
+@@ -322,7 +322,7 @@
+         if (conf.getWriteType() == AcidUtils.Operation.UPDATE ||
+             conf.getWriteType() == AcidUtils.Operation.DELETE) {
+           assert rowInspector instanceof StructObjectInspector :
+-              "Exptected rowInspector to be instance of StructObjectInspector but it is a " +
++              "Expected rowInspector to be instance of StructObjectInspector but it is a " +
+                   rowInspector.getClass().getName();
+           acidRowInspector = (StructObjectInspector)rowInspector;
+           // The record identifier is always in the first column
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/Registry.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/Registry.java
+index c274933..b4d35a4 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/Registry.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/Registry.java
+@@ -510,7 +510,7 @@
+       if (prev != null) {
+         if (isBuiltInFunc(prev.getFunctionClass())) {
+           throw new RuntimeException("Function " + functionName + " is hive builtin function, " +
+-              "which cannot be overriden.");
++              "which cannot be overridden.");
+         }
+         prev.discarded();
+       }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/SkewJoinHandler.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/SkewJoinHandler.java
+index 7fad34f..cec7c1a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/SkewJoinHandler.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/SkewJoinHandler.java
+@@ -233,7 +233,7 @@
+       // right now we assume that the group by is an ArrayList object. It may
+       // change in future.
+       if (!(dummyKey instanceof List)) {
+-        throw new RuntimeException("Bug in handle skew key in a seperate job.");
++        throw new RuntimeException("Bug in handle skew key in a separate job.");
+       }
+ 
+       skewKeyInCurrentGroup = true;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/Utilities.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/Utilities.java
+index 122df9f..0f9384a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/Utilities.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/Utilities.java
+@@ -3379,7 +3379,7 @@
+       }
+     }
+     throw new IllegalStateException("Failed to create a temp dir under "
+-    + baseDir + " Giving up after " + MAX_ATTEMPS + " attemps");
++    + baseDir + " Giving up after " + MAX_ATTEMPS + " attempts");
+ 
+   }
+ 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/persistence/MapJoinEagerRowContainer.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/persistence/MapJoinEagerRowContainer.java
+index bb3c4be..4b55778 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/persistence/MapJoinEagerRowContainer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/persistence/MapJoinEagerRowContainer.java
+@@ -161,7 +161,7 @@
+       ++numRowsWritten;      
+     }
+     if(numRows != rowCount()) {
+-      throw new ConcurrentModificationException("Values was modifified while persisting");
++      throw new ConcurrentModificationException("Values was modified while persisting");
+     }
+     if(numRowsWritten != numRows) {
+       throw new IllegalStateException("Expected to write " + numRows + " but wrote " + numRowsWritten);
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/persistence/MapJoinTableContainerSerDe.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/persistence/MapJoinTableContainerSerDe.java
+index 83a4612..9fd5611 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/persistence/MapJoinTableContainerSerDe.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/persistence/MapJoinTableContainerSerDe.java
+@@ -312,7 +312,7 @@
+           clazz.getDeclaredConstructor(Map.class);
+       return constructor.newInstance(metaData);
+     } catch (Exception e) {
+-      String msg = "Error while attemping to create table container" +
++      String msg = "Error while attempting to create table container" +
+           " of type: " + name + ", with metaData: " + metaData;
+       throw new HiveException(msg, e);
+     }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/io/orc/encoded/EncodedReaderImpl.java b/ql/src/java/org/apache/hadoop/hive/ql/io/orc/encoded/EncodedReaderImpl.java
+index 0c5b675..edf3218 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/io/orc/encoded/EncodedReaderImpl.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/io/orc/encoded/EncodedReaderImpl.java
+@@ -643,7 +643,7 @@
+       LOG.error("Failed " + (isCompressed ? "" : "un") + " compressed read; cOffset " + cOffset
+           + ", endCOffset " + endCOffset + ", streamOffset " + streamOffset
+           + ", unlockUntilCOffset " + unlockUntilCOffset + "; ranges passed in "
+-          + RecordReaderUtils.stringifyDiskRanges(start) + "; ranges passed to prepate "
++          + RecordReaderUtils.stringifyDiskRanges(start) + "; ranges passed to prepare "
+           + RecordReaderUtils.stringifyDiskRanges(current)); // Don't log exception here.
+       throw (ex instanceof IOException) ? (IOException)ex : new IOException(ex);
+     }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/lockmgr/DbTxnManager.java b/ql/src/java/org/apache/hadoop/hive/ql/lockmgr/DbTxnManager.java
+index 203eae5..a79c106 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/lockmgr/DbTxnManager.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/lockmgr/DbTxnManager.java
+@@ -454,7 +454,7 @@
+           Hive db;
+           try {
+             db = Hive.get(conf);
+-            // Create a new threadlocal synchronized metastore client for use in hearbeater threads.
++            // Create a new threadlocal synchronized metastore client for use in heartbeater threads.
+             // This makes the concurrent use of heartbeat thread safe, and won't cause transaction
+             // abort due to a long metastore client call blocking the heartbeat call.
+             heartbeaterClient = new SynchronizedMetaStoreClient(db.getMSC());
+@@ -465,7 +465,7 @@
+           }
+           // Increment the threadlocal metastore client count
+           if (heartbeaterMSClientCount.incrementAndGet() >= heartbeaterThreadPoolSize) {
+-            LOG.warn("The number of hearbeater metastore clients - + "
++            LOG.warn("The number of heartbeater metastore clients - + "
+                 + heartbeaterMSClientCount.get() + ", has exceeded the max limit - "
+                 + heartbeaterThreadPoolSize);
+           }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ConstantPropagateProcCtx.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ConstantPropagateProcCtx.java
+index 89de234..5102d81 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ConstantPropagateProcCtx.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ConstantPropagateProcCtx.java
+@@ -236,7 +236,7 @@
+         }
+       }
+     }
+-    LOG.debug("Offerring constants " + constants.keySet() + " to operator " + op.toString());
++    LOG.debug("Offering constants " + constants.keySet() + " to operator " + op.toString());
+     return constants;
+   }
+ 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ConstantPropagateProcFactory.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ConstantPropagateProcFactory.java
+index 8d7b4ab..517ce31 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ConstantPropagateProcFactory.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ConstantPropagateProcFactory.java
+@@ -357,7 +357,7 @@
+       // Don't evaluate nondeterministic function since the value can only calculate during runtime.
+       if (!isDeterministicUdf(udf, newExprs)) {
+         if (LOG.isDebugEnabled()) {
+-          LOG.debug("Function " + udf.getClass() + " is undeterministic. Don't evalulate immediately.");
++          LOG.debug("Function " + udf.getClass() + " is undeterministic. Don't evaluate immediately.");
+         }
+         ((ExprNodeGenericFuncDesc) desc).setChildren(newExprs);
+         return desc;
+@@ -990,7 +990,7 @@
+       return new ExprNodeConstantDesc(o).setFoldedFromVal(constStr);
+     } catch (HiveException e) {
+       LOG.error("Evaluation function " + udf.getClass()
+-          + " failed in Constant Propagatation Optimizer.");
++          + " failed in Constant Propagation Optimizer.");
+       throw new RuntimeException(e);
+     }
+   }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/GenMapRedUtils.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/GenMapRedUtils.java
+index 76204e8..24d1681 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/GenMapRedUtils.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/GenMapRedUtils.java
+@@ -558,7 +558,7 @@
+           LOG.info("Skip optimization to reduce input size of 'limit'");
+           parseCtx.getGlobalLimitCtx().disableOpt();
+         } else if (parts.isEmpty()) {
+-          LOG.info("Empty input: skip limit optimiztion");
++          LOG.info("Empty input: skip limit optimization");
+         } else {
+           LOG.info("Try to reduce input size for 'limit' " +
+               "sizeNeeded: " + sizeNeeded +
+@@ -1479,7 +1479,7 @@
+     } else if (mvWork.getLoadFileWork() != null) {
+       statsWork = new StatsWork(mvWork.getLoadFileWork());
+     }
+-    assert statsWork != null : "Error when genereting StatsTask";
++    assert statsWork != null : "Error when generating StatsTask";
+ 
+     statsWork.setSourceTask(currTask);
+     statsWork.setStatsReliable(hconf.getBoolVar(ConfVars.HIVE_STATS_RELIABLE));
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/translator/RexNodeConverter.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/translator/RexNodeConverter.java
+index d36eb0b..8d2e535 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/translator/RexNodeConverter.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/translator/RexNodeConverter.java
+@@ -491,7 +491,7 @@
+       }
+ 
+       if (noInp > 1)
+-        throw new RuntimeException("Ambigous column mapping");
++        throw new RuntimeException("Ambiguous column mapping");
+     }
+ 
+     return ctxLookingFor;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/correlation/QueryPlanTreeTransformation.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/correlation/QueryPlanTreeTransformation.java
+index c8aa48c..6841503 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/correlation/QueryPlanTreeTransformation.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/correlation/QueryPlanTreeTransformation.java
+@@ -229,7 +229,7 @@
+               handledRSs.add((ReduceSinkOperator)op);
+               parentsOfMux.add(CorrelationUtilities.getSingleParent(op, true));
+             } else {
+-              throw new SemanticException("An slibing of ReduceSinkOperator is nethier a " +
++              throw new SemanticException("A sibling of ReduceSinkOperator is neither a " +
+                   "DemuxOperator nor a ReduceSinkOperator");
+             }
+           }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/listbucketingpruner/ListBucketingPrunerUtils.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/listbucketingpruner/ListBucketingPrunerUtils.java
+index ccb75eb..4d3e74e 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/listbucketingpruner/ListBucketingPrunerUtils.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/listbucketingpruner/ListBucketingPrunerUtils.java
+@@ -247,7 +247,7 @@
+     String constantValueInFilter = ((ExprNodeConstantDesc) right).getValue().toString();
+     assert (skewedCols.contains(columnNameInFilter)) : "List bucketing pruner has a column name "
+         + columnNameInFilter
+-        + " which is not found in the partiton's skewed column list";
++        + " which is not found in the partition's skewed column list";
+     int index = skewedCols.indexOf(columnNameInFilter);
+     assert (index < cell.size()) : "GenericUDFOPEqual has a ExprNodeColumnDesc ("
+         + columnNameInFilter + ") which is " + index + "th" + "skewed column. "
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/physical/Vectorizer.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/physical/Vectorizer.java
+index 108c4e6..468ccaf 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/physical/Vectorizer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/physical/Vectorizer.java
+@@ -1935,7 +1935,7 @@
+     } catch (Exception e) {
+       // We should have already attempted to vectorize in validateAggregationDesc.
+       if (LOG.isDebugEnabled()) {
+-        LOG.debug("Vectorization of aggreation should have succeeded ", e);
++        LOG.debug("Vectorization of aggregation should have succeeded ", e);
+       }
+       return new Pair<Boolean,Boolean>(false, false);
+     }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ppr/PartitionPruner.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ppr/PartitionPruner.java
+index c58210b..655bd8a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ppr/PartitionPruner.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/ppr/PartitionPruner.java
+@@ -170,7 +170,7 @@
+           throws SemanticException {
+ 
+     if (LOG.isTraceEnabled()) {
+-      LOG.trace("Started pruning partiton");
++      LOG.trace("Started pruning partition");
+       LOG.trace("dbname = " + tab.getDbName());
+       LOG.trace("tabname = " + tab.getTableName());
+       LOG.trace("prune Expression = " + (prunerExpr == null ? "" : prunerExpr));
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/CalcitePlanner.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/CalcitePlanner.java
+index 10639de..bf79e95 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/CalcitePlanner.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/CalcitePlanner.java
+@@ -3333,7 +3333,7 @@
+         } else if (ParseUtils.containsTokenOfType(expr, HiveParser.TOK_FUNCTIONDI)
+             && !(srcRel instanceof HiveAggregate)) {
+           // Likely a malformed query eg, select hash(distinct c1) from t1;
+-          throw new CalciteSemanticException("Distinct without an aggreggation.",
++          throw new CalciteSemanticException("Distinct without an aggregation.",
+               UnsupportedFeature.Distinct_without_an_aggreggation);
+         } else {
+           // Case when this is an expression
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/DDLSemanticAnalyzer.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/DDLSemanticAnalyzer.java
+index 3f58130..050522f 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/DDLSemanticAnalyzer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/DDLSemanticAnalyzer.java
+@@ -1637,7 +1637,7 @@
+       if (!((inputFormatClass.equals(RCFileInputFormat.class) ||
+           (inputFormatClass.equals(OrcInputFormat.class))))) {
+         throw new SemanticException(
+-            "Only RCFile and ORCFile Formats are supportted right now.");
++            "Only RCFile and ORCFile Formats are supported right now.");
+       }
+       mergeDesc.setInputFormatClass(inputFormatClass);
+ 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
+index a861263..5ff74f2 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
+@@ -7174,7 +7174,7 @@
+     } catch (HiveException e) {
+       throw new SemanticException(e.getMessage());
+     }
+-    LOG.info("Generate an operator pipleline to autogather column stats for table " + tableName
++    LOG.info("Generate an operator pipeline to autogather column stats for table " + tableName
+         + " in query " + ctx.getCmd());
+     ColumnStatsAutoGatherContext columnStatsAutoGatherContext = null;
+     columnStatsAutoGatherContext = new ColumnStatsAutoGatherContext(this, conf, curr, table, partSpec, isInsertInto, ctx);
+@@ -11824,7 +11824,7 @@
+         }
+       } catch (HiveException e) {
+         // should not occur since second parameter to getTableWithQN is false
+-        throw new IllegalStateException("Unxpected Exception thrown: " + e.getMessage(), e);
++        throw new IllegalStateException("Unexpected Exception thrown: " + e.getMessage(), e);
+       }
+     }
+ 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/TaskCompiler.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/TaskCompiler.java
+index 8ce8ea3..e8b003e 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/TaskCompiler.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/TaskCompiler.java
+@@ -202,7 +202,7 @@
+       int fetchLimit = HiveConf.getIntVar(conf, HiveConf.ConfVars.HIVELIMITOPTMAXFETCH);
+       if (globalLimitCtx.isEnable() && globalLimitCtx.getGlobalLimit() > fetchLimit) {
+         LOG.info("For FetchTask, LIMIT " + globalLimitCtx.getGlobalLimit() + " > " + fetchLimit
+-            + ". Doesn't qualify limit optimiztion.");
++            + ". Doesn't qualify limit optimization.");
+         globalLimitCtx.disableOpt();
+ 
+       }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/TezCompiler.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/TezCompiler.java
+index cd0b588..cdb9e1b 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/TezCompiler.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/TezCompiler.java
+@@ -350,7 +350,7 @@
+     opRules.put(new RuleRegExp("No more walking on ReduceSink-MapJoin",
+         MapJoinOperator.getOperatorName() + "%"), new ReduceSinkMapJoinProc());
+ 
+-    opRules.put(new RuleRegExp("Recoginze a Sorted Merge Join operator to setup the right edge and"
++    opRules.put(new RuleRegExp("Recognize a Sorted Merge Join operator to setup the right edge and"
+         + " stop traversing the DummyStore-MapJoin", CommonMergeJoinOperator.getOperatorName()
+         + "%"), new MergeJoinProc());
+ 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/plan/FetchWork.java b/ql/src/java/org/apache/hadoop/hive/ql/plan/FetchWork.java
+index 2ecb6f8..4430107 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/plan/FetchWork.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/plan/FetchWork.java
+@@ -218,7 +218,7 @@
+     if (partDir != null && partDir.size() > 1) {
+       if (partDesc == null || partDir.size() != partDesc.size()) {
+         throw new RuntimeException(
+-            "Partiton Directory list size doesn't match Partition Descriptor list size");
++            "Partition Directory list size doesn't match Partition Descriptor list size");
+       }
+ 
+       // Construct a sorted Map of Partition Dir - Partition Descriptor; ordering is based on
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/security/authorization/plugin/SettableConfigUpdater.java b/ql/src/java/org/apache/hadoop/hive/ql/security/authorization/plugin/SettableConfigUpdater.java
+index f12cd51..3d8b0cf 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/security/authorization/plugin/SettableConfigUpdater.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/security/authorization/plugin/SettableConfigUpdater.java
+@@ -47,7 +47,7 @@
+     if(whiteListParamsStr == null || whiteListParamsStr.trim().isEmpty()) {
+       throw new HiveAuthzPluginException("Configuration parameter "
+           + ConfVars.HIVE_AUTHORIZATION_SQL_STD_AUTH_CONFIG_WHITELIST.varname
+-          + " is not iniatialized.");
++          + " is not initialized.");
+     }
+ 
+     // append regexes that user wanted to add
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDFStringToMap.java b/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDFStringToMap.java
+index 093f2a3..501b0b8 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDFStringToMap.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDFStringToMap.java
+@@ -42,7 +42,7 @@
+  */
+ @Description(name = "str_to_map", value = "_FUNC_(text, delimiter1, delimiter2) - "
+     + "Creates a map by parsing text ", extended = "Split text into key-value pairs"
+-    + " using two delimiters. The first delimiter seperates pairs, and the"
++    + " using two delimiters. The first delimiter separates pairs, and the"
+     + " second delimiter sperates key and value. If only one parameter is given, default"
+     + " delimiters are used: ',' as delimiter1 and '=' as delimiter2.")
+ public class GenericUDFStringToMap extends GenericUDF {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDFTrunc.java b/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDFTrunc.java
+index 036d112..a95248f 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDFTrunc.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDFTrunc.java
+@@ -126,7 +126,7 @@
+         return initializeNumber(arguments);
+       } else {
+         throw new UDFArgumentException(
+-            "Only primitive type arguments are accepted, when arguments lenght is one, got "
++            "Only primitive type arguments are accepted, when arguments length is one, got "
+                 + arguments[1].getTypeName());
+       }
+     }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java b/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java
+index 038dd3f..721974d 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java
+@@ -332,8 +332,8 @@
+             + "fails to construct aggregation for the partition "),
+   ANALYZE_TABLE_PARTIALSCAN_AUTOGATHER(10233, "Analyze partialscan is not allowed " +
+             "if hive.stats.autogather is set to false"),
+-  PARTITION_VALUE_NOT_CONTINUOUS(10234, "Parition values specifed are not continuous." +
+-            " A subpartition value is specified without specififying the parent partition's value"),
++  PARTITION_VALUE_NOT_CONTINUOUS(10234, "Partition values specified are not continuous." +
++            " A subpartition value is specified without specifying the parent partition's value"),
+   TABLES_INCOMPATIBLE_SCHEMAS(10235, "Tables have incompatible schemas and their partitions " +
+             " cannot be exchanged."),
+ 
+@@ -440,7 +440,7 @@
+   CANNOT_DROP_INDEX(10317, "Error while dropping index"),
+   INVALID_AST_TREE(10318, "Internal error : Invalid AST"),
+   ERROR_SERIALIZE_METASTORE(10319, "Error while serializing the metastore objects"),
+-  IO_ERROR(10320, "Error while peforming IO operation "),
++  IO_ERROR(10320, "Error while performing IO operation "),
+   ERROR_SERIALIZE_METADATA(10321, "Error while serializing the metadata"),
+   INVALID_LOAD_TABLE_FILE_WORK(10322, "Invalid Load Table Work or Load File Work"),
+   CLASSPATH_ERROR(10323, "Classpath error"),

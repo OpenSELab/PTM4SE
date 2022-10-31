@@ -1,0 +1,114 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/OpenFileCtx.java b/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/OpenFileCtx.java
+index 0c6be98..707900b 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/OpenFileCtx.java
++++ b/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/OpenFileCtx.java
+@@ -423,7 +423,7 @@
+       if (existantWriteCtx != null) {
+         if (!existantWriteCtx.getReplied()) {
+           if (LOG.isDebugEnabled()) {
+-            LOG.debug("Repeated write request which hasn't be served: xid="
++            LOG.debug("Repeated write request which hasn't been served: xid="
+                 + xid + ", drop it.");
+           }
+         } else {
+@@ -581,7 +581,7 @@
+    * writing, and there is no other threads writing (i.e., asyncStatus is
+    * false), start the writing and set asyncStatus to true.
+    * 
+-   * @return True if the new write is sequencial and we can start writing
++   * @return True if the new write is sequential and we can start writing
+    *         (including the case that there is already a thread writing).
+    */
+   private synchronized boolean checkAndStartWrite(
+@@ -906,7 +906,7 @@
+       long offset = nextOffset.get();
+       if (range.getMin() > offset) {
+         if (LOG.isDebugEnabled()) {
+-          LOG.debug("The next sequencial write has not arrived yet");
++          LOG.debug("The next sequential write has not arrived yet");
+         }
+         processCommits(nextOffset.get()); // handle race
+         this.asyncStatus = false;
+diff --git a/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/RpcProgramNfs3.java b/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/RpcProgramNfs3.java
+index 33dc3a3..0d591d6 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/RpcProgramNfs3.java
++++ b/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/RpcProgramNfs3.java
+@@ -1423,7 +1423,7 @@
+         throw io;
+       }
+       // This happens when startAfter was just deleted
+-      LOG.info("Cookie cound't be found: " + new String(startAfter)
++      LOG.info("Cookie couldn't be found: " + new String(startAfter)
+           + ", do listing from beginning");
+       dlisting = dfsClient
+           .listPaths(dirFileIdPath, HdfsFileStatus.EMPTY_NAME);
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataNode.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataNode.java
+index 441a659..bae363f 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataNode.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataNode.java
+@@ -1752,7 +1752,7 @@
+             + b + " (numBytes=" + b.getNumBytes() + ")"
+             + ", stage=" + stage
+             + ", clientname=" + clientname
+-            + ", targests=" + Arrays.asList(targets));
++            + ", targets=" + Arrays.asList(targets));
+       }
+       this.targets = targets;
+       this.targetStorageTypes = targetStorageTypes;
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/TestFileAppend4.java b/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/TestFileAppend4.java
+index b685a89..32a4196 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/TestFileAppend4.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/TestFileAppend4.java
+@@ -125,7 +125,7 @@
+     while (!recovered && tries-- > 0) {
+       try {
+         out = fs.append(file1);
+-        LOG.info("Successfully opened for appends");
++        LOG.info("Successfully opened for append");
+         recovered = true;
+       } catch (IOException e) {
+         LOG.info("Failed open for append, waiting on lease recovery");
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/namenode/TestStartup.java b/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/namenode/TestStartup.java
+index 5b9a1f8..08fde3e 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/namenode/TestStartup.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/namenode/TestStartup.java
+@@ -456,7 +456,7 @@
+     checkNameSpace(conf);
+ 
+     // read an image compressed in Gzip and store it uncompressed
+-    LOG.info("Read an compressed iamge and store it as uncompressed.");
++    LOG.info("Read a compressed image and store it as uncompressed.");
+     conf.setBoolean(DFSConfigKeys.DFS_IMAGE_COMPRESS_KEY, false);
+     checkNameSpace(conf);
+ 
+diff --git a/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/OpenFileCtx.java b/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/OpenFileCtx.java
+index 0c6be98..707900b 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/OpenFileCtx.java
++++ b/hadoop-hdfs-project/hadoop-hdfs-nfs/src/main/java/org/apache/hadoop/hdfs/nfs/nfs3/OpenFileCtx.java
+@@ -423,7 +423,7 @@
+       if (existantWriteCtx != null) {
+         if (!existantWriteCtx.getReplied()) {
+           if (LOG.isDebugEnabled()) {
+-            LOG.debug("Repeated write request which hasn't be served: xid="
++            LOG.debug("Repeated write request which hasn't been served: xid="
+                 + xid + ", drop it.");
+           }
+         } else {
+@@ -581,7 +581,7 @@
+    * writing, and there is no other threads writing (i.e., asyncStatus is
+    * false), start the writing and set asyncStatus to true.
+    * 
+-   * @return True if the new write is sequencial and we can start writing
++   * @return True if the new write is sequential and we can start writing
+    *         (including the case that there is already a thread writing).
+    */
+   private synchronized boolean checkAndStartWrite(
+@@ -906,7 +906,7 @@
+       long offset = nextOffset.get();
+       if (range.getMin() > offset) {
+         if (LOG.isDebugEnabled()) {
+-          LOG.debug("The next sequencial write has not arrived yet");
++          LOG.debug("The next sequential write has not arrived yet");
+         }
+         processCommits(nextOffset.get()); // handle race
+         this.asyncStatus = false;

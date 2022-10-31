@@ -1,0 +1,74 @@
+diff --git a/components/camel-stream/src/test/java/org/apache/camel/component/stream/SplitStreamFileTest.java b/components/camel-stream/src/test/java/org/apache/camel/component/stream/SplitStreamFileTest.java
+index 19b7e66..f0766b6 100644
+--- a/components/camel-stream/src/test/java/org/apache/camel/component/stream/SplitStreamFileTest.java
++++ b/components/camel-stream/src/test/java/org/apache/camel/component/stream/SplitStreamFileTest.java
+@@ -44,7 +44,7 @@
+         File file = new File("target/stream/splitFile.txt");
+         String result = IOConverter
+                 .toString(file, new DefaultExchange(context));
+-        assertEquals("Get a wrong result", "A\nB\nC\nD\nA\nB\n", result);
++        assertEquals("Get a wrong result", "A" + LS + "B" + LS + "C" + LS + "D" + LS + "A" + LS + "B" + LS, result);
+ 
+     }
+ 
+diff --git a/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesLastStrategyTest.java b/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesLastStrategyTest.java
+index 279bae0..6beb7d3 100644
+--- a/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesLastStrategyTest.java
++++ b/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesLastStrategyTest.java
+@@ -35,11 +35,11 @@
+         assertMockEndpointsSatisfied();
+ 
+         Object result = mock.getExchanges().get(0).getIn().getBody();
+-        assertEquals("Get a wrong result.", "A\nB\nC\nD\n", result);
++        assertEquals("Get a wrong result.", "A" + LS + "B" + LS + "C" + LS + "D" + LS, result);
+ 
+         // we did not have 4 lines but since its the last it was triggered anyway
+         Object result2 = mock.getExchanges().get(1).getIn().getBody();
+-        assertEquals("Get a wrong result.", "E\nF\n", result2);
++        assertEquals("Get a wrong result.", "E" + LS + "F" + LS, result2);
+     }
+ 
+     @Override
+diff --git a/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesStrategyTest.java b/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesStrategyTest.java
+index 10bb6af..dccf3e3 100644
+--- a/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesStrategyTest.java
++++ b/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesStrategyTest.java
+@@ -57,10 +57,10 @@
+         assertMockEndpointsSatisfied();
+ 
+         Object result = mock.getExchanges().get(0).getIn().getBody();
+-        assertEquals("Get a wrong result.", "A\nB\nC\n", result);
++        assertEquals("Get a wrong result.", "A" + LS + "B" + LS + "C" + LS, result);
+ 
+         Object result2 = mock.getExchanges().get(1).getIn().getBody();
+-        assertEquals("Get a wrong result.", "D\nE\nF\n", result2);
++        assertEquals("Get a wrong result.", "D" + LS + "E" + LS + "F" + LS, result2);
+     }
+ 
+     @Override
+diff --git a/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamHeaderTest.java b/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamHeaderTest.java
+index 90c95e3..3233538 100644
+--- a/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamHeaderTest.java
++++ b/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamHeaderTest.java
+@@ -36,7 +36,7 @@
+     public void testStringContent() {
+         template.sendBody("direct:in", "Hello");
+         // StreamProducer appends \n in text mode
+-        assertEquals("Hello\n", sb.toString());
++        assertEquals("Hello" + LS, sb.toString());
+     }
+ 
+     @Test
+diff --git a/components/camel-stream/src/test/java/org/apache/camel/component/stream/SplitStreamFileTest.java b/components/camel-stream/src/test/java/org/apache/camel/component/stream/SplitStreamFileTest.java
+index 19b7e66..f0766b6 100644
+--- a/components/camel-stream/src/test/java/org/apache/camel/component/stream/SplitStreamFileTest.java
++++ b/components/camel-stream/src/test/java/org/apache/camel/component/stream/SplitStreamFileTest.java
+@@ -44,7 +44,7 @@
+         File file = new File("target/stream/splitFile.txt");
+         String result = IOConverter
+                 .toString(file, new DefaultExchange(context));
+-        assertEquals("Get a wrong result", "A\nB\nC\nD\nA\nB\n", result);
++        assertEquals("Get a wrong result", "A" + LS + "B" + LS + "C" + LS + "D" + LS + "A" + LS + "B" + LS, result);
+ 
+     }
+ 

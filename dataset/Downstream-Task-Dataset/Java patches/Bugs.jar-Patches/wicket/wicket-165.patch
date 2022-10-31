@@ -1,0 +1,38 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java b/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
+index 0be5d76..2c015a4 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
+@@ -259,12 +259,6 @@ public class PageProvider implements IPageProvider
+ 		if (pageId != null)
+ 		{
+ 			page = getStoredPage(pageId);
+-
+-			if (page == null)
+-			{
+-				// WICKET-4594 - ignore the parsed parameters for stateful pages
+-				pageParameters = null;
+-			}
+ 		}
+ 
+ 		if (page == null)
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/AbstractBookmarkableMapper.java b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/AbstractBookmarkableMapper.java
+index 1569468..8a30578 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/AbstractBookmarkableMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/AbstractBookmarkableMapper.java
+@@ -271,11 +271,11 @@ public abstract class AbstractBookmarkableMapper extends AbstractComponentMapper
+ 
+ 		if (listenerInterface != null)
+ 		{
+-//			if (pageInfo.getPageId() != null)
+-//			{
+-//				// WICKET-4594 - ignore the parsed parameters for stateful pages
+-//				pageParameters = null;
+-//			}
++			if (pageInfo.getPageId() != null)
++			{
++				// WICKET-4594 - ignore the parsed parameters for stateful pages
++				pageParameters = null;
++			}
+ 
+ 			PageAndComponentProvider provider = new PageAndComponentProvider(pageInfo.getPageId(),
+ 				pageClass, pageParameters, renderCount, componentInfo.getComponentPath());

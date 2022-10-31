@@ -1,0 +1,28 @@
+diff --git a/src/com/google/javascript/jscomp/Compiler.java b/src/com/google/javascript/jscomp/Compiler.java
+index 8415124..908e2fc 100644
+--- a/src/com/google/javascript/jscomp/Compiler.java
++++ b/src/com/google/javascript/jscomp/Compiler.java
+@@ -2110,7 +2110,8 @@
+     }
+     for (CompilerInput input : filteredInputs) {
+       input.setCompiler(this);
+-      Node root = input.getAstRoot(this);
++      // Call getAstRoot to force parsing to happen.
++      input.getAstRoot(this);
+       input.getRequires();
+     }
+     return filteredInputs;
+diff --git a/src/com/google/javascript/jscomp/Compiler.java b/src/com/google/javascript/jscomp/Compiler.java
+index 8415124..908e2fc 100644
+--- a/src/com/google/javascript/jscomp/Compiler.java
++++ b/src/com/google/javascript/jscomp/Compiler.java
+@@ -2110,7 +2110,8 @@
+     }
+     for (CompilerInput input : filteredInputs) {
+       input.setCompiler(this);
+-      Node root = input.getAstRoot(this);
++      // Call getAstRoot to force parsing to happen.
++      input.getAstRoot(this);
+       input.getRequires();
+     }
+     return filteredInputs;

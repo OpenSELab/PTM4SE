@@ -1,0 +1,26 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandkill.java b/Essentials/src/com/earth2me/essentials/commands/Commandkill.java
+index 306bfd5..a83b0d4 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandkill.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandkill.java
+@@ -32,7 +32,7 @@
+ 		{
+ 			final EntityDamageEvent ede = new EntityDamageEvent(matchPlayer, sender instanceof Player && ((Player)sender).getName().equals(matchPlayer.getName()) ? EntityDamageEvent.DamageCause.SUICIDE : EntityDamageEvent.DamageCause.CUSTOM, Short.MAX_VALUE);
+ 			server.getPluginManager().callEvent(ede);
+-			if (ede.isCancelled() && !sender.hasPermission("essentials.kill.force"))
++			if (ede.isCancelled() && sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.kill.force"))
+ 			{
+ 				continue;
+ 			}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandkill.java b/Essentials/src/com/earth2me/essentials/commands/Commandkill.java
+index 306bfd5..a83b0d4 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandkill.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandkill.java
+@@ -32,7 +32,7 @@
+ 		{
+ 			final EntityDamageEvent ede = new EntityDamageEvent(matchPlayer, sender instanceof Player && ((Player)sender).getName().equals(matchPlayer.getName()) ? EntityDamageEvent.DamageCause.SUICIDE : EntityDamageEvent.DamageCause.CUSTOM, Short.MAX_VALUE);
+ 			server.getPluginManager().callEvent(ede);
+-			if (ede.isCancelled() && !sender.hasPermission("essentials.kill.force"))
++			if (ede.isCancelled() && sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.kill.force"))
+ 			{
+ 				continue;
+ 			}

@@ -1,0 +1,13 @@
+diff --git a/src/main/java/org/jboss/netty/channel/socket/nio/NioSocketChannel.java b/src/main/java/org/jboss/netty/channel/socket/nio/NioSocketChannel.java
+index a4031c7..3060836 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/nio/NioSocketChannel.java
++++ b/src/main/java/org/jboss/netty/channel/socket/nio/NioSocketChannel.java
+@@ -242,7 +242,7 @@
+                 if (newWriteBufferSize == 0 || newWriteBufferSize < lowWaterMark) {
+                     if (newWriteBufferSize + messageSize >= lowWaterMark) {
+                         highWaterMarkCounter.decrementAndGet();
+-                        if (!notifying.get()) {
++                        if (isConnected() && !notifying.get()) {
+                             notifying.set(Boolean.TRUE);
+                             fireChannelInterestChanged(NioSocketChannel.this);
+                             notifying.set(Boolean.FALSE);

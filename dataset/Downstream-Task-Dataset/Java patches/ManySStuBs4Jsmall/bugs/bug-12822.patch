@@ -1,0 +1,16 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/LambdaBytecodeGenerator.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/LambdaBytecodeGenerator.java
+index 42f7d92..5282fb4 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/LambdaBytecodeGenerator.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/LambdaBytecodeGenerator.java
+@@ -143,9 +143,9 @@
+         return new LambdaExpressionField(staticField, instanceField);
+     }
+ 
+-    private static RowExpressionVisitor<Scope, BytecodeNode> variableReferenceCompiler(Map<String, ParameterAndType> parameterMap)
++    private static RowExpressionVisitor<BytecodeNode, Scope> variableReferenceCompiler(Map<String, ParameterAndType> parameterMap)
+     {
+-        return new RowExpressionVisitor<Scope, BytecodeNode>()
++        return new RowExpressionVisitor<BytecodeNode, Scope>()
+         {
+             @Override
+             public BytecodeNode visitInputReference(InputReferenceExpression node, Scope scope)

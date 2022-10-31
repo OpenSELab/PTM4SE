@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/ScanFilterAndProjectOperator.java b/presto-main/src/main/java/com/facebook/presto/operator/ScanFilterAndProjectOperator.java
+index 0f45893..02fa13a 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/ScanFilterAndProjectOperator.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/ScanFilterAndProjectOperator.java
+@@ -185,7 +185,7 @@
+                 long bytesProcessed = cursor.getCompletedBytes() - completedBytes;
+                 long elapsedNanos = cursor.getReadTimeNanos() - readTimeNanos;
+                 operatorContext.recordGeneratedInput(new DataSize(bytesProcessed, BYTE), rowsProcessed, elapsedNanos);
+-                completedBytes += cursor.getCompletedBytes();
++                completedBytes = cursor.getCompletedBytes();
+                 readTimeNanos = cursor.getReadTimeNanos();
+ 
+                 if (rowsProcessed == 0) {
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/ScanFilterAndProjectOperator.java b/presto-main/src/main/java/com/facebook/presto/operator/ScanFilterAndProjectOperator.java
+index 0f45893..02fa13a 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/ScanFilterAndProjectOperator.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/ScanFilterAndProjectOperator.java
+@@ -185,7 +185,7 @@
+                 long bytesProcessed = cursor.getCompletedBytes() - completedBytes;
+                 long elapsedNanos = cursor.getReadTimeNanos() - readTimeNanos;
+                 operatorContext.recordGeneratedInput(new DataSize(bytesProcessed, BYTE), rowsProcessed, elapsedNanos);
+-                completedBytes += cursor.getCompletedBytes();
++                completedBytes = cursor.getCompletedBytes();
+                 readTimeNanos = cursor.getReadTimeNanos();
+ 
+                 if (rowsProcessed == 0) {

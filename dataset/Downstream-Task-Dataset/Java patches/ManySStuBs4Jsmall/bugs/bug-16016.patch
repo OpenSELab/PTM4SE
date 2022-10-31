@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/NearCacheTest.java b/hazelcast/src/test/java/com/hazelcast/map/NearCacheTest.java
+index a284a89..6fbfeb9 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/NearCacheTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/NearCacheTest.java
+@@ -411,7 +411,7 @@
+     public void testGetAsync() throws Exception {
+         final String mapName = "testGetAsyncWithNearCache";
+         Config config = new Config();
+-        config.getMapConfig(mapName).setNearCacheConfig(new NearCacheConfig());
++        config.getMapConfig(mapName).setNearCacheConfig(new NearCacheConfig().setInvalidateOnChange(false));
+         final TestHazelcastInstanceFactory hazelcastInstanceFactory = createHazelcastInstanceFactory(2);
+         HazelcastInstance instance1 = hazelcastInstanceFactory.newHazelcastInstance(config);
+         HazelcastInstance instance2 = hazelcastInstanceFactory.newHazelcastInstance(config);
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/NearCacheTest.java b/hazelcast/src/test/java/com/hazelcast/map/NearCacheTest.java
+index a284a89..6fbfeb9 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/NearCacheTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/NearCacheTest.java
+@@ -411,7 +411,7 @@
+     public void testGetAsync() throws Exception {
+         final String mapName = "testGetAsyncWithNearCache";
+         Config config = new Config();
+-        config.getMapConfig(mapName).setNearCacheConfig(new NearCacheConfig());
++        config.getMapConfig(mapName).setNearCacheConfig(new NearCacheConfig().setInvalidateOnChange(false));
+         final TestHazelcastInstanceFactory hazelcastInstanceFactory = createHazelcastInstanceFactory(2);
+         HazelcastInstance instance1 = hazelcastInstanceFactory.newHazelcastInstance(config);
+         HazelcastInstance instance2 = hazelcastInstanceFactory.newHazelcastInstance(config);

@@ -1,0 +1,44 @@
+diff --git a/community/cypher/docs/graphgist/src/test/java/org/neo4j/doc/cypherdoc/BlockTest.java b/community/cypher/docs/graphgist/src/test/java/org/neo4j/doc/cypherdoc/BlockTest.java
+index 1d95a5c..c66e0a9 100644
+--- a/community/cypher/docs/graphgist/src/test/java/org/neo4j/doc/cypherdoc/BlockTest.java
++++ b/community/cypher/docs/graphgist/src/test/java/org/neo4j/doc/cypherdoc/BlockTest.java
+@@ -226,7 +226,7 @@
+ 
+         when( engine.prettify( httpQuery.capture() ) ).
+                 thenReturn( "apa" );
+-        state = new State( engine, database, new File( "/dev/null" ), "http://myurl" );
++        state = new State( engine, database, new File( File.listRoots()[0], "something" ), "http://myurl" );
+         state.knownFiles.add( "my_file.csv" );
+ 
+ 
+@@ -234,7 +234,7 @@
+         block.process( state );
+ 
+         // then
+-        assertThat( fileQuery.getValue(), containsString( "file:/dev/null/my_file.csv" ) );
++        assertThat( fileQuery.getValue(), containsString( "file:" + File.listRoots()[0] + "something/my_file.csv" ) );
+         assertThat( httpQuery.getValue(), containsString( "http://myurl/my_file.csv" ) );
+     }
+ }
+diff --git a/community/cypher/docs/graphgist/src/test/java/org/neo4j/doc/cypherdoc/BlockTest.java b/community/cypher/docs/graphgist/src/test/java/org/neo4j/doc/cypherdoc/BlockTest.java
+index 1d95a5c..c66e0a9 100644
+--- a/community/cypher/docs/graphgist/src/test/java/org/neo4j/doc/cypherdoc/BlockTest.java
++++ b/community/cypher/docs/graphgist/src/test/java/org/neo4j/doc/cypherdoc/BlockTest.java
+@@ -226,7 +226,7 @@
+ 
+         when( engine.prettify( httpQuery.capture() ) ).
+                 thenReturn( "apa" );
+-        state = new State( engine, database, new File( "/dev/null" ), "http://myurl" );
++        state = new State( engine, database, new File( File.listRoots()[0], "something" ), "http://myurl" );
+         state.knownFiles.add( "my_file.csv" );
+ 
+ 
+@@ -234,7 +234,7 @@
+         block.process( state );
+ 
+         // then
+-        assertThat( fileQuery.getValue(), containsString( "file:/dev/null/my_file.csv" ) );
++        assertThat( fileQuery.getValue(), containsString( "file:" + File.listRoots()[0] + "something/my_file.csv" ) );
+         assertThat( httpQuery.getValue(), containsString( "http://myurl/my_file.csv" ) );
+     }
+ }

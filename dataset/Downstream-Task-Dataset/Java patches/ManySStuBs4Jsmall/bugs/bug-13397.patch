@@ -1,0 +1,30 @@
+diff --git a/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java b/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
+index ef4f1f5..0f68c6e 100644
+--- a/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
++++ b/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
+@@ -557,9 +557,7 @@
+                             partition = new AttributePartitionImpl(column, graph);
+                         }
+                         partitions.put(getIdCol(column), partition);
+-                    }
+-                    
+-                    if (forcedRanking.contains(id) || isRanking(graph, column)) {
++                    } else if (forcedRanking.contains(id) || (!forcedPartition.contains(id) && isRanking(graph, column))) {
+                         if (column.isIndexed()) {
+                             ranking = new AttributeRankingImpl(column, getIndex(localScale));
+                         } else {
+diff --git a/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java b/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
+index ef4f1f5..0f68c6e 100644
+--- a/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
++++ b/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
+@@ -557,9 +557,7 @@
+                             partition = new AttributePartitionImpl(column, graph);
+                         }
+                         partitions.put(getIdCol(column), partition);
+-                    }
+-                    
+-                    if (forcedRanking.contains(id) || isRanking(graph, column)) {
++                    } else if (forcedRanking.contains(id) || (!forcedPartition.contains(id) && isRanking(graph, column))) {
+                         if (column.isIndexed()) {
+                             ranking = new AttributeRankingImpl(column, getIndex(localScale));
+                         } else {

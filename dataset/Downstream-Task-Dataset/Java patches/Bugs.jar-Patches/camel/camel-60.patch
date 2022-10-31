@@ -1,0 +1,33 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/WrapProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/WrapProcessor.java
+index cb7eb9f..adb508a 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/WrapProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/WrapProcessor.java
+@@ -19,14 +19,14 @@ package org.apache.camel.processor;
+ import java.util.List;
+ 
+ import org.apache.camel.Processor;
+-import org.apache.camel.Traceable;
+ import org.apache.camel.util.ServiceHelper;
+ 
+ /**
+  * A processor which ensures wrapping processors is having lifecycle handled.
++ *
++ * @version 
+  */
+-public class WrapProcessor extends DelegateAsyncProcessor implements Traceable {
+-
++public class WrapProcessor extends DelegateAsyncProcessor {
+     private final Processor wrapped;
+ 
+     public WrapProcessor(Processor processor, Processor wrapped) {
+@@ -38,10 +38,6 @@ public class WrapProcessor extends DelegateAsyncProcessor implements Traceable {
+     public String toString() {
+         return "Wrap[" + wrapped + "] -> " + processor;
+     }
+-    
+-    public String getTraceLabel() {
+-        return "wrap[" + wrapped + "]";
+-    }
+ 
+     @Override
+     public List<Processor> next() {

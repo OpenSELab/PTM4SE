@@ -1,0 +1,39 @@
+diff --git a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/tracing/TraceSamplerFactory.java b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/tracing/TraceSamplerFactory.java
+index 0de7d3e..54bcb81 100644
+--- a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/tracing/TraceSamplerFactory.java
++++ b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/tracing/TraceSamplerFactory.java
+@@ -30,7 +30,7 @@
+   private static final Logger LOG =
+       LoggerFactory.getLogger(TraceSamplerFactory.class);
+ 
+-  public static Sampler createSampler(Configuration conf) {
++  public static Sampler<?> createSampler(Configuration conf) {
+     String samplerStr = conf.get(CommonConfigurationKeys.HADOOP_TRACE_SAMPLER,
+         CommonConfigurationKeys.HADOOP_TRACE_SAMPLER_DEFAULT);
+     if (samplerStr.equals("NeverSampler")) {
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/DFSClient.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/DFSClient.java
+index 94a68e2..8a7c8eb 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/DFSClient.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/DFSClient.java
+@@ -277,7 +277,7 @@
+   @VisibleForTesting
+   KeyProvider provider;
+   private final SpanReceiverHost spanReceiverHost;
+-  private final Sampler traceSampler;
++  private final Sampler<?> traceSampler;
+ 
+   /**
+    * DFSClient configuration 
+diff --git a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/tracing/TraceSamplerFactory.java b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/tracing/TraceSamplerFactory.java
+index 0de7d3e..54bcb81 100644
+--- a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/tracing/TraceSamplerFactory.java
++++ b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/tracing/TraceSamplerFactory.java
+@@ -30,7 +30,7 @@
+   private static final Logger LOG =
+       LoggerFactory.getLogger(TraceSamplerFactory.class);
+ 
+-  public static Sampler createSampler(Configuration conf) {
++  public static Sampler<?> createSampler(Configuration conf) {
+     String samplerStr = conf.get(CommonConfigurationKeys.HADOOP_TRACE_SAMPLER,
+         CommonConfigurationKeys.HADOOP_TRACE_SAMPLER_DEFAULT);
+     if (samplerStr.equals("NeverSampler")) {

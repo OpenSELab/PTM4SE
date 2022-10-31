@@ -1,0 +1,26 @@
+diff --git a/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/EtlRoutes.java b/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/EtlRoutes.java
+index 6856545..ab78a30 100644
+--- a/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/EtlRoutes.java
++++ b/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/EtlRoutes.java
+@@ -32,7 +32,7 @@
+             .to("jpa:org.apache.camel.example.etl.CustomerEntity");
+ 
+         // the following will dump the database to files
+-        from("jpa:org.apache.camel.example.etl.CustomerEntity?consumeDelete=false?consumer.delay=3000&consumeLockEntity=false")
++        from("jpa:org.apache.camel.example.etl.CustomerEntity?consumeDelete=false&consumer.delay=3000&consumeLockEntity=false")
+             .setHeader(FileComponent.HEADER_FILE_NAME, el("${in.body.userName}.xml"))
+             .to("file:target/customers?append=false");
+     }
+diff --git a/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/EtlRoutes.java b/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/EtlRoutes.java
+index 6856545..ab78a30 100644
+--- a/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/EtlRoutes.java
++++ b/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/EtlRoutes.java
+@@ -32,7 +32,7 @@
+             .to("jpa:org.apache.camel.example.etl.CustomerEntity");
+ 
+         // the following will dump the database to files
+-        from("jpa:org.apache.camel.example.etl.CustomerEntity?consumeDelete=false?consumer.delay=3000&consumeLockEntity=false")
++        from("jpa:org.apache.camel.example.etl.CustomerEntity?consumeDelete=false&consumer.delay=3000&consumeLockEntity=false")
+             .setHeader(FileComponent.HEADER_FILE_NAME, el("${in.body.userName}.xml"))
+             .to("file:target/customers?append=false");
+     }

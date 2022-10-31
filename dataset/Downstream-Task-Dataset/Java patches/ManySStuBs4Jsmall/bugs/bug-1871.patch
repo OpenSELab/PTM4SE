@@ -1,0 +1,44 @@
+diff --git a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+index 0aa1678..535f629 100755
+--- a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
++++ b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+@@ -893,7 +893,7 @@
+                         scope,
+                         null,
+                         null,
+-                        true,
++                        am.getAnnotation(Suspend.class).writeEntity(),
+                         am.getAnnotation(Suspend.class).contentType());
+             } else {
+                 f = new Filter(Action.SUSPEND,
+@@ -902,7 +902,7 @@
+                         scope,
+                         null,
+                         null,
+-                        true,
++                        am.getAnnotation(Suspend.class).writeEntity(),
+                         am.getAnnotation(Suspend.class).contentType());
+             }
+             f.setListeners(am.getAnnotation(Suspend.class).listeners());
+diff --git a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+index 0aa1678..535f629 100755
+--- a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
++++ b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+@@ -893,7 +893,7 @@
+                         scope,
+                         null,
+                         null,
+-                        true,
++                        am.getAnnotation(Suspend.class).writeEntity(),
+                         am.getAnnotation(Suspend.class).contentType());
+             } else {
+                 f = new Filter(Action.SUSPEND,
+@@ -902,7 +902,7 @@
+                         scope,
+                         null,
+                         null,
+-                        true,
++                        am.getAnnotation(Suspend.class).writeEntity(),
+                         am.getAnnotation(Suspend.class).contentType());
+             }
+             f.setListeners(am.getAnnotation(Suspend.class).listeners());

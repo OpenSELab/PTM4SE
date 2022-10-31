@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageEncoder.java b/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageEncoder.java
+index 2f3f106..bcd0d23 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageEncoder.java
++++ b/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageEncoder.java
+@@ -81,7 +81,7 @@
+ 
+         if (msg instanceof HttpChunk) {
+             HttpChunk chunk = (HttpChunk) msg;
+-            if (chunk.isLast()) {
++            if (chunk == HttpChunk.LAST_CHUNK) {
+                 return LAST_CHUNK.duplicate();
+             } else {
+                 ChannelBuffer content = chunk.getContent();
+diff --git a/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageEncoder.java b/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageEncoder.java
+index 2f3f106..bcd0d23 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageEncoder.java
++++ b/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageEncoder.java
+@@ -81,7 +81,7 @@
+ 
+         if (msg instanceof HttpChunk) {
+             HttpChunk chunk = (HttpChunk) msg;
+-            if (chunk.isLast()) {
++            if (chunk == HttpChunk.LAST_CHUNK) {
+                 return LAST_CHUNK.duplicate();
+             } else {
+                 ChannelBuffer content = chunk.getContent();

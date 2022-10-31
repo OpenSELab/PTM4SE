@@ -1,0 +1,26 @@
+diff --git a/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/BpmnXMLConverter.java b/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/BpmnXMLConverter.java
+index a65ba55..f524583 100644
+--- a/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/BpmnXMLConverter.java
++++ b/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/BpmnXMLConverter.java
+@@ -364,7 +364,7 @@
+ 						new MultiInstanceParser().parseChildElement(xtr, activeSubProcessList.get(activeSubProcessList.size() - 1), model);
+ 					  
+ 					} else if (convertersToBpmnMap.containsKey(xtr.getLocalName())) {
+-					  if (activeProcess.isExecutable()) {
++					  if (activeProcess != null && activeProcess.isExecutable()) {
+   					  Class<? extends BaseBpmnXMLConverter> converterClass = convertersToBpmnMap.get(xtr.getLocalName());
+   					  BaseBpmnXMLConverter converter = converterClass.newInstance();
+   					  if (userTaskFormTypes != null && ELEMENT_TASK_USER.equals(xtr.getLocalName())) {
+diff --git a/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/BpmnXMLConverter.java b/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/BpmnXMLConverter.java
+index a65ba55..f524583 100644
+--- a/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/BpmnXMLConverter.java
++++ b/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/BpmnXMLConverter.java
+@@ -364,7 +364,7 @@
+ 						new MultiInstanceParser().parseChildElement(xtr, activeSubProcessList.get(activeSubProcessList.size() - 1), model);
+ 					  
+ 					} else if (convertersToBpmnMap.containsKey(xtr.getLocalName())) {
+-					  if (activeProcess.isExecutable()) {
++					  if (activeProcess != null && activeProcess.isExecutable()) {
+   					  Class<? extends BaseBpmnXMLConverter> converterClass = convertersToBpmnMap.get(xtr.getLocalName());
+   					  BaseBpmnXMLConverter converter = converterClass.newInstance();
+   					  if (userTaskFormTypes != null && ELEMENT_TASK_USER.equals(xtr.getLocalName())) {

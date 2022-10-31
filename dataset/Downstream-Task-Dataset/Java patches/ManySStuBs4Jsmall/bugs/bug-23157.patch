@@ -1,0 +1,28 @@
+diff --git a/modules/swagger-core/src/main/java/io/swagger/jackson/ModelResolver.java b/modules/swagger-core/src/main/java/io/swagger/jackson/ModelResolver.java
+index 297bb1c..8f9c34f 100644
+--- a/modules/swagger-core/src/main/java/io/swagger/jackson/ModelResolver.java
++++ b/modules/swagger-core/src/main/java/io/swagger/jackson/ModelResolver.java
+@@ -139,7 +139,8 @@
+     }
+ 
+     private boolean _isOptionalType(JavaType propType) {
+-        return "com.google.common.base.Optional".equals(propType.getRawClass().getCanonicalName());
++        return Arrays.asList("com.google.common.base.Optional", "java.util.Optional")
++                .contains(propType.getRawClass().getCanonicalName());
+     }
+ 
+     public Model resolve(Type type, ModelConverterContext context, Iterator<ModelConverter> next) {
+diff --git a/modules/swagger-core/src/main/java/io/swagger/jackson/ModelResolver.java b/modules/swagger-core/src/main/java/io/swagger/jackson/ModelResolver.java
+index 297bb1c..8f9c34f 100644
+--- a/modules/swagger-core/src/main/java/io/swagger/jackson/ModelResolver.java
++++ b/modules/swagger-core/src/main/java/io/swagger/jackson/ModelResolver.java
+@@ -139,7 +139,8 @@
+     }
+ 
+     private boolean _isOptionalType(JavaType propType) {
+-        return "com.google.common.base.Optional".equals(propType.getRawClass().getCanonicalName());
++        return Arrays.asList("com.google.common.base.Optional", "java.util.Optional")
++                .contains(propType.getRawClass().getCanonicalName());
+     }
+ 
+     public Model resolve(Type type, ModelConverterContext context, Iterator<ModelConverter> next) {

@@ -1,0 +1,44 @@
+diff --git a/src/test/java/org/apache/hadoop/hbase/regionserver/handler/TestOpenRegionHandler.java b/src/test/java/org/apache/hadoop/hbase/regionserver/handler/TestOpenRegionHandler.java
+index 2c33d6a..11b535c 100644
+--- a/src/test/java/org/apache/hadoop/hbase/regionserver/handler/TestOpenRegionHandler.java
++++ b/src/test/java/org/apache/hadoop/hbase/regionserver/handler/TestOpenRegionHandler.java
+@@ -132,7 +132,7 @@
+   @Test
+   public void testFailedOpenRegion() throws Exception {
+     Server server = new MockServer(HTU);
+-    RegionServerServices rsServices = Mockito.mock(RegionServerServices.class);
++    RegionServerServices rsServices = new MockRegionServerServices();
+ 
+     // Create it OFFLINE, which is what it expects
+     ZKAssign.createNodeOffline(server.getZooKeeper(), TEST_HRI, server.getServerName());
+@@ -157,7 +157,7 @@
+   @Test
+   public void testFailedUpdateMeta() throws Exception {
+     Server server = new MockServer(HTU);
+-    RegionServerServices rsServices = Mockito.mock(RegionServerServices.class);
++    RegionServerServices rsServices = new MockRegionServerServices();
+ 
+     // Create it OFFLINE, which is what it expects
+     ZKAssign.createNodeOffline(server.getZooKeeper(), TEST_HRI, server.getServerName());
+diff --git a/src/test/java/org/apache/hadoop/hbase/regionserver/handler/TestOpenRegionHandler.java b/src/test/java/org/apache/hadoop/hbase/regionserver/handler/TestOpenRegionHandler.java
+index 2c33d6a..11b535c 100644
+--- a/src/test/java/org/apache/hadoop/hbase/regionserver/handler/TestOpenRegionHandler.java
++++ b/src/test/java/org/apache/hadoop/hbase/regionserver/handler/TestOpenRegionHandler.java
+@@ -132,7 +132,7 @@
+   @Test
+   public void testFailedOpenRegion() throws Exception {
+     Server server = new MockServer(HTU);
+-    RegionServerServices rsServices = Mockito.mock(RegionServerServices.class);
++    RegionServerServices rsServices = new MockRegionServerServices();
+ 
+     // Create it OFFLINE, which is what it expects
+     ZKAssign.createNodeOffline(server.getZooKeeper(), TEST_HRI, server.getServerName());
+@@ -157,7 +157,7 @@
+   @Test
+   public void testFailedUpdateMeta() throws Exception {
+     Server server = new MockServer(HTU);
+-    RegionServerServices rsServices = Mockito.mock(RegionServerServices.class);
++    RegionServerServices rsServices = new MockRegionServerServices();
+ 
+     // Create it OFFLINE, which is what it expects
+     ZKAssign.createNodeOffline(server.getZooKeeper(), TEST_HRI, server.getServerName());

@@ -1,0 +1,140 @@
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MessageIOSessionTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MessageIOSessionTest.java
+index 691d350..c1aaf69 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MessageIOSessionTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MessageIOSessionTest.java
+@@ -34,7 +34,7 @@
+     public void testIoSession() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+         mock.expectedMessageCount(1);
+-        template.sendBody("mina:tcp://localhost:6200?textline=true&sync=false", "Hello World");
++        template.sendBody("mina:tcp://localhost:9200?textline=true&sync=false", "Hello World");
+         assertMockEndpointsSatisfied();
+ 
+         Exchange exchange = mock.getExchanges().get(0);
+@@ -46,7 +46,7 @@
+     public void testLocalAndRemoteAddressHeaders() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+         mock.expectedMessageCount(1);
+-        template.sendBody("mina:tcp://localhost:6200?textline=true&sync=false", "Hello World");
++        template.sendBody("mina:tcp://localhost:9200?textline=true&sync=false", "Hello World");
+         assertMockEndpointsSatisfied();
+         
+         Message message = mock.getExchanges().get(0).getIn();
+@@ -61,7 +61,7 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("mina:tcp://localhost:6200?textline=true&sync=false")
++                from("mina:tcp://localhost:9200?textline=true&sync=false")
+                     .to("log://mytest")
+                     .to("mock:result");
+             }
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaConsumerTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaConsumerTest.java
+index 0589160..2ef9387 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaConsumerTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaConsumerTest.java
+@@ -41,7 +41,7 @@
+ 
+     public void testSendTextlineSyncText() throws Exception {
+         // START SNIPPET: e4
+-        String response = (String)template.requestBody("mina:tcp://localhost:6201?textline=true&sync=true", "World");
++        String response = (String)template.requestBody("mina:tcp://localhost:9201?textline=true&sync=true", "World");
+         assertEquals("Bye World", response);
+         // END SNIPPET: e4
+     }
+@@ -54,7 +54,7 @@
+                 // END SNIPPET: e1
+ 
+                 // START SNIPPET: e3
+-                from("mina:tcp://localhost:6201?textline=true&sync=true").process(new Processor() {
++                from("mina:tcp://localhost:9201?textline=true&sync=true").process(new Processor() {
+                     public void process(Exchange exchange) throws Exception {
+                         String body = exchange.getIn().getBody(String.class);
+                         exchange.getOut().setBody("Bye " + body);
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+index 00b465f..aabb25d 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+@@ -35,9 +35,9 @@
+  */
+ public class MinaCustomCodecTest extends ContextTestSupport {
+ 
+-    protected String uri = "mina:tcp://localhost:11300?sync=true&codec=#myCodec";
++    protected String uri = "mina:tcp://localhost:5130?sync=true&codec=#myCodec";
+    
+-    protected String badUri = "mina:tcp://localhost:11300?sync=true&codec=#XXX";
++    protected String badUri = "mina:tcp://localhost:5130?sync=true&codec=#XXX";
+ 
+     public void testMyCodec() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+@@ -51,7 +51,7 @@
+     }
+     
+     public void testTCPEncodeUTF8InputIsString() throws Exception {
+-        final String myUri = "mina:tcp://localhost:9080?encoding=UTF-8&sync=false";
++        final String myUri = "mina:tcp://localhost:9085?encoding=UTF-8&sync=false";
+         this.context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(myUri).to("mock:result");
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaEncodingTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaEncodingTest.java
+index 70edec1..e352761 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaEncodingTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaEncodingTest.java
+@@ -34,7 +34,7 @@
+ public class MinaEncodingTest extends ContextTestSupport {
+ 
+     public void testTCPEncodeUTF8InputIsBytes() throws Exception {
+-        final String uri = "mina:tcp://localhost:9080?encoding=UTF-8&sync=false";
++        final String uri = "mina:tcp://localhost:9085?encoding=UTF-8&sync=false";
+         this.context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).to("mock:result");
+@@ -54,7 +54,7 @@
+     }
+ 
+     public void testTCPEncodeUTF8InputIsString() throws Exception {
+-        final String uri = "mina:tcp://localhost:9080?encoding=UTF-8&sync=false";
++        final String uri = "mina:tcp://localhost:9085?encoding=UTF-8&sync=false";
+         this.context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).to("mock:result");
+@@ -74,7 +74,7 @@
+     }
+ 
+     public void testTCPEncodeUTF8TextLineInputIsString() throws Exception {
+-        final String uri = "mina:tcp://localhost:9080?textline=true&encoding=UTF-8&sync=false";
++        final String uri = "mina:tcp://localhost:9085?textline=true&encoding=UTF-8&sync=false";
+         this.context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).to("mock:result");
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MessageIOSessionTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MessageIOSessionTest.java
+index 691d350..c1aaf69 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MessageIOSessionTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MessageIOSessionTest.java
+@@ -34,7 +34,7 @@
+     public void testIoSession() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+         mock.expectedMessageCount(1);
+-        template.sendBody("mina:tcp://localhost:6200?textline=true&sync=false", "Hello World");
++        template.sendBody("mina:tcp://localhost:9200?textline=true&sync=false", "Hello World");
+         assertMockEndpointsSatisfied();
+ 
+         Exchange exchange = mock.getExchanges().get(0);
+@@ -46,7 +46,7 @@
+     public void testLocalAndRemoteAddressHeaders() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+         mock.expectedMessageCount(1);
+-        template.sendBody("mina:tcp://localhost:6200?textline=true&sync=false", "Hello World");
++        template.sendBody("mina:tcp://localhost:9200?textline=true&sync=false", "Hello World");
+         assertMockEndpointsSatisfied();
+         
+         Message message = mock.getExchanges().get(0).getIn();
+@@ -61,7 +61,7 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("mina:tcp://localhost:6200?textline=true&sync=false")
++                from("mina:tcp://localhost:9200?textline=true&sync=false")
+                     .to("log://mytest")
+                     .to("mock:result");
+             }

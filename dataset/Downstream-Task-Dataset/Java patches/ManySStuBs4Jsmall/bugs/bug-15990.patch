@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/queue/proxy/QueueProxySupport.java b/hazelcast/src/main/java/com/hazelcast/queue/proxy/QueueProxySupport.java
+index 6847a18..f12d840 100644
+--- a/hazelcast/src/main/java/com/hazelcast/queue/proxy/QueueProxySupport.java
++++ b/hazelcast/src/main/java/com/hazelcast/queue/proxy/QueueProxySupport.java
+@@ -88,7 +88,7 @@
+         throwExceptionIfNull(data);
+         OfferOperation operation = new OfferOperation(name, timeout, data);
+         try {
+-            return invokeAndGet(operation);
++            return (Boolean) invokeAndGet(operation);
+         } catch (Throwable throwable) {
+             throw ExceptionUtil.rethrowAllowInterrupted(throwable);
+         }
+diff --git a/hazelcast/src/main/java/com/hazelcast/queue/proxy/QueueProxySupport.java b/hazelcast/src/main/java/com/hazelcast/queue/proxy/QueueProxySupport.java
+index 6847a18..f12d840 100644
+--- a/hazelcast/src/main/java/com/hazelcast/queue/proxy/QueueProxySupport.java
++++ b/hazelcast/src/main/java/com/hazelcast/queue/proxy/QueueProxySupport.java
+@@ -88,7 +88,7 @@
+         throwExceptionIfNull(data);
+         OfferOperation operation = new OfferOperation(name, timeout, data);
+         try {
+-            return invokeAndGet(operation);
++            return (Boolean) invokeAndGet(operation);
+         } catch (Throwable throwable) {
+             throw ExceptionUtil.rethrowAllowInterrupted(throwable);
+         }

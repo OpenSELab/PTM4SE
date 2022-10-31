@@ -1,0 +1,41 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java
+index 89747ce..b5ca559 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java
+@@ -357,7 +357,7 @@
+ 
+         List<Class<?>> classes = Arrays.<Class<?>>asList(InputPreProcessor.class, ILossFunction.class, Layer.class, GraphVertex.class);
+         List<String> classNames = new ArrayList<>(4);
+-        for(Class<?> c : classes) classNames.add(c.getClass().getName());
++        for(Class<?> c : classes) classNames.add(c.getName());
+ 
+         // First: scan the classpath and find all instances of the 'baseClasses' classes
+         if(subtypesClassCache == null){
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/util/reflections/DL4JSubTypesScanner.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/util/reflections/DL4JSubTypesScanner.java
+index e22f697..d15eb9c 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/util/reflections/DL4JSubTypesScanner.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/util/reflections/DL4JSubTypesScanner.java
+@@ -41,7 +41,9 @@
+         String className = configuration.getMetadataAdapter().getClassName(cls);
+         String superclass = configuration.getMetadataAdapter().getSuperclassName(cls);
+ 
+-        if(classNames.contains(className)){
++        //Unfortunately: can't simply check if superclass is one of the classes we want
++        // as this doesn't take into account the class heirarchy properly
++        if(!"java.lang.Object".equals(superclass) ){
+             getStore().put(superclass, className);
+         }
+ 
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java
+index 89747ce..b5ca559 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/NeuralNetConfiguration.java
+@@ -357,7 +357,7 @@
+ 
+         List<Class<?>> classes = Arrays.<Class<?>>asList(InputPreProcessor.class, ILossFunction.class, Layer.class, GraphVertex.class);
+         List<String> classNames = new ArrayList<>(4);
+-        for(Class<?> c : classes) classNames.add(c.getClass().getName());
++        for(Class<?> c : classes) classNames.add(c.getName());
+ 
+         // First: scan the classpath and find all instances of the 'baseClasses' classes
+         if(subtypesClassCache == null){

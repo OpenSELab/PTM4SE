@@ -1,0 +1,40 @@
+diff --git a/src/roboguice/inject/ExtrasListener.java b/src/roboguice/inject/ExtrasListener.java
+index 2cea69c..533f7f2 100644
+--- a/src/roboguice/inject/ExtrasListener.java
++++ b/src/roboguice/inject/ExtrasListener.java
+@@ -83,7 +83,7 @@
+             throw new RuntimeException(e);
+ 
+         } catch (IllegalArgumentException f ) {
+-            throw new IllegalArgumentException( String.format("Can't assign %s value %s to %s field %s", value.getClass(), value, field.getType(), field.getName() ));
++            throw new IllegalArgumentException( String.format("Can't assign %s value %s to %s field %s", value!=null ? value.getClass() : "(null)" , value, field.getType(), field.getName() ));
+         }
+     }
+ 
+diff --git a/src/roboguice/inject/ResourceListener.java b/src/roboguice/inject/ResourceListener.java
+index 8813150..59ead62 100644
+--- a/src/roboguice/inject/ResourceListener.java
++++ b/src/roboguice/inject/ResourceListener.java
+@@ -67,7 +67,7 @@
+             throw new RuntimeException(e);
+ 
+         } catch (IllegalArgumentException f ) {
+-            throw new IllegalArgumentException( String.format("Can't assign %s value %s to %s field %s", value.getClass(), value, field.getType(), field.getName() ));
++            throw new IllegalArgumentException( String.format("Can't assign %s value %s to %s field %s", value!=null ? value.getClass() : "(null)", value, field.getType(), field.getName() ));
+         }
+     }
+ }
+\ No newline at end of file
+diff --git a/src/roboguice/inject/ExtrasListener.java b/src/roboguice/inject/ExtrasListener.java
+index 2cea69c..533f7f2 100644
+--- a/src/roboguice/inject/ExtrasListener.java
++++ b/src/roboguice/inject/ExtrasListener.java
+@@ -83,7 +83,7 @@
+             throw new RuntimeException(e);
+ 
+         } catch (IllegalArgumentException f ) {
+-            throw new IllegalArgumentException( String.format("Can't assign %s value %s to %s field %s", value.getClass(), value, field.getType(), field.getName() ));
++            throw new IllegalArgumentException( String.format("Can't assign %s value %s to %s field %s", value!=null ? value.getClass() : "(null)" , value, field.getType(), field.getName() ));
+         }
+     }
+ 

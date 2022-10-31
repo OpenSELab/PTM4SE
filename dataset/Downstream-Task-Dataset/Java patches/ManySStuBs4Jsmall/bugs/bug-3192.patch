@@ -1,0 +1,42 @@
+diff --git a/src/main/java/com/alibaba/druid/sql/visitor/SchemaStatVisitor.java b/src/main/java/com/alibaba/druid/sql/visitor/SchemaStatVisitor.java
+index 9839bf9..54dc56d 100644
+--- a/src/main/java/com/alibaba/druid/sql/visitor/SchemaStatVisitor.java
++++ b/src/main/java/com/alibaba/druid/sql/visitor/SchemaStatVisitor.java
+@@ -760,12 +760,14 @@
+         Map<String, String> aliasMap = getAliasMap();
+ 
+         if (aliasMap != null) {
+-            if (aliasMap.containsKey(name)) {
++            if (aliasMap.containsKey(name)
++            		&& aliasMap.get(name) != null) {
+                 return aliasMap.get(name);
+             }
+             
+             String name_lcase = name.toLowerCase();
+-            if (name_lcase != name && aliasMap.containsKey(name_lcase)) {
++            if (name_lcase != name && aliasMap.containsKey(name_lcase)
++            		&& aliasMap.get(name_lcase) != null) {
+                 return aliasMap.get(name_lcase);
+             }
+             
+diff --git a/src/main/java/com/alibaba/druid/sql/visitor/SchemaStatVisitor.java b/src/main/java/com/alibaba/druid/sql/visitor/SchemaStatVisitor.java
+index 9839bf9..54dc56d 100644
+--- a/src/main/java/com/alibaba/druid/sql/visitor/SchemaStatVisitor.java
++++ b/src/main/java/com/alibaba/druid/sql/visitor/SchemaStatVisitor.java
+@@ -760,12 +760,14 @@
+         Map<String, String> aliasMap = getAliasMap();
+ 
+         if (aliasMap != null) {
+-            if (aliasMap.containsKey(name)) {
++            if (aliasMap.containsKey(name)
++            		&& aliasMap.get(name) != null) {
+                 return aliasMap.get(name);
+             }
+             
+             String name_lcase = name.toLowerCase();
+-            if (name_lcase != name && aliasMap.containsKey(name_lcase)) {
++            if (name_lcase != name && aliasMap.containsKey(name_lcase)
++            		&& aliasMap.get(name_lcase) != null) {
+                 return aliasMap.get(name_lcase);
+             }
+             

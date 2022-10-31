@@ -1,0 +1,179 @@
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestDatabaseAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestDatabaseAutoConfiguration.java
+index 2ff86ac..aa3ce10 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestDatabaseAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestDatabaseAutoConfiguration.java
+@@ -50,11 +50,12 @@
+  * Auto-configuration for a test database.
+  *
+  * @author Phillip Webb
++ * @since 1.4.0
+  * @see AutoConfigureTestDatabase
+  */
+ @Configuration
+ @AutoConfigureBefore(DataSourceAutoConfiguration.class)
+-class TestDatabaseAutoConfiguration {
++public class TestDatabaseAutoConfiguration {
+ 
+ 	private final Environment environment;
+ 
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestEntityManagerAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestEntityManagerAutoConfiguration.java
+index 756dfea..27790a4 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestEntityManagerAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestEntityManagerAutoConfiguration.java
+@@ -29,12 +29,13 @@
+  * Auto-configuration for {@link TestEntityManager}.
+  *
+  * @author Phillip Webb
++ * @since 1.4.0
+  * @see AutoConfigureTestEntityManager
+  */
+ @Configuration
+ @ConditionalOnClass({ EntityManagerFactory.class })
+ @AutoConfigureAfter(HibernateJpaAutoConfiguration.class)
+-class TestEntityManagerAutoConfiguration {
++public class TestEntityManagerAutoConfiguration {
+ 
+ 	@Bean
+ 	@ConditionalOnMissingBean
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/restdocs/RestDocsAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/restdocs/RestDocsAutoConfiguration.java
+index b1536c7..55772c1 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/restdocs/RestDocsAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/restdocs/RestDocsAutoConfiguration.java
+@@ -33,11 +33,12 @@
+  * {@link EnableAutoConfiguration Auto-configuration} for Spring REST Docs.
+  *
+  * @author Andy Wilkinson
++ * @since 1.4.0
+  */
+ @Configuration
+ @ConditionalOnWebApplication
+ @EnableConfigurationProperties
+-class RestDocsAutoConfiguration {
++public class RestDocsAutoConfiguration {
+ 
+ 	@Bean
+ 	@ConditionalOnMissingBean(MockMvcRestDocumentationConfigurer.class)
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/MockRestServiceServerAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/MockRestServiceServerAutoConfiguration.java
+index ffad5c1..a58aec0 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/MockRestServiceServerAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/MockRestServiceServerAutoConfiguration.java
+@@ -38,11 +38,12 @@
+  * Auto-configuration for {@link MockRestServiceServer} support.
+  *
+  * @author Phillip Webb
++ * @since 1.4.0
+  * @see AutoConfigureMockRestServiceServer
+  */
+ @Configuration
+ @ConditionalOnProperty(prefix = "spring.test.webclient.mockrestserviceserver", name = "enabled")
+-class MockRestServiceServerAutoConfiguration {
++public class MockRestServiceServerAutoConfiguration {
+ 
+ 	@Bean
+ 	public MockServerRestTemplateCustomizer mockServerRestTemplateCustomizer() {
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/WebClientRestTemplateAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/WebClientRestTemplateAutoConfiguration.java
+index e3ef27a..8d16ffe 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/WebClientRestTemplateAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/WebClientRestTemplateAutoConfiguration.java
+@@ -29,12 +29,13 @@
+  * {@link AutoConfigureWebClient#registerRestTemplate()} is {@code true}.
+  *
+  * @author Phillip Webb
++ * @since 1.4.0
+  * @see AutoConfigureMockRestServiceServer
+  */
+ @Configuration
+ @ConditionalOnProperty(prefix = "spring.test.webclient", name = "register-rest-template")
+ @AutoConfigureAfter(WebClientAutoConfiguration.class)
+-class WebClientRestTemplateAutoConfiguration {
++public class WebClientRestTemplateAutoConfiguration {
+ 
+ 	@Bean
+ 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcAutoConfiguration.java
+index 9a48362..24cc252 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcAutoConfiguration.java
+@@ -38,12 +38,13 @@
+  * @author Phillip Webb
+  * @author Andy Wilkinson
+  * @see AutoConfigureWebMvc
++ * @since 1.4.0
+  */
+ @Configuration
+ @ConditionalOnWebApplication
+ @AutoConfigureAfter(WebMvcAutoConfiguration.class)
+ @EnableConfigurationProperties
+-class MockMvcAutoConfiguration {
++public class MockMvcAutoConfiguration {
+ 
+ 	private final WebApplicationContext context;
+ 
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcSecurityAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcSecurityAutoConfiguration.java
+index 6c8331d..f683d2d 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcSecurityAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcSecurityAutoConfiguration.java
+@@ -26,6 +26,7 @@
+  * Auto-configuration for Spring Security's testing support.
+  *
+  * @author Andy Wilkinson
++ * @since 1.4.0
+  */
+ @Configuration
+ @ConditionalOnProperty(prefix = "spring.test.mockmvc", name = "secure", havingValue = "true", matchIfMissing = true)
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcWebClientAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcWebClientAutoConfiguration.java
+index 6cecf27..b884e28 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcWebClientAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcWebClientAutoConfiguration.java
+@@ -34,12 +34,13 @@
+  * Auto-configuration for HtmlUnit {@link WebClient} MockMVC integration.
+  *
+  * @author Phillip Webb
++ * @since 1.4.0
+  */
+ @Configuration
+ @ConditionalOnClass(WebClient.class)
+ @AutoConfigureAfter(MockMvcAutoConfiguration.class)
+ @ConditionalOnProperty(prefix = "spring.test.webmvc.webclient", name = "enabled", matchIfMissing = true)
+-class MockMvcWebClientAutoConfiguration {
++public class MockMvcWebClientAutoConfiguration {
+ 
+ 	private final Environment environment;
+ 
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcWebDriverAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcWebDriverAutoConfiguration.java
+index 999555e..5fadb29 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcWebDriverAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/servlet/MockMvcWebDriverAutoConfiguration.java
+@@ -36,12 +36,13 @@
+  * Auto-configuration for Selenium {@link WebDriver} MockMVC integration.
+  *
+  * @author Phillip Webb
++ * @since 1.4.0
+  */
+ @Configuration
+ @ConditionalOnClass(HtmlUnitDriver.class)
+ @AutoConfigureAfter(MockMvcAutoConfiguration.class)
+ @ConditionalOnProperty(prefix = "spring.test.webmvc.webdriver", name = "enabled", matchIfMissing = true)
+-class MockMvcWebDriverAutoConfiguration {
++public class MockMvcWebDriverAutoConfiguration {
+ 
+ 	private final Environment environment;
+ 
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestDatabaseAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestDatabaseAutoConfiguration.java
+index 2ff86ac..aa3ce10 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestDatabaseAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/orm/jpa/TestDatabaseAutoConfiguration.java
+@@ -50,11 +50,12 @@
+  * Auto-configuration for a test database.
+  *
+  * @author Phillip Webb
++ * @since 1.4.0
+  * @see AutoConfigureTestDatabase
+  */
+ @Configuration
+ @AutoConfigureBefore(DataSourceAutoConfiguration.class)
+-class TestDatabaseAutoConfiguration {
++public class TestDatabaseAutoConfiguration {
+ 
+ 	private final Environment environment;
+ 

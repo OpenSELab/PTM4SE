@@ -1,0 +1,28 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
+index 3ec63ee..cd5e7e7 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
+@@ -938,7 +938,8 @@
+           // we cannot proceed and need to tell the hive client that retries won't succeed either
+           throw new HiveFatalException(
+                ErrorMsg.DYNAMIC_PARTITIONS_TOO_MANY_PER_NODE_ERROR.getErrorCodedMsg()
+-               + "Maximum was set to: " + maxPartitions);
++               + "Maximum was set to " + maxPartitions + " partitions per node"
++               + ", number of dynamic partitions on this node: " + valToPaths.size());
+         }
+ 
+         if (!conf.getDpSortState().equals(DPSortState.NONE) && prevFsp != null) {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
+index 3ec63ee..cd5e7e7 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/FileSinkOperator.java
+@@ -938,7 +938,8 @@
+           // we cannot proceed and need to tell the hive client that retries won't succeed either
+           throw new HiveFatalException(
+                ErrorMsg.DYNAMIC_PARTITIONS_TOO_MANY_PER_NODE_ERROR.getErrorCodedMsg()
+-               + "Maximum was set to: " + maxPartitions);
++               + "Maximum was set to " + maxPartitions + " partitions per node"
++               + ", number of dynamic partitions on this node: " + valToPaths.size());
+         }
+ 
+         if (!conf.getDpSortState().equals(DPSortState.NONE) && prevFsp != null) {

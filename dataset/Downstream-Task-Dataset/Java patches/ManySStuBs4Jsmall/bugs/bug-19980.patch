@@ -1,0 +1,34 @@
+diff --git a/bundles/core/org.openhab.core/src/main/java/org/openhab/core/binding/AbstractActiveBinding.java b/bundles/core/org.openhab.core/src/main/java/org/openhab/core/binding/AbstractActiveBinding.java
+index be00dc5..9fa0a08 100644
+--- a/bundles/core/org.openhab.core/src/main/java/org/openhab/core/binding/AbstractActiveBinding.java
++++ b/bundles/core/org.openhab.core/src/main/java/org/openhab/core/binding/AbstractActiveBinding.java
+@@ -154,7 +154,7 @@
+ 	 * Takes care about starting the refresh thread. It either creates a new
+ 	 * RefreshThread if no instance exists or starts the existing instance.
+ 	 */
+-	private void start() {
++	protected void start() {
+ 		if (this.refreshThread == null) {
+ 			this.refreshThread = new RefreshThread(getName(), getRefreshInterval());
+ 			this.refreshThread.start();
+@@ -178,7 +178,7 @@
+ 	 * 
+ 	 * @return the refresh interval
+ 	 */
+-	protected abstract int getRefreshInterval();
++	protected abstract long getRefreshInterval();
+ 	
+ 	/**
+ 	 * Returns the name of the Refresh thread.
+@@ -195,9 +195,9 @@
+ 	 */
+ 	class RefreshThread extends Thread {
+ 		
+-		private int refreshInterval;
++		private long refreshInterval;
+ 		
+-		public RefreshThread(String name, int refreshInterval) {
++		public RefreshThread(String name, long refreshInterval) {
+ 			super(name);
+ 			this.refreshInterval = refreshInterval;
+ 		}

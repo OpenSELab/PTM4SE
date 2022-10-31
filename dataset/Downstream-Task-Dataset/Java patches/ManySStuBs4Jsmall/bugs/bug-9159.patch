@@ -1,0 +1,40 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalCatchCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalCatchCheck.java
+index 5843e3f..bf3d1c2 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalCatchCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalCatchCheck.java
+@@ -105,7 +105,7 @@
+      * @param parentToken - parent node for types (TYPE or BOR)
+      * @return list, that contains all exception types in current catch
+      */
+-    public static List<DetailAST> getAllExceptionTypes(DetailAST parentToken) {
++    private static List<DetailAST> getAllExceptionTypes(DetailAST parentToken) {
+         DetailAST currentNode = parentToken.getFirstChild();
+         final List<DetailAST> exceptionTypes = new LinkedList<>();
+         if (currentNode.getType() == TokenTypes.BOR) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/indentation/CommentsIndentationCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/indentation/CommentsIndentationCheck.java
+index 594f250..04bb27c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/indentation/CommentsIndentationCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/indentation/CommentsIndentationCheck.java
+@@ -262,7 +262,8 @@
+      * @param comment single line comment.
+      * @return the first token of the destributed previous statement of single line comment.
+      */
+-    public static DetailAST getDistributedPreviousStatementOfSingleLineComment(DetailAST comment) {
++    private static DetailAST getDistributedPreviousStatementOfSingleLineComment(
++            DetailAST comment) {
+         DetailAST previousStatement = comment.getPreviousSibling();
+         if (previousStatement.getType() == TokenTypes.LITERAL_RETURN
+                 || previousStatement.getType() == TokenTypes.LITERAL_THROW) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalCatchCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalCatchCheck.java
+index 5843e3f..bf3d1c2 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalCatchCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalCatchCheck.java
+@@ -105,7 +105,7 @@
+      * @param parentToken - parent node for types (TYPE or BOR)
+      * @return list, that contains all exception types in current catch
+      */
+-    public static List<DetailAST> getAllExceptionTypes(DetailAST parentToken) {
++    private static List<DetailAST> getAllExceptionTypes(DetailAST parentToken) {
+         DetailAST currentNode = parentToken.getFirstChild();
+         final List<DetailAST> exceptionTypes = new LinkedList<>();
+         if (currentNode.getType() == TokenTypes.BOR) {

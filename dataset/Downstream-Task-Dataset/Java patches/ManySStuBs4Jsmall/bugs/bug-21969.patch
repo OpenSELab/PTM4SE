@@ -1,0 +1,26 @@
+diff --git a/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java b/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
+index a7928ab..b5123e5 100644
+--- a/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
+@@ -231,7 +231,7 @@
+       tokenOffset += sentenceTokens.size();
+       sentence.set(CoreAnnotations.TokenEndAnnotation.class, tokenOffset);
+       // update tokenOffset to first token of next sentence (if there is a next sentence)
+-      while (tokenOffset < tokens.size()-1 && tokens.get(tokenOffset).isNewline())
++      while (tokenOffset < tokens.size()-1 && Boolean.TRUE.equals(tokens.get(tokenOffset).isNewline()))
+         tokenOffset++;
+       sentence.set(CoreAnnotations.TokenEndAnnotation.class, tokenOffset);
+       sentence.set(CoreAnnotations.SentenceIndexAnnotation.class, sentences.size());
+diff --git a/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java b/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
+index a7928ab..b5123e5 100644
+--- a/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
+@@ -231,7 +231,7 @@
+       tokenOffset += sentenceTokens.size();
+       sentence.set(CoreAnnotations.TokenEndAnnotation.class, tokenOffset);
+       // update tokenOffset to first token of next sentence (if there is a next sentence)
+-      while (tokenOffset < tokens.size()-1 && tokens.get(tokenOffset).isNewline())
++      while (tokenOffset < tokens.size()-1 && Boolean.TRUE.equals(tokens.get(tokenOffset).isNewline()))
+         tokenOffset++;
+       sentence.set(CoreAnnotations.TokenEndAnnotation.class, tokenOffset);
+       sentence.set(CoreAnnotations.SentenceIndexAnnotation.class, sentences.size());

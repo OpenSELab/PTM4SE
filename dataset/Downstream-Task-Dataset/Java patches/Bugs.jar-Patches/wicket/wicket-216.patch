@@ -1,0 +1,16 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/MountedMapper.java b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/MountedMapper.java
+index 12f8985..c55222e 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/MountedMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/MountedMapper.java
+@@ -424,6 +424,11 @@ public class MountedMapper extends AbstractBookmarkableMapper
+ 			String optionalPlaceholder = getOptionalPlaceholder(mountSegments[i]);
+ 			if (placeholder != null)
+ 			{
++				if (!copy.getNamedKeys().contains(placeholder))
++				{
++					// no value for placeholder - cannot mount
++					return null;
++				}
+ 				url.getSegments().set(i - dropped, copy.get(placeholder).toString(""));
+ 				copy.remove(placeholder);
+ 			}

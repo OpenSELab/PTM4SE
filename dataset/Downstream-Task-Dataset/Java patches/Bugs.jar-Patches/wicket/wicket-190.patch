@@ -1,0 +1,21 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/MountedMapper.java b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/MountedMapper.java
+index ae742d6..12f8985 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/MountedMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/MountedMapper.java
+@@ -495,7 +495,15 @@ public class MountedMapper extends AbstractBookmarkableMapper
+ 	{
+ 		if (urlStartsWith(request.getUrl(), mountSegments))
+ 		{
+-			return mountSegments.length;
++			/* see WICKET-5056 - alter score with pathSegment type */
++			int countOptional = 0;
++			int fixedSegments = 0;
++			for (MountPathSegment pathSegment : pathSegments)
++			{
++				fixedSegments += pathSegment.getFixedPartSize();
++				countOptional += pathSegment.getOptionalParameters();
++			}
++			return mountSegments.length - countOptional + fixedSegments;
+ 		}
+ 		else
+ 		{

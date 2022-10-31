@@ -1,0 +1,150 @@
+diff --git a/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java b/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
+index 80afe62..0b8d3ec 100644
+--- a/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
++++ b/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
+@@ -507,7 +507,7 @@
+    */
+   protected boolean isRoot(String key) {
+     return PathUtils.normalizePath(key, PATH_SEPARATOR).equals(
+-        PathUtils.normalizePath(getRootKey(), PATH_SEPARATOR));
++        PathUtils.normalizePath(mUri.toString(), PATH_SEPARATOR));
+   }
+ 
+   /**
+@@ -544,11 +544,11 @@
+       throws IOException;
+ 
+   /**
+-   * Get full path of root in object store.
++   * Get full path of the bucket in object store.
+    *
+    * @return full path including scheme and bucket
+    */
+-  protected abstract String getRootKey();
++  protected abstract String getBucketPath();
+ 
+   /**
+    * Lists the files in the given path, the paths will be their logical names and not contain the
+@@ -688,7 +688,7 @@
+    */
+   private String stripPrefixIfPresent(String path) {
+     String stripedKey = CommonUtils.stripPrefixIfPresent(path,
+-        PathUtils.normalizePath(getRootKey(), PATH_SEPARATOR));
++        PathUtils.normalizePath(getBucketPath(), PATH_SEPARATOR));
+     if (!stripedKey.equals(path)) {
+       return stripedKey;
+     }
+diff --git a/tests/src/test/java/alluxio/underfs/UnderStorageSystemInterfaceIntegrationTest.java b/tests/src/test/java/alluxio/underfs/UnderStorageSystemInterfaceIntegrationTest.java
+index 74f9529..fb7717e 100644
+--- a/tests/src/test/java/alluxio/underfs/UnderStorageSystemInterfaceIntegrationTest.java
++++ b/tests/src/test/java/alluxio/underfs/UnderStorageSystemInterfaceIntegrationTest.java
+@@ -763,7 +763,7 @@
+     String baseDirectoryName = "base";
+     String baseDirectoryPath = PathUtils.concatPath(mUnderfsAddress, baseDirectoryName);
+     String baseDirectoryKey =
+-        baseDirectoryPath.substring(PathUtils.normalizePath(ufs.getRootKey(), "/").length());
++        baseDirectoryPath.substring(PathUtils.normalizePath(ufs.getBucketPath(), "/").length());
+     // Pseudo-directories to be inferred
+     String[] subDirectories = {"a", "b", "c"};
+     // Every directory (base and pseudo) has these files
+diff --git a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystem.java b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystem.java
+index 97d7ade..3f0a48d 100644
+--- a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystem.java
++++ b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystem.java
+@@ -303,7 +303,7 @@
+   }
+ 
+   @Override
+-  protected String getRootKey() {
++  protected String getBucketPath() {
+     return Constants.HEADER_GCS + mBucketName;
+   }
+ 
+diff --git a/underfs/oss/src/main/java/alluxio/underfs/oss/OSSUnderFileSystem.java b/underfs/oss/src/main/java/alluxio/underfs/oss/OSSUnderFileSystem.java
+index 5880d5a..9e93b74 100644
+--- a/underfs/oss/src/main/java/alluxio/underfs/oss/OSSUnderFileSystem.java
++++ b/underfs/oss/src/main/java/alluxio/underfs/oss/OSSUnderFileSystem.java
+@@ -261,7 +261,7 @@
+   }
+ 
+   @Override
+-  protected String getRootKey() {
++  protected String getBucketPath() {
+     return Constants.HEADER_OSS + mBucketName;
+   }
+ 
+diff --git a/underfs/s3/src/main/java/alluxio/underfs/s3/S3UnderFileSystem.java b/underfs/s3/src/main/java/alluxio/underfs/s3/S3UnderFileSystem.java
+index 6044d31..ec98c59 100644
+--- a/underfs/s3/src/main/java/alluxio/underfs/s3/S3UnderFileSystem.java
++++ b/underfs/s3/src/main/java/alluxio/underfs/s3/S3UnderFileSystem.java
+@@ -345,7 +345,7 @@
+   }
+ 
+   @Override
+-  protected String getRootKey() {
++  protected String getBucketPath() {
+     return Constants.HEADER_S3N + mBucketName;
+   }
+ 
+diff --git a/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java b/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
+index ea01c66..730452d 100644
+--- a/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
++++ b/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AUnderFileSystem.java
+@@ -384,7 +384,7 @@
+   }
+ 
+   @Override
+-  protected String getRootKey() {
++  protected String getBucketPath() {
+     return Constants.HEADER_S3A + mBucketName;
+   }
+ 
+diff --git a/underfs/swift/src/main/java/alluxio/underfs/swift/SwiftUnderFileSystem.java b/underfs/swift/src/main/java/alluxio/underfs/swift/SwiftUnderFileSystem.java
+index a198870..857cab1 100644
+--- a/underfs/swift/src/main/java/alluxio/underfs/swift/SwiftUnderFileSystem.java
++++ b/underfs/swift/src/main/java/alluxio/underfs/swift/SwiftUnderFileSystem.java
+@@ -359,7 +359,7 @@
+   }
+ 
+   @Override
+-  protected String getRootKey() {
++  protected String getBucketPath() {
+     return Constants.HEADER_SWIFT + mContainerName + PATH_SEPARATOR;
+   }
+ 
+diff --git a/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java b/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
+index 80afe62..0b8d3ec 100644
+--- a/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
++++ b/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
+@@ -507,7 +507,7 @@
+    */
+   protected boolean isRoot(String key) {
+     return PathUtils.normalizePath(key, PATH_SEPARATOR).equals(
+-        PathUtils.normalizePath(getRootKey(), PATH_SEPARATOR));
++        PathUtils.normalizePath(mUri.toString(), PATH_SEPARATOR));
+   }
+ 
+   /**
+@@ -544,11 +544,11 @@
+       throws IOException;
+ 
+   /**
+-   * Get full path of root in object store.
++   * Get full path of the bucket in object store.
+    *
+    * @return full path including scheme and bucket
+    */
+-  protected abstract String getRootKey();
++  protected abstract String getBucketPath();
+ 
+   /**
+    * Lists the files in the given path, the paths will be their logical names and not contain the
+@@ -688,7 +688,7 @@
+    */
+   private String stripPrefixIfPresent(String path) {
+     String stripedKey = CommonUtils.stripPrefixIfPresent(path,
+-        PathUtils.normalizePath(getRootKey(), PATH_SEPARATOR));
++        PathUtils.normalizePath(getBucketPath(), PATH_SEPARATOR));
+     if (!stripedKey.equals(path)) {
+       return stripedKey;
+     }

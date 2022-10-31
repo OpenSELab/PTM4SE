@@ -1,0 +1,56 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
+index a83b52d..f5f5242 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
+@@ -190,12 +190,11 @@
+ 	}
+ 	
+ 	/**
+-	 * Total negatives true negatives + falseNegatives
++	 * Total negatives true negatives + false positives
+ 	 * @return the overall negative count
+ 	 */
+ 	public double negative() {
+-		return trueNegatives() + falseNegatives.totalCount();
+-		
++		return trueNegatives() + falsePositive();
+ 	}
+ 	
+ 	/**
+@@ -209,7 +208,7 @@
+ 	
+ 	/**
+ 	 * Accuracy: 
+-	 * TP + TN / (P + N)
++	 * (TP + TN) / (P + N)
+ 	 * @return the accuracy of the guesses so far
+ 	 */
+ 	public double accuracy() {
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
+index a83b52d..f5f5242 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/eval/Evaluation.java
+@@ -190,12 +190,11 @@
+ 	}
+ 	
+ 	/**
+-	 * Total negatives true negatives + falseNegatives
++	 * Total negatives true negatives + false positives
+ 	 * @return the overall negative count
+ 	 */
+ 	public double negative() {
+-		return trueNegatives() + falseNegatives.totalCount();
+-		
++		return trueNegatives() + falsePositive();
+ 	}
+ 	
+ 	/**
+@@ -209,7 +208,7 @@
+ 	
+ 	/**
+ 	 * Accuracy: 
+-	 * TP + TN / (P + N)
++	 * (TP + TN) / (P + N)
+ 	 * @return the accuracy of the guesses so far
+ 	 */
+ 	public double accuracy() {

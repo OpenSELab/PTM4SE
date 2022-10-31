@@ -1,0 +1,26 @@
+diff --git a/ee/src/main/java/org/jboss/as/ee/managedbean/processors/ManagedBeanAnnotationProcessor.java b/ee/src/main/java/org/jboss/as/ee/managedbean/processors/ManagedBeanAnnotationProcessor.java
+index 1820090..2123f12 100644
+--- a/ee/src/main/java/org/jboss/as/ee/managedbean/processors/ManagedBeanAnnotationProcessor.java
++++ b/ee/src/main/java/org/jboss/as/ee/managedbean/processors/ManagedBeanAnnotationProcessor.java
+@@ -88,7 +88,7 @@
+             // Get the managed bean name from the annotation
+             final AnnotationValue nameValue = instance.value();
+             final String beanName = nameValue == null || nameValue.asString().isEmpty() ? beanClassName : nameValue.asString();
+-            final ComponentDescription componentDescription = new ComponentDescription(beanName, beanClassName, moduleDescription, moduleDescription.getClassByName(beanClassName), deploymentUnitServiceName);
++            final ComponentDescription componentDescription = new ComponentDescription(beanName, beanClassName, moduleDescription, moduleDescription.getClassByName(beanClassName), deploymentUnit.getServiceName());
+ 
+             // Add the view
+             ViewDescription viewDescription = new ViewDescription(componentDescription, beanClassName);
+diff --git a/ee/src/main/java/org/jboss/as/ee/managedbean/processors/ManagedBeanAnnotationProcessor.java b/ee/src/main/java/org/jboss/as/ee/managedbean/processors/ManagedBeanAnnotationProcessor.java
+index 1820090..2123f12 100644
+--- a/ee/src/main/java/org/jboss/as/ee/managedbean/processors/ManagedBeanAnnotationProcessor.java
++++ b/ee/src/main/java/org/jboss/as/ee/managedbean/processors/ManagedBeanAnnotationProcessor.java
+@@ -88,7 +88,7 @@
+             // Get the managed bean name from the annotation
+             final AnnotationValue nameValue = instance.value();
+             final String beanName = nameValue == null || nameValue.asString().isEmpty() ? beanClassName : nameValue.asString();
+-            final ComponentDescription componentDescription = new ComponentDescription(beanName, beanClassName, moduleDescription, moduleDescription.getClassByName(beanClassName), deploymentUnitServiceName);
++            final ComponentDescription componentDescription = new ComponentDescription(beanName, beanClassName, moduleDescription, moduleDescription.getClassByName(beanClassName), deploymentUnit.getServiceName());
+ 
+             // Add the view
+             ViewDescription viewDescription = new ViewDescription(componentDescription, beanClassName);

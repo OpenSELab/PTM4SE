@@ -1,0 +1,82 @@
+diff --git a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+index a58e3d8..79ebb05 100644
+--- a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
++++ b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+@@ -2005,15 +2005,14 @@
+         new TimeValidator(TimeUnit.SECONDS),
+         "remote spark client JobHandle future timeout value in seconds."),
+ 
+-    LLAP_ENABLED("hive.llap.enabled", false, ""),
+-    LLAP_LOW_LEVEL_CACHE("hive.llap.use.lowlevel.cache", true, ""),
+-    LLAP_ORC_CACHE_MIN_ALLOC("hive.llap.cache.orc.alloc.min", 128 * 1024, ""),
+-    LLAP_ORC_CACHE_MAX_ALLOC("hive.llap.cache.orc.alloc.max", 16 * 1024 * 1024, ""),
+-    LLAP_ORC_CACHE_ARENA_SIZE("hive.llap.cache.orc.arena.size", 128 * 1024 * 1024, ""),
+-    LLAP_ORC_CACHE_MAX_SIZE("hive.llap.cache.orc.size", 1024L * 1024 * 1024, ""),
+-    LLAP_REQUEST_THREAD_COUNT("hive.llap.request.thread.count", 16, ""),
+-    LLAP_USE_LRFU("hive.llap.use.lrfu", false, ""),
+-    LLAP_LRFU_LAMBDA("hive.llap.lrfu.lambda", 0.01f, "")
++    LLAP_IO_ENABLED("hive.llap.io.enabled", true, ""),
++    LLAP_LOW_LEVEL_CACHE("hive.llap.io.use.lowlevel.cache", true, ""),
++    LLAP_ORC_CACHE_MIN_ALLOC("hive.llap.io.cache.orc.alloc.min", 128 * 1024, ""),
++    LLAP_ORC_CACHE_MAX_ALLOC("hive.llap.io.cache.orc.alloc.max", 16 * 1024 * 1024, ""),
++    LLAP_ORC_CACHE_ARENA_SIZE("hive.llap.io.cache.orc.arena.size", 128 * 1024 * 1024, ""),
++    LLAP_ORC_CACHE_MAX_SIZE("hive.llap.io.cache.orc.size", 1024L * 1024 * 1024, ""),
++    LLAP_USE_LRFU("hive.llap.io.use.lrfu", false, ""),
++    LLAP_LRFU_LAMBDA("hive.llap.io.lrfu.lambda", 0.01f, "")
+     ;
+ 
+     public final String varname;
+diff --git a/llap-server/src/java/org/apache/hadoop/hive/llap/cache/LowLevelCacheImpl.java b/llap-server/src/java/org/apache/hadoop/hive/llap/cache/LowLevelCacheImpl.java
+index 4ebd9a1..09f5985 100644
+--- a/llap-server/src/java/org/apache/hadoop/hive/llap/cache/LowLevelCacheImpl.java
++++ b/llap-server/src/java/org/apache/hadoop/hive/llap/cache/LowLevelCacheImpl.java
+@@ -190,7 +190,7 @@
+                   + oldVal.declaredLength + " vs " + buffer.declaredLength + " @" + offset);
+             }
+             // We found an old, valid block for this key in the cache.
+-s            releaseBufferInternal(buffer);
++            releaseBufferInternal(buffer);
+             buffers[i] = oldVal;
+             if (result == null) {
+               result = new long[align64(buffers.length) >>> 6];
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/io/HiveInputFormat.java b/ql/src/java/org/apache/hadoop/hive/ql/io/HiveInputFormat.java
+index 49bdac0..ea8cc43 100755
+--- a/ql/src/java/org/apache/hadoop/hive/ql/io/HiveInputFormat.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/io/HiveInputFormat.java
+@@ -202,7 +202,7 @@
+ 
+   public static InputFormat<WritableComparable, Writable> wrapForLlap(
+       InputFormat<WritableComparable, Writable> inputFormat, Configuration conf) {
+-    if (!HiveConf.getBoolVar(conf, ConfVars.LLAP_ENABLED)) {
++    if (!HiveConf.getBoolVar(conf, ConfVars.LLAP_IO_ENABLED)) {
+       return inputFormat; // LLAP not enabled, no-op.
+     }
+     boolean isSupported = inputFormat instanceof LlapWrappableInputFormatInterface,
+diff --git a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+index a58e3d8..79ebb05 100644
+--- a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
++++ b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+@@ -2005,15 +2005,14 @@
+         new TimeValidator(TimeUnit.SECONDS),
+         "remote spark client JobHandle future timeout value in seconds."),
+ 
+-    LLAP_ENABLED("hive.llap.enabled", false, ""),
+-    LLAP_LOW_LEVEL_CACHE("hive.llap.use.lowlevel.cache", true, ""),
+-    LLAP_ORC_CACHE_MIN_ALLOC("hive.llap.cache.orc.alloc.min", 128 * 1024, ""),
+-    LLAP_ORC_CACHE_MAX_ALLOC("hive.llap.cache.orc.alloc.max", 16 * 1024 * 1024, ""),
+-    LLAP_ORC_CACHE_ARENA_SIZE("hive.llap.cache.orc.arena.size", 128 * 1024 * 1024, ""),
+-    LLAP_ORC_CACHE_MAX_SIZE("hive.llap.cache.orc.size", 1024L * 1024 * 1024, ""),
+-    LLAP_REQUEST_THREAD_COUNT("hive.llap.request.thread.count", 16, ""),
+-    LLAP_USE_LRFU("hive.llap.use.lrfu", false, ""),
+-    LLAP_LRFU_LAMBDA("hive.llap.lrfu.lambda", 0.01f, "")
++    LLAP_IO_ENABLED("hive.llap.io.enabled", true, ""),
++    LLAP_LOW_LEVEL_CACHE("hive.llap.io.use.lowlevel.cache", true, ""),
++    LLAP_ORC_CACHE_MIN_ALLOC("hive.llap.io.cache.orc.alloc.min", 128 * 1024, ""),
++    LLAP_ORC_CACHE_MAX_ALLOC("hive.llap.io.cache.orc.alloc.max", 16 * 1024 * 1024, ""),
++    LLAP_ORC_CACHE_ARENA_SIZE("hive.llap.io.cache.orc.arena.size", 128 * 1024 * 1024, ""),
++    LLAP_ORC_CACHE_MAX_SIZE("hive.llap.io.cache.orc.size", 1024L * 1024 * 1024, ""),
++    LLAP_USE_LRFU("hive.llap.io.use.lrfu", false, ""),
++    LLAP_LRFU_LAMBDA("hive.llap.io.lrfu.lambda", 0.01f, "")
+     ;
+ 
+     public final String varname;

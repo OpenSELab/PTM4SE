@@ -1,0 +1,26 @@
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/ByteBufferedInputChannelWrapper.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/ByteBufferedInputChannelWrapper.java
+index ba4f9d7..16d9b53 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/ByteBufferedInputChannelWrapper.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/ByteBufferedInputChannelWrapper.java
+@@ -225,7 +225,7 @@
+ 
+ 					// Wait for missing envelope to arrive
+ 					while (sequenceNumber > this.nextExpectedSequenceNumber) {
+-						wait(100);
++						this.queuedEnvelopes.wait(100);
+ 					}
+ 
+ 				} else {
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/ByteBufferedInputChannelWrapper.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/ByteBufferedInputChannelWrapper.java
+index ba4f9d7..16d9b53 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/ByteBufferedInputChannelWrapper.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/ByteBufferedInputChannelWrapper.java
+@@ -225,7 +225,7 @@
+ 
+ 					// Wait for missing envelope to arrive
+ 					while (sequenceNumber > this.nextExpectedSequenceNumber) {
+-						wait(100);
++						this.queuedEnvelopes.wait(100);
+ 					}
+ 
+ 				} else {

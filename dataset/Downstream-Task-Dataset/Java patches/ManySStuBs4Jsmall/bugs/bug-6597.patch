@@ -1,0 +1,15 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/RegularPactTask.java b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/RegularPactTask.java
+index e8d7add..f884df1 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/RegularPactTask.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/RegularPactTask.java
+@@ -256,8 +256,8 @@
+ 			initInputReaders();
+ 			initBroadcastInputReaders();
+ 		} catch (Exception e) {
+-			throw new RuntimeException("Initializing the input streams failed" +
+-				e.getMessage() == null ? "." : ": " + e.getMessage(), e);
++			throw new RuntimeException("Initializing the input streams failed in Task " + getEnvironment().getTaskName() +
++					(e.getMessage() == null ? "." : ": " + e.getMessage()), e);
+ 		}
+ 
+ 		// initialize the writers. this is necessary for nephele to create the output gates.

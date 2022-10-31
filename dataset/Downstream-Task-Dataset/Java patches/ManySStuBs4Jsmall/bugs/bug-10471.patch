@@ -1,0 +1,44 @@
+diff --git a/datavec-spark-inference-parent/datavec-spark-inference-server/src/main/java/org/datavec/spark/transform/CSVSparkTransformServer.java b/datavec-spark-inference-parent/datavec-spark-inference-server/src/main/java/org/datavec/spark/transform/CSVSparkTransformServer.java
+index cdae35b..e3dbeec 100644
+--- a/datavec-spark-inference-parent/datavec-spark-inference-server/src/main/java/org/datavec/spark/transform/CSVSparkTransformServer.java
++++ b/datavec-spark-inference-parent/datavec-spark-inference-server/src/main/java/org/datavec/spark/transform/CSVSparkTransformServer.java
+@@ -67,7 +67,7 @@
+             try {
+                 if (transform == null)
+                     return badRequest();
+-                return ok(objectMapper.writeValueAsString(transform.getTransformProcess().toJson())).as(contentType);
++                return ok(transform.getTransformProcess().toJson()).as(contentType);
+             } catch (Exception e) {
+                 log.error("Error in GET /transformprocess",e);
+                 return internalServerError(e.getMessage());
+@@ -79,7 +79,7 @@
+                 TransformProcess transformProcess = TransformProcess.fromJson(getJsonText());
+                 setCSVTransformProcess(transformProcess);
+                 log.info("Transform process initialized");
+-                return ok(objectMapper.writeValueAsString(transformProcess)).as(contentType);
++                return ok();
+             } catch (Exception e) {
+                 log.error("Error in POST /transformprocess",e);
+                 return internalServerError(e.getMessage());
+diff --git a/datavec-spark-inference-parent/datavec-spark-inference-server/src/main/java/org/datavec/spark/transform/CSVSparkTransformServer.java b/datavec-spark-inference-parent/datavec-spark-inference-server/src/main/java/org/datavec/spark/transform/CSVSparkTransformServer.java
+index cdae35b..e3dbeec 100644
+--- a/datavec-spark-inference-parent/datavec-spark-inference-server/src/main/java/org/datavec/spark/transform/CSVSparkTransformServer.java
++++ b/datavec-spark-inference-parent/datavec-spark-inference-server/src/main/java/org/datavec/spark/transform/CSVSparkTransformServer.java
+@@ -67,7 +67,7 @@
+             try {
+                 if (transform == null)
+                     return badRequest();
+-                return ok(objectMapper.writeValueAsString(transform.getTransformProcess().toJson())).as(contentType);
++                return ok(transform.getTransformProcess().toJson()).as(contentType);
+             } catch (Exception e) {
+                 log.error("Error in GET /transformprocess",e);
+                 return internalServerError(e.getMessage());
+@@ -79,7 +79,7 @@
+                 TransformProcess transformProcess = TransformProcess.fromJson(getJsonText());
+                 setCSVTransformProcess(transformProcess);
+                 log.info("Transform process initialized");
+-                return ok(objectMapper.writeValueAsString(transformProcess)).as(contentType);
++                return ok();
+             } catch (Exception e) {
+                 log.error("Error in POST /transformprocess",e);
+                 return internalServerError(e.getMessage());

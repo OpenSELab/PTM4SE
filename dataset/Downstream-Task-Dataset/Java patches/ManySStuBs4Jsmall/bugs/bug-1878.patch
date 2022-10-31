@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index f3e75b5..ea23bf4 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -1157,7 +1157,7 @@
+         private String servletPath = "";
+         private String requestURI;
+         private String requestURL;
+-        private Map<String, Object> localAttributes = new ConcurrentHashMap<String, Object>();
++        private Map<String, Object> localAttributes = Collections.synchronizedMap(new HashMap<String, Object>());
+         private InputStream inputStream;
+         private Reader reader;
+         private String remoteAddr = "";
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index f3e75b5..ea23bf4 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -1157,7 +1157,7 @@
+         private String servletPath = "";
+         private String requestURI;
+         private String requestURL;
+-        private Map<String, Object> localAttributes = new ConcurrentHashMap<String, Object>();
++        private Map<String, Object> localAttributes = Collections.synchronizedMap(new HashMap<String, Object>());
+         private InputStream inputStream;
+         private Reader reader;
+         private String remoteAddr = "";

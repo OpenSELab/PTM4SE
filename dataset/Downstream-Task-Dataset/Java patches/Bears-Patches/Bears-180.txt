@@ -1,0 +1,11 @@
+--- a/spring-cloud-gcp-storage/src/main/java/org/springframework/cloud/gcp/storage/GoogleStorageResourceObject.java
++++ b/spring-cloud-gcp-storage/src/main/java/org/springframework/cloud/gcp/storage/GoogleStorageResourceObject.java
+@@ -107,7 +107,7 @@ public class GoogleStorageResourceObject implements WritableResource {
+ 
+ 	private BlobId getBlobId() throws IOException {
+ 		URI uri = getURI();
+-		return BlobId.of(uri.getHost(),
++		return BlobId.of(uri.getAuthority(),
+ 				uri.getPath().substring(1, uri.getPath().length()));
+ 	}
+ 

@@ -1,0 +1,41 @@
+diff --git a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingChannelHandler.java b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingChannelHandler.java
+index 0c2b690..ad189d6 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingChannelHandler.java
++++ b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingChannelHandler.java
+@@ -134,7 +134,7 @@
+ 
+     @Override
+     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
+-        logger.warn("Unexpected exception", e.getCause());
++        logger.warn("Unexpected exception while HTTP tunneling", e.getCause());
+         invalidateHttpSession();
+         e.getChannel().close();
+     }
+diff --git a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
+index b56b3cf..fe3f7f7 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
++++ b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
+@@ -278,7 +278,9 @@
+ 
+         @Override
+         public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
+-            logger.warn("Unexpected exception", e.getCause());
++            fireExceptionCaught(
++                    HttpTunnelingClientSocketChannel.this,
++                    e.getCause());
+             channel.close();
+         }
+     }
+diff --git a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingChannelHandler.java b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingChannelHandler.java
+index 0c2b690..ad189d6 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingChannelHandler.java
++++ b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingChannelHandler.java
+@@ -134,7 +134,7 @@
+ 
+     @Override
+     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
+-        logger.warn("Unexpected exception", e.getCause());
++        logger.warn("Unexpected exception while HTTP tunneling", e.getCause());
+         invalidateHttpSession();
+         e.getChannel().close();
+     }

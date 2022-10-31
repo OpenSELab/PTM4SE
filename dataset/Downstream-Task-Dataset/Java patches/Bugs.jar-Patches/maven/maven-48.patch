@@ -1,0 +1,34 @@
+diff --git a/maven-core/src/main/java/org/apache/maven/plugin/internal/DefaultMavenPluginManager.java b/maven-core/src/main/java/org/apache/maven/plugin/internal/DefaultMavenPluginManager.java
+index c815920..5704276 100644
+--- a/maven-core/src/main/java/org/apache/maven/plugin/internal/DefaultMavenPluginManager.java
++++ b/maven-core/src/main/java/org/apache/maven/plugin/internal/DefaultMavenPluginManager.java
+@@ -390,8 +390,6 @@ private void createPluginRealm( PluginDescriptor pluginDescriptor, MavenSession
+         RepositorySystemSession repositorySession = session.getRepositorySession();
+         if ( plugin.isExtensions() )
+         {
+-            // TODO discover components in #setupExtensionsRealm
+-
+             ExtensionRealmCache.CacheRecord extensionRecord;
+             try
+             {
+@@ -406,6 +404,11 @@ private void createPluginRealm( PluginDescriptor pluginDescriptor, MavenSession
+ 
+             pluginRealm = extensionRecord.realm;
+             pluginArtifacts = extensionRecord.artifacts;
++
++            for ( ComponentDescriptor<?> componentDescriptor : pluginDescriptor.getComponents() )
++            {
++                componentDescriptor.setRealm( pluginRealm );
++            }
+         }
+         else
+         {
+@@ -877,6 +880,8 @@ public void releaseMojo( Object mojo, MojoExecution mojoExecution )
+         {
+             ClassRealm extensionRealm = classRealmManager.createExtensionRealm( plugin, toAetherArtifacts( artifacts ) );
+ 
++            // TODO figure out how to use the same PluginDescriptor when running mojos
++
+             PluginDescriptor pluginDescriptor = null;
+             if ( plugin.isExtensions() && !artifacts.isEmpty() )
+             {

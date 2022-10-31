@@ -1,0 +1,75 @@
+diff --git a/core/common/src/main/java/alluxio/underfs/options/MkdirsOptions.java b/core/common/src/main/java/alluxio/underfs/options/MkdirsOptions.java
+index d65c42e..d3b90db 100644
+--- a/core/common/src/main/java/alluxio/underfs/options/MkdirsOptions.java
++++ b/core/common/src/main/java/alluxio/underfs/options/MkdirsOptions.java
+@@ -97,7 +97,7 @@
+     if (this == o) {
+       return true;
+     }
+-    if (!(o instanceof CreateOptions)) {
++    if (!(o instanceof MkdirsOptions)) {
+       return false;
+     }
+     MkdirsOptions that = (MkdirsOptions) o;
+diff --git a/core/common/src/test/java/alluxio/underfs/options/MkdirsOptionsTest.java b/core/common/src/test/java/alluxio/underfs/options/MkdirsOptionsTest.java
+index bcf823f..84e9413 100644
+--- a/core/common/src/test/java/alluxio/underfs/options/MkdirsOptionsTest.java
++++ b/core/common/src/test/java/alluxio/underfs/options/MkdirsOptionsTest.java
+@@ -93,6 +93,6 @@
+ 
+   @Test
+   public void equalsTest() throws Exception {
+-    CommonTestUtils.testEquals(CreateOptions.class);
++    CommonTestUtils.testEquals(MkdirsOptions.class);
+   }
+ }
+diff --git a/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java b/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
+index 853422b..1071bf7 100644
+--- a/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
++++ b/core/server/src/main/java/alluxio/master/file/FileSystemMaster.java
+@@ -1838,10 +1838,10 @@
+    * @throws BlockInfoException if an invalid block size is encountered
+    * @throws FileDoesNotExistException if there is no UFS path
+    * @throws InvalidPathException if invalid path is encountered
+-   * @throws InvalidFileSizeException if invalid file size is encountered
++   * @throws AccessControlException if permission checking fails or permission setting fails
+    * @throws FileAlreadyCompletedException if the file is already completed
++   * @throws InvalidFileSizeException if invalid file size is encountered
+    * @throws IOException if an I/O error occurs
+-   * @throws AccessControlException if permission checking fails
+    */
+   private long loadFileMetadataAndJournal(LockedInodePath inodePath,
+       MountTable.Resolution resolution, LoadMetadataOptions options)
+@@ -2405,7 +2405,9 @@
+    * @param opTimeMs the operation time (in milliseconds)
+    * @param options the method options
+    * @return list of inodes which were marked as persisted
+-   * @throws FileDoesNotExistException
++   * @throws FileDoesNotExistException if the file does not exist
++   * @throws InvalidPathException if the file path corresponding to the file id is invalid
++   * @throws AccessControlException if failed to set permission
+    */
+   private List<Inode<?>> setAttributeInternal(LockedInodePath inodePath, long opTimeMs,
+       SetAttributeOptions options)
+@@ -2487,6 +2489,8 @@
+   /**
+    * @param entry the entry to use
+    * @throws FileDoesNotExistException if the file does not exist
++   * @throws InvalidPathException if the file path corresponding to the file id is invalid
++   * @throws AccessControlException if failed to set permission
+    */
+   private void setAttributeFromEntry(SetAttributeEntry entry)
+       throws FileDoesNotExistException, InvalidPathException, AccessControlException {
+diff --git a/core/common/src/main/java/alluxio/underfs/options/MkdirsOptions.java b/core/common/src/main/java/alluxio/underfs/options/MkdirsOptions.java
+index d65c42e..d3b90db 100644
+--- a/core/common/src/main/java/alluxio/underfs/options/MkdirsOptions.java
++++ b/core/common/src/main/java/alluxio/underfs/options/MkdirsOptions.java
+@@ -97,7 +97,7 @@
+     if (this == o) {
+       return true;
+     }
+-    if (!(o instanceof CreateOptions)) {
++    if (!(o instanceof MkdirsOptions)) {
+       return false;
+     }
+     MkdirsOptions that = (MkdirsOptions) o;

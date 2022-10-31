@@ -1,0 +1,35 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/cycle/RequestCycle.java b/wicket-core/src/main/java/org/apache/wicket/request/cycle/RequestCycle.java
+index 022f95a..73a3463 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/cycle/RequestCycle.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/cycle/RequestCycle.java
+@@ -601,7 +601,7 @@ public class RequestCycle implements IRequestCycle, IEventSink
+ 	{
+ 		IPageProvider provider = new PageProvider(pageClass, null);
+ 		scheduleRequestHandlerAfterCurrent(new RenderPageRequestHandler(provider,
+-			RenderPageRequestHandler.RedirectPolicy.AUTO_REDIRECT));
++			RenderPageRequestHandler.RedirectPolicy.ALWAYS_REDIRECT));
+ 	}
+ 
+ 
+@@ -616,7 +616,7 @@ public class RequestCycle implements IRequestCycle, IEventSink
+ 	{
+ 		IPageProvider provider = new PageProvider(pageClass, parameters);
+ 		scheduleRequestHandlerAfterCurrent(new RenderPageRequestHandler(provider,
+-			RenderPageRequestHandler.RedirectPolicy.AUTO_REDIRECT));
++			RenderPageRequestHandler.RedirectPolicy.ALWAYS_REDIRECT));
+ 	}
+ 
+ 	/**
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java b/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
+index 7d85405..3c84f2c 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
+@@ -164,7 +164,7 @@ public class WebPageRenderer extends PageRenderer
+ 			bufferedResponse.writeTo((WebResponse)requestCycle.getResponse());
+ 		}
+ 		else if (getRedirectPolicy() == RedirectPolicy.NEVER_REDIRECT ||
+-			(isOnePassRender() && isAjax == false) //
++			(isOnePassRender() && isAjax == false && getRedirectPolicy() != RedirectPolicy.ALWAYS_REDIRECT) //
+ 			||
+ 			(!isAjax //
+ 				&&

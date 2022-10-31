@@ -1,0 +1,13 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/design/MutableExceptionCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/design/MutableExceptionCheck.java
+index d8b7b70..b35522f 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/design/MutableExceptionCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/design/MutableExceptionCheck.java
+@@ -97,7 +97,7 @@
+      */
+     private void visitClassDef(DetailAST aAST)
+     {
+-        mCheckingStack.push(Boolean.valueOf(mChecking));
++        mCheckingStack.push(mChecking ? Boolean.TRUE : Boolean.FALSE);
+         mChecking =
+             isExceptionClass(aAST.findFirstToken(TokenTypes.IDENT).getText());
+     }

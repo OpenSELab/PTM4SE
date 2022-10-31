@@ -1,0 +1,28 @@
+diff --git a/src/main/java/org/apache/hadoop/hbase/regionserver/SplitTransaction.java b/src/main/java/org/apache/hadoop/hbase/regionserver/SplitTransaction.java
+index 145c5b7..1bcde8c 100644
+--- a/src/main/java/org/apache/hadoop/hbase/regionserver/SplitTransaction.java
++++ b/src/main/java/org/apache/hadoop/hbase/regionserver/SplitTransaction.java
+@@ -181,7 +181,8 @@
+       final RegionServerServices services)
+   throws IOException {
+     LOG.info("Starting split of region " + this.parent);
+-    if (server.isStopped() || services.isStopping()) {
++    if ((server != null && server.isStopped()) ||
++        (services != null && services.isStopping())) {
+       throw new IOException("Server is stopped or stopping");
+     }
+     assert !this.parent.lock.writeLock().isHeldByCurrentThread() : "Unsafe to hold write lock while performing RPCs";
+diff --git a/src/main/java/org/apache/hadoop/hbase/regionserver/SplitTransaction.java b/src/main/java/org/apache/hadoop/hbase/regionserver/SplitTransaction.java
+index 145c5b7..1bcde8c 100644
+--- a/src/main/java/org/apache/hadoop/hbase/regionserver/SplitTransaction.java
++++ b/src/main/java/org/apache/hadoop/hbase/regionserver/SplitTransaction.java
+@@ -181,7 +181,8 @@
+       final RegionServerServices services)
+   throws IOException {
+     LOG.info("Starting split of region " + this.parent);
+-    if (server.isStopped() || services.isStopping()) {
++    if ((server != null && server.isStopped()) ||
++        (services != null && services.isStopping())) {
+       throw new IOException("Server is stopped or stopping");
+     }
+     assert !this.parent.lock.writeLock().isHeldByCurrentThread() : "Unsafe to hold write lock while performing RPCs";

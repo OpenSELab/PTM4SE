@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/SqlTypeByteCodeExpression.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/SqlTypeByteCodeExpression.java
+index 13fb5c9..90510aa 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/SqlTypeByteCodeExpression.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/SqlTypeByteCodeExpression.java
+@@ -55,7 +55,7 @@
+     @Override
+     public ByteCodeNode getByteCode()
+     {
+-        return InvokeInstruction.invokeDynamic(type.getName(), binding.getType(), bootstrapMethod, binding.getBindingId());
++        return InvokeInstruction.invokeDynamic(type.getName().replaceAll("\\W+", "_"), binding.getType(), bootstrapMethod, binding.getBindingId());
+     }
+ 
+     @Override
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/SqlTypeByteCodeExpression.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/SqlTypeByteCodeExpression.java
+index 13fb5c9..90510aa 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/SqlTypeByteCodeExpression.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/SqlTypeByteCodeExpression.java
+@@ -55,7 +55,7 @@
+     @Override
+     public ByteCodeNode getByteCode()
+     {
+-        return InvokeInstruction.invokeDynamic(type.getName(), binding.getType(), bootstrapMethod, binding.getBindingId());
++        return InvokeInstruction.invokeDynamic(type.getName().replaceAll("\\W+", "_"), binding.getType(), bootstrapMethod, binding.getBindingId());
+     }
+ 
+     @Override

@@ -1,0 +1,118 @@
+--- a/src/main/java/org/springframework/data/convert/ClassGeneratingEntityInstantiator.java
++++ b/src/main/java/org/springframework/data/convert/ClassGeneratingEntityInstantiator.java
+@@ -55,18 +55,7 @@ import org.springframework.util.ClassUtils;
+  */
+ public class ClassGeneratingEntityInstantiator implements EntityInstantiator {
+ 
+-	private static final int ARG_CACHE_SIZE = 100;
+-
+-	private static final ThreadLocal<Object[][]> OBJECT_POOL = ThreadLocal.withInitial(() -> {
+-
+-		Object[][] cached = new Object[ARG_CACHE_SIZE][];
+-
+-		for (int i = 0; i < ARG_CACHE_SIZE; i++) {
+-			cached[i] = new Object[i];
+-		}
+-
+-		return cached;
+-	});
++	private static final Object[] EMPTY_ARGS = new Object[0];
+ 
+ 	private final ObjectInstantiatorClassGenerator generator;
+ 
+@@ -170,30 +159,14 @@ public class ClassGeneratingEntityInstantiator implements EntityInstantiator {
+ 	}
+ 
+ 	/**
+	 * Allocates an object array for instance creation. This method uses the argument array cache if possible.
+ 	 *
+ 	 * @param argumentCount
+ 	 * @return
+ 	 * @since 2.0
+	 * @see #ARG_CACHE_SIZE
+ 	 */
+ 	static Object[] allocateArguments(int argumentCount) {
+-		return argumentCount < ARG_CACHE_SIZE ? OBJECT_POOL.get()[argumentCount] : new Object[argumentCount];
+-	}
+-
+-	/**
+-	 * Deallocates an object array used for instance creation. Parameters are cleared if the array was cached.
+-	 *
+-	 * @param argumentCount
+-	 * @return
+-	 * @since 2.0
+-	 * @see #ARG_CACHE_SIZE
+-	 */
+-	static void deallocateArguments(Object[] params) {
+-
+-		if (params.length != 0 && params.length < ARG_CACHE_SIZE) {
+-			Arrays.fill(params, null);
+-		}
++		return argumentCount == 0 ? EMPTY_ARGS : new Object[argumentCount];
+ 	}
+ 
+ 	/**
+@@ -250,8 +223,6 @@ public class ClassGeneratingEntityInstantiator implements EntityInstantiator {
+ 				return (T) instantiator.newInstance(params);
+ 			} catch (Exception e) {
+ 				throw new MappingInstantiationException(entity, Arrays.asList(params), e);
+-			} finally {
+-				deallocateArguments(params);
+ 			}
+ 		}
+ 
+--- a/src/main/java/org/springframework/data/convert/KotlinClassGeneratingEntityInstantiator.java
++++ b/src/main/java/org/springframework/data/convert/KotlinClassGeneratingEntityInstantiator.java
+@@ -237,11 +237,7 @@ public class KotlinClassGeneratingEntityInstantiator extends ClassGeneratingEnti
+ 				params[userParameterCount + i] = defaulting[i];
+ 			}
+ 
+-			try {
+-				return (T) instantiator.newInstance(params);
+-			} finally {
+-				deallocateArguments(params);
+-			}
++			return (T) instantiator.newInstance(params);
+ 		}
+ 	}
+ }
+--- a/src/main/java/org/springframework/data/convert/ReflectionEntityInstantiator.java
++++ b/src/main/java/org/springframework/data/convert/ReflectionEntityInstantiator.java
+@@ -40,18 +40,7 @@ public enum ReflectionEntityInstantiator implements EntityInstantiator {
+ 
+ 	INSTANCE;
+ 
+-	private final int ARG_CACHE_SIZE = 100;
+-
+-	private final ThreadLocal<Object[][]> objectPool = ThreadLocal.withInitial(() -> {
+-
+-		Object[][] cached = new Object[ARG_CACHE_SIZE][];
+-
+-		for (int i = 0; i < ARG_CACHE_SIZE; i++) {
+-			cached[i] = new Object[i];
+-		}
+-
+-		return cached;
+-	});
++	private static final Object[] EMPTY_ARGS = new Object[0];
+ 
+ 	@SuppressWarnings("unchecked")
+ 	public <T, E extends PersistentEntity<? extends T, P>, P extends PersistentProperty<P>> T createInstance(E entity,
+@@ -80,7 +69,7 @@ public enum ReflectionEntityInstantiator implements EntityInstantiator {
+ 		}
+ 		int parameterCount = constructor.getConstructor().getParameterCount();
+ 
+-		Object[] params = parameterCount < ARG_CACHE_SIZE ? objectPool.get()[parameterCount] : new Object[parameterCount];
++		Object[] params = parameterCount == 0 ? EMPTY_ARGS : new Object[parameterCount];
+ 		int i = 0;
+ 		for (Parameter<?, P> parameter : constructor.getParameters()) {
+ 			params[i++] = provider.getParameterValue(parameter);
+@@ -90,8 +79,6 @@ public enum ReflectionEntityInstantiator implements EntityInstantiator {
+ 			return BeanUtils.instantiateClass(constructor.getConstructor(), params);
+ 		} catch (BeanInstantiationException e) {
+ 			throw new MappingInstantiationException(entity, new ArrayList<>(Arrays.asList(params)), e);
+-		} finally {
+-			Arrays.fill(params, null);
+ 		}
+ 	}
+ }

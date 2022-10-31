@@ -1,0 +1,13 @@
+diff --git a/samples/server/petstore/spring-mvc-j8-async/src/main/java/io/swagger/api/PetApi.java b/samples/server/petstore/spring-mvc-j8-async/src/main/java/io/swagger/api/PetApi.java
+index f3cef99..f9c8346 100644
+--- a/samples/server/petstore/spring-mvc-j8-async/src/main/java/io/swagger/api/PetApi.java
++++ b/samples/server/petstore/spring-mvc-j8-async/src/main/java/io/swagger/api/PetApi.java
+@@ -73,7 +73,7 @@
+     @RequestMapping(value = "/pet/findByStatus",
+         produces = { "application/xml", "application/json" }, 
+         method = RequestMethod.GET)
+-    default CompletableFuture<ResponseEntity<List<Pet>>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "AVAILABLE, PENDING, SOLD") @RequestParam(value = "status", required = true) List<String> status) {
++    default CompletableFuture<ResponseEntity<List<Pet>>> findPetsByStatus( @NotNull @ApiParam(value = "Status values that need to be considered for filter", required = true, allowableValues = "available, pending, sold") @RequestParam(value = "status", required = true) List<String> status) {
+         // do some magic!
+         return CompletableFuture.completedFuture(new ResponseEntity<List<Pet>>(HttpStatus.OK));
+     }

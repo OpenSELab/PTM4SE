@@ -1,0 +1,26 @@
+diff --git a/components/camel-jms/src/test/java/org/apache/camel/component/jms/issues/JmsBlockedAsyncRoutingEngineTest.java b/components/camel-jms/src/test/java/org/apache/camel/component/jms/issues/JmsBlockedAsyncRoutingEngineTest.java
+index ff8e267..d8fe352 100644
+--- a/components/camel-jms/src/test/java/org/apache/camel/component/jms/issues/JmsBlockedAsyncRoutingEngineTest.java
++++ b/components/camel-jms/src/test/java/org/apache/camel/component/jms/issues/JmsBlockedAsyncRoutingEngineTest.java
+@@ -115,7 +115,7 @@
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+                 from("activemq:queue:test?concurrentConsumers=5&useMessageIDAsCorrelationID=true&transacted=true")
+-                    .filter().simple("${in.body} = 'beSlow'")
++                    .filter().simple("${in.body} == 'beSlow'")
+                         .delay(constant(2000))
+                     .log(">>>>> Received message on test queue")
+                     .setBody(constant("Reply"))
+diff --git a/components/camel-jms/src/test/java/org/apache/camel/component/jms/issues/JmsBlockedAsyncRoutingEngineTest.java b/components/camel-jms/src/test/java/org/apache/camel/component/jms/issues/JmsBlockedAsyncRoutingEngineTest.java
+index ff8e267..d8fe352 100644
+--- a/components/camel-jms/src/test/java/org/apache/camel/component/jms/issues/JmsBlockedAsyncRoutingEngineTest.java
++++ b/components/camel-jms/src/test/java/org/apache/camel/component/jms/issues/JmsBlockedAsyncRoutingEngineTest.java
+@@ -115,7 +115,7 @@
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+                 from("activemq:queue:test?concurrentConsumers=5&useMessageIDAsCorrelationID=true&transacted=true")
+-                    .filter().simple("${in.body} = 'beSlow'")
++                    .filter().simple("${in.body} == 'beSlow'")
+                         .delay(constant(2000))
+                     .log(">>>>> Received message on test queue")
+                     .setBody(constant("Reply"))

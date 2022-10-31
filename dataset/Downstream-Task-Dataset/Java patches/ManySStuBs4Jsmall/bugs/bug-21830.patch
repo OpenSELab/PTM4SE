@@ -1,0 +1,26 @@
+diff --git a/okhttp/src/main/java/com/squareup/okhttp/internal/spdy/SpdyConnection.java b/okhttp/src/main/java/com/squareup/okhttp/internal/spdy/SpdyConnection.java
+index 299da8e..b8d2ff5 100644
+--- a/okhttp/src/main/java/com/squareup/okhttp/internal/spdy/SpdyConnection.java
++++ b/okhttp/src/main/java/com/squareup/okhttp/internal/spdy/SpdyConnection.java
+@@ -524,7 +524,7 @@
+           // reads to 'settings'. We synchronize on 'stream' to guard the state change.
+           // And we need to acquire the 'stream' lock first, since that may block.
+           synchronized (stream) {
+-            synchronized (this) {
++            synchronized (SpdyConnection.this) {
+               stream.receiveSettings(settings);
+             }
+           }
+diff --git a/okhttp/src/main/java/com/squareup/okhttp/internal/spdy/SpdyConnection.java b/okhttp/src/main/java/com/squareup/okhttp/internal/spdy/SpdyConnection.java
+index 299da8e..b8d2ff5 100644
+--- a/okhttp/src/main/java/com/squareup/okhttp/internal/spdy/SpdyConnection.java
++++ b/okhttp/src/main/java/com/squareup/okhttp/internal/spdy/SpdyConnection.java
+@@ -524,7 +524,7 @@
+           // reads to 'settings'. We synchronize on 'stream' to guard the state change.
+           // And we need to acquire the 'stream' lock first, since that may block.
+           synchronized (stream) {
+-            synchronized (this) {
++            synchronized (SpdyConnection.this) {
+               stream.receiveSettings(settings);
+             }
+           }

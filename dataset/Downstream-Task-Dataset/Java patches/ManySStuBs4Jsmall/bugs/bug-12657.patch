@@ -1,0 +1,22 @@
+diff --git a/presto-main/src/test/java/com/facebook/presto/type/TestTimeBase.java b/presto-main/src/test/java/com/facebook/presto/type/TestTimeBase.java
+index 4117e1c..b540fef 100644
+--- a/presto-main/src/test/java/com/facebook/presto/type/TestTimeBase.java
++++ b/presto-main/src/test/java/com/facebook/presto/type/TestTimeBase.java
+@@ -145,7 +145,7 @@
+     {
+         TimeZoneKey timeZoneThatChangedSince1970 = getTimeZoneKey("Asia/Kathmandu");
+         DateTimeZone dateTimeZoneThatChangedSince1970 = getDateTimeZone(timeZoneThatChangedSince1970);
+-        Session session = testSessionBuilder()
++        Session session = Session.builder(this.session)
+                 .setTimeZoneKey(timeZoneThatChangedSince1970)
+                 .build();
+         try (FunctionAssertions localAssertions = new FunctionAssertions(session)) {
+@@ -161,7 +161,7 @@
+     {
+         // Australia/Sydney will switch DST a second after session start
+         // For simplicity we have to use time zone that is going forward when entering DST zone with 1970-01-01
+-        Session session = testSessionBuilder()
++        Session session = Session.builder(this.session)
+                 .setTimeZoneKey(getTimeZoneKey("Australia/Sydney"))
+                 .setStartTime(new DateTime(2017, 10, 1, 1, 59, 59, 999, getDateTimeZone(getTimeZoneKey("Australia/Sydney"))).getMillis())
+                 .build();

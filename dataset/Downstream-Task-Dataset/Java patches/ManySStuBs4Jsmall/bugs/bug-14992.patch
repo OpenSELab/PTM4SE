@@ -1,0 +1,13 @@
+diff --git a/test/com/google/inject/spi/SpiBindingsTest.java b/test/com/google/inject/spi/SpiBindingsTest.java
+index 881d7c9..a95d4a8 100644
+--- a/test/com/google/inject/spi/SpiBindingsTest.java
++++ b/test/com/google/inject/spi/SpiBindingsTest.java
+@@ -353,7 +353,7 @@
+     final Injector injector = Guice.createInjector(new AbstractModule() {
+       protected void configure() {
+         bind(String.class).toProvider(new ProviderWithExtensionVisitor<String>() {
+-          public <V, B> V acceptExtensionVisitor(BindingTargetVisitor<B, V> visitor,
++          public <B, V> V acceptExtensionVisitor(BindingTargetVisitor<B, V> visitor,
+               ProviderInstanceBinding<? extends B> binding) {
+             assertSame(this, binding.getProviderInstance());
+             // We can't always check for FailingSpiTargetVisitor,

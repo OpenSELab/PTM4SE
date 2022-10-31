@@ -1,0 +1,26 @@
+diff --git a/bundles/core/org.openhab.core.library/src/main/java/org/openhab/core/library/items/ColorItem.java b/bundles/core/org.openhab.core.library/src/main/java/org/openhab/core/library/items/ColorItem.java
+index e8a3851..7690ec9 100644
+--- a/bundles/core/org.openhab.core.library/src/main/java/org/openhab/core/library/items/ColorItem.java
++++ b/bundles/core/org.openhab.core.library/src/main/java/org/openhab/core/library/items/ColorItem.java
+@@ -81,7 +81,7 @@
+ 					this.state = HSBType.BLACK;
+ 				} else if(state==OnOffType.ON) {
+ 					this.state = HSBType.WHITE;
+-				} else if(state instanceof PercentType) {
++				} else if(state instanceof PercentType && !(state instanceof HSBType)) {
+ 					this.state = new HSBType(DecimalType.ZERO, PercentType.ZERO, (PercentType) state);
+ 				} else {
+ 					super.setState(state);
+diff --git a/bundles/core/org.openhab.core.library/src/main/java/org/openhab/core/library/items/ColorItem.java b/bundles/core/org.openhab.core.library/src/main/java/org/openhab/core/library/items/ColorItem.java
+index e8a3851..7690ec9 100644
+--- a/bundles/core/org.openhab.core.library/src/main/java/org/openhab/core/library/items/ColorItem.java
++++ b/bundles/core/org.openhab.core.library/src/main/java/org/openhab/core/library/items/ColorItem.java
+@@ -81,7 +81,7 @@
+ 					this.state = HSBType.BLACK;
+ 				} else if(state==OnOffType.ON) {
+ 					this.state = HSBType.WHITE;
+-				} else if(state instanceof PercentType) {
++				} else if(state instanceof PercentType && !(state instanceof HSBType)) {
+ 					this.state = new HSBType(DecimalType.ZERO, PercentType.ZERO, (PercentType) state);
+ 				} else {
+ 					super.setState(state);

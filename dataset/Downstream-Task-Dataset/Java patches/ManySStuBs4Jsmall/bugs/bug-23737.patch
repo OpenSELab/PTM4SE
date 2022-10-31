@@ -1,0 +1,26 @@
+diff --git a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/management/cli/DataSourceTestCase.java b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/management/cli/DataSourceTestCase.java
+index a5bc841..323c297 100644
+--- a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/management/cli/DataSourceTestCase.java
++++ b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/management/cli/DataSourceTestCase.java
+@@ -129,7 +129,7 @@
+ 
+         // add data source
+         cli.sendLine("xa-data-source add --profile=" + profileNames[0] +
+-                " --jndi-name=java:jboss/datasources/TestXADS --name=java:jboss/datasources/TestXADS --driver-name=h2");
++                " --jndi-name=java:jboss/datasources/TestXADS --name=java:jboss/datasources/TestXADS --driver-name=h2 --xa-datasource-properties=ServerName=localhost,PortNumber=50011");
+ 
+         //check the data source is listed
+         cli.sendLine("cd /profile=" + profileNames[0] + "/subsystem=datasources/xa-data-source");
+diff --git a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/management/cli/DataSourceTestCase.java b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/management/cli/DataSourceTestCase.java
+index a5bc841..323c297 100644
+--- a/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/management/cli/DataSourceTestCase.java
++++ b/testsuite/domain/src/test/java/org/jboss/as/test/integration/domain/management/cli/DataSourceTestCase.java
+@@ -129,7 +129,7 @@
+ 
+         // add data source
+         cli.sendLine("xa-data-source add --profile=" + profileNames[0] +
+-                " --jndi-name=java:jboss/datasources/TestXADS --name=java:jboss/datasources/TestXADS --driver-name=h2");
++                " --jndi-name=java:jboss/datasources/TestXADS --name=java:jboss/datasources/TestXADS --driver-name=h2 --xa-datasource-properties=ServerName=localhost,PortNumber=50011");
+ 
+         //check the data source is listed
+         cli.sendLine("cd /profile=" + profileNames[0] + "/subsystem=datasources/xa-data-source");

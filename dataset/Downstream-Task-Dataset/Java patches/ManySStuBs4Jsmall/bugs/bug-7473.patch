@@ -1,0 +1,13 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegionServer.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegionServer.java
+index 802ccb4..ac28f57 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegionServer.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegionServer.java
+@@ -766,7 +766,7 @@
+ 
+     // Create the catalog tracker and start it;
+     this.catalogTracker = new CatalogTracker(this.zooKeeper, this.conf,
+-      this, this.conf.getInt("hbase.regionserver.catalog.timeout", Integer.MAX_VALUE));
++      this, this.conf.getInt("hbase.regionserver.catalog.timeout", 600000));
+     catalogTracker.start();
+   }
+ 

@@ -1,0 +1,26 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/metastore/MetastoreUtil.java b/presto-hive/src/main/java/com/facebook/presto/hive/metastore/MetastoreUtil.java
+index 4030072..b20f564 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/metastore/MetastoreUtil.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/metastore/MetastoreUtil.java
+@@ -223,7 +223,7 @@
+         Table.Builder tableBuilder = Table.builder()
+                 .setDatabaseName(table.getDbName())
+                 .setTableName(table.getTableName())
+-                .setOwner(table.getOwner())
++                .setOwner(nullToEmpty(table.getOwner()))
+                 .setTableType(table.getTableType())
+                 .setDataColumns(storageDescriptor.getCols().stream()
+                         .map(MetastoreUtil::fromMetastoreApiFieldSchema)
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/metastore/MetastoreUtil.java b/presto-hive/src/main/java/com/facebook/presto/hive/metastore/MetastoreUtil.java
+index 4030072..b20f564 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/metastore/MetastoreUtil.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/metastore/MetastoreUtil.java
+@@ -223,7 +223,7 @@
+         Table.Builder tableBuilder = Table.builder()
+                 .setDatabaseName(table.getDbName())
+                 .setTableName(table.getTableName())
+-                .setOwner(table.getOwner())
++                .setOwner(nullToEmpty(table.getOwner()))
+                 .setTableType(table.getTableType())
+                 .setDataColumns(storageDescriptor.getCols().stream()
+                         .map(MetastoreUtil::fromMetastoreApiFieldSchema)

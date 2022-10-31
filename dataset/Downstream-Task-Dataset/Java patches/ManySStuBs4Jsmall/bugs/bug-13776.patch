@@ -1,0 +1,70 @@
+diff --git a/src/com/google/javascript/jscomp/DefaultPassConfig.java b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+index 3d40a9e..bac481d 100644
+--- a/src/com/google/javascript/jscomp/DefaultPassConfig.java
++++ b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+@@ -418,7 +418,7 @@
+       }
+     }
+ 
+-    if (options.rewritePolyfills) {
++    if (options.rewritePolyfills && !options.checksOnly) {
+       TranspilationPasses.addRewritePolyfillPass(checks);
+     }
+ 
+@@ -463,7 +463,7 @@
+       addNonTranspilationCheckPasses(checks);
+     }
+ 
+-    if (options.needsTranspilationFrom(ES6) && !options.inIncrementalCheckMode()) {
++    if (options.needsTranspilationFrom(ES6) && !options.checksOnly) {
+       TranspilationPasses.addPostCheckPasses(checks);
+     }
+ 
+diff --git a/src/com/google/javascript/jscomp/TranspilationPasses.java b/src/com/google/javascript/jscomp/TranspilationPasses.java
+index 83a2c40..acd20ee 100644
+--- a/src/com/google/javascript/jscomp/TranspilationPasses.java
++++ b/src/com/google/javascript/jscomp/TranspilationPasses.java
+@@ -207,7 +207,7 @@
+       new HotSwapPassFactory("Es6RewriteClass") {
+         @Override
+         protected HotSwapCompilerPass create(AbstractCompiler compiler) {
+-          return new Es6RewriteClass(compiler, !compiler.getOptions().inIncrementalCheckMode());
++          return new Es6RewriteClass(compiler, true);
+         }
+ 
+         @Override
+diff --git a/src/com/google/javascript/jscomp/ijs/CheckIjsWarningsGuard.java b/src/com/google/javascript/jscomp/ijs/CheckIjsWarningsGuard.java
+index ea96e9e..16a2a60 100644
+--- a/src/com/google/javascript/jscomp/ijs/CheckIjsWarningsGuard.java
++++ b/src/com/google/javascript/jscomp/ijs/CheckIjsWarningsGuard.java
+@@ -27,7 +27,7 @@
+ 
+   @Override
+   public CheckLevel level(JSError error) {
+-    if (error.sourceName.endsWith(".i.js")) {
++    if (error.sourceName != null && error.sourceName.endsWith(".i.js")) {
+       return CheckLevel.WARNING;
+     }
+     return null;
+diff --git a/src/com/google/javascript/jscomp/DefaultPassConfig.java b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+index 3d40a9e..bac481d 100644
+--- a/src/com/google/javascript/jscomp/DefaultPassConfig.java
++++ b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+@@ -418,7 +418,7 @@
+       }
+     }
+ 
+-    if (options.rewritePolyfills) {
++    if (options.rewritePolyfills && !options.checksOnly) {
+       TranspilationPasses.addRewritePolyfillPass(checks);
+     }
+ 
+@@ -463,7 +463,7 @@
+       addNonTranspilationCheckPasses(checks);
+     }
+ 
+-    if (options.needsTranspilationFrom(ES6) && !options.inIncrementalCheckMode()) {
++    if (options.needsTranspilationFrom(ES6) && !options.checksOnly) {
+       TranspilationPasses.addPostCheckPasses(checks);
+     }
+ 

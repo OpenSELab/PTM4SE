@@ -1,0 +1,13 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index e4e1033..7791f65 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -351,7 +351,7 @@
+      */
+     @Override
+     public String getParameter(String s) {
+-        String name = b.request.getParameter(s);
++        String name = b.request  == null ? null : b.request.getParameter(s);
+         if (name == null) {
+             if (b.queryStrings.get(s) != null) {
+                 return b.queryStrings.get(s)[0];

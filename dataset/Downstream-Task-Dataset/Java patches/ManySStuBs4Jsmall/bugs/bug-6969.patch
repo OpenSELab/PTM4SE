@@ -1,0 +1,57 @@
+diff --git a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/shell/CommandWithDestination.java b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/shell/CommandWithDestination.java
+index 5d0d9d6..7152f02 100644
+--- a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/shell/CommandWithDestination.java
++++ b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/shell/CommandWithDestination.java
+@@ -478,7 +478,8 @@
+           createFlags.add(LAZY_PERSIST);
+         }
+         return create(item.path,
+-                      null,
++                      FsPermission.getFileDefault().applyUMask(
++                          FsPermission.getUMask(getConf())),
+                       createFlags,
+                       getConf().getInt("io.file.buffer.size", 4096),
+                       lazyPersist ? 1 : getDefaultReplication(item.path),
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsVolumeImpl.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsVolumeImpl.java
+index 217e932..e2efb2f 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsVolumeImpl.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsVolumeImpl.java
+@@ -381,8 +381,9 @@
+           !FileUtil.fullyDelete(finalizedDir)) {
+         throw new IOException("Failed to delete " + finalizedDir);
+       }
+-      if (!DatanodeUtil.dirNoFilesRecursive(lazypersistDir) ||
+-          !FileUtil.fullyDelete(lazypersistDir)) {
++      if (lazypersistDir.exists() &&
++        ((!DatanodeUtil.dirNoFilesRecursive(lazypersistDir) ||
++          !FileUtil.fullyDelete(lazypersistDir)))) {
+         throw new IOException("Failed to delete " + lazypersistDir);
+       }
+       FileUtil.fullyDelete(tmpDir);
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/datanode/TestDataDirs.java b/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/datanode/TestDataDirs.java
+index c0b4f9a..94af015 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/datanode/TestDataDirs.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/server/datanode/TestDataDirs.java
+@@ -51,7 +51,7 @@
+     String locations1 = "[disk]/dir0,[DISK]/dir1,[sSd]/dir2,[disK]/dir3,[ram_disk]/dir4";
+     conf.set(DFS_DATANODE_DATA_DIR_KEY, locations1);
+     locations = DataNode.getStorageLocations(conf);
+-    assertThat(locations.size(), is(4));
++    assertThat(locations.size(), is(5));
+     assertThat(locations.get(0).getStorageType(), is(StorageType.DISK));
+     assertThat(locations.get(0).getUri(), is(dir0.toURI()));
+     assertThat(locations.get(1).getStorageType(), is(StorageType.DISK));
+diff --git a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/shell/CommandWithDestination.java b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/shell/CommandWithDestination.java
+index 5d0d9d6..7152f02 100644
+--- a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/shell/CommandWithDestination.java
++++ b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/fs/shell/CommandWithDestination.java
+@@ -478,7 +478,8 @@
+           createFlags.add(LAZY_PERSIST);
+         }
+         return create(item.path,
+-                      null,
++                      FsPermission.getFileDefault().applyUMask(
++                          FsPermission.getUMask(getConf())),
+                       createFlags,
+                       getConf().getInt("io.file.buffer.size", 4096),
+                       lazyPersist ? 1 : getDefaultReplication(item.path),

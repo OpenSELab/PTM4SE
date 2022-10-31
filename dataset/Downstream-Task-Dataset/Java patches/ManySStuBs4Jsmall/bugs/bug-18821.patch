@@ -1,0 +1,74 @@
+diff --git a/common/src/main/java/io/netty/util/concurrent/DefaultPromise.java b/common/src/main/java/io/netty/util/concurrent/DefaultPromise.java
+index 3a3940b..082583d 100644
+--- a/common/src/main/java/io/netty/util/concurrent/DefaultPromise.java
++++ b/common/src/main/java/io/netty/util/concurrent/DefaultPromise.java
+@@ -278,6 +278,7 @@
+                 try {
+                     wait();
+                 } catch (InterruptedException e) {
++                    // Interrupted while waiting.
+                     interrupted = true;
+                 } finally {
+                     decWaiters();
+@@ -297,6 +298,7 @@
+         try {
+             return await0(unit.toNanos(timeout), false);
+         } catch (InterruptedException e) {
++            // Should not be raised at all.
+             throw new InternalError();
+         }
+     }
+@@ -306,6 +308,7 @@
+         try {
+             return await0(MILLISECONDS.toNanos(timeoutMillis), false);
+         } catch (InterruptedException e) {
++            // Should not be raised at all.
+             throw new InternalError();
+         }
+     }
+@@ -323,7 +326,7 @@
+             throw new InterruptedException(toString());
+         }
+ 
+-        long startTime = timeoutNanos <= 0 ? 0 : System.nanoTime();
++        long startTime = System.nanoTime();
+         long waitTime = timeoutNanos;
+         boolean interrupted = false;
+ 
+diff --git a/common/src/main/java/io/netty/util/concurrent/DefaultPromise.java b/common/src/main/java/io/netty/util/concurrent/DefaultPromise.java
+index 3a3940b..082583d 100644
+--- a/common/src/main/java/io/netty/util/concurrent/DefaultPromise.java
++++ b/common/src/main/java/io/netty/util/concurrent/DefaultPromise.java
+@@ -278,6 +278,7 @@
+                 try {
+                     wait();
+                 } catch (InterruptedException e) {
++                    // Interrupted while waiting.
+                     interrupted = true;
+                 } finally {
+                     decWaiters();
+@@ -297,6 +298,7 @@
+         try {
+             return await0(unit.toNanos(timeout), false);
+         } catch (InterruptedException e) {
++            // Should not be raised at all.
+             throw new InternalError();
+         }
+     }
+@@ -306,6 +308,7 @@
+         try {
+             return await0(MILLISECONDS.toNanos(timeoutMillis), false);
+         } catch (InterruptedException e) {
++            // Should not be raised at all.
+             throw new InternalError();
+         }
+     }
+@@ -323,7 +326,7 @@
+             throw new InterruptedException(toString());
+         }
+ 
+-        long startTime = timeoutNanos <= 0 ? 0 : System.nanoTime();
++        long startTime = System.nanoTime();
+         long waitTime = timeoutNanos;
+         boolean interrupted = false;
+ 

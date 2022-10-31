@@ -1,0 +1,39 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
+index d871ee7..22c4570 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
+@@ -507,7 +507,7 @@
+   private void initializeZKBasedSystemTrackers() throws IOException,
+       InterruptedException, KeeperException {
+     this.catalogTracker = createCatalogTracker(this.zooKeeper, this.conf,
+-        this, conf.getInt("hbase.master.catalog.timeout", 1800000));
++        this, conf.getInt("hbase.master.catalog.timeout", Integer.MAX_VALUE));
+     this.catalogTracker.start();
+ 
+     this.balancer = LoadBalancerFactory.getLoadBalancer(conf);
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegionServer.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegionServer.java
+index 73def17..802ccb4 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegionServer.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegionServer.java
+@@ -766,7 +766,7 @@
+ 
+     // Create the catalog tracker and start it;
+     this.catalogTracker = new CatalogTracker(this.zooKeeper, this.conf,
+-      this, this.conf.getInt("hbase.regionserver.catalog.timeout", 1800000));
++      this, this.conf.getInt("hbase.regionserver.catalog.timeout", Integer.MAX_VALUE));
+     catalogTracker.start();
+   }
+ 
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
+index d871ee7..22c4570 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
+@@ -507,7 +507,7 @@
+   private void initializeZKBasedSystemTrackers() throws IOException,
+       InterruptedException, KeeperException {
+     this.catalogTracker = createCatalogTracker(this.zooKeeper, this.conf,
+-        this, conf.getInt("hbase.master.catalog.timeout", 1800000));
++        this, conf.getInt("hbase.master.catalog.timeout", Integer.MAX_VALUE));
+     this.catalogTracker.start();
+ 
+     this.balancer = LoadBalancerFactory.getLoadBalancer(conf);

@@ -1,0 +1,52 @@
+diff --git a/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseFileSystem.java b/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseFileSystem.java
+index 7309624..7d660dc 100644
+--- a/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseFileSystem.java
++++ b/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseFileSystem.java
+@@ -93,8 +93,8 @@
+     mOpenFiles = new HashMap<>();
+ 
+     final int maxCachedPaths = Configuration.getInt(PropertyKey.FUSE_CACHED_PATHS_MAX);
+-    mIsShellGroupMapping = Configuration.get(
+-        PropertyKey.SECURITY_GROUP_MAPPING_CLASS) == ShellBasedUnixGroupsMapping.class.getName();
++    mIsShellGroupMapping = Configuration.get(PropertyKey.SECURITY_GROUP_MAPPING_CLASS)
++        .equals(ShellBasedUnixGroupsMapping.class.getName());
+     mPathResolverCache = CacheBuilder.newBuilder()
+         .maximumSize(maxCachedPaths)
+         .build(new PathCacheLoader());
+diff --git a/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseUtils.java b/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseUtils.java
+index 275a875..be03df9 100644
+--- a/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseUtils.java
++++ b/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseUtils.java
+@@ -56,7 +56,7 @@
+    * @return user name
+    */
+   public static String getUserName(long uid) throws IOException {
+-    return ShellUtils.execCommand("id", "-nu", new Long(uid).toString()).trim();
++    return ShellUtils.execCommand("id", "-nu", Long.toString(uid)).trim();
+   }
+ 
+   /**
+@@ -66,7 +66,7 @@
+    * @return group name
+    */
+   public static String getGroupName(long uid) throws IOException {
+-    return ShellUtils.execCommand("id", "-ng", new Long(uid).toString()).trim();
++    return ShellUtils.execCommand("id", "-ng", Long.toString(uid)).trim();
+   }
+ 
+   /**
+diff --git a/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseFileSystem.java b/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseFileSystem.java
+index 7309624..7d660dc 100644
+--- a/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseFileSystem.java
++++ b/integration/fuse/src/main/java/alluxio/fuse/AlluxioFuseFileSystem.java
+@@ -93,8 +93,8 @@
+     mOpenFiles = new HashMap<>();
+ 
+     final int maxCachedPaths = Configuration.getInt(PropertyKey.FUSE_CACHED_PATHS_MAX);
+-    mIsShellGroupMapping = Configuration.get(
+-        PropertyKey.SECURITY_GROUP_MAPPING_CLASS) == ShellBasedUnixGroupsMapping.class.getName();
++    mIsShellGroupMapping = Configuration.get(PropertyKey.SECURITY_GROUP_MAPPING_CLASS)
++        .equals(ShellBasedUnixGroupsMapping.class.getName());
+     mPathResolverCache = CacheBuilder.newBuilder()
+         .maximumSize(maxCachedPaths)
+         .build(new PathCacheLoader());

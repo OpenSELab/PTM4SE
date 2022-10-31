@@ -1,0 +1,39 @@
+diff --git a/wicket-datetime/src/main/java/org/apache/wicket/datetime/markup/html/form/DateTextField.java b/wicket-datetime/src/main/java/org/apache/wicket/datetime/markup/html/form/DateTextField.java
+index 718e7a3..ba144cf 100644
+--- a/wicket-datetime/src/main/java/org/apache/wicket/datetime/markup/html/form/DateTextField.java
++++ b/wicket-datetime/src/main/java/org/apache/wicket/datetime/markup/html/form/DateTextField.java
+@@ -132,7 +132,7 @@ public class DateTextField extends TextField<Date> implements ITextFormatProvide
+ 	 */
+ 	public static DateTextField forShortStyle(String id)
+ 	{
+-		return forShortStyle(id, null);
++		return forShortStyle(id, null, true);
+ 	}
+ 
+ 	/**
+@@ -144,9 +144,10 @@ public class DateTextField extends TextField<Date> implements ITextFormatProvide
+ 	 *            The model
+ 	 * @return DateTextField
+ 	 */
+-	public static DateTextField forShortStyle(String id, IModel<Date> model)
++	public static DateTextField forShortStyle(String id, IModel<Date> model,
++		boolean applyTimeZoneDifference)
+ 	{
+-		return new DateTextField(id, model, new StyleDateConverter(true));
++		return new DateTextField(id, model, new StyleDateConverter(applyTimeZoneDifference));
+ 	}
+ 
+ 	/**
+diff --git a/wicket-datetime/src/main/java/org/apache/wicket/extensions/yui/calendar/DateTimeField.java b/wicket-datetime/src/main/java/org/apache/wicket/extensions/yui/calendar/DateTimeField.java
+index ebb04e4..25f0d5c 100644
+--- a/wicket-datetime/src/main/java/org/apache/wicket/extensions/yui/calendar/DateTimeField.java
++++ b/wicket-datetime/src/main/java/org/apache/wicket/extensions/yui/calendar/DateTimeField.java
+@@ -377,7 +377,7 @@ public class DateTimeField extends FormComponentPanel<Date>
+ 	 */
+ 	protected DateTextField newDateTextField(String id, PropertyModel<Date> dateFieldModel)
+ 	{
+-		return DateTextField.forShortStyle(id, dateFieldModel);
++		return DateTextField.forShortStyle(id, dateFieldModel, false);
+ 	}
+ 
+ 	/**

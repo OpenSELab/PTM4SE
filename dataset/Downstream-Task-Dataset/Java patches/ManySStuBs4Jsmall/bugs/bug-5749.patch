@@ -1,0 +1,26 @@
+diff --git a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsProducer.java b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsProducer.java
+index 3105b04..501ef58 100644
+--- a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsProducer.java
++++ b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsProducer.java
+@@ -362,7 +362,7 @@
+ 
+     protected void setMessageId(Exchange exchange) {
+         if (exchange.hasOut()) {
+-            JmsMessage out = (JmsMessage) exchange.getOut();
++            JmsMessage out = exchange.getOut(JmsMessage.class);
+             try {
+                 if (out != null && out.getJmsMessage() != null) {
+                     out.setMessageId(out.getJmsMessage().getJMSMessageID());
+diff --git a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsProducer.java b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsProducer.java
+index 3105b04..501ef58 100644
+--- a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsProducer.java
++++ b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsProducer.java
+@@ -362,7 +362,7 @@
+ 
+     protected void setMessageId(Exchange exchange) {
+         if (exchange.hasOut()) {
+-            JmsMessage out = (JmsMessage) exchange.getOut();
++            JmsMessage out = exchange.getOut(JmsMessage.class);
+             try {
+                 if (out != null && out.getJmsMessage() != null) {
+                     out.setMessageId(out.getJmsMessage().getJMSMessageID());

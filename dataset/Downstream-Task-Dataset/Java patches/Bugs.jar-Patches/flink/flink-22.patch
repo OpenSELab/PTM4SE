@@ -1,0 +1,13 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/buffer/LocalBufferPool.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/buffer/LocalBufferPool.java
+index 1da2b8b..4cb1521 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/buffer/LocalBufferPool.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/buffer/LocalBufferPool.java
+@@ -141,7 +141,7 @@ class LocalBufferPool implements BufferPool {
+ 
+ 			while (availableMemorySegments.isEmpty()) {
+ 				if (isDestroyed) {
+-					return null;
++					throw new IllegalStateException("Buffer pool is destroyed.");
+ 				}
+ 
+ 				if (numberOfRequestedMemorySegments < currentPoolSize) {

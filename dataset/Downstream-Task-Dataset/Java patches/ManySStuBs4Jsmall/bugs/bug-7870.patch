@@ -1,0 +1,67 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorizationContext.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorizationContext.java
+index 54b935f..5201c57 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorizationContext.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorizationContext.java
+@@ -1757,7 +1757,8 @@
+   }
+ 
+   public static boolean isStringFamily(String resultType) {
+-    return resultType.equalsIgnoreCase("string") || charVarcharTypePattern.matcher(resultType).matches();
++    return resultType.equalsIgnoreCase("string") || charVarcharTypePattern.matcher(resultType).matches() ||
++           resultType.equalsIgnoreCase("string_family");
+   }
+ 
+   public static boolean isDatetimeFamily(String resultType) {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringGroupColConcatStringScalar.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringGroupColConcatStringScalar.java
+index ca8156a..1cd3c46 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringGroupColConcatStringScalar.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringGroupColConcatStringScalar.java
+@@ -125,7 +125,7 @@
+ 
+   @Override
+   public String getOutputType() {
+-    return "StringGroup";
++    return "String_Family";
+   }
+ 
+   public int getColNum() {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringGroupConcatColCol.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringGroupConcatColCol.java
+index 910b5e3..56bc97b 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringGroupConcatColCol.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringGroupConcatColCol.java
+@@ -416,7 +416,7 @@
+ 
+   @Override
+   public String getOutputType() {
+-    return "StringGroup";
++    return "String_Family";
+   }
+ 
+   public int getColNum1() {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringScalarConcatStringGroupCol.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringScalarConcatStringGroupCol.java
+index d3ddcef..b98f72d 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringScalarConcatStringGroupCol.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/StringScalarConcatStringGroupCol.java
+@@ -125,7 +125,7 @@
+ 
+   @Override
+   public String getOutputType() {
+-    return "StringGroup";
++    return "String_Family";
+   }
+ 
+   public int getColNum() {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorizationContext.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorizationContext.java
+index 54b935f..5201c57 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorizationContext.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorizationContext.java
+@@ -1757,7 +1757,8 @@
+   }
+ 
+   public static boolean isStringFamily(String resultType) {
+-    return resultType.equalsIgnoreCase("string") || charVarcharTypePattern.matcher(resultType).matches();
++    return resultType.equalsIgnoreCase("string") || charVarcharTypePattern.matcher(resultType).matches() ||
++           resultType.equalsIgnoreCase("string_family");
+   }
+ 
+   public static boolean isDatetimeFamily(String resultType) {

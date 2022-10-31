@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/EvictionMaxSizePolicyTest.java b/hazelcast/src/test/java/com/hazelcast/map/EvictionMaxSizePolicyTest.java
+index 0af918a..8b5d924 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/EvictionMaxSizePolicyTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/EvictionMaxSizePolicyTest.java
+@@ -104,7 +104,7 @@
+ 
+     private void setTestSizeEstimator(IMap map, final long oneEntryHeapCostInMegaBytes) {
+         final MapProxyImpl mapProxy = (MapProxyImpl) map;
+-        final MapService mapService = mapProxy.getService();
++        final MapService mapService = (MapService) mapProxy.getService();
+         final NodeEngine nodeEngine = mapService.getNodeEngine();
+         final InternalPartitionService partitionService = nodeEngine.getPartitionService();
+         for (int i = 0; i < partitionService.getPartitionCount(); i++) {
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/EvictionMaxSizePolicyTest.java b/hazelcast/src/test/java/com/hazelcast/map/EvictionMaxSizePolicyTest.java
+index 0af918a..8b5d924 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/EvictionMaxSizePolicyTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/EvictionMaxSizePolicyTest.java
+@@ -104,7 +104,7 @@
+ 
+     private void setTestSizeEstimator(IMap map, final long oneEntryHeapCostInMegaBytes) {
+         final MapProxyImpl mapProxy = (MapProxyImpl) map;
+-        final MapService mapService = mapProxy.getService();
++        final MapService mapService = (MapService) mapProxy.getService();
+         final NodeEngine nodeEngine = mapService.getNodeEngine();
+         final InternalPartitionService partitionService = nodeEngine.getPartitionService();
+         for (int i = 0; i < partitionService.getPartitionCount(); i++) {

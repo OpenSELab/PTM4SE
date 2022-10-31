@@ -1,0 +1,12 @@
+diff --git a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/runtime/tasks/OutputHandler.java b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/runtime/tasks/OutputHandler.java
+index 2d2f29b..73f0a89 100644
+--- a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/runtime/tasks/OutputHandler.java
++++ b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/runtime/tasks/OutputHandler.java
+@@ -274,6 +274,7 @@ public class OutputHandler<OUT> {
+ 		@Override
+ 		public void collect(T record) {
+ 			try {
++				operator.getRuntimeContext().setNextInput(record);
+ 				operator.processElement(serializer.copy(record));
+ 			} catch (Exception e) {
+ 				if (LOG.isErrorEnabled()) {

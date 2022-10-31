@@ -1,0 +1,114 @@
+diff --git a/app/controllers/MessageCountsController.java b/app/controllers/MessageCountsController.java
+index e9609c0..13f9c18 100644
+--- a/app/controllers/MessageCountsController.java
++++ b/app/controllers/MessageCountsController.java
+@@ -37,9 +37,9 @@
+     private MessagesService messagesService;
+ 
+     public Result total() {
+-        int countResult = messagesService.total();
++        long countResult = messagesService.total();
+ 
+-        Map<String, Integer> result = Maps.newHashMap();
++        Map<String, Long> result = Maps.newHashMap();
+         result.put("events", countResult);
+ 
+         return ok(new Gson().toJson(result)).as("application/json");
+diff --git a/app/models/MessagesService.java b/app/models/MessagesService.java
+index 7be19c9..65a4ad0 100644
+--- a/app/models/MessagesService.java
++++ b/app/models/MessagesService.java
+@@ -82,11 +82,11 @@
+         return Sets.newHashSet();
+     }
+ 
+-    public int total() {
++    public long total() {
+         try {
+-            return Cache.getOrElse(TOTAL_CNT_CACHE_KEY, new Callable<Integer>() {
++            return Cache.getOrElse(TOTAL_CNT_CACHE_KEY, new Callable<Long>() {
+                 @Override
+-                public Integer call() throws Exception {
++                public Long call() throws Exception {
+                     MessageCountResponse response = api.get(MessageCountResponse.class).path("/count/total").execute();
+                     return response.events;
+                 }
+diff --git a/app/models/api/responses/MessageCountResponse.java b/app/models/api/responses/MessageCountResponse.java
+index 297ab04..0005971 100644
+--- a/app/models/api/responses/MessageCountResponse.java
++++ b/app/models/api/responses/MessageCountResponse.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2013 TORCH UG
++ * Copyright 2013, 2014 TORCH GmbH
+  *
+  * This file is part of Graylog2.
+  *
+@@ -20,6 +20,6 @@
+ 
+ public class MessageCountResponse {
+ 
+-    public int events;
++    public long events;
+ 
+ }
+diff --git a/app/models/api/responses/SearchResultResponse.java b/app/models/api/responses/SearchResultResponse.java
+index 2adaec9..a306c5c 100644
+--- a/app/models/api/responses/SearchResultResponse.java
++++ b/app/models/api/responses/SearchResultResponse.java
+@@ -26,7 +26,7 @@
+ 	
+ 	public int time;
+ 	public String query;
+-	public int total_results;
++	public long total_results;
+ 	public List<MessageSummaryResponse> messages;
+ 	public List<String> fields;
+ 
+diff --git a/app/models/api/results/SearchResult.java b/app/models/api/results/SearchResult.java
+index c3d7b99..a42377d 100644
+--- a/app/models/api/results/SearchResult.java
++++ b/app/models/api/results/SearchResult.java
+@@ -32,7 +32,7 @@
+ 	private final String originalQuery;
+     private final String builtQuery;
+     private final TimeRange timeRange;
+-	private final int totalResultCount;
++	private final long totalResultCount;
+ 	private final int tookMs;
+ 	private final List<MessageResult> results;
+     private final SearchResultResponse.QueryError error;
+@@ -43,7 +43,7 @@
+     public SearchResult(String originalQuery,
+                         String builtQuery,
+                         TimeRange timeRange,
+-                        int totalResultCount,
++                        long totalResultCount,
+                         int tookMs,
+                         List<MessageSummaryResponse> summaryResponses,
+                         List<String> fields,
+@@ -85,7 +85,7 @@
+ 		return tookMs;
+ 	}
+ 	
+-	public int getTotalResultCount() {
++	public long getTotalResultCount() {
+ 		return totalResultCount;
+ 	}
+ 	
+diff --git a/app/controllers/MessageCountsController.java b/app/controllers/MessageCountsController.java
+index e9609c0..13f9c18 100644
+--- a/app/controllers/MessageCountsController.java
++++ b/app/controllers/MessageCountsController.java
+@@ -37,9 +37,9 @@
+     private MessagesService messagesService;
+ 
+     public Result total() {
+-        int countResult = messagesService.total();
++        long countResult = messagesService.total();
+ 
+-        Map<String, Integer> result = Maps.newHashMap();
++        Map<String, Long> result = Maps.newHashMap();
+         result.put("events", countResult);
+ 
+         return ok(new Gson().toJson(result)).as("application/json");

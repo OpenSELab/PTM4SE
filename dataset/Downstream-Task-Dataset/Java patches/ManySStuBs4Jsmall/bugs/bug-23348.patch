@@ -1,0 +1,26 @@
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/tx/CMTTxInterceptor.java b/ejb3/src/main/java/org/jboss/as/ejb3/tx/CMTTxInterceptor.java
+index cd40021..d65445d 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/tx/CMTTxInterceptor.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/tx/CMTTxInterceptor.java
+@@ -79,7 +79,7 @@
+      */
+     protected void endTransaction(final TransactionManager tm, final Transaction tx) {
+         try {
+-            if (tx != tm.getTransaction()) {
++            if (! tx.equals(tm.getTransaction())) {
+                 throw EjbLogger.ROOT_LOGGER.wrongTxOnThread(tx, tm.getTransaction());
+             }
+             final int txStatus = tx.getStatus();
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/tx/CMTTxInterceptor.java b/ejb3/src/main/java/org/jboss/as/ejb3/tx/CMTTxInterceptor.java
+index cd40021..d65445d 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/tx/CMTTxInterceptor.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/tx/CMTTxInterceptor.java
+@@ -79,7 +79,7 @@
+      */
+     protected void endTransaction(final TransactionManager tm, final Transaction tx) {
+         try {
+-            if (tx != tm.getTransaction()) {
++            if (! tx.equals(tm.getTransaction())) {
+                 throw EjbLogger.ROOT_LOGGER.wrongTxOnThread(tx, tm.getTransaction());
+             }
+             final int txStatus = tx.getStatus();

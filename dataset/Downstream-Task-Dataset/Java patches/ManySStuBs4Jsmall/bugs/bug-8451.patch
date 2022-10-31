@@ -1,0 +1,78 @@
+diff --git a/accumulo/src/main/java/com/yahoo/ycsb/db/AccumuloClient.java b/accumulo/src/main/java/com/yahoo/ycsb/db/AccumuloClient.java
+index 79be7d9..db78e87 100644
+--- a/accumulo/src/main/java/com/yahoo/ycsb/db/AccumuloClient.java
++++ b/accumulo/src/main/java/com/yahoo/ycsb/db/AccumuloClient.java
+@@ -416,7 +416,7 @@
+           // If the results are empty, the key is enqueued in
+           // Zookeeper
+           // and tried again, until the results are found.
+-          if (result.size() == 0) {
++          if (result.isEmpty()) {
+             q.produce(strKey);
+             int count = ((Integer) hmKeyNumReads.get(strKey)).intValue();
+             hmKeyNumReads.put(strKey, new Integer(count + 1));
+diff --git a/accumulo/src/main/java/com/yahoo/ycsb/db/ZKProducerConsumer.java b/accumulo/src/main/java/com/yahoo/ycsb/db/ZKProducerConsumer.java
+index 2d42c79..1b478f7 100644
+--- a/accumulo/src/main/java/com/yahoo/ycsb/db/ZKProducerConsumer.java
++++ b/accumulo/src/main/java/com/yahoo/ycsb/db/ZKProducerConsumer.java
+@@ -174,7 +174,7 @@
+       while (true) {
+         synchronized (mutex) {
+           List<String> list = zk.getChildren(getRoot(), true);
+-          if (list.size() == 0) {
++          if (list.isEmpty()) {
+             System.out.println("Going to wait");
+             mutex.wait();
+           } else {
+diff --git a/core/src/main/java/com/yahoo/ycsb/CommandLine.java b/core/src/main/java/com/yahoo/ycsb/CommandLine.java
+index 0288573..80c1fc1 100644
+--- a/core/src/main/java/com/yahoo/ycsb/CommandLine.java
++++ b/core/src/main/java/com/yahoo/ycsb/CommandLine.java
+@@ -327,7 +327,7 @@
+ 		  Status ret=db.scan(table,tokens[1],Integer.parseInt(tokens[2]),fields,results);
+ 		  System.out.println("Result: "+ret.getName());
+ 		  int record=0;
+-		  if (results.size()==0)
++		  if (results.isEmpty())
+ 		  {
+ 		     System.out.println("0 records");
+ 		  }
+diff --git a/couchbase/src/main/java/com/yahoo/ycsb/db/CouchbaseClient.java b/couchbase/src/main/java/com/yahoo/ycsb/db/CouchbaseClient.java
+index fb29c45..d5179b3 100644
+--- a/couchbase/src/main/java/com/yahoo/ycsb/db/CouchbaseClient.java
++++ b/couchbase/src/main/java/com/yahoo/ycsb/db/CouchbaseClient.java
+@@ -291,7 +291,7 @@
+     if (useJson) {
+       try {
+         JsonNode json = JSON_MAPPER.readTree((String) source);
+-        boolean checkFields = fields != null && fields.size() > 0;
++        boolean checkFields = fields != null && !fields.isEmpty();
+         for (Iterator<Map.Entry<String, JsonNode>> jsonFields = json.fields(); jsonFields.hasNext();) {
+           Map.Entry<String, JsonNode> jsonField = jsonFields.next();
+           String name = jsonField.getKey();
+diff --git a/memcached/src/main/java/com/yahoo/ycsb/db/MemcachedClient.java b/memcached/src/main/java/com/yahoo/ycsb/db/MemcachedClient.java
+index 8a95d8f..9ce0b93 100644
+--- a/memcached/src/main/java/com/yahoo/ycsb/db/MemcachedClient.java
++++ b/memcached/src/main/java/com/yahoo/ycsb/db/MemcachedClient.java
+@@ -262,7 +262,7 @@
+       String value, Set<String> fields,
+       Map<String, ByteIterator> result) throws IOException {
+     JsonNode json = MAPPER.readTree(value);
+-    boolean checkFields = fields != null && fields.size() > 0;
++    boolean checkFields = fields != null && !fields.isEmpty();
+     for (Iterator<Map.Entry<String, JsonNode>> jsonFields = json.getFields();
+          jsonFields.hasNext();
+          /* increment in loop body */) {
+diff --git a/accumulo/src/main/java/com/yahoo/ycsb/db/AccumuloClient.java b/accumulo/src/main/java/com/yahoo/ycsb/db/AccumuloClient.java
+index 79be7d9..db78e87 100644
+--- a/accumulo/src/main/java/com/yahoo/ycsb/db/AccumuloClient.java
++++ b/accumulo/src/main/java/com/yahoo/ycsb/db/AccumuloClient.java
+@@ -416,7 +416,7 @@
+           // If the results are empty, the key is enqueued in
+           // Zookeeper
+           // and tried again, until the results are found.
+-          if (result.size() == 0) {
++          if (result.isEmpty()) {
+             q.produce(strKey);
+             int count = ((Integer) hmKeyNumReads.get(strKey)).intValue();
+             hmKeyNumReads.put(strKey, new Integer(count + 1));

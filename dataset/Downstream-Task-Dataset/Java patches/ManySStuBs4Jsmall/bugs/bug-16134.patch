@@ -1,0 +1,26 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java b/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
+index 227b87b..84c27fe 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
+@@ -50,7 +50,7 @@
+         this.name = name;
+         this.proxyHelper = new ProxyHelper(name, client);
+         Config config = (Config) proxyHelper.doOp(ClusterOperation.GET_CONFIG, null, null);
+-        MapConfig mapConfig = config.getMapConfig(name);
++        MapConfig mapConfig = config.getMapConfig(name.substring(Prefix.MAP.length()));
+         NearCacheConfig ncc = mapConfig.getNearCacheConfig();
+ 
+         boolean nearCacheEnabled = "true".equalsIgnoreCase(System.getProperty(PROP_CLIENT_NEAR_CACHE_CONFIG_ENABLED, "false"));
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java b/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
+index 227b87b..84c27fe 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
+@@ -50,7 +50,7 @@
+         this.name = name;
+         this.proxyHelper = new ProxyHelper(name, client);
+         Config config = (Config) proxyHelper.doOp(ClusterOperation.GET_CONFIG, null, null);
+-        MapConfig mapConfig = config.getMapConfig(name);
++        MapConfig mapConfig = config.getMapConfig(name.substring(Prefix.MAP.length()));
+         NearCacheConfig ncc = mapConfig.getNearCacheConfig();
+ 
+         boolean nearCacheEnabled = "true".equalsIgnoreCase(System.getProperty(PROP_CLIENT_NEAR_CACHE_CONFIG_ENABLED, "false"));

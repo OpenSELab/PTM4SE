@@ -1,0 +1,44 @@
+diff --git a/transport-native-epoll/src/main/java/io/netty/channel/epoll/Native.java b/transport-native-epoll/src/main/java/io/netty/channel/epoll/Native.java
+index 46f3b56..84c1622 100644
+--- a/transport-native-epoll/src/main/java/io/netty/channel/epoll/Native.java
++++ b/transport-native-epoll/src/main/java/io/netty/channel/epoll/Native.java
+@@ -473,7 +473,7 @@
+ 
+     static InetSocketAddress address(byte[] addr, int offset, int len) {
+         // The last 4 bytes are always the port
+-        final int port = decodeInt(addr, len - 4);
++        final int port = decodeInt(addr, offset + len - 4);
+         final InetAddress address;
+ 
+         try {
+@@ -494,7 +494,7 @@
+                 case 24:
+                     byte[] ipv6 = new byte[16];
+                     System.arraycopy(addr, offset, ipv6, 0, 16);
+-                    int scopeId = decodeInt(addr, len  - 8);
++                    int scopeId = decodeInt(addr, offset + len  - 8);
+                     address = Inet6Address.getByAddress(null, ipv6, scopeId);
+                     break;
+                 default:
+diff --git a/transport-native-epoll/src/main/java/io/netty/channel/epoll/Native.java b/transport-native-epoll/src/main/java/io/netty/channel/epoll/Native.java
+index 46f3b56..84c1622 100644
+--- a/transport-native-epoll/src/main/java/io/netty/channel/epoll/Native.java
++++ b/transport-native-epoll/src/main/java/io/netty/channel/epoll/Native.java
+@@ -473,7 +473,7 @@
+ 
+     static InetSocketAddress address(byte[] addr, int offset, int len) {
+         // The last 4 bytes are always the port
+-        final int port = decodeInt(addr, len - 4);
++        final int port = decodeInt(addr, offset + len - 4);
+         final InetAddress address;
+ 
+         try {
+@@ -494,7 +494,7 @@
+                 case 24:
+                     byte[] ipv6 = new byte[16];
+                     System.arraycopy(addr, offset, ipv6, 0, 16);
+-                    int scopeId = decodeInt(addr, len  - 8);
++                    int scopeId = decodeInt(addr, offset + len  - 8);
+                     address = Inet6Address.getByAddress(null, ipv6, scopeId);
+                     break;
+                 default:

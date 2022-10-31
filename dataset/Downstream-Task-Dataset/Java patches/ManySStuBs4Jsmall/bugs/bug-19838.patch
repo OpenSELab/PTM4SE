@@ -1,0 +1,26 @@
+diff --git a/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java b/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
+index 5c18a65..a9ca3b8 100644
+--- a/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
++++ b/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
+@@ -115,7 +115,7 @@
+ 		} catch (ConnectException cex) {
+ 			logger.info("Can't connect to interface {}", hmInterface);
+ 		} catch (Exception ex) {
+-			throw new CcuClientException(ex.getMessage(), ex);
++			throw new CcuClientException(ex.getMessage() + "(sending " + request + ")", ex);
+ 		} finally {
+ 			try {
+ 				if (socket != null) {
+diff --git a/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java b/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
+index 5c18a65..a9ca3b8 100644
+--- a/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
++++ b/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
+@@ -115,7 +115,7 @@
+ 		} catch (ConnectException cex) {
+ 			logger.info("Can't connect to interface {}", hmInterface);
+ 		} catch (Exception ex) {
+-			throw new CcuClientException(ex.getMessage(), ex);
++			throw new CcuClientException(ex.getMessage() + "(sending " + request + ")", ex);
+ 		} finally {
+ 			try {
+ 				if (socket != null) {

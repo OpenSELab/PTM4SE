@@ -1,0 +1,26 @@
+diff --git a/core/client/src/main/java/alluxio/hadoop/HdfsFileInputStream.java b/core/client/src/main/java/alluxio/hadoop/HdfsFileInputStream.java
+index b824ffe..ed5dabe 100644
+--- a/core/client/src/main/java/alluxio/hadoop/HdfsFileInputStream.java
++++ b/core/client/src/main/java/alluxio/hadoop/HdfsFileInputStream.java
+@@ -87,7 +87,7 @@
+       mFileInfo = fs.getStatus(uri);
+       mHdfsPath = new Path(mFileInfo.getUfsPath());
+       mAlluxioFileInputStream =
+-          fs.openFile(uri, OpenFileOptions.defaults().setReadType(ReadType.CACHE));
++          fs.openFile(uri, OpenFileOptions.defaults());
+     } catch (FileDoesNotExistException e) {
+       throw new FileNotFoundException(
+           ExceptionMessage.HDFS_FILE_NOT_FOUND.getMessage(mHdfsPath, uri));
+diff --git a/core/client/src/main/java/alluxio/hadoop/HdfsFileInputStream.java b/core/client/src/main/java/alluxio/hadoop/HdfsFileInputStream.java
+index b824ffe..ed5dabe 100644
+--- a/core/client/src/main/java/alluxio/hadoop/HdfsFileInputStream.java
++++ b/core/client/src/main/java/alluxio/hadoop/HdfsFileInputStream.java
+@@ -87,7 +87,7 @@
+       mFileInfo = fs.getStatus(uri);
+       mHdfsPath = new Path(mFileInfo.getUfsPath());
+       mAlluxioFileInputStream =
+-          fs.openFile(uri, OpenFileOptions.defaults().setReadType(ReadType.CACHE));
++          fs.openFile(uri, OpenFileOptions.defaults());
+     } catch (FileDoesNotExistException e) {
+       throw new FileNotFoundException(
+           ExceptionMessage.HDFS_FILE_NOT_FOUND.getMessage(mHdfsPath, uri));

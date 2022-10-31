@@ -1,0 +1,26 @@
+diff --git a/clients/unshaded/src/main/java/tachyon/client/block/RemoteBlockOutStream.java b/clients/unshaded/src/main/java/tachyon/client/block/RemoteBlockOutStream.java
+index 8bbe589..b2a017d 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/block/RemoteBlockOutStream.java
++++ b/clients/unshaded/src/main/java/tachyon/client/block/RemoteBlockOutStream.java
+@@ -91,7 +91,7 @@
+     }
+     flush();
+     mRemoteWriter.close();
+-    if (mFlushedBytes > 0) {
++    if (mFlushedBytes == mBlockSize) {
+       mWorkerClient.cacheBlock(mBlockId);
+       ClientContext.getClientMetrics().incBlocksWrittenRemote(1);
+     } else {
+diff --git a/clients/unshaded/src/main/java/tachyon/client/block/RemoteBlockOutStream.java b/clients/unshaded/src/main/java/tachyon/client/block/RemoteBlockOutStream.java
+index 8bbe589..b2a017d 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/block/RemoteBlockOutStream.java
++++ b/clients/unshaded/src/main/java/tachyon/client/block/RemoteBlockOutStream.java
+@@ -91,7 +91,7 @@
+     }
+     flush();
+     mRemoteWriter.close();
+-    if (mFlushedBytes > 0) {
++    if (mFlushedBytes == mBlockSize) {
+       mWorkerClient.cacheBlock(mBlockId);
+       ClientContext.getClientMetrics().incBlocksWrittenRemote(1);
+     } else {

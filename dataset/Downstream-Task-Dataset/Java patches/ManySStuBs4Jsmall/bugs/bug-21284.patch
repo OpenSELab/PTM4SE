@@ -1,0 +1,20 @@
+diff --git a/spring-boot/src/test/java/org/springframework/boot/context/ContextIdApplicationContextInitializerTests.java b/spring-boot/src/test/java/org/springframework/boot/context/ContextIdApplicationContextInitializerTests.java
+index d9306e5..48df45a 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/context/ContextIdApplicationContextInitializerTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/context/ContextIdApplicationContextInitializerTests.java
+@@ -69,13 +69,13 @@
+ 	}
+ 
+ 	@Test
+-	public void testExplicitName() {
++	public void testExplicitNameIsChosenInFavorOfCloudFoundry() {
+ 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext();
+ 		EnvironmentTestUtils.addEnvironment(context, "spring.application.name:spam",
+ 				"spring.config.name:foo", "PORT:8080", "vcap.application.name:bar",
+ 				"vcap.application.instance_index:2");
+ 		this.initializer.initialize(context);
+-		assertEquals("bar:2", context.getId());
++		assertEquals("spam:2", context.getId());
+ 	}
+ 
+ }

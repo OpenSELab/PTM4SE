@@ -1,0 +1,26 @@
+diff --git a/clients/unshaded/src/main/java/tachyon/hadoop/HdfsFileInputStream.java b/clients/unshaded/src/main/java/tachyon/hadoop/HdfsFileInputStream.java
+index b0e43d4..b175038 100644
+--- a/clients/unshaded/src/main/java/tachyon/hadoop/HdfsFileInputStream.java
++++ b/clients/unshaded/src/main/java/tachyon/hadoop/HdfsFileInputStream.java
+@@ -262,7 +262,7 @@
+       if (mStatistics != null) {
+         mStatistics.incrementBytesRead(1);
+       }
+-      return mBuffer[mBufferPosition ++];
++      return BufferUtils.byteToInt(mBuffer[mBufferPosition ++]);
+     }
+     LOG.error("Reading from HDFS directly");
+     while ((mBufferLimit = mHdfsInputStream.read(mBuffer)) == 0) {
+diff --git a/clients/unshaded/src/main/java/tachyon/hadoop/HdfsFileInputStream.java b/clients/unshaded/src/main/java/tachyon/hadoop/HdfsFileInputStream.java
+index b0e43d4..b175038 100644
+--- a/clients/unshaded/src/main/java/tachyon/hadoop/HdfsFileInputStream.java
++++ b/clients/unshaded/src/main/java/tachyon/hadoop/HdfsFileInputStream.java
+@@ -262,7 +262,7 @@
+       if (mStatistics != null) {
+         mStatistics.incrementBytesRead(1);
+       }
+-      return mBuffer[mBufferPosition ++];
++      return BufferUtils.byteToInt(mBuffer[mBufferPosition ++]);
+     }
+     LOG.error("Reading from HDFS directly");
+     while ((mBufferLimit = mHdfsInputStream.read(mBuffer)) == 0) {

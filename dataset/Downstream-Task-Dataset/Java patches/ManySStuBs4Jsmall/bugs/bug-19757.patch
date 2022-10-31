@@ -1,0 +1,26 @@
+diff --git a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
+index ba6586b..f47a1b3 100644
+--- a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
++++ b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
+@@ -289,7 +289,7 @@
+ 							} else if (provider.getBindingType(itemName) == BindingType.ACTUAL
+ 									&& ((HeatingThermostat) device).isTemperatureActualUpdated()) {
+ 								eventPublisher.postUpdate(itemName, ((HeatingThermostat) device).getTemperatureActual());
+-							} else if (((HeatingThermostat) device).isTemperatureSetpointUpdated()){
++							} else if (((HeatingThermostat) device).isTemperatureSetpointUpdated() && provider.getBindingType(itemName) == null){
+ 								eventPublisher.postUpdate(itemName, ((HeatingThermostat) device).getTemperatureSetpoint());
+ 							}
+ 							break;
+diff --git a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
+index ba6586b..f47a1b3 100644
+--- a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
++++ b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
+@@ -289,7 +289,7 @@
+ 							} else if (provider.getBindingType(itemName) == BindingType.ACTUAL
+ 									&& ((HeatingThermostat) device).isTemperatureActualUpdated()) {
+ 								eventPublisher.postUpdate(itemName, ((HeatingThermostat) device).getTemperatureActual());
+-							} else if (((HeatingThermostat) device).isTemperatureSetpointUpdated()){
++							} else if (((HeatingThermostat) device).isTemperatureSetpointUpdated() && provider.getBindingType(itemName) == null){
+ 								eventPublisher.postUpdate(itemName, ((HeatingThermostat) device).getTemperatureSetpoint());
+ 							}
+ 							break;

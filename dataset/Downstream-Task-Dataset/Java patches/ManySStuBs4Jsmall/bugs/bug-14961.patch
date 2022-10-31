@@ -1,0 +1,26 @@
+diff --git a/extensions/assistedinject/src/com/google/inject/assistedinject/FactoryModuleBuilder.java b/extensions/assistedinject/src/com/google/inject/assistedinject/FactoryModuleBuilder.java
+index f014294..57f1035 100644
+--- a/extensions/assistedinject/src/com/google/inject/assistedinject/FactoryModuleBuilder.java
++++ b/extensions/assistedinject/src/com/google/inject/assistedinject/FactoryModuleBuilder.java
+@@ -314,7 +314,7 @@
+       @Override
+       protected void configure() {
+         Provider<F> provider = new FactoryProvider2<>(factoryInterface, bindings);
+-        bind(factoryInterface).toProvider(provider);
++        binder().skipSources(this.getClass()).bind(factoryInterface).toProvider(provider);
+       }
+     };
+   }
+diff --git a/extensions/assistedinject/src/com/google/inject/assistedinject/FactoryModuleBuilder.java b/extensions/assistedinject/src/com/google/inject/assistedinject/FactoryModuleBuilder.java
+index f014294..57f1035 100644
+--- a/extensions/assistedinject/src/com/google/inject/assistedinject/FactoryModuleBuilder.java
++++ b/extensions/assistedinject/src/com/google/inject/assistedinject/FactoryModuleBuilder.java
+@@ -314,7 +314,7 @@
+       @Override
+       protected void configure() {
+         Provider<F> provider = new FactoryProvider2<>(factoryInterface, bindings);
+-        bind(factoryInterface).toProvider(provider);
++        binder().skipSources(this.getClass()).bind(factoryInterface).toProvider(provider);
+       }
+     };
+   }

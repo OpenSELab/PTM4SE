@@ -1,0 +1,44 @@
+diff --git a/core/common/src/main/java/alluxio/underfs/UnderFileSystem.java b/core/common/src/main/java/alluxio/underfs/UnderFileSystem.java
+index 04cec4c..084b1ee 100644
+--- a/core/common/src/main/java/alluxio/underfs/UnderFileSystem.java
++++ b/core/common/src/main/java/alluxio/underfs/UnderFileSystem.java
+@@ -191,7 +191,7 @@
+    * @return instance of the under layer file system
+    */
+   public static UnderFileSystem get(String path, Object ufsConf, Configuration configuration) {
+-    Preconditions.checkNotNull(path);
++    Preconditions.checkArgument(path != null, "path may not be null");
+     Preconditions.checkNotNull(configuration);
+ 
+     return UFS_CACHE.get(path, ufsConf, configuration);
+@@ -262,7 +262,7 @@
+    *         address is "/" and the path starts with "/".
+    */
+   public static Pair<String, String> parse(AlluxioURI path, Configuration configuration) {
+-    Preconditions.checkNotNull(path);
++    Preconditions.checkArgument(path != null, "path may not be null");
+ 
+     if (path.hasScheme()) {
+       String header = path.getScheme() + "://";
+diff --git a/core/common/src/main/java/alluxio/underfs/UnderFileSystem.java b/core/common/src/main/java/alluxio/underfs/UnderFileSystem.java
+index 04cec4c..084b1ee 100644
+--- a/core/common/src/main/java/alluxio/underfs/UnderFileSystem.java
++++ b/core/common/src/main/java/alluxio/underfs/UnderFileSystem.java
+@@ -191,7 +191,7 @@
+    * @return instance of the under layer file system
+    */
+   public static UnderFileSystem get(String path, Object ufsConf, Configuration configuration) {
+-    Preconditions.checkNotNull(path);
++    Preconditions.checkArgument(path != null, "path may not be null");
+     Preconditions.checkNotNull(configuration);
+ 
+     return UFS_CACHE.get(path, ufsConf, configuration);
+@@ -262,7 +262,7 @@
+    *         address is "/" and the path starts with "/".
+    */
+   public static Pair<String, String> parse(AlluxioURI path, Configuration configuration) {
+-    Preconditions.checkNotNull(path);
++    Preconditions.checkArgument(path != null, "path may not be null");
+ 
+     if (path.hasScheme()) {
+       String header = path.getScheme() + "://";

@@ -1,0 +1,80 @@
+diff --git a/client/src/main/java/com/alibaba/otter/canal/client/impl/ClusterCanalConnector.java b/client/src/main/java/com/alibaba/otter/canal/client/impl/ClusterCanalConnector.java
+index d062b4f..9fd1ca1 100644
+--- a/client/src/main/java/com/alibaba/otter/canal/client/impl/ClusterCanalConnector.java
++++ b/client/src/main/java/com/alibaba/otter/canal/client/impl/ClusterCanalConnector.java
+@@ -108,7 +108,7 @@
+                 return;
+             } catch (Throwable t) {
+                 logger.warn("something goes wrong when subscribing from server:{}\n{}",
+-                    currentConnector.getAddress(),
++                    currentConnector != null ? currentConnector.getAddress() : "null",
+                     ExceptionUtils.getFullStackTrace(t));
+                 times++;
+                 restart();
+@@ -127,7 +127,7 @@
+                 return;
+             } catch (Throwable t) {
+                 logger.warn("something goes wrong when unsubscribing from server:{}\n{}",
+-                    currentConnector.getAddress(),
++                    currentConnector != null ? currentConnector.getAddress() : "null",
+                     ExceptionUtils.getFullStackTrace(t));
+                 times++;
+                 restart();
+@@ -145,7 +145,7 @@
+                 return msg;
+             } catch (Throwable t) {
+                 logger.warn("something goes wrong when getting data from server:{}\n{}",
+-                    currentConnector.getAddress(),
++                    currentConnector != null ? currentConnector.getAddress() : "null",
+                     ExceptionUtils.getFullStackTrace(t));
+                 times++;
+                 restart();
+@@ -163,7 +163,7 @@
+                 return msg;
+             } catch (Throwable t) {
+                 logger.warn("something goes wrong when getting data from server:{}\n{}",
+-                    currentConnector.getAddress(),
++                    currentConnector != null ? currentConnector.getAddress() : "null",
+                     ExceptionUtils.getFullStackTrace(t));
+                 times++;
+                 restart();
+diff --git a/client/src/main/java/com/alibaba/otter/canal/client/impl/ClusterCanalConnector.java b/client/src/main/java/com/alibaba/otter/canal/client/impl/ClusterCanalConnector.java
+index d062b4f..9fd1ca1 100644
+--- a/client/src/main/java/com/alibaba/otter/canal/client/impl/ClusterCanalConnector.java
++++ b/client/src/main/java/com/alibaba/otter/canal/client/impl/ClusterCanalConnector.java
+@@ -108,7 +108,7 @@
+                 return;
+             } catch (Throwable t) {
+                 logger.warn("something goes wrong when subscribing from server:{}\n{}",
+-                    currentConnector.getAddress(),
++                    currentConnector != null ? currentConnector.getAddress() : "null",
+                     ExceptionUtils.getFullStackTrace(t));
+                 times++;
+                 restart();
+@@ -127,7 +127,7 @@
+                 return;
+             } catch (Throwable t) {
+                 logger.warn("something goes wrong when unsubscribing from server:{}\n{}",
+-                    currentConnector.getAddress(),
++                    currentConnector != null ? currentConnector.getAddress() : "null",
+                     ExceptionUtils.getFullStackTrace(t));
+                 times++;
+                 restart();
+@@ -145,7 +145,7 @@
+                 return msg;
+             } catch (Throwable t) {
+                 logger.warn("something goes wrong when getting data from server:{}\n{}",
+-                    currentConnector.getAddress(),
++                    currentConnector != null ? currentConnector.getAddress() : "null",
+                     ExceptionUtils.getFullStackTrace(t));
+                 times++;
+                 restart();
+@@ -163,7 +163,7 @@
+                 return msg;
+             } catch (Throwable t) {
+                 logger.warn("something goes wrong when getting data from server:{}\n{}",
+-                    currentConnector.getAddress(),
++                    currentConnector != null ? currentConnector.getAddress() : "null",
+                     ExceptionUtils.getFullStackTrace(t));
+                 times++;
+                 restart();

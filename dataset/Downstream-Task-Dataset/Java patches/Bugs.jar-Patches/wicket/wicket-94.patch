@@ -1,0 +1,175 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/AbstractMarkupSourcingStrategy.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/AbstractMarkupSourcingStrategy.java
+index 30671b4..d8ac442 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/AbstractMarkupSourcingStrategy.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/AbstractMarkupSourcingStrategy.java
+@@ -24,6 +24,7 @@ import org.apache.wicket.markup.MarkupException;
+ import org.apache.wicket.markup.MarkupStream;
+ import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
+ import org.apache.wicket.markup.parser.XmlTag.TagType;
++import org.apache.wicket.markup.resolver.IComponentResolver;
+ 
+ /**
+  * Implements boilerplate as needed by many markup sourcing strategies.
+@@ -42,6 +43,40 @@ public abstract class AbstractMarkupSourcingStrategy implements IMarkupSourcingS
+ 	public abstract IMarkupFragment getMarkup(final MarkupContainer container, final Component child);
+ 
+ 	/**
++	 * If the child has not been directly added to the container, but via a
++	 * TransparentWebMarkupContainer, then we are in trouble. In general Wicket iterates over the
++	 * markup elements and searches for associated components, not the other way around. Because of
++	 * TransparentWebMarkupContainer (or more generally resolvers), there is no "synchronous" search
++	 * possible.
++	 * 
++	 * @param container
++	 *            the parent container.
++	 * @param child
++	 *            The component to find the markup for.
++	 * @return the markup fragment for the child, or {@code null}.
++	 */
++	protected IMarkupFragment searchMarkupInTransparentResolvers(final MarkupContainer container,
++		final Component child)
++	{
++		IMarkupFragment markup = null;
++
++		for (Component ch : container)
++		{
++			if ((ch != child) && (ch instanceof MarkupContainer) &&
++				(ch instanceof IComponentResolver))
++			{
++				markup = ((MarkupContainer)ch).getMarkup(child);
++				if (markup != null)
++				{
++					break;
++				}
++			}
++		}
++
++		return markup;
++	}
++
++	/**
+ 	 * Make sure we open up open-close tags to open-body-close
+ 	 */
+ 	public void onComponentTag(final Component component, final ComponentTag tag)
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/AssociatedMarkupSourcingStrategy.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/AssociatedMarkupSourcingStrategy.java
+index 3b61f97..d3196c6 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/AssociatedMarkupSourcingStrategy.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/AssociatedMarkupSourcingStrategy.java
+@@ -119,6 +119,12 @@ public abstract class AssociatedMarkupSourcingStrategy extends AbstractMarkupSou
+ 			return associatedMarkup;
+ 		}
+ 
++		associatedMarkup = searchMarkupInTransparentResolvers(parent, child);
++		if (associatedMarkup != null)
++		{
++			return associatedMarkup;
++		}
++
+ 		return findMarkupInAssociatedFileHeader(parent, child);
+ 	}
+ 
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/DefaultMarkupSourcingStrategy.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/DefaultMarkupSourcingStrategy.java
+index 9173181..24a09e9 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/DefaultMarkupSourcingStrategy.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/DefaultMarkupSourcingStrategy.java
+@@ -23,7 +23,6 @@ import org.apache.wicket.markup.IMarkupFragment;
+ import org.apache.wicket.markup.MarkupStream;
+ import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
+ import org.apache.wicket.markup.html.list.AbstractItem;
+-import org.apache.wicket.markup.resolver.IComponentResolver;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+@@ -32,7 +31,7 @@ import org.slf4j.LoggerFactory;
+  * 
+  * @author Juergen Donnerstag
+  */
+-public final class DefaultMarkupSourcingStrategy implements IMarkupSourcingStrategy
++public final class DefaultMarkupSourcingStrategy extends AbstractMarkupSourcingStrategy
+ {
+ 	/** Log for reporting. */
+ 	private static final Logger log = LoggerFactory.getLogger(DefaultMarkupSourcingStrategy.class);
+@@ -58,6 +57,7 @@ public final class DefaultMarkupSourcingStrategy implements IMarkupSourcingStrat
+ 	/**
+ 	 * Nothing to add to the response by default
+ 	 */
++	@Override
+ 	public void onComponentTag(final Component component, final ComponentTag tag)
+ 	{
+ 	}
+@@ -65,6 +65,7 @@ public final class DefaultMarkupSourcingStrategy implements IMarkupSourcingStrat
+ 	/**
+ 	 * Invoke the component's onComponentTagBody().
+ 	 */
++	@Override
+ 	public void onComponentTagBody(final Component component, final MarkupStream markupStream,
+ 		final ComponentTag openTag)
+ 	{
+@@ -74,6 +75,7 @@ public final class DefaultMarkupSourcingStrategy implements IMarkupSourcingStrat
+ 	/**
+ 	 * Get the markup for the child component, which is assumed to be a child of 'container'.
+ 	 */
++	@Override
+ 	public IMarkupFragment getMarkup(final MarkupContainer container, final Component child)
+ 	{
+ 		// If the sourcing strategy did not provide one, than ask the component.
+@@ -96,22 +98,10 @@ public final class DefaultMarkupSourcingStrategy implements IMarkupSourcingStrat
+ 			return markup;
+ 		}
+ 
+-		// If the child has not been directly added to the container, but via a
+-		// TransparentWebMarkupContainer, then we are in trouble. In general Wicket iterates over
+-		// the markup elements and searches for associated components, not the other way around.
+-		// Because of TransparentWebMarkupContainer (or more generally resolvers), there is no
+-		// "synchronous" search possible.
+-		for (Component ch : container)
++		markup = searchMarkupInTransparentResolvers(container, child);
++		if (markup != null)
+ 		{
+-			if ((ch != child) && (ch instanceof MarkupContainer) &&
+-				(ch instanceof IComponentResolver))
+-			{
+-				markup = ((MarkupContainer)ch).getMarkup(child);
+-				if (markup != null)
+-				{
+-					return markup;
+-				}
+-			}
++			return markup;
+ 		}
+ 
+ 		// This is to make migration for Items from 1.4 to 1.5 more easy
+@@ -156,6 +146,7 @@ public final class DefaultMarkupSourcingStrategy implements IMarkupSourcingStrat
+ 	/**
+ 	 * Empty: nothing will be added to the header by default
+ 	 */
++	@Override
+ 	public void renderHead(final Component component, HtmlHeaderContainer container)
+ 	{
+ 	}
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/IMarkupSourcingStrategy.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/IMarkupSourcingStrategy.java
+index bfc2240..7cc8fb2 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/IMarkupSourcingStrategy.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/panel/IMarkupSourcingStrategy.java
+@@ -22,6 +22,7 @@ import org.apache.wicket.markup.ComponentTag;
+ import org.apache.wicket.markup.IMarkupFragment;
+ import org.apache.wicket.markup.MarkupStream;
+ import org.apache.wicket.markup.html.internal.HtmlHeaderContainer;
++import org.apache.wicket.markup.resolver.IComponentResolver;
+ 
+ /**
+  * Markup sourcing strategies determine whether a Component behaves like a "Panel" pulling its
+@@ -79,10 +80,11 @@ public interface IMarkupSourcingStrategy
+ 	 * @see MarkupContainer#getMarkup(Component)
+ 	 * 
+ 	 * @param container
+-	 *            The parent containing the child. (@TODO Is container ever != child.getParent()??)
++	 *            The parent containing the child. This is not the direct parent, transparent
++	 *            component {@link IComponentResolver resolver} may be in the hierarchy between.
+ 	 * @param child
+ 	 *            The component to find the markup for.
+-	 * @return markup fragment
++	 * @return the markup fragment for the child, or {@code null}.
+ 	 */
+ 	IMarkupFragment getMarkup(final MarkupContainer container, final Component child);
+ }

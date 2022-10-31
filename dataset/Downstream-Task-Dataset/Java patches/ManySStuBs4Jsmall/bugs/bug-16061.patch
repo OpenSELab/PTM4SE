@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapStoreTest.java b/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapStoreTest.java
+index bb94d38..debd90f 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapStoreTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapStoreTest.java
+@@ -1006,7 +1006,7 @@
+         IMap<Object, Object> map = h1.getMap("testWriteBehindSameSecondSameKey");
+         final int mapSize = 100;
+         //store op count.
+-        testMapStore.latchStoreOpCount = new CountDownLatch(mapSize);
++        testMapStore.latchStoreOpCount = new CountDownLatch(mapSize+1);
+ 
+         for (int i = 0; i < mapSize; i++) {
+             map.put("key", "value" + i);
+diff --git a/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapStoreTest.java b/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapStoreTest.java
+index bb94d38..debd90f 100644
+--- a/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapStoreTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/map/mapstore/MapStoreTest.java
+@@ -1006,7 +1006,7 @@
+         IMap<Object, Object> map = h1.getMap("testWriteBehindSameSecondSameKey");
+         final int mapSize = 100;
+         //store op count.
+-        testMapStore.latchStoreOpCount = new CountDownLatch(mapSize);
++        testMapStore.latchStoreOpCount = new CountDownLatch(mapSize+1);
+ 
+         for (int i = 0; i < mapSize; i++) {
+             map.put("key", "value" + i);

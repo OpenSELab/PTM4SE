@@ -1,0 +1,13 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/iterators/Combiner.java b/core/src/main/java/org/apache/accumulo/core/iterators/Combiner.java
+index 6e72073..584eb14 100644
+--- a/core/src/main/java/org/apache/accumulo/core/iterators/Combiner.java
++++ b/core/src/main/java/org/apache/accumulo/core/iterators/Combiner.java
+@@ -63,7 +63,7 @@ public abstract class Combiner extends WrappingIterator implements OptionDescrib
+      */
+     public ValueIterator(SortedKeyValueIterator<Key,Value> source) {
+       this.source = source;
+-      topKey = source.getTopKey();
++      topKey = new Key(source.getTopKey());
+       hasNext = _hasNext();
+     }
+     

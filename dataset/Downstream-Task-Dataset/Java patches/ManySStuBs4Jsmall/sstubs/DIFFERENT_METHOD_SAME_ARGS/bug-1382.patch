@@ -1,0 +1,39 @@
+diff --git a/controller/src/main/java/org/jboss/as/controller/extension/ExtensionRegistry.java b/controller/src/main/java/org/jboss/as/controller/extension/ExtensionRegistry.java
+index 4fc5cca..3330e6b 100644
+--- a/controller/src/main/java/org/jboss/as/controller/extension/ExtensionRegistry.java
++++ b/controller/src/main/java/org/jboss/as/controller/extension/ExtensionRegistry.java
+@@ -350,7 +350,7 @@
+         final Map<String, SubsystemInformation> subsystemsInfo = getAvailableSubsystems(moduleName);
+         if(subsystemsInfo != null && ! subsystemsInfo.isEmpty()) {
+             for(final Map.Entry<String, SubsystemInformation> entry : subsystemsInfo.entrySet()) {
+-                subsystems.add(entry.getKey(), entry.getValue().getManagementInterfaceMajorVersion() +"."+ entry.getValue().getManagementInterfaceMinorVersion());
++                subsystems.add(entry.getKey(), entry.getValue().getManagementInterfaceMajorVersion() +"."+ entry.getValue().getManagementInterfaceMicroVersion());
+             }
+         }
+     }
+diff --git a/security/src/main/java/org/jboss/as/security/SecurityExtension.java b/security/src/main/java/org/jboss/as/security/SecurityExtension.java
+index 7fe9fcb..692b504 100644
+--- a/security/src/main/java/org/jboss/as/security/SecurityExtension.java
++++ b/security/src/main/java/org/jboss/as/security/SecurityExtension.java
+@@ -325,7 +325,7 @@
+             } else {
+                 // Convert to a composite of an add without the module list + a write-attribute for the module list
+                 PathAddress pa = PathAddress.pathAddress(operation.get(OP_ADDR));
+-                transformedOp = Util.createEmptyOperation(COMPOSITE, pa);
++                transformedOp = Util.createEmptyOperation(COMPOSITE, null);
+                 ModelNode steps = transformedOp.get(STEPS);
+                 ModelNode clone = operation.clone();
+                 clone.remove(attributeName);
+diff --git a/controller/src/main/java/org/jboss/as/controller/extension/ExtensionRegistry.java b/controller/src/main/java/org/jboss/as/controller/extension/ExtensionRegistry.java
+index 4fc5cca..3330e6b 100644
+--- a/controller/src/main/java/org/jboss/as/controller/extension/ExtensionRegistry.java
++++ b/controller/src/main/java/org/jboss/as/controller/extension/ExtensionRegistry.java
+@@ -350,7 +350,7 @@
+         final Map<String, SubsystemInformation> subsystemsInfo = getAvailableSubsystems(moduleName);
+         if(subsystemsInfo != null && ! subsystemsInfo.isEmpty()) {
+             for(final Map.Entry<String, SubsystemInformation> entry : subsystemsInfo.entrySet()) {
+-                subsystems.add(entry.getKey(), entry.getValue().getManagementInterfaceMajorVersion() +"."+ entry.getValue().getManagementInterfaceMinorVersion());
++                subsystems.add(entry.getKey(), entry.getValue().getManagementInterfaceMajorVersion() +"."+ entry.getValue().getManagementInterfaceMicroVersion());
+             }
+         }
+     }

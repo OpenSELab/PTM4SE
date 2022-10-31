@@ -1,0 +1,30 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/FromFileDoNotDeleteFileIfProcessFailsTest.java b/camel-core/src/test/java/org/apache/camel/component/file/FromFileDoNotDeleteFileIfProcessFailsTest.java
+index 51a2a28..cd4cb9e 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/FromFileDoNotDeleteFileIfProcessFailsTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/FromFileDoNotDeleteFileIfProcessFailsTest.java
+@@ -41,7 +41,9 @@
+         template.sendBodyAndHeader("file://target/deletefile", body, Exchange.FILE_NAME, "hello.txt");
+ 
+         MockEndpoint mock = getMockEndpoint("mock:error");
+-        mock.expectedBodiesReceived(body);
++        // it could potentially retry the file on the 2nd poll and then fail again
++        // so it should be minimum message count
++        mock.expectedMinimumMessageCount(1);
+ 
+         mock.assertIsSatisfied();
+ 
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/FromFileDoNotDeleteFileIfProcessFailsTest.java b/camel-core/src/test/java/org/apache/camel/component/file/FromFileDoNotDeleteFileIfProcessFailsTest.java
+index 51a2a28..cd4cb9e 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/FromFileDoNotDeleteFileIfProcessFailsTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/FromFileDoNotDeleteFileIfProcessFailsTest.java
+@@ -41,7 +41,9 @@
+         template.sendBodyAndHeader("file://target/deletefile", body, Exchange.FILE_NAME, "hello.txt");
+ 
+         MockEndpoint mock = getMockEndpoint("mock:error");
+-        mock.expectedBodiesReceived(body);
++        // it could potentially retry the file on the 2nd poll and then fail again
++        // so it should be minimum message count
++        mock.expectedMinimumMessageCount(1);
+ 
+         mock.assertIsSatisfied();
+ 

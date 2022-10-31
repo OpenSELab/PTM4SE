@@ -1,0 +1,13 @@
+diff --git a/lib/rhino/src/org/mozilla/javascript/NativeArray.java b/lib/rhino/src/org/mozilla/javascript/NativeArray.java
+index 2fccaa0..d370591 100644
+--- a/lib/rhino/src/org/mozilla/javascript/NativeArray.java
++++ b/lib/rhino/src/org/mozilla/javascript/NativeArray.java
+@@ -365,7 +365,7 @@
+     }
+ 
+     private static long toArrayIndex(double d) {
+-        if (d == d) {
++        if (!Double.isNaN(d)) {
+             long index = ScriptRuntime.toUint32(d);
+             if (index == d && index != 4294967295L) {
+                 return index;

@@ -1,0 +1,167 @@
+diff --git a/wicket-spring/src/main/java/org/apache/wicket/spring/SpringBeanLocator.java b/wicket-spring/src/main/java/org/apache/wicket/spring/SpringBeanLocator.java
+index a022792..a279126 100644
+--- a/wicket-spring/src/main/java/org/apache/wicket/spring/SpringBeanLocator.java
++++ b/wicket-spring/src/main/java/org/apache/wicket/spring/SpringBeanLocator.java
+@@ -19,6 +19,7 @@ package org.apache.wicket.spring;
+ import java.lang.ref.WeakReference;
+ 
+ import org.apache.wicket.proxy.IProxyTargetLocator;
++import org.apache.wicket.util.lang.Args;
+ import org.apache.wicket.util.lang.Objects;
+ import org.apache.wicket.core.util.lang.WicketObjects;
+ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+@@ -73,14 +74,8 @@ public class SpringBeanLocator implements IProxyTargetLocator
+ 	public SpringBeanLocator(final String beanName, final Class<?> beanType,
+ 		final ISpringContextLocator locator)
+ 	{
+-		if (locator == null)
+-		{
+-			throw new IllegalArgumentException("[locator] argument cannot be null");
+-		}
+-		if (beanType == null)
+-		{
+-			throw new IllegalArgumentException("[beanType] argument cannot be null");
+-		}
++		Args.notNull(locator, "locator");
++		Args.notNull(beanType, "beanType");
+ 
+ 		beanTypeCache = new WeakReference<Class<?>>(beanType);
+ 		beanTypeName = beanType.getName();
+@@ -122,9 +117,6 @@ public class SpringBeanLocator implements IProxyTargetLocator
+ 		return clazz;
+ 	}
+ 
+-	/**
+-	 * @see org.apache.wicket.proxy.IProxyTargetLocator#locateProxyTarget()
+-	 */
+ 	@Override
+ 	public Object locateProxyTarget()
+ 	{
+@@ -174,11 +166,10 @@ public class SpringBeanLocator implements IProxyTargetLocator
+ 	 *            bean name
+ 	 * @param clazz
+ 	 *            bean class
+-	 * @throws IllegalStateException
++	 * @throws java.lang.IllegalStateException
+ 	 * @return found bean
+ 	 */
+-	private static Object lookupSpringBean(final ApplicationContext ctx, final String name,
+-		final Class<?> clazz)
++	private Object lookupSpringBean(ApplicationContext ctx, String name, Class<?> clazz)
+ 	{
+ 		try
+ 		{
+@@ -194,7 +185,7 @@ public class SpringBeanLocator implements IProxyTargetLocator
+ 		catch (NoSuchBeanDefinitionException e)
+ 		{
+ 			throw new IllegalStateException("bean with name [" + name + "] and class [" +
+-				clazz.getName() + "] not found");
++				clazz.getName() + "] not found", e);
+ 		}
+ 	}
+ 
+diff --git a/wicket-spring/src/main/java/org/apache/wicket/spring/injection/annot/AnnotProxyFieldValueFactory.java b/wicket-spring/src/main/java/org/apache/wicket/spring/injection/annot/AnnotProxyFieldValueFactory.java
+index 648d2c7..6b7d071 100644
+--- a/wicket-spring/src/main/java/org/apache/wicket/spring/injection/annot/AnnotProxyFieldValueFactory.java
++++ b/wicket-spring/src/main/java/org/apache/wicket/spring/injection/annot/AnnotProxyFieldValueFactory.java
+@@ -110,7 +110,23 @@ public class AnnotProxyFieldValueFactory implements IFieldValueFactory
+ 	{
+ 		if (supportsField(field))
+ 		{
+-			String beanName = getBeanName(field);
++			SpringBean annot = field.getAnnotation(SpringBean.class);
++
++			String name;
++			boolean required;
++			if (annot != null)
++			{
++				name = annot.name();
++				required = annot.required();
++			}
++			else
++			{
++				Named named = field.getAnnotation(Named.class);
++				name = named != null ? named.value() : "";
++				required = false;
++			}
++
++			String beanName = getBeanName(field, name, required);
+ 
+ 			if (beanName == null)
+ 			{
+@@ -128,13 +144,26 @@ public class AnnotProxyFieldValueFactory implements IFieldValueFactory
+ 			}
+ 
+ 			Object target;
+-			if (wrapInProxies)
++			try
+ 			{
+-				target = LazyInitProxyFactory.createProxy(field.getType(), locator);
++				// check whether there is a bean with the provided properties
++				target = locator.locateProxyTarget();
+ 			}
+-			else
++			catch (IllegalStateException isx)
+ 			{
+-				target = locator.locateProxyTarget();
++				if (required)
++				{
++					throw isx;
++				}
++				else
++				{
++					return null;
++				}
++			}
++
++			if (wrapInProxies)
++			{
++				target = LazyInitProxyFactory.createProxy(field.getType(), locator);
+ 			}
+ 
+ 			// only put the proxy into the cache if the bean is a singleton
+@@ -156,31 +185,20 @@ public class AnnotProxyFieldValueFactory implements IFieldValueFactory
+ 	 * @param field
+ 	 * @return bean name
+ 	 */
+-	private String getBeanName(final Field field)
++	private String getBeanName(final Field field, String name, boolean required)
+ 	{
+-		SpringBean annot = field.getAnnotation(SpringBean.class);
+-		
+-		String name;
+-		boolean required;
+-		if (annot != null) {
+-			name = annot.name();
+-			required = annot.required();
+-		} else {
+-			Named named = field.getAnnotation(Named.class);
+-			name = named != null ? named.value() : "";
+-			required = false;
+-		}
+ 
+ 		if (Strings.isEmpty(name))
+ 		{
+-			name = beanNameCache.get(field.getType());
++			Class<?> fieldType = field.getType();
++			name = beanNameCache.get(fieldType);
+ 			if (name == null)
+ 			{
+-				name = getBeanNameOfClass(contextLocator.getSpringContext(), field.getType(), required);
++				name = getBeanNameOfClass(contextLocator.getSpringContext(), fieldType, required);
+ 
+ 				if (name != null)
+ 				{
+-					String tmpName = beanNameCache.putIfAbsent(field.getType(), name);
++					String tmpName = beanNameCache.putIfAbsent(fieldType, name);
+ 					if (tmpName != null)
+ 					{
+ 						name = tmpName;
+@@ -188,6 +206,7 @@ public class AnnotProxyFieldValueFactory implements IFieldValueFactory
+ 				}
+ 			}
+ 		}
++
+ 		return name;
+ 	}
+ 

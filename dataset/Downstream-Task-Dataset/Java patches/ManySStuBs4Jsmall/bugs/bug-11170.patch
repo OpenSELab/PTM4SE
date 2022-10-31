@@ -1,0 +1,26 @@
+diff --git a/dropwizard-core/src/test/java/io/dropwizard/server/SimpleServerFactoryTest.java b/dropwizard-core/src/test/java/io/dropwizard/server/SimpleServerFactoryTest.java
+index eeed14c..2f442bf 100644
+--- a/dropwizard-core/src/test/java/io/dropwizard/server/SimpleServerFactoryTest.java
++++ b/dropwizard-core/src/test/java/io/dropwizard/server/SimpleServerFactoryTest.java
+@@ -46,7 +46,7 @@
+     public void setUp() throws Exception {
+         objectMapper.getSubtypeResolver().registerSubtypes(ConsoleAppenderFactory.class,
+                 FileAppenderFactory.class, SyslogAppenderFactory.class, HttpConnectorFactory.class);
+-        http = new YamlConfigurationFactory<>(SimpleServerFactory.class, validator, objectMapper, "dw")
++        http = (SimpleServerFactory) new YamlConfigurationFactory<>(ServerFactory.class, validator, objectMapper, "dw")
+                 .build(new File(Resources.getResource("yaml/simple_server.yml").toURI()));
+     }
+ 
+diff --git a/dropwizard-core/src/test/java/io/dropwizard/server/SimpleServerFactoryTest.java b/dropwizard-core/src/test/java/io/dropwizard/server/SimpleServerFactoryTest.java
+index eeed14c..2f442bf 100644
+--- a/dropwizard-core/src/test/java/io/dropwizard/server/SimpleServerFactoryTest.java
++++ b/dropwizard-core/src/test/java/io/dropwizard/server/SimpleServerFactoryTest.java
+@@ -46,7 +46,7 @@
+     public void setUp() throws Exception {
+         objectMapper.getSubtypeResolver().registerSubtypes(ConsoleAppenderFactory.class,
+                 FileAppenderFactory.class, SyslogAppenderFactory.class, HttpConnectorFactory.class);
+-        http = new YamlConfigurationFactory<>(SimpleServerFactory.class, validator, objectMapper, "dw")
++        http = (SimpleServerFactory) new YamlConfigurationFactory<>(ServerFactory.class, validator, objectMapper, "dw")
+                 .build(new File(Resources.getResource("yaml/simple_server.yml").toURI()));
+     }
+ 

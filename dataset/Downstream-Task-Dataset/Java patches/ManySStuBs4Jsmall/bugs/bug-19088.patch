@@ -1,0 +1,56 @@
+diff --git a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+index 0d92a77..73db7fc 100644
+--- a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
++++ b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+@@ -306,6 +306,7 @@
+      *         succeeds or fails.
+      */
+     public ChannelFuture handshake(Channel channel) throws SSLException {
++        // FIXME do not throw SSLException - return a failed future.
+         ChannelFuture handshakeFuture;
+         synchronized (handshakeLock) {
+             if (handshaking) {
+@@ -327,13 +328,14 @@
+      * destroys the underlying {@link SSLEngine}.
+      */
+     public ChannelFuture close(Channel channel) throws SSLException {
++        // FIXME do not throw SSLException - return a failed future.
+         ChannelHandlerContext ctx = context(channel);
+         engine.closeOutbound();
+         return wrapNonAppData(ctx, channel);
+     }
+ 
+     private ChannelHandlerContext context(Channel channel) {
+-        return channel.getPipeline().getContext(getClass());
++        return channel.getPipeline().getContext(this);
+     }
+ 
+     public void handleDownstream(
+diff --git a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+index 0d92a77..73db7fc 100644
+--- a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
++++ b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+@@ -306,6 +306,7 @@
+      *         succeeds or fails.
+      */
+     public ChannelFuture handshake(Channel channel) throws SSLException {
++        // FIXME do not throw SSLException - return a failed future.
+         ChannelFuture handshakeFuture;
+         synchronized (handshakeLock) {
+             if (handshaking) {
+@@ -327,13 +328,14 @@
+      * destroys the underlying {@link SSLEngine}.
+      */
+     public ChannelFuture close(Channel channel) throws SSLException {
++        // FIXME do not throw SSLException - return a failed future.
+         ChannelHandlerContext ctx = context(channel);
+         engine.closeOutbound();
+         return wrapNonAppData(ctx, channel);
+     }
+ 
+     private ChannelHandlerContext context(Channel channel) {
+-        return channel.getPipeline().getContext(getClass());
++        return channel.getPipeline().getContext(this);
+     }
+ 
+     public void handleDownstream(

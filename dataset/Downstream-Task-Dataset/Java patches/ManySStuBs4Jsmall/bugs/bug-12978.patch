@@ -1,0 +1,39 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveClientConfig.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveClientConfig.java
+index c74a321..ec2824f 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveClientConfig.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveClientConfig.java
+@@ -75,7 +75,7 @@
+     private Duration metastoreTimeout = new Duration(10, TimeUnit.SECONDS);
+ 
+     private Duration ipcPingInterval = new Duration(10, TimeUnit.SECONDS);
+-    private Duration dfsTimeout = new Duration(10, TimeUnit.SECONDS);
++    private Duration dfsTimeout = new Duration(60, TimeUnit.SECONDS);
+     private Duration dfsConnectTimeout = new Duration(500, TimeUnit.MILLISECONDS);
+     private int dfsConnectMaxRetries = 5;
+     private boolean verifyChecksum = true;
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveClientConfig.java b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveClientConfig.java
+index 0e7b4d7..c4e7291 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveClientConfig.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveClientConfig.java
+@@ -58,7 +58,7 @@
+                 .setForceLocalScheduling(false)
+                 .setMaxConcurrentFileRenames(20)
+                 .setRecursiveDirWalkerEnabled(false)
+-                .setDfsTimeout(new Duration(10, TimeUnit.SECONDS))
++                .setDfsTimeout(new Duration(60, TimeUnit.SECONDS))
+                 .setIpcPingInterval(new Duration(10, TimeUnit.SECONDS))
+                 .setDfsConnectTimeout(new Duration(500, TimeUnit.MILLISECONDS))
+                 .setDfsConnectMaxRetries(5)
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveClientConfig.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveClientConfig.java
+index c74a321..ec2824f 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveClientConfig.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveClientConfig.java
+@@ -75,7 +75,7 @@
+     private Duration metastoreTimeout = new Duration(10, TimeUnit.SECONDS);
+ 
+     private Duration ipcPingInterval = new Duration(10, TimeUnit.SECONDS);
+-    private Duration dfsTimeout = new Duration(10, TimeUnit.SECONDS);
++    private Duration dfsTimeout = new Duration(60, TimeUnit.SECONDS);
+     private Duration dfsConnectTimeout = new Duration(500, TimeUnit.MILLISECONDS);
+     private int dfsConnectMaxRetries = 5;
+     private boolean verifyChecksum = true;

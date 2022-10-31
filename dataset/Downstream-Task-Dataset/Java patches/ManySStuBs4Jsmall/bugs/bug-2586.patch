@@ -1,0 +1,26 @@
+diff --git a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/dates/TimezoneAwareFunction.java b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/dates/TimezoneAwareFunction.java
+index 59b2154..84ab760 100644
+--- a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/dates/TimezoneAwareFunction.java
++++ b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/dates/TimezoneAwareFunction.java
+@@ -40,7 +40,7 @@
+     protected TimezoneAwareFunction() {
+         timeZoneParam = ParameterDescriptor
+                 .string(TIMEZONE, DateTimeZone.class)
+-                .transform(id -> DateTimeZone.forID(UPPER_ZONE_MAP.get(id)))
++                .transform(id -> DateTimeZone.forID(UPPER_ZONE_MAP.getOrDefault(id.toUpperCase(Locale.ENGLISH), "UTC")))
+                 .optional()
+                 .description("The timezone to apply to the date, defaults to UTC")
+                 .build();
+diff --git a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/dates/TimezoneAwareFunction.java b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/dates/TimezoneAwareFunction.java
+index 59b2154..84ab760 100644
+--- a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/dates/TimezoneAwareFunction.java
++++ b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/dates/TimezoneAwareFunction.java
+@@ -40,7 +40,7 @@
+     protected TimezoneAwareFunction() {
+         timeZoneParam = ParameterDescriptor
+                 .string(TIMEZONE, DateTimeZone.class)
+-                .transform(id -> DateTimeZone.forID(UPPER_ZONE_MAP.get(id)))
++                .transform(id -> DateTimeZone.forID(UPPER_ZONE_MAP.getOrDefault(id.toUpperCase(Locale.ENGLISH), "UTC")))
+                 .optional()
+                 .description("The timezone to apply to the date, defaults to UTC")
+                 .build();

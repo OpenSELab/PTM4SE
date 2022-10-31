@@ -1,0 +1,132 @@
+diff --git a/guava-testlib/test/com/google/common/collect/testing/FeatureSpecificTestSuiteBuilderTest.java b/guava-testlib/test/com/google/common/collect/testing/FeatureSpecificTestSuiteBuilderTest.java
+index 2e0d594..5328e9c 100644
+--- a/guava-testlib/test/com/google/common/collect/testing/FeatureSpecificTestSuiteBuilderTest.java
++++ b/guava-testlib/test/com/google/common/collect/testing/FeatureSpecificTestSuiteBuilderTest.java
+@@ -38,7 +38,7 @@
+     testWasRun = false;
+   }
+ 
+-  public static final class MyAbstractTester extends AbstractTester {
++  public static final class MyAbstractTester extends AbstractTester<Void> {
+     public void testNothing() {
+       testWasRun = true;
+     }
+diff --git a/guava-tests/test/com/google/common/cache/CacheBuilderSpecTest.java b/guava-tests/test/com/google/common/cache/CacheBuilderSpecTest.java
+index b8225c4..7dd5261 100644
+--- a/guava-tests/test/com/google/common/cache/CacheBuilderSpecTest.java
++++ b/guava-tests/test/com/google/common/cache/CacheBuilderSpecTest.java
+@@ -404,7 +404,7 @@
+     assertEquals(TimeUnit.MINUTES, spec.accessExpirationTimeUnit);
+     assertEquals(1L, spec.writeExpirationDuration);
+     assertEquals(10L, spec.accessExpirationDuration);
+-    CacheBuilder expected = CacheBuilder.newBuilder()
++    CacheBuilder<?, ?> expected = CacheBuilder.newBuilder()
+         .initialCapacity(10)
+         .maximumSize(20)
+         .concurrencyLevel(30)
+@@ -427,7 +427,7 @@
+     assertEquals(TimeUnit.SECONDS, spec.writeExpirationTimeUnit);
+     assertEquals(15L, spec.writeExpirationDuration);
+     assertNull(spec.accessExpirationTimeUnit);
+-    CacheBuilder expected = CacheBuilder.newBuilder()
++    CacheBuilder<?, ?> expected = CacheBuilder.newBuilder()
+         .initialCapacity(10)
+         .maximumSize(20)
+         .weakKeys()
+@@ -531,10 +531,10 @@
+   }
+ 
+   public void testCacheBuilderFrom_string() {
+-    CacheBuilder fromString = CacheBuilder.from(
++    CacheBuilder<?, ?> fromString = CacheBuilder.from(
+         "initialCapacity=10,maximumSize=20,concurrencyLevel=30,"
+         + "weakKeys,weakValues,expireAfterAccess=10m");
+-    CacheBuilder expected = CacheBuilder.newBuilder()
++    CacheBuilder<?, ?> expected = CacheBuilder.newBuilder()
+         .initialCapacity(10)
+         .maximumSize(20)
+         .concurrencyLevel(30)
+@@ -544,7 +544,7 @@
+     assertCacheBuilderEquivalence(expected, fromString);
+   }
+ 
+-  private static void assertCacheBuilderEquivalence(CacheBuilder a, CacheBuilder b) {
++  private static void assertCacheBuilderEquivalence(CacheBuilder<?, ?> a, CacheBuilder<?, ?> b) {
+     assertEquals("concurrencyLevel", a.concurrencyLevel, b.concurrencyLevel);
+     assertEquals("expireAfterAccessNanos", a.expireAfterAccessNanos, b.expireAfterAccessNanos);
+     assertEquals("expireAfterWriteNanos", a.expireAfterWriteNanos, b.expireAfterWriteNanos);
+diff --git a/guava-tests/test/com/google/common/cache/CacheTesting.java b/guava-tests/test/com/google/common/cache/CacheTesting.java
+index 62a7270..660fecd 100644
+--- a/guava-tests/test/com/google/common/cache/CacheTesting.java
++++ b/guava-tests/test/com/google/common/cache/CacheTesting.java
+@@ -134,7 +134,7 @@
+   static void drainRecencyQueues(Cache<?, ?> cache) {
+     if (hasLocalCache(cache)) {
+       LocalCache<?, ?> map = toLocalCache(cache);
+-      for (Segment segment : map.segments) {
++      for (Segment<?, ?> segment : map.segments) {
+         drainRecencyQueue(segment);
+       }
+     }
+@@ -156,7 +156,7 @@
+   }
+ 
+   static void drainReferenceQueues(LocalCache<?, ?> cchm) {
+-    for (LocalCache.Segment segment : cchm.segments) {
++    for (LocalCache.Segment<?, ?> segment : cchm.segments) {
+       drainReferenceQueue(segment);
+     }
+   }
+@@ -200,7 +200,7 @@
+       segment.cleanUp();
+       // under high memory pressure keys/values may be nulled out but not yet enqueued
+       assertTrue(table.size() <= segment.count);
+-      for (Entry entry : table.entrySet()) {
++      for (Entry<?, ?> entry : table.entrySet()) {
+         assertNotNull(entry.getKey());
+         assertNotNull(entry.getValue());
+         assertSame(entry.getValue(), cchm.get(entry.getKey()));
+@@ -303,7 +303,7 @@
+         }
+       }
+     } else {
+-      for (Segment segment : map.segments) {
++      for (Segment<?, ?> segment : map.segments) {
+         assertEquals(0, segment.recencyQueue.size());
+       }
+     }
+@@ -467,7 +467,7 @@
+       checkValidState(cchm);
+       assertTrue(cchm.isEmpty());
+       assertEquals(0, cchm.size());
+-      for (LocalCache.Segment segment : cchm.segments) {
++      for (LocalCache.Segment<?, ?> segment : cchm.segments) {
+         assertEquals(0, segment.count);
+         assertEquals(0, segmentSize(segment));
+         assertTrue(segment.writeQueue.isEmpty());
+diff --git a/guava-tests/test/com/google/common/collect/MapMakerTest.java b/guava-tests/test/com/google/common/collect/MapMakerTest.java
+index 6feef3a..3d12ec3 100644
+--- a/guava-tests/test/com/google/common/collect/MapMakerTest.java
++++ b/guava-tests/test/com/google/common/collect/MapMakerTest.java
+@@ -56,7 +56,7 @@
+     // notification.
+ 
+     final CountDownLatch computingLatch = new CountDownLatch(1);
+-    Function<String, String> computingFunction = new DelayingIdentityLoader(computingLatch);
++    Function<String, String> computingFunction = new DelayingIdentityLoader<String>(computingLatch);
+     QueuingRemovalListener<String, String> listener = new QueuingRemovalListener<String, String>();
+ 
+     @SuppressWarnings("deprecation") // test of deprecated code
+diff --git a/guava-testlib/test/com/google/common/collect/testing/FeatureSpecificTestSuiteBuilderTest.java b/guava-testlib/test/com/google/common/collect/testing/FeatureSpecificTestSuiteBuilderTest.java
+index 2e0d594..5328e9c 100644
+--- a/guava-testlib/test/com/google/common/collect/testing/FeatureSpecificTestSuiteBuilderTest.java
++++ b/guava-testlib/test/com/google/common/collect/testing/FeatureSpecificTestSuiteBuilderTest.java
+@@ -38,7 +38,7 @@
+     testWasRun = false;
+   }
+ 
+-  public static final class MyAbstractTester extends AbstractTester {
++  public static final class MyAbstractTester extends AbstractTester<Void> {
+     public void testNothing() {
+       testWasRun = true;
+     }

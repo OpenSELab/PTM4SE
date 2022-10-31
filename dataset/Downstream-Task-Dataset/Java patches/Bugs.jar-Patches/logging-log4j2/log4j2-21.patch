@@ -1,0 +1,13 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/JndiLookup.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/JndiLookup.java
+index d7d50cb..1cd4290 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/JndiLookup.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/JndiLookup.java
+@@ -52,7 +52,7 @@ public class JndiLookup extends AbstractLookup {
+         final String jndiName = convertJndiName(key);
+         final JndiManager jndiManager = JndiManager.getDefaultManager();
+         try {
+-            return jndiManager.lookup(jndiName);
++            return String.valueOf(jndiManager.lookup(jndiName));
+         } catch (final NamingException e) {
+             LOGGER.warn(LOOKUP, "Error looking up JNDI resource [{}].", jndiName, e);
+             return null;

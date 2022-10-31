@@ -1,0 +1,36 @@
+diff --git a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
+index 7269de2..3822612 100755
+--- a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
++++ b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
+@@ -89,8 +89,11 @@
+ 	
+ 	public void initialize(ApplicationListener listener, AndroidApplicationConfiguration config) {
+ 		graphics = new AndroidGraphicsLiveWallpaper(this, config, config.resolutionStrategy==null?new FillResolutionStrategy():config.resolutionStrategy);
+-		//input = new AndroidInput(this, this.getService(), null, config);
+-		input = AndroidInputFactory.newAndroidInput(this, this.getService(), graphics.view, config);
++		
++		// AndroidInputFactory causes exceptions when obfuscated: java.lang.RuntimeException: Couldn't construct AndroidInput, this should never happen
++		//input = AndroidInputFactory.newAndroidInput(this, this.getService(), graphics.view, config);
++		input = new AndroidInput(this, this.getService(), null, config);
++
+ 		audio = new AndroidAudio(this.getService(), config);
+ 		
+ 		// jw: added initialization of android local storage: /data/data/<app package>/files/
+diff --git a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
+index 7269de2..3822612 100755
+--- a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
++++ b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
+@@ -89,8 +89,11 @@
+ 	
+ 	public void initialize(ApplicationListener listener, AndroidApplicationConfiguration config) {
+ 		graphics = new AndroidGraphicsLiveWallpaper(this, config, config.resolutionStrategy==null?new FillResolutionStrategy():config.resolutionStrategy);
+-		//input = new AndroidInput(this, this.getService(), null, config);
+-		input = AndroidInputFactory.newAndroidInput(this, this.getService(), graphics.view, config);
++		
++		// AndroidInputFactory causes exceptions when obfuscated: java.lang.RuntimeException: Couldn't construct AndroidInput, this should never happen
++		//input = AndroidInputFactory.newAndroidInput(this, this.getService(), graphics.view, config);
++		input = new AndroidInput(this, this.getService(), null, config);
++
+ 		audio = new AndroidAudio(this.getService(), config);
+ 		
+ 		// jw: added initialization of android local storage: /data/data/<app package>/files/

@@ -1,0 +1,34 @@
+diff --git a/bundles/persistence/org.openhab.persistence.jdbc/java/org/openhab/persistence/jdbc/utils/StringUtilsExt.java b/bundles/persistence/org.openhab.persistence.jdbc/java/org/openhab/persistence/jdbc/utils/StringUtilsExt.java
+index d524c83..6a06a3a 100644
+--- a/bundles/persistence/org.openhab.persistence.jdbc/java/org/openhab/persistence/jdbc/utils/StringUtilsExt.java
++++ b/bundles/persistence/org.openhab.persistence.jdbc/java/org/openhab/persistence/jdbc/utils/StringUtilsExt.java
+@@ -126,10 +126,10 @@
+ 
+         URI dbURI = null;
+         try {
+-            dbURI = new URI(stringAfterSubstr(url, ":", 1));
++            dbURI = new URI(stringAfterSubstr(url, ":", 1).replaceFirst(" ", ""));
+             if (dbURI.getScheme() != null) {
+                 props.put("scheme", dbURI.getScheme());
+-                dbURI = new URI(stringAfterSubstr(url, ":", 2));
++                dbURI = new URI(stringAfterSubstr(url, ":", 2).replaceFirst(" ", ""));
+             }
+         } catch (URISyntaxException e) {
+             logger.error("parseJdbcURL: URI '{}' is not well formated URISyntaxException: {}", url, e);
+diff --git a/bundles/persistence/org.openhab.persistence.jdbc/java/org/openhab/persistence/jdbc/utils/StringUtilsExt.java b/bundles/persistence/org.openhab.persistence.jdbc/java/org/openhab/persistence/jdbc/utils/StringUtilsExt.java
+index d524c83..6a06a3a 100644
+--- a/bundles/persistence/org.openhab.persistence.jdbc/java/org/openhab/persistence/jdbc/utils/StringUtilsExt.java
++++ b/bundles/persistence/org.openhab.persistence.jdbc/java/org/openhab/persistence/jdbc/utils/StringUtilsExt.java
+@@ -126,10 +126,10 @@
+ 
+         URI dbURI = null;
+         try {
+-            dbURI = new URI(stringAfterSubstr(url, ":", 1));
++            dbURI = new URI(stringAfterSubstr(url, ":", 1).replaceFirst(" ", ""));
+             if (dbURI.getScheme() != null) {
+                 props.put("scheme", dbURI.getScheme());
+-                dbURI = new URI(stringAfterSubstr(url, ":", 2));
++                dbURI = new URI(stringAfterSubstr(url, ":", 2).replaceFirst(" ", ""));
+             }
+         } catch (URISyntaxException e) {
+             logger.error("parseJdbcURL: URI '{}' is not well formated URISyntaxException: {}", url, e);

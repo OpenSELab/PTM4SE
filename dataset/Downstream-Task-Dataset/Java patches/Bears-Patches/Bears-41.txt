@@ -1,0 +1,27 @@
+--- a/src/main/java/spoon/support/compiler/jdt/ReferenceBuilder.java
++++ b/src/main/java/spoon/support/compiler/jdt/ReferenceBuilder.java
+@@ -532,10 +533,11 @@ public class ReferenceBuilder {
+ 		if (res == null) {
+ 			return this.jdtTreeBuilder.getFactory().Type().createReference(CharOperation.toString(ref.getParameterizedTypeName()));
+ 		}
+-		CtPackageReference packageReference = index >= 0
+-				? this.jdtTreeBuilder.getFactory().Package().getOrCreate(concatSubArray(namesParameterized, index)).getReference()
+-				: this.jdtTreeBuilder.getFactory().Package().topLevel();
+-		inner.setPackage(packageReference);
++		if (inner.getPackage() == null) {
++			PackageFactory packageFactory = this.jdtTreeBuilder.getFactory().Package();
++			CtPackageReference packageReference = index >= 0 ? packageFactory.getOrCreate(concatSubArray(namesParameterized, index)).getReference() : packageFactory.topLevel();
++			inner.setPackage(packageReference);
++		}
+ 		return res;
+ 	}
+ 
+@@ -572,6 +574,8 @@ public class ReferenceBuilder {
+ 		} else if (Character.isUpperCase(name.charAt(0))) {
+ 			main = this.jdtTreeBuilder.getFactory().Core().createTypeReference();
+ 			main.setSimpleName(name);
++			final CtReference declaring = this.getDeclaringReferenceFromImports(name.toCharArray());
++			setPackageOrDeclaringType(main, declaring);
+ 		} else if (name.startsWith("?")) {
+ 			return (CtTypeReference) this.jdtTreeBuilder.getFactory().Core().createWildcardReference();
+ 		}

@@ -1,0 +1,129 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/DefaultExceptionMapper.java b/wicket-core/src/main/java/org/apache/wicket/DefaultExceptionMapper.java
+index eea361d..81829d0 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/DefaultExceptionMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/DefaultExceptionMapper.java
+@@ -56,7 +56,7 @@ public class DefaultExceptionMapper implements IExceptionMapper
+ 			Response response = RequestCycle.get().getResponse();
+ 			if (response instanceof WebResponse)
+ 			{
+-				// we don't wan't to cache an exceptional reply in the browser
++				// we don't want to cache an exceptional reply in the browser
+ 				((WebResponse)response).disableCaching();
+ 			}
+ 			return internalMap(e);
+@@ -92,7 +92,7 @@ public class DefaultExceptionMapper implements IExceptionMapper
+ 
+ 		if (e instanceof StalePageException)
+ 		{
+-			// If the page was stale, just rerender it
++			// If the page was stale, just re-render it
+ 			// (the url should always be updated by an redirect in that case)
+ 			return new RenderPageRequestHandler(new PageProvider(((StalePageException)e).getPage()));
+ 		}
+@@ -167,7 +167,6 @@ public class DefaultExceptionMapper implements IExceptionMapper
+ 
+ 	private boolean isProcessingAjaxRequest()
+ 	{
+-
+ 		RequestCycle rc = RequestCycle.get();
+ 		Request request = rc.getRequest();
+ 		if (request instanceof WebRequest)
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Page.java b/wicket-core/src/main/java/org/apache/wicket/Page.java
+index 1467798..86c0472 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Page.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Page.java
+@@ -450,6 +450,8 @@ public abstract class Page extends MarkupContainer implements IRedirectListener,
+ 
+ 		if (stateless == null)
+ 		{
++			internalInitialize();
++
+ 			if (isStateless() == false)
+ 			{
+ 				stateless = Boolean.FALSE;
+diff --git a/wicket-core/src/main/java/org/apache/wicket/page/AbstractPageManager.java b/wicket-core/src/main/java/org/apache/wicket/page/AbstractPageManager.java
+index 263bb62..da259e4 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/page/AbstractPageManager.java
++++ b/wicket-core/src/main/java/org/apache/wicket/page/AbstractPageManager.java
+@@ -127,10 +127,6 @@ public abstract class AbstractPageManager implements IPageManager
+ 	@Override
+ 	public void touchPage(IManageablePage page)
+ 	{
+-		if (!page.isPageStateless())
+-		{
+-			getContext().bind();
+-		}
+ 		getRequestAdapter().touch(page);
+ 	}
+ }
+diff --git a/wicket-core/src/main/java/org/apache/wicket/protocol/http/WicketFilter.java b/wicket-core/src/main/java/org/apache/wicket/protocol/http/WicketFilter.java
+index be577f3..f40a0c9 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/protocol/http/WicketFilter.java
++++ b/wicket-core/src/main/java/org/apache/wicket/protocol/http/WicketFilter.java
+@@ -431,6 +431,23 @@ public class WicketFilter implements Filter
+ 				ThreadContext.detach();
+ 			}
+ 		}
++		catch (Exception e)
++		{
++			// #destroy() might not be called by the web container when #init() fails,
++			// so destroy now
++			log.warn("initialization failed, destroying now");
++
++			try
++			{
++				destroy();
++			}
++			catch (Exception destroyException)
++			{
++				log.warn("Unable to destroy after initialization failure", destroyException);
++			}
++
++			throw new ServletException(e);
++		}
+ 		finally
+ 		{
+ 			if (newClassLoader != previousClassLoader)
+@@ -578,7 +595,14 @@ public class WicketFilter implements Filter
+ 
+ 		if (applicationFactory != null)
+ 		{
+-			applicationFactory.destroy(this);
++			try
++			{
++				applicationFactory.destroy(this);
++			}
++			finally
++			{
++				applicationFactory = null;
++			}
+ 		}
+ 	}
+ 
+@@ -781,7 +805,7 @@ public class WicketFilter implements Filter
+ 	 * level "/" then an empty string should be used instead.
+ 	 * 
+ 	 * @param filterPath
+-	 * @return
++	 * @return canonic filter path
+ 	 */
+ 	static String canonicaliseFilterPath(String filterPath)
+ 	{
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/cycle/PageRequestHandlerTracker.java b/wicket-core/src/main/java/org/apache/wicket/request/cycle/PageRequestHandlerTracker.java
+index caa5a6d..b2390a6 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/cycle/PageRequestHandlerTracker.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/cycle/PageRequestHandlerTracker.java
+@@ -59,6 +59,13 @@ public class PageRequestHandlerTracker extends AbstractRequestCycleListener
+ 		registerLastHandler(cycle,handler);
+ 	}
+ 
++	@Override
++	public void onExceptionRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler, Exception exception)
++	{
++		super.onExceptionRequestHandlerResolved(cycle, handler, exception);
++		registerLastHandler(cycle,handler);
++	}
++
+ 	/**
+ 	 * Registers pagerequesthandler when it's resolved ,keeps up with the most recent handler resolved
+ 	 *

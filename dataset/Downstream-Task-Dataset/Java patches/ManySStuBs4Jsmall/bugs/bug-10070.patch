@@ -1,0 +1,80 @@
+diff --git a/src/jvm/clojure/lang/Reflector.java b/src/jvm/clojure/lang/Reflector.java
+index ccb108b..4a1cf7c 100644
+--- a/src/jvm/clojure/lang/Reflector.java
++++ b/src/jvm/clojure/lang/Reflector.java
+@@ -159,7 +159,7 @@
+ 		{
+ 		return prepRet(f.getType(), f.get(null));
+ 		}
+-	throw new IllegalArgumentException("No matching field found");
++	throw new IllegalArgumentException("No matching field found: " + fieldName);
+ }
+ public static Object setStaticField(String className, String fieldName, Object val) throws Exception{
+ 	Class c = Class.forName(className);
+@@ -173,7 +173,7 @@
+ 		f.set(null, boxArg(f.getType(), val));
+ 		return val;
+ 		}
+-	throw new IllegalArgumentException("No matching field found");
++	throw new IllegalArgumentException("No matching field found: " + fieldName);
+ }
+ 
+ public static Object getInstanceField(Object target, String fieldName) throws Exception{
+@@ -183,7 +183,7 @@
+ 		{
+ 		return prepRet(f.getType(), f.get(target));
+ 		}
+-	throw new IllegalArgumentException("No matching field found");
++	throw new IllegalArgumentException("No matching field found: " + fieldName);
+ }
+ 
+ public static Object setInstanceField(Object target, String fieldName, Object val) throws Exception{
+@@ -194,7 +194,7 @@
+ 		f.set(target, boxArg(f.getType(), val));
+ 		return val;
+ 		}
+-	throw new IllegalArgumentException("No matching field found");
++	throw new IllegalArgumentException("No matching field found: " + fieldName);
+ }
+ 
+ public static Object invokeInstanceMember(Object target, String name) throws Exception{
+diff --git a/src/jvm/clojure/lang/Reflector.java b/src/jvm/clojure/lang/Reflector.java
+index ccb108b..4a1cf7c 100644
+--- a/src/jvm/clojure/lang/Reflector.java
++++ b/src/jvm/clojure/lang/Reflector.java
+@@ -159,7 +159,7 @@
+ 		{
+ 		return prepRet(f.getType(), f.get(null));
+ 		}
+-	throw new IllegalArgumentException("No matching field found");
++	throw new IllegalArgumentException("No matching field found: " + fieldName);
+ }
+ public static Object setStaticField(String className, String fieldName, Object val) throws Exception{
+ 	Class c = Class.forName(className);
+@@ -173,7 +173,7 @@
+ 		f.set(null, boxArg(f.getType(), val));
+ 		return val;
+ 		}
+-	throw new IllegalArgumentException("No matching field found");
++	throw new IllegalArgumentException("No matching field found: " + fieldName);
+ }
+ 
+ public static Object getInstanceField(Object target, String fieldName) throws Exception{
+@@ -183,7 +183,7 @@
+ 		{
+ 		return prepRet(f.getType(), f.get(target));
+ 		}
+-	throw new IllegalArgumentException("No matching field found");
++	throw new IllegalArgumentException("No matching field found: " + fieldName);
+ }
+ 
+ public static Object setInstanceField(Object target, String fieldName, Object val) throws Exception{
+@@ -194,7 +194,7 @@
+ 		f.set(target, boxArg(f.getType(), val));
+ 		return val;
+ 		}
+-	throw new IllegalArgumentException("No matching field found");
++	throw new IllegalArgumentException("No matching field found: " + fieldName);
+ }
+ 
+ public static Object invokeInstanceMember(Object target, String name) throws Exception{

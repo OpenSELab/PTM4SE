@@ -1,0 +1,54 @@
+diff --git a/modules/swagger-integration/src/main/java/io/swagger/oas/integration/GenericOpenApiContext.java b/modules/swagger-integration/src/main/java/io/swagger/oas/integration/GenericOpenApiContext.java
+index a68f03f..656d451 100644
+--- a/modules/swagger-integration/src/main/java/io/swagger/oas/integration/GenericOpenApiContext.java
++++ b/modules/swagger-integration/src/main/java/io/swagger/oas/integration/GenericOpenApiContext.java
+@@ -204,7 +204,7 @@
+ 
+     protected List<ImmutablePair<String, String>> getKnownLocations() {
+         return Arrays.asList(
+-                new ImmutablePair<>("classpath", "openapi-configiguration.yaml"),
++                new ImmutablePair<>("classpath", "openapi-configuration.yaml"),
+                 new ImmutablePair<>("classpath", "openapi-configuration.json"),
+                 new ImmutablePair<>("file", "openapi-configuration.yaml"),
+                 new ImmutablePair<>("file", "openapi-configuration.json"),
+diff --git a/modules/swagger-jaxrs2/src/main/java/io/swagger/jaxrs2/integration/ServletConfigContextUtils.java b/modules/swagger-jaxrs2/src/main/java/io/swagger/jaxrs2/integration/ServletConfigContextUtils.java
+index 43a2230..d980819 100644
+--- a/modules/swagger-jaxrs2/src/main/java/io/swagger/jaxrs2/integration/ServletConfigContextUtils.java
++++ b/modules/swagger-jaxrs2/src/main/java/io/swagger/jaxrs2/integration/ServletConfigContextUtils.java
+@@ -23,7 +23,7 @@
+     public static final String OPENAPI_CONFIGURATION_READALLRESOURCES_KEY = "openApi.configuration.readAllResources";
+     public static final String OPENAPI_CONFIGURATION_RESOURCECLASSES_KEY = "openApi.configuration.resourceClasses";
+     public static final String OPENAPI_CONFIGURATION_FILTER_KEY = "openApi.configuration.filterClass";
+-    public static final String OPENAPI_CONFIGURATION_CACHE_TTL_KEY = "openApi.configuration.filterClass";
++    public static final String OPENAPI_CONFIGURATION_CACHE_TTL_KEY = "openApi.configuration.cacheTTL";
+ 
+     public static Set<String> resolveResourcePackages(ServletConfig servletConfig) {
+         if (!isServletConfigAvailable(servletConfig)) {
+diff --git a/modules/swagger-jaxrs2/src/main/java/io/swagger/jaxrs2/integration/XmlWebOpenApiContext.java b/modules/swagger-jaxrs2/src/main/java/io/swagger/jaxrs2/integration/XmlWebOpenApiContext.java
+index 07aef08..3065951 100644
+--- a/modules/swagger-jaxrs2/src/main/java/io/swagger/jaxrs2/integration/XmlWebOpenApiContext.java
++++ b/modules/swagger-jaxrs2/src/main/java/io/swagger/jaxrs2/integration/XmlWebOpenApiContext.java
+@@ -46,8 +46,8 @@
+ 
+         List<ImmutablePair<String, String>> locations = new LinkedList<>(Arrays.asList(
+                 new ImmutablePair<>("servlet", ServletConfigContextUtils.OPENAPI_CONFIGURATION_LOCATION_KEY),
+-                new ImmutablePair<>("file", "WEBINF/openapi-configuration.yaml"),
+-                new ImmutablePair<>("file", "WEBINF/openapi-configuration.json")
++                new ImmutablePair<>("file", "WEB-INF/openapi-configuration.yaml"),
++                new ImmutablePair<>("file", "WEB-INF/openapi-configuration.json")
+         ));
+         locations.addAll(super.getKnownLocations());
+         locations.add(new ImmutablePair<>("servlet", ""));  // get config from init params
+diff --git a/modules/swagger-integration/src/main/java/io/swagger/oas/integration/GenericOpenApiContext.java b/modules/swagger-integration/src/main/java/io/swagger/oas/integration/GenericOpenApiContext.java
+index a68f03f..656d451 100644
+--- a/modules/swagger-integration/src/main/java/io/swagger/oas/integration/GenericOpenApiContext.java
++++ b/modules/swagger-integration/src/main/java/io/swagger/oas/integration/GenericOpenApiContext.java
+@@ -204,7 +204,7 @@
+ 
+     protected List<ImmutablePair<String, String>> getKnownLocations() {
+         return Arrays.asList(
+-                new ImmutablePair<>("classpath", "openapi-configiguration.yaml"),
++                new ImmutablePair<>("classpath", "openapi-configuration.yaml"),
+                 new ImmutablePair<>("classpath", "openapi-configuration.json"),
+                 new ImmutablePair<>("file", "openapi-configuration.yaml"),
+                 new ImmutablePair<>("file", "openapi-configuration.json"),

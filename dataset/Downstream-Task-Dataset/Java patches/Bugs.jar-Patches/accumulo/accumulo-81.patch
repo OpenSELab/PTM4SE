@@ -1,0 +1,16 @@
+diff --git a/shell/src/main/java/org/apache/accumulo/shell/ShellOptionsJC.java b/shell/src/main/java/org/apache/accumulo/shell/ShellOptionsJC.java
+index 92ea1a5..01b7ce3 100644
+--- a/shell/src/main/java/org/apache/accumulo/shell/ShellOptionsJC.java
++++ b/shell/src/main/java/org/apache/accumulo/shell/ShellOptionsJC.java
+@@ -315,6 +315,11 @@ public class ShellOptionsJC {
+       clientConfig.withZkHosts(siteConf.get(Property.INSTANCE_ZK_HOST));
+     }
+ 
++    // If the user provided the hosts, set the ZK for tracing too
++    if (null != zooKeeperHosts) {
++      clientConfig.setProperty(ClientProperty.INSTANCE_ZK_HOST, zooKeeperHosts);
++    }
++
+     return clientConfig;
+   }
+ 

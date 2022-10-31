@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/alibaba/fastjson/serializer/SerializeFilterable.java b/src/main/java/com/alibaba/fastjson/serializer/SerializeFilterable.java
+index ada318b..c688d87 100644
+--- a/src/main/java/com/alibaba/fastjson/serializer/SerializeFilterable.java
++++ b/src/main/java/com/alibaba/fastjson/serializer/SerializeFilterable.java
+@@ -203,7 +203,7 @@
+             if (jsonBeanDeser.out.writeNonStringValueAsString //
+                     && (propertyValue instanceof Number || propertyValue instanceof Boolean)) {
+                 propertyValue = propertyValue.toString();
+-            } else if (beanContext.isJsonDirect()) {
++            } else if (beanContext != null && beanContext.isJsonDirect()) {
+                 String jsonStr = (String) propertyValue;
+                 propertyValue = JSON.parse(jsonStr);
+             }
+diff --git a/src/main/java/com/alibaba/fastjson/serializer/SerializeFilterable.java b/src/main/java/com/alibaba/fastjson/serializer/SerializeFilterable.java
+index ada318b..c688d87 100644
+--- a/src/main/java/com/alibaba/fastjson/serializer/SerializeFilterable.java
++++ b/src/main/java/com/alibaba/fastjson/serializer/SerializeFilterable.java
+@@ -203,7 +203,7 @@
+             if (jsonBeanDeser.out.writeNonStringValueAsString //
+                     && (propertyValue instanceof Number || propertyValue instanceof Boolean)) {
+                 propertyValue = propertyValue.toString();
+-            } else if (beanContext.isJsonDirect()) {
++            } else if (beanContext != null && beanContext.isJsonDirect()) {
+                 String jsonStr = (String) propertyValue;
+                 propertyValue = JSON.parse(jsonStr);
+             }

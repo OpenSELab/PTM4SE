@@ -1,0 +1,30 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/CheckStyleTask.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/CheckStyleTask.java
+index 6ae4d3f..0bcfdc8 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/CheckStyleTask.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/CheckStyleTask.java
+@@ -423,7 +423,9 @@
+         public AuditListener createListener(Task aTask)
+             throws IOException
+         {
+-            if (E_XML.equals(mFormatterType.getValue())) {
++            if (mFormatterType != null
++                && E_XML.equals(mFormatterType.getValue()))
++            {
+                 return createXMLLogger(aTask);
+             }
+             else {
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/CheckStyleTask.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/CheckStyleTask.java
+index 6ae4d3f..0bcfdc8 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/CheckStyleTask.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/CheckStyleTask.java
+@@ -423,7 +423,9 @@
+         public AuditListener createListener(Task aTask)
+             throws IOException
+         {
+-            if (E_XML.equals(mFormatterType.getValue())) {
++            if (mFormatterType != null
++                && E_XML.equals(mFormatterType.getValue()))
++            {
+                 return createXMLLogger(aTask);
+             }
+             else {

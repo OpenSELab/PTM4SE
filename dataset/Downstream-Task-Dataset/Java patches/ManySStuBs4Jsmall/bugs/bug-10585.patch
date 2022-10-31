@@ -1,0 +1,26 @@
+diff --git a/nd4j-buffer/src/main/java/org/nd4j/linalg/api/buffer/BaseDataBuffer.java b/nd4j-buffer/src/main/java/org/nd4j/linalg/api/buffer/BaseDataBuffer.java
+index 2e68c30..5f4b7f1 100644
+--- a/nd4j-buffer/src/main/java/org/nd4j/linalg/api/buffer/BaseDataBuffer.java
++++ b/nd4j-buffer/src/main/java/org/nd4j/linalg/api/buffer/BaseDataBuffer.java
+@@ -459,7 +459,7 @@
+ 
+     @Override
+     public Pointer pointer() {
+-        return underlyingDataBuffer() != null ? underlyingDataBuffer().pointer() : pointer;
++        return underlyingDataBuffer() != null  && underlyingDataBuffer() != this ? underlyingDataBuffer().pointer() : pointer;
+     }
+ 
+     @Override
+diff --git a/nd4j-buffer/src/main/java/org/nd4j/linalg/api/buffer/BaseDataBuffer.java b/nd4j-buffer/src/main/java/org/nd4j/linalg/api/buffer/BaseDataBuffer.java
+index 2e68c30..5f4b7f1 100644
+--- a/nd4j-buffer/src/main/java/org/nd4j/linalg/api/buffer/BaseDataBuffer.java
++++ b/nd4j-buffer/src/main/java/org/nd4j/linalg/api/buffer/BaseDataBuffer.java
+@@ -459,7 +459,7 @@
+ 
+     @Override
+     public Pointer pointer() {
+-        return underlyingDataBuffer() != null ? underlyingDataBuffer().pointer() : pointer;
++        return underlyingDataBuffer() != null  && underlyingDataBuffer() != this ? underlyingDataBuffer().pointer() : pointer;
+     }
+ 
+     @Override

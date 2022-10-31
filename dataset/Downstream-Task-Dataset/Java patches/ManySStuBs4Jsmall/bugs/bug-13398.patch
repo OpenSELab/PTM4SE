@@ -1,0 +1,34 @@
+diff --git a/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java b/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
+index 3bc24d1..38637c2 100644
+--- a/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
++++ b/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
+@@ -133,10 +133,10 @@
+             target = nodeCheckBoxs;
+         } else {
+             for (Column c : graphController.getGraphModel().getEdgeTable()) {
+-                if (c.getOrigin().equals(Origin.DATA)) {
++                if (!c.isProperty()) {
+                     availableColumns.add(c);
+                 } else if (showProperties) {
+-                    if (c.getId().equalsIgnoreCase("label")) {
++                    if (showProperties && c.isProperty() && !c.getId().equals("timeset")) {
+                         availableColumns.add(c);
+                     }
+                 }
+diff --git a/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java b/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
+index 3bc24d1..38637c2 100644
+--- a/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
++++ b/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
+@@ -133,10 +133,10 @@
+             target = nodeCheckBoxs;
+         } else {
+             for (Column c : graphController.getGraphModel().getEdgeTable()) {
+-                if (c.getOrigin().equals(Origin.DATA)) {
++                if (!c.isProperty()) {
+                     availableColumns.add(c);
+                 } else if (showProperties) {
+-                    if (c.getId().equalsIgnoreCase("label")) {
++                    if (showProperties && c.isProperty() && !c.getId().equals("timeset")) {
+                         availableColumns.add(c);
+                     }
+                 }

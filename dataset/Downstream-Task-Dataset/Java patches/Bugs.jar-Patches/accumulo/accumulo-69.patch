@@ -1,0 +1,229 @@
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/Combiner.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/Combiner.java
+index 5281f4d..8532e56 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/Combiner.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/Combiner.java
+@@ -228,6 +228,20 @@ public abstract class Combiner extends WrappingIterator implements OptionDescrib
+   }
+   
+   @Override
++  public SortedKeyValueIterator<Key,Value> deepCopy(IteratorEnvironment env) {
++    Combiner newInstance;
++    try {
++      newInstance = this.getClass().newInstance();
++    } catch (Exception e) {
++      throw new RuntimeException(e);
++    }
++    newInstance.setSource(getSource().deepCopy(env));
++    newInstance.combiners = combiners;
++    newInstance.combineAllColumns = combineAllColumns;
++    return newInstance;
++  }
++  
++  @Override
+   public IteratorOptions describeOptions() {
+     IteratorOptions io = new IteratorOptions("comb", "Combiners apply reduce functions to values with identical keys", null, null);
+     io.addNamedOption(ALL_OPTION, "set to true to apply Combiner to every column, otherwise leave blank. if true, " + COLUMNS_OPTION
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/TypedValueCombiner.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/TypedValueCombiner.java
+index 628c9dd..7b8d636 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/TypedValueCombiner.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/TypedValueCombiner.java
+@@ -145,6 +145,14 @@ public abstract class TypedValueCombiner<V> extends Combiner {
+     }
+   }
+   
++  @SuppressWarnings("unchecked")
++  @Override
++  public SortedKeyValueIterator<Key,Value> deepCopy(IteratorEnvironment env) {
++    TypedValueCombiner<V> newInstance = (TypedValueCombiner<V>) super.deepCopy(env);
++    newInstance.setEncoder(encoder);
++    return newInstance;
++  }
++  
+   @Override
+   public Value reduce(Key key, Iterator<Value> iter) {
+     return new Value(encoder.encode(typedReduce(key, new VIterator<V>(iter, encoder))));
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/VersioningIterator.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/VersioningIterator.java
+index e38c68e..9d92db3 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/VersioningIterator.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/VersioningIterator.java
+@@ -29,6 +29,8 @@ public class VersioningIterator extends org.apache.accumulo.core.iterators.user.
+   public VersioningIterator() {}
+   
+   public VersioningIterator(SortedKeyValueIterator<Key,Value> iterator, int maxVersions) {
+-    super(iterator, maxVersions);
++    super();
++    this.setSource(iterator);
++    this.maxVersions = maxVersions;
+   }
+ }
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/AgeOffFilter.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/AgeOffFilter.java
+index 9feffd8..486e6cb 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/AgeOffFilter.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/AgeOffFilter.java
+@@ -37,26 +37,6 @@ public class AgeOffFilter extends Filter {
+   private long threshold;
+   private long currentTime;
+   
+-  public AgeOffFilter() {}
+-  
+-  /**
+-   * Constructs a filter that omits entries read from a source iterator if the Key's timestamp is less than currentTime - threshold.
+-   * 
+-   * @param iterator
+-   *          The source iterator.
+-   * 
+-   * @param threshold
+-   *          Maximum age in milliseconds of data to keep.
+-   * 
+-   * @param threshold
+-   *          Current time in milliseconds.
+-   */
+-  private AgeOffFilter(SortedKeyValueIterator<Key,Value> iterator, long threshold, long currentTime) {
+-    setSource(iterator);
+-    this.threshold = threshold;
+-    this.currentTime = currentTime;
+-  }
+-  
+   /**
+    * Accepts entries whose timestamps are less than currentTime - threshold.
+    * 
+@@ -93,7 +73,10 @@ public class AgeOffFilter extends Filter {
+   
+   @Override
+   public SortedKeyValueIterator<Key,Value> deepCopy(IteratorEnvironment env) {
+-    return new AgeOffFilter(getSource(), threshold, currentTime);
++    AgeOffFilter copy = (AgeOffFilter) super.deepCopy(env);
++    copy.currentTime = currentTime;
++    copy.threshold = threshold;
++    return copy;
+   }
+   
+   @Override
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/ColumnAgeOffFilter.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/ColumnAgeOffFilter.java
+index 4bffbcb..8c95728 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/ColumnAgeOffFilter.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/ColumnAgeOffFilter.java
+@@ -36,15 +36,6 @@ import org.apache.hadoop.io.Text;
+  * Different thresholds are set for each column.
+  */
+ public class ColumnAgeOffFilter extends Filter {
+-  
+-  public ColumnAgeOffFilter() {}
+-  
+-  private ColumnAgeOffFilter(SortedKeyValueIterator<Key,Value> iterator, TTLSet ttls, long currentTime) {
+-    setSource(iterator);
+-    this.ttls = ttls;
+-    this.currentTime = currentTime;
+-  }
+-  
+   public static class TTLSet extends ColumnToClassMapping<Long> {
+     public TTLSet(Map<String,String> objectStrings) {
+       super();
+@@ -87,7 +78,10 @@ public class ColumnAgeOffFilter extends Filter {
+   
+   @Override
+   public SortedKeyValueIterator<Key,Value> deepCopy(IteratorEnvironment env) {
+-    return new ColumnAgeOffFilter(getSource(), ttls, currentTime);
++    ColumnAgeOffFilter copy = (ColumnAgeOffFilter) super.deepCopy(env);
++    copy.currentTime = currentTime;
++    copy.ttls = ttls;
++    return copy;
+   }
+   
+   public void overrideCurrentTime(long ts) {
+@@ -123,7 +117,7 @@ public class ColumnAgeOffFilter extends Filter {
+   public static void addTTL(IteratorSetting is, IteratorSetting.Column column, Long ttl) {
+     is.addOption(ColumnSet.encodeColumns(column.getFirst(), column.getSecond()), Long.toString(ttl));
+   }
+-
++  
+   /**
+    * A convenience method for removing an age off threshold for a column.
+    * 
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/RegExFilter.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/RegExFilter.java
+index fb53801..e508631 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/RegExFilter.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/RegExFilter.java
+@@ -37,8 +37,7 @@ public class RegExFilter extends Filter {
+   
+   @Override
+   public SortedKeyValueIterator<Key,Value> deepCopy(IteratorEnvironment env) {
+-    RegExFilter result = new RegExFilter();
+-    result.setSource(getSource().deepCopy(env));
++    RegExFilter result = (RegExFilter) super.deepCopy(env);
+     result.rowMatcher = copyMatcher(rowMatcher);
+     result.colfMatcher = copyMatcher(colfMatcher);
+     result.colqMatcher = copyMatcher(colqMatcher);
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/TimestampFilter.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/TimestampFilter.java
+index 5b652aa..2dbfe66 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/TimestampFilter.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/TimestampFilter.java
+@@ -54,17 +54,6 @@ public class TimestampFilter extends Filter {
+   
+   public TimestampFilter() {}
+   
+-  private TimestampFilter(SortedKeyValueIterator<Key,Value> iterator, boolean hasStart, long start, boolean startInclusive, boolean hasEnd, long end,
+-      boolean endInclusive) {
+-    setSource(iterator);
+-    this.start = start;
+-    this.startInclusive = startInclusive;
+-    this.hasStart = true;
+-    this.end = end;
+-    this.endInclusive = endInclusive;
+-    this.hasEnd = true;
+-  }
+-  
+   @Override
+   public boolean accept(Key k, Value v) {
+     long ts = k.getTimestamp();
+@@ -112,7 +101,14 @@ public class TimestampFilter extends Filter {
+   
+   @Override
+   public SortedKeyValueIterator<Key,Value> deepCopy(IteratorEnvironment env) {
+-    return new TimestampFilter(getSource(), hasStart, start, startInclusive, hasEnd, end, endInclusive);
++    TimestampFilter copy = (TimestampFilter) super.deepCopy(env);
++    copy.hasStart = hasStart;
++    copy.start = start;
++    copy.startInclusive = startInclusive;
++    copy.hasEnd = hasEnd;
++    copy.end = end;
++    copy.endInclusive = endInclusive;
++    return copy;
+   }
+   
+   @Override
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/VersioningIterator.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/VersioningIterator.java
+index 0b2c767..53833f4 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/user/VersioningIterator.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/user/VersioningIterator.java
+@@ -37,25 +37,14 @@ public class VersioningIterator extends WrappingIterator implements OptionDescri
+   
+   private Key currentKey = new Key();
+   private int numVersions;
+-  private int maxVersions;
++  protected int maxVersions;
+   
+   @Override
+   public VersioningIterator deepCopy(IteratorEnvironment env) {
+-    return new VersioningIterator(this, env);
+-  }
+-  
+-  private VersioningIterator(VersioningIterator other, IteratorEnvironment env) {
+-    setSource(other.getSource().deepCopy(env));
+-    maxVersions = other.maxVersions;
+-  }
+-  
+-  public VersioningIterator() {}
+-  
+-  public VersioningIterator(SortedKeyValueIterator<Key,Value> iterator, int maxVersions) {
+-    if (maxVersions < 1)
+-      throw new IllegalArgumentException("maxVersions for versioning iterator must be >= 1");
+-    this.setSource(iterator);
+-    this.maxVersions = maxVersions;
++    VersioningIterator copy = new VersioningIterator();
++    copy.setSource(getSource().deepCopy(env));
++    copy.maxVersions = maxVersions;
++    return copy;
+   }
+   
+   @Override

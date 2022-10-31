@@ -1,0 +1,16 @@
+diff --git a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/query/RowImpl.java b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/query/RowImpl.java
+index e337f39..e50d30d 100644
+--- a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/query/RowImpl.java
++++ b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/query/RowImpl.java
+@@ -100,9 +100,9 @@ public class RowImpl implements Row {
+         int len = values.length;
+         Value[] v2 = new Value[values.length];
+         for (int i = 0; i < len; i++) {
+-            if(values[i].isArray()){
++            if (values[i] != null && values[i].isArray()) {
+                 v2[i] = result.createValue(mvpToString(values[i]));
+-            }else{
++            } else {
+                 v2[i] = result.createValue(values[i]);
+             }
+         }

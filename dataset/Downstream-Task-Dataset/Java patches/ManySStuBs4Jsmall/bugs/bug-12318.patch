@@ -1,0 +1,39 @@
+diff --git a/EssentialsGroupManager/src/org/anjocaido/groupmanager/GMConfiguration.java b/EssentialsGroupManager/src/org/anjocaido/groupmanager/GMConfiguration.java
+index 95fd35e..4fcd0a5 100644
+--- a/EssentialsGroupManager/src/org/anjocaido/groupmanager/GMConfiguration.java
++++ b/EssentialsGroupManager/src/org/anjocaido/groupmanager/GMConfiguration.java
+@@ -112,7 +112,7 @@
+ 
+ 			Object level = ((Map<String, String>) getElement("settings", GMconfig).get("logging")).get("level");
+ 			if (level instanceof String)
+-				level = (String) level;
++				loggerLevel = (String) level;
+ 
+ 			/*
+ 			 * Store our mirrors map for parsing later.
+diff --git a/EssentialsGroupManager/src/org/anjocaido/groupmanager/GroupManager.java b/EssentialsGroupManager/src/org/anjocaido/groupmanager/GroupManager.java
+index 8298988..3236b9b 100644
+--- a/EssentialsGroupManager/src/org/anjocaido/groupmanager/GroupManager.java
++++ b/EssentialsGroupManager/src/org/anjocaido/groupmanager/GroupManager.java
+@@ -152,7 +152,7 @@
+ 				ch = new GMLoggerHandler();
+ 				GroupManager.logger.addHandler(ch);
+ 			}
+-			logger.setLevel(Level.ALL);
++			GroupManager.logger.setLevel(Level.ALL);
+ 
+ 			// Create the backup folder, if it doesn't exist.
+ 			prepareFileFields();
+diff --git a/EssentialsGroupManager/src/org/anjocaido/groupmanager/GMConfiguration.java b/EssentialsGroupManager/src/org/anjocaido/groupmanager/GMConfiguration.java
+index 95fd35e..4fcd0a5 100644
+--- a/EssentialsGroupManager/src/org/anjocaido/groupmanager/GMConfiguration.java
++++ b/EssentialsGroupManager/src/org/anjocaido/groupmanager/GMConfiguration.java
+@@ -112,7 +112,7 @@
+ 
+ 			Object level = ((Map<String, String>) getElement("settings", GMconfig).get("logging")).get("level");
+ 			if (level instanceof String)
+-				level = (String) level;
++				loggerLevel = (String) level;
+ 
+ 			/*
+ 			 * Store our mirrors map for parsing later.

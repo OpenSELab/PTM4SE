@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+index 487ada6..f1e4e2f 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+@@ -86,7 +86,7 @@
+         INDArray preOut = preOutput2d(training);
+         //special case: softmax
+         if (layerConf().getActivationFunction().equals("softmax")) {
+-            setScoreWithZ(preOut);
++            setScore(null,preOut);
+         } else {
+             INDArray output = Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(), preOut));
+             setScoreWithZ(output);
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+index 487ada6..f1e4e2f 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+@@ -86,7 +86,7 @@
+         INDArray preOut = preOutput2d(training);
+         //special case: softmax
+         if (layerConf().getActivationFunction().equals("softmax")) {
+-            setScoreWithZ(preOut);
++            setScore(null,preOut);
+         } else {
+             INDArray output = Nd4j.getExecutioner().execAndReturn(Nd4j.getOpFactory().createTransform(conf().getLayer().getActivationFunction(), preOut));
+             setScoreWithZ(output);

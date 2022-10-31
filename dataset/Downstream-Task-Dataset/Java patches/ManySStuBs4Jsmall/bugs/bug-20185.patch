@@ -1,0 +1,22 @@
+diff --git a/web/src/main/java/org/openmrs/web/controller/concept/ConceptDatatypeListController.java b/web/src/main/java/org/openmrs/web/controller/concept/ConceptDatatypeListController.java
+index 073567d..ffd4ad2 100644
+--- a/web/src/main/java/org/openmrs/web/controller/concept/ConceptDatatypeListController.java
++++ b/web/src/main/java/org/openmrs/web/controller/concept/ConceptDatatypeListController.java
+@@ -86,7 +86,7 @@
+ 				}
+ 				catch (APIException e) {
+ 					log.warn("Error deleting concept datatype", e);
+-					if (!"".equals(error)) {
++					if (!"".equals(error.toString())) {
+ 						error.append("<br/>");
+ 					}
+ 					error.append(cd).append(" ").append(notDeleted);
+@@ -97,7 +97,7 @@
+ 			if (!"".equals(success.toString())) {
+ 				httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, success.toString());
+ 			}
+-			if (!"".equals(error)) {
++			if (!"".equals(error.toString())) {
+ 				httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR, error.toString());
+ 			}
+ 		}

@@ -1,0 +1,26 @@
+diff --git a/core/server/worker/src/main/java/alluxio/worker/netty/AbstractWriteHandler.java b/core/server/worker/src/main/java/alluxio/worker/netty/AbstractWriteHandler.java
+index eed169d..490154f 100644
+--- a/core/server/worker/src/main/java/alluxio/worker/netty/AbstractWriteHandler.java
++++ b/core/server/worker/src/main/java/alluxio/worker/netty/AbstractWriteHandler.java
+@@ -189,7 +189,7 @@
+     // Only initialize (open the readers) if this is the first packet in the block/file.
+     if (writeRequest.getOffset() == 0) {
+       Preconditions.checkState(mRequest == null);
+-      reset();
++      mPosToQueue = 0;
+       mRequest = createRequest(msg);
+     }
+ 
+diff --git a/core/server/worker/src/main/java/alluxio/worker/netty/AbstractWriteHandler.java b/core/server/worker/src/main/java/alluxio/worker/netty/AbstractWriteHandler.java
+index eed169d..490154f 100644
+--- a/core/server/worker/src/main/java/alluxio/worker/netty/AbstractWriteHandler.java
++++ b/core/server/worker/src/main/java/alluxio/worker/netty/AbstractWriteHandler.java
+@@ -189,7 +189,7 @@
+     // Only initialize (open the readers) if this is the first packet in the block/file.
+     if (writeRequest.getOffset() == 0) {
+       Preconditions.checkState(mRequest == null);
+-      reset();
++      mPosToQueue = 0;
+       mRequest = createRequest(msg);
+     }
+ 

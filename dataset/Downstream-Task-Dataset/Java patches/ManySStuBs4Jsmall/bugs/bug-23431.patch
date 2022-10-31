@@ -1,0 +1,31 @@
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ExpirationResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ExpirationResourceDefinition.java
+index 63f2aad..7010021 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ExpirationResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ExpirationResourceDefinition.java
+@@ -55,7 +55,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(60000))
++            .setDefaultValue(new ModelNode().set(60000L))
+             .build();
+ 
+     static final SimpleAttributeDefinition LIFESPAN = new SimpleAttributeDefinitionBuilder(ModelKeys.LIFESPAN, ModelType.LONG, true)
+@@ -63,7 +63,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(-1))
++            .setDefaultValue(new ModelNode().set(-1L))
+             .build();
+ 
+     static final SimpleAttributeDefinition MAX_IDLE = new SimpleAttributeDefinitionBuilder(ModelKeys.MAX_IDLE, ModelType.LONG, true)
+@@ -71,7 +71,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(-1))
++            .setDefaultValue(new ModelNode().set(-1L))
+             .build();
+ 
+     static final AttributeDefinition[] ATTRIBUTES = new AttributeDefinition[] { MAX_IDLE, LIFESPAN, INTERVAL };

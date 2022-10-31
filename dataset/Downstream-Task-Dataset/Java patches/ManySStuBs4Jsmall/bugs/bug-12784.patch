@@ -1,0 +1,176 @@
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/ArrayBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/ArrayBlockBuilder.java
+index 49f26b6..7d124f0 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/ArrayBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/ArrayBlockBuilder.java
+@@ -95,7 +95,7 @@
+     @Override
+     public long getSizeInBytes()
+     {
+-        return values.getSizeInBytes() + ((Integer.BYTES + Byte.BYTES) * positionCount);
++        return values.getSizeInBytes() + ((Integer.BYTES + Byte.BYTES) * (long) positionCount);
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/ByteArrayBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/ByteArrayBlockBuilder.java
+index 959ab6f..406dc6a 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/ByteArrayBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/ByteArrayBlockBuilder.java
+@@ -125,11 +125,10 @@
+         }
+     }
+ 
+-    // Copied from ByteArrayBlock
+     @Override
+     public long getSizeInBytes()
+     {
+-        return (Byte.BYTES + Byte.BYTES) * positionCount;
++        return (Byte.BYTES + Byte.BYTES) * (long) positionCount;
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/DictionaryBlock.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/DictionaryBlock.java
+index e0c8eca..be60c71 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/DictionaryBlock.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/DictionaryBlock.java
+@@ -216,7 +216,7 @@
+                 seen[position] = true;
+             }
+         }
+-        this.sizeInBytes = sizeInBytes + (positionCount * Integer.BYTES);
++        this.sizeInBytes = sizeInBytes + (Integer.BYTES * (long) positionCount);
+         this.uniqueIds = uniqueIds;
+     }
+ 
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
+index 7462390..e28a886 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
+@@ -74,7 +74,7 @@
+     @Override
+     public long getSizeInBytes()
+     {
+-        return getRawSlice().length() + valueIsNull.length();
++        return getRawSlice().length() + (long) valueIsNull.length();
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
+index e98bbc3..f5a004d 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
+@@ -87,7 +87,7 @@
+     @Override
+     public long getSizeInBytes()
+     {
+-        return sliceOutput.size() + valueIsNull.size();
++        return sliceOutput.size() + (long) valueIsNull.size();
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/IntArrayBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/IntArrayBlockBuilder.java
+index bdaa586..4df15ca 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/IntArrayBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/IntArrayBlockBuilder.java
+@@ -126,11 +126,10 @@
+         }
+     }
+ 
+-    // Copied from IntArrayBlock
+     @Override
+     public long getSizeInBytes()
+     {
+-        return (Integer.BYTES + Byte.BYTES) * positionCount;
++        return (Integer.BYTES + Byte.BYTES) * (long) positionCount;
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/LongArrayBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/LongArrayBlockBuilder.java
+index 9fdf009..806a305 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/LongArrayBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/LongArrayBlockBuilder.java
+@@ -127,11 +127,10 @@
+         }
+     }
+ 
+-    // Copied from LongArrayBlock
+     @Override
+     public long getSizeInBytes()
+     {
+-        return (Long.BYTES + Byte.BYTES) * positionCount;
++        return (Long.BYTES + Byte.BYTES) * (long) positionCount;
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlock.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlock.java
+index ad92074..f2d1fda 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlock.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlock.java
+@@ -139,8 +139,8 @@
+         int entryCount = entriesEnd - entriesStart;
+         sizeInBytes = keyBlock.getRegionSizeInBytes(entriesStart, entryCount) +
+                 valueBlock.getRegionSizeInBytes(entriesStart, entryCount) +
+-                (Integer.BYTES + Byte.BYTES) * this.positionCount +
+-                Integer.BYTES * HASH_MULTIPLIER * entryCount;
++                (Integer.BYTES + Byte.BYTES) * (long) this.positionCount +
++                Integer.BYTES * HASH_MULTIPLIER * (long) entryCount;
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlockBuilder.java
+index 8f1bf51..2467bbf 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlockBuilder.java
+@@ -154,8 +154,8 @@
+     public long getSizeInBytes()
+     {
+         return keyBlockBuilder.getSizeInBytes() + valueBlockBuilder.getSizeInBytes() +
+-                (Integer.BYTES + Byte.BYTES) * positionCount +
+-                Integer.BYTES * HASH_MULTIPLIER * keyBlockBuilder.getPositionCount();
++                (Integer.BYTES + Byte.BYTES) * (long) positionCount +
++                Integer.BYTES * HASH_MULTIPLIER * (long) keyBlockBuilder.getPositionCount();
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/ShortArrayBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/ShortArrayBlockBuilder.java
+index d8bc459..f3a3b47 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/ShortArrayBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/ShortArrayBlockBuilder.java
+@@ -126,11 +126,10 @@
+         }
+     }
+ 
+-    // Copied from ShortArrayBlock
+     @Override
+     public long getSizeInBytes()
+     {
+-        return (Short.BYTES + Byte.BYTES) * positionCount;
++        return (Short.BYTES + Byte.BYTES) * (long) positionCount;
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/VariableWidthBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/VariableWidthBlockBuilder.java
+index eedc9a6..8de3da1 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/VariableWidthBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/VariableWidthBlockBuilder.java
+@@ -99,7 +99,7 @@
+     @Override
+     public long getSizeInBytes()
+     {
+-        long arraysSizeInBytes = (Integer.BYTES + Byte.BYTES) * positions;
++        long arraysSizeInBytes = (Integer.BYTES + Byte.BYTES) * (long) positions;
+         return sliceOutput.size() + arraysSizeInBytes;
+     }
+ 
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/ArrayBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/ArrayBlockBuilder.java
+index 49f26b6..7d124f0 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/ArrayBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/ArrayBlockBuilder.java
+@@ -95,7 +95,7 @@
+     @Override
+     public long getSizeInBytes()
+     {
+-        return values.getSizeInBytes() + ((Integer.BYTES + Byte.BYTES) * positionCount);
++        return values.getSizeInBytes() + ((Integer.BYTES + Byte.BYTES) * (long) positionCount);
+     }
+ 
+     @Override

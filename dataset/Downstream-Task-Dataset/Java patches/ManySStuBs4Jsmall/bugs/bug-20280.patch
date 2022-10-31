@@ -1,0 +1,13 @@
+diff --git a/api/src/main/java/org/openmrs/validator/BaseCustomizableValidator.java b/api/src/main/java/org/openmrs/validator/BaseCustomizableValidator.java
+index 47e8425..19d5ed1 100644
+--- a/api/src/main/java/org/openmrs/validator/BaseCustomizableValidator.java
++++ b/api/src/main/java/org/openmrs/validator/BaseCustomizableValidator.java
+@@ -37,7 +37,7 @@
+ 		
+ 		// check to make sure that the target has the right number of each type of attribute
+ 		for (T at : attributeTypes) {
+-			if (at.getMinOccurs() > 0 || at.getMaxOccurs() != null) {
++			if ((at.getMinOccurs() > 0 || at.getMaxOccurs() != null) && !at.isRetired()) {
+ 				int numFound = 0;
+ 				for (A attr : customizable.getActiveAttributes()) {
+ 					if (attr.getAttributeType().equals(at)) {

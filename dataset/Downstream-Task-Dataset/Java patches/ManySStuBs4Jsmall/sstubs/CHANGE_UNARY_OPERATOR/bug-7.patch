@@ -1,0 +1,39 @@
+diff --git a/integration/yarn/src/main/java/alluxio/yarn/ContainerAllocator.java b/integration/yarn/src/main/java/alluxio/yarn/ContainerAllocator.java
+index 7b45f96..e4aa39f 100644
+--- a/integration/yarn/src/main/java/alluxio/yarn/ContainerAllocator.java
++++ b/integration/yarn/src/main/java/alluxio/yarn/ContainerAllocator.java
+@@ -145,7 +145,7 @@
+     Priority priority;
+     if (mPreferredHost != null) {
+       hosts = new String[]{mPreferredHost};
+-      relaxLocality = !mPreferredHost.equals("localhost");
++      relaxLocality = mPreferredHost.equals("localhost");
+       priority = Priority.newInstance(100);
+     } else {
+       hosts = getPotentialWorkerHosts();
+diff --git a/integration/yarn/src/test/java/alluxio/yarn/ContainerAllocatorTest.java b/integration/yarn/src/test/java/alluxio/yarn/ContainerAllocatorTest.java
+index 33214f3..38e78c0 100644
+--- a/integration/yarn/src/test/java/alluxio/yarn/ContainerAllocatorTest.java
++++ b/integration/yarn/src/test/java/alluxio/yarn/ContainerAllocatorTest.java
+@@ -115,7 +115,7 @@
+             @Override
+             public boolean matches(Object o) {
+               ContainerRequest request = (ContainerRequest) o;
+-              if (request.getRelaxLocality() == false
++              if (request.getRelaxLocality() == true
+                   && request.getNodes().size() == 1
+                   && request.getNodes().get(0).equals("localhost")) {
+                 return true;
+diff --git a/integration/yarn/src/main/java/alluxio/yarn/ContainerAllocator.java b/integration/yarn/src/main/java/alluxio/yarn/ContainerAllocator.java
+index 7b45f96..e4aa39f 100644
+--- a/integration/yarn/src/main/java/alluxio/yarn/ContainerAllocator.java
++++ b/integration/yarn/src/main/java/alluxio/yarn/ContainerAllocator.java
+@@ -145,7 +145,7 @@
+     Priority priority;
+     if (mPreferredHost != null) {
+       hosts = new String[]{mPreferredHost};
+-      relaxLocality = !mPreferredHost.equals("localhost");
++      relaxLocality = mPreferredHost.equals("localhost");
+       priority = Priority.newInstance(100);
+     } else {
+       hosts = getPotentialWorkerHosts();

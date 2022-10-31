@@ -1,0 +1,61 @@
+diff --git a/connectors/camel-connector/src/main/java/org/apache/camel/component/connector/DefaultConnectorComponent.java b/connectors/camel-connector/src/main/java/org/apache/camel/component/connector/DefaultConnectorComponent.java
+index d0ef3c9..e980b2e 100644
+--- a/connectors/camel-connector/src/main/java/org/apache/camel/component/connector/DefaultConnectorComponent.java
++++ b/connectors/camel-connector/src/main/java/org/apache/camel/component/connector/DefaultConnectorComponent.java
+@@ -179,7 +179,7 @@
+         boolean found = false;
+         for (String line : lines) {
+             line = line.trim();
+-            if (line.startsWith("\"componentValues\":")) {
++            if (line.startsWith("\"componentValues\"")) {
+                 found = true;
+             } else if (line.startsWith("}")) {
+                 found = false;
+@@ -206,7 +206,7 @@
+         boolean found = false;
+         for (String line : lines) {
+             line = line.trim();
+-            if (line.startsWith("\"endpointValues\":")) {
++            if (line.startsWith("\"endpointValues\"")) {
+                 found = true;
+             } else if (line.startsWith("}")) {
+                 found = false;
+diff --git a/connectors/examples/twitter-salesforce-example/src/main/java/org/foo/MentionAddContractRoute.java b/connectors/examples/twitter-salesforce-example/src/main/java/org/foo/MentionAddContractRoute.java
+index 64047aa..0876aab 100644
+--- a/connectors/examples/twitter-salesforce-example/src/main/java/org/foo/MentionAddContractRoute.java
++++ b/connectors/examples/twitter-salesforce-example/src/main/java/org/foo/MentionAddContractRoute.java
+@@ -24,10 +24,7 @@
+ 
+     @Override
+     public void configure() throws Exception {
+-        from("foo:blah?period=2000")
+-            .log("Foo triggered");
+-
+-//        from("twitter-mention?count=10")
+-//            .log("I was mentioned by ${body}");
++        from("twitter-mention")
++            .log("I was mentioned by ${body}");
+     }
+ }
+diff --git a/connectors/camel-connector/src/main/java/org/apache/camel/component/connector/DefaultConnectorComponent.java b/connectors/camel-connector/src/main/java/org/apache/camel/component/connector/DefaultConnectorComponent.java
+index d0ef3c9..e980b2e 100644
+--- a/connectors/camel-connector/src/main/java/org/apache/camel/component/connector/DefaultConnectorComponent.java
++++ b/connectors/camel-connector/src/main/java/org/apache/camel/component/connector/DefaultConnectorComponent.java
+@@ -179,7 +179,7 @@
+         boolean found = false;
+         for (String line : lines) {
+             line = line.trim();
+-            if (line.startsWith("\"componentValues\":")) {
++            if (line.startsWith("\"componentValues\"")) {
+                 found = true;
+             } else if (line.startsWith("}")) {
+                 found = false;
+@@ -206,7 +206,7 @@
+         boolean found = false;
+         for (String line : lines) {
+             line = line.trim();
+-            if (line.startsWith("\"endpointValues\":")) {
++            if (line.startsWith("\"endpointValues\"")) {
+                 found = true;
+             } else if (line.startsWith("}")) {
+                 found = false;

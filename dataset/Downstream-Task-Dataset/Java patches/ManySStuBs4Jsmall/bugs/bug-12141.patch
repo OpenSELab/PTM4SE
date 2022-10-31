@@ -1,0 +1,26 @@
+diff --git a/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java b/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java
+index c9b7b8f..b20c55d 100644
+--- a/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java
++++ b/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java
+@@ -96,7 +96,7 @@
+ 
+   @Override
+   public HttpServerResponse setStatusCode(int statusCode) {
+-    this.response.setStatus(HttpResponseStatus.valueOf(statusCode));
++    this.response.setStatus(new HttpResponseStatus(statusCode, response.getStatus().reasonPhrase()));
+     return this;
+   }
+ 
+diff --git a/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java b/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java
+index c9b7b8f..b20c55d 100644
+--- a/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java
++++ b/vertx-core/src/main/java/org/vertx/java/core/http/impl/DefaultHttpServerResponse.java
+@@ -96,7 +96,7 @@
+ 
+   @Override
+   public HttpServerResponse setStatusCode(int statusCode) {
+-    this.response.setStatus(HttpResponseStatus.valueOf(statusCode));
++    this.response.setStatus(new HttpResponseStatus(statusCode, response.getStatus().reasonPhrase()));
+     return this;
+   }
+ 

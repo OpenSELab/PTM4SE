@@ -1,0 +1,26 @@
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+index 8a6a93f..b4dbae0 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+@@ -897,7 +897,7 @@
+         pageSourceProvider.createPageSource(split, ImmutableList.of(invalidColumnHandle));
+     }
+ 
+-    @Test(expectedExceptions = PrestoException.class, expectedExceptionsMessageRegExp = "Table '.*\\.presto_test_partition_schema_change' partition 'ds=2012-12-29' column 't_data' type 'string' does not match table column type 'bigint'")
++    @Test(expectedExceptions = PrestoException.class, expectedExceptionsMessageRegExp = ".*The column 't_data' in table '.*\\.presto_test_partition_schema_change' is declared as type 'bigint', but partition 'ds=2012-12-29' declared column 't_data' as type 'string'.")
+     public void testPartitionSchemaMismatch()
+             throws Exception
+     {
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+index 8a6a93f..b4dbae0 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+@@ -897,7 +897,7 @@
+         pageSourceProvider.createPageSource(split, ImmutableList.of(invalidColumnHandle));
+     }
+ 
+-    @Test(expectedExceptions = PrestoException.class, expectedExceptionsMessageRegExp = "Table '.*\\.presto_test_partition_schema_change' partition 'ds=2012-12-29' column 't_data' type 'string' does not match table column type 'bigint'")
++    @Test(expectedExceptions = PrestoException.class, expectedExceptionsMessageRegExp = ".*The column 't_data' in table '.*\\.presto_test_partition_schema_change' is declared as type 'bigint', but partition 'ds=2012-12-29' declared column 't_data' as type 'string'.")
+     public void testPartitionSchemaMismatch()
+             throws Exception
+     {

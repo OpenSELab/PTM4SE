@@ -1,0 +1,91 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandfly.java b/Essentials/src/com/earth2me/essentials/commands/Commandfly.java
+index 8d38f08..dcd1d51 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandfly.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandfly.java
+@@ -61,7 +61,7 @@
+ 		}
+ 
+ 		user.sendMessage(_("flyMode", _(enabled ? "enabled" : "disabled"), user.getDisplayName()));
+-		if (!sender.equals(user.getBase()))
++		if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+ 		{
+ 			sender.sendMessage(_("flyMode", _(enabled ? "enabled" : "disabled"), user.getDisplayName()));
+ 		}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandgod.java b/Essentials/src/com/earth2me/essentials/commands/Commandgod.java
+index 4395846..44d930c 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandgod.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandgod.java
+@@ -67,7 +67,7 @@
+ 			}
+ 
+ 			user.sendMessage(_("godMode", enabled ? _("enabled") : _("disabled")));
+-			if (!sender.equals(user.getBase()))
++			if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+ 			{
+ 				sender.sendMessage(_("godMode", _(enabled ? "godEnabledFor" : "godDisabledFor", user.getDisplayName())));
+ 			}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandr.java b/Essentials/src/com/earth2me/essentials/commands/Commandr.java
+index 046024c..4b4de6f 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandr.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandr.java
+@@ -66,7 +66,7 @@
+ 		{
+ 			if (target.isPlayer())
+ 			{
+-				(target.isPlayer() ? ess.getUser(target.getPlayer()) : ess.getUser(Console.NAME)).setReplyTo(sender);
++				ess.getUser(target.getPlayer()).setReplyTo(sender);
+ 			}
+ 			else
+ 			{
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandsocialspy.java b/Essentials/src/com/earth2me/essentials/commands/Commandsocialspy.java
+index e288a5c..63d3764 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandsocialspy.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandsocialspy.java
+@@ -56,7 +56,7 @@
+ 
+ 
+ 		user.sendMessage(_("socialSpy", user.getDisplayName(), enabled ? _("enabled") : _("disabled")));
+-		if (!sender.equals(user.getBase()))
++		if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+ 		{
+ 			sender.sendMessage(_("socialSpy", user.getDisplayName(), enabled ? _("enabled") : _("disabled")));
+ 		}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandtptoggle.java b/Essentials/src/com/earth2me/essentials/commands/Commandtptoggle.java
+index 442f535..9705287 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandtptoggle.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandtptoggle.java
+@@ -55,7 +55,7 @@
+ 		user.setTeleportEnabled(enabled);
+ 
+ 		user.sendMessage(enabled ? _("teleportationEnabled") : _("teleportationDisabled"));
+-		if (!sender.equals(user.getBase()))
++		if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+ 		{
+ 			sender.sendMessage(enabled ? _("teleportationEnabledFor", user.getDisplayName()) : _("teleportationDisabledFor", user.getDisplayName()));
+ 		}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandvanish.java b/Essentials/src/com/earth2me/essentials/commands/Commandvanish.java
+index 588c178..34aa82f 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandvanish.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandvanish.java
+@@ -59,7 +59,7 @@
+ 		{
+ 			user.sendMessage(_("vanished"));
+ 		}
+-		if (!sender.equals(user.getBase()))
++		if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+ 		{
+ 			sender.sendMessage(_("vanish", user.getDisplayName(), enabled ? _("enabled") : _("disabled")));
+ 		}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandfly.java b/Essentials/src/com/earth2me/essentials/commands/Commandfly.java
+index 8d38f08..dcd1d51 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandfly.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandfly.java
+@@ -61,7 +61,7 @@
+ 		}
+ 
+ 		user.sendMessage(_("flyMode", _(enabled ? "enabled" : "disabled"), user.getDisplayName()));
+-		if (!sender.equals(user.getBase()))
++		if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+ 		{
+ 			sender.sendMessage(_("flyMode", _(enabled ? "enabled" : "disabled"), user.getDisplayName()));
+ 		}

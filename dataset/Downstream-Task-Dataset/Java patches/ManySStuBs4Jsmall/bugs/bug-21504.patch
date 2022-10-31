@@ -1,0 +1,63 @@
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/health/MongoHealthIndicator.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/health/MongoHealthIndicator.java
+index a13dfdc..c282939 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/health/MongoHealthIndicator.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/health/MongoHealthIndicator.java
+@@ -39,7 +39,7 @@
+ 
+ 	@Override
+ 	protected void doHealthCheck(Health.Builder builder) throws Exception {
+-		CommandResult result = this.mongoTemplate.executeCommand("{ serverStatus: 1 }");
++		CommandResult result = this.mongoTemplate.executeCommand("{ buildInfo: 1 }");
+ 		builder.up().withDetail("version", result.getString("version"));
+ 	}
+ 
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
+index 16b1d15..b60b104 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
+@@ -67,7 +67,7 @@
+ 		CommandResult commandResult = Mockito.mock(CommandResult.class);
+ 		Mockito.when(commandResult.getString("version")).thenReturn("2.6.4");
+ 		MongoTemplate mongoTemplate = Mockito.mock(MongoTemplate.class);
+-		Mockito.when(mongoTemplate.executeCommand("{ serverStatus: 1 }")).thenReturn(
++		Mockito.when(mongoTemplate.executeCommand("{ buildInfo: 1 }")).thenReturn(
+ 				commandResult);
+ 		MongoHealthIndicator healthIndicator = new MongoHealthIndicator(mongoTemplate);
+ 
+@@ -76,13 +76,13 @@
+ 		assertEquals("2.6.4", health.getDetails().get("version"));
+ 
+ 		Mockito.verify(commandResult).getString("version");
+-		Mockito.verify(mongoTemplate).executeCommand("{ serverStatus: 1 }");
++		Mockito.verify(mongoTemplate).executeCommand("{ buildInfo: 1 }");
+ 	}
+ 
+ 	@Test
+ 	public void mongoIsDown() throws Exception {
+ 		MongoTemplate mongoTemplate = Mockito.mock(MongoTemplate.class);
+-		Mockito.when(mongoTemplate.executeCommand("{ serverStatus: 1 }")).thenThrow(
++		Mockito.when(mongoTemplate.executeCommand("{ buildInfo: 1 }")).thenThrow(
+ 				new MongoException("Connection failed"));
+ 		MongoHealthIndicator healthIndicator = new MongoHealthIndicator(mongoTemplate);
+ 
+@@ -91,6 +91,6 @@
+ 		assertTrue(((String) health.getDetails().get("error"))
+ 				.contains("Connection failed"));
+ 
+-		Mockito.verify(mongoTemplate).executeCommand("{ serverStatus: 1 }");
++		Mockito.verify(mongoTemplate).executeCommand("{ buildInfo: 1 }");
+ 	}
+ }
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/health/MongoHealthIndicator.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/health/MongoHealthIndicator.java
+index a13dfdc..c282939 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/health/MongoHealthIndicator.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/health/MongoHealthIndicator.java
+@@ -39,7 +39,7 @@
+ 
+ 	@Override
+ 	protected void doHealthCheck(Health.Builder builder) throws Exception {
+-		CommandResult result = this.mongoTemplate.executeCommand("{ serverStatus: 1 }");
++		CommandResult result = this.mongoTemplate.executeCommand("{ buildInfo: 1 }");
+ 		builder.up().withDetail("version", result.getString("version"));
+ 	}
+ 

@@ -1,0 +1,39 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkClient.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkClient.java
+index 2a809cf..ee6f7d7 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkClient.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkClient.java
+@@ -56,7 +56,7 @@
+ 
+   private static String sparkHome = "/home/xzhang/apache/spark";
+   
+-  private static int reducerCount = 5;
++  private static int reducerCount = 1;
+   
+   private static String execMem = "1g";
+   private static String execJvmOpts = "";
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkCollector.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkCollector.java
+index f773c75..5076377 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkCollector.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkCollector.java
+@@ -35,7 +35,7 @@
+   
+   @Override
+   public void collect(BytesWritable key, BytesWritable value) throws IOException {
+-    result.add(new Tuple2<BytesWritable, BytesWritable>(key, value));
++    result.add(new Tuple2<BytesWritable, BytesWritable>(new BytesWritable(key.copyBytes()), new BytesWritable(value.copyBytes())));
+   }
+   
+   public void clear() {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkClient.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkClient.java
+index 2a809cf..ee6f7d7 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkClient.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkClient.java
+@@ -56,7 +56,7 @@
+ 
+   private static String sparkHome = "/home/xzhang/apache/spark";
+   
+-  private static int reducerCount = 5;
++  private static int reducerCount = 1;
+   
+   private static String execMem = "1g";
+   private static String execJvmOpts = "";

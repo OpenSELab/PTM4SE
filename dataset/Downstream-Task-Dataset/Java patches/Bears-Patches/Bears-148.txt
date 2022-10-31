@@ -1,0 +1,25 @@
+--- a/suite/spdz2k/src/main/java/dk/alexandra/fresco/suite/spdz2k/datatypes/CompUInt96.java
++++ b/suite/spdz2k/src/main/java/dk/alexandra/fresco/suite/spdz2k/datatypes/CompUInt96.java
+@@ -33,7 +33,7 @@ public class CompUInt96 implements CompUInt<UInt64, UInt32, CompUInt96> {
+   }
+ 
+   CompUInt96(BigInteger value) {
+-    this(value.toByteArray());
++    this(value.shiftRight(64).intValue(), value.shiftRight(32).intValue(), value.intValue());
+   }
+ 
+   CompUInt96(UInt64 value) {
+--- a/suite/spdz2k/src/main/java/dk/alexandra/fresco/suite/spdz2k/datatypes/CompUInt96Factory.java
++++ b/suite/spdz2k/src/main/java/dk/alexandra/fresco/suite/spdz2k/datatypes/CompUInt96Factory.java
+
+--- a/suite/spdz2k/src/main/java/dk/alexandra/fresco/suite/spdz2k/datatypes/CompUIntFactory.java
++++ b/suite/spdz2k/src/main/java/dk/alexandra/fresco/suite/spdz2k/datatypes/CompUIntFactory.java
+@@ -92,7 +92,7 @@ public interface CompUIntFactory<CompT extends CompUInt<?, ?, CompT>> extends OI
+    * Creates element whose value is zero.
+    */
+   default CompT zero() {
+-    return createFromBytes(new byte[getCompositeBitLength() / Byte.SIZE]);
++    return createFromBigInteger(BigInteger.ZERO);
+   }
+ 
+   default CompT one() {

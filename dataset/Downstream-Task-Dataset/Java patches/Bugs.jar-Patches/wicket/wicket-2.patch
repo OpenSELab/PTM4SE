@@ -1,0 +1,51 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/markup/html/navigation/paging/PagingNavigation.java b/wicket/src/main/java/org/apache/wicket/markup/html/navigation/paging/PagingNavigation.java
+index 3342762..60c5499 100644
+--- a/wicket/src/main/java/org/apache/wicket/markup/html/navigation/paging/PagingNavigation.java
++++ b/wicket/src/main/java/org/apache/wicket/markup/html/navigation/paging/PagingNavigation.java
+@@ -345,7 +345,8 @@ public class PagingNavigation extends Loop
+ 			@Override
+ 			public boolean isEnabled()
+ 			{
+-				return PagingNavigation.this.isEnabled() && PagingNavigation.this.isEnableAllowed();
++				return super.isEnabled() && PagingNavigation.this.isEnabled() &&
++					PagingNavigation.this.isEnableAllowed();
+ 			}
+ 		};
+ 	}
+diff --git a/wicket/src/main/java/org/apache/wicket/markup/html/navigation/paging/PagingNavigator.java b/wicket/src/main/java/org/apache/wicket/markup/html/navigation/paging/PagingNavigator.java
+index 018d165..9d9fd47 100644
+--- a/wicket/src/main/java/org/apache/wicket/markup/html/navigation/paging/PagingNavigator.java
++++ b/wicket/src/main/java/org/apache/wicket/markup/html/navigation/paging/PagingNavigator.java
+@@ -119,7 +119,8 @@ public class PagingNavigator extends Panel
+ 			@Override
+ 			public boolean isEnabled()
+ 			{
+-				return PagingNavigator.this.isEnabled() && PagingNavigator.this.isEnableAllowed();
++				return super.isEnabled() && PagingNavigator.this.isEnabled() &&
++					PagingNavigator.this.isEnableAllowed();
+ 			}
+ 		};
+ 	}
+@@ -145,9 +146,11 @@ public class PagingNavigator extends Panel
+ 			@Override
+ 			public boolean isEnabled()
+ 			{
+-				return PagingNavigator.this.isEnabled() && PagingNavigator.this.isEnableAllowed();
++				return super.isEnabled() && PagingNavigator.this.isEnabled() &&
++					PagingNavigator.this.isEnableAllowed();
+ 			}
+ 		};
++
+ 	}
+ 
+ 	/**
+@@ -169,7 +172,8 @@ public class PagingNavigator extends Panel
+ 			@Override
+ 			public boolean isEnabled()
+ 			{
+-				return PagingNavigator.this.isEnabled() && PagingNavigator.this.isEnableAllowed();
++				return super.isEnabled() && PagingNavigator.this.isEnabled() &&
++					PagingNavigator.this.isEnableAllowed();
+ 			}
+ 		};
+ 	}

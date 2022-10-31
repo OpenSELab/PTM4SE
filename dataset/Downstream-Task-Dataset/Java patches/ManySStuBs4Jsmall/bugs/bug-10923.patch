@@ -1,0 +1,28 @@
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
+index ed7d922..f28cf64 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
+@@ -190,8 +190,7 @@
+         for (int i = 0; i < indexes.length; i++) {
+             INDArrayIndex idx = indexes[i];
+             // On vectors, the first dimension can be ignored when indexing them with a single point index
+-            if(idx instanceof PointIndex &&
+-                    arr.isVector() && indexes.length == 1 ? idx.current() >= shape[i+1] : idx.current() >= shape[i]){
++            if(idx instanceof PointIndex && (arr.isVector() && indexes.length == 1 ? idx.current() >= shape[i+1] : idx.current() >= shape[i])){
+                 throw new IllegalArgumentException("INDArrayIndex["+i+"] is out of bounds (value: "+idx.current()+")");
+             }
+         }
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
+index ed7d922..f28cf64 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
+@@ -190,8 +190,7 @@
+         for (int i = 0; i < indexes.length; i++) {
+             INDArrayIndex idx = indexes[i];
+             // On vectors, the first dimension can be ignored when indexing them with a single point index
+-            if(idx instanceof PointIndex &&
+-                    arr.isVector() && indexes.length == 1 ? idx.current() >= shape[i+1] : idx.current() >= shape[i]){
++            if(idx instanceof PointIndex && (arr.isVector() && indexes.length == 1 ? idx.current() >= shape[i+1] : idx.current() >= shape[i])){
+                 throw new IllegalArgumentException("INDArrayIndex["+i+"] is out of bounds (value: "+idx.current()+")");
+             }
+         }

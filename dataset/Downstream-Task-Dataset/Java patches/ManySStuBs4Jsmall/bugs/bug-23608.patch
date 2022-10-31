@@ -1,0 +1,30 @@
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/client/descriptor/EJBClientDescriptorTestCase.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/client/descriptor/EJBClientDescriptorTestCase.java
+index bb7ffcf..c71b985 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/client/descriptor/EJBClientDescriptorTestCase.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/client/descriptor/EJBClientDescriptorTestCase.java
+@@ -234,9 +234,7 @@
+                 remoteEcho.twoSecondEcho(JBOSS_EJB_CLIENT_1_2_MODULE_NAME, msg);
+                 Assert.fail("Expected to receive a timeout for the invocation");
+             } catch (Exception e) {
+-                // this will be thrown a UndeclaredThrowableException for reasons explained in the javadoc
+-                // of that exception http://docs.oracle.com/javase/6/docs/api/java/lang/reflect/UndeclaredThrowableException.html
+-                if (e instanceof EJBException && e.getCause() instanceof UndeclaredThrowableException && e.getCause().getCause() instanceof TimeoutException) {
++                if (e instanceof EJBException && e.getCause() instanceof TimeoutException) {
+                     logger.info("Got the expected timeout exception", e.getCause());
+                     return;
+                 }
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/client/descriptor/EJBClientDescriptorTestCase.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/client/descriptor/EJBClientDescriptorTestCase.java
+index bb7ffcf..c71b985 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/client/descriptor/EJBClientDescriptorTestCase.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/client/descriptor/EJBClientDescriptorTestCase.java
+@@ -234,9 +234,7 @@
+                 remoteEcho.twoSecondEcho(JBOSS_EJB_CLIENT_1_2_MODULE_NAME, msg);
+                 Assert.fail("Expected to receive a timeout for the invocation");
+             } catch (Exception e) {
+-                // this will be thrown a UndeclaredThrowableException for reasons explained in the javadoc
+-                // of that exception http://docs.oracle.com/javase/6/docs/api/java/lang/reflect/UndeclaredThrowableException.html
+-                if (e instanceof EJBException && e.getCause() instanceof UndeclaredThrowableException && e.getCause().getCause() instanceof TimeoutException) {
++                if (e instanceof EJBException && e.getCause() instanceof TimeoutException) {
+                     logger.info("Got the expected timeout exception", e.getCause());
+                     return;
+                 }

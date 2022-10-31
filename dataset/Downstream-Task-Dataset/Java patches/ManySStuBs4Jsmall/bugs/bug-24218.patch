@@ -1,0 +1,38 @@
+diff --git a/twitter4j-http2-support/src/main/java/twitter4j/AlternativeHttpClientImpl.java b/twitter4j-http2-support/src/main/java/twitter4j/AlternativeHttpClientImpl.java
+index 84acc5e..576c0d8 100644
+--- a/twitter4j-http2-support/src/main/java/twitter4j/AlternativeHttpClientImpl.java
++++ b/twitter4j-http2-support/src/main/java/twitter4j/AlternativeHttpClientImpl.java
+@@ -147,12 +147,12 @@
+ 			for(HttpParameter parameter:req.getParameters()){
+ 				if(parameter.isFile()) {
+ 					multipartBuilder.addPart(
+-							Headers.of("Content-Disposition","form-data; name=\"" + parameter.getName() + "\"; filename=\"" + parameter.getFile().getName()),
++							Headers.of("Content-Disposition","form-data; name=\"" + parameter.getName() + "\"; filename=\"" + parameter.getFile().getName()+"\""),
+ 							RequestBody.create(MediaType.parse(parameter.getContentType()),parameter.getFile())
+ 					);
+ 				}else {
+ 					multipartBuilder.addPart(
+-							Headers.of("Content-Disposition","form-data; name=" + parameter.getName()),
++							Headers.of("Content-Disposition","form-data; name=\"" + parameter.getName()+"\""),
+ 							RequestBody.create(TEXT,parameter.getValue().getBytes("UTF-8"))
+ 					);
+ 				}
+diff --git a/twitter4j-http2-support/src/main/java/twitter4j/AlternativeHttpClientImpl.java b/twitter4j-http2-support/src/main/java/twitter4j/AlternativeHttpClientImpl.java
+index 84acc5e..576c0d8 100644
+--- a/twitter4j-http2-support/src/main/java/twitter4j/AlternativeHttpClientImpl.java
++++ b/twitter4j-http2-support/src/main/java/twitter4j/AlternativeHttpClientImpl.java
+@@ -147,12 +147,12 @@
+ 			for(HttpParameter parameter:req.getParameters()){
+ 				if(parameter.isFile()) {
+ 					multipartBuilder.addPart(
+-							Headers.of("Content-Disposition","form-data; name=\"" + parameter.getName() + "\"; filename=\"" + parameter.getFile().getName()),
++							Headers.of("Content-Disposition","form-data; name=\"" + parameter.getName() + "\"; filename=\"" + parameter.getFile().getName()+"\""),
+ 							RequestBody.create(MediaType.parse(parameter.getContentType()),parameter.getFile())
+ 					);
+ 				}else {
+ 					multipartBuilder.addPart(
+-							Headers.of("Content-Disposition","form-data; name=" + parameter.getName()),
++							Headers.of("Content-Disposition","form-data; name=\"" + parameter.getName()+"\""),
+ 							RequestBody.create(TEXT,parameter.getValue().getBytes("UTF-8"))
+ 					);
+ 				}

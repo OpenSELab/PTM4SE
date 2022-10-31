@@ -1,0 +1,28 @@
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
+index 32e71c6..0800762 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
+@@ -165,7 +165,8 @@
+ 	@ConditionalOnProperty(prefix = "endpoints.health", name = "enabled", matchIfMissing = true)
+ 	public HealthMvcEndpoint healthMvcEndpoint(HealthEndpoint delegate) {
+ 		HealthMvcEndpoint healthMvcEndpoint = new HealthMvcEndpoint(delegate);
+-		boolean secure = this.managementServerProperties.getSecurity().isEnabled()
++		boolean secure = this.managementServerProperties.getSecurity() != null
++				&& this.managementServerProperties.getSecurity().isEnabled()
+ 				&& ClassUtils.isPresent(
+ 						"org.springframework.security.core.Authentication", null);
+ 		delegate.setSensitive(secure);
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
+index 32e71c6..0800762 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/EndpointWebMvcAutoConfiguration.java
+@@ -165,7 +165,8 @@
+ 	@ConditionalOnProperty(prefix = "endpoints.health", name = "enabled", matchIfMissing = true)
+ 	public HealthMvcEndpoint healthMvcEndpoint(HealthEndpoint delegate) {
+ 		HealthMvcEndpoint healthMvcEndpoint = new HealthMvcEndpoint(delegate);
+-		boolean secure = this.managementServerProperties.getSecurity().isEnabled()
++		boolean secure = this.managementServerProperties.getSecurity() != null
++				&& this.managementServerProperties.getSecurity().isEnabled()
+ 				&& ClassUtils.isPresent(
+ 						"org.springframework.security.core.Authentication", null);
+ 		delegate.setSensitive(secure);

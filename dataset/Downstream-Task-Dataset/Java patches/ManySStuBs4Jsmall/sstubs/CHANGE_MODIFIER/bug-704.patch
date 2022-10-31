@@ -1,0 +1,141 @@
+diff --git a/guava-tests/test/com/google/common/base/CharMatcherTest.java b/guava-tests/test/com/google/common/base/CharMatcherTest.java
+index 228d91e..2e52a6e 100644
+--- a/guava-tests/test/com/google/common/base/CharMatcherTest.java
++++ b/guava-tests/test/com/google/common/base/CharMatcherTest.java
+@@ -198,7 +198,7 @@
+   }
+ 
+   @GwtIncompatible("NullPointerTester")
+-  private void doTestNull(CharMatcher matcher) throws Exception {
++  private static void doTestNull(CharMatcher matcher) throws Exception {
+     NullPointerTester tester = new NullPointerTester();
+     tester.testAllPublicInstanceMethods(matcher);
+   }
+diff --git a/guava-tests/test/com/google/common/cache/CacheEvictionTest.java b/guava-tests/test/com/google/common/cache/CacheEvictionTest.java
+index 041a212..e70a5a5 100644
+--- a/guava-tests/test/com/google/common/cache/CacheEvictionTest.java
++++ b/guava-tests/test/com/google/common/cache/CacheEvictionTest.java
+@@ -411,7 +411,7 @@
+     assertThat(keySet).containsExactly(5, 6, 7, 8, 9, 10, 11, 12);
+   }
+ 
+-  private void getAll(LoadingCache<Integer, Integer> cache, List<Integer> keys) {
++  private static void getAll(LoadingCache<Integer, Integer> cache, List<Integer> keys) {
+     for (int i : keys) {
+       cache.getUnchecked(i);
+     }
+diff --git a/guava-tests/test/com/google/common/cache/CacheExpirationTest.java b/guava-tests/test/com/google/common/cache/CacheExpirationTest.java
+index c2c221e..e0c53c6 100644
+--- a/guava-tests/test/com/google/common/cache/CacheExpirationTest.java
++++ b/guava-tests/test/com/google/common/cache/CacheExpirationTest.java
+@@ -440,7 +440,7 @@
+     assertEquals(10, removalListener.getCount());
+   }
+ 
+-  private void getAll(LoadingCache<Integer, Integer> cache, List<Integer> keys) {
++  private static void getAll(LoadingCache<Integer, Integer> cache, List<Integer> keys) {
+     for (int i : keys) {
+       cache.getUnchecked(i);
+     }
+diff --git a/guava-tests/test/com/google/common/cache/EmptyCachesTest.java b/guava-tests/test/com/google/common/cache/EmptyCachesTest.java
+index 994f236..38d5945 100644
+--- a/guava-tests/test/com/google/common/cache/EmptyCachesTest.java
++++ b/guava-tests/test/com/google/common/cache/EmptyCachesTest.java
+@@ -379,7 +379,7 @@
+             DurationSpec.of(1, DAYS)));
+   }
+ 
+-  private void warmUp(LoadingCache<Object, Object> cache, int minimum, int maximum) {
++  private static void warmUp(LoadingCache<Object, Object> cache, int minimum, int maximum) {
+     for (int i = minimum; i < maximum; i++) {
+       cache.getUnchecked(i);
+     }
+diff --git a/guava-tests/test/com/google/common/collect/ComputingConcurrentHashMapTest.java b/guava-tests/test/com/google/common/collect/ComputingConcurrentHashMapTest.java
+index 756ba2a..01d5f0d 100644
+--- a/guava-tests/test/com/google/common/collect/ComputingConcurrentHashMapTest.java
++++ b/guava-tests/test/com/google/common/collect/ComputingConcurrentHashMapTest.java
+@@ -63,7 +63,7 @@
+         maker, computingFunction);
+   }
+ 
+-  private MapMaker createMapMaker() {
++  private static MapMaker createMapMaker() {
+     MapMaker maker = new MapMaker();
+     maker.useCustomMap = true;
+     return maker;
+diff --git a/guava-tests/test/com/google/common/collect/MinMaxPriorityQueueTest.java b/guava-tests/test/com/google/common/collect/MinMaxPriorityQueueTest.java
+index fa1ea97..9634d62 100644
+--- a/guava-tests/test/com/google/common/collect/MinMaxPriorityQueueTest.java
++++ b/guava-tests/test/com/google/common/collect/MinMaxPriorityQueueTest.java
+@@ -752,8 +752,8 @@
+     return seed;
+   }
+ 
+-  private void insertRandomly(ArrayList<Integer> elements, MinMaxPriorityQueue<Integer> q,
+-      Random random) {
++  private static void insertRandomly(
++      ArrayList<Integer> elements, MinMaxPriorityQueue<Integer> q, Random random) {
+     while (!elements.isEmpty()) {
+       int selectedIndex = random.nextInt(elements.size());
+       q.offer(elements.remove(selectedIndex));
+diff --git a/guava-tests/test/com/google/common/collect/TreeRangeMapTest.java b/guava-tests/test/com/google/common/collect/TreeRangeMapTest.java
+index d1b77ab..a1fb21f 100644
+--- a/guava-tests/test/com/google/common/collect/TreeRangeMapTest.java
++++ b/guava-tests/test/com/google/common/collect/TreeRangeMapTest.java
+@@ -573,7 +573,7 @@
+     }
+   }
+ 
+-  private void putModel(Map<Integer, Integer> model, Range<Integer> range, int value) {
++  private static void putModel(Map<Integer, Integer> model, Range<Integer> range, int value) {
+     for (int i = MIN_BOUND - 1; i <= MAX_BOUND + 1; i++) {
+       if (range.contains(i)) {
+         model.put(i, value);
+@@ -581,7 +581,7 @@
+     }
+   }
+ 
+-  private void removeModel(Map<Integer, Integer> model, Range<Integer> range) {
++  private static void removeModel(Map<Integer, Integer> model, Range<Integer> range) {
+     for (int i = MIN_BOUND - 1; i <= MAX_BOUND + 1; i++) {
+       if (range.contains(i)) {
+         model.remove(i);
+diff --git a/guava-tests/test/com/google/common/escape/UnicodeEscaperTest.java b/guava-tests/test/com/google/common/escape/UnicodeEscaperTest.java
+index 36eccdf..4d901c8 100644
+--- a/guava-tests/test/com/google/common/escape/UnicodeEscaperTest.java
++++ b/guava-tests/test/com/google/common/escape/UnicodeEscaperTest.java
+@@ -185,7 +185,7 @@
+     }
+   }
+ 
+-  private String escapeAsString(Escaper e, String s) {
++  private static String escapeAsString(Escaper e, String s) {
+     return e.escape(s);
+   }
+ }
+diff --git a/guava-tests/test/com/google/common/util/concurrent/AbstractFutureTest.java b/guava-tests/test/com/google/common/util/concurrent/AbstractFutureTest.java
+index f5c5ff0..41b9c84 100644
+--- a/guava-tests/test/com/google/common/util/concurrent/AbstractFutureTest.java
++++ b/guava-tests/test/com/google/common/util/concurrent/AbstractFutureTest.java
+@@ -605,7 +605,7 @@
+     executor.shutdown();
+   }
+ 
+-  private int awaitUnchecked(final CyclicBarrier barrier) {
++  private static int awaitUnchecked(final CyclicBarrier barrier) {
+     try {
+       return barrier.await();
+     } catch (Exception e) {
+diff --git a/guava-tests/test/com/google/common/base/CharMatcherTest.java b/guava-tests/test/com/google/common/base/CharMatcherTest.java
+index 228d91e..2e52a6e 100644
+--- a/guava-tests/test/com/google/common/base/CharMatcherTest.java
++++ b/guava-tests/test/com/google/common/base/CharMatcherTest.java
+@@ -198,7 +198,7 @@
+   }
+ 
+   @GwtIncompatible("NullPointerTester")
+-  private void doTestNull(CharMatcher matcher) throws Exception {
++  private static void doTestNull(CharMatcher matcher) throws Exception {
+     NullPointerTester tester = new NullPointerTester();
+     tester.testAllPublicInstanceMethods(matcher);
+   }

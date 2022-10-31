@@ -1,0 +1,54 @@
+diff --git a/library/src/com/haarman/listviewanimations/itemmanipulation/ExpandableListItemAdapter.java b/library/src/com/haarman/listviewanimations/itemmanipulation/ExpandableListItemAdapter.java
+index 1a8f81b..a1955d1 100644
+--- a/library/src/com/haarman/listviewanimations/itemmanipulation/ExpandableListItemAdapter.java
++++ b/library/src/com/haarman/listviewanimations/itemmanipulation/ExpandableListItemAdapter.java
+@@ -103,7 +103,7 @@
+ 		}
+ 
+ 		View titleView = getTitleView(position, viewHolder.titleView, viewHolder.titleParent);
+-		if (!titleView.equals(viewHolder.titleView)) {
++		if (titleView != viewHolder.titleView) {
+ 			viewHolder.titleParent.removeAllViews();
+ 			viewHolder.titleParent.addView(titleView);
+ 
+@@ -116,11 +116,11 @@
+ 		viewHolder.titleView = titleView;
+ 
+ 		View contentView = getContentView(position, viewHolder.contentView, viewHolder.contentParent);
+-		if (!contentView.equals(viewHolder.contentView)) {
++		if (contentView != viewHolder.contentView) {
+ 			viewHolder.contentParent.removeAllViews();
+ 			viewHolder.contentParent.addView(contentView);
+ 		}
+-		viewHolder.titleView = titleView;
++		viewHolder.contentParent = contentParent;
+ 
+ 		viewHolder.contentParent.setVisibility(mVisibleIds.contains(getItemId(position)) ? View.VISIBLE : View.GONE);
+ 		viewHolder.contentParent.setTag(getItemId(position));
+diff --git a/library/src/com/haarman/listviewanimations/itemmanipulation/ExpandableListItemAdapter.java b/library/src/com/haarman/listviewanimations/itemmanipulation/ExpandableListItemAdapter.java
+index 1a8f81b..a1955d1 100644
+--- a/library/src/com/haarman/listviewanimations/itemmanipulation/ExpandableListItemAdapter.java
++++ b/library/src/com/haarman/listviewanimations/itemmanipulation/ExpandableListItemAdapter.java
+@@ -103,7 +103,7 @@
+ 		}
+ 
+ 		View titleView = getTitleView(position, viewHolder.titleView, viewHolder.titleParent);
+-		if (!titleView.equals(viewHolder.titleView)) {
++		if (titleView != viewHolder.titleView) {
+ 			viewHolder.titleParent.removeAllViews();
+ 			viewHolder.titleParent.addView(titleView);
+ 
+@@ -116,11 +116,11 @@
+ 		viewHolder.titleView = titleView;
+ 
+ 		View contentView = getContentView(position, viewHolder.contentView, viewHolder.contentParent);
+-		if (!contentView.equals(viewHolder.contentView)) {
++		if (contentView != viewHolder.contentView) {
+ 			viewHolder.contentParent.removeAllViews();
+ 			viewHolder.contentParent.addView(contentView);
+ 		}
+-		viewHolder.titleView = titleView;
++		viewHolder.contentParent = contentParent;
+ 
+ 		viewHolder.contentParent.setVisibility(mVisibleIds.contains(getItemId(position)) ? View.VISIBLE : View.GONE);
+ 		viewHolder.contentParent.setTag(getItemId(position));

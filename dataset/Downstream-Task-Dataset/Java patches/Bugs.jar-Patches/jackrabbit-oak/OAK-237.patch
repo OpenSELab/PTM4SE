@@ -1,0 +1,645 @@
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/core/MicroKernelImpl.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/core/MicroKernelImpl.java
+index 2445959..2cbb066 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/core/MicroKernelImpl.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/core/MicroKernelImpl.java
+@@ -18,9 +18,7 @@ package org.apache.jackrabbit.mk.core;
+ 
+ import java.io.InputStream;
+ import java.util.ArrayList;
+-import java.util.Collections;
+ import java.util.HashMap;
+-import java.util.LinkedList;
+ import java.util.List;
+ import java.util.Map;
+ 
+@@ -31,6 +29,7 @@ import org.apache.jackrabbit.mk.json.JsopTokenizer;
+ import org.apache.jackrabbit.mk.model.ChildNodeEntry;
+ import org.apache.jackrabbit.mk.model.Commit;
+ import org.apache.jackrabbit.mk.model.CommitBuilder;
++import org.apache.jackrabbit.mk.model.CommitBuilder.NodeTree;
+ import org.apache.jackrabbit.mk.model.Id;
+ import org.apache.jackrabbit.mk.model.NodeState;
+ import org.apache.jackrabbit.mk.model.PropertyState;
+@@ -40,7 +39,6 @@ import org.apache.jackrabbit.mk.store.NotFoundException;
+ import org.apache.jackrabbit.mk.store.RevisionProvider;
+ import org.apache.jackrabbit.mk.util.CommitGate;
+ import org.apache.jackrabbit.mk.util.PathUtils;
+-import org.apache.jackrabbit.mk.util.SimpleLRUCache;
+ 
+ /**
+  *
+@@ -49,11 +47,6 @@ public class MicroKernelImpl implements MicroKernel {
+ 
+     protected Repository rep;
+     private final CommitGate gate = new CommitGate();
+-    
+-    /**
+-     * Key: revision id, Value: diff string
+-     */
+-    private final Map<Id, String> diffCache = Collections.synchronizedMap(SimpleLRUCache.<Id, String>newInstance(100));
+ 
+     public MicroKernelImpl(String homeDir) throws MicroKernelException {
+         init(homeDir);
+@@ -97,7 +90,6 @@ public class MicroKernelImpl implements MicroKernel {
+             }
+             rep = null;
+         }
+-        diffCache.clear();
+     }
+ 
+     public String getHeadRevision() throws MicroKernelException {
+@@ -211,13 +203,8 @@ public class MicroKernelImpl implements MicroKernel {
+             commitBuff.object().
+                     key("id").value(commit.getId().toString()).
+                     key("ts").value(commit.getCommitTS()).
+-                    key("msg").value(commit.getMsg());
+-            String diff = diffCache.get(commit.getId());
+-            if (diff == null) {
+-                diff = diff(commit.getParentId(), commit.getId(), filter);
+-                diffCache.put(commit.getId(), diff);
+-            }
+-            commitBuff.key("changes").value(diff).endObject();
++                    key("msg").value(commit.getMsg()).
++                    key("changes").value(commit.getChanges()).endObject();
+         }
+         return commitBuff.endArray().toString();
+     }
+@@ -478,12 +465,7 @@ public class MicroKernelImpl implements MicroKernel {
+                             }
+                             String parentPath = PathUtils.getParentPath(nodePath);
+                             String nodeName = PathUtils.getName(nodePath);
+-                            // build the list of added nodes recursively
+-                            LinkedList<AddNodeOperation> list = new LinkedList<AddNodeOperation>();
+-                            addNode(list, parentPath, nodeName, t);
+-                            for (AddNodeOperation op : list) {
+-                                cb.addNode(op.path, op.name, op.props);
+-                            }
++                            cb.addNode(parentPath, nodeName, parseNode(t));
+                         } else {
+                             String value;
+                             if (t.matches(JsopTokenizer.NULL)) {
+@@ -637,30 +619,20 @@ public class MicroKernelImpl implements MicroKernel {
+         }
+     }
+     
+-    static void addNode(LinkedList<AddNodeOperation> list, String path, String name, JsopTokenizer t) throws Exception {
+-        AddNodeOperation op = new AddNodeOperation();
+-        op.path = path;
+-        op.name = name;
+-        list.add(op);
++    NodeTree parseNode(JsopTokenizer t) throws Exception {
++        NodeTree node = new NodeTree();
+         if (!t.matches('}')) {
+             do {
+                 String key = t.readString();
+                 t.read(':');
+                 if (t.matches('{')) {
+-                    addNode(list, PathUtils.concat(path, name), key, t);
++                    node.nodes.put(key, parseNode(t));
+                 } else {
+-                    op.props.put(key, t.readRawValue().trim());
++                    node.props.put(key, t.readRawValue().trim());
+                 }
+             } while (t.matches(','));
+             t.read('}');
+         }
++        return node;
+     }
+-
+-    //--------------------------------------------------------< inner classes >
+-    static class AddNodeOperation {
+-        String path;
+-        String name;
+-        Map<String, String> props = new HashMap<String, String>();
+-    }
+-
+ }
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/AbstractCommit.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/AbstractCommit.java
+index 97f2dea..4f766ee 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/AbstractCommit.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/AbstractCommit.java
+@@ -32,6 +32,9 @@ public abstract class AbstractCommit implements Commit {
+     // commit message
+     protected String msg;
+ 
++    // changes
++    protected String changes;
++
+     // id of parent commit
+     protected Id parentId;
+ 
+@@ -42,6 +45,7 @@ public abstract class AbstractCommit implements Commit {
+         this.parentId = other.getParentId();
+         this.rootNodeId = other.getRootNodeId();
+         this.msg = other.getMsg();
++        this.changes = other.getChanges();
+         this.commitTS = other.getCommitTS();
+     }
+ 
+@@ -61,10 +65,15 @@ public abstract class AbstractCommit implements Commit {
+         return msg;
+     }
+ 
++    public String getChanges() {
++        return changes;
++    }
++
+     public void serialize(Binding binding) throws Exception {
+         binding.write("rootNodeId", rootNodeId.getBytes());
+         binding.write("commitTS", commitTS);
+         binding.write("msg", msg == null ? "" : msg);
++        binding.write("changes", changes == null ? "" : changes);
+         binding.write("parentId", parentId == null ? "" : parentId.toString());
+     }
+ }
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/Commit.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/Commit.java
+index 82501a0..697693c 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/Commit.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/Commit.java
+@@ -31,5 +31,7 @@ public interface Commit {
+ 
+     public String getMsg();
+ 
++    public String getChanges();
++
+     void serialize(Binding binding) throws Exception;
+ }
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/CommitBuilder.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/CommitBuilder.java
+index 645851b..b7cfc9c 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/CommitBuilder.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/CommitBuilder.java
+@@ -50,130 +50,39 @@ public class CommitBuilder {
+         this.store = store;
+     }
+ 
+-    public void addNode(String parentNodePath, String nodeName) throws Exception {
+-        addNode(parentNodePath, nodeName, Collections.<String, String>emptyMap());
+-    }
+-
+-    public void addNode(String parentNodePath, String nodeName, Map<String, String> properties) throws Exception {
+-        MutableNode modParent = getOrCreateStagedNode(parentNodePath);
+-        if (modParent.getChildNodeEntry(nodeName) != null) {
+-            throw new Exception("there's already a child node with name '" + nodeName + "'");
+-        }
+-        String newPath = PathUtils.concat(parentNodePath, nodeName);
+-        MutableNode newChild = new MutableNode(store, newPath);
+-        newChild.getProperties().putAll(properties);
+-
+-        // id will be computed on commit
+-        modParent.add(new ChildNode(nodeName, null));
+-        staged.put(newPath, newChild);
++    public void addNode(String parentNodePath, String nodeName, NodeTree node) throws Exception {
++        Change change = new AddNode(parentNodePath, nodeName, node);
++        change.apply();
+         // update change log
+-        changeLog.add(new AddNode(parentNodePath, nodeName, properties));
++        changeLog.add(change);
+     }
+ 
+     public void removeNode(String nodePath) throws NotFoundException, Exception {
+-        String parentPath = PathUtils.getParentPath(nodePath);
+-        String nodeName = PathUtils.getName(nodePath);
+-
+-        MutableNode parent = getOrCreateStagedNode(parentPath);
+-        if (parent.remove(nodeName) == null) {
+-            throw new NotFoundException(nodePath);
+-        }
+-
+-        // update staging area
+-        removeStagedNodes(nodePath);
+-
++        Change change = new RemoveNode(nodePath);
++        change.apply();
+         // update change log
+-        changeLog.add(new RemoveNode(nodePath));
++        changeLog.add(change);
+     }
+ 
+     public void moveNode(String srcPath, String destPath) throws NotFoundException, Exception {
+-        if (PathUtils.isAncestor(srcPath, destPath)) {
+-            throw new Exception("target path cannot be descendant of source path: " + destPath);
+-        }
+-
+-        String srcParentPath = PathUtils.getParentPath(srcPath);
+-        String srcNodeName = PathUtils.getName(srcPath);
+-
+-        String destParentPath = PathUtils.getParentPath(destPath);
+-        String destNodeName = PathUtils.getName(destPath);
+-
+-        MutableNode srcParent = getOrCreateStagedNode(srcParentPath);
+-        if (srcParentPath.equals(destParentPath)) {
+-            if (srcParent.getChildNodeEntry(destNodeName) != null) {
+-                throw new Exception("node already exists at move destination path: " + destPath);
+-            }
+-            if (srcParent.rename(srcNodeName, destNodeName) == null) {
+-                throw new NotFoundException(srcPath);
+-            }
+-        } else {
+-            ChildNode srcCNE = srcParent.remove(srcNodeName);
+-            if (srcCNE == null) {
+-                throw new NotFoundException(srcPath);
+-            }
+-
+-            MutableNode destParent = getOrCreateStagedNode(destParentPath);
+-            if (destParent.getChildNodeEntry(destNodeName) != null) {
+-                throw new Exception("node already exists at move destination path: " + destPath);
+-            }
+-            destParent.add(new ChildNode(destNodeName, srcCNE.getId()));
+-        }
+-
+-        // update staging area
+-        moveStagedNodes(srcPath, destPath);
+-
++        Change change = new MoveNode(srcPath, destPath);
++        change.apply();
+         // update change log
+-        changeLog.add(new MoveNode(srcPath, destPath));
++        changeLog.add(change);
+     }
+ 
+     public void copyNode(String srcPath, String destPath) throws NotFoundException, Exception {
+-        String srcParentPath = PathUtils.getParentPath(srcPath);
+-        String srcNodeName = PathUtils.getName(srcPath);
+-
+-        String destParentPath = PathUtils.getParentPath(destPath);
+-        String destNodeName = PathUtils.getName(destPath);
+-
+-        MutableNode srcParent = getOrCreateStagedNode(srcParentPath);
+-        ChildNode srcCNE = srcParent.getChildNodeEntry(srcNodeName);
+-        if (srcCNE == null) {
+-            throw new NotFoundException(srcPath);
+-        }
+-
+-        MutableNode destParent = getOrCreateStagedNode(destParentPath);
+-        destParent.add(new ChildNode(destNodeName, srcCNE.getId()));
+-
+-        if (srcCNE.getId() == null) {
+-            // a 'new' node is being copied
+-
+-            // update staging area
+-            copyStagedNodes(srcPath, destPath);
+-        }
+-
++        Change change = new CopyNode(srcPath, destPath);
++        change.apply();
+         // update change log
+-        changeLog.add(new CopyNode(srcPath, destPath));
++        changeLog.add(change);
+     }
+ 
+     public void setProperty(String nodePath, String propName, String propValue) throws Exception {
+-        MutableNode node = getOrCreateStagedNode(nodePath);
+-
+-        Map<String, String> properties = node.getProperties();
+-        if (propValue == null) {
+-            properties.remove(propName);
+-        } else {
+-            properties.put(propName, propValue);
+-        }
+-
++        Change change = new SetProperty(nodePath, propName, propValue);
++        change.apply();
+         // update change log
+-        changeLog.add(new SetProperty(nodePath, propName, propValue));
+-    }
+-
+-    public void setProperties(String nodePath, Map<String, String> properties) throws Exception {
+-        MutableNode node = getOrCreateStagedNode(nodePath);
+-
+-        node.getProperties().clear();
+-        node.getProperties().putAll(properties);
+-
+-        // update change log
+-        changeLog.add(new SetProperties(nodePath, properties));
++        changeLog.add(change);
+     }
+ 
+     public Id /* new revId */ doCommit() throws Exception {
+@@ -190,9 +99,7 @@ public class CommitBuilder {
+             // clear staging area
+             staged.clear();
+             // replay change log on new base revision
+-            // copy log in order to avoid concurrent modifications
+-            List<Change> log = new ArrayList<Change>(changeLog);
+-            for (Change change : log) {
++            for (Change change : changeLog) {
+                 change.apply();
+             }
+         }
+@@ -222,19 +129,29 @@ public class CommitBuilder {
+             newCommit.setParentId(baseRevId);
+             newCommit.setCommitTS(System.currentTimeMillis());
+             newCommit.setMsg(msg);
++            StringBuilder diff = new StringBuilder();
++            for (Change change : changeLog) {
++                if (diff.length() > 0) {
++                    diff.append('\n');
++                }
++                diff.append(change.asDiff());
++            }
++            newCommit.setChanges(diff.toString());
+             newCommit.setRootNodeId(rootNodeId);
+             newRevId = store.putHeadCommit(newCommit);
+         } finally {
+             store.unlockHead();
+         }
+ 
+-        // reset instance in order to be reusable
++        // reset instance
+         staged.clear();
+         changeLog.clear();
+ 
+         return newRevId;
+     }
+ 
++    //--------------------------------------------------------< inner classes >
++
+     MutableNode getOrCreateStagedNode(String nodePath) throws Exception {
+         MutableNode node = staged.get(nodePath);
+         if (node == null) {
+@@ -418,23 +335,79 @@ public class CommitBuilder {
+     }
+ 
+     //--------------------------------------------------------< inner classes >
++
++    public static class NodeTree {
++        public Map<String, String> props = new HashMap<String, String>();
++        public Map<String, NodeTree> nodes = new HashMap<String, NodeTree>();
++
++        void toJson(StringBuffer buf) {
++            toJson(buf, this);
++        }
++
++        private static void toJson(StringBuffer buf, NodeTree node) {
++            buf.append('{');
++            for (String name : node.props.keySet()) {
++                if (buf.charAt(buf.length() - 1) != '{')  {
++                    buf.append(',');
++                }
++                buf.append('"').append(name).append("\":").append(node.props.get(name));
++            }
++            for (String name : node.nodes.keySet()) {
++                if (buf.charAt(buf.length() - 1) != '{')  {
++                    buf.append(',');
++                }
++                buf.append('"').append(name).append("\":");
++                toJson(buf, node.nodes.get(name));
++            }
++            buf.append('}');
++        }
++    }
++
+     abstract class Change {
+         abstract void apply() throws Exception;
++        abstract String asDiff();
+     }
+ 
+     class AddNode extends Change {
+         String parentNodePath;
+         String nodeName;
+-        Map<String, String> properties;
++        NodeTree node;
+ 
+-        AddNode(String parentNodePath, String nodeName, Map<String, String> properties) {
++        AddNode(String parentNodePath, String nodeName, NodeTree node) {
+             this.parentNodePath = parentNodePath;
+             this.nodeName = nodeName;
+-            this.properties = properties;
++            this.node = node;
+         }
+ 
++        @Override
+         void apply() throws Exception {
+-            addNode(parentNodePath, nodeName, properties);
++            recursiveAddNode(parentNodePath, nodeName, node);
++        }
++
++        @Override
++        String asDiff() {
++            StringBuffer diff = new StringBuffer("+");
++            diff.append('"').append(PathUtils.concat(parentNodePath, nodeName)).append("\":");
++            node.toJson(diff);
++            return diff.toString();
++        }
++
++        private void recursiveAddNode(String parentPath, String name, NodeTree node) throws Exception {
++            MutableNode modParent = getOrCreateStagedNode(parentPath);
++            if (modParent.getChildNodeEntry(name) != null) {
++                throw new Exception("there's already a child node with name '" + name + "'");
++            }
++            String newPath = PathUtils.concat(parentPath, name);
++            MutableNode newChild = new MutableNode(store, newPath);
++            newChild.getProperties().putAll(node.props);
++
++            // id will be computed on commit
++            modParent.add(new ChildNode(name, null));
++            staged.put(newPath, newChild);
++
++            for (String childName : node.nodes.keySet()) {
++                recursiveAddNode(PathUtils.concat(parentPath, name), childName, node.nodes.get(childName));
++            }
+         }
+     }
+ 
+@@ -445,8 +418,25 @@ public class CommitBuilder {
+             this.nodePath = nodePath;
+         }
+ 
++        @Override
+         void apply() throws Exception {
+-            removeNode(nodePath);
++            String parentPath = PathUtils.getParentPath(nodePath);
++            String nodeName = PathUtils.getName(nodePath);
++
++            MutableNode parent = getOrCreateStagedNode(parentPath);
++            if (parent.remove(nodeName) == null) {
++                throw new NotFoundException(nodePath);
++            }
++
++            // update staging area
++            removeStagedNodes(nodePath);
++        }
++
++        @Override
++        String asDiff() {
++            StringBuffer diff = new StringBuffer("-");
++            diff.append('"').append(nodePath).append('"');
++            return diff.toString();
+         }
+     }
+ 
+@@ -459,8 +449,48 @@ public class CommitBuilder {
+             this.destPath = destPath;
+         }
+ 
++        @Override
+         void apply() throws Exception {
+-            moveNode(srcPath, destPath);
++            if (PathUtils.isAncestor(srcPath, destPath)) {
++                throw new Exception("target path cannot be descendant of source path: " + destPath);
++            }
++
++            String srcParentPath = PathUtils.getParentPath(srcPath);
++            String srcNodeName = PathUtils.getName(srcPath);
++
++            String destParentPath = PathUtils.getParentPath(destPath);
++            String destNodeName = PathUtils.getName(destPath);
++
++            MutableNode srcParent = getOrCreateStagedNode(srcParentPath);
++            if (srcParentPath.equals(destParentPath)) {
++                if (srcParent.getChildNodeEntry(destNodeName) != null) {
++                    throw new Exception("node already exists at move destination path: " + destPath);
++                }
++                if (srcParent.rename(srcNodeName, destNodeName) == null) {
++                    throw new NotFoundException(srcPath);
++                }
++            } else {
++                ChildNode srcCNE = srcParent.remove(srcNodeName);
++                if (srcCNE == null) {
++                    throw new NotFoundException(srcPath);
++                }
++
++                MutableNode destParent = getOrCreateStagedNode(destParentPath);
++                if (destParent.getChildNodeEntry(destNodeName) != null) {
++                    throw new Exception("node already exists at move destination path: " + destPath);
++                }
++                destParent.add(new ChildNode(destNodeName, srcCNE.getId()));
++            }
++
++            // update staging area
++            moveStagedNodes(srcPath, destPath);
++        }
++
++        @Override
++        String asDiff() {
++            StringBuffer diff = new StringBuffer(">");
++            diff.append('"').append(srcPath).append("\":\"").append(destPath).append('"');
++            return diff.toString();
+         }
+     }
+ 
+@@ -473,8 +503,36 @@ public class CommitBuilder {
+             this.destPath = destPath;
+         }
+ 
++        @Override
+         void apply() throws Exception {
+-            copyNode(srcPath, destPath);
++            String srcParentPath = PathUtils.getParentPath(srcPath);
++            String srcNodeName = PathUtils.getName(srcPath);
++
++            String destParentPath = PathUtils.getParentPath(destPath);
++            String destNodeName = PathUtils.getName(destPath);
++
++            MutableNode srcParent = getOrCreateStagedNode(srcParentPath);
++            ChildNode srcCNE = srcParent.getChildNodeEntry(srcNodeName);
++            if (srcCNE == null) {
++                throw new NotFoundException(srcPath);
++            }
++
++            MutableNode destParent = getOrCreateStagedNode(destParentPath);
++            destParent.add(new ChildNode(destNodeName, srcCNE.getId()));
++
++            if (srcCNE.getId() == null) {
++                // a 'new' node is being copied
++
++                // update staging area
++                copyStagedNodes(srcPath, destPath);
++            }
++        }
++
++        @Override
++        String asDiff() {
++            StringBuffer diff = new StringBuffer("*");
++            diff.append('"').append(srcPath).append("\":\"").append(destPath).append('"');
++            return diff.toString();
+         }
+     }
+ 
+@@ -489,22 +547,23 @@ public class CommitBuilder {
+             this.propValue = propValue;
+         }
+ 
++        @Override
+         void apply() throws Exception {
+-            setProperty(nodePath, propName, propValue);
+-        }
+-    }
++            MutableNode node = getOrCreateStagedNode(nodePath);
+ 
+-    class SetProperties extends Change {
+-        String nodePath;
+-        Map<String, String> properties;
+-
+-        SetProperties(String nodePath, Map<String, String> properties) {
+-            this.nodePath = nodePath;
+-            this.properties = properties;
++            Map<String, String> properties = node.getProperties();
++            if (propValue == null) {
++                properties.remove(propName);
++            } else {
++                properties.put(propName, propValue);
++            }
+         }
+ 
+-        void apply() throws Exception {
+-            setProperties(nodePath, properties);
++        @Override
++        String asDiff() {
++            StringBuffer diff = new StringBuffer("^");
++            diff.append('"').append(PathUtils.concat(nodePath, propName)).append("\":").append(propValue);
++            return diff.toString();
+         }
+     }
+ }
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/MutableCommit.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/MutableCommit.java
+index 0992938..4a3312c 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/MutableCommit.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/MutableCommit.java
+@@ -39,6 +39,7 @@ public class MutableCommit extends AbstractCommit {
+         setRootNodeId(other.getRootNodeId());
+         setCommitTS(other.getCommitTS());
+         setMsg(other.getMsg());
++        setChanges(other.getChanges());
+         this.id = other.getId();
+     }
+ 
+@@ -57,7 +58,11 @@ public class MutableCommit extends AbstractCommit {
+     public void setMsg(String msg) {
+         this.msg = msg;
+     }
+-    
++
++    public void setChanges(String changes) {
++        this.changes = changes;
++    }
++
+     /**
+      * Return the commit id.
+      * 
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/StoredCommit.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/StoredCommit.java
+index 0cb15b7..95206c4 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/StoredCommit.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/StoredCommit.java
+@@ -29,17 +29,19 @@ public class StoredCommit extends AbstractCommit {
+         Id rootNodeId = new Id(binding.readBytesValue("rootNodeId"));
+         long commitTS = binding.readLongValue("commitTS");
+         String msg = binding.readStringValue("msg");
++        String changes = binding.readStringValue("changes");
+         String parentId = binding.readStringValue("parentId");
+         return new StoredCommit(id, "".equals(parentId) ? null : Id.fromString(parentId),
+-                commitTS, rootNodeId, "".equals(msg) ? null : msg);
++                commitTS, rootNodeId, "".equals(msg) ? null : msg, changes);
+     }
+ 
+-    public StoredCommit(Id id, Id parentId, long commitTS, Id rootNodeId, String msg) {
++    public StoredCommit(Id id, Id parentId, long commitTS, Id rootNodeId, String msg, String changes) {
+         this.id = id;
+         this.parentId = parentId;
+         this.commitTS = commitTS;
+         this.rootNodeId = rootNodeId;
+         this.msg = msg;
++        this.changes = changes;
+     }
+ 
+     public StoredCommit(Id id, Commit commit) {

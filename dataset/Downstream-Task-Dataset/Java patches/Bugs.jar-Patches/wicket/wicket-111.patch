@@ -1,0 +1,93 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/protocol/http/mock/MockServletContext.java b/wicket-core/src/main/java/org/apache/wicket/protocol/http/mock/MockServletContext.java
+index 42a8996..392e921 100755
+--- a/wicket-core/src/main/java/org/apache/wicket/protocol/http/mock/MockServletContext.java
++++ b/wicket-core/src/main/java/org/apache/wicket/protocol/http/mock/MockServletContext.java
+@@ -107,7 +107,7 @@ public class MockServletContext implements ServletContext
+ 		mimeTypes.put("htm", "text/html");
+ 		mimeTypes.put("css", "text/css");
+ 		mimeTypes.put("xml", "text/xml");
+-		mimeTypes.put("js", "text/plain");
++		mimeTypes.put("js", "text/javascript");
+ 		mimeTypes.put("gif", "image/gif");
+ 		mimeTypes.put("jpg", "image/jpeg");
+ 		mimeTypes.put("png", "image/png");
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/resource/ByteArrayResource.java b/wicket-core/src/main/java/org/apache/wicket/request/resource/ByteArrayResource.java
+index d156c11..d11cab8 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/resource/ByteArrayResource.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/resource/ByteArrayResource.java
+@@ -16,6 +16,8 @@
+  */
+ package org.apache.wicket.request.resource;
+ 
++import java.net.URLConnection;
++
+ import org.apache.wicket.WicketRuntimeException;
+ import org.apache.wicket.util.time.Time;
+ 
+@@ -95,6 +97,22 @@ public class ByteArrayResource extends AbstractResource
+ 	{
+ 		final ResourceResponse response = new ResourceResponse();
+ 
++		String contentType = this.contentType;
++
++		if (contentType == null)
++		{
++			if (filename != null)
++			{
++				contentType = URLConnection.getFileNameMap().getContentTypeFor(filename);
++			}
++
++			if (contentType == null)
++			{
++				contentType = "application/octet-stream";
++			}
++		}
++
++
+ 		response.setContentType(contentType);
+ 		response.setLastModified(lastModified);
+ 
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/resource/PackageResource.java b/wicket-core/src/main/java/org/apache/wicket/request/resource/PackageResource.java
+index 449c344..a4ce0fe 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/resource/PackageResource.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/resource/PackageResource.java
+@@ -252,11 +252,15 @@ public class PackageResource extends AbstractResource implements IStaticCacheabl
+ 				return sendResourceError(resourceResponse, HttpServletResponse.SC_NOT_FOUND,
+ 					"Unable to find resource");
+ 
+-			String contentType = resourceStream.getContentType();
+-			if (contentType == null && Application.exists())
++			final String contentType;
++			if (Application.exists())
+ 			{
+ 				contentType = Application.get().getMimeType(path);
+ 			}
++			else
++			{
++				contentType = resourceStream.getContentType();
++			}
+ 			// set Content-Type (may be null)
+ 			resourceResponse.setContentType(contentType);
+ 
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/resource/ResourceStreamResource.java b/wicket-core/src/main/java/org/apache/wicket/request/resource/ResourceStreamResource.java
+index e9d25f0..e83257a 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/resource/ResourceStreamResource.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/resource/ResourceStreamResource.java
+@@ -123,11 +123,15 @@ public class ResourceStreamResource extends AbstractResource
+ 			}
+ 			data.setFileName(fileName);
+ 
+-			String contentType = stream.getContentType();
+-			if (contentType == null && fileName != null && Application.exists())
++			final String contentType;
++			if (fileName != null && Application.exists())
+ 			{
+ 				contentType = Application.get().getMimeType(fileName);
+ 			}
++			else
++			{
++				contentType = stream.getContentType();
++			}
+ 			data.setContentType(contentType);
+ 			data.setTextEncoding(textEncoding);
+ 

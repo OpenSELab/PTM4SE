@@ -1,0 +1,50 @@
+diff --git a/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGML.java b/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGML.java
+index 9902d80..fe45926 100644
+--- a/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGML.java
++++ b/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGML.java
+@@ -291,7 +291,7 @@
+             } else if ("directed".equalsIgnoreCase(key)) {
+                 if (value instanceof Double) {
+                     EdgeDirection type = ((Double) value) == 1 ? EdgeDirection.DIRECTED : EdgeDirection.UNDIRECTED;
+-                    edge.setType(type);
++                    edge.setDirection(type);
+                 } else {
+                     report.logIssue(new Issue(NbBundle.getMessage(ImporterGML.class, "importerGML_error_directedparse", edge.toString()), Issue.Level.WARNING));
+                 }
+diff --git a/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGraphML.java b/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGraphML.java
+index 17bdde1..234830e 100644
+--- a/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGraphML.java
++++ b/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGraphML.java
+@@ -406,15 +406,15 @@
+         //Type
+         if (!directed.isEmpty()) {
+             if (directed.equalsIgnoreCase("true")) {
+-                edge.setType(EdgeDirection.DIRECTED);
++                edge.setDirection(EdgeDirection.DIRECTED);
+             } else if (directed.equalsIgnoreCase("false")) {
+-                edge.setType(EdgeDirection.UNDIRECTED);
++                edge.setDirection(EdgeDirection.UNDIRECTED);
+             } else {
+                 report.logIssue(new Issue(NbBundle.getMessage(ImporterGraphML.class, "importerGraphML_error_edgetype", directed, edge), Issue.Level.SEVERE));
+-                edge.setType(edgeDefault);
++                edge.setDirection(edgeDefault);
+             }
+         } else {
+-            edge.setType(edgeDefault);
++            edge.setDirection(edgeDefault);
+         }
+ 
+         boolean end = false;
+diff --git a/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGML.java b/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGML.java
+index 9902d80..fe45926 100644
+--- a/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGML.java
++++ b/modules/ImportPlugin/src/main/java/org/gephi/io/importer/plugin/file/ImporterGML.java
+@@ -291,7 +291,7 @@
+             } else if ("directed".equalsIgnoreCase(key)) {
+                 if (value instanceof Double) {
+                     EdgeDirection type = ((Double) value) == 1 ? EdgeDirection.DIRECTED : EdgeDirection.UNDIRECTED;
+-                    edge.setType(type);
++                    edge.setDirection(type);
+                 } else {
+                     report.logIssue(new Issue(NbBundle.getMessage(ImporterGML.class, "importerGML_error_directedparse", edge.toString()), Issue.Level.WARNING));
+                 }

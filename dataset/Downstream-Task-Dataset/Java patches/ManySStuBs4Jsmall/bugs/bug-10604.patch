@@ -1,0 +1,38 @@
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SELUDerivative.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SELUDerivative.java
+index fdee40a..4f091c1 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SELUDerivative.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SELUDerivative.java
+@@ -88,12 +88,12 @@
+ 
+     @Override
+     public double op(double d1) {
+-        return d1 > 0.0f ? SELU_LAMBDA : SELU_LAMBDA * FastMath.exp(d1);
++        return d1 > 0.0f ? SELU_LAMBDA :  SELU_ALPHA * SELU_LAMBDA * FastMath.exp(d1);
+     }
+ 
+     @Override
+     public float op(float d1) {
+-        return d1 > 0.0f ? (float) SELU_LAMBDA : (float) SELU_LAMBDA * (float) FastMath.exp(d1);
++        return d1 > 0.0f ? (float) SELU_LAMBDA : (float) SELU_ALPHA *  (float) SELU_LAMBDA * (float) FastMath.exp(d1);
+     }
+ 
+     @Override
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SELUDerivative.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SELUDerivative.java
+index fdee40a..4f091c1 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SELUDerivative.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SELUDerivative.java
+@@ -88,12 +88,12 @@
+ 
+     @Override
+     public double op(double d1) {
+-        return d1 > 0.0f ? SELU_LAMBDA : SELU_LAMBDA * FastMath.exp(d1);
++        return d1 > 0.0f ? SELU_LAMBDA :  SELU_ALPHA * SELU_LAMBDA * FastMath.exp(d1);
+     }
+ 
+     @Override
+     public float op(float d1) {
+-        return d1 > 0.0f ? (float) SELU_LAMBDA : (float) SELU_LAMBDA * (float) FastMath.exp(d1);
++        return d1 > 0.0f ? (float) SELU_LAMBDA : (float) SELU_ALPHA *  (float) SELU_LAMBDA * (float) FastMath.exp(d1);
+     }
+ 
+     @Override

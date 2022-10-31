@@ -1,0 +1,47 @@
+diff --git a/src/edu/stanford/nlp/pipeline/SentenceAnnotator.java b/src/edu/stanford/nlp/pipeline/SentenceAnnotator.java
+index 5599ea4..46db206 100644
+--- a/src/edu/stanford/nlp/pipeline/SentenceAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/SentenceAnnotator.java
+@@ -59,7 +59,7 @@
+             } catch (RejectedExecutionException e) {
+               // If we time out, for now, we just throw away all jobs which were running at the time.
+               // Note that in order for this to be useful, the underlying job needs to handle Thread.interrupted()
+-              List<CoreMap> failedSentences = wrapper.shutdownNow();
++              List<CoreMap> failedSentences = wrapper.joinWithTimeout();
+               for (CoreMap failed : failedSentences) {
+                 doOneFailedSentence(annotation, failed);
+               }
+diff --git a/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java b/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
+index 20d8037..3b4924e 100644
+--- a/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
++++ b/src/edu/stanford/nlp/util/concurrent/InterruptibleMulticoreWrapper.java
+@@ -89,15 +89,8 @@
+    * interrupted.  The job the thread is running needs to occasionally
+    * check Thread.interrupted() and throw an exception or otherwise
+    * clean up.
+-   * <br>
+-   * Note that because we only put jobs on a processor when one is
+-   * available, there actually shouldn't be any jobs in the threadpool
+-   * which had never started.  Therefore, even though shutdownNow
+-   * theoretically returns a list of jobs which have never been
+-   * started, that list should always be empty, so this method doesn't
+-   * return anything.
+    */
+-  public List<I> shutdownNow() {
++  private List<I> shutdownNow() {
+     List<I> orphans = new ArrayList<I>();
+     List<Runnable> runnables = threadPool.shutdownNow();
+     for (Runnable runnable : runnables) {
+diff --git a/src/edu/stanford/nlp/pipeline/SentenceAnnotator.java b/src/edu/stanford/nlp/pipeline/SentenceAnnotator.java
+index 5599ea4..46db206 100644
+--- a/src/edu/stanford/nlp/pipeline/SentenceAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/SentenceAnnotator.java
+@@ -59,7 +59,7 @@
+             } catch (RejectedExecutionException e) {
+               // If we time out, for now, we just throw away all jobs which were running at the time.
+               // Note that in order for this to be useful, the underlying job needs to handle Thread.interrupted()
+-              List<CoreMap> failedSentences = wrapper.shutdownNow();
++              List<CoreMap> failedSentences = wrapper.joinWithTimeout();
+               for (CoreMap failed : failedSentences) {
+                 doOneFailedSentence(annotation, failed);
+               }

@@ -1,0 +1,548 @@
+diff --git a/android/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java b/android/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
+index 2ba48ba..db4d675 100755
+--- a/android/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
++++ b/android/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
+@@ -96,14 +96,14 @@
+   }
+ 
+   @Override
+-  public N oppositeNode(Object edge) {
++  public N adjacentNode(E edge) {
+     // Since the reference node is defined to be 'source' for directed graphs,
+     // we can assume this edge lives in the set of outgoing edges.
+     return checkNotNull(outEdgeMap.get(edge));
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     if (isSelfLoop) {
+       checkNonNegative(--selfLoopCount);
+     }
+@@ -112,7 +112,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N previousNode = outEdgeMap.remove(edge);
+     return checkNotNull(previousNode);
+   }
+diff --git a/android/guava/src/com/google/common/graph/AbstractUndirectedNetworkConnections.java b/android/guava/src/com/google/common/graph/AbstractUndirectedNetworkConnections.java
+index e06c6b4..03279d0 100755
+--- a/android/guava/src/com/google/common/graph/AbstractUndirectedNetworkConnections.java
++++ b/android/guava/src/com/google/common/graph/AbstractUndirectedNetworkConnections.java
+@@ -64,12 +64,12 @@
+   }
+ 
+   @Override
+-  public N oppositeNode(Object edge) {
++  public N adjacentNode(E edge) {
+     return checkNotNull(incidentEdgeMap.get(edge));
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     if (!isSelfLoop) {
+       return removeOutEdge(edge);
+     }
+@@ -77,7 +77,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N previousNode = incidentEdgeMap.remove(edge);
+     return checkNotNull(previousNode);
+   }
+diff --git a/android/guava/src/com/google/common/graph/ConfigurableMutableNetwork.java b/android/guava/src/com/google/common/graph/ConfigurableMutableNetwork.java
+index 11c2dfa..d4e012f 100755
+--- a/android/guava/src/com/google/common/graph/ConfigurableMutableNetwork.java
++++ b/android/guava/src/com/google/common/graph/ConfigurableMutableNetwork.java
+@@ -146,7 +146,7 @@
+     }
+ 
+     NetworkConnections<N, E> connectionsU = nodeConnections.get(nodeU);
+-    N nodeV = connectionsU.oppositeNode(edge);
++    N nodeV = connectionsU.adjacentNode(edge);
+     NetworkConnections<N, E> connectionsV = nodeConnections.get(nodeV);
+     connectionsU.removeOutEdge(edge);
+     connectionsV.removeInEdge(edge, allowsSelfLoops() && nodeU.equals(nodeV));
+diff --git a/android/guava/src/com/google/common/graph/ConfigurableNetwork.java b/android/guava/src/com/google/common/graph/ConfigurableNetwork.java
+index a87dc08..cdfa8d6 100755
+--- a/android/guava/src/com/google/common/graph/ConfigurableNetwork.java
++++ b/android/guava/src/com/google/common/graph/ConfigurableNetwork.java
+@@ -135,7 +135,7 @@
+   @Override
+   public EndpointPair<N> incidentNodes(E edge) {
+     N nodeU = checkedReferenceNode(edge);
+-    N nodeV = nodeConnections.get(nodeU).oppositeNode(edge);
++    N nodeV = nodeConnections.get(nodeU).adjacentNode(edge);
+     return EndpointPair.of(this, nodeU, nodeV);
+   }
+ 
+diff --git a/android/guava/src/com/google/common/graph/DirectedGraphConnections.java b/android/guava/src/com/google/common/graph/DirectedGraphConnections.java
+index 809046b..668b569 100755
+--- a/android/guava/src/com/google/common/graph/DirectedGraphConnections.java
++++ b/android/guava/src/com/google/common/graph/DirectedGraphConnections.java
+@@ -166,7 +166,7 @@
+ 
+   @SuppressWarnings("unchecked")
+   @Override
+-  public V value(Object node) {
++  public V value(N node) {
+     Object value = adjacentNodeValues.get(node);
+     if (value == PRED) {
+       return null;
+@@ -179,7 +179,7 @@
+ 
+   @SuppressWarnings("unchecked")
+   @Override
+-  public void removePredecessor(Object node) {
++  public void removePredecessor(N node) {
+     Object previousValue = adjacentNodeValues.get(node);
+     if (previousValue == PRED) {
+       adjacentNodeValues.remove(node);
+diff --git a/android/guava/src/com/google/common/graph/DirectedMultiNetworkConnections.java b/android/guava/src/com/google/common/graph/DirectedMultiNetworkConnections.java
+index e204a71..d882f30 100755
+--- a/android/guava/src/com/google/common/graph/DirectedMultiNetworkConnections.java
++++ b/android/guava/src/com/google/common/graph/DirectedMultiNetworkConnections.java
+@@ -104,7 +104,7 @@
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     N node = super.removeInEdge(edge, isSelfLoop);
+     Multiset<N> predecessors = getReference(predecessorsReference);
+     if (predecessors != null) {
+@@ -114,7 +114,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N node = super.removeOutEdge(edge);
+     Multiset<N> successors = getReference(successorsReference);
+     if (successors != null) {
+diff --git a/android/guava/src/com/google/common/graph/GraphConnections.java b/android/guava/src/com/google/common/graph/GraphConnections.java
+index 0988f71..252a027 100755
+--- a/android/guava/src/com/google/common/graph/GraphConnections.java
++++ b/android/guava/src/com/google/common/graph/GraphConnections.java
+@@ -41,17 +41,17 @@
+    * if there is no such edge.
+    */
+   @Nullable
+-  V value(Object node);
++  V value(N node);
+ 
+   /** Remove {@code node} from the set of predecessors. */
+-  void removePredecessor(Object node);
++  void removePredecessor(N node);
+ 
+   /**
+    * Remove {@code node} from the set of successors. Returns the value previously associated with
+    * the edge connecting the two nodes.
+    */
+   @CanIgnoreReturnValue
+-  V removeSuccessor(Object node);
++  V removeSuccessor(N node);
+ 
+   /**
+    * Add {@code node} as a predecessor to the origin node. In the case of an undirected graph, it
+diff --git a/android/guava/src/com/google/common/graph/MutableGraph.java b/android/guava/src/com/google/common/graph/MutableGraph.java
+index d7e43f7..a671784 100755
+--- a/android/guava/src/com/google/common/graph/MutableGraph.java
++++ b/android/guava/src/com/google/common/graph/MutableGraph.java
+@@ -46,7 +46,7 @@
+    * undirected graph, the edge will also connect {@code nodeV} to {@code nodeU}.
+    *
+    * <p>Behavior if {@code nodeU} and {@code nodeV} are not already present in this graph is
+-   * implementation-dependent. Suggested behaviors include (a) silently {@link #addNode(Object)
++   * implementation-dependent. Suggested behaviors include (a) silently {@link #addNode(N)
+    * adding} {@code nodeU} and {@code nodeV} to the graph (this is the behavior of the default
+    * implementations) or (b) throwing {@code IllegalArgumentException}.
+    *
+diff --git a/android/guava/src/com/google/common/graph/NetworkConnections.java b/android/guava/src/com/google/common/graph/NetworkConnections.java
+index a9ea9f2..16a68d6 100755
+--- a/android/guava/src/com/google/common/graph/NetworkConnections.java
++++ b/android/guava/src/com/google/common/graph/NetworkConnections.java
+@@ -48,11 +48,11 @@
+   Set<E> edgesConnecting(N node);
+ 
+   /**
+-   * Returns the node that is opposite the origin node along {@code edge}.
++   * Returns the node that is adjacent to the origin node along {@code edge}.
+    *
+    * <p>In the directed case, {@code edge} is assumed to be an outgoing edge.
+    */
+-  N oppositeNode(Object edge);
++  N adjacentNode(E edge);
+ 
+   /**
+    * Remove {@code edge} from the set of incoming edges. Returns the former predecessor node.
+@@ -60,11 +60,11 @@
+    * <p>In the undirected case, returns {@code null} if {@code isSelfLoop} is true.
+    */
+   @CanIgnoreReturnValue
+-  N removeInEdge(Object edge, boolean isSelfLoop);
++  N removeInEdge(E edge, boolean isSelfLoop);
+ 
+   /** Remove {@code edge} from the set of outgoing edges. Returns the former successor node. */
+   @CanIgnoreReturnValue
+-  N removeOutEdge(Object edge);
++  N removeOutEdge(E edge);
+ 
+   /**
+    * Add {@code edge} to the set of incoming edges. Implicitly adds {@code node} as a predecessor.
+diff --git a/android/guava/src/com/google/common/graph/UndirectedGraphConnections.java b/android/guava/src/com/google/common/graph/UndirectedGraphConnections.java
+index 9c5187e..bb5ed13 100755
+--- a/android/guava/src/com/google/common/graph/UndirectedGraphConnections.java
++++ b/android/guava/src/com/google/common/graph/UndirectedGraphConnections.java
+@@ -65,18 +65,18 @@
+   }
+ 
+   @Override
+-  public V value(Object node) {
++  public V value(N node) {
+     return adjacentNodeValues.get(node);
+   }
+ 
+   @Override
+-  public void removePredecessor(Object node) {
++  public void removePredecessor(N node) {
+     @SuppressWarnings("unused")
+     V unused = removeSuccessor(node);
+   }
+ 
+   @Override
+-  public V removeSuccessor(Object node) {
++  public V removeSuccessor(N node) {
+     return adjacentNodeValues.remove(node);
+   }
+ 
+diff --git a/android/guava/src/com/google/common/graph/UndirectedMultiNetworkConnections.java b/android/guava/src/com/google/common/graph/UndirectedMultiNetworkConnections.java
+index 5be379e..431e724 100755
+--- a/android/guava/src/com/google/common/graph/UndirectedMultiNetworkConnections.java
++++ b/android/guava/src/com/google/common/graph/UndirectedMultiNetworkConnections.java
+@@ -83,7 +83,7 @@
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     if (!isSelfLoop) {
+       return removeOutEdge(edge);
+     }
+@@ -91,7 +91,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N node = super.removeOutEdge(edge);
+     Multiset<N> adjacentNodes = getReference(adjacentNodesReference);
+     if (adjacentNodes != null) {
+diff --git a/android/guava/src/com/google/common/graph/ValueGraph.java b/android/guava/src/com/google/common/graph/ValueGraph.java
+index 9f40d5a..6589b57 100755
+--- a/android/guava/src/com/google/common/graph/ValueGraph.java
++++ b/android/guava/src/com/google/common/graph/ValueGraph.java
+@@ -203,7 +203,7 @@
+    * <li>A and B have equal {@link #isDirected() directedness}.
+    * <li>A and B have equal {@link #nodes() node sets}.
+    * <li>A and B have equal {@link #edges() edge sets}.
+-   * <li>Every edge in A and B are associated with equal {@link #edgeValue(Object, Object) values}.
++   * <li>The {@link #edgeValue(Object, Object) value} of a given edge is the same in both A and B.
+    * </ul>
+    *
+    * <p>Graph properties besides {@link #isDirected() directedness} do <b>not</b> affect equality.
+diff --git a/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java b/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
+index 2ba48ba..db4d675 100644
+--- a/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
++++ b/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
+@@ -96,14 +96,14 @@
+   }
+ 
+   @Override
+-  public N oppositeNode(Object edge) {
++  public N adjacentNode(E edge) {
+     // Since the reference node is defined to be 'source' for directed graphs,
+     // we can assume this edge lives in the set of outgoing edges.
+     return checkNotNull(outEdgeMap.get(edge));
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     if (isSelfLoop) {
+       checkNonNegative(--selfLoopCount);
+     }
+@@ -112,7 +112,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N previousNode = outEdgeMap.remove(edge);
+     return checkNotNull(previousNode);
+   }
+diff --git a/guava/src/com/google/common/graph/AbstractUndirectedNetworkConnections.java b/guava/src/com/google/common/graph/AbstractUndirectedNetworkConnections.java
+index e06c6b4..03279d0 100644
+--- a/guava/src/com/google/common/graph/AbstractUndirectedNetworkConnections.java
++++ b/guava/src/com/google/common/graph/AbstractUndirectedNetworkConnections.java
+@@ -64,12 +64,12 @@
+   }
+ 
+   @Override
+-  public N oppositeNode(Object edge) {
++  public N adjacentNode(E edge) {
+     return checkNotNull(incidentEdgeMap.get(edge));
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     if (!isSelfLoop) {
+       return removeOutEdge(edge);
+     }
+@@ -77,7 +77,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N previousNode = incidentEdgeMap.remove(edge);
+     return checkNotNull(previousNode);
+   }
+diff --git a/guava/src/com/google/common/graph/ConfigurableMutableNetwork.java b/guava/src/com/google/common/graph/ConfigurableMutableNetwork.java
+index 11c2dfa..d4e012f 100644
+--- a/guava/src/com/google/common/graph/ConfigurableMutableNetwork.java
++++ b/guava/src/com/google/common/graph/ConfigurableMutableNetwork.java
+@@ -146,7 +146,7 @@
+     }
+ 
+     NetworkConnections<N, E> connectionsU = nodeConnections.get(nodeU);
+-    N nodeV = connectionsU.oppositeNode(edge);
++    N nodeV = connectionsU.adjacentNode(edge);
+     NetworkConnections<N, E> connectionsV = nodeConnections.get(nodeV);
+     connectionsU.removeOutEdge(edge);
+     connectionsV.removeInEdge(edge, allowsSelfLoops() && nodeU.equals(nodeV));
+diff --git a/guava/src/com/google/common/graph/ConfigurableNetwork.java b/guava/src/com/google/common/graph/ConfigurableNetwork.java
+index a87dc08..cdfa8d6 100644
+--- a/guava/src/com/google/common/graph/ConfigurableNetwork.java
++++ b/guava/src/com/google/common/graph/ConfigurableNetwork.java
+@@ -135,7 +135,7 @@
+   @Override
+   public EndpointPair<N> incidentNodes(E edge) {
+     N nodeU = checkedReferenceNode(edge);
+-    N nodeV = nodeConnections.get(nodeU).oppositeNode(edge);
++    N nodeV = nodeConnections.get(nodeU).adjacentNode(edge);
+     return EndpointPair.of(this, nodeU, nodeV);
+   }
+ 
+diff --git a/guava/src/com/google/common/graph/DirectedGraphConnections.java b/guava/src/com/google/common/graph/DirectedGraphConnections.java
+index 809046b..668b569 100644
+--- a/guava/src/com/google/common/graph/DirectedGraphConnections.java
++++ b/guava/src/com/google/common/graph/DirectedGraphConnections.java
+@@ -166,7 +166,7 @@
+ 
+   @SuppressWarnings("unchecked")
+   @Override
+-  public V value(Object node) {
++  public V value(N node) {
+     Object value = adjacentNodeValues.get(node);
+     if (value == PRED) {
+       return null;
+@@ -179,7 +179,7 @@
+ 
+   @SuppressWarnings("unchecked")
+   @Override
+-  public void removePredecessor(Object node) {
++  public void removePredecessor(N node) {
+     Object previousValue = adjacentNodeValues.get(node);
+     if (previousValue == PRED) {
+       adjacentNodeValues.remove(node);
+diff --git a/guava/src/com/google/common/graph/DirectedMultiNetworkConnections.java b/guava/src/com/google/common/graph/DirectedMultiNetworkConnections.java
+index e204a71..d882f30 100644
+--- a/guava/src/com/google/common/graph/DirectedMultiNetworkConnections.java
++++ b/guava/src/com/google/common/graph/DirectedMultiNetworkConnections.java
+@@ -104,7 +104,7 @@
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     N node = super.removeInEdge(edge, isSelfLoop);
+     Multiset<N> predecessors = getReference(predecessorsReference);
+     if (predecessors != null) {
+@@ -114,7 +114,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N node = super.removeOutEdge(edge);
+     Multiset<N> successors = getReference(successorsReference);
+     if (successors != null) {
+diff --git a/guava/src/com/google/common/graph/GraphConnections.java b/guava/src/com/google/common/graph/GraphConnections.java
+index 0988f71..252a027 100644
+--- a/guava/src/com/google/common/graph/GraphConnections.java
++++ b/guava/src/com/google/common/graph/GraphConnections.java
+@@ -41,17 +41,17 @@
+    * if there is no such edge.
+    */
+   @Nullable
+-  V value(Object node);
++  V value(N node);
+ 
+   /** Remove {@code node} from the set of predecessors. */
+-  void removePredecessor(Object node);
++  void removePredecessor(N node);
+ 
+   /**
+    * Remove {@code node} from the set of successors. Returns the value previously associated with
+    * the edge connecting the two nodes.
+    */
+   @CanIgnoreReturnValue
+-  V removeSuccessor(Object node);
++  V removeSuccessor(N node);
+ 
+   /**
+    * Add {@code node} as a predecessor to the origin node. In the case of an undirected graph, it
+diff --git a/guava/src/com/google/common/graph/MutableGraph.java b/guava/src/com/google/common/graph/MutableGraph.java
+index d7e43f7..a671784 100644
+--- a/guava/src/com/google/common/graph/MutableGraph.java
++++ b/guava/src/com/google/common/graph/MutableGraph.java
+@@ -46,7 +46,7 @@
+    * undirected graph, the edge will also connect {@code nodeV} to {@code nodeU}.
+    *
+    * <p>Behavior if {@code nodeU} and {@code nodeV} are not already present in this graph is
+-   * implementation-dependent. Suggested behaviors include (a) silently {@link #addNode(Object)
++   * implementation-dependent. Suggested behaviors include (a) silently {@link #addNode(N)
+    * adding} {@code nodeU} and {@code nodeV} to the graph (this is the behavior of the default
+    * implementations) or (b) throwing {@code IllegalArgumentException}.
+    *
+diff --git a/guava/src/com/google/common/graph/NetworkConnections.java b/guava/src/com/google/common/graph/NetworkConnections.java
+index a9ea9f2..16a68d6 100644
+--- a/guava/src/com/google/common/graph/NetworkConnections.java
++++ b/guava/src/com/google/common/graph/NetworkConnections.java
+@@ -48,11 +48,11 @@
+   Set<E> edgesConnecting(N node);
+ 
+   /**
+-   * Returns the node that is opposite the origin node along {@code edge}.
++   * Returns the node that is adjacent to the origin node along {@code edge}.
+    *
+    * <p>In the directed case, {@code edge} is assumed to be an outgoing edge.
+    */
+-  N oppositeNode(Object edge);
++  N adjacentNode(E edge);
+ 
+   /**
+    * Remove {@code edge} from the set of incoming edges. Returns the former predecessor node.
+@@ -60,11 +60,11 @@
+    * <p>In the undirected case, returns {@code null} if {@code isSelfLoop} is true.
+    */
+   @CanIgnoreReturnValue
+-  N removeInEdge(Object edge, boolean isSelfLoop);
++  N removeInEdge(E edge, boolean isSelfLoop);
+ 
+   /** Remove {@code edge} from the set of outgoing edges. Returns the former successor node. */
+   @CanIgnoreReturnValue
+-  N removeOutEdge(Object edge);
++  N removeOutEdge(E edge);
+ 
+   /**
+    * Add {@code edge} to the set of incoming edges. Implicitly adds {@code node} as a predecessor.
+diff --git a/guava/src/com/google/common/graph/UndirectedGraphConnections.java b/guava/src/com/google/common/graph/UndirectedGraphConnections.java
+index 9c5187e..bb5ed13 100644
+--- a/guava/src/com/google/common/graph/UndirectedGraphConnections.java
++++ b/guava/src/com/google/common/graph/UndirectedGraphConnections.java
+@@ -65,18 +65,18 @@
+   }
+ 
+   @Override
+-  public V value(Object node) {
++  public V value(N node) {
+     return adjacentNodeValues.get(node);
+   }
+ 
+   @Override
+-  public void removePredecessor(Object node) {
++  public void removePredecessor(N node) {
+     @SuppressWarnings("unused")
+     V unused = removeSuccessor(node);
+   }
+ 
+   @Override
+-  public V removeSuccessor(Object node) {
++  public V removeSuccessor(N node) {
+     return adjacentNodeValues.remove(node);
+   }
+ 
+diff --git a/guava/src/com/google/common/graph/UndirectedMultiNetworkConnections.java b/guava/src/com/google/common/graph/UndirectedMultiNetworkConnections.java
+index 5be379e..431e724 100644
+--- a/guava/src/com/google/common/graph/UndirectedMultiNetworkConnections.java
++++ b/guava/src/com/google/common/graph/UndirectedMultiNetworkConnections.java
+@@ -83,7 +83,7 @@
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     if (!isSelfLoop) {
+       return removeOutEdge(edge);
+     }
+@@ -91,7 +91,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N node = super.removeOutEdge(edge);
+     Multiset<N> adjacentNodes = getReference(adjacentNodesReference);
+     if (adjacentNodes != null) {
+diff --git a/guava/src/com/google/common/graph/ValueGraph.java b/guava/src/com/google/common/graph/ValueGraph.java
+index 9f40d5a..6589b57 100644
+--- a/guava/src/com/google/common/graph/ValueGraph.java
++++ b/guava/src/com/google/common/graph/ValueGraph.java
+@@ -203,7 +203,7 @@
+    * <li>A and B have equal {@link #isDirected() directedness}.
+    * <li>A and B have equal {@link #nodes() node sets}.
+    * <li>A and B have equal {@link #edges() edge sets}.
+-   * <li>Every edge in A and B are associated with equal {@link #edgeValue(Object, Object) values}.
++   * <li>The {@link #edgeValue(Object, Object) value} of a given edge is the same in both A and B.
+    * </ul>
+    *
+    * <p>Graph properties besides {@link #isDirected() directedness} do <b>not</b> affect equality.
+diff --git a/android/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java b/android/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
+index 2ba48ba..db4d675 100755
+--- a/android/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
++++ b/android/guava/src/com/google/common/graph/AbstractDirectedNetworkConnections.java
+@@ -96,14 +96,14 @@
+   }
+ 
+   @Override
+-  public N oppositeNode(Object edge) {
++  public N adjacentNode(E edge) {
+     // Since the reference node is defined to be 'source' for directed graphs,
+     // we can assume this edge lives in the set of outgoing edges.
+     return checkNotNull(outEdgeMap.get(edge));
+   }
+ 
+   @Override
+-  public N removeInEdge(Object edge, boolean isSelfLoop) {
++  public N removeInEdge(E edge, boolean isSelfLoop) {
+     if (isSelfLoop) {
+       checkNonNegative(--selfLoopCount);
+     }
+@@ -112,7 +112,7 @@
+   }
+ 
+   @Override
+-  public N removeOutEdge(Object edge) {
++  public N removeOutEdge(E edge) {
+     N previousNode = outEdgeMap.remove(edge);
+     return checkNotNull(previousNode);
+   }

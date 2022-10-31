@@ -1,0 +1,13 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntSet.java b/gdx/src/com/badlogic/gdx/utils/IntSet.java
+index 2dde38c..b0f3b2b 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntSet.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntSet.java
+@@ -80,7 +80,7 @@
+ 
+ 	/** Creates a new set identical to the specified set. */
+ 	public IntSet (IntSet set) {
+-		this(set.capacity, set.loadFactor);
++		this((int)Math.floor(set.capacity * set.loadFactor), set.loadFactor);
+ 		stashSize = set.stashSize;
+ 		System.arraycopy(set.keyTable, 0, keyTable, 0, set.keyTable.length);
+ 		size = set.size;

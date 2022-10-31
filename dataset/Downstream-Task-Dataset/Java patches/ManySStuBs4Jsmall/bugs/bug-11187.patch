@@ -1,0 +1,78 @@
+diff --git a/dropwizard-client/src/main/java/io/dropwizard/client/DropwizardSSLConnectionSocketFactory.java b/dropwizard-client/src/main/java/io/dropwizard/client/DropwizardSSLConnectionSocketFactory.java
+index 431cf0d..f87210e 100644
+--- a/dropwizard-client/src/main/java/io/dropwizard/client/DropwizardSSLConnectionSocketFactory.java
++++ b/dropwizard-client/src/main/java/io/dropwizard/client/DropwizardSSLConnectionSocketFactory.java
+@@ -90,7 +90,7 @@
+         sslContextBuilder.loadTrustMaterial(trustStore, trustStrategy);
+     }
+ 
+-    private KeyStore loadKeyStore(String type, File path, String password) throws Exception {
++    private static KeyStore loadKeyStore(String type, File path, String password) throws Exception {
+         final KeyStore keyStore = KeyStore.getInstance(type);
+         try (InputStream inputStream = new FileInputStream(path)) {
+             keyStore.load(inputStream, password.toCharArray());
+diff --git a/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java b/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
+index 3ad2965..8d6570e 100644
+--- a/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
++++ b/dropwizard-core/src/main/java/io/dropwizard/cli/Cli.java
+@@ -89,7 +89,7 @@
+         }
+     }
+ 
+-    private boolean isFlag(String[][] flags, String[] arguments) {
++    private static boolean isFlag(String[][] flags, String[] arguments) {
+         for (String[] cmd : flags) {
+             if (Arrays.equals(arguments, cmd)) {
+                 return true;
+diff --git a/dropwizard-hibernate/src/test/java/io/dropwizard/hibernate/UnitOfWorkApplicationListenerTest.java b/dropwizard-hibernate/src/test/java/io/dropwizard/hibernate/UnitOfWorkApplicationListenerTest.java
+index e5b7cfd..1bffdf7 100644
+--- a/dropwizard-hibernate/src/test/java/io/dropwizard/hibernate/UnitOfWorkApplicationListenerTest.java
++++ b/dropwizard-hibernate/src/test/java/io/dropwizard/hibernate/UnitOfWorkApplicationListenerTest.java
+@@ -271,7 +271,7 @@
+         when(uriInfo.getMatchedResourceMethod()).thenReturn(resourceMethod);
+     }
+ 
+-    private boolean methodDefinedOnInterface(String methodName, Method[] methods) {
++    private static boolean methodDefinedOnInterface(String methodName, Method[] methods) {
+         for (Method method : methods) {
+             if (method.getName().equals(methodName)) {
+                 return true;
+diff --git a/dropwizard-jersey/src/main/java/io/dropwizard/jersey/DropwizardResourceConfig.java b/dropwizard-jersey/src/main/java/io/dropwizard/jersey/DropwizardResourceConfig.java
+index a01c9ef..a943189 100644
+--- a/dropwizard-jersey/src/main/java/io/dropwizard/jersey/DropwizardResourceConfig.java
++++ b/dropwizard-jersey/src/main/java/io/dropwizard/jersey/DropwizardResourceConfig.java
+@@ -189,7 +189,7 @@
+             }
+         }
+ 
+-        private String normalizePath(String basePath, String path) {
++        private static String normalizePath(String basePath, String path) {
+             if (path == null) {
+                 return basePath;
+             }
+diff --git a/dropwizard-logging/src/test/java/io/dropwizard/logging/PrefixedRootCauseFirstThrowableProxyConverterTest.java b/dropwizard-logging/src/test/java/io/dropwizard/logging/PrefixedRootCauseFirstThrowableProxyConverterTest.java
+index 82fea76..d7ebf3d 100644
+--- a/dropwizard-logging/src/test/java/io/dropwizard/logging/PrefixedRootCauseFirstThrowableProxyConverterTest.java
++++ b/dropwizard-logging/src/test/java/io/dropwizard/logging/PrefixedRootCauseFirstThrowableProxyConverterTest.java
+@@ -33,7 +33,7 @@
+         return null; // unpossible, tell the type-system
+     }
+ 
+-    private void throwRoot() throws SocketTimeoutException {
++    private static void throwRoot() throws SocketTimeoutException {
+         throw new SocketTimeoutException("Timed-out reading from socket");
+     }
+ 
+diff --git a/dropwizard-client/src/main/java/io/dropwizard/client/DropwizardSSLConnectionSocketFactory.java b/dropwizard-client/src/main/java/io/dropwizard/client/DropwizardSSLConnectionSocketFactory.java
+index 431cf0d..f87210e 100644
+--- a/dropwizard-client/src/main/java/io/dropwizard/client/DropwizardSSLConnectionSocketFactory.java
++++ b/dropwizard-client/src/main/java/io/dropwizard/client/DropwizardSSLConnectionSocketFactory.java
+@@ -90,7 +90,7 @@
+         sslContextBuilder.loadTrustMaterial(trustStore, trustStrategy);
+     }
+ 
+-    private KeyStore loadKeyStore(String type, File path, String password) throws Exception {
++    private static KeyStore loadKeyStore(String type, File path, String password) throws Exception {
+         final KeyStore keyStore = KeyStore.getInstance(type);
+         try (InputStream inputStream = new FileInputStream(path)) {
+             keyStore.load(inputStream, password.toCharArray());

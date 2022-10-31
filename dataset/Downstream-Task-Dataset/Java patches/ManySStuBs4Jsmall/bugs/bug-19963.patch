@@ -1,0 +1,62 @@
+diff --git a/bundles/io/org.openhab.io.rest/src/main/java/org/openhab/io/rest/internal/resources/SitemapResource.java b/bundles/io/org.openhab.io.rest/src/main/java/org/openhab/io/rest/internal/resources/SitemapResource.java
+index cea4167..86374e2 100644
+--- a/bundles/io/org.openhab.io.rest/src/main/java/org/openhab/io/rest/internal/resources/SitemapResource.java
++++ b/bundles/io/org.openhab.io.rest/src/main/java/org/openhab/io/rest/internal/resources/SitemapResource.java
+@@ -163,7 +163,7 @@
+ 		ItemUIRegistry itemUIRegistry = RESTApplication.getItemUIRegistry();
+ 		Sitemap sitemap = getSitemap(sitemapName);
+ 		if(sitemap!=null) {
+-			if(pageId.equals(sitemapName)) {
++			if(pageId.equals(sitemap.getName())) {
+ 				return createPageBean(sitemapName, sitemap.getLabel(), sitemap.getIcon(), sitemap.getName(), sitemap.getChildren(), false, uri);
+ 			} else {
+ 				Widget pageWidget = itemUIRegistry.getWidget(sitemap, pageId);
+@@ -180,7 +180,7 @@
+ 						pageBean.parent.widgets = null;
+ 						pageBean.parent.parent = null;
+ 					} else if(parentPage instanceof Sitemap) {
+-						pageBean.parent = getPageBean(sitemapName, sitemapName, uri);
++						pageBean.parent = getPageBean(sitemapName, sitemap.getName(), uri);
+ 						pageBean.parent.widgets = null;
+ 					}
+ 					return pageBean;
+@@ -231,7 +231,7 @@
+     	SitemapBean bean = new SitemapBean();
+     	bean.name = sitemapName;
+     	bean.link = UriBuilder.fromUri(uri).path(SitemapResource.PATH_SITEMAPS).path(bean.name).build().toASCIIString();
+-    	bean.homepage = createPageBean(sitemapName, sitemap.getLabel(), sitemap.getIcon(), sitemap.getName(), sitemap.getChildren(), true, uri);
++    	bean.homepage = createPageBean(sitemap.getName(), sitemap.getLabel(), sitemap.getIcon(), sitemap.getName(), sitemap.getChildren(), true, uri);
+     	return bean;
+     }
+     
+diff --git a/bundles/io/org.openhab.io.rest/src/main/java/org/openhab/io/rest/internal/resources/SitemapResource.java b/bundles/io/org.openhab.io.rest/src/main/java/org/openhab/io/rest/internal/resources/SitemapResource.java
+index cea4167..86374e2 100644
+--- a/bundles/io/org.openhab.io.rest/src/main/java/org/openhab/io/rest/internal/resources/SitemapResource.java
++++ b/bundles/io/org.openhab.io.rest/src/main/java/org/openhab/io/rest/internal/resources/SitemapResource.java
+@@ -163,7 +163,7 @@
+ 		ItemUIRegistry itemUIRegistry = RESTApplication.getItemUIRegistry();
+ 		Sitemap sitemap = getSitemap(sitemapName);
+ 		if(sitemap!=null) {
+-			if(pageId.equals(sitemapName)) {
++			if(pageId.equals(sitemap.getName())) {
+ 				return createPageBean(sitemapName, sitemap.getLabel(), sitemap.getIcon(), sitemap.getName(), sitemap.getChildren(), false, uri);
+ 			} else {
+ 				Widget pageWidget = itemUIRegistry.getWidget(sitemap, pageId);
+@@ -180,7 +180,7 @@
+ 						pageBean.parent.widgets = null;
+ 						pageBean.parent.parent = null;
+ 					} else if(parentPage instanceof Sitemap) {
+-						pageBean.parent = getPageBean(sitemapName, sitemapName, uri);
++						pageBean.parent = getPageBean(sitemapName, sitemap.getName(), uri);
+ 						pageBean.parent.widgets = null;
+ 					}
+ 					return pageBean;
+@@ -231,7 +231,7 @@
+     	SitemapBean bean = new SitemapBean();
+     	bean.name = sitemapName;
+     	bean.link = UriBuilder.fromUri(uri).path(SitemapResource.PATH_SITEMAPS).path(bean.name).build().toASCIIString();
+-    	bean.homepage = createPageBean(sitemapName, sitemap.getLabel(), sitemap.getIcon(), sitemap.getName(), sitemap.getChildren(), true, uri);
++    	bean.homepage = createPageBean(sitemap.getName(), sitemap.getLabel(), sitemap.getIcon(), sitemap.getName(), sitemap.getChildren(), true, uri);
+     	return bean;
+     }
+     

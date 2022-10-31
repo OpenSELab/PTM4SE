@@ -1,0 +1,26 @@
+diff --git a/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java b/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
+index 55015a2..02b3ea3 100644
+--- a/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
++++ b/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
+@@ -178,7 +178,7 @@
+             }
+ 
+             // Skip standard or already set fields.
+-            if (message.getField(key) != null || Message.RESERVED_FIELDS.contains(key)) {
++            if (message.getField(key) != null || (Message.RESERVED_FIELDS.contains(key) && !Message.RESERVED_SETTABLE_FIELDS.contains(key))) {
+                 continue;
+             }
+ 
+diff --git a/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java b/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
+index 55015a2..02b3ea3 100644
+--- a/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
++++ b/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
+@@ -178,7 +178,7 @@
+             }
+ 
+             // Skip standard or already set fields.
+-            if (message.getField(key) != null || Message.RESERVED_FIELDS.contains(key)) {
++            if (message.getField(key) != null || (Message.RESERVED_FIELDS.contains(key) && !Message.RESERVED_SETTABLE_FIELDS.contains(key))) {
+                 continue;
+             }
+ 

@@ -1,0 +1,13 @@
+diff --git a/presto-testing-server-launcher/src/main/java/com/facebook/presto/server/testing/TestingPrestoServerLauncher.java b/presto-testing-server-launcher/src/main/java/com/facebook/presto/server/testing/TestingPrestoServerLauncher.java
+index 77b5fa7..bcc68a6 100644
+--- a/presto-testing-server-launcher/src/main/java/com/facebook/presto/server/testing/TestingPrestoServerLauncher.java
++++ b/presto-testing-server-launcher/src/main/java/com/facebook/presto/server/testing/TestingPrestoServerLauncher.java
+@@ -51,7 +51,7 @@
+     {
+         try (TestingPrestoServer server = new TestingPrestoServer()) {
+             for (String pluginClass : options.getPluginClassNames()) {
+-                Plugin plugin = (Plugin) Class.forName(pluginClass).newInstance();
++                Plugin plugin = (Plugin) Class.forName(pluginClass).getConstructor().newInstance();
+                 server.installPlugin(plugin);
+             }
+ 

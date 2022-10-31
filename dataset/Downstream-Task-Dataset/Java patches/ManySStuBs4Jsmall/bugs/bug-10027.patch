@@ -1,0 +1,44 @@
+diff --git a/src/jvm/clojure/lang/Numbers.java b/src/jvm/clojure/lang/Numbers.java
+index e40fe39..4a49c8c 100644
+--- a/src/jvm/clojure/lang/Numbers.java
++++ b/src/jvm/clojure/lang/Numbers.java
+@@ -1740,7 +1740,7 @@
+ 
+ static public int minus(int x, int y){
+ 	int ret = x - y;
+-	if ((ret ^ x) < 0 && (ret ^ -y) < 0)
++	if (((ret ^ x) < 0 && (ret ^ -y) < 0) || (y == Integer.MIN_VALUE))
+ 		return throwIntOverflow();
+ 	return ret;
+ }
+@@ -1847,7 +1847,7 @@
+ 
+ static public long minus(long x, long y){
+ 	long ret = x - y;
+-	if ((ret ^ x) < 0 && (ret ^ -y) < 0)
++	if (((ret ^ x) < 0 && (ret ^ -y) < 0) || (y == Long.MIN_VALUE))
+ 		return throwIntOverflow();
+ 	return ret;
+ }
+diff --git a/src/jvm/clojure/lang/Numbers.java b/src/jvm/clojure/lang/Numbers.java
+index e40fe39..4a49c8c 100644
+--- a/src/jvm/clojure/lang/Numbers.java
++++ b/src/jvm/clojure/lang/Numbers.java
+@@ -1740,7 +1740,7 @@
+ 
+ static public int minus(int x, int y){
+ 	int ret = x - y;
+-	if ((ret ^ x) < 0 && (ret ^ -y) < 0)
++	if (((ret ^ x) < 0 && (ret ^ -y) < 0) || (y == Integer.MIN_VALUE))
+ 		return throwIntOverflow();
+ 	return ret;
+ }
+@@ -1847,7 +1847,7 @@
+ 
+ static public long minus(long x, long y){
+ 	long ret = x - y;
+-	if ((ret ^ x) < 0 && (ret ^ -y) < 0)
++	if (((ret ^ x) < 0 && (ret ^ -y) < 0) || (y == Long.MIN_VALUE))
+ 		return throwIntOverflow();
+ 	return ret;
+ }

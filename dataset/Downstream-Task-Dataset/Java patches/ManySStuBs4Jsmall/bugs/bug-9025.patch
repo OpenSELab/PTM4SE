@@ -1,0 +1,31 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/JavadocDetailNodeParser.java b/src/main/java/com/puppycrawl/tools/checkstyle/JavadocDetailNodeParser.java
+index d82eb7d..85adb62 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/JavadocDetailNodeParser.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/JavadocDetailNodeParser.java
+@@ -232,7 +232,7 @@
+             final ParseTree currentParseTreeNodeChild = parseTreeParent.getChild(i);
+             final JavadocNodeImpl[] subChildren =
+                     createChildrenNodes(currentJavadocNode, currentParseTreeNodeChild);
+-            currentJavadocNode.setChildren(subChildren);
++            currentJavadocNode.setChildren((DetailNode[]) subChildren);
+         }
+     }
+ 
+@@ -272,7 +272,7 @@
+                     rootJavadocNode, i);
+             children[i] = child;
+         }
+-        rootJavadocNode.setChildren(children);
++        rootJavadocNode.setChildren((DetailNode[]) children);
+         return rootJavadocNode;
+     }
+ 
+@@ -292,7 +292,7 @@
+         node.setIndex(index);
+         node.setType(getTokenType(parseTree));
+         node.setParent(parent);
+-        node.setChildren(new JavadocNodeImpl[parseTree.getChildCount()]);
++        node.setChildren((DetailNode[]) new JavadocNodeImpl[parseTree.getChildCount()]);
+         return node;
+     }
+ 

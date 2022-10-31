@@ -1,0 +1,44 @@
+diff --git a/controller/src/test/java/org/jboss/as/controller/util/Tools.java b/controller/src/test/java/org/jboss/as/controller/util/Tools.java
+index faa92bc..9acc1d4 100644
+--- a/controller/src/test/java/org/jboss/as/controller/util/Tools.java
++++ b/controller/src/test/java/org/jboss/as/controller/util/Tools.java
+@@ -100,7 +100,7 @@
+ 
+ 
+     static ModelNode getCurrentModelVersions() throws Exception {
+-        ModelControllerClient client = ModelControllerClient.Factory.create("localhost", 9999);
++        ModelControllerClient client = ModelControllerClient.Factory.create("http-remoting","localhost", 9990);
+         try {
+             ModelNode allVersions = new ModelNode();
+ 
+@@ -133,7 +133,7 @@
+     }
+ 
+     static ModelNode getCurrentRunningResourceDefinition(PathAddress pathAddress) throws Exception {
+-        ModelControllerClient client = ModelControllerClient.Factory.create("localhost", 9999);
++        ModelControllerClient client = ModelControllerClient.Factory.create("http-remoting", "localhost", 9990);
+         try {
+             ModelNode op = new ModelNode();
+             op.get(OP).set(READ_RESOURCE_DESCRIPTION_OPERATION);
+diff --git a/controller/src/test/java/org/jboss/as/controller/util/Tools.java b/controller/src/test/java/org/jboss/as/controller/util/Tools.java
+index faa92bc..9acc1d4 100644
+--- a/controller/src/test/java/org/jboss/as/controller/util/Tools.java
++++ b/controller/src/test/java/org/jboss/as/controller/util/Tools.java
+@@ -100,7 +100,7 @@
+ 
+ 
+     static ModelNode getCurrentModelVersions() throws Exception {
+-        ModelControllerClient client = ModelControllerClient.Factory.create("localhost", 9999);
++        ModelControllerClient client = ModelControllerClient.Factory.create("http-remoting","localhost", 9990);
+         try {
+             ModelNode allVersions = new ModelNode();
+ 
+@@ -133,7 +133,7 @@
+     }
+ 
+     static ModelNode getCurrentRunningResourceDefinition(PathAddress pathAddress) throws Exception {
+-        ModelControllerClient client = ModelControllerClient.Factory.create("localhost", 9999);
++        ModelControllerClient client = ModelControllerClient.Factory.create("http-remoting", "localhost", 9990);
+         try {
+             ModelNode op = new ModelNode();
+             op.get(OP).set(READ_RESOURCE_DESCRIPTION_OPERATION);

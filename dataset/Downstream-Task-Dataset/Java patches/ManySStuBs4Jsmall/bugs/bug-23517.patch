@@ -1,0 +1,26 @@
+diff --git a/network/src/main/java/org/jboss/as/network/ManagedSocketBinding.java b/network/src/main/java/org/jboss/as/network/ManagedSocketBinding.java
+index 0d5a65e..c36f18a 100644
+--- a/network/src/main/java/org/jboss/as/network/ManagedSocketBinding.java
++++ b/network/src/main/java/org/jboss/as/network/ManagedSocketBinding.java
+@@ -52,7 +52,7 @@
+     }
+ 
+     public InetSocketAddress getBindAddress() {
+-        return InetSocketAddress.class.cast(getLocalAddress());
++        return new InetSocketAddress(getLocalAddress(), getPort());
+     }
+ 
+     public void bind(SocketAddress bindpoint) throws IOException {
+diff --git a/network/src/main/java/org/jboss/as/network/ManagedSocketBinding.java b/network/src/main/java/org/jboss/as/network/ManagedSocketBinding.java
+index 0d5a65e..c36f18a 100644
+--- a/network/src/main/java/org/jboss/as/network/ManagedSocketBinding.java
++++ b/network/src/main/java/org/jboss/as/network/ManagedSocketBinding.java
+@@ -52,7 +52,7 @@
+     }
+ 
+     public InetSocketAddress getBindAddress() {
+-        return InetSocketAddress.class.cast(getLocalAddress());
++        return new InetSocketAddress(getLocalAddress(), getPort());
+     }
+ 
+     public void bind(SocketAddress bindpoint) throws IOException {

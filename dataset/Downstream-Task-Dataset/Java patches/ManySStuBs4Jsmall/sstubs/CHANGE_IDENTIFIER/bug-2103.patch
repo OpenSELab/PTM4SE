@@ -1,0 +1,39 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/config/ClientConfig.java b/hazelcast-client/src/main/java/com/hazelcast/client/config/ClientConfig.java
+index 3bc5b48..1aee17e 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/config/ClientConfig.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/config/ClientConfig.java
+@@ -227,7 +227,7 @@
+         return this;
+     }
+ 
+-    public Collection<String> getAddressList() {
++    public List<String> getAddresses() {
+         if (addressList.size() == 0) {
+             addAddress("localhost");
+         }
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientClusterServiceImpl.java b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientClusterServiceImpl.java
+index e1e253f..20ca110 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientClusterServiceImpl.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/spi/impl/ClientClusterServiceImpl.java
+@@ -560,7 +560,7 @@
+ 
+     private Collection<InetSocketAddress> getConfigAddresses() {
+         final List<InetSocketAddress> socketAddresses = new LinkedList<InetSocketAddress>();
+-        for (String address : getClientConfig().getAddressList()) {
++        for (String address : getClientConfig().getAddresses()) {
+             socketAddresses.addAll(AddressHelper.getSocketAddresses(address));
+         }
+         Collections.shuffle(socketAddresses);
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/config/ClientConfig.java b/hazelcast-client/src/main/java/com/hazelcast/client/config/ClientConfig.java
+index 3bc5b48..1aee17e 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/config/ClientConfig.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/config/ClientConfig.java
+@@ -227,7 +227,7 @@
+         return this;
+     }
+ 
+-    public Collection<String> getAddressList() {
++    public List<String> getAddresses() {
+         if (addressList.size() == 0) {
+             addAddress("localhost");
+         }

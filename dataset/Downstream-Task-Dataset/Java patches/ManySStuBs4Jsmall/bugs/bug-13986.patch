@@ -1,0 +1,44 @@
+diff --git a/src/com/google/javascript/jscomp/Compiler.java b/src/com/google/javascript/jscomp/Compiler.java
+index 32514c7..39a1adb 100644
+--- a/src/com/google/javascript/jscomp/Compiler.java
++++ b/src/com/google/javascript/jscomp/Compiler.java
+@@ -937,7 +937,7 @@
+   Tracer newTracer(String passName) {
+     String comment = passName
+         + (recentChange.hasCodeChanged() ? " on recently changed AST" : "");
+-    if (options.tracer.isOn()) {
++    if (options.tracer.isOn() && tracker != null) {
+       tracker.recordPassStart(passName, true);
+     }
+     return new Tracer("Compiler", comment);
+@@ -945,7 +945,7 @@
+ 
+   void stopTracer(Tracer t, String passName) {
+     long result = t.stop();
+-    if (options.tracer.isOn()) {
++    if (options.tracer.isOn() && tracker != null) {
+       tracker.recordPassStop(passName, result);
+     }
+   }
+diff --git a/src/com/google/javascript/jscomp/Compiler.java b/src/com/google/javascript/jscomp/Compiler.java
+index 32514c7..39a1adb 100644
+--- a/src/com/google/javascript/jscomp/Compiler.java
++++ b/src/com/google/javascript/jscomp/Compiler.java
+@@ -937,7 +937,7 @@
+   Tracer newTracer(String passName) {
+     String comment = passName
+         + (recentChange.hasCodeChanged() ? " on recently changed AST" : "");
+-    if (options.tracer.isOn()) {
++    if (options.tracer.isOn() && tracker != null) {
+       tracker.recordPassStart(passName, true);
+     }
+     return new Tracer("Compiler", comment);
+@@ -945,7 +945,7 @@
+ 
+   void stopTracer(Tracer t, String passName) {
+     long result = t.stop();
+-    if (options.tracer.isOn()) {
++    if (options.tracer.isOn() && tracker != null) {
+       tracker.recordPassStop(passName, result);
+     }
+   }

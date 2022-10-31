@@ -1,0 +1,26 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/snapshot/SnapshotFileCache.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/snapshot/SnapshotFileCache.java
+index 006ca2a..522b1c9 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/snapshot/SnapshotFileCache.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/snapshot/SnapshotFileCache.java
+@@ -190,7 +190,7 @@
+     }
+     if (lock == null || lock.tryLock()) {
+       try {
+-        if (snapshotManager == null || snapshotManager.isTakingAnySnapshot()) {
++        if (snapshotManager != null && snapshotManager.isTakingAnySnapshot()) {
+           LOG.warn("Not checking unreferenced files since snapshot is running, it will "
+               + "skip to clean the HFiles this time");
+           return unReferencedFiles;
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/snapshot/SnapshotFileCache.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/snapshot/SnapshotFileCache.java
+index 006ca2a..522b1c9 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/snapshot/SnapshotFileCache.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/snapshot/SnapshotFileCache.java
+@@ -190,7 +190,7 @@
+     }
+     if (lock == null || lock.tryLock()) {
+       try {
+-        if (snapshotManager == null || snapshotManager.isTakingAnySnapshot()) {
++        if (snapshotManager != null && snapshotManager.isTakingAnySnapshot()) {
+           LOG.warn("Not checking unreferenced files since snapshot is running, it will "
+               + "skip to clean the HFiles this time");
+           return unReferencedFiles;

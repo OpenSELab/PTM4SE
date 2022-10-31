@@ -1,0 +1,41 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/layout/XMLLayout.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/layout/XMLLayout.java
+index 59a511a..d0e4d48 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/layout/XMLLayout.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/layout/XMLLayout.java
+@@ -21,6 +21,7 @@ import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
+ 
++import org.apache.logging.log4j.Marker;
+ import org.apache.logging.log4j.core.LogEvent;
+ import org.apache.logging.log4j.core.config.plugins.Plugin;
+ import org.apache.logging.log4j.core.config.plugins.PluginAttribute;
+@@ -195,6 +196,28 @@ public class XMLLayout extends AbstractStringLayout {
+             buf.append(this.eol);
+         }
+ 
++        if (event.getMarker() != null) {
++            final Marker marker = event.getMarker();
++            buf.append(this.indent2);
++            buf.append('<');
++            if (!complete) {
++                buf.append(this.namespacePrefix);
++            }
++            buf.append("Marker");
++            final Marker parent = marker.getParent();
++            if (parent != null) {
++                buf.append(" parent=\"").append(Transform.escapeHtmlTags(parent.getName())).append("\"");
++            }
++            buf.append('>');
++            buf.append(Transform.escapeHtmlTags(marker.getName()));
++            buf.append("</");
++            if (!complete) {
++                buf.append(this.namespacePrefix);
++            }
++            buf.append("Marker>");
++            buf.append(this.eol);
++        }
++
+         final Throwable throwable = event.getThrown();
+         if (throwable != null) {
+             final List<String> s = Throwables.toStringList(throwable);

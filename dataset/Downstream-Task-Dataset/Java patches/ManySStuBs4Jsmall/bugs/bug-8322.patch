@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/zaxxer/hikari/HikariConfig.java b/src/main/java/com/zaxxer/hikari/HikariConfig.java
+index f759a1b..92b3b9d 100644
+--- a/src/main/java/com/zaxxer/hikari/HikariConfig.java
++++ b/src/main/java/com/zaxxer/hikari/HikariConfig.java
+@@ -648,7 +648,7 @@
+    @Override
+    public void setMinimumIdle(int minIdle)
+    {
+-      if (minIdle < 0 || minIdle > maxPoolSize) {
++      if (minIdle < 0 || (minIdle > maxPoolSize && maxPoolSize > 0)) {
+          throw new IllegalArgumentException("minimumIdle cannot be negative or more than maximumPoolSize");
+       }
+       this.minIdle = minIdle;
+diff --git a/src/main/java/com/zaxxer/hikari/HikariConfig.java b/src/main/java/com/zaxxer/hikari/HikariConfig.java
+index f759a1b..92b3b9d 100644
+--- a/src/main/java/com/zaxxer/hikari/HikariConfig.java
++++ b/src/main/java/com/zaxxer/hikari/HikariConfig.java
+@@ -648,7 +648,7 @@
+    @Override
+    public void setMinimumIdle(int minIdle)
+    {
+-      if (minIdle < 0 || minIdle > maxPoolSize) {
++      if (minIdle < 0 || (minIdle > maxPoolSize && maxPoolSize > 0)) {
+          throw new IllegalArgumentException("minimumIdle cannot be negative or more than maximumPoolSize");
+       }
+       this.minIdle = minIdle;

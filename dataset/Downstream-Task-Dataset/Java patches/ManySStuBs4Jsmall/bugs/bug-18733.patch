@@ -1,0 +1,26 @@
+diff --git a/codec-http2/src/test/java/io/netty/handler/codec/http2/StreamBufferingEncoderTest.java b/codec-http2/src/test/java/io/netty/handler/codec/http2/StreamBufferingEncoderTest.java
+index ed3c884..00dcef9 100644
+--- a/codec-http2/src/test/java/io/netty/handler/codec/http2/StreamBufferingEncoderTest.java
++++ b/codec-http2/src/test/java/io/netty/handler/codec/http2/StreamBufferingEncoderTest.java
+@@ -204,7 +204,7 @@
+     public void bufferingNewStreamFailsAfterGoAwayReceived() {
+         encoder.writeSettingsAck(ctx, promise);
+         setMaxConcurrentStreams(0);
+-        connection.goAwayReceived(1, 8, null);
++        connection.goAwayReceived(1, 8, EMPTY_BUFFER);
+ 
+         promise = mock(ChannelPromise.class);
+         encoderWriteHeaders(3, promise);
+diff --git a/codec-http2/src/test/java/io/netty/handler/codec/http2/StreamBufferingEncoderTest.java b/codec-http2/src/test/java/io/netty/handler/codec/http2/StreamBufferingEncoderTest.java
+index ed3c884..00dcef9 100644
+--- a/codec-http2/src/test/java/io/netty/handler/codec/http2/StreamBufferingEncoderTest.java
++++ b/codec-http2/src/test/java/io/netty/handler/codec/http2/StreamBufferingEncoderTest.java
+@@ -204,7 +204,7 @@
+     public void bufferingNewStreamFailsAfterGoAwayReceived() {
+         encoder.writeSettingsAck(ctx, promise);
+         setMaxConcurrentStreams(0);
+-        connection.goAwayReceived(1, 8, null);
++        connection.goAwayReceived(1, 8, EMPTY_BUFFER);
+ 
+         promise = mock(ChannelPromise.class);
+         encoderWriteHeaders(3, promise);

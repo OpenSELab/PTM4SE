@@ -1,0 +1,643 @@
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/ExponentiallyDecayingReservoir.java b/metrics-core/src/main/java/io/dropwizard/metrics/ExponentiallyDecayingReservoir.java
+index 46bcb93..7128deb 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/ExponentiallyDecayingReservoir.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/ExponentiallyDecayingReservoir.java
+@@ -68,7 +68,7 @@
+      * @param clock the clock used to timestamp samples and track rescaling
+      */
+     public ExponentiallyDecayingReservoir(int size, double alpha, Clock clock) {
+-        this.values = new ConcurrentSkipListMap<Double, WeightedSample>();
++        this.values = new ConcurrentSkipListMap<>();
+         this.lock = new ReentrantReadWriteLock();
+         this.alpha = alpha;
+         this.size = size;
+@@ -171,7 +171,7 @@
+                 this.startTime = currentTimeInSeconds();
+                 final double scalingFactor = exp(-alpha * (startTime - oldStartTime));
+ 
+-                final ArrayList<Double> keys = new ArrayList<Double>(values.keySet());
++                final ArrayList<Double> keys = new ArrayList<>(values.keySet());
+                 for (Double key : keys) {
+                     final WeightedSample sample = values.remove(key);
+                     final WeightedSample newSample = new WeightedSample(sample.value, sample.weight * scalingFactor);
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedExecutorService.java b/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedExecutorService.java
+index f7a923b..379f253 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedExecutorService.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedExecutorService.java
+@@ -98,7 +98,7 @@
+     public <T> Future<T> submit(Callable<T> task) {
+         submitted.mark();
+         try {
+-            return delegate.submit(new InstrumentedCallable<T>(task));
++            return delegate.submit(new InstrumentedCallable<>(task));
+         } catch (RejectedExecutionException e) {
+             rejected.mark();
+             throw e;
+@@ -166,9 +166,9 @@
+     }
+ 
+     private <T> Collection<? extends Callable<T>> instrument(Collection<? extends Callable<T>> tasks) {
+-        final List<InstrumentedCallable<T>> instrumented = new ArrayList<InstrumentedCallable<T>>(tasks.size());
++        final List<InstrumentedCallable<T>> instrumented = new ArrayList<>(tasks.size());
+         for (Callable<T> task : tasks) {
+-            instrumented.add(new InstrumentedCallable<T>(task));
++            instrumented.add(new InstrumentedCallable<>(task));
+         }
+         return instrumented;
+     }
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedScheduledExecutorService.java b/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedScheduledExecutorService.java
+index 4b20551..efe0299 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedScheduledExecutorService.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/InstrumentedScheduledExecutorService.java
+@@ -75,7 +75,7 @@
+     @Override
+     public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit) {
+         scheduledOnce.mark();
+-        return delegate.schedule(new InstrumentedCallable<V>(callable), delay, unit);
++        return delegate.schedule(new InstrumentedCallable<>(callable), delay, unit);
+     }
+ 
+     /**
+@@ -142,7 +142,7 @@
+     @Override
+     public <T> Future<T> submit(Callable<T> task) {
+         submitted.mark();
+-        return delegate.submit(new InstrumentedCallable<T>(task));
++        return delegate.submit(new InstrumentedCallable<>(task));
+     }
+ 
+     /**
+@@ -204,7 +204,7 @@
+     }
+ 
+     private <T> Collection<? extends Callable<T>> instrument(Collection<? extends Callable<T>> tasks) {
+-        final List<InstrumentedCallable<T>> instrumented = new ArrayList<InstrumentedCallable<T>>(tasks.size());
++        final List<InstrumentedCallable<T>> instrumented = new ArrayList<>(tasks.size());
+         for (Callable<T> task : tasks) {
+             instrumented.add(new InstrumentedCallable(task));
+         }
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/JmxReporter.java b/metrics-core/src/main/java/io/dropwizard/metrics/JmxReporter.java
+index 75fdc76..ad81e70 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/JmxReporter.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/JmxReporter.java
+@@ -497,7 +497,7 @@
+             this.name = name;
+             this.filter = filter;
+             this.timeUnits = timeUnits;
+-            this.registered = new ConcurrentHashMap<ObjectName, ObjectName>();
++            this.registered = new ConcurrentHashMap<>();
+             this.objectNameFactory = objectNameFactory;
+         }
+ 
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/JvmAttributeGaugeSet.java b/metrics-core/src/main/java/io/dropwizard/metrics/JvmAttributeGaugeSet.java
+index 8ee1768..9a4ec2e 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/JvmAttributeGaugeSet.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/JvmAttributeGaugeSet.java
+@@ -30,7 +30,7 @@
+ 
+     @Override
+     public Map<MetricName, Metric> getMetrics() {
+-        final Map<MetricName, Metric> gauges = new HashMap<MetricName, Metric>();
++        final Map<MetricName, Metric> gauges = new HashMap<>();
+ 
+         gauges.put(MetricName.build("name"), new Gauge<String>() {
+             @Override
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/MetricName.java b/metrics-core/src/main/java/io/dropwizard/metrics/MetricName.java
+index 7fa07fc..cd076ea 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/MetricName.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/MetricName.java
+@@ -85,7 +85,7 @@
+      * @return A newly created metric name with the specified tags associated with it.
+      */
+     public MetricName tagged(Map<String, String> add) {
+-        final Map<String, String> tags = new HashMap<String, String>(add);
++        final Map<String, String> tags = new HashMap<>(add);
+         tags.putAll(this.tags);
+         return new MetricName(key, tags);
+     }
+@@ -108,7 +108,7 @@
+             throw new IllegalArgumentException("Argument count must be even");
+         }
+ 
+-        final Map<String, String> add = new HashMap<String, String>();
++        final Map<String, String> add = new HashMap<>();
+ 
+         for (int i = 0; i < pairs.length; i += 2) {
+             add.put(pairs[i], pairs[i+1]);
+@@ -126,7 +126,7 @@
+      **/
+     public static MetricName join(MetricName... parts) {
+         final StringBuilder nameBuilder = new StringBuilder();
+-        final Map<String, String> tags = new HashMap<String, String>();
++        final Map<String, String> tags = new HashMap<>();
+ 
+         boolean first = true;
+ 
+@@ -291,7 +291,7 @@
+     }
+ 
+     private Iterable<String> uniqueSortedKeys(Map<String, String> left, Map<String, String> right) {
+-        final Set<String> set = new TreeSet<String>(left.keySet());
++        final Set<String> set = new TreeSet<>(left.keySet());
+         set.addAll(right.keySet());
+         return set;
+     }
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/MetricRegistry.java b/metrics-core/src/main/java/io/dropwizard/metrics/MetricRegistry.java
+index 5b5f2fc..e43a28e 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/MetricRegistry.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/MetricRegistry.java
+@@ -76,7 +76,7 @@
+      */
+     protected MetricRegistry(ConcurrentMap<MetricName, Metric> metricsMap) {
+         this.metrics = metricsMap;
+-        this.listeners = new CopyOnWriteArrayList<MetricRegistryListener>();
++        this.listeners = new CopyOnWriteArrayList<>();
+     }
+ 
+     /**
+@@ -256,7 +256,7 @@
+      * @return the names of all the metrics
+      */
+     public SortedSet<MetricName> getNames() {
+-        return Collections.unmodifiableSortedSet(new TreeSet<MetricName>(metrics.keySet()));
++        return Collections.unmodifiableSortedSet(new TreeSet<>(metrics.keySet()));
+     }
+ 
+     /**
+@@ -376,7 +376,7 @@
+ 
+     @SuppressWarnings("unchecked")
+     private <T extends Metric> SortedMap<MetricName, T> getMetrics(Class<T> klass, MetricFilter filter) {
+-        final TreeMap<MetricName, T> timers = new TreeMap<MetricName, T>();
++        final TreeMap<MetricName, T> timers = new TreeMap<>();
+         for (Map.Entry<MetricName, Metric> entry : metrics.entrySet()) {
+             if (klass.isInstance(entry.getValue()) && filter.matches(entry.getKey(),
+                                                                      entry.getValue())) {
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/SharedMetricRegistries.java b/metrics-core/src/main/java/io/dropwizard/metrics/SharedMetricRegistries.java
+index cf727ef..1fef063 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/SharedMetricRegistries.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/SharedMetricRegistries.java
+@@ -9,7 +9,7 @@
+  */
+ public class SharedMetricRegistries {
+     private static final ConcurrentMap<String, MetricRegistry> REGISTRIES =
+-            new ConcurrentHashMap<String, MetricRegistry>();
++            new ConcurrentHashMap<>();
+ 
+     private static volatile String defaultRegistryName = null;
+ 
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/SlidingTimeWindowReservoir.java b/metrics-core/src/main/java/io/dropwizard/metrics/SlidingTimeWindowReservoir.java
+index 573b196..dd571d2 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/SlidingTimeWindowReservoir.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/SlidingTimeWindowReservoir.java
+@@ -39,7 +39,7 @@
+      */
+     public SlidingTimeWindowReservoir(long window, TimeUnit windowUnit, Clock clock) {
+         this.clock = clock;
+-        this.measurements = new ConcurrentSkipListMap<Long, Long>();
++        this.measurements = new ConcurrentSkipListMap<>();
+         this.window = windowUnit.toNanos(window) * COLLISION_BUFFER;
+         this.lastTick = new AtomicLong(clock.getTick() * COLLISION_BUFFER);
+         this.count = new AtomicLong();
+diff --git a/metrics-core/src/test/java/io/dropwizard/metrics/ConsoleReporterTest.java b/metrics-core/src/test/java/io/dropwizard/metrics/ConsoleReporterTest.java
+index 8c6eb7f..f2fc3b5 100644
+--- a/metrics-core/src/test/java/io/dropwizard/metrics/ConsoleReporterTest.java
++++ b/metrics-core/src/test/java/io/dropwizard/metrics/ConsoleReporterTest.java
+@@ -268,11 +268,11 @@
+     }
+ 
+     private <T> SortedMap<MetricName, T> map() {
+-        return new TreeMap<MetricName, T>();
++        return new TreeMap<>();
+     }
+ 
+     private <T> SortedMap<MetricName, T> map(String name, Map<String,String> tags, T metric) {
+-        final TreeMap<MetricName, T> map = new TreeMap<MetricName, T>();
++        final TreeMap<MetricName, T> map = new TreeMap<>();
+         map.put(new MetricName(name,tags), metric);
+         return map;
+     }
+diff --git a/metrics-core/src/test/java/io/dropwizard/metrics/CsvReporterTest.java b/metrics-core/src/test/java/io/dropwizard/metrics/CsvReporterTest.java
+index 7cd70d3..600d5b2 100644
+--- a/metrics-core/src/test/java/io/dropwizard/metrics/CsvReporterTest.java
++++ b/metrics-core/src/test/java/io/dropwizard/metrics/CsvReporterTest.java
+@@ -226,11 +226,11 @@
+     }
+ 
+     private <T> SortedMap<MetricName, T> map() {
+-        return new TreeMap<MetricName, T>();
++        return new TreeMap<>();
+     }
+ 
+     private <T> SortedMap<MetricName, T> map(String name, Map<String,String> tags, T metric) {
+-        final TreeMap<MetricName, T> map = new TreeMap<MetricName, T>();
++        final TreeMap<MetricName, T> map = new TreeMap<>();
+         map.put(new MetricName(name,tags), metric);
+         return map;
+     }
+diff --git a/metrics-core/src/test/java/io/dropwizard/metrics/InstrumentedExecutorServiceTest.java b/metrics-core/src/test/java/io/dropwizard/metrics/InstrumentedExecutorServiceTest.java
+index 6ff7f0c..94c1709 100644
+--- a/metrics-core/src/test/java/io/dropwizard/metrics/InstrumentedExecutorServiceTest.java
++++ b/metrics-core/src/test/java/io/dropwizard/metrics/InstrumentedExecutorServiceTest.java
+@@ -58,7 +58,7 @@
+ 
+     @Test
+     public void reportsRejected() throws Exception {
+-        final BlockingQueue<Runnable> queueCapacityOne = new LinkedBlockingQueue<Runnable>(1);
++        final BlockingQueue<Runnable> queueCapacityOne = new LinkedBlockingQueue<>(1);
+         this.executor = new ThreadPoolExecutor(1, 1, 0, TimeUnit.MILLISECONDS, queueCapacityOne);
+         final InstrumentedExecutorService instrumented = new InstrumentedExecutorService(executor, registry, "r");
+         final CountDownLatch finish = new CountDownLatch(1);
+@@ -75,7 +75,7 @@
+         assertThat(duration.getCount()).isEqualTo(0);
+         assertThat(rejected.getCount()).isEqualTo(0);
+ 
+-        final List<Future<Object>> futures = new ArrayList<Future<Object>>();
++        final List<Future<Object>> futures = new ArrayList<>();
+         // Start two callables - one to run on thread and one to be added to queue
+         for (int i = 0; i < 2; i++) {
+             futures.add(instrumented.submit(new Callable<Object>() {
+diff --git a/metrics-core/src/test/java/io/dropwizard/metrics/JmxAttributeGaugeTest.java b/metrics-core/src/test/java/io/dropwizard/metrics/JmxAttributeGaugeTest.java
+index 1c8a65c..65fd84d 100644
+--- a/metrics-core/src/test/java/io/dropwizard/metrics/JmxAttributeGaugeTest.java
++++ b/metrics-core/src/test/java/io/dropwizard/metrics/JmxAttributeGaugeTest.java
+@@ -19,7 +19,7 @@
+ 
+     private static MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+ 
+-    private static List<ObjectName> registeredMBeans = new ArrayList<ObjectName>();
++    private static List<ObjectName> registeredMBeans = new ArrayList<>();
+ 
+     public interface JmxTestMBean {
+         Long getValue();
+diff --git a/metrics-core/src/test/java/io/dropwizard/metrics/MetricNameTest.java b/metrics-core/src/test/java/io/dropwizard/metrics/MetricNameTest.java
+index ebe1a72..4ed50e5 100644
+--- a/metrics-core/src/test/java/io/dropwizard/metrics/MetricNameTest.java
++++ b/metrics-core/src/test/java/io/dropwizard/metrics/MetricNameTest.java
+@@ -47,7 +47,7 @@
+ 
+     @Test
+     public void testAddTagsVarious() {
+-        final Map<String, String> refTags = new HashMap<String, String>();
++        final Map<String, String> refTags = new HashMap<>();
+         refTags.put("foo", "bar");
+         final MetricName test = MetricName.EMPTY.tagged("foo", "bar");
+         final MetricName test2 = MetricName.EMPTY.tagged(refTags);
+@@ -61,7 +61,7 @@
+ 
+     @Test
+     public void testTaggedMoreArguments() {
+-        final Map<String, String> refTags = new HashMap<String, String>();
++        final Map<String, String> refTags = new HashMap<>();
+         refTags.put("foo", "bar");
+         refTags.put("baz", "biz");
+         assertThat(MetricName.EMPTY.tagged("foo", "bar", "baz", "biz").getTags()).isEqualTo(refTags);
+diff --git a/metrics-core/src/test/java/io/dropwizard/metrics/MetricRegistryTest.java b/metrics-core/src/test/java/io/dropwizard/metrics/MetricRegistryTest.java
+index 33cb2e0..4a38010 100644
+--- a/metrics-core/src/test/java/io/dropwizard/metrics/MetricRegistryTest.java
++++ b/metrics-core/src/test/java/io/dropwizard/metrics/MetricRegistryTest.java
+@@ -265,7 +265,7 @@
+         final MetricSet metrics = new MetricSet() {
+             @Override
+             public Map<MetricName, Metric> getMetrics() {
+-                final Map<MetricName, Metric> metrics = new HashMap<MetricName, Metric>();
++                final Map<MetricName, Metric> metrics = new HashMap<>();
+                 metrics.put(GAUGE2, gauge);
+                 metrics.put(COUNTER2, counter);
+                 return metrics;
+@@ -286,7 +286,7 @@
+         final MetricSet metrics = new MetricSet() {
+             @Override
+             public Map<MetricName, Metric> getMetrics() {
+-                final Map<MetricName, Metric> metrics = new HashMap<MetricName, Metric>();
++                final Map<MetricName, Metric> metrics = new HashMap<>();
+                 metrics.put(GAUGE, gauge);
+                 metrics.put(COUNTER, counter);
+                 return metrics;
+@@ -304,7 +304,7 @@
+         final MetricSet inner = new MetricSet() {
+             @Override
+             public Map<MetricName, Metric> getMetrics() {
+-                final Map<MetricName, Metric> metrics = new HashMap<MetricName, Metric>();
++                final Map<MetricName, Metric> metrics = new HashMap<>();
+                 metrics.put(GAUGE, gauge);
+                 return metrics;
+             }
+@@ -313,7 +313,7 @@
+         final MetricSet outer = new MetricSet() {
+             @Override
+             public Map<MetricName, Metric> getMetrics() {
+-                final Map<MetricName, Metric> metrics = new HashMap<MetricName, Metric>();
++                final Map<MetricName, Metric> metrics = new HashMap<>();
+                 metrics.put(MetricName.build("inner"), inner);
+                 metrics.put(COUNTER, counter);
+                 return metrics;
+diff --git a/metrics-core/src/test/java/io/dropwizard/metrics/ScheduledReporterTest.java b/metrics-core/src/test/java/io/dropwizard/metrics/ScheduledReporterTest.java
+index 1f631a9..714376f 100644
+--- a/metrics-core/src/test/java/io/dropwizard/metrics/ScheduledReporterTest.java
++++ b/metrics-core/src/test/java/io/dropwizard/metrics/ScheduledReporterTest.java
+@@ -74,7 +74,7 @@
+     }
+ 
+     private <T> SortedMap<MetricName, T> map(String name, T value) {
+-        final SortedMap<MetricName, T> map = new TreeMap<MetricName, T>();
++        final SortedMap<MetricName, T> map = new TreeMap<>();
+         map.put(MetricName.build(name), value);
+         return map;
+     }
+diff --git a/metrics-core/src/test/java/io/dropwizard/metrics/WeightedSnapshotTest.java b/metrics-core/src/test/java/io/dropwizard/metrics/WeightedSnapshotTest.java
+index 01d73c4..fc42766 100644
+--- a/metrics-core/src/test/java/io/dropwizard/metrics/WeightedSnapshotTest.java
++++ b/metrics-core/src/test/java/io/dropwizard/metrics/WeightedSnapshotTest.java
+@@ -22,7 +22,7 @@
+             throw new IllegalArgumentException("Mismatched lengths: " + values.length + " vs " + weights.length);
+         }
+         
+-        final ArrayList<WeightedSample> samples = new ArrayList<WeightedSnapshot.WeightedSample>();
++        final ArrayList<WeightedSample> samples = new ArrayList<>();
+         for (int i = 0; i < values.length; i++) {
+             samples.add(new WeightedSnapshot.WeightedSample(values[i], weights[i]));
+         }
+diff --git a/metrics-graphite/src/main/java/io/dropwizard/metrics/graphite/PickledGraphite.java b/metrics-graphite/src/main/java/io/dropwizard/metrics/graphite/PickledGraphite.java
+index 8809948..ea9e5ee 100644
+--- a/metrics-graphite/src/main/java/io/dropwizard/metrics/graphite/PickledGraphite.java
++++ b/metrics-graphite/src/main/java/io/dropwizard/metrics/graphite/PickledGraphite.java
+@@ -31,7 +31,7 @@
+ 
+     private int batchSize;
+     // graphite expects a python-pickled list of nested tuples.
+-    private List<MetricTuple> metrics = new LinkedList<MetricTuple>();
++    private List<MetricTuple> metrics = new LinkedList<>();
+ 
+     private final String hostname;
+     private final int port;
+diff --git a/metrics-graphite/src/test/java/io/dropwizard/metrics/graphite/GraphiteReporterTest.java b/metrics-graphite/src/test/java/io/dropwizard/metrics/graphite/GraphiteReporterTest.java
+index e2a7d60..eadf5ea 100644
+--- a/metrics-graphite/src/test/java/io/dropwizard/metrics/graphite/GraphiteReporterTest.java
++++ b/metrics-graphite/src/test/java/io/dropwizard/metrics/graphite/GraphiteReporterTest.java
+@@ -412,11 +412,11 @@
+     }
+ 
+     private <T> SortedMap<MetricName, T> map() {
+-        return new TreeMap<MetricName, T>();
++        return new TreeMap<>();
+     }
+ 
+     private <T> SortedMap<MetricName, T> map(String name, Map<String,String> tags, T metric) {
+-        final TreeMap<MetricName, T> map = new TreeMap<MetricName, T>();
++        final TreeMap<MetricName, T> map = new TreeMap<>();
+         map.put(new MetricName(name,tags), metric);
+         return map;
+     }
+diff --git a/metrics-healthchecks/src/main/java/io/dropwizard/metrics/health/HealthCheckRegistry.java b/metrics-healthchecks/src/main/java/io/dropwizard/metrics/health/HealthCheckRegistry.java
+index bb92327..00dc47f 100644
+--- a/metrics-healthchecks/src/main/java/io/dropwizard/metrics/health/HealthCheckRegistry.java
++++ b/metrics-healthchecks/src/main/java/io/dropwizard/metrics/health/HealthCheckRegistry.java
+@@ -20,7 +20,7 @@
+      * Creates a new {@link HealthCheckRegistry}.
+      */
+     public HealthCheckRegistry() {
+-        this.healthChecks = new ConcurrentHashMap<String, HealthCheck>();
++        this.healthChecks = new ConcurrentHashMap<>();
+     }
+ 
+     /**
+@@ -48,7 +48,7 @@
+      * @return the names of all registered health checks
+      */
+     public SortedSet<String> getNames() {
+-        return Collections.unmodifiableSortedSet(new TreeSet<String>(healthChecks.keySet()));
++        return Collections.unmodifiableSortedSet(new TreeSet<>(healthChecks.keySet()));
+     }
+ 
+     /**
+@@ -72,7 +72,7 @@
+      * @return a map of the health check results
+      */
+     public SortedMap<String, HealthCheck.Result> runHealthChecks() {
+-        final SortedMap<String, HealthCheck.Result> results = new TreeMap<String, HealthCheck.Result>();
++        final SortedMap<String, HealthCheck.Result> results = new TreeMap<>();
+         for (Map.Entry<String, HealthCheck> entry : healthChecks.entrySet()) {
+             final Result result = entry.getValue().execute();
+             results.put(entry.getKey(), result);
+@@ -86,7 +86,7 @@
+      * @return a map of the health check results
+      */
+     public SortedMap<String, HealthCheck.Result> runHealthChecks(ExecutorService executor) {
+-        final Map<String, Future<HealthCheck.Result>> futures = new HashMap<String, Future<Result>>();
++        final Map<String, Future<HealthCheck.Result>> futures = new HashMap<>();
+         for (final Map.Entry<String, HealthCheck> entry : healthChecks.entrySet()) {
+             futures.put(entry.getKey(), executor.submit(new Callable<Result>() {
+                 @Override
+@@ -96,7 +96,7 @@
+             }));
+         }
+ 
+-        final SortedMap<String, HealthCheck.Result> results = new TreeMap<String, HealthCheck.Result>();
++        final SortedMap<String, HealthCheck.Result> results = new TreeMap<>();
+         for (Map.Entry<String, Future<Result>> entry : futures.entrySet()) {
+             try {
+                 results.put(entry.getKey(), entry.getValue().get());
+diff --git a/metrics-healthchecks/src/main/java/io/dropwizard/metrics/health/SharedHealthCheckRegistries.java b/metrics-healthchecks/src/main/java/io/dropwizard/metrics/health/SharedHealthCheckRegistries.java
+index e3a6dbb..ea7c45d 100644
+--- a/metrics-healthchecks/src/main/java/io/dropwizard/metrics/health/SharedHealthCheckRegistries.java
++++ b/metrics-healthchecks/src/main/java/io/dropwizard/metrics/health/SharedHealthCheckRegistries.java
+@@ -9,7 +9,7 @@
+  */
+ public class SharedHealthCheckRegistries {
+     private static final ConcurrentMap<String, HealthCheckRegistry> REGISTRIES =
+-            new ConcurrentHashMap<String, HealthCheckRegistry>();
++            new ConcurrentHashMap<>();
+ 
+     private SharedHealthCheckRegistries() { /* singleton */ }
+ 
+diff --git a/metrics-healthchecks/src/test/java/io/dropwizard/metrics/health/jvm/ThreadDeadlockHealthCheckTest.java b/metrics-healthchecks/src/test/java/io/dropwizard/metrics/health/jvm/ThreadDeadlockHealthCheckTest.java
+index 995a8cb..6bbceb7 100644
+--- a/metrics-healthchecks/src/test/java/io/dropwizard/metrics/health/jvm/ThreadDeadlockHealthCheckTest.java
++++ b/metrics-healthchecks/src/test/java/io/dropwizard/metrics/health/jvm/ThreadDeadlockHealthCheckTest.java
+@@ -29,7 +29,7 @@
+ 
+     @Test
+     public void isUnhealthyIfThreadsAreDeadlocked() throws Exception {
+-        final Set<String> threads = new TreeSet<String>();
++        final Set<String> threads = new TreeSet<>();
+         threads.add("one");
+         threads.add("two");
+ 
+diff --git a/metrics-jdbi/src/main/java/io/dropwizard/metrics/jdbi/strategies/DelegatingStatementNameStrategy.java b/metrics-jdbi/src/main/java/io/dropwizard/metrics/jdbi/strategies/DelegatingStatementNameStrategy.java
+index 359a8d5..ea50909 100644
+--- a/metrics-jdbi/src/main/java/io/dropwizard/metrics/jdbi/strategies/DelegatingStatementNameStrategy.java
++++ b/metrics-jdbi/src/main/java/io/dropwizard/metrics/jdbi/strategies/DelegatingStatementNameStrategy.java
+@@ -9,7 +9,7 @@
+ import java.util.List;
+ 
+ public abstract class DelegatingStatementNameStrategy implements StatementNameStrategy {
+-    private final List<StatementNameStrategy> strategies = new ArrayList<StatementNameStrategy>();
++    private final List<StatementNameStrategy> strategies = new ArrayList<>();
+ 
+     protected DelegatingStatementNameStrategy(StatementNameStrategy... strategies) {
+         registerStrategies(strategies);
+diff --git a/metrics-jdbi/src/main/java/io/dropwizard/metrics/jdbi/strategies/ShortNameStrategy.java b/metrics-jdbi/src/main/java/io/dropwizard/metrics/jdbi/strategies/ShortNameStrategy.java
+index fffd7ad..ff37ee0 100644
+--- a/metrics-jdbi/src/main/java/io/dropwizard/metrics/jdbi/strategies/ShortNameStrategy.java
++++ b/metrics-jdbi/src/main/java/io/dropwizard/metrics/jdbi/strategies/ShortNameStrategy.java
+@@ -15,7 +15,7 @@
+  * by class name and method; a shortening strategy is applied to make the JMX output nicer.
+  */
+ public final class ShortNameStrategy extends DelegatingStatementNameStrategy {
+-    private final ConcurrentMap<String, String> shortClassNames = new ConcurrentHashMap<String, String>();
++    private final ConcurrentMap<String, String> shortClassNames = new ConcurrentHashMap<>();
+ 
+     private final String baseJmxName;
+ 
+diff --git a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/BufferPoolMetricSet.java b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/BufferPoolMetricSet.java
+index 85e52c5..51ea062 100644
+--- a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/BufferPoolMetricSet.java
++++ b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/BufferPoolMetricSet.java
+@@ -37,7 +37,7 @@
+ 
+     @Override
+     public Map<MetricName, Metric> getMetrics() {
+-        final Map<MetricName, Metric> gauges = new HashMap<MetricName, Metric>();
++        final Map<MetricName, Metric> gauges = new HashMap<>();
+         for (String pool : POOLS) {
+             for (int i = 0; i < ATTRIBUTES.length; i++) {
+                 final String attribute = ATTRIBUTES[i];
+diff --git a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ClassLoadingGaugeSet.java b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ClassLoadingGaugeSet.java
+index fdbd61e..21f5b62 100644
+--- a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ClassLoadingGaugeSet.java
++++ b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ClassLoadingGaugeSet.java
+@@ -27,7 +27,7 @@
+ 
+     @Override
+     public Map<MetricName, Metric> getMetrics() {
+-        final Map<MetricName, Metric> gauges = new HashMap<MetricName, Metric>();
++        final Map<MetricName, Metric> gauges = new HashMap<>();
+ 
+         gauges.put(MetricName.build("loaded"), new Gauge<Long>() {
+             @Override
+diff --git a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/GarbageCollectorMetricSet.java b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/GarbageCollectorMetricSet.java
+index 5389b9e..4b1785c 100644
+--- a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/GarbageCollectorMetricSet.java
++++ b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/GarbageCollectorMetricSet.java
+@@ -33,12 +33,12 @@
+      * @param garbageCollectors    the garbage collectors
+      */
+     public GarbageCollectorMetricSet(Collection<GarbageCollectorMXBean> garbageCollectors) {
+-        this.garbageCollectors = new ArrayList<GarbageCollectorMXBean>(garbageCollectors);
++        this.garbageCollectors = new ArrayList<>(garbageCollectors);
+     }
+ 
+     @Override
+     public Map<MetricName, Metric> getMetrics() {
+-        final Map<MetricName, Metric> gauges = new HashMap<MetricName, Metric>();
++        final Map<MetricName, Metric> gauges = new HashMap<>();
+         for (final GarbageCollectorMXBean gc : garbageCollectors) {
+             final String name = WHITESPACE.matcher(gc.getName()).replaceAll("-");
+             gauges.put(name(name, "count"), new Gauge<Long>() {
+diff --git a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/MemoryUsageGaugeSet.java b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/MemoryUsageGaugeSet.java
+index efac44b..934077f 100644
+--- a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/MemoryUsageGaugeSet.java
++++ b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/MemoryUsageGaugeSet.java
+@@ -38,12 +38,12 @@
+     public MemoryUsageGaugeSet(MemoryMXBean mxBean,
+                                Collection<MemoryPoolMXBean> memoryPools) {
+         this.mxBean = mxBean;
+-        this.memoryPools = new ArrayList<MemoryPoolMXBean>(memoryPools);
++        this.memoryPools = new ArrayList<>(memoryPools);
+     }
+ 
+     @Override
+     public Map<MetricName, Metric> getMetrics() {
+-        final Map<MetricName, Metric> gauges = new HashMap<MetricName, Metric>();
++        final Map<MetricName, Metric> gauges = new HashMap<>();
+ 
+         gauges.put(MetricName.build("total.init"), new Gauge<Long>() {
+             @Override
+diff --git a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ThreadDeadlockDetector.java b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ThreadDeadlockDetector.java
+index cca9c84..a591252 100644
+--- a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ThreadDeadlockDetector.java
++++ b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ThreadDeadlockDetector.java
+@@ -40,7 +40,7 @@
+     public Set<String> getDeadlockedThreads() {
+         final long[] ids = threads.findDeadlockedThreads();
+         if (ids != null) {
+-            final Set<String> deadlocks = new HashSet<String>();
++            final Set<String> deadlocks = new HashSet<>();
+             for (ThreadInfo info : threads.getThreadInfo(ids, MAX_STACK_TRACE_DEPTH)) {
+                 final StringBuilder stackTrace = new StringBuilder();
+                 for (StackTraceElement element : info.getStackTrace()) {
+diff --git a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ThreadStatesGaugeSet.java b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ThreadStatesGaugeSet.java
+index 6529bb5..a42ad8b 100644
+--- a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ThreadStatesGaugeSet.java
++++ b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/ThreadStatesGaugeSet.java
+@@ -47,7 +47,7 @@
+ 
+     @Override
+     public Map<MetricName, Metric> getMetrics() {
+-        final Map<MetricName, Metric> gauges = new HashMap<MetricName, Metric>();
++        final Map<MetricName, Metric> gauges = new HashMap<>();
+ 
+         for (final Thread.State state : Thread.State.values()) {
+             gauges.put(name(state.toString().toLowerCase(), "count"),
+diff --git a/metrics-jvm/src/test/java/io/dropwizard/metrics/jvm/ThreadStatesGaugeSetTest.java b/metrics-jvm/src/test/java/io/dropwizard/metrics/jvm/ThreadStatesGaugeSetTest.java
+index 42f5c27..77eea76 100644
+--- a/metrics-jvm/src/test/java/io/dropwizard/metrics/jvm/ThreadStatesGaugeSetTest.java
++++ b/metrics-jvm/src/test/java/io/dropwizard/metrics/jvm/ThreadStatesGaugeSetTest.java
+@@ -31,7 +31,7 @@
+     private final ThreadInfo timedWaitingThread = mock(ThreadInfo.class);
+     private final ThreadInfo terminatedThread = mock(ThreadInfo.class);
+ 
+-    private final Set<String> deadlocks = new HashSet<String>();
++    private final Set<String> deadlocks = new HashSet<>();
+ 
+     private static final MetricName TERMINATED_COUNT = MetricName.build("terminated.count");
+     private static final MetricName NEW_COUNT = MetricName.build("new.count");
+diff --git a/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/AbstractInstrumentedFilter.java b/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/AbstractInstrumentedFilter.java
+index 8d2630d..24e56a6 100644
+--- a/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/AbstractInstrumentedFilter.java
++++ b/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/AbstractInstrumentedFilter.java
+@@ -63,7 +63,7 @@
+             metricName = getClass().getName();
+         }
+ 
+-        this.metersByStatusCode = new ConcurrentHashMap<Integer, Meter>(meterNamesByStatusCode
++        this.metersByStatusCode = new ConcurrentHashMap<>(meterNamesByStatusCode
+                 .size());
+         for (Entry<Integer, String> entry : meterNamesByStatusCode.entrySet()) {
+             metersByStatusCode.put(entry.getKey(),
+diff --git a/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/InstrumentedFilter.java b/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/InstrumentedFilter.java
+index dd2d3b4..23a7958 100644
+--- a/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/InstrumentedFilter.java
++++ b/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/InstrumentedFilter.java
+@@ -36,7 +36,7 @@
+     }
+ 
+     private static Map<Integer, String> createMeterNamesByStatusCode() {
+-        final Map<Integer, String> meterNamesByStatusCode = new HashMap<Integer, String>(6);
++        final Map<Integer, String> meterNamesByStatusCode = new HashMap<>(6);
+         meterNamesByStatusCode.put(OK, NAME_PREFIX + "ok");
+         meterNamesByStatusCode.put(CREATED, NAME_PREFIX + "created");
+         meterNamesByStatusCode.put(NO_CONTENT, NAME_PREFIX + "noContent");
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/ExponentiallyDecayingReservoir.java b/metrics-core/src/main/java/io/dropwizard/metrics/ExponentiallyDecayingReservoir.java
+index 46bcb93..7128deb 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/ExponentiallyDecayingReservoir.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/ExponentiallyDecayingReservoir.java
+@@ -68,7 +68,7 @@
+      * @param clock the clock used to timestamp samples and track rescaling
+      */
+     public ExponentiallyDecayingReservoir(int size, double alpha, Clock clock) {
+-        this.values = new ConcurrentSkipListMap<Double, WeightedSample>();
++        this.values = new ConcurrentSkipListMap<>();
+         this.lock = new ReentrantReadWriteLock();
+         this.alpha = alpha;
+         this.size = size;
+@@ -171,7 +171,7 @@
+                 this.startTime = currentTimeInSeconds();
+                 final double scalingFactor = exp(-alpha * (startTime - oldStartTime));
+ 
+-                final ArrayList<Double> keys = new ArrayList<Double>(values.keySet());
++                final ArrayList<Double> keys = new ArrayList<>(values.keySet());
+                 for (Double key : keys) {
+                     final WeightedSample sample = values.remove(key);
+                     final WeightedSample newSample = new WeightedSample(sample.value, sample.weight * scalingFactor);

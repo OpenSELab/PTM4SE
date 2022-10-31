@@ -1,0 +1,15 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/internal/XDocsPagesTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/internal/XDocsPagesTest.java
+index 86e06a5..173fc68 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/internal/XDocsPagesTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/internal/XDocsPagesTest.java
+@@ -177,7 +177,9 @@
+     private static void buildAndValidateXml(String fileName, String unserializedSource)
+             throws IOException, ParserConfigurationException, CheckstyleException {
+         // not all examples come with the full xml structure
+-        String code = unserializedSource;
++        String code = unserializedSource
++            // don't corrupt our own cachefile
++            .replace("target/cachefile", "target/cachefile-test");
+ 
+         if (!hasFileSetClass(code)) {
+             code = "<module name=\"TreeWalker\">\n" + code + "\n</module>";

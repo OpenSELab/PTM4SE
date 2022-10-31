@@ -1,0 +1,19 @@
+diff --git a/cli/src/java/org/apache/hadoop/hive/cli/CliDriver.java b/cli/src/java/org/apache/hadoop/hive/cli/CliDriver.java
+index 0c21739..1f6199a 100644
+--- a/cli/src/java/org/apache/hadoop/hive/cli/CliDriver.java
++++ b/cli/src/java/org/apache/hadoop/hive/cli/CliDriver.java
+@@ -301,12 +301,12 @@
+     String curPrompt = prompt;
+     while ((line = reader.readLine(curPrompt+"> ")) != null) {
+       if(line.trim().endsWith(";")) {
+-        line = prefix + " " + line;
++        line = prefix + "\n" + line;
+         ret = cli.processLine(line);
+         prefix = "";
+         curPrompt = prompt;
+       } else {
+-        prefix = prefix + line;
++        prefix = prefix + "\n" + line;
+         curPrompt = prompt2;
+         continue;
+       }

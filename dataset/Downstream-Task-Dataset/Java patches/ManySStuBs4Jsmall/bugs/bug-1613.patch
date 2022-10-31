@@ -1,0 +1,39 @@
+diff --git a/client/src/main/java/org/asynchttpclient/netty/timeout/ReadTimeoutTimerTask.java b/client/src/main/java/org/asynchttpclient/netty/timeout/ReadTimeoutTimerTask.java
+index 715afad..a35a695 100755
+--- a/client/src/main/java/org/asynchttpclient/netty/timeout/ReadTimeoutTimerTask.java
++++ b/client/src/main/java/org/asynchttpclient/netty/timeout/ReadTimeoutTimerTask.java
+@@ -52,7 +52,7 @@
+ 
+         if (durationBeforeCurrentReadTimeout <= 0L) {
+             // idleConnectTimeout reached
+-            String message = "Read timeout to " + remoteAddress + " of " + readTimeout + " ms";
++            String message = "Read timeout to " + remoteAddress + " after " + readTimeout + " ms";
+             long durationSinceLastTouch = now - nettyResponseFuture.getLastTouch();
+             expire(message, durationSinceLastTouch);
+             // cancel request timeout sibling
+diff --git a/client/src/main/java/org/asynchttpclient/netty/timeout/RequestTimeoutTimerTask.java b/client/src/main/java/org/asynchttpclient/netty/timeout/RequestTimeoutTimerTask.java
+index 42ba4f1..8ebdbd0 100755
+--- a/client/src/main/java/org/asynchttpclient/netty/timeout/RequestTimeoutTimerTask.java
++++ b/client/src/main/java/org/asynchttpclient/netty/timeout/RequestTimeoutTimerTask.java
+@@ -43,7 +43,7 @@
+         if (nettyResponseFuture.isDone())
+             return;
+ 
+-        String message = "Request timed out to " + remoteAddress + " of " + requestTimeout + " ms";
++        String message = "Request timeout to " + remoteAddress + " after " + requestTimeout + "ms";
+         long age = millisTime() - nettyResponseFuture.getStart();
+         expire(message, age);
+     }
+diff --git a/client/src/main/java/org/asynchttpclient/netty/timeout/ReadTimeoutTimerTask.java b/client/src/main/java/org/asynchttpclient/netty/timeout/ReadTimeoutTimerTask.java
+index 715afad..a35a695 100755
+--- a/client/src/main/java/org/asynchttpclient/netty/timeout/ReadTimeoutTimerTask.java
++++ b/client/src/main/java/org/asynchttpclient/netty/timeout/ReadTimeoutTimerTask.java
+@@ -52,7 +52,7 @@
+ 
+         if (durationBeforeCurrentReadTimeout <= 0L) {
+             // idleConnectTimeout reached
+-            String message = "Read timeout to " + remoteAddress + " of " + readTimeout + " ms";
++            String message = "Read timeout to " + remoteAddress + " after " + readTimeout + " ms";
+             long durationSinceLastTouch = now - nettyResponseFuture.getLastTouch();
+             expire(message, durationSinceLastTouch);
+             // cancel request timeout sibling

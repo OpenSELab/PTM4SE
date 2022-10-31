@@ -1,0 +1,26 @@
+diff --git a/src/java/org/apache/hadoop/hbase/regionserver/HStore.java b/src/java/org/apache/hadoop/hbase/regionserver/HStore.java
+index 242863f..6f0d29f 100644
+--- a/src/java/org/apache/hadoop/hbase/regionserver/HStore.java
++++ b/src/java/org/apache/hadoop/hbase/regionserver/HStore.java
+@@ -1524,7 +1524,7 @@
+   private static boolean isExpired(final HStoreKey hsk, final long ttl,
+       final long now) {
+     boolean result = ttl != HConstants.FOREVER && now > hsk.getTimestamp() + ttl;
+-    if (LOG.isDebugEnabled()) {
++    if (result && LOG.isDebugEnabled()) {
+       LOG.debug("rowAtOrBeforeCandidate 1:" + hsk +
+         ": expired, skipped");
+     }
+diff --git a/src/java/org/apache/hadoop/hbase/regionserver/HStore.java b/src/java/org/apache/hadoop/hbase/regionserver/HStore.java
+index 242863f..6f0d29f 100644
+--- a/src/java/org/apache/hadoop/hbase/regionserver/HStore.java
++++ b/src/java/org/apache/hadoop/hbase/regionserver/HStore.java
+@@ -1524,7 +1524,7 @@
+   private static boolean isExpired(final HStoreKey hsk, final long ttl,
+       final long now) {
+     boolean result = ttl != HConstants.FOREVER && now > hsk.getTimestamp() + ttl;
+-    if (LOG.isDebugEnabled()) {
++    if (result && LOG.isDebugEnabled()) {
+       LOG.debug("rowAtOrBeforeCandidate 1:" + hsk +
+         ": expired, skipped");
+     }

@@ -1,0 +1,13 @@
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
+index 24a50df..4f4e0ba 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
+@@ -76,7 +76,7 @@
+ 
+ 	public void setColor (float r, float g, float b, float a) {
+ 		int intBits = ((int)(255 * a) << 24) | ((int)(255 * b) << 16) | ((int)(255 * g) << 8) | ((int)(255 * r));
+-		float color = Float.intBitsToFloat(intBits);
++		float color = Float.intBitsToFloat((intBits & 0xfeffffff));
+ 		if (color == this.color) return;
+ 		this.color = color;
+ 		float[] vertices = this.vertices;

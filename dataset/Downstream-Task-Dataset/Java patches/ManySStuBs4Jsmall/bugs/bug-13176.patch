@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryManager.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryManager.java
+index 95d12c3..d292967 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryManager.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryManager.java
+@@ -253,7 +253,7 @@
+ 
+         // start the query in the background
+         if (!queryStarter.submit(queryExecution)) {
+-            return createFailedQuery(session, query, queryId, new PrestoException(QUERY_QUEUE_FULL, "Too many queued queries!"));
++            queryExecution.fail(new PrestoException(QUERY_QUEUE_FULL, "Too many queued queries!"));
+         }
+ 
+         return queryExecution.getQueryInfo();
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryManager.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryManager.java
+index 95d12c3..d292967 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryManager.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryManager.java
+@@ -253,7 +253,7 @@
+ 
+         // start the query in the background
+         if (!queryStarter.submit(queryExecution)) {
+-            return createFailedQuery(session, query, queryId, new PrestoException(QUERY_QUEUE_FULL, "Too many queued queries!"));
++            queryExecution.fail(new PrestoException(QUERY_QUEUE_FULL, "Too many queued queries!"));
+         }
+ 
+         return queryExecution.getQueryInfo();

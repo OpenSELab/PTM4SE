@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index 9b3539c..2d9331f 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -2157,7 +2157,7 @@
+             configureRequestResponse(req, res);
+             a = asyncSupport.service(req, res);
+         } catch (IllegalStateException ex) {
+-            boolean isJBoss = ex.getMessage().startsWith("JBoss failed");
++            boolean isJBoss = ex.getMessage() == null ? false : ex.getMessage().startsWith("JBoss failed");
+             if (ex.getMessage() != null && (ex.getMessage().startsWith("Tomcat failed") || isJBoss)) {
+                 if (!isFilter) {
+                     logger.warn("Failed using comet support: {}, error: {} Is the NIO or APR Connector enabled?", asyncSupport.getClass().getName(),
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index 9b3539c..2d9331f 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -2157,7 +2157,7 @@
+             configureRequestResponse(req, res);
+             a = asyncSupport.service(req, res);
+         } catch (IllegalStateException ex) {
+-            boolean isJBoss = ex.getMessage().startsWith("JBoss failed");
++            boolean isJBoss = ex.getMessage() == null ? false : ex.getMessage().startsWith("JBoss failed");
+             if (ex.getMessage() != null && (ex.getMessage().startsWith("Tomcat failed") || isJBoss)) {
+                 if (!isFilter) {
+                     logger.warn("Failed using comet support: {}, error: {} Is the NIO or APR Connector enabled?", asyncSupport.getClass().getName(),

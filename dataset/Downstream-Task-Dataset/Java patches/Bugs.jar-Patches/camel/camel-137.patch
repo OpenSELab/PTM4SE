@@ -1,0 +1,13 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/file/GenericFile.java b/camel-core/src/main/java/org/apache/camel/component/file/GenericFile.java
+index 907de21..e517550 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/file/GenericFile.java
++++ b/camel-core/src/main/java/org/apache/camel/component/file/GenericFile.java
+@@ -185,7 +185,7 @@ public class GenericFile<T> implements WrappedFile<T>  {
+ 
+         // Make sure the names is normalized.
+         String newFileName = FileUtil.normalizePath(newName);
+-        String newEndpointPath = FileUtil.normalizePath(endpointPath);
++        String newEndpointPath = FileUtil.normalizePath(endpointPath.endsWith("" + File.separatorChar) ? endpointPath : endpointPath + File.separatorChar);
+ 
+         LOG.trace("Normalized endpointPath: {}", newEndpointPath);
+         LOG.trace("Normalized newFileName: ()", newFileName);

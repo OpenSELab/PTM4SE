@@ -1,0 +1,41 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Behaviors.java b/wicket-core/src/main/java/org/apache/wicket/Behaviors.java
+index 2e358e2..627d4e6 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Behaviors.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Behaviors.java
+@@ -70,7 +70,7 @@ final class Behaviors implements IDetachable
+ 	private void internalAdd(final Behavior behavior)
+ 	{
+ 		component.data_add(behavior);
+-		if (behavior.isStateless(component))
++		if (behavior.getStatelessHint(component))
+ 		{
+ 			getBehaviorId(behavior);
+ 		}
+diff --git a/wicket-core/src/main/java/org/apache/wicket/behavior/Behavior.java b/wicket-core/src/main/java/org/apache/wicket/behavior/Behavior.java
+index ff2e04a..a809405 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/behavior/Behavior.java
++++ b/wicket-core/src/main/java/org/apache/wicket/behavior/Behavior.java
+@@ -178,23 +178,6 @@ public abstract class Behavior
+ 	}
+ 
+ 	/**
+-	 * Returns whether or not this behavior is stateless. Most behaviors should either not override
+-	 * this method or return {@code false} because most behavior are not stateless.
+-	 * 
+-	 * A small subset of behaviors are made specifically to be stateless and as such should override
+-	 * this method and return {@code true}. One sideeffect of this method is that the behavior id
+-	 * will be generated eagerly when the behavior is added to the component instead of before
+-	 * render when a method to create the url is called - this allows for stateless callback urls.
+-	 * 
+-	 * @param component
+-	 * @return whether or not this behavior is stateless
+-	 */
+-	public boolean isStateless(Component component)
+-	{
+-		return false;
+-	}
+-
+-	/**
+ 	 * Checks if a listener can be invoked on this behavior
+ 	 * 
+ 	 * @param component

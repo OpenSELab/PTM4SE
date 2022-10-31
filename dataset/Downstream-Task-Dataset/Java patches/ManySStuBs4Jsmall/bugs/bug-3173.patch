@@ -1,0 +1,42 @@
+diff --git a/src/main/java/com/alibaba/druid/sql/parser/Lexer.java b/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
+index 531b4ba..fbbb6d3 100644
+--- a/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
++++ b/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
+@@ -450,13 +450,13 @@
+                     return;
+                 case '?':
+                     scanChar();
+-                    if (ch == '?') {
++                    if (ch == '?' && JdbcConstants.POSTGRESQL.equals(dbType)) {
+                         scanChar();
+                         token = Token.QUESQUES;
+-                    } else if (ch == '|') {
++                    } else if (ch == '|' && JdbcConstants.POSTGRESQL.equals(dbType)) {
+                         scanChar();
+                         token = Token.QUESBAR;
+-                    } else if (ch == '&') {
++                    } else if (ch == '&' && JdbcConstants.POSTGRESQL.equals(dbType)) {
+                         scanChar();
+                         token = Token.QUESAMP;
+                     } else {
+diff --git a/src/main/java/com/alibaba/druid/sql/parser/Lexer.java b/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
+index 531b4ba..fbbb6d3 100644
+--- a/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
++++ b/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
+@@ -450,13 +450,13 @@
+                     return;
+                 case '?':
+                     scanChar();
+-                    if (ch == '?') {
++                    if (ch == '?' && JdbcConstants.POSTGRESQL.equals(dbType)) {
+                         scanChar();
+                         token = Token.QUESQUES;
+-                    } else if (ch == '|') {
++                    } else if (ch == '|' && JdbcConstants.POSTGRESQL.equals(dbType)) {
+                         scanChar();
+                         token = Token.QUESBAR;
+-                    } else if (ch == '&') {
++                    } else if (ch == '&' && JdbcConstants.POSTGRESQL.equals(dbType)) {
+                         scanChar();
+                         token = Token.QUESAMP;
+                     } else {

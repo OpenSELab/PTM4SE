@@ -1,0 +1,65 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java b/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
+index fcebffa..67d88b8 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
+@@ -600,7 +600,7 @@
+ 
+         /** @param file set the property value from a File */
+         public void setFile(File file) {
+-            setValue(file.getAbsolutePath());
++            value = file.getAbsolutePath();
+         }
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractNestedDepthCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractNestedDepthCheck.java
+index fd1075a..8c1f0f1 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractNestedDepthCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractNestedDepthCheck.java
+@@ -38,7 +38,7 @@
+      * @param max default allowed nesting depth.
+      */
+     protected AbstractNestedDepthCheck(int max) {
+-        setMax(max);
++        this.max = max;
+     }
+ 
+     @Override
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/MutableExceptionCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/MutableExceptionCheck.java
+index a62643b..4d1ea49 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/MutableExceptionCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/MutableExceptionCheck.java
+@@ -59,7 +59,7 @@
+     /** Creates new instance of the check. */
+     public MutableExceptionCheck() {
+         super(DEFAULT_FORMAT);
+-        setExtendedClassNameFormat(DEFAULT_FORMAT);
++        extendedClassNameFormat = DEFAULT_FORMAT;
+     }
+ 
+     /**
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/ThrowsCountCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/ThrowsCountCheck.java
+index 3d6a469..d743555 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/ThrowsCountCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/ThrowsCountCheck.java
+@@ -71,7 +71,7 @@
+ 
+     /** Creates new instance of the check. */
+     public ThrowsCountCheck() {
+-        setMax(DEFAULT_MAX);
++        max = DEFAULT_MAX;
+     }
+ 
+     @Override
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java b/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
+index fcebffa..67d88b8 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
+@@ -600,7 +600,7 @@
+ 
+         /** @param file set the property value from a File */
+         public void setFile(File file) {
+-            setValue(file.getAbsolutePath());
++            value = file.getAbsolutePath();
+         }
+     }
+ 

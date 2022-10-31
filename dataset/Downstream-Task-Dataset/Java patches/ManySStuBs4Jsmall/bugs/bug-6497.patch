@@ -1,0 +1,26 @@
+diff --git a/flink-libraries/flink-cep/src/main/java/org/apache/flink/cep/operator/AbstractKeyedCEPPatternOperator.java b/flink-libraries/flink-cep/src/main/java/org/apache/flink/cep/operator/AbstractKeyedCEPPatternOperator.java
+index 373b9f4..83892ca 100644
+--- a/flink-libraries/flink-cep/src/main/java/org/apache/flink/cep/operator/AbstractKeyedCEPPatternOperator.java
++++ b/flink-libraries/flink-cep/src/main/java/org/apache/flink/cep/operator/AbstractKeyedCEPPatternOperator.java
+@@ -190,7 +190,7 @@
+ 		super.restoreState(state, recoveryTimestamp);
+ 
+ 		@SuppressWarnings("unchecked")
+-		StateHandle<DataInputView> stateHandle = (StateHandle<DataInputView>) state;
++		StateHandle<DataInputView> stateHandle = (StateHandle<DataInputView>) state.getOperatorState();
+ 
+ 		DataInputView inputView = stateHandle.getState(getUserCodeClassloader());
+ 
+diff --git a/flink-libraries/flink-cep/src/main/java/org/apache/flink/cep/operator/AbstractKeyedCEPPatternOperator.java b/flink-libraries/flink-cep/src/main/java/org/apache/flink/cep/operator/AbstractKeyedCEPPatternOperator.java
+index 373b9f4..83892ca 100644
+--- a/flink-libraries/flink-cep/src/main/java/org/apache/flink/cep/operator/AbstractKeyedCEPPatternOperator.java
++++ b/flink-libraries/flink-cep/src/main/java/org/apache/flink/cep/operator/AbstractKeyedCEPPatternOperator.java
+@@ -190,7 +190,7 @@
+ 		super.restoreState(state, recoveryTimestamp);
+ 
+ 		@SuppressWarnings("unchecked")
+-		StateHandle<DataInputView> stateHandle = (StateHandle<DataInputView>) state;
++		StateHandle<DataInputView> stateHandle = (StateHandle<DataInputView>) state.getOperatorState();
+ 
+ 		DataInputView inputView = stateHandle.getState(getUserCodeClassloader());
+ 

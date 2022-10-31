@@ -1,0 +1,13 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/LongMap.java b/gdx/src/com/badlogic/gdx/utils/LongMap.java
+index bed3d22..79b6c7d 100644
+--- a/gdx/src/com/badlogic/gdx/utils/LongMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/LongMap.java
+@@ -86,7 +86,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public LongMap (LongMap<? extends V> map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);

@@ -1,0 +1,34 @@
+diff --git a/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java b/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
+index f799cbe..7086c9f 100644
+--- a/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
++++ b/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
+@@ -296,10 +296,10 @@
+     if (coreLabel.containsKey(NaturalLogicAnnotations.OperatorAnnotation.class)) { builder.setOperator(toProto(getAndRegister(coreLabel, keysToSerialize, NaturalLogicAnnotations.OperatorAnnotation.class))); }
+     if (coreLabel.containsKey(NaturalLogicAnnotations.PolarityAnnotation.class)) { builder.setPolarity(toProto(getAndRegister(coreLabel, keysToSerialize, NaturalLogicAnnotations.PolarityAnnotation.class))); }
+     if (coreLabel.get(SpanAnnotation.class) != null) {
+-      IntPair span = coreLabel.get(SpanAnnotation.class);
++      IntPair span = getAndRegister(coreLabel, keysToSerialize, SpanAnnotation.class);
+       builder.setSpan(CoreNLPProtos.Span.newBuilder().setBegin(span.getSource()).setEnd(span.getTarget()).build());
+     }
+-    if (coreLabel.get(SentimentCoreAnnotations.SentimentClass.class) != null) { builder.setSentiment(coreLabel.get(SentimentCoreAnnotations.SentimentClass.class)); }
++    if (coreLabel.get(SentimentCoreAnnotations.SentimentClass.class) != null) { builder.setSentiment(getAndRegister(coreLabel, keysToSerialize, SentimentCoreAnnotations.SentimentClass.class)); }
+     // Non-default annotators
+     if (getAndRegister(coreLabel, keysToSerialize, GenderAnnotation.class) != null) { builder.setGender(getAndRegister(coreLabel, keysToSerialize, GenderAnnotation.class)); }
+     if (coreLabel.containsKey(TrueCaseAnnotation.class)) { builder.setTrueCase(getAndRegister(coreLabel, keysToSerialize, TrueCaseAnnotation.class)); }
+diff --git a/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java b/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
+index f799cbe..7086c9f 100644
+--- a/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
++++ b/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
+@@ -296,10 +296,10 @@
+     if (coreLabel.containsKey(NaturalLogicAnnotations.OperatorAnnotation.class)) { builder.setOperator(toProto(getAndRegister(coreLabel, keysToSerialize, NaturalLogicAnnotations.OperatorAnnotation.class))); }
+     if (coreLabel.containsKey(NaturalLogicAnnotations.PolarityAnnotation.class)) { builder.setPolarity(toProto(getAndRegister(coreLabel, keysToSerialize, NaturalLogicAnnotations.PolarityAnnotation.class))); }
+     if (coreLabel.get(SpanAnnotation.class) != null) {
+-      IntPair span = coreLabel.get(SpanAnnotation.class);
++      IntPair span = getAndRegister(coreLabel, keysToSerialize, SpanAnnotation.class);
+       builder.setSpan(CoreNLPProtos.Span.newBuilder().setBegin(span.getSource()).setEnd(span.getTarget()).build());
+     }
+-    if (coreLabel.get(SentimentCoreAnnotations.SentimentClass.class) != null) { builder.setSentiment(coreLabel.get(SentimentCoreAnnotations.SentimentClass.class)); }
++    if (coreLabel.get(SentimentCoreAnnotations.SentimentClass.class) != null) { builder.setSentiment(getAndRegister(coreLabel, keysToSerialize, SentimentCoreAnnotations.SentimentClass.class)); }
+     // Non-default annotators
+     if (getAndRegister(coreLabel, keysToSerialize, GenderAnnotation.class) != null) { builder.setGender(getAndRegister(coreLabel, keysToSerialize, GenderAnnotation.class)); }
+     if (coreLabel.containsKey(TrueCaseAnnotation.class)) { builder.setTrueCase(getAndRegister(coreLabel, keysToSerialize, TrueCaseAnnotation.class)); }

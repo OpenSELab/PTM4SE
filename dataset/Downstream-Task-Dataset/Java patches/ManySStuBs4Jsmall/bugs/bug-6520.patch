@@ -1,0 +1,39 @@
+diff --git a/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java b/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
+index 4e081fd..07d409e 100644
+--- a/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
++++ b/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
+@@ -339,7 +339,7 @@
+ 	public static InfoOptions parseInfoCommand(String[] args) throws CliArgsException {
+ 		try {
+ 			PosixParser parser = new PosixParser();
+-			CommandLine line = parser.parse(INFO_OPTIONS, args, false);
++			CommandLine line = parser.parse(INFO_OPTIONS, args, true);
+ 			return new InfoOptions(line);
+ 		}
+ 		catch (ParseException e) {
+diff --git a/flink-clients/src/test/java/org/apache/flink/client/CliFrontendInfoTest.java b/flink-clients/src/test/java/org/apache/flink/client/CliFrontendInfoTest.java
+index c1df541..5cc90eb 100644
+--- a/flink-clients/src/test/java/org/apache/flink/client/CliFrontendInfoTest.java
++++ b/flink-clients/src/test/java/org/apache/flink/client/CliFrontendInfoTest.java
+@@ -61,7 +61,7 @@
+ 		replaceStdOut();
+ 		try {
+ 
+-			String[] parameters = new String[] { CliFrontendTestUtils.getTestJarPath() };
++			String[] parameters = new String[] { CliFrontendTestUtils.getTestJarPath(), "-f", "true"};
+ 			CliFrontend testFrontend = new CliFrontend(CliFrontendTestUtils.getConfigDir());
+ 			int retCode = testFrontend.info(parameters);
+ 			assertTrue(retCode == 0);
+diff --git a/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java b/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
+index 4e081fd..07d409e 100644
+--- a/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
++++ b/flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontendParser.java
+@@ -339,7 +339,7 @@
+ 	public static InfoOptions parseInfoCommand(String[] args) throws CliArgsException {
+ 		try {
+ 			PosixParser parser = new PosixParser();
+-			CommandLine line = parser.parse(INFO_OPTIONS, args, false);
++			CommandLine line = parser.parse(INFO_OPTIONS, args, true);
+ 			return new InfoOptions(line);
+ 		}
+ 		catch (ParseException e) {

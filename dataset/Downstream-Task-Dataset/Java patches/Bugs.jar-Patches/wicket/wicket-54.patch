@@ -1,0 +1,17 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Component.java b/wicket-core/src/main/java/org/apache/wicket/Component.java
+index f94cf41..7a3df6a 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Component.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Component.java
+@@ -2956,6 +2956,12 @@ public abstract class Component
+ 			if (model != null)
+ 			{
+ 				data_set(0, model);
++				// WICKET-3413 reset 'inherited model' flag if model changed
++				// and a new one is not IComponentInheritedModel
++				if (getFlag(FLAG_INHERITABLE_MODEL) && !(model instanceof IComponentInheritedModel))
++				{
++					setFlag(FLAG_INHERITABLE_MODEL, false);
++				}
+ 			}
+ 			else
+ 			{

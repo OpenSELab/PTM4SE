@@ -1,0 +1,13 @@
+diff --git a/api/src/main/java/org/openmrs/api/impl/FormServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/FormServiceImpl.java
+index 8ca3e7c..b3ac8c1 100644
+--- a/api/src/main/java/org/openmrs/api/impl/FormServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/FormServiceImpl.java
+@@ -784,7 +784,7 @@
+ 	public void checkIfFormsAreLocked() {
+ 		String locked = Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_FORMS_LOCKED,
+ 		    "false");
+-		if (locked.toLowerCase().equals("true")) {
++		if ("true".equals(locked.toLowerCase())) {
+ 			throw new FormsLockedException();
+ 		}
+ 	}

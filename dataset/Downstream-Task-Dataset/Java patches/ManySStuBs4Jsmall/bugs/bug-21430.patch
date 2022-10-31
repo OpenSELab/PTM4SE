@@ -1,0 +1,26 @@
+diff --git a/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java b/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java
+index 958ddce..dab8d11 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java
++++ b/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java
+@@ -112,7 +112,7 @@
+ 			String logFile) {
+ 		RollingFileAppender<ILoggingEvent> appender = new RollingFileAppender<ILoggingEvent>();
+ 		PatternLayoutEncoder encoder = new PatternLayoutEncoder();
+-		encoder.setPattern(FILE_LOG_PATTERN);
++		encoder.setPattern(OptionHelper.substVars(FILE_LOG_PATTERN, config.getContext()));
+ 		appender.setEncoder(encoder);
+ 		config.start(encoder);
+ 
+diff --git a/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java b/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java
+index 958ddce..dab8d11 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java
++++ b/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java
+@@ -112,7 +112,7 @@
+ 			String logFile) {
+ 		RollingFileAppender<ILoggingEvent> appender = new RollingFileAppender<ILoggingEvent>();
+ 		PatternLayoutEncoder encoder = new PatternLayoutEncoder();
+-		encoder.setPattern(FILE_LOG_PATTERN);
++		encoder.setPattern(OptionHelper.substVars(FILE_LOG_PATTERN, config.getContext()));
+ 		appender.setEncoder(encoder);
+ 		config.start(encoder);
+ 

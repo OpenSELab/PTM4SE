@@ -1,0 +1,47 @@
+diff --git a/src/main/java/redis/clients/jedis/BinaryClient.java b/src/main/java/redis/clients/jedis/BinaryClient.java
+index 30a3cec..3cdc317 100644
+--- a/src/main/java/redis/clients/jedis/BinaryClient.java
++++ b/src/main/java/redis/clients/jedis/BinaryClient.java
+@@ -1189,7 +1189,7 @@
+   }
+   
+   private byte[][] removeNulls(List<byte[]> list) {
+-    ArrayList<byte[]> noNullsList = new ArrayList<>(list);
++    ArrayList<byte[]> noNullsList = new ArrayList<byte[]>(list);
+     noNullsList.removeAll(Collections.singleton(null));
+ 
+     return noNullsList.toArray(new byte[noNullsList.size()][]);
+diff --git a/src/main/java/redis/clients/jedis/params/Params.java b/src/main/java/redis/clients/jedis/params/Params.java
+index 78a766c..3b2ad96 100644
+--- a/src/main/java/redis/clients/jedis/params/Params.java
++++ b/src/main/java/redis/clients/jedis/params/Params.java
+@@ -22,14 +22,14 @@
+   
+   protected void addParam(String name, Object value) {
+     if(params == null) {
+-      params = new HashMap<>();
++      params = new HashMap<String, Object>();
+     }
+     params.put(name, value);
+   }
+   
+   protected void addParam(String name) {
+     if(params == null) {
+-      params = new HashMap<>();
++      params = new HashMap<String, Object>();
+     }
+     params.put(name, true);
+   }
+diff --git a/src/main/java/redis/clients/jedis/BinaryClient.java b/src/main/java/redis/clients/jedis/BinaryClient.java
+index 30a3cec..3cdc317 100644
+--- a/src/main/java/redis/clients/jedis/BinaryClient.java
++++ b/src/main/java/redis/clients/jedis/BinaryClient.java
+@@ -1189,7 +1189,7 @@
+   }
+   
+   private byte[][] removeNulls(List<byte[]> list) {
+-    ArrayList<byte[]> noNullsList = new ArrayList<>(list);
++    ArrayList<byte[]> noNullsList = new ArrayList<byte[]>(list);
+     noNullsList.removeAll(Collections.singleton(null));
+ 
+     return noNullsList.toArray(new byte[noNullsList.size()][]);

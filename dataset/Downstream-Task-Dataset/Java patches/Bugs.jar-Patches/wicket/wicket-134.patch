@@ -1,0 +1,63 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
+index a0f3654..46dbefc 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
+@@ -796,10 +796,6 @@ public class Form<T> extends WebMarkupContainer implements IFormSubmitListener
+ 	 */
+ 	public void process(IFormSubmitter submittingComponent)
+ 	{
+-		// save the page in case the component is removed during submit
+-		final Page page = getPage();
+-		String hiddenFieldId = getHiddenFieldId();
+-
+ 		if (!isEnabledInHierarchy() || !isVisibleInHierarchy())
+ 		{
+ 			// since process() can be called outside of the default form workflow, an additional
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/form/StatelessForm.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/form/StatelessForm.java
+index 034519c..2442556 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/form/StatelessForm.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/form/StatelessForm.java
+@@ -17,6 +17,9 @@
+ package org.apache.wicket.markup.html.form;
+ 
+ import org.apache.wicket.model.IModel;
++import org.apache.wicket.request.mapper.parameter.PageParameters;
++import org.apache.wicket.util.visit.IVisit;
++import org.apache.wicket.util.visit.IVisitor;
+ 
+ /**
+  * This StatelessForm is the same as a normal form but with the statelesshint default to true. The
+@@ -72,4 +75,33 @@ public class StatelessForm<T> extends Form<T>
+ 	{
+ 		return urlFor(IFormSubmitListener.INTERFACE, getPage().getPageParameters());
+ 	}
++
++	/**
++	 * Remove the page parameters for all form component otherwise they get appended to action URL
++	 *
++	 * {@inheritDoc}
++	 */
++	@Override
++	public void process(IFormSubmitter submittingComponent)
++	{
++		super.process(submittingComponent);
++
++		final PageParameters parameters = getPage().getPageParameters();
++		if (parameters != null)
++		{
++			visitFormComponents(new IVisitor<FormComponent<?>, Void>()
++			{
++				public void component(final FormComponent<?> formComponent, final IVisit<Void> visit)
++				{
++					parameters.remove(formComponent.getInputName());
++				}
++			});
++			parameters.remove(getHiddenFieldId());
++			if (submittingComponent instanceof AbstractSubmitLink)
++			{
++				AbstractSubmitLink submitLink = (AbstractSubmitLink)submittingComponent;
++				parameters.remove(submitLink.getInputName());
++			}
++		}
++	}
+ }

@@ -1,0 +1,31 @@
+diff --git a/metrics-core/src/main/java/io/dropwizard/metrics/MetricRegistry.java b/metrics-core/src/main/java/io/dropwizard/metrics/MetricRegistry.java
+index 5b5f2fc..e43a28e 100644
+--- a/metrics-core/src/main/java/io/dropwizard/metrics/MetricRegistry.java
++++ b/metrics-core/src/main/java/io/dropwizard/metrics/MetricRegistry.java
+@@ -76,7 +76,7 @@
+      */
+     protected MetricRegistry(ConcurrentMap<MetricName, Metric> metricsMap) {
+         this.metrics = metricsMap;
+-        this.listeners = new CopyOnWriteArrayList<MetricRegistryListener>();
++        this.listeners = new CopyOnWriteArrayList<>();
+     }
+ 
+     /**
+@@ -256,7 +256,7 @@
+      * @return the names of all the metrics
+      */
+     public SortedSet<MetricName> getNames() {
+-        return Collections.unmodifiableSortedSet(new TreeSet<MetricName>(metrics.keySet()));
++        return Collections.unmodifiableSortedSet(new TreeSet<>(metrics.keySet()));
+     }
+ 
+     /**
+@@ -376,7 +376,7 @@
+ 
+     @SuppressWarnings("unchecked")
+     private <T extends Metric> SortedMap<MetricName, T> getMetrics(Class<T> klass, MetricFilter filter) {
+-        final TreeMap<MetricName, T> timers = new TreeMap<MetricName, T>();
++        final TreeMap<MetricName, T> timers = new TreeMap<>();
+         for (Map.Entry<MetricName, Metric> entry : metrics.entrySet()) {
+             if (klass.isInstance(entry.getValue()) && filter.matches(entry.getKey(),
+                                                                      entry.getValue())) {

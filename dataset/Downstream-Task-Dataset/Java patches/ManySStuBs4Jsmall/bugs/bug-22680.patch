@@ -1,0 +1,118 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index b37e286..86a2938 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -2385,7 +2385,7 @@
+ 
+             // validation
+             // handle maximum, minimum properly for int/long by removing the trailing ".0"
+-            if ("integer".equals(type)) {
++            if ("integer".equals(qp.getType())) {
+                 p.maximum = qp.getMaximum() == null ? null : String.valueOf(qp.getMaximum().longValue());
+                 p.minimum = qp.getMinimum() == null ? null : String.valueOf(qp.getMinimum().longValue());
+             } else {
+diff --git a/samples/server/petstore/jaxrs/jersey1/src/gen/java/io/swagger/api/StoreApiService.java b/samples/server/petstore/jaxrs/jersey1/src/gen/java/io/swagger/api/StoreApiService.java
+index 283e268..b5a01e4 100644
+--- a/samples/server/petstore/jaxrs/jersey1/src/gen/java/io/swagger/api/StoreApiService.java
++++ b/samples/server/petstore/jaxrs/jersey1/src/gen/java/io/swagger/api/StoreApiService.java
+@@ -21,7 +21,7 @@
+ import javax.validation.constraints.*;
+ 
+ public abstract class StoreApiService {
+-      public abstract Response deleteOrder( @Min(1.0)String orderId,SecurityContext securityContext)
++      public abstract Response deleteOrder(String orderId,SecurityContext securityContext)
+       throws NotFoundException;
+       public abstract Response getInventory(SecurityContext securityContext)
+       throws NotFoundException;
+diff --git a/samples/server/petstore/jaxrs/jersey1/src/main/java/io/swagger/api/impl/StoreApiServiceImpl.java b/samples/server/petstore/jaxrs/jersey1/src/main/java/io/swagger/api/impl/StoreApiServiceImpl.java
+index a1b85ef..96194fb 100644
+--- a/samples/server/petstore/jaxrs/jersey1/src/main/java/io/swagger/api/impl/StoreApiServiceImpl.java
++++ b/samples/server/petstore/jaxrs/jersey1/src/main/java/io/swagger/api/impl/StoreApiServiceImpl.java
+@@ -22,7 +22,7 @@
+ 
+ public class StoreApiServiceImpl extends StoreApiService {
+     @Override
+-    public Response deleteOrder( @Min(1.0)String orderId, SecurityContext securityContext)
++    public Response deleteOrder(String orderId, SecurityContext securityContext)
+     throws NotFoundException {
+         // do some magic!
+         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/FakeApiService.java b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/FakeApiService.java
+index e49ec4c..aaff35d 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/FakeApiService.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/FakeApiService.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/PetApiService.java b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/PetApiService.java
+index 8ac5692..3156675 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/PetApiService.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/PetApiService.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/StoreApiService.java b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/StoreApiService.java
+index e472fd9..911c700 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/StoreApiService.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/StoreApiService.java
+@@ -18,7 +18,7 @@
+ import javax.validation.constraints.*;
+ 
+ public abstract class StoreApiService {
+-    public abstract Response deleteOrder( @Min(1.0)String orderId,SecurityContext securityContext) throws NotFoundException;
++    public abstract Response deleteOrder(String orderId,SecurityContext securityContext) throws NotFoundException;
+     public abstract Response getInventory(SecurityContext securityContext) throws NotFoundException;
+     public abstract Response getOrderById( @Min(1) @Max(5)Long orderId,SecurityContext securityContext) throws NotFoundException;
+     public abstract Response placeOrder(Order body,SecurityContext securityContext) throws NotFoundException;
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/UserApiService.java b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/UserApiService.java
+index 254895e..8bbee33 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/UserApiService.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/api/UserApiService.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Animal.java b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Animal.java
+index ff2a4f0..1898c82 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Animal.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Animal.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/FormatTest.java b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/FormatTest.java
+index a2a748a..973afef 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/FormatTest.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/FormatTest.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Name.java b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Name.java
+index 7d2c29e..c48051e 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Name.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Name.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Pet.java b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Pet.java
+index 3070763..2b1c91b 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Pet.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/gen/java/io/swagger/model/Pet.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/FakeApiServiceImpl.java b/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/FakeApiServiceImpl.java
+index 98b6ea9..11b046e 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/FakeApiServiceImpl.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/FakeApiServiceImpl.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/PetApiServiceImpl.java b/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/PetApiServiceImpl.java
+index 84b2d2d..be3e7e1 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/PetApiServiceImpl.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/PetApiServiceImpl.java
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/StoreApiServiceImpl.java b/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/StoreApiServiceImpl.java
+index cddb935..f8fd4ce 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/StoreApiServiceImpl.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/StoreApiServiceImpl.java
+@@ -19,7 +19,7 @@
+ 
+ public class StoreApiServiceImpl extends StoreApiService {
+     @Override
+-    public Response deleteOrder( @Min(1.0)String orderId, SecurityContext securityContext) throws NotFoundException {
++    public Response deleteOrder(String orderId, SecurityContext securityContext) throws NotFoundException {
+         // do some magic!
+         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+     }
+diff --git a/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/UserApiServiceImpl.java b/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/UserApiServiceImpl.java
+index 6868d0a..5853e33 100644
+--- a/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/UserApiServiceImpl.java
++++ b/samples/server/petstore/jaxrs/jersey2/src/main/java/io/swagger/api/impl/UserApiServiceImpl.java
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index b37e286..86a2938 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -2385,7 +2385,7 @@
+ 
+             // validation
+             // handle maximum, minimum properly for int/long by removing the trailing ".0"
+-            if ("integer".equals(type)) {
++            if ("integer".equals(qp.getType())) {
+                 p.maximum = qp.getMaximum() == null ? null : String.valueOf(qp.getMaximum().longValue());
+                 p.minimum = qp.getMinimum() == null ? null : String.valueOf(qp.getMinimum().longValue());
+             } else {

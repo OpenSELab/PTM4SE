@@ -1,0 +1,39 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/memory/MemoryPool.java b/presto-main/src/main/java/com/facebook/presto/memory/MemoryPool.java
+index 0f46fc8..20520fa 100644
+--- a/presto-main/src/main/java/com/facebook/presto/memory/MemoryPool.java
++++ b/presto-main/src/main/java/com/facebook/presto/memory/MemoryPool.java
+@@ -322,7 +322,7 @@
+     {
+         public static <V> NonCancellableMemoryFuture<V> create()
+         {
+-            return new NonCancellableMemoryFuture<V>();
++            return new NonCancellableMemoryFuture<>();
+         }
+ 
+         @Override
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/ValidateDependenciesChecker.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/ValidateDependenciesChecker.java
+index 5ee7ffb..995158c 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/ValidateDependenciesChecker.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/ValidateDependenciesChecker.java
+@@ -349,7 +349,7 @@
+ 
+             int leftMaxPosition = -1;
+             Optional<Integer> rightMinPosition = Optional.empty();
+-            Set<Symbol> leftSymbols = new HashSet<Symbol>(node.getLeft().getOutputSymbols());
++            Set<Symbol> leftSymbols = new HashSet<>(node.getLeft().getOutputSymbols());
+             for (int i = 0; i < node.getOutputSymbols().size(); i++) {
+                 Symbol symbol = node.getOutputSymbols().get(i);
+                 if (leftSymbols.contains(symbol)) {
+diff --git a/presto-main/src/main/java/com/facebook/presto/memory/MemoryPool.java b/presto-main/src/main/java/com/facebook/presto/memory/MemoryPool.java
+index 0f46fc8..20520fa 100644
+--- a/presto-main/src/main/java/com/facebook/presto/memory/MemoryPool.java
++++ b/presto-main/src/main/java/com/facebook/presto/memory/MemoryPool.java
+@@ -322,7 +322,7 @@
+     {
+         public static <V> NonCancellableMemoryFuture<V> create()
+         {
+-            return new NonCancellableMemoryFuture<V>();
++            return new NonCancellableMemoryFuture<>();
+         }
+ 
+         @Override

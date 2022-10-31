@@ -1,0 +1,38 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/memory/ClusterMemoryPool.java b/presto-main/src/main/java/com/facebook/presto/memory/ClusterMemoryPool.java
+index 061101d..ca0df46 100644
+--- a/presto-main/src/main/java/com/facebook/presto/memory/ClusterMemoryPool.java
++++ b/presto-main/src/main/java/com/facebook/presto/memory/ClusterMemoryPool.java
+@@ -130,12 +130,12 @@
+ 
+     public synchronized Map<QueryId, Long> getQueryMemoryReservations()
+     {
+-        return queryMemoryReservations;
++        return ImmutableMap.copyOf(queryMemoryReservations);
+     }
+ 
+     public synchronized Map<QueryId, Long> getQueryMemoryRevocableReservations()
+     {
+-        return queryMemoryRevocableReservations;
++        return ImmutableMap.copyOf(queryMemoryRevocableReservations);
+     }
+ 
+     public synchronized void update(List<MemoryInfo> memoryInfos, int assignedQueries)
+diff --git a/presto-main/src/main/java/com/facebook/presto/memory/ClusterMemoryPool.java b/presto-main/src/main/java/com/facebook/presto/memory/ClusterMemoryPool.java
+index 061101d..ca0df46 100644
+--- a/presto-main/src/main/java/com/facebook/presto/memory/ClusterMemoryPool.java
++++ b/presto-main/src/main/java/com/facebook/presto/memory/ClusterMemoryPool.java
+@@ -130,12 +130,12 @@
+ 
+     public synchronized Map<QueryId, Long> getQueryMemoryReservations()
+     {
+-        return queryMemoryReservations;
++        return ImmutableMap.copyOf(queryMemoryReservations);
+     }
+ 
+     public synchronized Map<QueryId, Long> getQueryMemoryRevocableReservations()
+     {
+-        return queryMemoryRevocableReservations;
++        return ImmutableMap.copyOf(queryMemoryRevocableReservations);
+     }
+ 
+     public synchronized void update(List<MemoryInfo> memoryInfos, int assignedQueries)

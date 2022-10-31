@@ -1,0 +1,22 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/proxy/ClientCacheProxy.java b/hazelcast-client/src/main/java/com/hazelcast/client/proxy/ClientCacheProxy.java
+index 4cfffa4..fbf5adc 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/proxy/ClientCacheProxy.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/proxy/ClientCacheProxy.java
+@@ -156,7 +156,7 @@
+             return true;
+         }
+         CacheContainsKeyRequest request = new CacheContainsKeyRequest(getDistributedObjectName(), keyData);
+-        return toObject(invoke(request, keyData));
++        return (Boolean) toObject(invoke(request, keyData));
+     }
+ 
+     @Override
+@@ -1103,7 +1103,7 @@
+                     if (eventObject instanceof CacheEventData) {
+                         CacheEventData cacheEventData = (CacheEventData) eventObject;
+                         if (cacheEventData.getCacheEventType() == CacheEventType.COMPLETED) {
+-                            int completionId = toObject(cacheEventData.getDataValue());
++                            Integer completionId = toObject(cacheEventData.getDataValue());
+                             countDownCompletionLatch(completionId);
+                         }
+                     }

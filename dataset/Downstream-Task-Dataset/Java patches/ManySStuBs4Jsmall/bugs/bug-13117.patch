@@ -1,0 +1,44 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveRecordSink.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveRecordSink.java
+index f1302b8..ca738b9 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveRecordSink.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveRecordSink.java
+@@ -210,7 +210,7 @@
+             recordWriter.close(false);
+         }
+         catch (IOException e) {
+-            throw Throwables.propagate(e);
++            throw new PrestoException(HIVE_WRITER_ERROR, "Error committing write to Hive", e);
+         }
+ 
+         // the committer can list the directory
+@@ -224,7 +224,7 @@
+             recordWriter.close(true);
+         }
+         catch (IOException e) {
+-            throw Throwables.propagate(e);
++            throw new PrestoException(HIVE_WRITER_ERROR, "Error rolling back write to Hive", e);
+         }
+     }
+ 
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveRecordSink.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveRecordSink.java
+index f1302b8..ca738b9 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveRecordSink.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveRecordSink.java
+@@ -210,7 +210,7 @@
+             recordWriter.close(false);
+         }
+         catch (IOException e) {
+-            throw Throwables.propagate(e);
++            throw new PrestoException(HIVE_WRITER_ERROR, "Error committing write to Hive", e);
+         }
+ 
+         // the committer can list the directory
+@@ -224,7 +224,7 @@
+             recordWriter.close(true);
+         }
+         catch (IOException e) {
+-            throw Throwables.propagate(e);
++            throw new PrestoException(HIVE_WRITER_ERROR, "Error rolling back write to Hive", e);
+         }
+     }
+ 

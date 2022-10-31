@@ -1,0 +1,36 @@
+diff --git a/src/com/google/javascript/jscomp/newtypes/JSType.java b/src/com/google/javascript/jscomp/newtypes/JSType.java
+index 3f0f76e..1f7dee5 100644
+--- a/src/com/google/javascript/jscomp/newtypes/JSType.java
++++ b/src/com/google/javascript/jscomp/newtypes/JSType.java
+@@ -1517,7 +1517,12 @@
+             switch (tag) {
+               case TRUE_MASK:
+               case FALSE_MASK:
+-                builder.append("boolean");
++                builder.append(
++                    (tags & BOOLEAN_MASK) == BOOLEAN_MASK
++                        ? "boolean"
++                        : tag == TRUE_MASK
++                        ? "true"
++                        : "false");
+                 tags &= ~BOOLEAN_MASK;
+                 continue;
+               case NULL_MASK:
+diff --git a/src/com/google/javascript/jscomp/newtypes/JSType.java b/src/com/google/javascript/jscomp/newtypes/JSType.java
+index 3f0f76e..1f7dee5 100644
+--- a/src/com/google/javascript/jscomp/newtypes/JSType.java
++++ b/src/com/google/javascript/jscomp/newtypes/JSType.java
+@@ -1517,7 +1517,12 @@
+             switch (tag) {
+               case TRUE_MASK:
+               case FALSE_MASK:
+-                builder.append("boolean");
++                builder.append(
++                    (tags & BOOLEAN_MASK) == BOOLEAN_MASK
++                        ? "boolean"
++                        : tag == TRUE_MASK
++                        ? "true"
++                        : "false");
+                 tags &= ~BOOLEAN_MASK;
+                 continue;
+               case NULL_MASK:

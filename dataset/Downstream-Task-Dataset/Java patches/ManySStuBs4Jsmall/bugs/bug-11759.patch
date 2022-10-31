@@ -1,0 +1,26 @@
+diff --git a/processing/src/main/java/io/druid/query/TimewarpOperator.java b/processing/src/main/java/io/druid/query/TimewarpOperator.java
+index 66df6e3..c599081 100644
+--- a/processing/src/main/java/io/druid/query/TimewarpOperator.java
++++ b/processing/src/main/java/io/druid/query/TimewarpOperator.java
+@@ -85,7 +85,7 @@
+ 
+         final Interval interval = query.getIntervals().get(0);
+         final Interval modifiedInterval = new Interval(
+-            interval.getStartMillis() + offset,
++            Math.min(interval.getStartMillis() + offset, now + offset),
+             Math.min(interval.getEndMillis() + offset, now + offset)
+         );
+         return Sequences.map(
+diff --git a/processing/src/main/java/io/druid/query/TimewarpOperator.java b/processing/src/main/java/io/druid/query/TimewarpOperator.java
+index 66df6e3..c599081 100644
+--- a/processing/src/main/java/io/druid/query/TimewarpOperator.java
++++ b/processing/src/main/java/io/druid/query/TimewarpOperator.java
+@@ -85,7 +85,7 @@
+ 
+         final Interval interval = query.getIntervals().get(0);
+         final Interval modifiedInterval = new Interval(
+-            interval.getStartMillis() + offset,
++            Math.min(interval.getStartMillis() + offset, now + offset),
+             Math.min(interval.getEndMillis() + offset, now + offset)
+         );
+         return Sequences.map(

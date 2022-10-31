@@ -1,0 +1,22 @@
+diff --git a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecPlainStringTest.java b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecPlainStringTest.java
+index e65c9e2..3453e72 100644
+--- a/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecPlainStringTest.java
++++ b/components/camel-hl7/src/test/java/org/apache/camel/component/hl7/HL7MLLPCodecPlainStringTest.java
+@@ -46,7 +46,7 @@
+         mock.expectedBodiesReceived("Bye World");
+ 
+         // send plain hello world as String
+-        Object out = template.requestBody("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec", "Hello World");
++        Object out = template.requestBody("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec", "Hello World");
+ 
+         assertMockEndpointsSatisfied();
+ 
+@@ -59,7 +59,7 @@
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+                 // START SNIPPET: e2
+-                from("mina:tcp://0.0.0.0:8888?sync=true&codec=#hl7codec")
++                from("mina:tcp://127.0.0.1:8888?sync=true&codec=#hl7codec")
+                     .process(new Processor() {
+                         public void process(Exchange exchange) throws Exception {
+                             // use plain String as message format

@@ -1,0 +1,33 @@
+--- a/address-controller/src/main/java/io/enmasse/controller/api/DefaultExceptionMapper.java
++++ b/address-controller/src/main/java/io/enmasse/controller/api/DefaultExceptionMapper.java
+@@ -28,7 +29,7 @@ public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
+             WebApplicationException webApplicationException = (WebApplicationException) exception;
+             status = Response.Status.fromStatusCode(webApplicationException.getResponse().getStatus());
+             response = webApplicationException.getResponse();
+-        } else if (exception instanceof UnresolvedAddressException || exception instanceof UnresolvedAddressSpaceException) {
++        } else if (exception instanceof UnresolvedAddressException || exception instanceof UnresolvedAddressSpaceException || exception instanceof DeserializeException) {
+             status = Response.Status.BAD_REQUEST;
+             response = Response.status(status)
+                     .entity(new ErrorResponse(null, exception.getMessage()))
+diff --git a/address-model-lib/src/main/java/io/enmasse/address/model/v1/AddressSpaceV1Deserializer.java b/address-model-lib/src/main/java/io/enmasse/address/model/v1/AddressSpaceV1Deserializer.java
+index c0fafac..b5e0700 100644
+--- a/address-model-lib/src/main/java/io/enmasse/address/model/v1/AddressSpaceV1Deserializer.java
++++ b/address-model-lib/src/main/java/io/enmasse/address/model/v1/AddressSpaceV1Deserializer.java
+@@ -35,6 +35,7 @@ class AddressSpaceV1Deserializer extends JsonDeserializer<AddressSpace> {
+     }
+ 
+     AddressSpace deserialize(ObjectNode root) {
++        validate(root);
+ 
+         ObjectNode metadata = (ObjectNode) root.get(Fields.METADATA);
+         ObjectNode spec = (ObjectNode) root.get(Fields.SPEC);
+--- a/address-model-lib/src/main/java/io/enmasse/address/model/v1/AddressV1Deserializer.java
++++ b/address-model-lib/src/main/java/io/enmasse/address/model/v1/AddressV1Deserializer.java
+@@ -29,6 +30,7 @@ class AddressV1Deserializer extends JsonDeserializer<Address> {
+     }
+ 
+     Address deserialize(ObjectNode root) {
++        validate(root);
+         ObjectNode metadata = (ObjectNode) root.get(Fields.METADATA);
+         ObjectNode spec = (ObjectNode) root.get(Fields.SPEC);
+         ObjectNode status = (ObjectNode) root.get(Fields.STATUS);

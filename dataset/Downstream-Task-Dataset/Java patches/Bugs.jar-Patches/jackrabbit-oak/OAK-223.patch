@@ -1,0 +1,21 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/FullTextSearchImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/FullTextSearchImpl.java
+index 2e0505f..f3d11de 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/FullTextSearchImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/FullTextSearchImpl.java
+@@ -273,16 +273,6 @@ public class FullTextSearchImpl extends ConstraintImpl {
+ 
+     @Override
+     public void restrict(FilterImpl f) {
+-        if (propertyName != null) {
+-            if (f.getSelector().equals(selector)) {
+-                String p = propertyName;
+-                if (relativePath != null) {
+-                    p = PathUtils.concat(relativePath, p);
+-                }
+-                p = normalizePropertyName(p);
+-                restrictPropertyOnFilter(p, f);
+-            }
+-        }
+         f.restrictFulltextCondition(fullTextSearchExpression.currentValue().getValue(Type.STRING));
+     }
+ 

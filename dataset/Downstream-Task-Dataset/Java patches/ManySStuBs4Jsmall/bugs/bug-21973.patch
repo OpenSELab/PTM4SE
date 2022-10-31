@@ -1,0 +1,26 @@
+diff --git a/src/edu/stanford/nlp/pipeline/GenericWebServiceAnnotator.java b/src/edu/stanford/nlp/pipeline/GenericWebServiceAnnotator.java
+index 112e3cd..0245457 100644
+--- a/src/edu/stanford/nlp/pipeline/GenericWebServiceAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/GenericWebServiceAnnotator.java
+@@ -116,7 +116,7 @@
+       conn = (HttpURLConnection) new URL(annotatorEndpoint + "/annotate/").openConnection();
+       conn.setRequestMethod("POST");
+       conn.setDoOutput(true);
+-      conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
++      conn.setRequestProperty("Content-Type", "application/octet-stream; charset=UTF-8");
+ 
+       try(OutputStream outputStream = conn.getOutputStream()) {
+         serializer.toProto(ann).writeDelimitedTo(outputStream);
+diff --git a/src/edu/stanford/nlp/pipeline/GenericWebServiceAnnotator.java b/src/edu/stanford/nlp/pipeline/GenericWebServiceAnnotator.java
+index 112e3cd..0245457 100644
+--- a/src/edu/stanford/nlp/pipeline/GenericWebServiceAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/GenericWebServiceAnnotator.java
+@@ -116,7 +116,7 @@
+       conn = (HttpURLConnection) new URL(annotatorEndpoint + "/annotate/").openConnection();
+       conn.setRequestMethod("POST");
+       conn.setDoOutput(true);
+-      conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
++      conn.setRequestProperty("Content-Type", "application/octet-stream; charset=UTF-8");
+ 
+       try(OutputStream outputStream = conn.getOutputStream()) {
+         serializer.toProto(ann).writeDelimitedTo(outputStream);

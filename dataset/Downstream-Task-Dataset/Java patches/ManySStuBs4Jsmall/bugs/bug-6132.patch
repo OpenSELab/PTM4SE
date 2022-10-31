@@ -1,0 +1,74 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/WaitForTaskToComplete.java b/camel-core/src/main/java/org/apache/camel/WaitForTaskToComplete.java
+index 7e9ba3f..bd6cced 100644
+--- a/camel-core/src/main/java/org/apache/camel/WaitForTaskToComplete.java
++++ b/camel-core/src/main/java/org/apache/camel/WaitForTaskToComplete.java
+@@ -32,5 +32,5 @@
+ @XmlEnum(String.class)
+ public enum WaitForTaskToComplete {
+ 
+-    Newer, IfReplyExpected, Always
++    Never, IfReplyExpected, Always
+ }
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncDeadLetterChannelTest.java b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncDeadLetterChannelTest.java
+index cc64640..319763e 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncDeadLetterChannelTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncDeadLetterChannelTest.java
+@@ -79,7 +79,7 @@
+                 errorHandler(deadLetterChannel("mock:dead").maximumRedeliveries(2).delay(0).logStackTrace(false));
+ 
+                 from("direct:in")
+-                    .threads(2).waitForTaskToComplete(WaitForTaskToComplete.Newer)
++                    .threads(2).waitForTaskToComplete(WaitForTaskToComplete.Never)
+                     .to("mock:foo")
+                     .process(new Processor() {
+                         public void process(Exchange exchange) throws Exception {
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncDefaultErrorHandlerTest.java b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncDefaultErrorHandlerTest.java
+index 68bb5f4..3c0d341 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncDefaultErrorHandlerTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncDefaultErrorHandlerTest.java
+@@ -68,7 +68,7 @@
+             @Override
+             public void configure() throws Exception {
+                 from("direct:in")
+-                    .threads(2).waitForTaskToComplete(WaitForTaskToComplete.Newer)
++                    .threads(2).waitForTaskToComplete(WaitForTaskToComplete.Never)
+                     .to("mock:foo")
+                     .process(new Processor() {
+                         public void process(Exchange exchange) throws Exception {
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteNoWaitTest.java b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteNoWaitTest.java
+index 932ffd1..63b0984 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteNoWaitTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteNoWaitTest.java
+@@ -127,7 +127,7 @@
+                             // we do not want to wait for tasks to be complete so we instruct Camel
+                             // to not wait, and therefore Camel returns the Future<Exchange> handle we
+                             // can use to get the result when we want
+-                        .threads().waitForTaskToComplete(WaitForTaskToComplete.Newer)
++                        .threads().waitForTaskToComplete(WaitForTaskToComplete.Never)
+                             // from this point forward this is the async route doing its work
+                             // so we do a bit of delay to simulate heavy work that takes time
+                         .to("mock:foo")
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteNoWaitWithErrorTest.java b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteNoWaitWithErrorTest.java
+index 79736ea..02e6400 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteNoWaitWithErrorTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteNoWaitWithErrorTest.java
+@@ -104,7 +104,7 @@
+                             // now turn the route into async from this point forward
+                             // the caller will have a Future<Exchange> returned as response in OUT
+                             // to be used to grap the async response when he fell like it
+-                        .threads().waitForTaskToComplete(WaitForTaskToComplete.Newer)
++                        .threads().waitForTaskToComplete(WaitForTaskToComplete.Never)
+                             // from this point forward this is the async route doing its work
+                             // so we do a bit of delay to simulate heavy work that takes time
+                         .to("mock:foo")
+diff --git a/camel-core/src/main/java/org/apache/camel/WaitForTaskToComplete.java b/camel-core/src/main/java/org/apache/camel/WaitForTaskToComplete.java
+index 7e9ba3f..bd6cced 100644
+--- a/camel-core/src/main/java/org/apache/camel/WaitForTaskToComplete.java
++++ b/camel-core/src/main/java/org/apache/camel/WaitForTaskToComplete.java
+@@ -32,5 +32,5 @@
+ @XmlEnum(String.class)
+ public enum WaitForTaskToComplete {
+ 
+-    Newer, IfReplyExpected, Always
++    Never, IfReplyExpected, Always
+ }

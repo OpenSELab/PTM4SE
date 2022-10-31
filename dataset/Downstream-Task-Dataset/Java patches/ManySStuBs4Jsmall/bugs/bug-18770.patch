@@ -1,0 +1,36 @@
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java
+index 9130d33..f320927 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java
+@@ -341,11 +341,11 @@
+             FileOutputStream outputStream = new FileOutputStream(dest);
+             FileChannel in = inputStream.getChannel();
+             FileChannel out = outputStream.getChannel();
+-            int chunkSize = 8196;
++            long chunkSize = 8196;
+             long position = 0;
+             while (position < size) {
+                 if (chunkSize < size - position) {
+-                    chunkSize = (int) (size - position);
++                    chunkSize = size - position;
+                 }
+                 position += in.transferTo(position, chunkSize , out);
+             }
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java
+index 9130d33..f320927 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java
+@@ -341,11 +341,11 @@
+             FileOutputStream outputStream = new FileOutputStream(dest);
+             FileChannel in = inputStream.getChannel();
+             FileChannel out = outputStream.getChannel();
+-            int chunkSize = 8196;
++            long chunkSize = 8196;
+             long position = 0;
+             while (position < size) {
+                 if (chunkSize < size - position) {
+-                    chunkSize = (int) (size - position);
++                    chunkSize = size - position;
+                 }
+                 position += in.transferTo(position, chunkSize , out);
+             }

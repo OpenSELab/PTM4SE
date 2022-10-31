@@ -1,0 +1,28 @@
+diff --git a/components/camel-spring-boot/src/main/java/org/apache/camel/spring/boot/CamelSpringBootApplicationController.java b/components/camel-spring-boot/src/main/java/org/apache/camel/spring/boot/CamelSpringBootApplicationController.java
+index bbca474..c05b35a 100644
+--- a/components/camel-spring-boot/src/main/java/org/apache/camel/spring/boot/CamelSpringBootApplicationController.java
++++ b/components/camel-spring-boot/src/main/java/org/apache/camel/spring/boot/CamelSpringBootApplicationController.java
+@@ -53,7 +53,8 @@
+                 try {
+                     super.doStop();
+                 } finally {
+-                    latch.countDown();
++                    // should use the latch on this instance
++                    CamelSpringBootApplicationController.this.latch.countDown();
+                 }
+             }
+         };
+diff --git a/components/camel-spring-boot/src/main/java/org/apache/camel/spring/boot/CamelSpringBootApplicationController.java b/components/camel-spring-boot/src/main/java/org/apache/camel/spring/boot/CamelSpringBootApplicationController.java
+index bbca474..c05b35a 100644
+--- a/components/camel-spring-boot/src/main/java/org/apache/camel/spring/boot/CamelSpringBootApplicationController.java
++++ b/components/camel-spring-boot/src/main/java/org/apache/camel/spring/boot/CamelSpringBootApplicationController.java
+@@ -53,7 +53,8 @@
+                 try {
+                     super.doStop();
+                 } finally {
+-                    latch.countDown();
++                    // should use the latch on this instance
++                    CamelSpringBootApplicationController.this.latch.countDown();
+                 }
+             }
+         };

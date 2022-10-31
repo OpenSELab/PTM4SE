@@ -1,0 +1,30 @@
+diff --git a/spring-boot/src/main/java/org/springframework/boot/logging/logback/SpringProfileAction.java b/spring-boot/src/main/java/org/springframework/boot/logging/logback/SpringProfileAction.java
+index 492be92..4ab2958 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/logging/logback/SpringProfileAction.java
++++ b/spring-boot/src/main/java/org/springframework/boot/logging/logback/SpringProfileAction.java
+@@ -67,8 +67,8 @@
+ 	}
+ 
+ 	private boolean acceptsProfiles(InterpretationContext ic, Attributes attributes) {
+-		String[] profileNames = StringUtils
+-				.commaDelimitedListToStringArray(attributes.getValue(NAME_ATTRIBUTE));
++		String[] profileNames = StringUtils.trimArrayElements(StringUtils
++				.commaDelimitedListToStringArray(attributes.getValue(NAME_ATTRIBUTE)));
+ 		if (profileNames.length != 0) {
+ 			for (String profileName : profileNames) {
+ 				OptionHelper.substVars(profileName, ic, this.context);
+diff --git a/spring-boot/src/main/java/org/springframework/boot/logging/logback/SpringProfileAction.java b/spring-boot/src/main/java/org/springframework/boot/logging/logback/SpringProfileAction.java
+index 492be92..4ab2958 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/logging/logback/SpringProfileAction.java
++++ b/spring-boot/src/main/java/org/springframework/boot/logging/logback/SpringProfileAction.java
+@@ -67,8 +67,8 @@
+ 	}
+ 
+ 	private boolean acceptsProfiles(InterpretationContext ic, Attributes attributes) {
+-		String[] profileNames = StringUtils
+-				.commaDelimitedListToStringArray(attributes.getValue(NAME_ATTRIBUTE));
++		String[] profileNames = StringUtils.trimArrayElements(StringUtils
++				.commaDelimitedListToStringArray(attributes.getValue(NAME_ATTRIBUTE)));
+ 		if (profileNames.length != 0) {
+ 			for (String profileName : profileNames) {
+ 				OptionHelper.substVars(profileName, ic, this.context);

@@ -1,0 +1,140 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java b/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
+index 3d3b5f1..5e1bae9 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
+@@ -294,7 +294,7 @@
+     }
+ 
+     /** Notify all listeners about the audit start */
+-    protected void fireAuditStarted() {
++    void fireAuditStarted() {
+         final AuditEvent evt = new AuditEvent(this);
+         for (final AuditListener listener : listeners) {
+             listener.auditStarted(evt);
+@@ -302,7 +302,7 @@
+     }
+ 
+     /** Notify all listeners about the audit end */
+-    protected void fireAuditFinished() {
++    void fireAuditFinished() {
+         final AuditEvent evt = new AuditEvent(this);
+         for (final AuditListener listener : listeners) {
+             listener.auditFinished(evt);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+index 714074f..bb6dfbb 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+@@ -253,7 +253,7 @@
+      * @return the check configurations
+      * @throws CheckstyleException if an error occurs
+      */
+-    public static Configuration loadConfiguration(InputSource configSource,
++    private static Configuration loadConfiguration(InputSource configSource,
+         PropertyResolver overridePropsResolver, boolean omitIgnoredModules)
+         throws CheckstyleException {
+         try {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
+index 745e292..c997dfa 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
+@@ -160,7 +160,7 @@
+     /**
+      * Flushes the output streams and closes them if needed.
+      */
+-    protected void closeStreams() {
++    private void closeStreams() {
+         infoWriter.flush();
+         if (closeInfo) {
+             infoWriter.close();
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/utils/CheckUtils.java b/src/main/java/com/puppycrawl/tools/checkstyle/utils/CheckUtils.java
+index 484c0b9..bd9d5ae 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/utils/CheckUtils.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/utils/CheckUtils.java
+@@ -214,7 +214,7 @@
+      * @return the integer represented by the string argument in the specified
+      * radix.
+      */
+-    public static int parseInt(String text, int radix) {
++    private static int parseInt(String text, int radix) {
+         int result = 0;
+         final int max = text.length();
+         for (int i = 0; i < max; i++) {
+@@ -236,7 +236,7 @@
+      * @return the long represented by the string argument in the specified
+      * radix.
+      */
+-    public static long parseLong(String text, int radix) {
++    private static long parseLong(String text, int radix) {
+         long result = 0;
+         final int max = text.length();
+         for (int i = 0; i < max; i++) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/utils/JavadocUtils.java b/src/main/java/com/puppycrawl/tools/checkstyle/utils/JavadocUtils.java
+index 61351f2..9065b08 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/utils/JavadocUtils.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/utils/JavadocUtils.java
+@@ -236,7 +236,7 @@
+      *        block comment AST.
+      * @return content of block comment.
+      */
+-    public static String getBlockCommentContent(DetailAST blockCommentBegin) {
++    private static String getBlockCommentContent(DetailAST blockCommentBegin) {
+         final DetailAST commentContent = blockCommentBegin.getFirstChild();
+         return commentContent.getText();
+     }
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/BaseCheckTestSupport.java b/src/test/java/com/puppycrawl/tools/checkstyle/BaseCheckTestSupport.java
+index 5241a1e..e2ffab8 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/BaseCheckTestSupport.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/BaseCheckTestSupport.java
+@@ -41,7 +41,7 @@
+     protected final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+     protected final PrintStream stream = new PrintStream(baos);
+ 
+-    public static DefaultConfiguration createCheckConfig(Class<?> clazz) {
++    protected static DefaultConfiguration createCheckConfig(Class<?> clazz) {
+         return new DefaultConfiguration(clazz.getName());
+     }
+ 
+@@ -135,7 +135,7 @@
+      * @param messageKey the key of message in 'messages.properties' file.
+      * @param arguments  the arguments of message in 'messages.properties' file.
+      */
+-    public String getCheckMessage(String messageKey, Object... arguments) {
++    protected String getCheckMessage(String messageKey, Object... arguments) {
+         Properties pr = new Properties();
+         try {
+             pr.load(getClass().getResourceAsStream("messages.properties"));
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/PackageNamesLoaderTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/PackageNamesLoaderTest.java
+index 7ced289..305b88c 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/PackageNamesLoaderTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/PackageNamesLoaderTest.java
+@@ -179,7 +179,7 @@
+         }
+     }
+ 
+-    public static URL getMockUrl(final URLConnection connection) throws IOException {
++    private static URL getMockUrl(final URLConnection connection) throws IOException {
+         final URLStreamHandler handler = new URLStreamHandler() {
+             @Override
+             protected URLConnection openConnection(final URL url) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java b/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
+index 3d3b5f1..5e1bae9 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/Checker.java
+@@ -294,7 +294,7 @@
+     }
+ 
+     /** Notify all listeners about the audit start */
+-    protected void fireAuditStarted() {
++    void fireAuditStarted() {
+         final AuditEvent evt = new AuditEvent(this);
+         for (final AuditListener listener : listeners) {
+             listener.auditStarted(evt);
+@@ -302,7 +302,7 @@
+     }
+ 
+     /** Notify all listeners about the audit end */
+-    protected void fireAuditFinished() {
++    void fireAuditFinished() {
+         final AuditEvent evt = new AuditEvent(this);
+         for (final AuditListener listener : listeners) {
+             listener.auditFinished(evt);

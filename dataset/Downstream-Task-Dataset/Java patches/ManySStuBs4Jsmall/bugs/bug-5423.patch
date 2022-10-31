@@ -1,0 +1,28 @@
+diff --git a/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQConsumer.java b/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQConsumer.java
+index 7ae8d12..a1128dd 100644
+--- a/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQConsumer.java
++++ b/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQConsumer.java
+@@ -61,7 +61,8 @@
+                 endpoint.isAutoDelete(),
+                 new HashMap<String, Object>());
+ 
+-        channel.queueDeclare(endpoint.getQueue(), true, false, false, null);
++        // need to make sure the queueDeclare is same with the exchange declare
++        channel.queueDeclare(endpoint.getQueue(), endpoint.isDurable(), false, endpoint.isAutoDelete(), null);
+         channel.queueBind(endpoint.getQueue(), endpoint.getExchangeName(),
+                 endpoint.getRoutingKey() == null ? "" : endpoint.getRoutingKey());
+ 
+diff --git a/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQConsumer.java b/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQConsumer.java
+index 7ae8d12..a1128dd 100644
+--- a/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQConsumer.java
++++ b/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQConsumer.java
+@@ -61,7 +61,8 @@
+                 endpoint.isAutoDelete(),
+                 new HashMap<String, Object>());
+ 
+-        channel.queueDeclare(endpoint.getQueue(), true, false, false, null);
++        // need to make sure the queueDeclare is same with the exchange declare
++        channel.queueDeclare(endpoint.getQueue(), endpoint.isDurable(), false, endpoint.isAutoDelete(), null);
+         channel.queueBind(endpoint.getQueue(), endpoint.getExchangeName(),
+                 endpoint.getRoutingKey() == null ? "" : endpoint.getRoutingKey());
+ 

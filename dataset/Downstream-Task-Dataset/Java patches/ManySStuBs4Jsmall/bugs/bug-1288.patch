@@ -1,0 +1,26 @@
+diff --git a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+index 73f82d8..fee51fe 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
++++ b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+@@ -187,7 +187,7 @@
+     mFSMasterClient = mCloser.register(FileSystemContext.INSTANCE.acquireMasterClient());
+     mBlockMasterClient = mCloser.register(BlockStoreContext.INSTANCE.acquireMasterClient());
+     mRawTableMasterClient = mCloser.register(new RawTableMasterClient(mMasterAddress,
+-        mExecutorService, mTachyonConf));
++        ClientContext.getExecutorService(), mTachyonConf));
+     mWorkerClient = mCloser.register(BlockStoreContext.INSTANCE.acquireWorkerClient());
+     mUserFailedSpaceRequestLimits = mTachyonConf.getInt(Constants.USER_FAILED_SPACE_REQUEST_LIMITS);
+     String scheme = mZookeeperMode ? Constants.SCHEME_FT : Constants.SCHEME;
+diff --git a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+index 73f82d8..fee51fe 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
++++ b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+@@ -187,7 +187,7 @@
+     mFSMasterClient = mCloser.register(FileSystemContext.INSTANCE.acquireMasterClient());
+     mBlockMasterClient = mCloser.register(BlockStoreContext.INSTANCE.acquireMasterClient());
+     mRawTableMasterClient = mCloser.register(new RawTableMasterClient(mMasterAddress,
+-        mExecutorService, mTachyonConf));
++        ClientContext.getExecutorService(), mTachyonConf));
+     mWorkerClient = mCloser.register(BlockStoreContext.INSTANCE.acquireWorkerClient());
+     mUserFailedSpaceRequestLimits = mTachyonConf.getInt(Constants.USER_FAILED_SPACE_REQUEST_LIMITS);
+     String scheme = mZookeeperMode ? Constants.SCHEME_FT : Constants.SCHEME;

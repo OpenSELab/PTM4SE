@@ -1,0 +1,79 @@
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/state/StateMachineFactory.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/state/StateMachineFactory.java
+index 71c829a..df6ef6f 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/state/StateMachineFactory.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/state/StateMachineFactory.java
+@@ -68,7 +68,7 @@
+   
+   private StateMachineFactory
+       (StateMachineFactory<OPERAND, STATE, EVENTTYPE, EVENT> that,
+-       ApplicableTransition t) {
++       ApplicableTransition<OPERAND, STATE, EVENTTYPE, EVENT> t) {
+     this.defaultInitialState = that.defaultInitialState;
+     this.transitionsListNode 
+         = new TransitionsListNode(t, that.transitionsListNode);
+@@ -96,11 +96,12 @@
+   }
+ 
+   private class TransitionsListNode {
+-    final ApplicableTransition transition;
++    final ApplicableTransition<OPERAND, STATE, EVENTTYPE, EVENT> transition;
+     final TransitionsListNode next;
+ 
+     TransitionsListNode
+-        (ApplicableTransition transition, TransitionsListNode next) {
++        (ApplicableTransition<OPERAND, STATE, EVENTTYPE, EVENT> transition,
++        TransitionsListNode next) {
+       this.transition = transition;
+       this.next = next;
+     }
+@@ -225,8 +226,8 @@
+           addTransition(STATE preState, STATE postState,
+                         EVENTTYPE eventType,
+                         SingleArcTransition<OPERAND, EVENT> hook){
+-    return new StateMachineFactory
+-        (this, new ApplicableSingleOrMultipleTransition
++    return new StateMachineFactory<OPERAND, STATE, EVENTTYPE, EVENT>
++        (this, new ApplicableSingleOrMultipleTransition<OPERAND, STATE, EVENTTYPE, EVENT>
+            (preState, eventType, new SingleInternalArc(postState, hook)));
+   }
+ 
+@@ -248,9 +249,9 @@
+           addTransition(STATE preState, Set<STATE> postStates,
+                         EVENTTYPE eventType,
+                         MultipleArcTransition<OPERAND, EVENT, STATE> hook){
+-    return new StateMachineFactory
++    return new StateMachineFactory<OPERAND, STATE, EVENTTYPE, EVENT>
+         (this,
+-         new ApplicableSingleOrMultipleTransition
++         new ApplicableSingleOrMultipleTransition<OPERAND, STATE, EVENTTYPE, EVENT>
+            (preState, eventType, new MultipleInternalArc(postStates, hook)));
+   }
+ 
+@@ -273,7 +274,7 @@
+   public StateMachineFactory
+              <OPERAND, STATE, EVENTTYPE, EVENT>
+           installTopology() {
+-    return new StateMachineFactory(this, true);
++    return new StateMachineFactory<OPERAND, STATE, EVENTTYPE, EVENT>(this, true);
+   }
+ 
+   /**
+@@ -308,7 +309,8 @@
+   }
+ 
+   private void makeStateMachineTable() {
+-    Stack<ApplicableTransition> stack = new Stack<ApplicableTransition>();
++    Stack<ApplicableTransition<OPERAND, STATE, EVENTTYPE, EVENT>> stack =
++      new Stack<ApplicableTransition<OPERAND, STATE, EVENTTYPE, EVENT>>();
+ 
+     Map<STATE, Map<EVENTTYPE, Transition<OPERAND, STATE, EVENTTYPE, EVENT>>>
+       prototype = new HashMap<STATE, Map<EVENTTYPE, Transition<OPERAND, STATE, EVENTTYPE, EVENT>>>();
+@@ -469,7 +471,7 @@
+         } else if (transition instanceof StateMachineFactory.MultipleInternalArc) {
+           StateMachineFactory.MultipleInternalArc ma
+               = (StateMachineFactory.MultipleInternalArc) transition;
+-          Iterator<STATE> iter = ma.validPostStates.iterator();
++          Iterator iter = ma.validPostStates.iterator();
+           while (iter.hasNext()) {
+             Graph.Node fromNode = g.getNode(startState.toString());
+             Graph.Node toNode = g.getNode(iter.next().toString());

@@ -1,0 +1,52 @@
+diff --git a/indexing-hadoop/src/main/java/io/druid/indexer/HadoopIngestionSpec.java b/indexing-hadoop/src/main/java/io/druid/indexer/HadoopIngestionSpec.java
+index 985b3f1..2ebd1b7 100644
+--- a/indexing-hadoop/src/main/java/io/druid/indexer/HadoopIngestionSpec.java
++++ b/indexing-hadoop/src/main/java/io/druid/indexer/HadoopIngestionSpec.java
+@@ -139,7 +139,7 @@
+           dataSource,
+           new StringInputRowParser(
+               dataSpec == null ? null : dataSpec.toParseSpec(timestampSpec, dimensionExclusions),
+-              null, null, null
++              null, null, null, null
+           ),
+           rollupSpec == null
+           ? new AggregatorFactory[]{}
+diff --git a/processing/src/test/java/io/druid/segment/TestIndex.java b/processing/src/test/java/io/druid/segment/TestIndex.java
+index 434042b..9582321 100644
+--- a/processing/src/test/java/io/druid/segment/TestIndex.java
++++ b/processing/src/test/java/io/druid/segment/TestIndex.java
+@@ -182,7 +182,7 @@
+                     "\t",
+                     Arrays.asList(COLUMNS)
+                 ),
+-                null, null, null
++                null, null, null, null
+             );
+             boolean runOnce = false;
+             int lineCount = 0;
+diff --git a/server/src/test/java/io/druid/segment/realtime/FireDepartmentTest.java b/server/src/test/java/io/druid/segment/realtime/FireDepartmentTest.java
+index 2da5854..19c104a 100644
+--- a/server/src/test/java/io/druid/segment/realtime/FireDepartmentTest.java
++++ b/server/src/test/java/io/druid/segment/realtime/FireDepartmentTest.java
+@@ -63,7 +63,7 @@
+                         null
+                     )
+                 ),
+-                null, null, null
++                null, null, null, null
+             ),
+             new AggregatorFactory[]{
+                 new CountAggregatorFactory("count")
+diff --git a/indexing-hadoop/src/main/java/io/druid/indexer/HadoopIngestionSpec.java b/indexing-hadoop/src/main/java/io/druid/indexer/HadoopIngestionSpec.java
+index 985b3f1..2ebd1b7 100644
+--- a/indexing-hadoop/src/main/java/io/druid/indexer/HadoopIngestionSpec.java
++++ b/indexing-hadoop/src/main/java/io/druid/indexer/HadoopIngestionSpec.java
+@@ -139,7 +139,7 @@
+           dataSource,
+           new StringInputRowParser(
+               dataSpec == null ? null : dataSpec.toParseSpec(timestampSpec, dimensionExclusions),
+-              null, null, null
++              null, null, null, null
+           ),
+           rollupSpec == null
+           ? new AggregatorFactory[]{}

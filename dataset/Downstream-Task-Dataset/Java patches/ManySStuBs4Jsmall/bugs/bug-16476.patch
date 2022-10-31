@@ -1,0 +1,38 @@
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index 8f95baf..8b73ade 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -453,12 +453,12 @@
+      * @return the CSS Path that can be used to retrieve the element in a selector.
+      */
+     public String cssSelector() {
+-        if (!id().isEmpty())
++        if (id().length() > 0)
+             return "#" + id();
+ 
+         StringBuilder selector = new StringBuilder(tagName());
+         String classes = StringUtil.join(classNames(), ".");
+-        if (!classes.isEmpty())
++        if (classes.length() > 0)
+             selector.append('.').append(classes);
+ 
+         if (parent() == null || parent() instanceof Document) // don't add Document to selector, as will always have a html node
+diff --git a/src/main/java/org/jsoup/nodes/Element.java b/src/main/java/org/jsoup/nodes/Element.java
+index 8f95baf..8b73ade 100644
+--- a/src/main/java/org/jsoup/nodes/Element.java
++++ b/src/main/java/org/jsoup/nodes/Element.java
+@@ -453,12 +453,12 @@
+      * @return the CSS Path that can be used to retrieve the element in a selector.
+      */
+     public String cssSelector() {
+-        if (!id().isEmpty())
++        if (id().length() > 0)
+             return "#" + id();
+ 
+         StringBuilder selector = new StringBuilder(tagName());
+         String classes = StringUtil.join(classNames(), ".");
+-        if (!classes.isEmpty())
++        if (classes.length() > 0)
+             selector.append('.').append(classes);
+ 
+         if (parent() == null || parent() instanceof Document) // don't add Document to selector, as will always have a html node

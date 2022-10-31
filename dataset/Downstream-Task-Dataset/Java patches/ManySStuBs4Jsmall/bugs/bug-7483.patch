@@ -1,0 +1,66 @@
+diff --git a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
+index 975bf6c..ba70263 100644
+--- a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
++++ b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
+@@ -105,7 +105,7 @@
+ 
+       @Override
+       public synchronized void update(byte[] region, byte[] row, R result) {
+-        max = ci.compare(max, result) < 0 ? result : max;
++        max = (max == null || (result != null && ci.compare(max, result) < 0)) ? result : max;
+       }
+     }
+     MaxCallBack aMaxCallBack = new MaxCallBack();
+@@ -155,7 +155,7 @@
+ 
+       @Override
+       public synchronized void update(byte[] region, byte[] row, R result) {
+-        min = (min == null || ci.compare(result, min) < 0) ? result : min;
++        min = (min == null || (result != null && ci.compare(result, min) < 0)) ? result : min;
+       }
+     }
+     HTable table = new HTable(conf, tableName);
+diff --git a/src/main/java/org/apache/hadoop/hbase/coprocessor/AggregateImplementation.java b/src/main/java/org/apache/hadoop/hbase/coprocessor/AggregateImplementation.java
+index 6d23f81..735905e 100644
+--- a/src/main/java/org/apache/hadoop/hbase/coprocessor/AggregateImplementation.java
++++ b/src/main/java/org/apache/hadoop/hbase/coprocessor/AggregateImplementation.java
+@@ -72,7 +72,7 @@
+         hasMoreRows = scanner.next(results);
+         for (KeyValue kv : results) {
+           temp = ci.getValue(colFamily, qualifier, kv);
+-          max = (max == null || ci.compare(temp, max) > 0) ? temp : max;
++          max = (max == null || (temp != null && ci.compare(temp, max) > 0)) ? temp : max;
+         }
+         results.clear();
+       } while (hasMoreRows);
+@@ -101,7 +101,7 @@
+         hasMoreRows = scanner.next(results);
+         for (KeyValue kv : results) {
+           temp = ci.getValue(colFamily, qualifier, kv);
+-          min = (min == null || ci.compare(temp, min) < 0) ? temp : min;
++          min = (min == null || (temp != null && ci.compare(temp, min) < 0)) ? temp : min;
+         }
+         results.clear();
+       } while (hasMoreRows);
+diff --git a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
+index 975bf6c..ba70263 100644
+--- a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
++++ b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
+@@ -105,7 +105,7 @@
+ 
+       @Override
+       public synchronized void update(byte[] region, byte[] row, R result) {
+-        max = ci.compare(max, result) < 0 ? result : max;
++        max = (max == null || (result != null && ci.compare(max, result) < 0)) ? result : max;
+       }
+     }
+     MaxCallBack aMaxCallBack = new MaxCallBack();
+@@ -155,7 +155,7 @@
+ 
+       @Override
+       public synchronized void update(byte[] region, byte[] row, R result) {
+-        min = (min == null || ci.compare(result, min) < 0) ? result : min;
++        min = (min == null || (result != null && ci.compare(result, min) < 0)) ? result : min;
+       }
+     }
+     HTable table = new HTable(conf, tableName);

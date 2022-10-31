@@ -1,0 +1,92 @@
+diff --git a/runtime-testsuite/test/org/antlr/v4/test/runtime/swift/BaseSwiftTest.java b/runtime-testsuite/test/org/antlr/v4/test/runtime/swift/BaseSwiftTest.java
+index f6b8909..90dc052 100644
+--- a/runtime-testsuite/test/org/antlr/v4/test/runtime/swift/BaseSwiftTest.java
++++ b/runtime-testsuite/test/org/antlr/v4/test/runtime/swift/BaseSwiftTest.java
+@@ -145,7 +145,7 @@
+ 
+ 		String projectName = "testcase-" + System.currentTimeMillis();
+ 		String projectDir = getTmpDir() + "/" + projectName;
+-		buildProject(projectDir);
++		buildProject(projectDir, projectName);
+ 		return execTest(projectDir, projectName);
+ 	}
+ 
+@@ -183,12 +183,12 @@
+ 		Collections.addAll(this.sourceFiles, files);
+ 	}
+ 
+-	private void buildProject(String projectDir) {
++	private void buildProject(String projectDir, String projectName) {
+ 		mkdir(projectDir);
+ 		fastFailRunProcess(projectDir, SWIFT_CMD, "package", "init", "--type", "executable");
+ 		for (String sourceFile: sourceFiles) {
+ 			String absPath = getTmpDir() + "/" + sourceFile;
+-			fastFailRunProcess(getTmpDir(), "mv", "-f", absPath, projectDir + "/Sources/");
++			fastFailRunProcess(getTmpDir(), "mv", "-f", absPath, projectDir + "/Sources/" + projectName);
+ 		}
+ 		fastFailRunProcess(getTmpDir(), "mv", "-f", "input", projectDir);
+ 
+@@ -201,7 +201,7 @@
+ 					"-Xlinker", "-rpath",
+ 					"-Xlinker", dylibPath);
+ 			if (buildResult.b.length() > 0) {
+-				throw new RuntimeException("unit test build failed: " + buildResult.b);
++				throw new RuntimeException("unit test build failed: " + buildResult.a + "\n" + buildResult.b);
+ 			}
+ 		} catch (IOException | InterruptedException e) {
+ 			e.printStackTrace();
+@@ -251,7 +251,7 @@
+ 		addSourceFiles("main.swift");
+ 		String projectName = "testcase-" + System.currentTimeMillis();
+ 		String projectDir = getTmpDir() + "/" + projectName;
+-		buildProject(projectDir);
++		buildProject(projectDir, projectName);
+ 		return execTest(projectDir, projectName);
+ 	}
+ 
+diff --git a/runtime-testsuite/test/org/antlr/v4/test/runtime/swift/BaseSwiftTest.java b/runtime-testsuite/test/org/antlr/v4/test/runtime/swift/BaseSwiftTest.java
+index f6b8909..90dc052 100644
+--- a/runtime-testsuite/test/org/antlr/v4/test/runtime/swift/BaseSwiftTest.java
++++ b/runtime-testsuite/test/org/antlr/v4/test/runtime/swift/BaseSwiftTest.java
+@@ -145,7 +145,7 @@
+ 
+ 		String projectName = "testcase-" + System.currentTimeMillis();
+ 		String projectDir = getTmpDir() + "/" + projectName;
+-		buildProject(projectDir);
++		buildProject(projectDir, projectName);
+ 		return execTest(projectDir, projectName);
+ 	}
+ 
+@@ -183,12 +183,12 @@
+ 		Collections.addAll(this.sourceFiles, files);
+ 	}
+ 
+-	private void buildProject(String projectDir) {
++	private void buildProject(String projectDir, String projectName) {
+ 		mkdir(projectDir);
+ 		fastFailRunProcess(projectDir, SWIFT_CMD, "package", "init", "--type", "executable");
+ 		for (String sourceFile: sourceFiles) {
+ 			String absPath = getTmpDir() + "/" + sourceFile;
+-			fastFailRunProcess(getTmpDir(), "mv", "-f", absPath, projectDir + "/Sources/");
++			fastFailRunProcess(getTmpDir(), "mv", "-f", absPath, projectDir + "/Sources/" + projectName);
+ 		}
+ 		fastFailRunProcess(getTmpDir(), "mv", "-f", "input", projectDir);
+ 
+@@ -201,7 +201,7 @@
+ 					"-Xlinker", "-rpath",
+ 					"-Xlinker", dylibPath);
+ 			if (buildResult.b.length() > 0) {
+-				throw new RuntimeException("unit test build failed: " + buildResult.b);
++				throw new RuntimeException("unit test build failed: " + buildResult.a + "\n" + buildResult.b);
+ 			}
+ 		} catch (IOException | InterruptedException e) {
+ 			e.printStackTrace();
+@@ -251,7 +251,7 @@
+ 		addSourceFiles("main.swift");
+ 		String projectName = "testcase-" + System.currentTimeMillis();
+ 		String projectDir = getTmpDir() + "/" + projectName;
+-		buildProject(projectDir);
++		buildProject(projectDir, projectName);
+ 		return execTest(projectDir, projectName);
+ 	}
+ 

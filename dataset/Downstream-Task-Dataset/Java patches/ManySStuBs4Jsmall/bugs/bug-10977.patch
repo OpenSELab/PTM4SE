@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+index 9a2e6fc..acb470e 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+@@ -170,7 +170,7 @@
+             return new Triple<>(gradient,outSubLabels,output);
+         	
+         case SQUARED_LOSS:
+-        	gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY, input.transpose().mmul(input.transpose().mmul(pow(outSubLabels,2))));
++        	gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY, input.transpose().mmul(pow(outSubLabels,2)));
+         	gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY, outSubLabels.sum(0));
+             return new Triple<>(gradient,outSubLabels,output);
+             
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+index 9a2e6fc..acb470e 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+@@ -170,7 +170,7 @@
+             return new Triple<>(gradient,outSubLabels,output);
+         	
+         case SQUARED_LOSS:
+-        	gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY, input.transpose().mmul(input.transpose().mmul(pow(outSubLabels,2))));
++        	gradient.gradientForVariable().put(DefaultParamInitializer.WEIGHT_KEY, input.transpose().mmul(pow(outSubLabels,2)));
+         	gradient.gradientForVariable().put(DefaultParamInitializer.BIAS_KEY, outSubLabels.sum(0));
+             return new Triple<>(gradient,outSubLabels,output);
+             

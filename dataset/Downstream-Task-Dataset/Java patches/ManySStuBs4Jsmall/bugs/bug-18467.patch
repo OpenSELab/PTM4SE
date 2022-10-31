@@ -1,0 +1,26 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPool.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPool.java
+index 0e6dec5..67be248 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPool.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPool.java
+@@ -531,7 +531,7 @@
+                 {
+                     ((MappedPersistenceWindow) window).unmap();
+                 }
+-                else if ( window instanceof PlainPersistenceWindow )
++                else if ( !readOnly && window instanceof PlainPersistenceWindow )
+                 {
+                     ((PlainPersistenceWindow) window).writeOut();
+                 }
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPool.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPool.java
+index 0e6dec5..67be248 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPool.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/nioneo/store/PersistenceWindowPool.java
+@@ -531,7 +531,7 @@
+                 {
+                     ((MappedPersistenceWindow) window).unmap();
+                 }
+-                else if ( window instanceof PlainPersistenceWindow )
++                else if ( !readOnly && window instanceof PlainPersistenceWindow )
+                 {
+                     ((PlainPersistenceWindow) window).writeOut();
+                 }

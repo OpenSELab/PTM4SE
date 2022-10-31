@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/Session.java b/presto-main/src/main/java/com/facebook/presto/Session.java
+index 487920f..2f8d374 100644
+--- a/presto-main/src/main/java/com/facebook/presto/Session.java
++++ b/presto-main/src/main/java/com/facebook/presto/Session.java
+@@ -269,7 +269,7 @@
+                 continue;
+             }
+             ConnectorId connectorId = transactionManager.getOptionalCatalogMetadata(transactionId, catalogName)
+-                    .orElseThrow(() -> new PrestoException(NOT_FOUND, "Catalog does not exist: " + catalogName))
++                    .orElseThrow(() -> new PrestoException(NOT_FOUND, "Session property catalog does not exist: " + catalogName))
+                     .getConnectorId();
+ 
+             for (Entry<String, String> property : catalogProperties.entrySet()) {
+diff --git a/presto-main/src/main/java/com/facebook/presto/Session.java b/presto-main/src/main/java/com/facebook/presto/Session.java
+index 487920f..2f8d374 100644
+--- a/presto-main/src/main/java/com/facebook/presto/Session.java
++++ b/presto-main/src/main/java/com/facebook/presto/Session.java
+@@ -269,7 +269,7 @@
+                 continue;
+             }
+             ConnectorId connectorId = transactionManager.getOptionalCatalogMetadata(transactionId, catalogName)
+-                    .orElseThrow(() -> new PrestoException(NOT_FOUND, "Catalog does not exist: " + catalogName))
++                    .orElseThrow(() -> new PrestoException(NOT_FOUND, "Session property catalog does not exist: " + catalogName))
+                     .getConnectorId();
+ 
+             for (Entry<String, String> property : catalogProperties.entrySet()) {

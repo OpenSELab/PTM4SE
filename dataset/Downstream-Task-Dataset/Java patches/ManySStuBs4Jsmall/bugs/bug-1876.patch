@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedAtmosphereHandler.java b/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedAtmosphereHandler.java
+index da023ac..ace01d8 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedAtmosphereHandler.java
++++ b/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedAtmosphereHandler.java
+@@ -205,7 +205,7 @@
+         } else {
+             Object o;
+             if (msg != null) {
+-                if (Managed.class.isAssignableFrom(msg.getClass())) {
++                if (r.getBroadcaster().getBroadcasterConfig().hasFilters() && Managed.class.isAssignableFrom(msg.getClass())) {
+                     Object newMsg = Managed.class.cast(msg).o;
+                     event.setMessage(newMsg);
+                     // No method matched. Give a last chance by trying to decode the proxiedInstance.
+diff --git a/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedAtmosphereHandler.java b/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedAtmosphereHandler.java
+index da023ac..ace01d8 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedAtmosphereHandler.java
++++ b/modules/cpr/src/main/java/org/atmosphere/config/managed/ManagedAtmosphereHandler.java
+@@ -205,7 +205,7 @@
+         } else {
+             Object o;
+             if (msg != null) {
+-                if (Managed.class.isAssignableFrom(msg.getClass())) {
++                if (r.getBroadcaster().getBroadcasterConfig().hasFilters() && Managed.class.isAssignableFrom(msg.getClass())) {
+                     Object newMsg = Managed.class.cast(msg).o;
+                     event.setMessage(newMsg);
+                     // No method matched. Give a last chance by trying to decode the proxiedInstance.

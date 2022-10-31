@@ -1,0 +1,153 @@
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/ByteBufferKeyValue.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/ByteBufferKeyValue.java
+index f906681..c59b947 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/ByteBufferKeyValue.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/ByteBufferKeyValue.java
+@@ -302,7 +302,7 @@
+   }
+ 
+   @Override
+-  public Cell deepClone() {
++  public ExtendedCell deepClone() {
+     byte[] copy = new byte[this.length];
+     ByteBufferUtils.copyFromBufferToArray(copy, this.buf, this.offset, 0, this.length);
+     KeyValue kv = new KeyValue(copy, 0, copy.length);
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/CellUtil.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/CellUtil.java
+index 825d9b1..a3029f8 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/CellUtil.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/CellUtil.java
+@@ -657,7 +657,7 @@
+     }
+ 
+     @Override
+-    public Cell deepClone() {
++    public ExtendedCell deepClone() {
+       Cell clonedBaseCell = ((ExtendedCell) this.cell).deepClone();
+       return new TagRewriteCell(clonedBaseCell, this.tags);
+     }
+@@ -838,7 +838,7 @@
+     }
+ 
+     @Override
+-    public Cell deepClone() {
++    public ExtendedCell deepClone() {
+       Cell clonedBaseCell = ((ExtendedCell) this.cell).deepClone();
+       if (clonedBaseCell instanceof ByteBufferCell) {
+         return new TagRewriteByteBufferCell((ByteBufferCell) clonedBaseCell, this.tags);
+@@ -981,7 +981,7 @@
+     }
+ 
+     @Override
+-    public Cell deepClone() {
++    public ExtendedCell deepClone() {
+       Cell clonedBaseCell = ((ExtendedCell) this.cell).deepClone();
+       return new ValueAndTagRewriteCell(clonedBaseCell, this.value, this.tags);
+     }
+@@ -1047,7 +1047,7 @@
+     }
+ 
+     @Override
+-    public Cell deepClone() {
++    public ExtendedCell deepClone() {
+       Cell clonedBaseCell = ((ExtendedCell) this.cell).deepClone();
+       if (clonedBaseCell instanceof ByteBufferCell) {
+         return new ValueAndTagRewriteByteBufferCell((ByteBufferCell) clonedBaseCell, this.value,
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/ExtendedCell.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/ExtendedCell.java
+index 7ed4dc0..4d16fca 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/ExtendedCell.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/ExtendedCell.java
+@@ -73,7 +73,7 @@
+    * Does a deep copy of the contents to a new memory area and returns it as a new cell.
+    * @return The deep cloned cell
+    */
+-  Cell deepClone();
++  ExtendedCell deepClone();
+ 
+   /**
+    * Extracts the id of the backing bytebuffer of this cell if it was obtained from fixed sized
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/IndividualBytesFieldCell.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/IndividualBytesFieldCell.java
+index 0597c5e..14e35df 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/IndividualBytesFieldCell.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/IndividualBytesFieldCell.java
+@@ -183,7 +183,7 @@
+   }
+ 
+   @Override
+-  public Cell deepClone() {
++  public ExtendedCell deepClone() {
+     // When being added to the memstore, deepClone() is called and KeyValue has less heap overhead.
+     return new KeyValue(this);
+   }
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/KeyValue.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/KeyValue.java
+index 0ee8b80..ae95738 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/KeyValue.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/KeyValue.java
+@@ -2808,7 +2808,7 @@
+   }
+ 
+   @Override
+-  public Cell deepClone() {
++  public ExtendedCell deepClone() {
+     byte[] copy = Bytes.copy(this.bytes, this.offset, this.length);
+     KeyValue kv = new KeyValue(copy, 0, copy.length);
+     kv.setSequenceId(this.getSequenceId());
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/NoTagsByteBufferKeyValue.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/NoTagsByteBufferKeyValue.java
+index 1822563..82b243b 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/NoTagsByteBufferKeyValue.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/NoTagsByteBufferKeyValue.java
+@@ -52,7 +52,7 @@
+   }
+ 
+   @Override
+-  public Cell deepClone() {
++  public ExtendedCell deepClone() {
+     byte[] copy = new byte[this.length];
+     ByteBufferUtils.copyFromBufferToArray(copy, this.buf, this.offset, 0, this.length);
+     KeyValue kv = new NoTagsKeyValue(copy, 0, copy.length);
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/NoTagsKeyValue.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/NoTagsKeyValue.java
+index 8a57a01..088aff5 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/NoTagsKeyValue.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/NoTagsKeyValue.java
+@@ -51,7 +51,7 @@
+   }
+ 
+   @Override
+-  public Cell deepClone() {
++  public ExtendedCell deepClone() {
+     byte[] copy = Bytes.copy(this.bytes, this.offset, this.length);
+     KeyValue kv = new NoTagsKeyValue(copy, 0, copy.length);
+     kv.setSequenceId(this.getSequenceId());
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/io/encoding/BufferedDataBlockEncoder.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/io/encoding/BufferedDataBlockEncoder.java
+index 00ec0fc..bc905e5 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/io/encoding/BufferedDataBlockEncoder.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/io/encoding/BufferedDataBlockEncoder.java
+@@ -470,7 +470,7 @@
+     }
+ 
+     @Override
+-    public Cell deepClone() {
++    public ExtendedCell deepClone() {
+       // This is not used in actual flow. Throwing UnsupportedOperationException
+       throw new UnsupportedOperationException();
+     }
+@@ -715,7 +715,7 @@
+     }
+ 
+     @Override
+-    public Cell deepClone() {
++    public ExtendedCell deepClone() {
+       // This is not used in actual flow. Throwing UnsupportedOperationException
+       throw new UnsupportedOperationException();
+     }
+diff --git a/hbase-common/src/main/java/org/apache/hadoop/hbase/ByteBufferKeyValue.java b/hbase-common/src/main/java/org/apache/hadoop/hbase/ByteBufferKeyValue.java
+index f906681..c59b947 100644
+--- a/hbase-common/src/main/java/org/apache/hadoop/hbase/ByteBufferKeyValue.java
++++ b/hbase-common/src/main/java/org/apache/hadoop/hbase/ByteBufferKeyValue.java
+@@ -302,7 +302,7 @@
+   }
+ 
+   @Override
+-  public Cell deepClone() {
++  public ExtendedCell deepClone() {
+     byte[] copy = new byte[this.length];
+     ByteBufferUtils.copyFromBufferToArray(copy, this.buf, this.offset, 0, this.length);
+     KeyValue kv = new KeyValue(copy, 0, copy.length);

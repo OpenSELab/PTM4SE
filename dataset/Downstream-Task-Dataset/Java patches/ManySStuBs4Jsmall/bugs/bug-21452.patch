@@ -1,0 +1,32 @@
+diff --git a/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java b/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java
+index b4d8b93..8e9bb0e 100644
+--- a/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java
++++ b/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java
+@@ -95,8 +95,9 @@
+ 	}
+ 
+ 	private boolean isSetterReturnType(ExecutableElement method) {
+-		return (TypeKind.VOID == method.getReturnType().getKind() || method
+-				.getEnclosingElement().asType().equals(method.getReturnType()));
++		return (TypeKind.VOID == method.getReturnType().getKind() || this.env
++				.getTypeUtils().isSameType(method.getEnclosingElement().asType(),
++						method.getReturnType()));
+ 	}
+ 
+ 	private String getAccessorName(String methodName) {
+diff --git a/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java b/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java
+index b4d8b93..8e9bb0e 100644
+--- a/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java
++++ b/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/TypeElementMembers.java
+@@ -95,8 +95,9 @@
+ 	}
+ 
+ 	private boolean isSetterReturnType(ExecutableElement method) {
+-		return (TypeKind.VOID == method.getReturnType().getKind() || method
+-				.getEnclosingElement().asType().equals(method.getReturnType()));
++		return (TypeKind.VOID == method.getReturnType().getKind() || this.env
++				.getTypeUtils().isSameType(method.getEnclosingElement().asType(),
++						method.getReturnType()));
+ 	}
+ 
+ 	private String getAccessorName(String methodName) {

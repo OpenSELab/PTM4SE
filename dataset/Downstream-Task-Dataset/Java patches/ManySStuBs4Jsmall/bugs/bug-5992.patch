@@ -1,0 +1,70 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/builder/NotifierBuilder.java b/camel-core/src/main/java/org/apache/camel/builder/NotifierBuilder.java
+index 3ddd353..e046051 100644
+--- a/camel-core/src/main/java/org/apache/camel/builder/NotifierBuilder.java
++++ b/camel-core/src/main/java/org/apache/camel/builder/NotifierBuilder.java
+@@ -572,7 +572,7 @@
+     /**
+      * Notifier which hooks into Camel to listen for {@link Exchange} relevant events for this builder
+      */
+-    private class ExchangeNotifier extends EventNotifierSupport {
++    private final class ExchangeNotifier extends EventNotifierSupport {
+ 
+         public void notify(EventObject event) throws Exception {
+             if (event instanceof ExchangeCreatedEvent) {
+@@ -721,7 +721,7 @@
+     /**
+      * To hold an operation and predicate
+      */
+-    private class EventPredicateHolder {
++    private final class EventPredicateHolder {
+         private final EventOperation operation;
+         private final EventPredicate predicate;
+ 
+@@ -747,7 +747,7 @@
+     /**
+      * To hold multiple predicates which are part of same expression
+      */
+-    private class CompoundEventPredicate implements EventPredicate {
++    private final class CompoundEventPredicate implements EventPredicate {
+ 
+         private List<EventPredicate> predicates = new ArrayList<EventPredicate>();
+ 
+diff --git a/camel-core/src/test/java/org/apache/camel/builder/NotifierBuilderTest.java b/camel-core/src/test/java/org/apache/camel/builder/NotifierBuilderTest.java
+index c7a9693..2d08222 100644
+--- a/camel-core/src/test/java/org/apache/camel/builder/NotifierBuilderTest.java
++++ b/camel-core/src/test/java/org/apache/camel/builder/NotifierBuilderTest.java
+diff --git a/camel-core/src/test/java/org/apache/camel/language/SimpleTest.java b/camel-core/src/test/java/org/apache/camel/language/SimpleTest.java
+index 4bac563..dfa49d0 100644
+--- a/camel-core/src/test/java/org/apache/camel/language/SimpleTest.java
++++ b/camel-core/src/test/java/org/apache/camel/language/SimpleTest.java
+diff --git a/camel-core/src/main/java/org/apache/camel/builder/NotifierBuilder.java b/camel-core/src/main/java/org/apache/camel/builder/NotifierBuilder.java
+index 3ddd353..e046051 100644
+--- a/camel-core/src/main/java/org/apache/camel/builder/NotifierBuilder.java
++++ b/camel-core/src/main/java/org/apache/camel/builder/NotifierBuilder.java
+@@ -572,7 +572,7 @@
+     /**
+      * Notifier which hooks into Camel to listen for {@link Exchange} relevant events for this builder
+      */
+-    private class ExchangeNotifier extends EventNotifierSupport {
++    private final class ExchangeNotifier extends EventNotifierSupport {
+ 
+         public void notify(EventObject event) throws Exception {
+             if (event instanceof ExchangeCreatedEvent) {
+@@ -721,7 +721,7 @@
+     /**
+      * To hold an operation and predicate
+      */
+-    private class EventPredicateHolder {
++    private final class EventPredicateHolder {
+         private final EventOperation operation;
+         private final EventPredicate predicate;
+ 
+@@ -747,7 +747,7 @@
+     /**
+      * To hold multiple predicates which are part of same expression
+      */
+-    private class CompoundEventPredicate implements EventPredicate {
++    private final class CompoundEventPredicate implements EventPredicate {
+ 
+         private List<EventPredicate> predicates = new ArrayList<EventPredicate>();
+ 

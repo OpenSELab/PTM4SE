@@ -1,0 +1,17 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/net/server/JsonInputStreamLogEventBridge.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/net/server/JsonInputStreamLogEventBridge.java
+index 1b81644..8ed2732 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/net/server/JsonInputStreamLogEventBridge.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/net/server/JsonInputStreamLogEventBridge.java
+@@ -55,8 +55,10 @@ public class JsonInputStreamLogEventBridge extends InputStreamLogEventBridge {
+         boolean inEsc = false;
+         for (int i = start; i < charArray.length; i++) {
+             final char c = charArray[i];
+-            if (!inEsc) {
+-                inEsc = false;
++            if (inEsc) {
++            	// Skip this char and continue
++            	inEsc = false;
++            } else { 
+                 switch (c) {
+                 case EVENT_START_MARKER:
+                     if (!inStr) {

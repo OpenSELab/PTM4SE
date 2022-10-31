@@ -1,0 +1,51 @@
+diff --git a/domain-management/src/main/java/org/jboss/as/domain/management/security/KeystoreAttributes.java b/domain-management/src/main/java/org/jboss/as/domain/management/security/KeystoreAttributes.java
+index c943ec3..5f5267a 100644
+--- a/domain-management/src/main/java/org/jboss/as/domain/management/security/KeystoreAttributes.java
++++ b/domain-management/src/main/java/org/jboss/as/domain/management/security/KeystoreAttributes.java
+@@ -40,7 +40,7 @@
+ 
+     public static final SimpleAttributeDefinition ALIAS = new SimpleAttributeDefinitionBuilder(ModelDescriptionConstants.ALIAS,
+             ModelType.STRING, true).setXmlName(ModelDescriptionConstants.ALIAS)
+-            .setValidator(new StringLengthValidator(1, Integer.MAX_VALUE, true, true))
++            .setValidator(new StringLengthValidator(1, Integer.MAX_VALUE, true, false))
+             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES).build();
+ 
+     public static final SimpleAttributeDefinition KEY_PASSWORD = new SimpleAttributeDefinitionBuilder(
+diff --git a/domain-management/src/main/java/org/jboss/as/domain/management/security/LdapAuthenticationResourceDefinition.java b/domain-management/src/main/java/org/jboss/as/domain/management/security/LdapAuthenticationResourceDefinition.java
+index b7d9780..aac0b5c 100644
+--- a/domain-management/src/main/java/org/jboss/as/domain/management/security/LdapAuthenticationResourceDefinition.java
++++ b/domain-management/src/main/java/org/jboss/as/domain/management/security/LdapAuthenticationResourceDefinition.java
+@@ -65,12 +65,17 @@
+             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES).build();
+ 
+     public static final SimpleAttributeDefinition USERNAME_FILTER = new SimpleAttributeDefinitionBuilder(ModelDescriptionConstants.USERNAME_ATTRIBUTE, ModelType.STRING, false)
+-            .setXmlName("attribute").setAlternatives(ModelDescriptionConstants.ADVANCED_FILTER)
+-            .setValidator(new StringLengthValidator(1, Integer.MAX_VALUE, true, false)).setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES).build();
++            .setXmlName("attribute")
++            .setAlternatives(ModelDescriptionConstants.ADVANCED_FILTER)
++            .setValidator(new StringLengthValidator(1, Integer.MAX_VALUE, true, false))
++            .setValidateNull(false)
++            .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES).build();
+ 
+     public static final SimpleAttributeDefinition ADVANCED_FILTER = new SimpleAttributeDefinitionBuilder(ModelDescriptionConstants.ADVANCED_FILTER, ModelType.STRING, false)
+             .setXmlName("filter")
+-            .setAlternatives(ModelDescriptionConstants.USERNAME_ATTRIBUTE).setValidator(new StringLengthValidator(1, Integer.MAX_VALUE, true, false))
++            .setAlternatives(ModelDescriptionConstants.USERNAME_ATTRIBUTE)
++            .setValidator(new StringLengthValidator(1, Integer.MAX_VALUE, true, false))
++            .setValidateNull(false)
+             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES).build();
+ 
+     public static final AttributeDefinition[] ATTRIBUTE_DEFINITIONS = {
+diff --git a/domain-management/src/main/java/org/jboss/as/domain/management/security/KeystoreAttributes.java b/domain-management/src/main/java/org/jboss/as/domain/management/security/KeystoreAttributes.java
+index c943ec3..5f5267a 100644
+--- a/domain-management/src/main/java/org/jboss/as/domain/management/security/KeystoreAttributes.java
++++ b/domain-management/src/main/java/org/jboss/as/domain/management/security/KeystoreAttributes.java
+@@ -40,7 +40,7 @@
+ 
+     public static final SimpleAttributeDefinition ALIAS = new SimpleAttributeDefinitionBuilder(ModelDescriptionConstants.ALIAS,
+             ModelType.STRING, true).setXmlName(ModelDescriptionConstants.ALIAS)
+-            .setValidator(new StringLengthValidator(1, Integer.MAX_VALUE, true, true))
++            .setValidator(new StringLengthValidator(1, Integer.MAX_VALUE, true, false))
+             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES).build();
+ 
+     public static final SimpleAttributeDefinition KEY_PASSWORD = new SimpleAttributeDefinitionBuilder(

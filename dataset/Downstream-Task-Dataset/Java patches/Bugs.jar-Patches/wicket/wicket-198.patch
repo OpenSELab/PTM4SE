@@ -1,0 +1,104 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/internal/InlineEnclosure.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/internal/InlineEnclosure.java
+index 6ce1edc..3e4d230 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/internal/InlineEnclosure.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/internal/InlineEnclosure.java
+@@ -19,7 +19,6 @@ package org.apache.wicket.markup.html.internal;
+ import org.apache.wicket.Page;
+ import org.apache.wicket.markup.ComponentTag;
+ import org.apache.wicket.markup.IMarkupFragment;
+-import org.apache.wicket.markup.Markup;
+ import org.apache.wicket.markup.MarkupParser;
+ import org.apache.wicket.markup.MarkupResourceStream;
+ import org.apache.wicket.markup.parser.filter.InlineEnclosureHandler;
+@@ -47,8 +46,6 @@ public class InlineEnclosure extends Enclosure
+ 
+ 	private static final Logger log = LoggerFactory.getLogger(InlineEnclosure.class);
+ 
+-	private String enclosureMarkupAsString;
+-
+ 	/**
+ 	 * Construct.
+ 	 * 
+@@ -59,8 +56,6 @@ public class InlineEnclosure extends Enclosure
+ 	{
+ 		super(id, childId);
+ 
+-		enclosureMarkupAsString = null;
+-
+ 		// ensure that the Enclosure is ready for ajax updates
+ 		setOutputMarkupPlaceholderTag(true);
+ 		setMarkupId(getId());
+@@ -88,34 +83,6 @@ public class InlineEnclosure extends Enclosure
+ 	}
+ 
+ 	/**
+-	 * {@link InlineEnclosure}s keep their own cache of their markup because Component#markup is
+-	 * detached and later during Ajax request it is hard to re-lookup {@link InlineEnclosure}'s
+-	 * markup from its parent.
+-	 * 
+-	 * @see org.apache.wicket.Component#getMarkup()
+-	 */
+-	@Override
+-	public IMarkupFragment getMarkup()
+-	{
+-		IMarkupFragment enclosureMarkup = null;
+-		if (enclosureMarkupAsString == null)
+-		{
+-			IMarkupFragment markup = super.getMarkup();
+-			if (markup != null && markup != Markup.NO_MARKUP)
+-			{
+-				enclosureMarkup = markup;
+-				enclosureMarkupAsString = markup.toString(true);
+-			}
+-		}
+-		else
+-		{
+-			enclosureMarkup = Markup.of(enclosureMarkupAsString, getWicketNamespace());
+-		}
+-
+-		return enclosureMarkup;
+-	}
+-
+-	/**
+ 	 * @return the markup namespace for Wicket elements and attributes.
+ 	 */
+ 	private String getWicketNamespace()
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
+index 7e9ea8e..507339b 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/filter/InlineEnclosureHandler.java
+@@ -65,6 +65,12 @@ public final class InlineEnclosureHandler extends AbstractMarkupFilter
+ 	private Stack<ComponentTag> enclosures;
+ 
+ 	/**
++	 * InlinceEnclosures are not removed after render as other auto-components,
++	 * thus they have to have a stable id.
++	 */
++	private int counter;
++
++	/**
+ 	 * Construct.
+ 	 */
+ 	public InlineEnclosureHandler()
+@@ -107,7 +113,8 @@ public final class InlineEnclosureHandler extends AbstractMarkupFilter
+ 				{
+ 					if (Strings.isEmpty(htmlId))
+ 					{
+-						String id = getWicketNamespace() + "_" + INLINE_ENCLOSURE_ID_PREFIX;
++						String id = getWicketNamespace() + "_" + INLINE_ENCLOSURE_ID_PREFIX +
++							(counter++);
+ 						tag.setId(id);
+ 					}
+ 					else
+@@ -198,10 +205,7 @@ public final class InlineEnclosureHandler extends AbstractMarkupFilter
+ 		if (Strings.isEmpty(inlineEnclosureChildId) == false)
+ 		{
+ 			String id = tag.getId();
+-			if (id.startsWith(getWicketNamespace(markupStream)))
+-			{
+-				id = id + container.getPage().getAutoIndex();
+-			}
++
+ 			// Yes, we handled the tag
+ 			return new InlineEnclosure(id, inlineEnclosureChildId);
+ 		}

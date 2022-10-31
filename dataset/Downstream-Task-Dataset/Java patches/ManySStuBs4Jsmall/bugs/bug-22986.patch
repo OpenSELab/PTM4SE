@@ -1,0 +1,30 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/AbstractTypeScriptClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/AbstractTypeScriptClientCodegen.java
+index 4b0ae9c..a31cd39 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/AbstractTypeScriptClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/AbstractTypeScriptClientCodegen.java
+@@ -121,9 +121,7 @@
+ 		} else if (p instanceof MapProperty) {
+ 			MapProperty mp = (MapProperty) p;
+ 			Property inner = mp.getAdditionalProperties();
+-
+-			return getSwaggerType(p) + "<String, " + getTypeDeclaration(inner)
+-					+ ">";
++			return "{ [key: string]: "+ getTypeDeclaration(inner) + "; }";
+ 		}
+ 		return super.getTypeDeclaration(p);
+ 	}
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/AbstractTypeScriptClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/AbstractTypeScriptClientCodegen.java
+index 4b0ae9c..a31cd39 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/AbstractTypeScriptClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/AbstractTypeScriptClientCodegen.java
+@@ -121,9 +121,7 @@
+ 		} else if (p instanceof MapProperty) {
+ 			MapProperty mp = (MapProperty) p;
+ 			Property inner = mp.getAdditionalProperties();
+-
+-			return getSwaggerType(p) + "<String, " + getTypeDeclaration(inner)
+-					+ ">";
++			return "{ [key: string]: "+ getTypeDeclaration(inner) + "; }";
+ 		}
+ 		return super.getTypeDeclaration(p);
+ 	}

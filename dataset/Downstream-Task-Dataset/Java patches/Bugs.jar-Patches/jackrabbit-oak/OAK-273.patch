@@ -1,0 +1,15 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryNodeBuilder.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryNodeBuilder.java
+index 3854466..9faa23f 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryNodeBuilder.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryNodeBuilder.java
+@@ -254,7 +254,9 @@ public class MemoryNodeBuilder implements NodeBuilder {
+             writeState = parent.getWriteState(name);
+             if (writeState == null) {
+                 if (exists()) {
+-                    writeState = new MutableNodeState(baseState);
++                    NodeState writeBase =
++                            parent.writeState.base.getChildNode(name);
++                    writeState = new MutableNodeState(writeBase);
+                 }
+                 else {
+                     writeState = new MutableNodeState(null);

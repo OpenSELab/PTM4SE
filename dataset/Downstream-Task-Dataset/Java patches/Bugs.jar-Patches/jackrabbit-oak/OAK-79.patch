@@ -1,0 +1,17 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/Revision.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/Revision.java
+index 79043e9..a7806cd 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/Revision.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/Revision.java
+@@ -156,6 +156,12 @@ public class Revision {
+         long timestamp = getCurrentTimestamp();
+         int c;
+         synchronized (Revision.class) {
++            // need to check again, because threads
++            // could arrive inside the synchronized block
++            // out of order
++            if (timestamp < lastRevisionTimestamp) {
++                timestamp = lastRevisionTimestamp;
++            }
+             if (timestamp == lastRevisionTimestamp) {
+                 c = ++lastRevisionCount;
+             } else {

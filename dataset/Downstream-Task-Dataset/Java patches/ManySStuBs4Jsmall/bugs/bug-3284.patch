@@ -1,0 +1,74 @@
+diff --git a/src/main/java/com/alibaba/druid/mock/MockStatement.java b/src/main/java/com/alibaba/druid/mock/MockStatement.java
+index 6bbf539..18001a5 100644
+--- a/src/main/java/com/alibaba/druid/mock/MockStatement.java
++++ b/src/main/java/com/alibaba/druid/mock/MockStatement.java
+@@ -36,7 +36,7 @@
+         }
+     }
+ 
+-    protected void checkOpen() throws SQLException, MockConnectionClosedException {
++    protected void checkOpen() throws SQLException {
+         if (closed) {
+             throw new SQLException();
+         }
+diff --git a/src/main/java/com/alibaba/druid/sql/parser/Lexer.java b/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
+index 12ccd10..e4aa41f 100644
+--- a/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
++++ b/src/main/java/com/alibaba/druid/sql/parser/Lexer.java
+@@ -808,7 +808,7 @@
+         token = Token.LITERAL_HEX;
+     }
+ 
+-    public String hexString() throws NumberFormatException {
++    public String hexString() {
+         return new String(buf, np, sp);
+     }
+ 
+@@ -876,7 +876,7 @@
+     }
+ 
+     // QS_TODO negative number is invisible for lexer
+-    public Number integerValue() throws NumberFormatException {
++    public Number integerValue() {
+         long result = 0;
+         boolean negative = false;
+         int i = np, max = np + sp;
+diff --git a/src/main/java/com/alibaba/druid/support/spring/stat/BeanTypeAutoProxyCreator.java b/src/main/java/com/alibaba/druid/support/spring/stat/BeanTypeAutoProxyCreator.java
+index 42409d8..6ce7f98 100644
+--- a/src/main/java/com/alibaba/druid/support/spring/stat/BeanTypeAutoProxyCreator.java
++++ b/src/main/java/com/alibaba/druid/support/spring/stat/BeanTypeAutoProxyCreator.java
+@@ -52,7 +52,7 @@
+         this.targetBeanType = targetClass;
+     }
+ 
+-    public void setApplicationContext(ApplicationContext context) throws BeansException {
++    public void setApplicationContext(ApplicationContext context) {
+         this.context = context;
+     }
+ 
+diff --git a/src/main/java/com/alibaba/druid/util/jdbc/StatementBase.java b/src/main/java/com/alibaba/druid/util/jdbc/StatementBase.java
+index a7ae44d..9f4d7d3 100644
+--- a/src/main/java/com/alibaba/druid/util/jdbc/StatementBase.java
++++ b/src/main/java/com/alibaba/druid/util/jdbc/StatementBase.java
+@@ -58,7 +58,7 @@
+         this.connection = connection;
+     }
+ 
+-    protected void checkOpen() throws SQLException, MockConnectionClosedException {
++    protected void checkOpen() throws SQLException {
+         if (closed) {
+             throw new SQLException();
+         }
+diff --git a/src/main/java/com/alibaba/druid/mock/MockStatement.java b/src/main/java/com/alibaba/druid/mock/MockStatement.java
+index 6bbf539..18001a5 100644
+--- a/src/main/java/com/alibaba/druid/mock/MockStatement.java
++++ b/src/main/java/com/alibaba/druid/mock/MockStatement.java
+@@ -36,7 +36,7 @@
+         }
+     }
+ 
+-    protected void checkOpen() throws SQLException, MockConnectionClosedException {
++    protected void checkOpen() throws SQLException {
+         if (closed) {
+             throw new SQLException();
+         }

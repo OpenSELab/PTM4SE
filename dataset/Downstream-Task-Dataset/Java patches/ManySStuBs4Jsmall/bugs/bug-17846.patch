@@ -1,0 +1,92 @@
+diff --git a/src/main/java/org/apache/ibatis/io/ResolverUtil.java b/src/main/java/org/apache/ibatis/io/ResolverUtil.java
+index c85f1f8..1cd43d2 100644
+--- a/src/main/java/org/apache/ibatis/io/ResolverUtil.java
++++ b/src/main/java/org/apache/ibatis/io/ResolverUtil.java
+@@ -38,7 +38,7 @@
+ import java.util.jar.JarInputStream;
+ import java.util.regex.Pattern;
+ 
+-/*
++/**
+  * <p>ResolverUtil is used to locate classes that are available in the/a class path and meet
+  * arbitrary conditions. The two most common conditions are that a class implements/extends
+  * another class, or that is it annotated with a specific annotation. However, through the use
+@@ -113,11 +113,10 @@
+ 			this.parent = parentType;
+ 		}
+ 
+-		/*
++    /**
+ 		 * Returns true if type is assignable to the parent type supplied in the constructor.
+ 		 */
+-		@SuppressWarnings("unchecked")
+-		public boolean matches(Class type) {
++    public boolean matches(Class<?> type) {
+ 			return type != null && parent.isAssignableFrom(type);
+ 		}
+ 
+@@ -144,8 +143,7 @@
+ 		/*
+ 		 * Returns true if the type is annotated with the class provided to the constructor.
+ 		 */
+-		@SuppressWarnings("unchecked")
+-		public boolean matches(Class type) {
++    public boolean matches(Class<?> type) {
+ 			return type != null && type.isAnnotationPresent(annotation);
+ 		}
+ 
+@@ -548,7 +546,7 @@
+ 			ClassLoader loader = getClassLoader();
+ 			log.debug("Checking to see if class " + externalName + " matches criteria [" + test + "]");
+ 
+-			Class type = loader.loadClass(externalName);
++      Class<?> type = loader.loadClass(externalName);
+ 			if (test.matches(type)) {
+ 				matches.add((Class<T>) type);
+ 			}
+diff --git a/src/main/java/org/apache/ibatis/io/ResolverUtil.java b/src/main/java/org/apache/ibatis/io/ResolverUtil.java
+index c85f1f8..1cd43d2 100644
+--- a/src/main/java/org/apache/ibatis/io/ResolverUtil.java
++++ b/src/main/java/org/apache/ibatis/io/ResolverUtil.java
+@@ -38,7 +38,7 @@
+ import java.util.jar.JarInputStream;
+ import java.util.regex.Pattern;
+ 
+-/*
++/**
+  * <p>ResolverUtil is used to locate classes that are available in the/a class path and meet
+  * arbitrary conditions. The two most common conditions are that a class implements/extends
+  * another class, or that is it annotated with a specific annotation. However, through the use
+@@ -113,11 +113,10 @@
+ 			this.parent = parentType;
+ 		}
+ 
+-		/*
++    /**
+ 		 * Returns true if type is assignable to the parent type supplied in the constructor.
+ 		 */
+-		@SuppressWarnings("unchecked")
+-		public boolean matches(Class type) {
++    public boolean matches(Class<?> type) {
+ 			return type != null && parent.isAssignableFrom(type);
+ 		}
+ 
+@@ -144,8 +143,7 @@
+ 		/*
+ 		 * Returns true if the type is annotated with the class provided to the constructor.
+ 		 */
+-		@SuppressWarnings("unchecked")
+-		public boolean matches(Class type) {
++    public boolean matches(Class<?> type) {
+ 			return type != null && type.isAnnotationPresent(annotation);
+ 		}
+ 
+@@ -548,7 +546,7 @@
+ 			ClassLoader loader = getClassLoader();
+ 			log.debug("Checking to see if class " + externalName + " matches criteria [" + test + "]");
+ 
+-			Class type = loader.loadClass(externalName);
++      Class<?> type = loader.loadClass(externalName);
+ 			if (test.matches(type)) {
+ 				matches.add((Class<T>) type);
+ 			}

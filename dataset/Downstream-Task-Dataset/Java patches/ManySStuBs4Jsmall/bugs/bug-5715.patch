@@ -1,0 +1,56 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/strategy/FileChangedReadLockTest.java b/camel-core/src/test/java/org/apache/camel/component/file/strategy/FileChangedReadLockTest.java
+index 87d8f57..3240c37 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/strategy/FileChangedReadLockTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/strategy/FileChangedReadLockTest.java
+@@ -48,7 +48,8 @@
+         String[] lines = content.split("\n");
+         assertEquals("There should be 20 lines in the file", 20, lines.length);
+         for (int i = 0; i < 20; i++) {
+-            assertEquals("Line " + i, lines[i]);
++            // there may be windows line terminators
++            assertTrue(lines[i].startsWith("Line " + i));
+         }
+     }
+ 
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java b/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
+index e067362..5677b98 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
+@@ -59,7 +59,8 @@
+         content = context.getTypeConverter().convertTo(String.class, new File("target/marker/out/file2.dat").getAbsoluteFile());
+         lines = content.split("\n");
+         for (int i = 0; i < 20; i++) {
+-            assertEquals("Line " + i, lines[i]);
++            // there may be windows line terminators
++            assertTrue(lines[i].startsWith("Line " + i));
+         }
+ 
+         waitUntilCompleted();
+diff --git a/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpChangedReadLockTest.java b/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpChangedReadLockTest.java
+index 4662de4..e5f9bd7 100644
+--- a/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpChangedReadLockTest.java
++++ b/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpChangedReadLockTest.java
+@@ -50,7 +50,8 @@
+         String[] lines = content.split("\n");
+         assertEquals("There should be 20 lines in the file", 20, lines.length);
+         for (int i = 0; i < 20; i++) {
+-            assertEquals("Line " + i, lines[i]);
++            // there may be windows line terminators
++            assertTrue(lines[i].startsWith("Line " + i));
+         }
+     }
+ 
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/strategy/FileChangedReadLockTest.java b/camel-core/src/test/java/org/apache/camel/component/file/strategy/FileChangedReadLockTest.java
+index 87d8f57..3240c37 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/strategy/FileChangedReadLockTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/strategy/FileChangedReadLockTest.java
+@@ -48,7 +48,8 @@
+         String[] lines = content.split("\n");
+         assertEquals("There should be 20 lines in the file", 20, lines.length);
+         for (int i = 0; i < 20; i++) {
+-            assertEquals("Line " + i, lines[i]);
++            // there may be windows line terminators
++            assertTrue(lines[i].startsWith("Line " + i));
+         }
+     }
+ 

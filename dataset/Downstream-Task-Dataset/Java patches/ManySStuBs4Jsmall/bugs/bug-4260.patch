@@ -1,0 +1,30 @@
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/CxfRsProducer.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/CxfRsProducer.java
+index 76750c0..4a1d3d3 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/CxfRsProducer.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/CxfRsProducer.java
+@@ -165,8 +165,8 @@
+         setupClientQueryAndHeaders(client, exchange);
+ 
+         // ensure the CONTENT_TYPE header can be retrieved
+-        if (null == inMessage.getHeader(Exchange.CONTENT_TYPE, String.class) &&
+-                null != client.getHeaders().get(Exchange.CONTENT_TYPE)) {
++        if (ObjectHelper.isEmpty(inMessage.getHeader(Exchange.CONTENT_TYPE, String.class)) &&
++                ObjectHelper.isNotEmpty(client.getHeaders().get(Exchange.CONTENT_TYPE))) {
+             inMessage.setHeader(Exchange.CONTENT_TYPE, client.getHeaders().get(Exchange.CONTENT_TYPE).get(0));
+         }
+ 
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/CxfRsProducer.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/CxfRsProducer.java
+index 76750c0..4a1d3d3 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/CxfRsProducer.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/CxfRsProducer.java
+@@ -165,8 +165,8 @@
+         setupClientQueryAndHeaders(client, exchange);
+ 
+         // ensure the CONTENT_TYPE header can be retrieved
+-        if (null == inMessage.getHeader(Exchange.CONTENT_TYPE, String.class) &&
+-                null != client.getHeaders().get(Exchange.CONTENT_TYPE)) {
++        if (ObjectHelper.isEmpty(inMessage.getHeader(Exchange.CONTENT_TYPE, String.class)) &&
++                ObjectHelper.isNotEmpty(client.getHeaders().get(Exchange.CONTENT_TYPE))) {
+             inMessage.setHeader(Exchange.CONTENT_TYPE, client.getHeaders().get(Exchange.CONTENT_TYPE).get(0));
+         }
+ 

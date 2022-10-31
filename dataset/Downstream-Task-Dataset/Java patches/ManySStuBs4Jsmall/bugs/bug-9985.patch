@@ -1,0 +1,26 @@
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index fd658d8..4a2deb2 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -3221,7 +3221,7 @@
+ 			PersistentVector argvs = PersistentVector.EMPTY;
+ 			for(int i = 0; i < args.count(); i++)
+ 				argvs = argvs.cons(((Expr) args.nth(i)).eval());
+-			return fn.applyTo(RT.seq(argvs));
++			return fn.applyTo(RT.seq( Util.ret1(argvs, argvs = null) ));
+ 			}
+ 		catch(Throwable e)
+ 			{
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index fd658d8..4a2deb2 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -3221,7 +3221,7 @@
+ 			PersistentVector argvs = PersistentVector.EMPTY;
+ 			for(int i = 0; i < args.count(); i++)
+ 				argvs = argvs.cons(((Expr) args.nth(i)).eval());
+-			return fn.applyTo(RT.seq(argvs));
++			return fn.applyTo(RT.seq( Util.ret1(argvs, argvs = null) ));
+ 			}
+ 		catch(Throwable e)
+ 			{

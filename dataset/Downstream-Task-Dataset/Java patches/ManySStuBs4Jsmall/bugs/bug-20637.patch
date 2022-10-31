@@ -1,0 +1,26 @@
+diff --git a/src/api/org/openmrs/api/db/hibernate/HibernatePatientSetDAO.java b/src/api/org/openmrs/api/db/hibernate/HibernatePatientSetDAO.java
+index 56f0ecc..36b767d 100644
+--- a/src/api/org/openmrs/api/db/hibernate/HibernatePatientSetDAO.java
++++ b/src/api/org/openmrs/api/db/hibernate/HibernatePatientSetDAO.java
+@@ -1406,7 +1406,7 @@
+ 				criteria.add(Restrictions.in("person.personId", patients.getMemberIds()));
+ 			
+ 			// do not include voided person rows
+-			criteria.add(Expression.eq("personVoided", false));
++			criteria.add(Expression.eq("voided", false));
+ 		}
+ 		else {
+ 			projectionList.add(Projections.property("patient.personId"));
+diff --git a/src/api/org/openmrs/api/db/hibernate/HibernatePatientSetDAO.java b/src/api/org/openmrs/api/db/hibernate/HibernatePatientSetDAO.java
+index 56f0ecc..36b767d 100644
+--- a/src/api/org/openmrs/api/db/hibernate/HibernatePatientSetDAO.java
++++ b/src/api/org/openmrs/api/db/hibernate/HibernatePatientSetDAO.java
+@@ -1406,7 +1406,7 @@
+ 				criteria.add(Restrictions.in("person.personId", patients.getMemberIds()));
+ 			
+ 			// do not include voided person rows
+-			criteria.add(Expression.eq("personVoided", false));
++			criteria.add(Expression.eq("voided", false));
+ 		}
+ 		else {
+ 			projectionList.add(Projections.property("patient.personId"));

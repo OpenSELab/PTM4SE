@@ -1,0 +1,22 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/cycle/RequestCycle.java b/wicket-core/src/main/java/org/apache/wicket/request/cycle/RequestCycle.java
+index 81923b6..4c93370 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/cycle/RequestCycle.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/cycle/RequestCycle.java
+@@ -199,6 +199,8 @@ public class RequestCycle extends RequestHandlerStack implements IRequestCycle,
+ 		try
+ 		{
+ 			set(this);
++			listeners.onBeginRequest(this);
++			onBeginRequest();
+ 			IRequestHandler handler = resolveRequestHandler();
+ 			if (handler != null)
+ 			{
+@@ -242,8 +244,6 @@ public class RequestCycle extends RequestHandlerStack implements IRequestCycle,
+ 		boolean result;
+ 		try
+ 		{
+-			listeners.onBeginRequest(this);
+-			onBeginRequest();
+ 			result = processRequest();
+ 		}
+ 		finally

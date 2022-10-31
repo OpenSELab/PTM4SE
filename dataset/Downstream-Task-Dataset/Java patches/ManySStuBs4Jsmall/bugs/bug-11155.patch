@@ -1,0 +1,44 @@
+diff --git a/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/main/java/org/deeplearning4j/iterativereduce/actor/multilayer/ActorNetworkRunner.java b/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/main/java/org/deeplearning4j/iterativereduce/actor/multilayer/ActorNetworkRunner.java
+index 18513a1..b3b5c72 100644
+--- a/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/main/java/org/deeplearning4j/iterativereduce/actor/multilayer/ActorNetworkRunner.java
++++ b/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/main/java/org/deeplearning4j/iterativereduce/actor/multilayer/ActorNetworkRunner.java
+@@ -276,7 +276,7 @@
+ 				if(host == null)
+ 					throw new IllegalArgumentException("No host set for worker");
+ 
+-				int port = this.stateTrackerPort;
++				int port = this.stateTrackerPort < 1 ? HazelCastStateTracker.DEFAULT_HAZELCAST_PORT : this.stateTrackerPort;
+ 
+ 				String connectionString = host + ":" + port;
+ 
+@@ -430,7 +430,7 @@
+ 	 * Shut down this network actor
+ 	 */
+ 	public void shutdown() {
+-		//order matters here, the state tracker should be shutdown after the actor system
++		//order matters here, the state tracker should
+ 		system.shutdown();
+ 
+ 		if(stateTracker != null)
+diff --git a/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/main/java/org/deeplearning4j/iterativereduce/actor/multilayer/ActorNetworkRunner.java b/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/main/java/org/deeplearning4j/iterativereduce/actor/multilayer/ActorNetworkRunner.java
+index 18513a1..b3b5c72 100644
+--- a/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/main/java/org/deeplearning4j/iterativereduce/actor/multilayer/ActorNetworkRunner.java
++++ b/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/main/java/org/deeplearning4j/iterativereduce/actor/multilayer/ActorNetworkRunner.java
+@@ -276,7 +276,7 @@
+ 				if(host == null)
+ 					throw new IllegalArgumentException("No host set for worker");
+ 
+-				int port = this.stateTrackerPort;
++				int port = this.stateTrackerPort < 1 ? HazelCastStateTracker.DEFAULT_HAZELCAST_PORT : this.stateTrackerPort;
+ 
+ 				String connectionString = host + ":" + port;
+ 
+@@ -430,7 +430,7 @@
+ 	 * Shut down this network actor
+ 	 */
+ 	public void shutdown() {
+-		//order matters here, the state tracker should be shutdown after the actor system
++		//order matters here, the state tracker should
+ 		system.shutdown();
+ 
+ 		if(stateTracker != null)

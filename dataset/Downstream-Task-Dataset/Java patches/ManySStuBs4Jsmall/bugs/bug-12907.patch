@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/joins/JoinGraph.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/joins/JoinGraph.java
+index 31e803d..b2baa60 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/joins/JoinGraph.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/joins/JoinGraph.java
+@@ -165,7 +165,7 @@
+     private JoinGraph joinWith(JoinGraph other, List<JoinNode.EquiJoinClause> joinClauses, Context context, PlanNodeId newRoot)
+     {
+         for (PlanNode node : other.nodes) {
+-            checkState(!edges.containsKey(node), format("Node [%s] appeared in two JoinGraphs", node));
++            checkState(!edges.containsKey(node.getId()), format("Node [%s] appeared in two JoinGraphs", node));
+         }
+ 
+         List<PlanNode> nodes = ImmutableList.<PlanNode>builder()
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/joins/JoinGraph.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/joins/JoinGraph.java
+index 31e803d..b2baa60 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/joins/JoinGraph.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/joins/JoinGraph.java
+@@ -165,7 +165,7 @@
+     private JoinGraph joinWith(JoinGraph other, List<JoinNode.EquiJoinClause> joinClauses, Context context, PlanNodeId newRoot)
+     {
+         for (PlanNode node : other.nodes) {
+-            checkState(!edges.containsKey(node), format("Node [%s] appeared in two JoinGraphs", node));
++            checkState(!edges.containsKey(node.getId()), format("Node [%s] appeared in two JoinGraphs", node));
+         }
+ 
+         List<PlanNode> nodes = ImmutableList.<PlanNode>builder()

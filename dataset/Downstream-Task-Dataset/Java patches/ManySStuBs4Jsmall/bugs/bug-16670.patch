@@ -1,0 +1,44 @@
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtInput.java b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtInput.java
+index 1484e7e..87fbde6 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtInput.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtInput.java
+@@ -498,7 +498,7 @@
+ 
+ 	private void handleEvent (NativeEvent e) {
+ 		if (e.getType().equals("mousedown")) {
+-			if (!e.getEventTarget().equals(canvas) || touched[0]) {
++			if (!e.getEventTarget().equals(canvas) || pressedButtons.contains(getButton(e.getButton()))) {
+ 				float mouseX = getRelativeX(e, canvas);
+ 				float mouseY = getRelativeY(e, canvas);
+ 				if (mouseX < 0 || mouseX > Gdx.graphics.getWidth() || mouseY < 0 || mouseY > Gdx.graphics.getHeight()) {
+@@ -545,7 +545,7 @@
+ 		}
+ 
+ 		if (e.getType().equals("mouseup")) {
+-			if (!touched[0]) return;
++			if (!pressedButtons.contains(getButton(e.getButton()))) return;
+ 			this.pressedButtons.remove(getButton(e.getButton()));
+ 			this.touched[0] = pressedButtons.size > 0;
+ 			if (isCursorCatched()) {
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtInput.java b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtInput.java
+index 1484e7e..87fbde6 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtInput.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtInput.java
+@@ -498,7 +498,7 @@
+ 
+ 	private void handleEvent (NativeEvent e) {
+ 		if (e.getType().equals("mousedown")) {
+-			if (!e.getEventTarget().equals(canvas) || touched[0]) {
++			if (!e.getEventTarget().equals(canvas) || pressedButtons.contains(getButton(e.getButton()))) {
+ 				float mouseX = getRelativeX(e, canvas);
+ 				float mouseY = getRelativeY(e, canvas);
+ 				if (mouseX < 0 || mouseX > Gdx.graphics.getWidth() || mouseY < 0 || mouseY > Gdx.graphics.getHeight()) {
+@@ -545,7 +545,7 @@
+ 		}
+ 
+ 		if (e.getType().equals("mouseup")) {
+-			if (!touched[0]) return;
++			if (!pressedButtons.contains(getButton(e.getButton()))) return;
+ 			this.pressedButtons.remove(getButton(e.getButton()));
+ 			this.touched[0] = pressedButtons.size > 0;
+ 			if (isCursorCatched()) {

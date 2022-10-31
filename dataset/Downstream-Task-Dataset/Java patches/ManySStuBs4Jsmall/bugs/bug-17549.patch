@@ -1,0 +1,62 @@
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/Group.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/Group.java
+index b617209..da8ad0d 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/Group.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/Group.java
+@@ -227,7 +227,7 @@
+ 		if (focusedActor[pointer] != null) {
+ 			point.x = x;
+ 			point.y = y;
+-			focusedActor[pointer].toLocalCoordinates(point);
++			toChildCoordinates(focusedActor[pointer], x, y, point);			
+ 			focusedActor[pointer].touchDown(point.x, point.y, pointer);
+ 			return true;
+ 		}
+@@ -257,7 +257,7 @@
+ 		if (focusedActor[pointer] != null) {
+ 			point.x = x;
+ 			point.y = y;
+-			focusedActor[pointer].toLocalCoordinates(point);
++			toChildCoordinates(focusedActor[pointer], x, y, point);
+ 			focusedActor[pointer].touchUp(point.x, point.y, pointer);
+ 			return true;
+ 		}
+@@ -280,7 +280,7 @@
+ 		if (focusedActor[pointer] != null) {
+ 			point.x = x;
+ 			point.y = y;
+-			focusedActor[pointer].toLocalCoordinates(point);
++			toChildCoordinates(focusedActor[pointer], x, y, point);
+ 			focusedActor[pointer].touchDragged(point.x, point.y, pointer);
+ 			return true;
+ 		}
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/Group.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/Group.java
+index b617209..da8ad0d 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/Group.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/Group.java
+@@ -227,7 +227,7 @@
+ 		if (focusedActor[pointer] != null) {
+ 			point.x = x;
+ 			point.y = y;
+-			focusedActor[pointer].toLocalCoordinates(point);
++			toChildCoordinates(focusedActor[pointer], x, y, point);			
+ 			focusedActor[pointer].touchDown(point.x, point.y, pointer);
+ 			return true;
+ 		}
+@@ -257,7 +257,7 @@
+ 		if (focusedActor[pointer] != null) {
+ 			point.x = x;
+ 			point.y = y;
+-			focusedActor[pointer].toLocalCoordinates(point);
++			toChildCoordinates(focusedActor[pointer], x, y, point);
+ 			focusedActor[pointer].touchUp(point.x, point.y, pointer);
+ 			return true;
+ 		}
+@@ -280,7 +280,7 @@
+ 		if (focusedActor[pointer] != null) {
+ 			point.x = x;
+ 			point.y = y;
+-			focusedActor[pointer].toLocalCoordinates(point);
++			toChildCoordinates(focusedActor[pointer], x, y, point);
+ 			focusedActor[pointer].touchDragged(point.x, point.y, pointer);
+ 			return true;
+ 		}

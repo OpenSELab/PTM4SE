@@ -1,0 +1,20 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/internal/cluster/impl/operations/SplitBrainMergeValidationOp.java b/hazelcast/src/main/java/com/hazelcast/internal/cluster/impl/operations/SplitBrainMergeValidationOp.java
+index 5d4b443..45ad0a2 100644
+--- a/hazelcast/src/main/java/com/hazelcast/internal/cluster/impl/operations/SplitBrainMergeValidationOp.java
++++ b/hazelcast/src/main/java/com/hazelcast/internal/cluster/impl/operations/SplitBrainMergeValidationOp.java
+@@ -97,13 +97,13 @@
+         }
+ 
+         if (!node.isRunning()) {
+-            logger.info("Ignoring join check from " + getCallerAddress() + ", because this node is not active...");
++            logger.info("Ignoring join check from " + getCallerAddress() + " because this node is not active...");
+             return false;
+         }
+ 
+         final ClusterState clusterState = clusterService.getClusterState();
+         if (!clusterState.isJoinAllowed()) {
+-            logger.info("Ignoring join check from " + getCallerAddress() + ", because cluster is in "
++            logger.info("Ignoring join check from " + getCallerAddress() + " because cluster is in "
+                     + clusterState + " state ...");
+             return false;
+         }

@@ -1,0 +1,26 @@
+diff --git a/arquillian2/container-managed/src/main/java/org/jboss/as/arquillian/container/managed/JBossAsManagedContainer.java b/arquillian2/container-managed/src/main/java/org/jboss/as/arquillian/container/managed/JBossAsManagedContainer.java
+index b2471b2..cff379a 100644
+--- a/arquillian2/container-managed/src/main/java/org/jboss/as/arquillian/container/managed/JBossAsManagedContainer.java
++++ b/arquillian2/container-managed/src/main/java/org/jboss/as/arquillian/container/managed/JBossAsManagedContainer.java
+@@ -118,7 +118,7 @@
+             } while (timeout > 0 && serverAvailable == false);
+ 
+             if (!serverAvailable) {
+-                throw new TimeoutException(String.format("Managed server was not started within [%d] ms", timeout));
++                throw new TimeoutException(String.format("Managed server was not started within [%d] ms", config.getStartupTimeoutInSeconds()*1000));
+             }
+             boolean testRunnerMBeanAvaialble = false;
+             MBeanServerConnection mbeanServer = null;
+diff --git a/arquillian2/container-managed/src/main/java/org/jboss/as/arquillian/container/managed/JBossAsManagedContainer.java b/arquillian2/container-managed/src/main/java/org/jboss/as/arquillian/container/managed/JBossAsManagedContainer.java
+index b2471b2..cff379a 100644
+--- a/arquillian2/container-managed/src/main/java/org/jboss/as/arquillian/container/managed/JBossAsManagedContainer.java
++++ b/arquillian2/container-managed/src/main/java/org/jboss/as/arquillian/container/managed/JBossAsManagedContainer.java
+@@ -118,7 +118,7 @@
+             } while (timeout > 0 && serverAvailable == false);
+ 
+             if (!serverAvailable) {
+-                throw new TimeoutException(String.format("Managed server was not started within [%d] ms", timeout));
++                throw new TimeoutException(String.format("Managed server was not started within [%d] ms", config.getStartupTimeoutInSeconds()*1000));
+             }
+             boolean testRunnerMBeanAvaialble = false;
+             MBeanServerConnection mbeanServer = null;

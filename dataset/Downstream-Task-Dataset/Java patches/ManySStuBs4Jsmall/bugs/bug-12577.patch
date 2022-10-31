@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/QueryInfo.java b/presto-main/src/main/java/com/facebook/presto/execution/QueryInfo.java
+index 0ed3c0a..29b0722 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/QueryInfo.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/QueryInfo.java
+@@ -344,7 +344,7 @@
+     @JsonProperty
+     public boolean isFinalQueryInfo()
+     {
+-        return state.isDone() && getAllStages(outputStage).stream().allMatch(StageInfo::isFinalStageInfo);
++        return state.equals(QueryState.FAILED) || state.isDone() && getAllStages(outputStage).stream().allMatch(StageInfo::isFinalStageInfo);
+     }
+ 
+     @JsonProperty
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/QueryInfo.java b/presto-main/src/main/java/com/facebook/presto/execution/QueryInfo.java
+index 0ed3c0a..29b0722 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/QueryInfo.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/QueryInfo.java
+@@ -344,7 +344,7 @@
+     @JsonProperty
+     public boolean isFinalQueryInfo()
+     {
+-        return state.isDone() && getAllStages(outputStage).stream().allMatch(StageInfo::isFinalStageInfo);
++        return state.equals(QueryState.FAILED) || state.isDone() && getAllStages(outputStage).stream().allMatch(StageInfo::isFinalStageInfo);
+     }
+ 
+     @JsonProperty

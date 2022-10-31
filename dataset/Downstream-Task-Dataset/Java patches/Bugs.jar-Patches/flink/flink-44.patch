@@ -1,0 +1,48 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/HashPartition.java b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/HashPartition.java
+index 7baaee7..32fd74a 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/HashPartition.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/HashPartition.java
+@@ -198,6 +198,19 @@ public class HashPartition<BT, PT> extends AbstractPagedInputView implements See
+ 	public final boolean isInMemory() {
+ 		return this.buildSideChannel == null;
+ 	}
++
++	/**
++	 * Gets the number of memory segments used by this partition, which includes build side
++	 * memory buffers and overflow memory segments.
++	 * 
++	 * @return The number of occupied memory segments.
++	 */
++	public int getNumOccupiedMemorySegments() {
++		// either the number of memory segments, or one for spilling
++		final int numPartitionBuffers = this.partitionBuffers != null ? this.partitionBuffers.length : 1;
++		return numPartitionBuffers + numOverflowSegments;
++	}
++	
+ 	
+ 	public int getBuildSideBlockCount() {
+ 		return this.partitionBuffers == null ? this.buildSideWriteBuffer.getBlockCount() : this.partitionBuffers.length;
+@@ -284,7 +297,7 @@ public class HashPartition<BT, PT> extends AbstractPagedInputView implements See
+ 			throw new RuntimeException("Bug in Hybrid Hash Join: " +
+ 					"Request to spill a partition that has already been spilled.");
+ 		}
+-		if (getBuildSideBlockCount() + this.numOverflowSegments < 2) {
++		if (getNumOccupiedMemorySegments() < 2) {
+ 			throw new RuntimeException("Bug in Hybrid Hash Join: " +
+ 				"Request to spill a partition with less than two buffers.");
+ 		}
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/MutableHashTable.java b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/MutableHashTable.java
+index 2ad01aa..efaceea 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/MutableHashTable.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/MutableHashTable.java
+@@ -1093,8 +1093,8 @@ public class MutableHashTable<BT, PT> implements MemorySegmentSource {
+ 		
+ 		for (int i = 0; i < partitions.size(); i++) {
+ 			HashPartition<BT, PT> p = partitions.get(i);
+-			if (p.isInMemory() && p.getBuildSideBlockCount() > largestNumBlocks) {
+-				largestNumBlocks = p.getBuildSideBlockCount();
++			if (p.isInMemory() && p.getNumOccupiedMemorySegments() > largestNumBlocks) {
++				largestNumBlocks = p.getNumOccupiedMemorySegments();
+ 				largestPartNum = i;
+ 			}
+ 		}

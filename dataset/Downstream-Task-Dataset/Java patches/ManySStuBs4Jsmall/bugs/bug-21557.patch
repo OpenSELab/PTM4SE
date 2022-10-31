@@ -1,0 +1,90 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializer.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializer.java
+index 5c5ab4a..255eaf8 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializer.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializer.java
+@@ -106,7 +106,8 @@
+ 	public void logAutoConfigurationReport(boolean isCrashReport) {
+ 		if (this.report == null) {
+ 			if (this.applicationContext == null) {
+-				this.logger.info("Nothing to report: ApplicationContext not available");
++				this.logger.info("Unable to provide auto-configuration report "
++						+ "due to missing ApplicationContext");
+ 				return;
+ 			}
+ 			this.report = AutoConfigurationReport.get(this.applicationContext
+@@ -114,10 +115,11 @@
+ 		}
+ 		if (this.report.getConditionAndOutcomesBySource().size() > 0) {
+ 			if (isCrashReport && this.logger.isInfoEnabled()) {
+-				this.logger.info(getLogMessage(this.report
+-						.getConditionAndOutcomesBySource()));
++				this.logger.info("\n\nError starting ApplicationContext. "
++						+ "To display the auto-configuration report enabled "
++						+ "debug logging (start with --debug)\n\n");
+ 			}
+-			else if (!isCrashReport && this.logger.isDebugEnabled()) {
++			if (this.logger.isDebugEnabled()) {
+ 				this.logger.debug(getLogMessage(this.report
+ 						.getConditionAndOutcomesBySource()));
+ 			}
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializerTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializerTests.java
+index ed808f0..44b31de 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializerTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializerTests.java
+@@ -115,7 +115,7 @@
+ 	}
+ 
+ 	@Test
+-	public void logsInfoOnError() {
++	public void logsInfoAndDebugOnError() {
+ 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+ 		this.initializer.initialize(context);
+ 		context.register(ErrorConfig.class);
+@@ -128,7 +128,7 @@
+ 					new SpringApplication(), context, new String[] {}, ex));
+ 		}
+ 
+-		assertThat(this.debugLog.size(), equalTo(0));
++		assertThat(this.debugLog.size(), not(equalTo(0)));
+ 		assertThat(this.infoLog.size(), not(equalTo(0)));
+ 	}
+ 
+@@ -171,7 +171,8 @@
+ 		this.initializer.onApplicationEvent(new SpringApplicationErrorEvent(
+ 				new SpringApplication(), null, new String[0], new RuntimeException(
+ 						"Planned")));
+-		assertThat(this.infoLog.get(0), containsString("Nothing to report"));
++		assertThat(this.infoLog.get(0),
++				containsString("Unable to provide auto-configuration report"));
+ 	}
+ 
+ 	public static class MockLogFactory extends LogFactoryImpl {
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializer.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializer.java
+index 5c5ab4a..255eaf8 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializer.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializer.java
+@@ -106,7 +106,8 @@
+ 	public void logAutoConfigurationReport(boolean isCrashReport) {
+ 		if (this.report == null) {
+ 			if (this.applicationContext == null) {
+-				this.logger.info("Nothing to report: ApplicationContext not available");
++				this.logger.info("Unable to provide auto-configuration report "
++						+ "due to missing ApplicationContext");
+ 				return;
+ 			}
+ 			this.report = AutoConfigurationReport.get(this.applicationContext
+@@ -114,10 +115,11 @@
+ 		}
+ 		if (this.report.getConditionAndOutcomesBySource().size() > 0) {
+ 			if (isCrashReport && this.logger.isInfoEnabled()) {
+-				this.logger.info(getLogMessage(this.report
+-						.getConditionAndOutcomesBySource()));
++				this.logger.info("\n\nError starting ApplicationContext. "
++						+ "To display the auto-configuration report enabled "
++						+ "debug logging (start with --debug)\n\n");
+ 			}
+-			else if (!isCrashReport && this.logger.isDebugEnabled()) {
++			if (this.logger.isDebugEnabled()) {
+ 				this.logger.debug(getLogMessage(this.report
+ 						.getConditionAndOutcomesBySource()));
+ 			}

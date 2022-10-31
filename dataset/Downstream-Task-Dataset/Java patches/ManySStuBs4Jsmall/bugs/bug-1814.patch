@@ -1,0 +1,62 @@
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+index 44ba377..c9327f6 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+@@ -248,7 +248,7 @@
+ 
+         if (channel != null) {
+             if (log.isDebugEnabled()) {
+-                log.debug(String.format(currentThread() + "Using cached Channel %s", uri, channel));
++                log.debug(String.format(currentThread() + "Using cached Channel %s for uri %s", channel, uri));
+             }
+ 
+             if (channel.isOpen() && channel.isBound()) {
+@@ -708,7 +708,7 @@
+ 
+                 if (log.isDebugEnabled()) {
+                     log.debug(String.format(currentThread()
+-                            + "\n\nCached Request %s\n", request.toString()));
++                            + "\n\nCached Request %s\n", channel));
+                 }
+                 channel.getPipeline().getContext(NettyAsyncHttpProvider.class).setAttachment(f);
+ 
+@@ -748,7 +748,7 @@
+             } else {
+                 channelFuture = bootstrap.connect(new InetSocketAddress(proxyServer.getHost(), proxyServer.getPort()));
+             }
+-            bootstrap.setOption("connectTimeout", config.getConnectionTimeoutInMs());
++            bootstrap.setOption("connectTimeoutMillis", config.getConnectionTimeoutInMs());
+         } catch (Throwable t) {
+             log.error(String.format(currentThread() + "doConnect"), t);
+             abort(c.future(), t.getCause());
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+index 44ba377..c9327f6 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+@@ -248,7 +248,7 @@
+ 
+         if (channel != null) {
+             if (log.isDebugEnabled()) {
+-                log.debug(String.format(currentThread() + "Using cached Channel %s", uri, channel));
++                log.debug(String.format(currentThread() + "Using cached Channel %s for uri %s", channel, uri));
+             }
+ 
+             if (channel.isOpen() && channel.isBound()) {
+@@ -708,7 +708,7 @@
+ 
+                 if (log.isDebugEnabled()) {
+                     log.debug(String.format(currentThread()
+-                            + "\n\nCached Request %s\n", request.toString()));
++                            + "\n\nCached Request %s\n", channel));
+                 }
+                 channel.getPipeline().getContext(NettyAsyncHttpProvider.class).setAttachment(f);
+ 
+@@ -748,7 +748,7 @@
+             } else {
+                 channelFuture = bootstrap.connect(new InetSocketAddress(proxyServer.getHost(), proxyServer.getPort()));
+             }
+-            bootstrap.setOption("connectTimeout", config.getConnectionTimeoutInMs());
++            bootstrap.setOption("connectTimeoutMillis", config.getConnectionTimeoutInMs());
+         } catch (Throwable t) {
+             log.error(String.format(currentThread() + "doConnect"), t);
+             abort(c.future(), t.getCause());

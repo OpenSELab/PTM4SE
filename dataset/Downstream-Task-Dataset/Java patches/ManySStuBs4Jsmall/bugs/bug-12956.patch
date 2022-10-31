@@ -1,0 +1,62 @@
+diff --git a/presto-main/src/test/java/com/facebook/presto/execution/scheduler/TestFixedCountScheduler.java b/presto-main/src/test/java/com/facebook/presto/execution/scheduler/TestFixedCountScheduler.java
+index 1411254..54e4a2a 100644
+--- a/presto-main/src/test/java/com/facebook/presto/execution/scheduler/TestFixedCountScheduler.java
++++ b/presto-main/src/test/java/com/facebook/presto/execution/scheduler/TestFixedCountScheduler.java
+@@ -58,7 +58,7 @@
+         FixedCountScheduler nodeScheduler = new FixedCountScheduler(
+                 (node, partition) -> taskFactory.createTableScanTask(
+                         new TaskId("test", 1, 1),
+-                        (Node) node, ImmutableList.of(),
++                        node, ImmutableList.of(),
+                         new PartitionedSplitCountTracker(delta -> { })),
+                 generateRandomNodes(1));
+ 
+@@ -66,7 +66,7 @@
+         assertTrue(result.isFinished());
+         assertTrue(result.getBlocked().isDone());
+         assertEquals(result.getNewTasks().size(), 1);
+-        result.getNewTasks().iterator().next().getNodeId().equals("other 0");
++        assertTrue(result.getNewTasks().iterator().next().getNodeId().equals("other 0"));
+     }
+ 
+     @Test
+@@ -76,7 +76,7 @@
+         FixedCountScheduler nodeScheduler = new FixedCountScheduler(
+                 (node, partition) -> taskFactory.createTableScanTask(
+                         new TaskId("test", 1, 1),
+-                        (Node) node, ImmutableList.of(),
++                        node, ImmutableList.of(),
+                         new PartitionedSplitCountTracker(delta -> { })),
+                 generateRandomNodes(5));
+ 
+diff --git a/presto-main/src/test/java/com/facebook/presto/execution/scheduler/TestFixedCountScheduler.java b/presto-main/src/test/java/com/facebook/presto/execution/scheduler/TestFixedCountScheduler.java
+index 1411254..54e4a2a 100644
+--- a/presto-main/src/test/java/com/facebook/presto/execution/scheduler/TestFixedCountScheduler.java
++++ b/presto-main/src/test/java/com/facebook/presto/execution/scheduler/TestFixedCountScheduler.java
+@@ -58,7 +58,7 @@
+         FixedCountScheduler nodeScheduler = new FixedCountScheduler(
+                 (node, partition) -> taskFactory.createTableScanTask(
+                         new TaskId("test", 1, 1),
+-                        (Node) node, ImmutableList.of(),
++                        node, ImmutableList.of(),
+                         new PartitionedSplitCountTracker(delta -> { })),
+                 generateRandomNodes(1));
+ 
+@@ -66,7 +66,7 @@
+         assertTrue(result.isFinished());
+         assertTrue(result.getBlocked().isDone());
+         assertEquals(result.getNewTasks().size(), 1);
+-        result.getNewTasks().iterator().next().getNodeId().equals("other 0");
++        assertTrue(result.getNewTasks().iterator().next().getNodeId().equals("other 0"));
+     }
+ 
+     @Test
+@@ -76,7 +76,7 @@
+         FixedCountScheduler nodeScheduler = new FixedCountScheduler(
+                 (node, partition) -> taskFactory.createTableScanTask(
+                         new TaskId("test", 1, 1),
+-                        (Node) node, ImmutableList.of(),
++                        node, ImmutableList.of(),
+                         new PartitionedSplitCountTracker(delta -> { })),
+                 generateRandomNodes(5));
+ 

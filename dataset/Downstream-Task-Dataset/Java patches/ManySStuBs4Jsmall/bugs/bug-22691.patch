@@ -1,0 +1,39 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
+index c80cc12..cb4b76c 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
+@@ -359,7 +359,7 @@
+                         return getSwaggerType(p) + "<NSString*, " + innerTypeDeclaration + "*>*";
+                     }
+                 }
+-                return getSwaggerType(p) + "<NSString*, " + innerTypeDeclaration + ">*";
++                return getSwaggerType(p) + "<" + innerTypeDeclaration + ">*";
+             }
+         } else {
+             String swaggerType = getSwaggerType(p);
+diff --git a/modules/swagger-codegen/src/test/java/io/swagger/codegen/objc/ObjcModelTest.java b/modules/swagger-codegen/src/test/java/io/swagger/codegen/objc/ObjcModelTest.java
+index 76e5ced..c2d0fd0 100644
+--- a/modules/swagger-codegen/src/test/java/io/swagger/codegen/objc/ObjcModelTest.java
++++ b/modules/swagger-codegen/src/test/java/io/swagger/codegen/objc/ObjcModelTest.java
+@@ -224,7 +224,7 @@
+         final CodegenProperty property1 = cm.vars.get(0);
+         Assert.assertEquals(property1.baseName, "children");
+         Assert.assertEquals(property1.complexType, "SWGChildren");
+-        Assert.assertEquals(property1.datatype, "NSDictionary<NSString*, SWGChildren>*");
++        Assert.assertEquals(property1.datatype, "NSDictionary<SWGChildren>*");
+         Assert.assertEquals(property1.name, "children");
+         Assert.assertEquals(property1.baseType, "NSDictionary");
+         Assert.assertEquals(property1.containerType, "map");
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
+index c80cc12..cb4b76c 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
+@@ -359,7 +359,7 @@
+                         return getSwaggerType(p) + "<NSString*, " + innerTypeDeclaration + "*>*";
+                     }
+                 }
+-                return getSwaggerType(p) + "<NSString*, " + innerTypeDeclaration + ">*";
++                return getSwaggerType(p) + "<" + innerTypeDeclaration + ">*";
+             }
+         } else {
+             String swaggerType = getSwaggerType(p);

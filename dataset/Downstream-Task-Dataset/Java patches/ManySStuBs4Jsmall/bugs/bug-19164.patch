@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/jboss/netty/channel/socket/nio/NioWorker.java b/src/main/java/org/jboss/netty/channel/socket/nio/NioWorker.java
+index a477999..435cdba 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/nio/NioWorker.java
++++ b/src/main/java/org/jboss/netty/channel/socket/nio/NioWorker.java
+@@ -716,7 +716,7 @@
+         boolean bound = channel.isBound();
+         try {
+             channel.socket.close();
+-            future.setSuccess();
++            assert future == channel.getCloseFuture();
+             if (channel.setClosed()) {
+                 if (connected) {
+                     if (channel.getInterestOps() != Channel.OP_WRITE) {
+diff --git a/src/main/java/org/jboss/netty/channel/socket/nio/NioWorker.java b/src/main/java/org/jboss/netty/channel/socket/nio/NioWorker.java
+index a477999..435cdba 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/nio/NioWorker.java
++++ b/src/main/java/org/jboss/netty/channel/socket/nio/NioWorker.java
+@@ -716,7 +716,7 @@
+         boolean bound = channel.isBound();
+         try {
+             channel.socket.close();
+-            future.setSuccess();
++            assert future == channel.getCloseFuture();
+             if (channel.setClosed()) {
+                 if (connected) {
+                     if (channel.getInterestOps() != Channel.OP_WRITE) {

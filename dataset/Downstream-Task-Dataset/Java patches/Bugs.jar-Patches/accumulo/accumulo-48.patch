@@ -1,0 +1,14 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/mapred/InputFormatBase.java b/core/src/main/java/org/apache/accumulo/core/client/mapred/InputFormatBase.java
+index 54b983f..0cee355 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/mapred/InputFormatBase.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/mapred/InputFormatBase.java
+@@ -322,6 +322,9 @@ public abstract class InputFormatBase<K,V> extends AbstractInputFormat<K,V> {
+         iterators = getIterators(job);
+       } else {
+         iterators = split.getIterators();
++        if (null == iterators) {
++          iterators = getIterators(job);
++        }
+       }
+ 
+       setupIterators(iterators, scanner);

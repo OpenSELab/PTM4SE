@@ -1,0 +1,28 @@
+diff --git a/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConsumer.java b/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConsumer.java
+index 4c76c15..1163743 100644
+--- a/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConsumer.java
++++ b/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConsumer.java
+@@ -204,8 +204,7 @@
+     }
+ 
+     private boolean passedThroughFilter(Exchange exchange) {
+-        return exchange.getProperties().containsKey(Exchange.FILTER_MATCHED)
+-                && ((Boolean) exchange.getProperties().get(Exchange.FILTER_MATCHED));
++        return exchange.getProperty(Exchange.FILTER_MATCHED, false, Boolean.class);
+     }
+ 
+     /**
+diff --git a/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConsumer.java b/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConsumer.java
+index 4c76c15..1163743 100644
+--- a/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConsumer.java
++++ b/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConsumer.java
+@@ -204,8 +204,7 @@
+     }
+ 
+     private boolean passedThroughFilter(Exchange exchange) {
+-        return exchange.getProperties().containsKey(Exchange.FILTER_MATCHED)
+-                && ((Boolean) exchange.getProperties().get(Exchange.FILTER_MATCHED));
++        return exchange.getProperty(Exchange.FILTER_MATCHED, false, Boolean.class);
+     }
+ 
+     /**

@@ -1,0 +1,13 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/FSNamesystem.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/FSNamesystem.java
+index 0b049ec..eedefdb 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/FSNamesystem.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/FSNamesystem.java
+@@ -4601,7 +4601,7 @@
+      */
+     private boolean needEnter() {
+       return (threshold != 0 && blockSafe < blockThreshold) ||
+-        (getNumLiveDataNodes() < datanodeThreshold) ||
++        (datanodeThreshold != 0 && getNumLiveDataNodes() < datanodeThreshold) ||
+         (!nameNodeHasResourcesAvailable());
+     }
+       

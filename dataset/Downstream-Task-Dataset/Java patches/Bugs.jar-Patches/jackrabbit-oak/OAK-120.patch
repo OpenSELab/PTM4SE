@@ -1,0 +1,18 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+index a46af36..c93221c 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+@@ -1383,7 +1383,12 @@ public final class DocumentNodeStore
+     @CheckForNull
+     @Override
+     public NodeState retrieve(@Nonnull String checkpoint) {
+-        return getRoot(Revision.fromString(checkpoint));
++        Revision r = Revision.fromString(checkpoint);
++        if (checkpoints.getCheckpoints().containsKey(r)) {
++            return getRoot(r);
++        } else {
++            return null;
++        }
+     }
+ 
+     @Override

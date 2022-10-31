@@ -1,0 +1,26 @@
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/EventSubscriptionEntityManager.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/EventSubscriptionEntityManager.java
+index 062824d..4d183bf 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/EventSubscriptionEntityManager.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/EventSubscriptionEntityManager.java
+@@ -102,7 +102,7 @@
+     
+     // add events created in this command (not visible yet in query)
+     for (SignalEventSubscriptionEntity entity : createdSignalSubscriptions) {
+-      if(processInstanceId.equals(processInstanceId) && eventName.equals(entity.getEventName())) {
++      if(processInstanceId.equals(entity.getProcessInstanceId()) && eventName.equals(entity.getEventName())) {
+         selectList.add(entity);        
+       }
+     }
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/EventSubscriptionEntityManager.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/EventSubscriptionEntityManager.java
+index 062824d..4d183bf 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/EventSubscriptionEntityManager.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/EventSubscriptionEntityManager.java
+@@ -102,7 +102,7 @@
+     
+     // add events created in this command (not visible yet in query)
+     for (SignalEventSubscriptionEntity entity : createdSignalSubscriptions) {
+-      if(processInstanceId.equals(processInstanceId) && eventName.equals(entity.getEventName())) {
++      if(processInstanceId.equals(entity.getProcessInstanceId()) && eventName.equals(entity.getEventName())) {
+         selectList.add(entity);        
+       }
+     }

@@ -1,0 +1,30 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/HiveCalciteUtil.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/HiveCalciteUtil.java
+index e2f1cfb..90c2067 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/HiveCalciteUtil.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/HiveCalciteUtil.java
+@@ -234,8 +234,8 @@
+       leftKeys.add(origLeftInputSize + i);
+       rightKeys.add(origRightInputSize + i);
+       RexNode cond = rexBuilder.makeCall(SqlStdOperatorTable.EQUALS,
+-          rexBuilder.makeInputRef(newLeftFields.get(i).getType(), newLeftOffset + i),
+-          rexBuilder.makeInputRef(newLeftFields.get(i).getType(), newRightOffset + i));
++          rexBuilder.makeInputRef(newLeftFields.get(origLeftInputSize + i).getType(), newLeftOffset + i),
++          rexBuilder.makeInputRef(newRightFields.get(origRightInputSize + i).getType(), newRightOffset + i));
+       if (outJoinCond == null) {
+         outJoinCond = cond;
+       } else {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/HiveCalciteUtil.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/HiveCalciteUtil.java
+index e2f1cfb..90c2067 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/HiveCalciteUtil.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/HiveCalciteUtil.java
+@@ -234,8 +234,8 @@
+       leftKeys.add(origLeftInputSize + i);
+       rightKeys.add(origRightInputSize + i);
+       RexNode cond = rexBuilder.makeCall(SqlStdOperatorTable.EQUALS,
+-          rexBuilder.makeInputRef(newLeftFields.get(i).getType(), newLeftOffset + i),
+-          rexBuilder.makeInputRef(newLeftFields.get(i).getType(), newRightOffset + i));
++          rexBuilder.makeInputRef(newLeftFields.get(origLeftInputSize + i).getType(), newLeftOffset + i),
++          rexBuilder.makeInputRef(newRightFields.get(origRightInputSize + i).getType(), newRightOffset + i));
+       if (outJoinCond == null) {
+         outJoinCond = cond;
+       } else {

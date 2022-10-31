@@ -1,0 +1,26 @@
+diff --git a/server/src/main/java/com/metamx/druid/master/rules/PeriodLoadRule.java b/server/src/main/java/com/metamx/druid/master/rules/PeriodLoadRule.java
+index 84128e4..60d27eb 100644
+--- a/server/src/main/java/com/metamx/druid/master/rules/PeriodLoadRule.java
++++ b/server/src/main/java/com/metamx/druid/master/rules/PeriodLoadRule.java
+@@ -83,7 +83,7 @@
+   @Override
+   public boolean appliesTo(DataSegment segment)
+   {
+-    final Interval currInterval = new Interval(new DateTime().minus(period), period);
++    final Interval currInterval = new Interval(period, new DateTime());
+     return currInterval.overlaps(segment.getInterval());
+   }
+ }
+diff --git a/server/src/main/java/com/metamx/druid/master/rules/PeriodLoadRule.java b/server/src/main/java/com/metamx/druid/master/rules/PeriodLoadRule.java
+index 84128e4..60d27eb 100644
+--- a/server/src/main/java/com/metamx/druid/master/rules/PeriodLoadRule.java
++++ b/server/src/main/java/com/metamx/druid/master/rules/PeriodLoadRule.java
+@@ -83,7 +83,7 @@
+   @Override
+   public boolean appliesTo(DataSegment segment)
+   {
+-    final Interval currInterval = new Interval(new DateTime().minus(period), period);
++    final Interval currInterval = new Interval(period, new DateTime());
+     return currInterval.overlaps(segment.getInterval());
+   }
+ }

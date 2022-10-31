@@ -1,0 +1,16 @@
+diff --git a/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java b/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
+index 353ef7e..3434126 100644
+--- a/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
++++ b/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
+@@ -566,9 +566,9 @@
+   private boolean isLazy(Result result) {
+     boolean isLazy = configuration.isLazyLoadingEnabled();
+     if (result.one().select().length() > 0 && FetchType.DEFAULT != result.one().fetchType()) {
+-      isLazy = (result.one().fetchType() == FetchType.LAZY);
++      isLazy = result.one().fetchType() == FetchType.LAZY;
+     } else if (result.many().select().length() > 0 && FetchType.DEFAULT != result.many().fetchType()) {
+-      isLazy = (result.many().fetchType() == FetchType.LAZY);
++      isLazy = result.many().fetchType() == FetchType.LAZY;
+     }
+     return isLazy;
+   }

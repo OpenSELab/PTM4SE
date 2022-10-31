@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/rewrite/ShowQueriesRewrite.java b/presto-main/src/main/java/com/facebook/presto/sql/rewrite/ShowQueriesRewrite.java
+index 69843b8..91a6a1f 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/rewrite/ShowQueriesRewrite.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/rewrite/ShowQueriesRewrite.java
+@@ -164,7 +164,7 @@
+             QualifiedSchemaName schema = createQualifiedSchemaName(session, showTables, showTables.getSchema());
+ 
+             if (!metadata.schemaExists(session, schema)) {
+-                throw new SemanticException(MISSING_SCHEMA, showTables, "Schema '%s' does not exist", schema);
++                throw new SemanticException(MISSING_SCHEMA, showTables, "Schema '%s' does not exist", schema.getSchemaName());
+             }
+ 
+             Expression predicate = equal(nameReference("table_schema"), new StringLiteral(schema.getSchemaName()));
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/rewrite/ShowQueriesRewrite.java b/presto-main/src/main/java/com/facebook/presto/sql/rewrite/ShowQueriesRewrite.java
+index 69843b8..91a6a1f 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/rewrite/ShowQueriesRewrite.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/rewrite/ShowQueriesRewrite.java
+@@ -164,7 +164,7 @@
+             QualifiedSchemaName schema = createQualifiedSchemaName(session, showTables, showTables.getSchema());
+ 
+             if (!metadata.schemaExists(session, schema)) {
+-                throw new SemanticException(MISSING_SCHEMA, showTables, "Schema '%s' does not exist", schema);
++                throw new SemanticException(MISSING_SCHEMA, showTables, "Schema '%s' does not exist", schema.getSchemaName());
+             }
+ 
+             Expression predicate = equal(nameReference("table_schema"), new StringLiteral(schema.getSchemaName()));

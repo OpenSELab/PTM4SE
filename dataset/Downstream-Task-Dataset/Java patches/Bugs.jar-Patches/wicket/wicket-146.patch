@@ -1,0 +1,35 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/TagAttributes.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/TagAttributes.java
+index 6f9719d..041b0cdb 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/TagAttributes.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/TagAttributes.java
+@@ -54,7 +54,7 @@ public class TagAttributes extends ValueMap
+ 	public final Object put(String key, Object value)
+ 	{
+ 
+-		return super.put(key, unescapeHtml(value));
++		return super.put(key, value);
+ 	}
+ 
+ 	@Override
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/parser/XmlPullParser.java b/wicket-core/src/main/java/org/apache/wicket/markup/parser/XmlPullParser.java
+index 0ec91c9..93c57d0 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/parser/XmlPullParser.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/parser/XmlPullParser.java
+@@ -31,6 +31,7 @@ import org.apache.wicket.util.lang.Args;
+ import org.apache.wicket.util.parse.metapattern.parsers.TagNameParser;
+ import org.apache.wicket.util.parse.metapattern.parsers.VariableAssignmentParser;
+ import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
++import org.apache.wicket.util.string.Strings;
+ 
+ /**
+  * A fairly shallow markup pull parser which parses a markup string of a given type of markup (for
+@@ -665,6 +666,9 @@ public final class XmlPullParser implements IXmlPullParser
+ 				// Trim trailing whitespace
+ 				value = value.trim();
+ 
++				// Unescape
++				value = Strings.unescapeMarkup(value).toString();
++
+ 				// Get key
+ 				final String key = attributeParser.getKey();
+ 

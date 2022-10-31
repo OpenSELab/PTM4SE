@@ -1,0 +1,23 @@
+--- a/omod-1.9/src/main/java/org/openmrs/module/webservices/rest/web/v1_0/resource/openmrs1_9/ObsResource1_9.java
++++ b/omod-1.9/src/main/java/org/openmrs/module/webservices/rest/web/v1_0/resource/openmrs1_9/ObsResource1_9.java
+@@ -31,7 +35,19 @@ public class ObsResource1_9 extends ObsResource1_8 {
+ 	 */
+ 	@PropertySetter("concept")
+ 	public static void setConcept(Obs obs, Object value) {
+-		obs.setConcept(new ConceptResource1_9().getByUniqueId((String) value));
++		Object identifier = null;
++		if (value instanceof Map) {
++			Object uuid = ((Map) value).get(RestConstants.PROPERTY_UUID);
++			if (uuid != null) {
++				identifier = uuid;
++			}
++		}
++		
++		if (identifier == null) {
++			identifier = value;
++		}
++		
++		obs.setConcept(ConversionUtil.getConverter(Concept.class).getByUniqueId((String) identifier));
+ 	}
+ 	
+ }

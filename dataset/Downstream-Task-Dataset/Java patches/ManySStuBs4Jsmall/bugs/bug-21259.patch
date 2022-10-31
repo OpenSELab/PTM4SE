@@ -1,0 +1,44 @@
+diff --git a/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/jar/JarFileTests.java b/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/jar/JarFileTests.java
+index f08243b..0dcee73 100644
+--- a/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/jar/JarFileTests.java
++++ b/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/jar/JarFileTests.java
+@@ -321,14 +321,13 @@
+ 
+ 	@Test
+ 	public void createNonNestedUrlFromString() throws Exception {
+-		nonNestedJarFileFromString(
+-				"jar:file:" + this.rootJarFile.getAbsolutePath() + "!/2.dat");
++		nonNestedJarFileFromString("jar:" + this.rootJarFile.toURI() + "!/2.dat");
+ 	}
+ 
+ 	@Test
+-	public void createNonNestedUrlFromStringWithDoubleSlash() throws Exception {
++	public void createNonNestedUrlFromPathString() throws Exception {
+ 		nonNestedJarFileFromString(
+-				"jar:file://" + this.rootJarFile.getAbsolutePath() + "!/2.dat");
++				"jar:" + this.rootJarFile.toPath().toUri() + "!/2.dat");
+ 	}
+ 
+ 	private void nonNestedJarFileFromString(String spec) throws Exception {
+diff --git a/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/jar/JarFileTests.java b/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/jar/JarFileTests.java
+index f08243b..0dcee73 100644
+--- a/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/jar/JarFileTests.java
++++ b/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/jar/JarFileTests.java
+@@ -321,14 +321,13 @@
+ 
+ 	@Test
+ 	public void createNonNestedUrlFromString() throws Exception {
+-		nonNestedJarFileFromString(
+-				"jar:file:" + this.rootJarFile.getAbsolutePath() + "!/2.dat");
++		nonNestedJarFileFromString("jar:" + this.rootJarFile.toURI() + "!/2.dat");
+ 	}
+ 
+ 	@Test
+-	public void createNonNestedUrlFromStringWithDoubleSlash() throws Exception {
++	public void createNonNestedUrlFromPathString() throws Exception {
+ 		nonNestedJarFileFromString(
+-				"jar:file://" + this.rootJarFile.getAbsolutePath() + "!/2.dat");
++				"jar:" + this.rootJarFile.toPath().toUri() + "!/2.dat");
+ 	}
+ 
+ 	private void nonNestedJarFileFromString(String spec) throws Exception {

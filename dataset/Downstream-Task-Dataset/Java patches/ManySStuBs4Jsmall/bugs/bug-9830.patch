@@ -1,0 +1,24 @@
+diff --git a/src/tests/com/puppycrawl/tools/checkstyle/checks/naming/ConstantNameCheckTest.java b/src/tests/com/puppycrawl/tools/checkstyle/checks/naming/ConstantNameCheckTest.java
+index 17a6f33..30e41be 100644
+--- a/src/tests/com/puppycrawl/tools/checkstyle/checks/naming/ConstantNameCheckTest.java
++++ b/src/tests/com/puppycrawl/tools/checkstyle/checks/naming/ConstantNameCheckTest.java
+@@ -28,8 +28,8 @@
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(ConstantNameCheck.class);
+         final String[] expected = {
+-            "25:29: Name 'badConstant' must match pattern '^[A-Z](_?[A-Z0-9]+)*$'.",
+-            "142:30: Name 'BAD__NAME' must match pattern '^[A-Z](_?[A-Z0-9]+)*$'."
++            "25:29: Name 'badConstant' must match pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.",
++            "142:30: Name 'BAD__NAME' must match pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'."
+         };
+         verify(checkConfig, getPath("InputSimple.java"), expected);
+     }
+@@ -40,7 +40,7 @@
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(ConstantNameCheck.class);
+         final String[] expected = {
+-            "24:16: Name 'data' must match pattern '^[A-Z](_?[A-Z0-9]+)*$'."
++            "24:16: Name 'data' must match pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'."
+         };
+         verify(checkConfig, getPath("InputInner.java"), expected);
+     }

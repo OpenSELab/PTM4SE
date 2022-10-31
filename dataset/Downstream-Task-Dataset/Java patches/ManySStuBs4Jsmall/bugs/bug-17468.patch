@@ -1,0 +1,44 @@
+diff --git a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudio.java b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudio.java
+index 891192c..ad8c301 100644
+--- a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudio.java
++++ b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudio.java
+@@ -102,7 +102,7 @@
+ 			}
+ 		} else {
+ 			try {
+-				mediaPlayer.setDataSource(aHandle.path());
++				mediaPlayer.setDataSource(aHandle.file().getPath());
+ 				mediaPlayer.prepare();
+ 				AndroidMusic music = new AndroidMusic(this, mediaPlayer);
+ 				synchronized (musics) {
+@@ -132,7 +132,7 @@
+ 			}
+ 		} else {
+ 			try {
+-				return new AndroidSound(soundPool, manager, soundPool.load(aHandle.path(), 1));
++				return new AndroidSound(soundPool, manager, soundPool.load(aHandle.file().getPath(), 1));
+ 			} catch (Exception ex) {
+ 				throw new GdxRuntimeException("Error loading audio file: " + file, ex);
+ 			}
+diff --git a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudio.java b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudio.java
+index 891192c..ad8c301 100644
+--- a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudio.java
++++ b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidAudio.java
+@@ -102,7 +102,7 @@
+ 			}
+ 		} else {
+ 			try {
+-				mediaPlayer.setDataSource(aHandle.path());
++				mediaPlayer.setDataSource(aHandle.file().getPath());
+ 				mediaPlayer.prepare();
+ 				AndroidMusic music = new AndroidMusic(this, mediaPlayer);
+ 				synchronized (musics) {
+@@ -132,7 +132,7 @@
+ 			}
+ 		} else {
+ 			try {
+-				return new AndroidSound(soundPool, manager, soundPool.load(aHandle.path(), 1));
++				return new AndroidSound(soundPool, manager, soundPool.load(aHandle.file().getPath(), 1));
+ 			} catch (Exception ex) {
+ 				throw new GdxRuntimeException("Error loading audio file: " + file, ex);
+ 			}

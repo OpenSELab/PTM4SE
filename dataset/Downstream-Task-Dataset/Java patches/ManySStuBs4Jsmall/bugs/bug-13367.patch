@@ -1,0 +1,30 @@
+diff --git a/modules/UIPropertyEditor/src/main/java/org/gephi/ui/propertyeditor/AbstractAttributeColumnPropertyEditor.java b/modules/UIPropertyEditor/src/main/java/org/gephi/ui/propertyeditor/AbstractAttributeColumnPropertyEditor.java
+index 954f973..64401b3 100644
+--- a/modules/UIPropertyEditor/src/main/java/org/gephi/ui/propertyeditor/AbstractAttributeColumnPropertyEditor.java
++++ b/modules/UIPropertyEditor/src/main/java/org/gephi/ui/propertyeditor/AbstractAttributeColumnPropertyEditor.java
+@@ -158,7 +158,9 @@
+     }
+ 
+     public boolean isNumberColumn(Column column) {
+-        return AttributeUtils.isSimpleType(column.getTypeClass()) && AttributeUtils.isNumberType(column.getTypeClass());
++        return AttributeUtils.isNumberType(column.getTypeClass())
++                && !AttributeUtils.isArrayType(column.getTypeClass())
++                && !AttributeUtils.isDynamicType(column.getTypeClass());
+     }
+ 
+     public boolean isStringColumn(Column column) {
+diff --git a/modules/UIPropertyEditor/src/main/java/org/gephi/ui/propertyeditor/AbstractAttributeColumnPropertyEditor.java b/modules/UIPropertyEditor/src/main/java/org/gephi/ui/propertyeditor/AbstractAttributeColumnPropertyEditor.java
+index 954f973..64401b3 100644
+--- a/modules/UIPropertyEditor/src/main/java/org/gephi/ui/propertyeditor/AbstractAttributeColumnPropertyEditor.java
++++ b/modules/UIPropertyEditor/src/main/java/org/gephi/ui/propertyeditor/AbstractAttributeColumnPropertyEditor.java
+@@ -158,7 +158,9 @@
+     }
+ 
+     public boolean isNumberColumn(Column column) {
+-        return AttributeUtils.isSimpleType(column.getTypeClass()) && AttributeUtils.isNumberType(column.getTypeClass());
++        return AttributeUtils.isNumberType(column.getTypeClass())
++                && !AttributeUtils.isArrayType(column.getTypeClass())
++                && !AttributeUtils.isDynamicType(column.getTypeClass());
+     }
+ 
+     public boolean isStringColumn(Column column) {

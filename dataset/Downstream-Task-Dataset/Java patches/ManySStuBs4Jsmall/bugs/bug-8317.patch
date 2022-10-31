@@ -1,0 +1,26 @@
+diff --git a/core/src/main/java/org/b3log/solo/processor/LoginProcessor.java b/core/src/main/java/org/b3log/solo/processor/LoginProcessor.java
+index 95192fc..843b4c3 100644
+--- a/core/src/main/java/org/b3log/solo/processor/LoginProcessor.java
++++ b/core/src/main/java/org/b3log/solo/processor/LoginProcessor.java
+@@ -250,7 +250,7 @@
+                 final String userPassword = user.optString(User.USER_PASSWORD);
+                 final String hashPassword = cookieJSONObject.optString(User.USER_PASSWORD);
+ 
+-                if (MD5.hash(userPassword).equals(hashPassword)) {
++                if (userPassword.equals(hashPassword)) {
+                     Sessions.login(request, response, user);
+                     LOGGER.log(Level.INFO, "Logged in with cookie[email={0}]", userEmail);
+                 }
+diff --git a/core/src/main/java/org/b3log/solo/processor/LoginProcessor.java b/core/src/main/java/org/b3log/solo/processor/LoginProcessor.java
+index 95192fc..843b4c3 100644
+--- a/core/src/main/java/org/b3log/solo/processor/LoginProcessor.java
++++ b/core/src/main/java/org/b3log/solo/processor/LoginProcessor.java
+@@ -250,7 +250,7 @@
+                 final String userPassword = user.optString(User.USER_PASSWORD);
+                 final String hashPassword = cookieJSONObject.optString(User.USER_PASSWORD);
+ 
+-                if (MD5.hash(userPassword).equals(hashPassword)) {
++                if (userPassword.equals(hashPassword)) {
+                     Sessions.login(request, response, user);
+                     LOGGER.log(Level.INFO, "Logged in with cookie[email={0}]", userEmail);
+                 }

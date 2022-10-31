@@ -1,0 +1,26 @@
+diff --git a/ee/src/main/java/org/jboss/as/ee/component/ComponentInstallProcessor.java b/ee/src/main/java/org/jboss/as/ee/component/ComponentInstallProcessor.java
+index 365d10d..f8d9083 100644
+--- a/ee/src/main/java/org/jboss/as/ee/component/ComponentInstallProcessor.java
++++ b/ee/src/main/java/org/jboss/as/ee/component/ComponentInstallProcessor.java
+@@ -192,7 +192,7 @@
+         final Set<BindingConfiguration> uniqueBindings = new HashSet(bindings);
+         for (BindingConfiguration bindingConfiguration : uniqueBindings) {
+             if (bindingConfiguration.getName().startsWith("java:comp") || !bindingConfiguration.getName().startsWith("java:")) {
+-                final String bindingName = bindingConfiguration.getName();
++                final String bindingName = bindingConfiguration.getName().startsWith("java:comp") ? bindingConfiguration.getName() : "java:comp/env/" + bindingConfiguration.getName();
+                 final BinderService service = new BinderService(bindingName);
+                 final ServiceName serviceName = ContextNames.serviceNameOfEnvEntry(configuration.getApplicationName(), configuration.getModuleName(), configuration.getComponentName(), configuration.getComponentDescription().getNamingMode() == ComponentNamingMode.CREATE, bindingName);
+ 
+diff --git a/ee/src/main/java/org/jboss/as/ee/component/ComponentInstallProcessor.java b/ee/src/main/java/org/jboss/as/ee/component/ComponentInstallProcessor.java
+index 365d10d..f8d9083 100644
+--- a/ee/src/main/java/org/jboss/as/ee/component/ComponentInstallProcessor.java
++++ b/ee/src/main/java/org/jboss/as/ee/component/ComponentInstallProcessor.java
+@@ -192,7 +192,7 @@
+         final Set<BindingConfiguration> uniqueBindings = new HashSet(bindings);
+         for (BindingConfiguration bindingConfiguration : uniqueBindings) {
+             if (bindingConfiguration.getName().startsWith("java:comp") || !bindingConfiguration.getName().startsWith("java:")) {
+-                final String bindingName = bindingConfiguration.getName();
++                final String bindingName = bindingConfiguration.getName().startsWith("java:comp") ? bindingConfiguration.getName() : "java:comp/env/" + bindingConfiguration.getName();
+                 final BinderService service = new BinderService(bindingName);
+                 final ServiceName serviceName = ContextNames.serviceNameOfEnvEntry(configuration.getApplicationName(), configuration.getModuleName(), configuration.getComponentName(), configuration.getComponentDescription().getNamingMode() == ComponentNamingMode.CREATE, bindingName);
+ 

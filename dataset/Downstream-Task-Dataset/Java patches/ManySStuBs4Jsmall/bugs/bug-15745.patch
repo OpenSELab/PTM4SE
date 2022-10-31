@@ -1,0 +1,14 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java b/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
+index 4782136..7535f23 100644
+--- a/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
++++ b/hazelcast/src/main/java/com/hazelcast/config/XmlConfigBuilder.java
+@@ -649,7 +649,8 @@
+                 handleMemberList(n);
+             } else if (cleanNodeName(n.getNodeName()).equals("required-member")) {
+                 if (tcpIpConfig.getRequiredMember() != null) {
+-                    throw new InvalidConfigurationException("Duplicate required-member'" + "' definition found in XML configuration. ");
++                    throw new InvalidConfigurationException("Duplicate required-member"
++                            + " definition found in XML configuration. ");
+                 }
+                 tcpIpConfig.setRequiredMember(value);
+             } else if (memberTags.contains(cleanNodeName(n.getNodeName()))) {

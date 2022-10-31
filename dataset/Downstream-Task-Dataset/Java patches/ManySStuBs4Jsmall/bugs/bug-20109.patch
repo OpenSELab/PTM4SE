@@ -1,0 +1,13 @@
+diff --git a/api/src/main/java/org/openmrs/api/impl/EncounterServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/EncounterServiceImpl.java
+index a694d42..d5a71d5 100644
+--- a/api/src/main/java/org/openmrs/api/impl/EncounterServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/EncounterServiceImpl.java
+@@ -881,7 +881,7 @@
+ 	public void checkIfEncounterTypesAreLocked() {
+ 		String locked = Context.getAdministrationService().getGlobalProperty(
+ 		    OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_TYPES_LOCKED, "false");
+-		if (locked.toLowerCase().equals("true")) {
++		if ("true".equals(locked.toLowerCase())) {
+ 			throw new EncounterTypeLockedException();
+ 		}
+ 	}

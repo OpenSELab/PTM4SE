@@ -1,0 +1,26 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager.java
+index b596f73..14be800 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager.java
+@@ -157,7 +157,7 @@
+     }
+     synchronized (this.hlogsById) {
+       SortedSet<String> hlogs = this.hlogsById.get(id);
+-      if (!queueRecovered && hlogs.first() != key) {
++      if (!queueRecovered && !hlogs.first().equals(key)) {
+         SortedSet<String> hlogSet = hlogs.headSet(key);
+         for (String hlog : hlogSet) {
+           this.zkHelper.removeLogFromList(hlog, id);
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager.java
+index b596f73..14be800 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/replication/regionserver/ReplicationSourceManager.java
+@@ -157,7 +157,7 @@
+     }
+     synchronized (this.hlogsById) {
+       SortedSet<String> hlogs = this.hlogsById.get(id);
+-      if (!queueRecovered && hlogs.first() != key) {
++      if (!queueRecovered && !hlogs.first().equals(key)) {
+         SortedSet<String> hlogSet = hlogs.headSet(key);
+         for (String hlog : hlogSet) {
+           this.zkHelper.removeLogFromList(hlog, id);

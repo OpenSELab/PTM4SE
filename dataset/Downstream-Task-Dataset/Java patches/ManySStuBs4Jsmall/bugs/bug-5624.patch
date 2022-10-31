@@ -1,0 +1,13 @@
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/interceptors/SetSoapVersionInterceptor.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/interceptors/SetSoapVersionInterceptor.java
+index dfba44b..54a16c2 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/interceptors/SetSoapVersionInterceptor.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/interceptors/SetSoapVersionInterceptor.java
+@@ -31,7 +31,7 @@
+     public void handleMessage(SoapMessage message) throws Fault {
+         if (message.getExchange() != null) { 
+             if (message.getExchange().getInMessage() instanceof SoapMessage) {
+-                ((SoapMessage)message).setVersion(((SoapMessage)message.getExchange().getInMessage()).getVersion());
++                message.setVersion(((SoapMessage)message.getExchange().getInMessage()).getVersion());
+             } 
+         }
+     }

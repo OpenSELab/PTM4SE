@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/alibaba/fastjson/serializer/ASMSerializerFactory.java b/src/main/java/com/alibaba/fastjson/serializer/ASMSerializerFactory.java
+index 2a3a51d..ea13312 100755
+--- a/src/main/java/com/alibaba/fastjson/serializer/ASMSerializerFactory.java
++++ b/src/main/java/com/alibaba/fastjson/serializer/ASMSerializerFactory.java
+@@ -1155,7 +1155,7 @@
+         if (method != null) {
+             mw.visitVarInsn(ALOAD, context.var("entity"));
+             Class<?> declaringClass = method.getDeclaringClass();
+-            mw.visitMethodInsn(INVOKEVIRTUAL, type(declaringClass), method.getName(), desc(method));
++            mw.visitMethodInsn(declaringClass.isInterface() ? INVOKEINTERFACE : INVOKEVIRTUAL, type(declaringClass), method.getName(), desc(method));
+             if (!method.getReturnType().equals(fieldInfo.fieldClass)) {
+                 mw.visitTypeInsn(CHECKCAST, type(fieldInfo.fieldClass)); // cast
+             }
+diff --git a/src/main/java/com/alibaba/fastjson/serializer/ASMSerializerFactory.java b/src/main/java/com/alibaba/fastjson/serializer/ASMSerializerFactory.java
+index 2a3a51d..ea13312 100755
+--- a/src/main/java/com/alibaba/fastjson/serializer/ASMSerializerFactory.java
++++ b/src/main/java/com/alibaba/fastjson/serializer/ASMSerializerFactory.java
+@@ -1155,7 +1155,7 @@
+         if (method != null) {
+             mw.visitVarInsn(ALOAD, context.var("entity"));
+             Class<?> declaringClass = method.getDeclaringClass();
+-            mw.visitMethodInsn(INVOKEVIRTUAL, type(declaringClass), method.getName(), desc(method));
++            mw.visitMethodInsn(declaringClass.isInterface() ? INVOKEINTERFACE : INVOKEVIRTUAL, type(declaringClass), method.getName(), desc(method));
+             if (!method.getReturnType().equals(fieldInfo.fieldClass)) {
+                 mw.visitTypeInsn(CHECKCAST, type(fieldInfo.fieldClass)); // cast
+             }

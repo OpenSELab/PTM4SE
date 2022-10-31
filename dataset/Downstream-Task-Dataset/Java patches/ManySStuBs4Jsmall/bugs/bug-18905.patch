@@ -1,0 +1,26 @@
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+index d63d4df..d7a7940 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+@@ -1651,7 +1651,7 @@
+         }
+ 
+         private void flush(ByteBuf out) {
+-            while (out.isWritable()) {
++            while (out.maxCapacity() != out.writerIndex()) {
+                 ByteBuf data = exchangeBuf.peek();
+                 if (data == null) {
+                     break;
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+index d63d4df..d7a7940 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+@@ -1651,7 +1651,7 @@
+         }
+ 
+         private void flush(ByteBuf out) {
+-            while (out.isWritable()) {
++            while (out.maxCapacity() != out.writerIndex()) {
+                 ByteBuf data = exchangeBuf.peek();
+                 if (data == null) {
+                     break;

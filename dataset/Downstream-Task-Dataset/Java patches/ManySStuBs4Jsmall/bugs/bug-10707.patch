@@ -1,0 +1,13 @@
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/stats/StatsUtils.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/stats/StatsUtils.java
+index 2a4f7c8..79be2f4 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/stats/StatsUtils.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/stats/StatsUtils.java
+@@ -242,7 +242,7 @@
+             for (EventStats e : list) {
+                 machineIDs.add(e.getMachineID());
+                 jvmIDs.add(e.getJvmID());
+-                uniqueTuples.add(new Tuple3<>(e.getMachineID(), e.getJvmID(), e.getThreadID()));
++                uniqueTuples.add(new Tuple3<String, String, Long>(e.getMachineID(), e.getJvmID(), e.getThreadID()));
+                 earliestStart = Math.min(earliestStart, e.getStartTime());
+                 latestEnd = Math.max(latestEnd, e.getStartTime() + e.getDurationMs());
+             }

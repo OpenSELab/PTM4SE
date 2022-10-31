@@ -1,0 +1,12 @@
+diff --git a/src/jvm/backtype/storm/utils/Time.java b/src/jvm/backtype/storm/utils/Time.java
+index d5610b8..40eb3ba 100644
+--- a/src/jvm/backtype/storm/utils/Time.java
++++ b/src/jvm/backtype/storm/utils/Time.java
+@@ -76,6 +76,6 @@
+         synchronized(sleepTimesLock) {
+             time = threadSleepTimes.get(t);
+         }
+-        return time!=null && currentTimeMillis() < time.longValue();
++        return !t.isAlive() || time!=null && currentTimeMillis() < time.longValue();
+     }    
+ }

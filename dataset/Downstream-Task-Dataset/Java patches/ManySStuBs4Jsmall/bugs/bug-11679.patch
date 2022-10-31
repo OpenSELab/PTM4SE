@@ -1,0 +1,36 @@
+diff --git a/processing/src/main/java/io/druid/query/groupby/GroupByQueryEngine.java b/processing/src/main/java/io/druid/query/groupby/GroupByQueryEngine.java
+index 84f877a..89498e6 100644
+--- a/processing/src/main/java/io/druid/query/groupby/GroupByQueryEngine.java
++++ b/processing/src/main/java/io/druid/query/groupby/GroupByQueryEngine.java
+@@ -366,11 +366,11 @@
+         }
+         cursor.advance();
+       }
+-      while (!cursor.isDone()) {
++      while (!cursor.isDone() && rowUpdater.getNumRows() < config.getMaxIntermediateRows()) {
+         ByteBuffer key = ByteBuffer.allocate(dimensions.size() * Ints.BYTES);
+ 
+         unprocessedKeys = rowUpdater.updateValues(key, dimensions);
+-        if (unprocessedKeys != null || rowUpdater.getNumRows() > config.getMaxIntermediateRows()) {
++        if (unprocessedKeys != null) {
+           break;
+         }
+ 
+diff --git a/processing/src/main/java/io/druid/query/groupby/GroupByQueryEngine.java b/processing/src/main/java/io/druid/query/groupby/GroupByQueryEngine.java
+index 84f877a..89498e6 100644
+--- a/processing/src/main/java/io/druid/query/groupby/GroupByQueryEngine.java
++++ b/processing/src/main/java/io/druid/query/groupby/GroupByQueryEngine.java
+@@ -366,11 +366,11 @@
+         }
+         cursor.advance();
+       }
+-      while (!cursor.isDone()) {
++      while (!cursor.isDone() && rowUpdater.getNumRows() < config.getMaxIntermediateRows()) {
+         ByteBuffer key = ByteBuffer.allocate(dimensions.size() * Ints.BYTES);
+ 
+         unprocessedKeys = rowUpdater.updateValues(key, dimensions);
+-        if (unprocessedKeys != null || rowUpdater.getNumRows() > config.getMaxIntermediateRows()) {
++        if (unprocessedKeys != null) {
+           break;
+         }
+ 

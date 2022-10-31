@@ -1,0 +1,48 @@
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
+index d233b2f..4f3c8bc 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
+@@ -172,7 +172,7 @@
+         valueIsNull.appendByte(isNull ? 1 : 0);
+ 
+         positionCount++;
+-        blockBuilderStatus.addBytes(fixedSize);
++        blockBuilderStatus.addBytes(Byte.BYTES + fixedSize);
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/test/java/com/facebook/presto/spi/block/TestFixedWidthBlockBuilder.java b/presto-spi/src/test/java/com/facebook/presto/spi/block/TestFixedWidthBlockBuilder.java
+index 7a89710..dffee6b 100644
+--- a/presto-spi/src/test/java/com/facebook/presto/spi/block/TestFixedWidthBlockBuilder.java
++++ b/presto-spi/src/test/java/com/facebook/presto/spi/block/TestFixedWidthBlockBuilder.java
+@@ -21,7 +21,7 @@
+ 
+ public class TestFixedWidthBlockBuilder
+ {
+-    private static final int BOOLEAN_ENTRY_SIZE = BOOLEAN.getFixedSize();
++    private static final int BOOLEAN_ENTRY_SIZE = BOOLEAN.getFixedSize() + Byte.BYTES; // value + isNull
+     private static final int EXPECTED_ENTRY_COUNT = 3;
+ 
+     @Test
+@@ -34,7 +34,7 @@
+ 
+     private static void testIsFull(PageBuilderStatus pageBuilderStatus)
+     {
+-        FixedWidthBlockBuilder blockBuilder = new FixedWidthBlockBuilder(BOOLEAN_ENTRY_SIZE, pageBuilderStatus.createBlockBuilderStatus());
++        FixedWidthBlockBuilder blockBuilder = new FixedWidthBlockBuilder(BOOLEAN.getFixedSize(), pageBuilderStatus.createBlockBuilderStatus());
+         assertTrue(pageBuilderStatus.isEmpty());
+         while (!pageBuilderStatus.isFull()) {
+             BOOLEAN.writeBoolean(blockBuilder, true);
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
+index d233b2f..4f3c8bc 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlockBuilder.java
+@@ -172,7 +172,7 @@
+         valueIsNull.appendByte(isNull ? 1 : 0);
+ 
+         positionCount++;
+-        blockBuilderStatus.addBytes(fixedSize);
++        blockBuilderStatus.addBytes(Byte.BYTES + fixedSize);
+     }
+ 
+     @Override

@@ -1,0 +1,11 @@
+--- a/src/org/traccar/protocol/Jt600FrameDecoder.java
++++ b/src/org/traccar/protocol/Jt600FrameDecoder.java
+@@ -37,7 +37,7 @@ public class Jt600FrameDecoder extends FrameDecoder {
+         if (type == '$') {
+             boolean longFormat = buf.getUnsignedByte(buf.readerIndex() + 1) == 0x75;
+             int length = buf.getUnsignedShort(buf.readerIndex() + (longFormat ? 8 : 7)) + 10;
+-            if (length >= buf.readableBytes()) {
++            if (length <= buf.readableBytes()) {
+                 return buf.readBytes(length);
+             }
+         } else if (type == '(') {

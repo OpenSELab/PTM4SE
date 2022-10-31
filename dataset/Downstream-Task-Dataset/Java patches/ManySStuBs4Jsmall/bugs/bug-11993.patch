@@ -1,0 +1,39 @@
+diff --git a/client/src/main/java/com/metamx/druid/http/BrokerNode.java b/client/src/main/java/com/metamx/druid/http/BrokerNode.java
+index b09507a..39f7730 100644
+--- a/client/src/main/java/com/metamx/druid/http/BrokerNode.java
++++ b/client/src/main/java/com/metamx/druid/http/BrokerNode.java
+@@ -215,7 +215,7 @@
+     );
+ 
+     root.addEventListener(new GuiceServletConfig(injector));
+-    root.addFilter(GuiceFilter.class, "/datasources/*", 0);
++    root.addFilter(GuiceFilter.class, "/*", 0);
+ 
+     for (String path : pathsForGuiceFilter) {
+       root.addFilter(GuiceFilter.class, path, 0);
+diff --git a/client/src/main/java/com/metamx/druid/http/ClientInfoResource.java b/client/src/main/java/com/metamx/druid/http/ClientInfoResource.java
+index 8bf344e..307d284 100644
+--- a/client/src/main/java/com/metamx/druid/http/ClientInfoResource.java
++++ b/client/src/main/java/com/metamx/druid/http/ClientInfoResource.java
+@@ -42,7 +42,7 @@
+ 
+ /**
+  */
+-@Path("/datasources")
++@Path("/druid/v2/datasources")
+ public class ClientInfoResource
+ {
+   private static final int SEGMENT_HISTORY_MILLIS = 7 * 24 * 60 * 60 * 1000; // ONE WEEK
+diff --git a/client/src/main/java/com/metamx/druid/http/BrokerNode.java b/client/src/main/java/com/metamx/druid/http/BrokerNode.java
+index b09507a..39f7730 100644
+--- a/client/src/main/java/com/metamx/druid/http/BrokerNode.java
++++ b/client/src/main/java/com/metamx/druid/http/BrokerNode.java
+@@ -215,7 +215,7 @@
+     );
+ 
+     root.addEventListener(new GuiceServletConfig(injector));
+-    root.addFilter(GuiceFilter.class, "/datasources/*", 0);
++    root.addFilter(GuiceFilter.class, "/*", 0);
+ 
+     for (String path : pathsForGuiceFilter) {
+       root.addFilter(GuiceFilter.class, path, 0);

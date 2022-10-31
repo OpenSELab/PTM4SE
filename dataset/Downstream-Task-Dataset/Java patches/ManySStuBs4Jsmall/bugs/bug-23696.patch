@@ -1,0 +1,44 @@
+diff --git a/web/src/main/java/org/jboss/as/web/session/DistributableSessionManager.java b/web/src/main/java/org/jboss/as/web/session/DistributableSessionManager.java
+index a0ac4e4..0adb3ce 100644
+--- a/web/src/main/java/org/jboss/as/web/session/DistributableSessionManager.java
++++ b/web/src/main/java/org/jboss/as/web/session/DistributableSessionManager.java
+@@ -636,12 +636,15 @@
+ 
+     @Override
+     protected String generateSessionId(Random random) {
+-        return this.distributedCacheManager.createSessionId();
++        return this.createSessionId(this.distributedCacheManager.createSessionId(), this.getJvmRoute());
+     }
+ 
+     @Override
+     protected boolean appendJVMRoute() {
+-        return this.getUseJK();
++        // Controls whether super.generateSessionId(Random) should append the jvm route to the session ID
++        // Don't do it then - so that the KeyAffinityService uses the real id (i.e. the value to be store in the Cache)
++        // We'll append the jvm route ourselves in this.generateSessionId(Random)
++        return false;
+     }
+ 
+     @Override
+diff --git a/web/src/main/java/org/jboss/as/web/session/DistributableSessionManager.java b/web/src/main/java/org/jboss/as/web/session/DistributableSessionManager.java
+index a0ac4e4..0adb3ce 100644
+--- a/web/src/main/java/org/jboss/as/web/session/DistributableSessionManager.java
++++ b/web/src/main/java/org/jboss/as/web/session/DistributableSessionManager.java
+@@ -636,12 +636,15 @@
+ 
+     @Override
+     protected String generateSessionId(Random random) {
+-        return this.distributedCacheManager.createSessionId();
++        return this.createSessionId(this.distributedCacheManager.createSessionId(), this.getJvmRoute());
+     }
+ 
+     @Override
+     protected boolean appendJVMRoute() {
+-        return this.getUseJK();
++        // Controls whether super.generateSessionId(Random) should append the jvm route to the session ID
++        // Don't do it then - so that the KeyAffinityService uses the real id (i.e. the value to be store in the Cache)
++        // We'll append the jvm route ourselves in this.generateSessionId(Random)
++        return false;
+     }
+ 
+     @Override

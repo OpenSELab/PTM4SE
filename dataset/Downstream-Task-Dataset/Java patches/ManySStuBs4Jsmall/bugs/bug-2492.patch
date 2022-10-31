@@ -1,0 +1,44 @@
+diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
+index 3baf2b6..b316cd5 100644
+--- a/src/main/java/org/bukkit/Material.java
++++ b/src/main/java/org/bukkit/Material.java
+@@ -306,7 +306,7 @@
+      * @return MaterialData associated with this Material
+      */
+     public Class<? extends MaterialData> getData() {
+-        return data;
++        return (data == null) ? MaterialData.class : data;
+     }
+ 
+     /**
+@@ -318,7 +318,7 @@
+      */
+     public MaterialData getNewData(final byte raw) {
+         if (data == null) {
+-            return null;
++            return new MaterialData(id, raw);
+         }
+ 
+         try {
+diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
+index 3baf2b6..b316cd5 100644
+--- a/src/main/java/org/bukkit/Material.java
++++ b/src/main/java/org/bukkit/Material.java
+@@ -306,7 +306,7 @@
+      * @return MaterialData associated with this Material
+      */
+     public Class<? extends MaterialData> getData() {
+-        return data;
++        return (data == null) ? MaterialData.class : data;
+     }
+ 
+     /**
+@@ -318,7 +318,7 @@
+      */
+     public MaterialData getNewData(final byte raw) {
+         if (data == null) {
+-            return null;
++            return new MaterialData(id, raw);
+         }
+ 
+         try {

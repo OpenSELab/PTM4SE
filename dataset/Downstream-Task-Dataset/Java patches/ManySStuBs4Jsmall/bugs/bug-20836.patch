@@ -1,0 +1,57 @@
+diff --git a/src/test/java/org/scribe/extractors/BaseStringExtractorTest.java b/src/test/java/org/scribe/extractors/BaseStringExtractorTest.java
+index b145592..8fe872f 100644
+--- a/src/test/java/org/scribe/extractors/BaseStringExtractorTest.java
++++ b/src/test/java/org/scribe/extractors/BaseStringExtractorTest.java
+@@ -23,7 +23,7 @@
+   @Test
+   public void shouldExtractBaseStringFromOAuthRequest()
+   {
+-    String expected = "GET&http%3A%2F%2Fexample.com&oauth_callback%3Dhttp%253A%252F%252Fexample%252Fcallback%26oauth_consumer_key%3DAS%2523%2524%255E*%2540%2526%26oauth_signature%3DOAuth-Signature%26oauth_timestamp%3D123456";
++    String expected = "GET&http%3A%2F%2Fexample.com&oauth_callback%3Dhttp%253A%252F%252Fexample%252Fcallback%26oauth_consumer_key%3DAS%2523%2524%255E%252A%2540%2526%26oauth_signature%3DOAuth-Signature%26oauth_timestamp%3D123456";
+     String baseString = extractor.extract(request);
+     assertEquals(expected, baseString);
+   }
+@@ -45,7 +45,7 @@
+   @Test
+   public void shouldProperlyEncodeSpaces()
+   {
+-    String expected = "GET&http%3A%2F%2Fexample.com&body%3Dthis%2520param%2520has%2520whitespace%26oauth_callback%3Dhttp%253A%252F%252Fexample%252Fcallback%26oauth_consumer_key%3DAS%2523%2524%255E*%2540%2526%26oauth_signature%3DOAuth-Signature%26oauth_timestamp%3D123456";
++    String expected = "GET&http%3A%2F%2Fexample.com&body%3Dthis%2520param%2520has%2520whitespace%26oauth_callback%3Dhttp%253A%252F%252Fexample%252Fcallback%26oauth_consumer_key%3DAS%2523%2524%255E%252A%2540%2526%26oauth_signature%3DOAuth-Signature%26oauth_timestamp%3D123456";
+     request.addBodyParameter("body", "this param has whitespace");
+     assertEquals(expected, extractor.extract(request));
+   }
+diff --git a/src/test/java/org/scribe/extractors/HeaderExtractorTest.java b/src/test/java/org/scribe/extractors/HeaderExtractorTest.java
+index 0b461c7..bdc727c 100644
+--- a/src/test/java/org/scribe/extractors/HeaderExtractorTest.java
++++ b/src/test/java/org/scribe/extractors/HeaderExtractorTest.java
+@@ -24,7 +24,7 @@
+   public void shouldExtractStandardHeader()
+   {
+     String expected = "OAuth oauth_callback=\"http%3A%2F%2Fexample%2Fcallback\", " + "oauth_signature=\"OAuth-Signature\", "
+-        + "oauth_consumer_key=\"AS%23%24%5E*%40%26\", " + "oauth_timestamp=\"123456\"";
++        + "oauth_consumer_key=\"AS%23%24%5E%2A%40%26\", " + "oauth_timestamp=\"123456\"";
+     String header = extractor.extract(request);
+     assertEquals(expected, header);
+   }
+diff --git a/src/test/java/org/scribe/extractors/BaseStringExtractorTest.java b/src/test/java/org/scribe/extractors/BaseStringExtractorTest.java
+index b145592..8fe872f 100644
+--- a/src/test/java/org/scribe/extractors/BaseStringExtractorTest.java
++++ b/src/test/java/org/scribe/extractors/BaseStringExtractorTest.java
+@@ -23,7 +23,7 @@
+   @Test
+   public void shouldExtractBaseStringFromOAuthRequest()
+   {
+-    String expected = "GET&http%3A%2F%2Fexample.com&oauth_callback%3Dhttp%253A%252F%252Fexample%252Fcallback%26oauth_consumer_key%3DAS%2523%2524%255E*%2540%2526%26oauth_signature%3DOAuth-Signature%26oauth_timestamp%3D123456";
++    String expected = "GET&http%3A%2F%2Fexample.com&oauth_callback%3Dhttp%253A%252F%252Fexample%252Fcallback%26oauth_consumer_key%3DAS%2523%2524%255E%252A%2540%2526%26oauth_signature%3DOAuth-Signature%26oauth_timestamp%3D123456";
+     String baseString = extractor.extract(request);
+     assertEquals(expected, baseString);
+   }
+@@ -45,7 +45,7 @@
+   @Test
+   public void shouldProperlyEncodeSpaces()
+   {
+-    String expected = "GET&http%3A%2F%2Fexample.com&body%3Dthis%2520param%2520has%2520whitespace%26oauth_callback%3Dhttp%253A%252F%252Fexample%252Fcallback%26oauth_consumer_key%3DAS%2523%2524%255E*%2540%2526%26oauth_signature%3DOAuth-Signature%26oauth_timestamp%3D123456";
++    String expected = "GET&http%3A%2F%2Fexample.com&body%3Dthis%2520param%2520has%2520whitespace%26oauth_callback%3Dhttp%253A%252F%252Fexample%252Fcallback%26oauth_consumer_key%3DAS%2523%2524%255E%252A%2540%2526%26oauth_signature%3DOAuth-Signature%26oauth_timestamp%3D123456";
+     request.addBodyParameter("body", "this param has whitespace");
+     assertEquals(expected, extractor.extract(request));
+   }

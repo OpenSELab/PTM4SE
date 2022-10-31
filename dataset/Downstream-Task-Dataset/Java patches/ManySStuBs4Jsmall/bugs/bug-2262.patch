@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index 07f36f7..5f50b68 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -90,7 +90,7 @@
+             br = new BufferedReader(new InputStreamReader(b.inputStream));
+         }
+ 
+-        methodType = b.methodType == null ? (isNotNoOps()? b.request.getMethod() : "GET") : b.methodType;
++        methodType = b.methodType == null ? (b.request != null ? b.request.getMethod() : "GET") : b.methodType;
+ 
+         if (b.request == null) b.request(new NoOpsRequest());
+ 
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index 07f36f7..5f50b68 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -90,7 +90,7 @@
+             br = new BufferedReader(new InputStreamReader(b.inputStream));
+         }
+ 
+-        methodType = b.methodType == null ? (isNotNoOps()? b.request.getMethod() : "GET") : b.methodType;
++        methodType = b.methodType == null ? (b.request != null ? b.request.getMethod() : "GET") : b.methodType;
+ 
+         if (b.request == null) b.request(new NoOpsRequest());
+ 

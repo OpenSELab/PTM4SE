@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/analyzer/ExpressionAnalyzer.java b/presto-main/src/main/java/com/facebook/presto/sql/analyzer/ExpressionAnalyzer.java
+index 2ef1d79..5b42ce6 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/analyzer/ExpressionAnalyzer.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/analyzer/ExpressionAnalyzer.java
+@@ -1129,7 +1129,7 @@
+             int numCapturedValues = node.getValues().size();
+             verify(argumentTypes.size() == functionInputTypes.size());
+             for (int i = 0; i < numCapturedValues; i++) {
+-                verify(functionInputTypes.get(i) == argumentTypes.get(i));
++                verify(functionInputTypes.get(i).equals(argumentTypes.get(i)));
+             }
+ 
+             FunctionType result = new FunctionType(argumentTypes.subList(numCapturedValues, argumentTypes.size()), functionType.getReturnType());
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/analyzer/ExpressionAnalyzer.java b/presto-main/src/main/java/com/facebook/presto/sql/analyzer/ExpressionAnalyzer.java
+index 2ef1d79..5b42ce6 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/analyzer/ExpressionAnalyzer.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/analyzer/ExpressionAnalyzer.java
+@@ -1129,7 +1129,7 @@
+             int numCapturedValues = node.getValues().size();
+             verify(argumentTypes.size() == functionInputTypes.size());
+             for (int i = 0; i < numCapturedValues; i++) {
+-                verify(functionInputTypes.get(i) == argumentTypes.get(i));
++                verify(functionInputTypes.get(i).equals(argumentTypes.get(i)));
+             }
+ 
+             FunctionType result = new FunctionType(argumentTypes.subList(numCapturedValues, argumentTypes.size()), functionType.getReturnType());

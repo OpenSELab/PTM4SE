@@ -1,0 +1,117 @@
+diff --git a/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/transport/AbstractClient.java b/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/transport/AbstractClient.java
+index a945586..477fa71 100644
+--- a/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/transport/AbstractClient.java
++++ b/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/transport/AbstractClient.java
+@@ -276,7 +276,7 @@
+             if (!isConnected()) {
+                 throw new RemotingException(this, "Failed connect to server " + getRemoteAddress() + " from " + getClass().getSimpleName() + " "
+                         + NetUtils.getLocalHost() + " using dubbo version " + Version.getVersion()
+-                        + ", cause: Connect wait timeout: " + getTimeout() + "ms.");
++                        + ", cause: Connect wait timeout: " + getConnectTimeout() + "ms.");
+             } else {
+                 if (logger.isInfoEnabled()) {
+                     logger.info("Successed connect to server " + getRemoteAddress() + " from " + getClass().getSimpleName() + " "
+diff --git a/dubbo-remoting/dubbo-remoting-grizzly/src/main/java/org/apache/dubbo/remoting/transport/grizzly/GrizzlyClient.java b/dubbo-remoting/dubbo-remoting-grizzly/src/main/java/org/apache/dubbo/remoting/transport/grizzly/GrizzlyClient.java
+index 30f47b8..2753d21 100644
+--- a/dubbo-remoting/dubbo-remoting-grizzly/src/main/java/org/apache/dubbo/remoting/transport/grizzly/GrizzlyClient.java
++++ b/dubbo-remoting/dubbo-remoting-grizzly/src/main/java/org/apache/dubbo/remoting/transport/grizzly/GrizzlyClient.java
+@@ -66,7 +66,7 @@
+                 .setMaxPoolSize(Integer.MAX_VALUE)
+                 .setKeepAliveTime(60L, TimeUnit.SECONDS);
+         builder.setTcpNoDelay(true).setKeepAlive(true)
+-                .setConnectionTimeout(getTimeout())
++                .setConnectionTimeout(getConnectTimeout())
+                 .setIOStrategy(SameThreadIOStrategy.getInstance());
+         transport = builder.build();
+         transport.setProcessor(filterChainBuilder.build());
+diff --git a/dubbo-remoting/dubbo-remoting-mina/src/main/java/org/apache/dubbo/remoting/transport/mina/MinaClient.java b/dubbo-remoting/dubbo-remoting-mina/src/main/java/org/apache/dubbo/remoting/transport/mina/MinaClient.java
+index 552becd..23296f7 100644
+--- a/dubbo-remoting/dubbo-remoting-mina/src/main/java/org/apache/dubbo/remoting/transport/mina/MinaClient.java
++++ b/dubbo-remoting/dubbo-remoting-mina/src/main/java/org/apache/dubbo/remoting/transport/mina/MinaClient.java
+@@ -78,7 +78,7 @@
+             cfg.setThreadModel(ThreadModel.MANUAL);
+             cfg.getSessionConfig().setTcpNoDelay(true);
+             cfg.getSessionConfig().setKeepAlive(true);
+-            int timeout = getTimeout();
++            int timeout = getConnectTimeout();
+             cfg.setConnectTimeout(timeout < 1000 ? 1 : timeout / 1000);
+             // set codec.
+             connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new MinaCodecAdapter(getCodec(), getUrl(), this)));
+@@ -135,10 +135,10 @@
+             }
+         });
+         try {
+-            finish.await(getTimeout(), TimeUnit.MILLISECONDS);
++            finish.await(getConnectTimeout(), TimeUnit.MILLISECONDS);
+         } catch (InterruptedException e) {
+             throw new RemotingException(this, "client(url: " + getUrl() + ") failed to connect to server " + getRemoteAddress() + " client-side timeout "
+-                    + getTimeout() + "ms (elapsed: " + (System.currentTimeMillis() - start)
++                    + getConnectTimeout() + "ms (elapsed: " + (System.currentTimeMillis() - start)
+                     + "ms) from netty client " + NetUtils.getLocalHost() + " using dubbo version "
+                     + Version.getVersion() + ", cause: " + e.getMessage(), e);
+         }
+diff --git a/dubbo-remoting/dubbo-remoting-netty/src/main/java/org/apache/dubbo/remoting/transport/netty/NettyClient.java b/dubbo-remoting/dubbo-remoting-netty/src/main/java/org/apache/dubbo/remoting/transport/netty/NettyClient.java
+index a91aa58..574402f 100644
+--- a/dubbo-remoting/dubbo-remoting-netty/src/main/java/org/apache/dubbo/remoting/transport/netty/NettyClient.java
++++ b/dubbo-remoting/dubbo-remoting-netty/src/main/java/org/apache/dubbo/remoting/transport/netty/NettyClient.java
+@@ -67,7 +67,7 @@
+         // @see org.jboss.netty.channel.socket.SocketChannelConfig
+         bootstrap.setOption("keepAlive", true);
+         bootstrap.setOption("tcpNoDelay", true);
+-        bootstrap.setOption("connectTimeoutMillis", getTimeout());
++        bootstrap.setOption("connectTimeoutMillis", getConnectTimeout());
+         final NettyHandler nettyHandler = new NettyHandler(getUrl(), this);
+         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+             @Override
+diff --git a/dubbo-remoting/dubbo-remoting-netty4/src/main/java/org/apache/dubbo/remoting/transport/netty4/NettyClient.java b/dubbo-remoting/dubbo-remoting-netty4/src/main/java/org/apache/dubbo/remoting/transport/netty4/NettyClient.java
+index 48e669c..19b56ae 100644
+--- a/dubbo-remoting/dubbo-remoting-netty4/src/main/java/org/apache/dubbo/remoting/transport/netty4/NettyClient.java
++++ b/dubbo-remoting/dubbo-remoting-netty4/src/main/java/org/apache/dubbo/remoting/transport/netty4/NettyClient.java
+@@ -66,10 +66,10 @@
+                 //.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, getTimeout())
+                 .channel(NioSocketChannel.class);
+ 
+-        if (getTimeout() < 3000) {
++        if (getConnectTimeout() < 3000) {
+             bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000);
+         } else {
+-            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, getTimeout());
++            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, getConnectTimeout());
+         }
+ 
+         bootstrap.handler(new ChannelInitializer() {
+@@ -90,7 +90,7 @@
+         long start = System.currentTimeMillis();
+         ChannelFuture future = bootstrap.connect(getConnectAddress());
+         try {
+-            boolean ret = future.awaitUninterruptibly(3000, TimeUnit.MILLISECONDS);
++            boolean ret = future.awaitUninterruptibly(getConnectTimeout(), TimeUnit.MILLISECONDS);
+ 
+             if (ret && future.isSuccess()) {
+                 Channel newChannel = future.channel();
+diff --git a/dubbo-rpc/dubbo-rpc-rest/src/main/java/org/apache/dubbo/rpc/protocol/rest/RestProtocol.java b/dubbo-rpc/dubbo-rpc-rest/src/main/java/org/apache/dubbo/rpc/protocol/rest/RestProtocol.java
+index 82883f4..2268b71 100644
+--- a/dubbo-rpc/dubbo-rpc-rest/src/main/java/org/apache/dubbo/rpc/protocol/rest/RestProtocol.java
++++ b/dubbo-rpc/dubbo-rpc-rest/src/main/java/org/apache/dubbo/rpc/protocol/rest/RestProtocol.java
+@@ -148,7 +148,7 @@
+ 
+         connectionMonitor.addConnectionManager(connectionManager);
+         RequestConfig requestConfig = RequestConfig.custom()
+-                .setConnectTimeout(url.getParameter(Constants.TIMEOUT_KEY, Constants.DEFAULT_TIMEOUT))
++                .setConnectTimeout(url.getParameter(Constants.CONNECT_TIMEOUT_KEY, Constants.DEFAULT_CONNECT_TIMEOUT))
+                 .setSocketTimeout(url.getParameter(Constants.TIMEOUT_KEY, Constants.DEFAULT_TIMEOUT))
+                 .build();
+ 
+diff --git a/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/transport/AbstractClient.java b/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/transport/AbstractClient.java
+index a945586..477fa71 100644
+--- a/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/transport/AbstractClient.java
++++ b/dubbo-remoting/dubbo-remoting-api/src/main/java/org/apache/dubbo/remoting/transport/AbstractClient.java
+@@ -276,7 +276,7 @@
+             if (!isConnected()) {
+                 throw new RemotingException(this, "Failed connect to server " + getRemoteAddress() + " from " + getClass().getSimpleName() + " "
+                         + NetUtils.getLocalHost() + " using dubbo version " + Version.getVersion()
+-                        + ", cause: Connect wait timeout: " + getTimeout() + "ms.");
++                        + ", cause: Connect wait timeout: " + getConnectTimeout() + "ms.");
+             } else {
+                 if (logger.isInfoEnabled()) {
+                     logger.info("Successed connect to server " + getRemoteAddress() + " from " + getClass().getSimpleName() + " "

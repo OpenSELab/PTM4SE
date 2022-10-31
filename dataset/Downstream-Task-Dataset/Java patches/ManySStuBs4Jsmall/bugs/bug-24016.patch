@@ -1,0 +1,39 @@
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/component/stateful/StatefulComponentSessionIdGeneratingInterceptorFactory.java b/ejb3/src/main/java/org/jboss/as/ejb3/component/stateful/StatefulComponentSessionIdGeneratingInterceptorFactory.java
+index 02f9a7d..d74754c 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/component/stateful/StatefulComponentSessionIdGeneratingInterceptorFactory.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/component/stateful/StatefulComponentSessionIdGeneratingInterceptorFactory.java
+@@ -51,7 +51,7 @@
+ 
+     private class StatefulComponentSessionIdGeneratingInterceptor implements Interceptor {
+ 
+-        final private AtomicReference<Serializable> sessionIdReference;
++        private final AtomicReference<Serializable> sessionIdReference;
+ 
+         StatefulComponentSessionIdGeneratingInterceptor(AtomicReference<Serializable> sessionIdReference) {
+             this.sessionIdReference = sessionIdReference;
+diff --git a/webservices/server-integration/src/main/java/org/jboss/as/webservices/deployers/WebServiceRefAnnotationParsingProcessor.java b/webservices/server-integration/src/main/java/org/jboss/as/webservices/deployers/WebServiceRefAnnotationParsingProcessor.java
+index 082d342..91c728b 100644
+--- a/webservices/server-integration/src/main/java/org/jboss/as/webservices/deployers/WebServiceRefAnnotationParsingProcessor.java
++++ b/webservices/server-integration/src/main/java/org/jboss/as/webservices/deployers/WebServiceRefAnnotationParsingProcessor.java
+@@ -172,7 +172,7 @@
+         reference.setServiceRefName(name);
+         // TODO handle mappedName
+ 
+-        if (wsdlLocation.length() > 0) {
++        if (wsdlLocation != null && wsdlLocation.length() > 0) {
+             reference.setWsdlFile(wsdlLocation);
+         }
+         reference.setServiceRefType(type);
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/component/stateful/StatefulComponentSessionIdGeneratingInterceptorFactory.java b/ejb3/src/main/java/org/jboss/as/ejb3/component/stateful/StatefulComponentSessionIdGeneratingInterceptorFactory.java
+index 02f9a7d..d74754c 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/component/stateful/StatefulComponentSessionIdGeneratingInterceptorFactory.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/component/stateful/StatefulComponentSessionIdGeneratingInterceptorFactory.java
+@@ -51,7 +51,7 @@
+ 
+     private class StatefulComponentSessionIdGeneratingInterceptor implements Interceptor {
+ 
+-        final private AtomicReference<Serializable> sessionIdReference;
++        private final AtomicReference<Serializable> sessionIdReference;
+ 
+         StatefulComponentSessionIdGeneratingInterceptor(AtomicReference<Serializable> sessionIdReference) {
+             this.sessionIdReference = sessionIdReference;

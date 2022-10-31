@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/scalar/annotations/ScalarImplementation.java b/presto-main/src/main/java/com/facebook/presto/operator/scalar/annotations/ScalarImplementation.java
+index b299fdc..427ea5c 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/scalar/annotations/ScalarImplementation.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/scalar/annotations/ScalarImplementation.java
+@@ -356,7 +356,7 @@
+                         checkArgument(typeParameters.contains(annotation), "Injected type parameters must be declared with @TypeParameter annotation on the method [%s]", method);
+                     }
+                     if (annotation instanceof LiteralParameter) {
+-                        checkArgument(literalParameters.contains(((LiteralParameter) annotation).value()), "Parameter injected by @LiteralParameter must be declared in @LiteralParameter.");
++                        checkArgument(literalParameters.contains(((LiteralParameter) annotation).value()), "Parameter injected by @LiteralParameter must be declared with @LiteralParameters on the method [%s]", method);
+                     }
+                     dependencies.add(parseDependency(annotation));
+                 }
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/scalar/annotations/ScalarImplementation.java b/presto-main/src/main/java/com/facebook/presto/operator/scalar/annotations/ScalarImplementation.java
+index b299fdc..427ea5c 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/scalar/annotations/ScalarImplementation.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/scalar/annotations/ScalarImplementation.java
+@@ -356,7 +356,7 @@
+                         checkArgument(typeParameters.contains(annotation), "Injected type parameters must be declared with @TypeParameter annotation on the method [%s]", method);
+                     }
+                     if (annotation instanceof LiteralParameter) {
+-                        checkArgument(literalParameters.contains(((LiteralParameter) annotation).value()), "Parameter injected by @LiteralParameter must be declared in @LiteralParameter.");
++                        checkArgument(literalParameters.contains(((LiteralParameter) annotation).value()), "Parameter injected by @LiteralParameter must be declared with @LiteralParameters on the method [%s]", method);
+                     }
+                     dependencies.add(parseDependency(annotation));
+                 }

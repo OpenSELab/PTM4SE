@@ -1,0 +1,46 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/FilerConsumerShouldSkipDoneFileSuffixTest.java b/camel-core/src/test/java/org/apache/camel/component/file/FilerConsumerShouldSkipDoneFileSuffixTest.java
+index e6ab1d3..258b98a 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/FilerConsumerShouldSkipDoneFileSuffixTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/FilerConsumerShouldSkipDoneFileSuffixTest.java
+@@ -67,7 +67,9 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("file:target/done?doneFileName=${file:name}.ready&initialDelay=0&delay=10").to("mock:result");
++                from("file:target/done?doneFileName=${file:name}.ready&initialDelay=0")
++                    .convertBodyTo(String.class)
++                    .to("mock:result");
+             }
+         };
+     }
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/RecipientListParallelAggregateThreadPoolIssueTest.java b/camel-core/src/test/java/org/apache/camel/processor/RecipientListParallelAggregateThreadPoolIssueTest.java
+index 7040251..078c4a1 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/RecipientListParallelAggregateThreadPoolIssueTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/RecipientListParallelAggregateThreadPoolIssueTest.java
+@@ -42,9 +42,9 @@
+         int num1 = context.getTypeConverter().convertTo(int.class, before);
+         int num2 = context.getTypeConverter().convertTo(int.class, after);
+         int diff = num2 - num1;
+-        // should be 10 + 1 other threads (10 in parallel pool + 1 in aggregate pool)
++        // should be at least 10 + 1 other threads (10 in parallel pool + 1 in aggregate pool)
+         // we run unit test per jmv fork, so there may be a hanging thread
+-        assertTrue("There should be 12 threads in diff, was: " + diff, diff >= 12 && diff <= 13);
++        assertTrue("There should be 12 or more threads in use, was: " + diff, diff >= 11);
+     }
+ 
+     @Override
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/FilerConsumerShouldSkipDoneFileSuffixTest.java b/camel-core/src/test/java/org/apache/camel/component/file/FilerConsumerShouldSkipDoneFileSuffixTest.java
+index e6ab1d3..258b98a 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/FilerConsumerShouldSkipDoneFileSuffixTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/FilerConsumerShouldSkipDoneFileSuffixTest.java
+@@ -67,7 +67,9 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("file:target/done?doneFileName=${file:name}.ready&initialDelay=0&delay=10").to("mock:result");
++                from("file:target/done?doneFileName=${file:name}.ready&initialDelay=0")
++                    .convertBodyTo(String.class)
++                    .to("mock:result");
+             }
+         };
+     }

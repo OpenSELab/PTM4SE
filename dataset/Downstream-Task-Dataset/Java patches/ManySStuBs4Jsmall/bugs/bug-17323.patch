@@ -1,0 +1,13 @@
+diff --git a/extensions/gdx-controllers/gdx-controllers-desktop/src/com/badlogic/gdx/controllers/desktop/DesktopControllersBuild.java b/extensions/gdx-controllers/gdx-controllers-desktop/src/com/badlogic/gdx/controllers/desktop/DesktopControllersBuild.java
+index 10e7eaa..9a1888e 100644
+--- a/extensions/gdx-controllers/gdx-controllers-desktop/src/com/badlogic/gdx/controllers/desktop/DesktopControllersBuild.java
++++ b/extensions/gdx-controllers/gdx-controllers-desktop/src/com/badlogic/gdx/controllers/desktop/DesktopControllersBuild.java
+@@ -86,7 +86,7 @@
+ 		mac.libraries = "-framework CoreServices -framework Carbon -framework IOKit -framework Cocoa";
+ 		
+ 		new AntScriptGenerator().generate(buildConfig, win32home, win32, win64, lin32, lin64, mac);
+-		if(!BuildExecutor.executeAnt("jni/build-macosx32.xml", "-Dhas-compiler=true -v clean postcompile")) {
++		if(!BuildExecutor.executeAnt("jni/build-macosx32.xml", "-Dhas-compiler=true -v postcompile")) {
+ 			throw new Exception("build failed");
+ 		}
+ 		BuildExecutor.executeAnt("jni/build.xml", "pack-natives");

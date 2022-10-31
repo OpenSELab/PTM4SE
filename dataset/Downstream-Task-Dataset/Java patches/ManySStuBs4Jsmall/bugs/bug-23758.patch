@@ -1,0 +1,182 @@
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterAddProxy.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterAddProxy.java
+index 3a43304..ac1d4d9 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterAddProxy.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterAddProxy.java
+@@ -46,7 +46,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterDisable.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterDisable.java
+index 29faee4..98138e9 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterDisable.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterDisable.java
+@@ -44,7 +44,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterDisableContext.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterDisableContext.java
+index c809396..aa3a97e 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterDisableContext.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterDisableContext.java
+@@ -46,7 +46,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterEnable.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterEnable.java
+index 8c9c5dd..372acd8 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterEnable.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterEnable.java
+@@ -44,7 +44,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterEnableContext.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterEnableContext.java
+index bce009f..c12147e 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterEnableContext.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterEnableContext.java
+@@ -46,7 +46,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterGetProxyConfiguration.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterGetProxyConfiguration.java
+index a8899e1..a7912b7 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterGetProxyConfiguration.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterGetProxyConfiguration.java
+@@ -48,7 +48,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterGetProxyInfo.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterGetProxyInfo.java
+index 38f7283..bf536a8 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterGetProxyInfo.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterGetProxyInfo.java
+@@ -48,7 +48,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterListProxies.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterListProxies.java
+index f80c7a1..922bbea 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterListProxies.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterListProxies.java
+@@ -48,7 +48,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterRefresh.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterRefresh.java
+index ddc6e23..7f0be13 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterRefresh.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterRefresh.java
+@@ -44,7 +44,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterRemoveProxy.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterRemoveProxy.java
+index 12009c1..862e6e6 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterRemoveProxy.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterRemoveProxy.java
+@@ -46,7 +46,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterReset.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterReset.java
+index 095b036..f9f27ec 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterReset.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterReset.java
+@@ -44,7 +44,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterStop.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterStop.java
+index bfe6b83..9884840 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterStop.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterStop.java
+@@ -47,7 +47,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterStopContext.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterStopContext.java
+index da9ac58..ec1cc6a 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterStopContext.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterStopContext.java
+@@ -46,7 +46,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {
+diff --git a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterAddProxy.java b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterAddProxy.java
+index 3a43304..ac1d4d9 100644
+--- a/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterAddProxy.java
++++ b/modcluster/src/main/java/org/jboss/as/modcluster/ModClusterAddProxy.java
+@@ -46,7 +46,7 @@
+     @Override
+     public void execute(OperationContext context, ModelNode operation)
+             throws OperationFailedException {
+-        if (context.isNormalServer()) {
++        if (context.isNormalServer() && context.getServiceRegistry(false).getService(ModClusterService.NAME)!=null) {
+             context.addStep(new OperationStepHandler() {
+                 @Override
+                 public void execute(OperationContext context, ModelNode operation) throws OperationFailedException {

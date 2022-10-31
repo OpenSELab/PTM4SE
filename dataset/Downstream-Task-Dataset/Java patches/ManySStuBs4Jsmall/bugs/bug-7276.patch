@@ -1,0 +1,44 @@
+diff --git a/hbase-client/src/main/java/org/apache/hadoop/hbase/client/AsyncRpcRetryingCallerFactory.java b/hbase-client/src/main/java/org/apache/hadoop/hbase/client/AsyncRpcRetryingCallerFactory.java
+index d71b428..270f265 100644
+--- a/hbase-client/src/main/java/org/apache/hadoop/hbase/client/AsyncRpcRetryingCallerFactory.java
++++ b/hbase-client/src/main/java/org/apache/hadoop/hbase/client/AsyncRpcRetryingCallerFactory.java
+@@ -144,7 +144,7 @@
+ 
+   public class ScanSingleRegionCallerBuilder extends BuilderBase {
+ 
+-    private long scannerId = -1L;
++    private Long scannerId = null;
+ 
+     private Scan scan;
+ 
+@@ -238,7 +238,7 @@
+     }
+ 
+     public AsyncScanSingleRegionRpcRetryingCaller build() {
+-      checkArgument(scannerId >= 0, "invalid scannerId %d", scannerId);
++      checkArgument(scannerId != null, "invalid scannerId %d", scannerId);
+       return new AsyncScanSingleRegionRpcRetryingCaller(retryTimer, conn,
+           checkNotNull(scan, "scan is null"), scanMetrics, scannerId,
+           checkNotNull(resultCache, "resultCache is null"),
+diff --git a/hbase-client/src/main/java/org/apache/hadoop/hbase/client/AsyncRpcRetryingCallerFactory.java b/hbase-client/src/main/java/org/apache/hadoop/hbase/client/AsyncRpcRetryingCallerFactory.java
+index d71b428..270f265 100644
+--- a/hbase-client/src/main/java/org/apache/hadoop/hbase/client/AsyncRpcRetryingCallerFactory.java
++++ b/hbase-client/src/main/java/org/apache/hadoop/hbase/client/AsyncRpcRetryingCallerFactory.java
+@@ -144,7 +144,7 @@
+ 
+   public class ScanSingleRegionCallerBuilder extends BuilderBase {
+ 
+-    private long scannerId = -1L;
++    private Long scannerId = null;
+ 
+     private Scan scan;
+ 
+@@ -238,7 +238,7 @@
+     }
+ 
+     public AsyncScanSingleRegionRpcRetryingCaller build() {
+-      checkArgument(scannerId >= 0, "invalid scannerId %d", scannerId);
++      checkArgument(scannerId != null, "invalid scannerId %d", scannerId);
+       return new AsyncScanSingleRegionRpcRetryingCaller(retryTimer, conn,
+           checkNotNull(scan, "scan is null"), scanMetrics, scannerId,
+           checkNotNull(resultCache, "resultCache is null"),

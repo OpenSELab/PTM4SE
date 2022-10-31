@@ -1,0 +1,73 @@
+--- a/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
++++ b/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
+@@ -1099,14 +1099,16 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 		} else {
+ 			// It's a method invocation
+ 			printer.snapshotLength();
+-			try (Writable _context = context.modify()) {
+-				if (invocation.getTarget() instanceof CtTypeAccess) {
+-					_context.ignoreGenerics(true);
++			if (!this.importsContext.isImported(invocation.getExecutable())) {
++				try (Writable _context = context.modify()) {
++					if (invocation.getTarget() instanceof CtTypeAccess) {
++						_context.ignoreGenerics(true);
++					}
++					scan(invocation.getTarget());
++				}
++				if (printer.hasNewContent()) {
++					printer.write(".");
+ 				}
+-				scan(invocation.getTarget());
+-			}
+-			if (printer.hasNewContent()) {
+-				printer.write(".");
+ 			}
+ 
+ 			elementPrinterHelper.writeActualTypeArguments(invocation);
+--- a/src/main/java/spoon/reflect/visitor/ImportScannerImpl.java
++++ b/src/main/java/spoon/reflect/visitor/ImportScannerImpl.java
+@@ -367,11 +367,19 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 	 */
+ 	private boolean declaringTypeIsLocalOrImported(CtTypeReference declaringType) {
+ 		if (declaringType != null) {
+-			if (!isTypeInCollision(declaringType, false) && addClassImport(declaringType)) {
+-				return true;
++
++			boolean isInCollision = isTypeInCollision(declaringType, false);
++			if (!isInCollision) {
++				boolean importSuccess = addClassImport(declaringType);
++				if (importSuccess) {
++					return true;
++				}
+ 			}
+ 
+-			if (isImportedInClassImports(declaringType) || classNamePresentInJavaLang(declaringType)) {
++			boolean importedInClassImports = isImportedInClassImports(declaringType);
++			boolean inJavaLang = classNamePresentInJavaLang(declaringType);
++
++			if (importedInClassImports || inJavaLang) {
+ 				return true;
+ 			}
+ 
+@@ -396,6 +426,10 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 			return false;
+ 		}
+ 
++		if (this.isInCollisionWithLocalMethod(ref)) {
++			return false;
++		}
++
+ 		methodImports.put(ref.getSimpleName(), ref);
+ 
+ 		// if we are in the same package than target type, we also import class to avoid FQN in FQN mode.
+@@ -420,6 +454,10 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 	}
+ 
+ 	protected boolean addFieldImport(CtFieldReference ref) {
++		// static import is not supported below java 1.5
++		if (ref.getFactory().getEnvironment().getComplianceLevel() < 5) {
++			return false;
++		}
+ 		if (this.fieldImports.containsKey(ref.getSimpleName())) {
+ 			return isImportedInFieldImports(ref);
+ 		}

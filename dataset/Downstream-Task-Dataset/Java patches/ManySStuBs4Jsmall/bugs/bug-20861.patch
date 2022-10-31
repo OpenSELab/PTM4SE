@@ -1,0 +1,23 @@
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
+index 38c36cd..d259f8d 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
+@@ -243,7 +243,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<ResourceUrlEncodingFilter> filterRegistration() {
+-			FilterRegistrationBean<ResourceUrlEncodingFilter> bean = new FilterRegistrationBean<ResourceUrlEncodingFilter>(
++			FilterRegistrationBean<ResourceUrlEncodingFilter> bean = new FilterRegistrationBean<>(
+ 					new ResourceUrlEncodingFilter());
+ 			bean.setDispatcherTypes(EnumSet.of(DispatcherType.INCLUDE));
+ 			return bean;
+@@ -257,8 +257,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<OrderedCharacterEncodingFilter> filterRegistration() {
+-			return new FilterRegistrationBean<OrderedCharacterEncodingFilter>(
+-					new OrderedCharacterEncodingFilter());
++			return new FilterRegistrationBean<>(new OrderedCharacterEncodingFilter());
+ 		}
+ 
+ 	}

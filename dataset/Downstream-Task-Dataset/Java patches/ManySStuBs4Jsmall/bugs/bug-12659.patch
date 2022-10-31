@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/type/RealOperators.java b/presto-main/src/main/java/com/facebook/presto/type/RealOperators.java
+index 7f0768a..dc05445 100644
+--- a/presto-main/src/main/java/com/facebook/presto/type/RealOperators.java
++++ b/presto-main/src/main/java/com/facebook/presto/type/RealOperators.java
+@@ -165,7 +165,7 @@
+     @SqlType(StandardTypes.BIGINT)
+     public static long hashCode(@SqlType(StandardTypes.REAL) long value)
+     {
+-        return AbstractIntType.hash((int) value);
++        return AbstractIntType.hash(floatToIntBits(intBitsToFloat((int) value)));
+     }
+ 
+     @ScalarOperator(XX_HASH_64)
+diff --git a/presto-main/src/main/java/com/facebook/presto/type/RealOperators.java b/presto-main/src/main/java/com/facebook/presto/type/RealOperators.java
+index 7f0768a..dc05445 100644
+--- a/presto-main/src/main/java/com/facebook/presto/type/RealOperators.java
++++ b/presto-main/src/main/java/com/facebook/presto/type/RealOperators.java
+@@ -165,7 +165,7 @@
+     @SqlType(StandardTypes.BIGINT)
+     public static long hashCode(@SqlType(StandardTypes.REAL) long value)
+     {
+-        return AbstractIntType.hash((int) value);
++        return AbstractIntType.hash(floatToIntBits(intBitsToFloat((int) value)));
+     }
+ 
+     @ScalarOperator(XX_HASH_64)

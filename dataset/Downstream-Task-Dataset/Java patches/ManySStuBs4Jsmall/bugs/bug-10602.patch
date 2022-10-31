@@ -1,0 +1,42 @@
+diff --git a/nd4j-serde/nd4j-gson/src/main/java/org/nd4j/serde/gson/GsonDeserializationUtils.java b/nd4j-serde/nd4j-gson/src/main/java/org/nd4j/serde/gson/GsonDeserializationUtils.java
+index 54483f2..74dee32 100644
+--- a/nd4j-serde/nd4j-gson/src/main/java/org/nd4j/serde/gson/GsonDeserializationUtils.java
++++ b/nd4j-serde/nd4j-gson/src/main/java/org/nd4j/serde/gson/GsonDeserializationUtils.java
+@@ -15,8 +15,15 @@
+ public class GsonDeserializationUtils {
+     private static final JsonParser JSON_PARSER = new JsonParser();
+ 
++    /**
++     * Deserialize an ndarray
++     * form json
++     * @param serializedRawArray
++     * @return
++     */
+     public static INDArray deserializeRawJson(String serializedRawArray) {
+-        String cleanedRawArray = serializedRawArray.replaceAll("(?<=[\\d])(,)(?=[\\d])", "");
++       // String cleanedRawArray = serializedRawArray.replaceAll("(?<=[\\d])(,)(?=[\\d])", "");
++        String cleanedRawArray = serializedRawArray;
+         JsonArray jsonArray = JSON_PARSER.parse(cleanedRawArray).getAsJsonArray();
+ 
+         List<Integer> dimensions = new ArrayList<>();
+diff --git a/nd4j-serde/nd4j-gson/src/main/java/org/nd4j/serde/gson/GsonDeserializationUtils.java b/nd4j-serde/nd4j-gson/src/main/java/org/nd4j/serde/gson/GsonDeserializationUtils.java
+index 54483f2..74dee32 100644
+--- a/nd4j-serde/nd4j-gson/src/main/java/org/nd4j/serde/gson/GsonDeserializationUtils.java
++++ b/nd4j-serde/nd4j-gson/src/main/java/org/nd4j/serde/gson/GsonDeserializationUtils.java
+@@ -15,8 +15,15 @@
+ public class GsonDeserializationUtils {
+     private static final JsonParser JSON_PARSER = new JsonParser();
+ 
++    /**
++     * Deserialize an ndarray
++     * form json
++     * @param serializedRawArray
++     * @return
++     */
+     public static INDArray deserializeRawJson(String serializedRawArray) {
+-        String cleanedRawArray = serializedRawArray.replaceAll("(?<=[\\d])(,)(?=[\\d])", "");
++       // String cleanedRawArray = serializedRawArray.replaceAll("(?<=[\\d])(,)(?=[\\d])", "");
++        String cleanedRawArray = serializedRawArray;
+         JsonArray jsonArray = JSON_PARSER.parse(cleanedRawArray).getAsJsonArray();
+ 
+         List<Integer> dimensions = new ArrayList<>();

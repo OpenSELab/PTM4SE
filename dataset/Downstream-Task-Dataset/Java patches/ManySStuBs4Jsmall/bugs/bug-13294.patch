@@ -1,0 +1,41 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/DefaultFunctionBinder.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/DefaultFunctionBinder.java
+index 0be3259..85a3a99 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/DefaultFunctionBinder.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/DefaultFunctionBinder.java
+@@ -50,7 +50,7 @@
+                 Object value = ((Constant) node).getValue();
+                 if (argument.getType() == boolean.class) {
+                     checkArgument(value instanceof Integer, "boolean should be represented as an integer");
+-                    value = (value != 0);
++                    value = (((Integer) value) != 0);
+                 }
+                 // bind constant argument
+                 methodHandle = MethodHandles.insertArguments(methodHandle, argIndex, value);
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
+index 4a466e7..92b7fed 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
+@@ -1907,8 +1907,8 @@
+                     constantValuesBuilder.add(testValue);
+                     int hashCode;
+                     if (type == boolean.class) {
+-                        // boolean constant is actually and integer type
+-                        hashCode = Operations.hashCode(testValue != 0);
++                        // boolean constant is actually an integer type
++                        hashCode = Operations.hashCode(((Number) testValue).intValue() != 0);
+                     }
+                     else if (type == long.class) {
+                         hashCode = Operations.hashCode((long) testValue);
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/DefaultFunctionBinder.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/DefaultFunctionBinder.java
+index 0be3259..85a3a99 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/DefaultFunctionBinder.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/DefaultFunctionBinder.java
+@@ -50,7 +50,7 @@
+                 Object value = ((Constant) node).getValue();
+                 if (argument.getType() == boolean.class) {
+                     checkArgument(value instanceof Integer, "boolean should be represented as an integer");
+-                    value = (value != 0);
++                    value = (((Integer) value) != 0);
+                 }
+                 // bind constant argument
+                 methodHandle = MethodHandles.insertArguments(methodHandle, argIndex, value);

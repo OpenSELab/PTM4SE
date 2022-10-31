@@ -1,0 +1,22 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
+index ff5e76c..c7f88d5 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
+@@ -100,7 +100,7 @@
+     @Override
+     public void addError(AuditEvent evt) {
+         final SeverityLevel severityLevel = evt.getSeverityLevel();
+-        if (SeverityLevel.IGNORE != severityLevel) {
++        if (severityLevel != SeverityLevel.IGNORE) {
+ 
+             final String fileName = evt.getFileName();
+             final String message = evt.getMessage();
+@@ -114,7 +114,7 @@
+             if (evt.getColumn() > 0) {
+                 sb.append(':').append(evt.getColumn());
+             }
+-            if (SeverityLevel.WARNING == severityLevel) {
++            if (severityLevel == SeverityLevel.WARNING) {
+                 sb.append(": warning");
+             }
+             sb.append(": ").append(message);

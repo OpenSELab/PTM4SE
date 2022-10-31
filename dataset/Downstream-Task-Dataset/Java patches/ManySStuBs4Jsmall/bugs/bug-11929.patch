@@ -1,0 +1,26 @@
+diff --git a/indexing-service/src/main/java/io/druid/indexing/overlord/scaling/SimpleResourceManagementStrategy.java b/indexing-service/src/main/java/io/druid/indexing/overlord/scaling/SimpleResourceManagementStrategy.java
+index 25afe9f..50d612b 100644
+--- a/indexing-service/src/main/java/io/druid/indexing/overlord/scaling/SimpleResourceManagementStrategy.java
++++ b/indexing-service/src/main/java/io/druid/indexing/overlord/scaling/SimpleResourceManagementStrategy.java
+@@ -200,7 +200,7 @@
+                     {
+                       return input.getRunningTasks().isEmpty()
+                              && System.currentTimeMillis() - input.getLastCompletedTaskTime().getMillis()
+-                                >= config.getWorkerIdleTimeout().getMillis();
++                                >= config.getWorkerIdleTimeout().toStandardDuration().getMillis();
+                     }
+                   }
+               )
+diff --git a/indexing-service/src/main/java/io/druid/indexing/overlord/scaling/SimpleResourceManagementStrategy.java b/indexing-service/src/main/java/io/druid/indexing/overlord/scaling/SimpleResourceManagementStrategy.java
+index 25afe9f..50d612b 100644
+--- a/indexing-service/src/main/java/io/druid/indexing/overlord/scaling/SimpleResourceManagementStrategy.java
++++ b/indexing-service/src/main/java/io/druid/indexing/overlord/scaling/SimpleResourceManagementStrategy.java
+@@ -200,7 +200,7 @@
+                     {
+                       return input.getRunningTasks().isEmpty()
+                              && System.currentTimeMillis() - input.getLastCompletedTaskTime().getMillis()
+-                                >= config.getWorkerIdleTimeout().getMillis();
++                                >= config.getWorkerIdleTimeout().toStandardDuration().getMillis();
+                     }
+                   }
+               )

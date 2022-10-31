@@ -1,0 +1,26 @@
+diff --git a/api/src/main/java/org/openmrs/propertyeditor/WorkflowCollectionEditor.java b/api/src/main/java/org/openmrs/propertyeditor/WorkflowCollectionEditor.java
+index cd59952..8296d06 100644
+--- a/api/src/main/java/org/openmrs/propertyeditor/WorkflowCollectionEditor.java
++++ b/api/src/main/java/org/openmrs/propertyeditor/WorkflowCollectionEditor.java
+@@ -84,7 +84,7 @@
+ 			for (ProgramWorkflow pw : oldSet) {
+ 				if (!newConceptIds.contains(pw.getConcept().getConceptId())) {
+ 					pw.setRetired(true);
+-				} else if (pw.isRetired()) { // && newConceptIds.contains(pw...)
++				} else if (newConceptIds.contains(pw.getConcept().getConceptId()) && pw.isRetired()) {
+ 					pw.setRetired(false);
+ 				}
+ 				alreadyDone.add(pw.getConcept().getConceptId());
+diff --git a/api/src/main/java/org/openmrs/propertyeditor/WorkflowCollectionEditor.java b/api/src/main/java/org/openmrs/propertyeditor/WorkflowCollectionEditor.java
+index cd59952..8296d06 100644
+--- a/api/src/main/java/org/openmrs/propertyeditor/WorkflowCollectionEditor.java
++++ b/api/src/main/java/org/openmrs/propertyeditor/WorkflowCollectionEditor.java
+@@ -84,7 +84,7 @@
+ 			for (ProgramWorkflow pw : oldSet) {
+ 				if (!newConceptIds.contains(pw.getConcept().getConceptId())) {
+ 					pw.setRetired(true);
+-				} else if (pw.isRetired()) { // && newConceptIds.contains(pw...)
++				} else if (newConceptIds.contains(pw.getConcept().getConceptId()) && pw.isRetired()) {
+ 					pw.setRetired(false);
+ 				}
+ 				alreadyDone.add(pw.getConcept().getConceptId());

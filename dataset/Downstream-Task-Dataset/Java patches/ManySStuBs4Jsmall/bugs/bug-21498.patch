@@ -1,0 +1,26 @@
+diff --git a/spring-boot-integration-tests/src/test/java/org/springframework/boot/starter/StarterDependenciesIntegrationTests.java b/spring-boot-integration-tests/src/test/java/org/springframework/boot/starter/StarterDependenciesIntegrationTests.java
+index b2548b5..b7cfa63 100644
+--- a/spring-boot-integration-tests/src/test/java/org/springframework/boot/starter/StarterDependenciesIntegrationTests.java
++++ b/spring-boot-integration-tests/src/test/java/org/springframework/boot/starter/StarterDependenciesIntegrationTests.java
+@@ -61,7 +61,7 @@
+ 	public static List<String[]> getStarters() {
+ 		List<String[]> starters = new ArrayList<String[]>();
+ 		for (File file : new File("../spring-boot-starters").listFiles()) {
+-			if (file.isDirectory()) {
++			if (file.isDirectory() && new File(file, "pom.xml").exists()) {
+ 				String name = file.getName();
+ 				if (name.startsWith(STARTER_NAME_PREFIX)
+ 						&& !EXCLUDED_STARTERS.contains(file.getName())) {
+diff --git a/spring-boot-integration-tests/src/test/java/org/springframework/boot/starter/StarterDependenciesIntegrationTests.java b/spring-boot-integration-tests/src/test/java/org/springframework/boot/starter/StarterDependenciesIntegrationTests.java
+index b2548b5..b7cfa63 100644
+--- a/spring-boot-integration-tests/src/test/java/org/springframework/boot/starter/StarterDependenciesIntegrationTests.java
++++ b/spring-boot-integration-tests/src/test/java/org/springframework/boot/starter/StarterDependenciesIntegrationTests.java
+@@ -61,7 +61,7 @@
+ 	public static List<String[]> getStarters() {
+ 		List<String[]> starters = new ArrayList<String[]>();
+ 		for (File file : new File("../spring-boot-starters").listFiles()) {
+-			if (file.isDirectory()) {
++			if (file.isDirectory() && new File(file, "pom.xml").exists()) {
+ 				String name = file.getName();
+ 				if (name.startsWith(STARTER_NAME_PREFIX)
+ 						&& !EXCLUDED_STARTERS.contains(file.getName())) {

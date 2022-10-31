@@ -1,0 +1,13 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/snapshot/FileDiffList.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/snapshot/FileDiffList.java
+index f9f5056..0c94554 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/snapshot/FileDiffList.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/namenode/snapshot/FileDiffList.java
+@@ -63,7 +63,7 @@
+     List<FileDiff> diffs = this.asList();
+     int i = Collections.binarySearch(diffs, snapshotId);
+     BlockInfoContiguous[] blocks = null;
+-    for(i = i >= 0 ? i : -i; i < diffs.size(); i--) {
++    for(i = i >= 0 ? i : -i-2; i >= 0; i--) {
+       blocks = diffs.get(i).getBlocks();
+       if(blocks != null) {
+         break;

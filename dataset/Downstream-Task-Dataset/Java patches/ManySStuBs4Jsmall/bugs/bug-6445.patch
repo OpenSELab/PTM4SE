@@ -1,0 +1,28 @@
+diff --git a/flink-connectors/flink-connector-kafka-base/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBase.java b/flink-connectors/flink-connector-kafka-base/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBase.java
+index a35e710..4a05efa 100644
+--- a/flink-connectors/flink-connector-kafka-base/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBase.java
++++ b/flink-connectors/flink-connector-kafka-base/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBase.java
+@@ -516,7 +516,8 @@
+ 				if (LOG.isDebugEnabled()) {
+ 					LOG.debug("Using the following offsets: {}", restoredState);
+ 				}
+-			} else if (restoredState.isEmpty()) {
++			}
++			if (restoredState != null && restoredState.isEmpty()) {
+ 				restoredState = null;
+ 			}
+ 		} else {
+diff --git a/flink-connectors/flink-connector-kafka-base/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBase.java b/flink-connectors/flink-connector-kafka-base/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBase.java
+index a35e710..4a05efa 100644
+--- a/flink-connectors/flink-connector-kafka-base/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBase.java
++++ b/flink-connectors/flink-connector-kafka-base/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumerBase.java
+@@ -516,7 +516,8 @@
+ 				if (LOG.isDebugEnabled()) {
+ 					LOG.debug("Using the following offsets: {}", restoredState);
+ 				}
+-			} else if (restoredState.isEmpty()) {
++			}
++			if (restoredState != null && restoredState.isEmpty()) {
+ 				restoredState = null;
+ 			}
+ 		} else {

@@ -1,0 +1,64 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/LineColumn.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/LineColumn.java
+index 65bccd7..ce646da 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/LineColumn.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/LineColumn.java
+@@ -58,8 +58,8 @@
+     @Override
+     public int compareTo(LineColumn lineColumn) {
+         return this.getLine() != lineColumn.getLine()
+-            ? this.getLine() - lineColumn.getLine()
+-            : this.getColumn() - lineColumn.getColumn();
++            ? Integer.compare(this.getLine(), lineColumn.getLine())
++            : Integer.compare(this.getColumn(), lineColumn.getColumn());
+     }
+ 
+     /** {@inheritDoc} */
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilter.java b/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilter.java
+index c5924ed..9dde7e0 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilter.java
+@@ -179,10 +179,10 @@
+         @Override
+         public int compareTo(Tag other) {
+             if (firstLine == other.firstLine) {
+-                return lastLine - other.lastLine;
++                return Integer.compare(lastLine, other.lastLine);
+             }
+ 
+-            return firstLine - other.firstLine;
++            return Integer.compare(firstLine, other.firstLine);
+         }
+ 
+         /** {@inheritDoc} */
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressionCommentFilter.java b/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressionCommentFilter.java
+index 75f2710..a7e5679 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressionCommentFilter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressionCommentFilter.java
+@@ -182,10 +182,10 @@
+         @Override
+         public int compareTo(Tag object) {
+             if (line == object.line) {
+-                return column - object.column;
++                return Integer.compare(column, object.column);
+             }
+ 
+-            return line - object.line;
++            return Integer.compare(line, object.line);
+         }
+ 
+         /** {@inheritDoc} */
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/LineColumn.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/LineColumn.java
+index 65bccd7..ce646da 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/LineColumn.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/LineColumn.java
+@@ -58,8 +58,8 @@
+     @Override
+     public int compareTo(LineColumn lineColumn) {
+         return this.getLine() != lineColumn.getLine()
+-            ? this.getLine() - lineColumn.getLine()
+-            : this.getColumn() - lineColumn.getColumn();
++            ? Integer.compare(this.getLine(), lineColumn.getLine())
++            : Integer.compare(this.getColumn(), lineColumn.getColumn());
+     }
+ 
+     /** {@inheritDoc} */

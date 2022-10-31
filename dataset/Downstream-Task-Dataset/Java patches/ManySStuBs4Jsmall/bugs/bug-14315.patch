@@ -1,0 +1,32 @@
+diff --git a/src/com/google/javascript/jscomp/CommandLineRunner.java b/src/com/google/javascript/jscomp/CommandLineRunner.java
+index 8560dc7..8ce396c 100644
+--- a/src/com/google/javascript/jscomp/CommandLineRunner.java
++++ b/src/com/google/javascript/jscomp/CommandLineRunner.java
+@@ -820,9 +820,8 @@
+           ProcessCommonJSModules.toModuleName(flags.commonJsEntryModule));
+     }
+     
+-    if (!(flags.outputWrapper == null ||
+-        flags.outputWrapper.contains(CommandLineRunner.OUTPUT_MARKER)))
+-    {
++    if (flags.outputWrapper != null && !flags.outputWrapper.isEmpty() &&
++        !flags.outputWrapper.contains(CommandLineRunner.OUTPUT_MARKER)) {
+       err.println("ERROR - invalid output_wrapper specified. Missing '" +
+           CommandLineRunner.OUTPUT_MARKER + "'.");
+       isConfigValid = false;
+diff --git a/src/com/google/javascript/jscomp/CommandLineRunner.java b/src/com/google/javascript/jscomp/CommandLineRunner.java
+index 8560dc7..8ce396c 100644
+--- a/src/com/google/javascript/jscomp/CommandLineRunner.java
++++ b/src/com/google/javascript/jscomp/CommandLineRunner.java
+@@ -820,9 +820,8 @@
+           ProcessCommonJSModules.toModuleName(flags.commonJsEntryModule));
+     }
+     
+-    if (!(flags.outputWrapper == null ||
+-        flags.outputWrapper.contains(CommandLineRunner.OUTPUT_MARKER)))
+-    {
++    if (flags.outputWrapper != null && !flags.outputWrapper.isEmpty() &&
++        !flags.outputWrapper.contains(CommandLineRunner.OUTPUT_MARKER)) {
+       err.println("ERROR - invalid output_wrapper specified. Missing '" +
+           CommandLineRunner.OUTPUT_MARKER + "'.");
+       isConfigValid = false;

@@ -1,0 +1,15 @@
+diff --git a/gdx/src/com/badlogic/gdx/math/Matrix4.java b/gdx/src/com/badlogic/gdx/math/Matrix4.java
+index 6276f3e..b593435 100644
+--- a/gdx/src/com/badlogic/gdx/math/Matrix4.java
++++ b/gdx/src/com/badlogic/gdx/math/Matrix4.java
+@@ -70,7 +70,9 @@
+ 	/** WW: Typically the value one. On Vector3 multiplication this value is ignored. */
+ 	public static final int M33 = 15;
+ 
+-	public final float tmp[] = new float[16];
++	/** @Deprecated Do not use this member, instead use a temporary Matrix4 instance, or create a temporary float array. */
++	@Deprecated
++	public static final float tmp[] = new float[16]; // FIXME Change to private access
+ 	public final float val[] = new float[16];
+ 
+ 	/** Constructs an identity matrix */

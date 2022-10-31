@@ -1,0 +1,46 @@
+diff --git a/common/src/main/java/tachyon/conf/TachyonConf.java b/common/src/main/java/tachyon/conf/TachyonConf.java
+index 8ac4041..678e8d0 100644
+--- a/common/src/main/java/tachyon/conf/TachyonConf.java
++++ b/common/src/main/java/tachyon/conf/TachyonConf.java
+@@ -278,7 +278,7 @@
+     throw new RuntimeException("Invalid configuration key " + key + ".");
+   }
+ 
+-  private float getFloat(String key, final float defaultValue) {
++  public float getFloat(String key) {
+     if (mProperties.containsKey(key)) {
+       String rawValue = mProperties.getProperty(key);
+       try {
+@@ -287,7 +287,8 @@
+         LOG.warn("Configuration cannot evaluate key " + key + " as float.");
+       }
+     }
+-    return defaultValue;
++    // if key is not found among the default properties
++    throw new RuntimeException("Invalid configuration key " + key + ".");
+   }
+ 
+   public boolean getBoolean(String key, boolean defaultValue) {
+diff --git a/common/src/main/java/tachyon/conf/TachyonConf.java b/common/src/main/java/tachyon/conf/TachyonConf.java
+index 8ac4041..678e8d0 100644
+--- a/common/src/main/java/tachyon/conf/TachyonConf.java
++++ b/common/src/main/java/tachyon/conf/TachyonConf.java
+@@ -278,7 +278,7 @@
+     throw new RuntimeException("Invalid configuration key " + key + ".");
+   }
+ 
+-  private float getFloat(String key, final float defaultValue) {
++  public float getFloat(String key) {
+     if (mProperties.containsKey(key)) {
+       String rawValue = mProperties.getProperty(key);
+       try {
+@@ -287,7 +287,8 @@
+         LOG.warn("Configuration cannot evaluate key " + key + " as float.");
+       }
+     }
+-    return defaultValue;
++    // if key is not found among the default properties
++    throw new RuntimeException("Invalid configuration key " + key + ".");
+   }
+ 
+   public boolean getBoolean(String key, boolean defaultValue) {

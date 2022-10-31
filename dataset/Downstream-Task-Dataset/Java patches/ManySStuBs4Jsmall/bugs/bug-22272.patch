@@ -1,0 +1,26 @@
+diff --git a/src/edu/stanford/nlp/ie/machinereading/structure/EntityMention.java b/src/edu/stanford/nlp/ie/machinereading/structure/EntityMention.java
+index 59db520..12530e2 100644
+--- a/src/edu/stanford/nlp/ie/machinereading/structure/EntityMention.java
++++ b/src/edu/stanford/nlp/ie/machinereading/structure/EntityMention.java
+@@ -128,7 +128,7 @@
+     // have the same head span, the same type/subtype, and the same text.
+     // We need this for scoring NER, and in various places in KBP
+     //
+-    if(sentence == otherEnt.sentence && textEquals(otherEnt) && labelEquals(otherEnt, useSubType)){
++    if((sentence == otherEnt.sentence || sentence.equals(otherEnt.sentence)) && textEquals(otherEnt) && labelEquals(otherEnt, useSubType)){
+       return true;
+     }
+     /*
+diff --git a/src/edu/stanford/nlp/ie/machinereading/structure/EntityMention.java b/src/edu/stanford/nlp/ie/machinereading/structure/EntityMention.java
+index 59db520..12530e2 100644
+--- a/src/edu/stanford/nlp/ie/machinereading/structure/EntityMention.java
++++ b/src/edu/stanford/nlp/ie/machinereading/structure/EntityMention.java
+@@ -128,7 +128,7 @@
+     // have the same head span, the same type/subtype, and the same text.
+     // We need this for scoring NER, and in various places in KBP
+     //
+-    if(sentence == otherEnt.sentence && textEquals(otherEnt) && labelEquals(otherEnt, useSubType)){
++    if((sentence == otherEnt.sentence || sentence.equals(otherEnt.sentence)) && textEquals(otherEnt) && labelEquals(otherEnt, useSubType)){
+       return true;
+     }
+     /*

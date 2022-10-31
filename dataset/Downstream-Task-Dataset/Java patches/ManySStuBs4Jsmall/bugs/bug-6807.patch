@@ -1,0 +1,26 @@
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bufferprovider/LocalBufferPool.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bufferprovider/LocalBufferPool.java
+index 943d14f..2f6d2bf 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bufferprovider/LocalBufferPool.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bufferprovider/LocalBufferPool.java
+@@ -264,7 +264,7 @@
+ 		synchronized (this.buffers) {
+ 
+ 			if (this.isDestroyed) {
+-				this.globalBufferPool.releaseGlobalBuffer(this.buffers.poll());
++				this.globalBufferPool.releaseGlobalBuffer(byteBuffer);
+ 				this.requestedNumberOfBuffers--;
+ 				return;
+ 			}
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bufferprovider/LocalBufferPool.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bufferprovider/LocalBufferPool.java
+index 943d14f..2f6d2bf 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bufferprovider/LocalBufferPool.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bufferprovider/LocalBufferPool.java
+@@ -264,7 +264,7 @@
+ 		synchronized (this.buffers) {
+ 
+ 			if (this.isDestroyed) {
+-				this.globalBufferPool.releaseGlobalBuffer(this.buffers.poll());
++				this.globalBufferPool.releaseGlobalBuffer(byteBuffer);
+ 				this.requestedNumberOfBuffers--;
+ 				return;
+ 			}

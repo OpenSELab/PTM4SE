@@ -1,0 +1,57 @@
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/cobar/DALParserTest.java b/src/test/java/com/alibaba/druid/bvt/sql/cobar/DALParserTest.java
+index fc3dc65..2518748 100755
+--- a/src/test/java/com/alibaba/druid/bvt/sql/cobar/DALParserTest.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/cobar/DALParserTest.java
+@@ -128,7 +128,7 @@
+         SQLSetStatement set = (SQLSetStatement) parser.parseStatementList().get(0);
+         parser.match(Token.EOF);
+         String output = SQLUtils.toMySqlString(set);
+-        Assert.assertEquals("SET @@global.var1 = 1, var2 = 2", output);
++        Assert.assertEquals("SET @@global.var1 = 1, @@session.var2 = 2", output);
+     }
+     
+     public void testSet_5() throws Exception {
+@@ -137,7 +137,7 @@
+         SQLSetStatement set = (SQLSetStatement) parser.parseStatementList().get(0);
+         parser.match(Token.EOF);
+         String output = SQLUtils.toMySqlString(set);
+-        Assert.assertEquals("SET @@global.var1 = 1, var2 = 2", output);
++        Assert.assertEquals("SET @@global.var1 = 1, @@session.var2 = 2", output);
+     }
+     
+     public void testSetTxn_0() throws Exception {
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/mysql/param/MySqlParameterizedOutputVisitorTest_6.java b/src/test/java/com/alibaba/druid/bvt/sql/mysql/param/MySqlParameterizedOutputVisitorTest_6.java
+index 3e53f44..416654f 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/mysql/param/MySqlParameterizedOutputVisitorTest_6.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/mysql/param/MySqlParameterizedOutputVisitorTest_6.java
+@@ -32,7 +32,7 @@
+ 
+     public void test_1() throws Exception {
+         String sql = "SET GLOBAL sort_buffer_size=1000000, SESSION sort_buffer_size=1000000;";
+-        String paramSql = "SET @@global.sort_buffer_size = ?, sort_buffer_size = ?;";
++        String paramSql = "SET @@global.sort_buffer_size = ?, @@session.sort_buffer_size = ?;";
+         Assert.assertEquals(paramSql, ParameterizedOutputVisitorUtils.parameterize(sql, JdbcConstants.MYSQL));
+     }
+ }
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/cobar/DALParserTest.java b/src/test/java/com/alibaba/druid/bvt/sql/cobar/DALParserTest.java
+index fc3dc65..2518748 100755
+--- a/src/test/java/com/alibaba/druid/bvt/sql/cobar/DALParserTest.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/cobar/DALParserTest.java
+@@ -128,7 +128,7 @@
+         SQLSetStatement set = (SQLSetStatement) parser.parseStatementList().get(0);
+         parser.match(Token.EOF);
+         String output = SQLUtils.toMySqlString(set);
+-        Assert.assertEquals("SET @@global.var1 = 1, var2 = 2", output);
++        Assert.assertEquals("SET @@global.var1 = 1, @@session.var2 = 2", output);
+     }
+     
+     public void testSet_5() throws Exception {
+@@ -137,7 +137,7 @@
+         SQLSetStatement set = (SQLSetStatement) parser.parseStatementList().get(0);
+         parser.match(Token.EOF);
+         String output = SQLUtils.toMySqlString(set);
+-        Assert.assertEquals("SET @@global.var1 = 1, var2 = 2", output);
++        Assert.assertEquals("SET @@global.var1 = 1, @@session.var2 = 2", output);
+     }
+     
+     public void testSetTxn_0() throws Exception {

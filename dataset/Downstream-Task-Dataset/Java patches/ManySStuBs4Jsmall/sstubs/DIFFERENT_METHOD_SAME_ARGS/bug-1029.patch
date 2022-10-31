@@ -1,0 +1,82 @@
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
+index dae7722..5239153 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
+@@ -254,10 +254,10 @@
+ 		Color color = getColor();
+ 		float oldAlpha = color.a;
+ 		color.a *= alphaModulation;
+-		setColor(color);
++		setColors(color);
+ 		draw(spriteBatch);
+ 		color.a = oldAlpha;
+-		setColor(color);
++		setColors(color);
+ 	}
+ 
+ 	/** Removes all glyphs in the cache. */
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Label.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Label.java
+index eda0d0e..7071518 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Label.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Label.java
+@@ -207,7 +207,7 @@
+ 			batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+ 			style.background.draw(batch, getX(), getY(), getWidth(), getHeight());
+ 		}
+-		cache.setColor(style.fontColor == null ? color : Color.tmp.set(color).mul(style.fontColor));
++		cache.setColors(style.fontColor == null ? color : Color.tmp.set(color).mul(style.fontColor));
+ 		cache.setPosition(getX(), getY());
+ 		cache.draw(batch, parentAlpha);
+ 	}
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Window.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Window.java
+index ee5e6f6..7169470 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Window.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Window.java
+@@ -255,7 +255,7 @@
+ 			else
+ 				y -= (padTop - bounds.height) / 2;
+ 		}
+-		titleCache.setColor(Color.tmp.set(getColor()).mul(style.titleFontColor));
++		titleCache.setColors(Color.tmp.set(getColor()).mul(style.titleFontColor));
+ 		titleCache.setPosition((int)x, (int)y);
+ 		titleCache.draw(batch, parentAlpha);
+ 	}
+diff --git a/tests/gdx-tests/src/com/badlogic/gdx/tests/BitmapFontFlipTest.java b/tests/gdx-tests/src/com/badlogic/gdx/tests/BitmapFontFlipTest.java
+index 4698dda..d86125a 100644
+--- a/tests/gdx-tests/src/com/badlogic/gdx/tests/BitmapFontFlipTest.java
++++ b/tests/gdx-tests/src/com/badlogic/gdx/tests/BitmapFontFlipTest.java
+@@ -147,7 +147,7 @@
+ 	}
+ 
+ 	private void renderCached () {
+-		cache5.setColor(red);
++		cache5.setColors(red);
+ 		cache5.draw(spriteBatch);
+ 
+ 		cache1.draw(spriteBatch);
+@@ -160,7 +160,7 @@
+ 	}
+ 
+ 	private void renderCachedScaled () {
+-		cacheScaled5.setColor(red);
++		cacheScaled5.setColors(red);
+ 		cacheScaled5.draw(spriteBatch);
+ 
+ 		cacheScaled1.draw(spriteBatch);
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
+index dae7722..5239153 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java
+@@ -254,10 +254,10 @@
+ 		Color color = getColor();
+ 		float oldAlpha = color.a;
+ 		color.a *= alphaModulation;
+-		setColor(color);
++		setColors(color);
+ 		draw(spriteBatch);
+ 		color.a = oldAlpha;
+-		setColor(color);
++		setColors(color);
+ 	}
+ 
+ 	/** Removes all glyphs in the cache. */

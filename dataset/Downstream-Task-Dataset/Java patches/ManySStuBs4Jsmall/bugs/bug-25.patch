@@ -1,0 +1,13 @@
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/deploy/DefaultDeploymentCache.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/deploy/DefaultDeploymentCache.java
+index 6ae52c6..662b0d2 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/deploy/DefaultDeploymentCache.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/deploy/DefaultDeploymentCache.java
+@@ -33,7 +33,7 @@
+ 
+   /** Cache with no limit */
+   public DefaultDeploymentCache() {
+-    this.cache = new HashMap<String, T>();
++    this.cache = Collections.synchronizedMap(new HashMap<String, T>());
+   }
+ 
+   /**

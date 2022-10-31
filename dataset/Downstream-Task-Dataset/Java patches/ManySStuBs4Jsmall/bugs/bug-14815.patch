@@ -1,0 +1,58 @@
+diff --git a/guava/src/com/google/common/collect/ImmutableEnumSet.java b/guava/src/com/google/common/collect/ImmutableEnumSet.java
+index 2e26a6f..67e8245 100644
+--- a/guava/src/com/google/common/collect/ImmutableEnumSet.java
++++ b/guava/src/com/google/common/collect/ImmutableEnumSet.java
+@@ -31,14 +31,15 @@
+ @GwtCompatible(serializable = true, emulated = true)
+ @SuppressWarnings("serial") // we're overriding default serialization
+ final class ImmutableEnumSet<E extends Enum<E>> extends ImmutableSet<E> {
+-  static <E extends Enum<E>> ImmutableSet<E> asImmutable(EnumSet<E> set) {
++  @SuppressWarnings("rawtypes") // necessary to compile against Java 8
++  static ImmutableSet asImmutable(EnumSet set) {
+     switch (set.size()) {
+       case 0:
+         return ImmutableSet.of();
+       case 1:
+         return ImmutableSet.of(Iterables.getOnlyElement(set));
+       default:
+-        return new ImmutableEnumSet<E>(set);
++        return new ImmutableEnumSet(set);
+     }
+   }
+ 
+diff --git a/guava/src/com/google/common/collect/ImmutableSet.java b/guava/src/com/google/common/collect/ImmutableSet.java
+index a4af1a8..9ca38b9 100644
+--- a/guava/src/com/google/common/collect/ImmutableSet.java
++++ b/guava/src/com/google/common/collect/ImmutableSet.java
+@@ -305,7 +305,8 @@
+     }
+   }
+ 
+-  private static <E extends Enum<E>> ImmutableSet<E> copyOfEnumSet(EnumSet<E> enumSet) {
++  @SuppressWarnings("rawtypes") // necessary to compile against Java 8
++  private static ImmutableSet copyOfEnumSet(EnumSet enumSet) {
+     return ImmutableEnumSet.asImmutable(EnumSet.copyOf(enumSet));
+   }
+ 
+diff --git a/guava/src/com/google/common/collect/ImmutableEnumSet.java b/guava/src/com/google/common/collect/ImmutableEnumSet.java
+index 2e26a6f..67e8245 100644
+--- a/guava/src/com/google/common/collect/ImmutableEnumSet.java
++++ b/guava/src/com/google/common/collect/ImmutableEnumSet.java
+@@ -31,14 +31,15 @@
+ @GwtCompatible(serializable = true, emulated = true)
+ @SuppressWarnings("serial") // we're overriding default serialization
+ final class ImmutableEnumSet<E extends Enum<E>> extends ImmutableSet<E> {
+-  static <E extends Enum<E>> ImmutableSet<E> asImmutable(EnumSet<E> set) {
++  @SuppressWarnings("rawtypes") // necessary to compile against Java 8
++  static ImmutableSet asImmutable(EnumSet set) {
+     switch (set.size()) {
+       case 0:
+         return ImmutableSet.of();
+       case 1:
+         return ImmutableSet.of(Iterables.getOnlyElement(set));
+       default:
+-        return new ImmutableEnumSet<E>(set);
++        return new ImmutableEnumSet(set);
+     }
+   }
+ 

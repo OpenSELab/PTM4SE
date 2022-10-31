@@ -1,0 +1,162 @@
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheResourceDefinition.java
+index 9839918..25c9b46 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheResourceDefinition.java
+@@ -65,7 +65,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(10))
++            .setDefaultValue(new ModelNode().set(10L))
+             .build();
+ 
+     static final SimpleAttributeDefinition QUEUE_SIZE = new SimpleAttributeDefinitionBuilder(ModelKeys.QUEUE_SIZE, ModelType.INT, true)
+@@ -80,7 +80,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(17500))
++            .setDefaultValue(new ModelNode().set(17500L))
+             .build();
+ 
+     static final AttributeDefinition[] ATTRIBUTES = new AttributeDefinition[] { ASYNC_MARSHALLING, MODE, QUEUE_SIZE, QUEUE_FLUSH_INTERVAL, REMOTE_TIMEOUT };
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/DistributedCacheResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/DistributedCacheResourceDefinition.java
+index 7712993..7f90847 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/DistributedCacheResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/DistributedCacheResourceDefinition.java
+@@ -71,7 +71,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(600000))
++            .setDefaultValue(new ModelNode().set(600000L))
+             .build();
+ 
+     static final SimpleAttributeDefinition OWNERS = new SimpleAttributeDefinitionBuilder(ModelKeys.OWNERS, ModelType.INT, true)
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ExpirationResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ExpirationResourceDefinition.java
+index 63f2aad..7010021 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ExpirationResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ExpirationResourceDefinition.java
+@@ -55,7 +55,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(60000))
++            .setDefaultValue(new ModelNode().set(60000L))
+             .build();
+ 
+     static final SimpleAttributeDefinition LIFESPAN = new SimpleAttributeDefinitionBuilder(ModelKeys.LIFESPAN, ModelType.LONG, true)
+@@ -63,7 +63,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(-1))
++            .setDefaultValue(new ModelNode().set(-1L))
+             .build();
+ 
+     static final SimpleAttributeDefinition MAX_IDLE = new SimpleAttributeDefinitionBuilder(ModelKeys.MAX_IDLE, ModelType.LONG, true)
+@@ -71,7 +71,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(-1))
++            .setDefaultValue(new ModelNode().set(-1L))
+             .build();
+ 
+     static final AttributeDefinition[] ATTRIBUTES = new AttributeDefinition[] { MAX_IDLE, LIFESPAN, INTERVAL };
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/LockingResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/LockingResourceDefinition.java
+index 2547457..1293fb3 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/LockingResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/LockingResourceDefinition.java
+@@ -57,7 +57,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(15000))
++            .setDefaultValue(new ModelNode().set(15000L))
+             .build();
+ 
+     static final SimpleAttributeDefinition CONCURRENCY_LEVEL = new SimpleAttributeDefinitionBuilder(ModelKeys.CONCURRENCY_LEVEL, ModelType.INT, true)
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/RemoteStoreResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/RemoteStoreResourceDefinition.java
+index 0229ed4..7723b08 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/RemoteStoreResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/RemoteStoreResourceDefinition.java
+@@ -73,7 +73,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(60000))
++            .setDefaultValue(new ModelNode().set(60000L))
+             .build();
+ 
+     // the remote servers parameter is required (not null), and the list of remote-server objects must have size >= 1
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/StateTransferResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/StateTransferResourceDefinition.java
+index b136fc8..321fc00 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/StateTransferResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/StateTransferResourceDefinition.java
+@@ -69,7 +69,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(60000))
++            .setDefaultValue(new ModelNode().set(60000L))
+             .build();
+ 
+     static final AttributeDefinition[] ATTRIBUTES = new AttributeDefinition[] { ENABLED, TIMEOUT, CHUNK_SIZE };
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/StoreWriteBehindResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/StoreWriteBehindResourceDefinition.java
+index bb04a27..3af37f9 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/StoreWriteBehindResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/StoreWriteBehindResourceDefinition.java
+@@ -56,7 +56,7 @@
+             .setXmlName(Attribute.FLUSH_LOCK_TIMEOUT.getLocalName())
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(1))
++            .setDefaultValue(new ModelNode().set(1L))
+             .build();
+ 
+     static final SimpleAttributeDefinition MODIFICATION_QUEUE_SIZE = new SimpleAttributeDefinitionBuilder(ModelKeys.MODIFICATION_QUEUE_SIZE, ModelType.INT, true)
+@@ -70,7 +70,7 @@
+             .setXmlName(Attribute.SHUTDOWN_TIMEOUT.getLocalName())
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(25000))
++            .setDefaultValue(new ModelNode().set(25000L))
+             .build();
+ 
+     static final SimpleAttributeDefinition THREAD_POOL_SIZE = new SimpleAttributeDefinitionBuilder(ModelKeys.THREAD_POOL_SIZE, ModelType.INT, true)
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/TransportResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/TransportResourceDefinition.java
+index 2ac5fde..eef4f1a 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/TransportResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/TransportResourceDefinition.java
+@@ -67,7 +67,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(240000))
++            .setDefaultValue(new ModelNode().set(240000L))
+             .build();
+ 
+     // if stack is null, use default stack
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheResourceDefinition.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheResourceDefinition.java
+index 9839918..25c9b46 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheResourceDefinition.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheResourceDefinition.java
+@@ -65,7 +65,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(10))
++            .setDefaultValue(new ModelNode().set(10L))
+             .build();
+ 
+     static final SimpleAttributeDefinition QUEUE_SIZE = new SimpleAttributeDefinitionBuilder(ModelKeys.QUEUE_SIZE, ModelType.INT, true)
+@@ -80,7 +80,7 @@
+             .setMeasurementUnit(MeasurementUnit.MILLISECONDS)
+             .setAllowExpression(true)
+             .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-            .setDefaultValue(new ModelNode().set(17500))
++            .setDefaultValue(new ModelNode().set(17500L))
+             .build();
+ 
+     static final AttributeDefinition[] ATTRIBUTES = new AttributeDefinition[] { ASYNC_MARSHALLING, MODE, QUEUE_SIZE, QUEUE_FLUSH_INTERVAL, REMOTE_TIMEOUT };

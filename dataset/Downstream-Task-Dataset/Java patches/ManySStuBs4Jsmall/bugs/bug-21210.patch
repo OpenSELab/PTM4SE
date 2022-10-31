@@ -1,0 +1,39 @@
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/websocket/WebSocketMessagingAutoConfigurationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/websocket/WebSocketMessagingAutoConfigurationTests.java
+index 0c98e46..33e1f40 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/websocket/WebSocketMessagingAutoConfigurationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/websocket/WebSocketMessagingAutoConfigurationTests.java
+@@ -106,7 +106,7 @@
+ 	@Test
+ 	public void basicMessagingWithStringResponse() throws Throwable {
+ 		Object result = performStompSubscription("/app/string");
+-		assertThat(new String((byte[]) result)).isEqualTo(String.format("string data"));
++		assertThat(new String((byte[]) result)).isEqualTo("string data");
+ 	}
+ 
+ 	@Test
+diff --git a/spring-boot/src/main/java/org/springframework/boot/bind/YamlConfigurationFactory.java b/spring-boot/src/main/java/org/springframework/boot/bind/YamlConfigurationFactory.java
+index 3414b90..6ab2e55 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/bind/YamlConfigurationFactory.java
++++ b/spring-boot/src/main/java/org/springframework/boot/bind/YamlConfigurationFactory.java
+@@ -138,7 +138,7 @@
+ 				+ "either set it directly or set the resource to load it from");
+ 		try {
+ 			if (this.logger.isTraceEnabled()) {
+-				this.logger.trace(String.format("Yaml document is %n%s" + this.yaml));
++				this.logger.trace(String.format("Yaml document is %n%s", this.yaml));
+ 			}
+ 			Constructor constructor = new YamlJavaBeanPropertyConstructor(this.type,
+ 					this.propertyAliases);
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/websocket/WebSocketMessagingAutoConfigurationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/websocket/WebSocketMessagingAutoConfigurationTests.java
+index 0c98e46..33e1f40 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/websocket/WebSocketMessagingAutoConfigurationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/websocket/WebSocketMessagingAutoConfigurationTests.java
+@@ -106,7 +106,7 @@
+ 	@Test
+ 	public void basicMessagingWithStringResponse() throws Throwable {
+ 		Object result = performStompSubscription("/app/string");
+-		assertThat(new String((byte[]) result)).isEqualTo(String.format("string data"));
++		assertThat(new String((byte[]) result)).isEqualTo("string data");
+ 	}
+ 
+ 	@Test

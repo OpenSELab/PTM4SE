@@ -1,0 +1,66 @@
+diff --git a/buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java b/buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java
+index 3ec26c6..a5b4588 100644
+--- a/buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java
++++ b/buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java
+@@ -289,7 +289,7 @@
+ 
+     @Override
+     public ByteBuffer internalNioBuffer(int index, int length) {
+-        return buffer.internalNioBuffer(index, length);
++        return buffer.internalNioBuffer(index, length).duplicate();
+     }
+ 
+     @Override
+diff --git a/buffer/src/main/java/io/netty/buffer/ReadOnlyByteBuf.java b/buffer/src/main/java/io/netty/buffer/ReadOnlyByteBuf.java
+index 01157b0..eee506f 100644
+--- a/buffer/src/main/java/io/netty/buffer/ReadOnlyByteBuf.java
++++ b/buffer/src/main/java/io/netty/buffer/ReadOnlyByteBuf.java
+@@ -292,7 +292,7 @@
+ 
+     @Override
+     public ByteBuffer internalNioBuffer(int index, int length) {
+-        return buffer.internalNioBuffer(index, length);
++        return buffer.internalNioBuffer(index, length).duplicate();
+     }
+ 
+     @Override
+diff --git a/buffer/src/main/java/io/netty/buffer/SlicedByteBuf.java b/buffer/src/main/java/io/netty/buffer/SlicedByteBuf.java
+index 561cada..93678f6 100644
+--- a/buffer/src/main/java/io/netty/buffer/SlicedByteBuf.java
++++ b/buffer/src/main/java/io/netty/buffer/SlicedByteBuf.java
+@@ -271,7 +271,7 @@
+     @Override
+     public ByteBuffer internalNioBuffer(int index, int length) {
+         checkIndex(index, length);
+-        return buffer.internalNioBuffer(index + adjustment, length);
++        return buffer.internalNioBuffer(index + adjustment, length).duplicate();
+     }
+ 
+     @Override
+diff --git a/buffer/src/main/java/io/netty/buffer/SwappedByteBuf.java b/buffer/src/main/java/io/netty/buffer/SwappedByteBuf.java
+index c720f44..4d2a1bf 100644
+--- a/buffer/src/main/java/io/netty/buffer/SwappedByteBuf.java
++++ b/buffer/src/main/java/io/netty/buffer/SwappedByteBuf.java
+@@ -741,8 +741,7 @@
+ 
+     @Override
+     public ByteBuffer internalNioBuffer(int index, int length) {
+-        // Do not mess with the internal buffer's byte order.
+-        return buf.nioBuffer(index, length).order(order);
++        return buf.internalNioBuffer(index, length).duplicate().order(order);
+     }
+ 
+     @Override
+diff --git a/buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java b/buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java
+index 3ec26c6..a5b4588 100644
+--- a/buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java
++++ b/buffer/src/main/java/io/netty/buffer/DuplicatedByteBuf.java
+@@ -289,7 +289,7 @@
+ 
+     @Override
+     public ByteBuffer internalNioBuffer(int index, int length) {
+-        return buffer.internalNioBuffer(index, length);
++        return buffer.internalNioBuffer(index, length).duplicate();
+     }
+ 
+     @Override

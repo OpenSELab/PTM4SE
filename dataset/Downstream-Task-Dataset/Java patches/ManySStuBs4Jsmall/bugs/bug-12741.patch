@@ -1,0 +1,26 @@
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+index 5301030..f02ade7 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+@@ -1263,7 +1263,7 @@
+                 fail("Expected HiveNotReadableException");
+             }
+             catch (HiveNotReadableException e) {
+-                assertEquals(e.getMessage(), "Table 'default.presto_test_not_readable' is not readable: reason for not readable");
++                assertThat(e).hasMessageMatching("Table '.*\\.presto_test_not_readable' is not readable: reason for not readable");
+                 assertEquals(e.getTableName(), tableNotReadable);
+                 assertEquals(e.getPartition(), Optional.empty());
+             }
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+index 5301030..f02ade7 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+@@ -1263,7 +1263,7 @@
+                 fail("Expected HiveNotReadableException");
+             }
+             catch (HiveNotReadableException e) {
+-                assertEquals(e.getMessage(), "Table 'default.presto_test_not_readable' is not readable: reason for not readable");
++                assertThat(e).hasMessageMatching("Table '.*\\.presto_test_not_readable' is not readable: reason for not readable");
+                 assertEquals(e.getTableName(), tableNotReadable);
+                 assertEquals(e.getPartition(), Optional.empty());
+             }

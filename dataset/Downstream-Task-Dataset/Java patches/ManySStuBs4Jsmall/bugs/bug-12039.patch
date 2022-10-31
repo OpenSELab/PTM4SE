@@ -1,0 +1,80 @@
+diff --git a/src/test/java/io/vertx/test/core/queue/QueueTest.java b/src/test/java/io/vertx/test/core/queue/QueueTest.java
+index 8c7e8a3..8f37138 100644
+--- a/src/test/java/io/vertx/test/core/queue/QueueTest.java
++++ b/src/test/java/io/vertx/test/core/queue/QueueTest.java
+@@ -542,7 +542,7 @@
+       }
+     });
+     queue.addAll(Arrays.asList(0, 1, 2, 3));
+-    waitUntilEquals(Arrays.asList(0, 1, 2, 3, 4, 5), () -> consumed);
++    waitUntilEquals(Arrays.asList(0, 1, 2, 3, 4, 5), () -> new ArrayList<>(consumed));
+   }
+ 
+   @Test
+@@ -586,7 +586,7 @@
+     queue.pause();
+     queue.addAll(Arrays.asList(0, 1, 2, 3));
+     queue.resume();
+-    waitUntilEquals(Collections.singletonList(0), () -> consumed);
++    waitUntilEquals(Collections.singletonList(0), () -> new ArrayList<>(consumed));
+     waitUntilEquals(1, resumes::get);
+   }
+ 
+@@ -617,7 +617,7 @@
+     queue.pause();
+     queue.addAll(Arrays.asList(0, 1, 2, 3));
+     queue.resume();
+-    waitUntilEquals(Arrays.asList(0, 1, 2), () -> consumed);
++    waitUntilEquals(Arrays.asList(0, 1, 2), () -> new ArrayList<>(consumed));
+     waitUntilEquals(1, resumes::get);
+   }
+ 
+@@ -645,7 +645,7 @@
+     queue.pause();
+     queue.addAll(Arrays.asList(0, 1, 2, 3));
+     queue.resume();
+-    waitUntilEquals(Collections.singletonList(0), () -> consumed);
++    waitUntilEquals(Collections.singletonList(0), () -> new ArrayList<>(consumed));
+     // We get a resume but it's a side effect of clearing the queue
+     waitUntilEquals(1, resumes::get);
+   }
+diff --git a/src/test/java/io/vertx/test/core/queue/QueueTest.java b/src/test/java/io/vertx/test/core/queue/QueueTest.java
+index 8c7e8a3..8f37138 100644
+--- a/src/test/java/io/vertx/test/core/queue/QueueTest.java
++++ b/src/test/java/io/vertx/test/core/queue/QueueTest.java
+@@ -542,7 +542,7 @@
+       }
+     });
+     queue.addAll(Arrays.asList(0, 1, 2, 3));
+-    waitUntilEquals(Arrays.asList(0, 1, 2, 3, 4, 5), () -> consumed);
++    waitUntilEquals(Arrays.asList(0, 1, 2, 3, 4, 5), () -> new ArrayList<>(consumed));
+   }
+ 
+   @Test
+@@ -586,7 +586,7 @@
+     queue.pause();
+     queue.addAll(Arrays.asList(0, 1, 2, 3));
+     queue.resume();
+-    waitUntilEquals(Collections.singletonList(0), () -> consumed);
++    waitUntilEquals(Collections.singletonList(0), () -> new ArrayList<>(consumed));
+     waitUntilEquals(1, resumes::get);
+   }
+ 
+@@ -617,7 +617,7 @@
+     queue.pause();
+     queue.addAll(Arrays.asList(0, 1, 2, 3));
+     queue.resume();
+-    waitUntilEquals(Arrays.asList(0, 1, 2), () -> consumed);
++    waitUntilEquals(Arrays.asList(0, 1, 2), () -> new ArrayList<>(consumed));
+     waitUntilEquals(1, resumes::get);
+   }
+ 
+@@ -645,7 +645,7 @@
+     queue.pause();
+     queue.addAll(Arrays.asList(0, 1, 2, 3));
+     queue.resume();
+-    waitUntilEquals(Collections.singletonList(0), () -> consumed);
++    waitUntilEquals(Collections.singletonList(0), () -> new ArrayList<>(consumed));
+     // We get a resume but it's a side effect of clearing the queue
+     waitUntilEquals(1, resumes::get);
+   }

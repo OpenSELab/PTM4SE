@@ -1,0 +1,26 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PerlClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PerlClientCodegen.java
+index 0a9733e..90fea3f 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PerlClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PerlClientCodegen.java
+@@ -96,7 +96,7 @@
+ 
+         if (additionalProperties.containsKey(MODULE_NAME)) {
+             setModuleName((String) additionalProperties.get(MODULE_NAME));
+-            setModulePathPart(moduleName.replaceAll("::",String.valueOf(File.separatorChar)));
++            setModulePathPart(moduleName.replaceAll("::", Matcher.quoteReplacement(File.separator)));
+         } else {
+             additionalProperties.put(MODULE_NAME, moduleName);
+         }
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PerlClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PerlClientCodegen.java
+index 0a9733e..90fea3f 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PerlClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PerlClientCodegen.java
+@@ -96,7 +96,7 @@
+ 
+         if (additionalProperties.containsKey(MODULE_NAME)) {
+             setModuleName((String) additionalProperties.get(MODULE_NAME));
+-            setModulePathPart(moduleName.replaceAll("::",String.valueOf(File.separatorChar)));
++            setModulePathPart(moduleName.replaceAll("::", Matcher.quoteReplacement(File.separator)));
+         } else {
+             additionalProperties.put(MODULE_NAME, moduleName);
+         }

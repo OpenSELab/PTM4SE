@@ -1,0 +1,26 @@
+diff --git a/extras/redis/src/main/java/org/atmosphere/plugin/redis/RedisBroadcaster.java b/extras/redis/src/main/java/org/atmosphere/plugin/redis/RedisBroadcaster.java
+index 4ecd3b5..31e750a 100644
+--- a/extras/redis/src/main/java/org/atmosphere/plugin/redis/RedisBroadcaster.java
++++ b/extras/redis/src/main/java/org/atmosphere/plugin/redis/RedisBroadcaster.java
+@@ -226,7 +226,7 @@
+             try {
+                 jedisPublisher.publish(getID(), message.toString());
+             } catch (JedisException e) {
+-                logger.warn("outgoingBroadcast exception, retying a connection", e);
++                logger.warn("outgoingBroadcast exception, retrying a connection", e);
+                 // Try a second time.
+                 jedisPublisher = sharedPool ? jedisPool.getResource() : new Jedis(uri.getHost(), uri.getPort());
+             }
+diff --git a/extras/redis/src/main/java/org/atmosphere/plugin/redis/RedisBroadcaster.java b/extras/redis/src/main/java/org/atmosphere/plugin/redis/RedisBroadcaster.java
+index 4ecd3b5..31e750a 100644
+--- a/extras/redis/src/main/java/org/atmosphere/plugin/redis/RedisBroadcaster.java
++++ b/extras/redis/src/main/java/org/atmosphere/plugin/redis/RedisBroadcaster.java
+@@ -226,7 +226,7 @@
+             try {
+                 jedisPublisher.publish(getID(), message.toString());
+             } catch (JedisException e) {
+-                logger.warn("outgoingBroadcast exception, retying a connection", e);
++                logger.warn("outgoingBroadcast exception, retrying a connection", e);
+                 // Try a second time.
+                 jedisPublisher = sharedPool ? jedisPool.getResource() : new Jedis(uri.getHost(), uri.getPort());
+             }

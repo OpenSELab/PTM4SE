@@ -1,0 +1,26 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/ConnectionManager.java b/hazelcast-client/src/main/java/com/hazelcast/client/ConnectionManager.java
+index a984312..2fe2290 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/ConnectionManager.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/ConnectionManager.java
+@@ -71,7 +71,7 @@
+         heartbeatTimer.schedule(new TimerTask() {
+             @Override
+             public void run() {
+-                long diff = client.getInRunnable().lastReceived - Clock.currentTimeMillis();
++                long diff = Clock.currentTimeMillis() - client.getInRunnable().lastReceived;
+                 try {
+                     if (diff >= TIMEOUT / 5 && diff < TIMEOUT) {
+                         logger.log(Level.FINEST,
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/ConnectionManager.java b/hazelcast-client/src/main/java/com/hazelcast/client/ConnectionManager.java
+index a984312..2fe2290 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/ConnectionManager.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/ConnectionManager.java
+@@ -71,7 +71,7 @@
+         heartbeatTimer.schedule(new TimerTask() {
+             @Override
+             public void run() {
+-                long diff = client.getInRunnable().lastReceived - Clock.currentTimeMillis();
++                long diff = Clock.currentTimeMillis() - client.getInRunnable().lastReceived;
+                 try {
+                     if (diff >= TIMEOUT / 5 && diff < TIMEOUT) {
+                         logger.log(Level.FINEST,

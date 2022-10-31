@@ -1,0 +1,28 @@
+diff --git a/src/edu/stanford/nlp/pipeline/StanfordCoreNLPServer.java b/src/edu/stanford/nlp/pipeline/StanfordCoreNLPServer.java
+index 3e0c78a..eacb702 100644
+--- a/src/edu/stanford/nlp/pipeline/StanfordCoreNLPServer.java
++++ b/src/edu/stanford/nlp/pipeline/StanfordCoreNLPServer.java
+@@ -678,7 +678,8 @@
+         if (languagePropertiesFile != null) {
+           Properties languageSpecificProperties = new Properties();
+           try {
+-            languageSpecificProperties.load(StanfordCoreNLPServer.class.getResourceAsStream(languagePropertiesFile));
++            languageSpecificProperties.load(
++                    IOUtils.getInputStreamFromURLOrClasspathOrFileSystem(languagePropertiesFile));
+             PropertiesUtils.overWriteProperties(props,languageSpecificProperties);
+           } catch (IOException e) {
+             err("Failure to load language specific properties.");
+diff --git a/src/edu/stanford/nlp/pipeline/StanfordCoreNLPServer.java b/src/edu/stanford/nlp/pipeline/StanfordCoreNLPServer.java
+index 3e0c78a..eacb702 100644
+--- a/src/edu/stanford/nlp/pipeline/StanfordCoreNLPServer.java
++++ b/src/edu/stanford/nlp/pipeline/StanfordCoreNLPServer.java
+@@ -678,7 +678,8 @@
+         if (languagePropertiesFile != null) {
+           Properties languageSpecificProperties = new Properties();
+           try {
+-            languageSpecificProperties.load(StanfordCoreNLPServer.class.getResourceAsStream(languagePropertiesFile));
++            languageSpecificProperties.load(
++                    IOUtils.getInputStreamFromURLOrClasspathOrFileSystem(languagePropertiesFile));
+             PropertiesUtils.overWriteProperties(props,languageSpecificProperties);
+           } catch (IOException e) {
+             err("Failure to load language specific properties.");

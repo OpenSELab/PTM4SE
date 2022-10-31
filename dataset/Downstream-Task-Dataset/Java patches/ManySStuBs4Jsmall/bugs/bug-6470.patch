@@ -1,0 +1,34 @@
+diff --git a/flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterClient.java b/flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterClient.java
+index e620f21..cd447d7 100644
+--- a/flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterClient.java
++++ b/flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterClient.java
+@@ -419,8 +419,10 @@
+ 				== YarnApplicationState.KILLED) {
+ 				LOG.warn("Application failed. Diagnostics " + appReport.getDiagnostics());
+ 				LOG.warn("If log aggregation is activated in the Hadoop cluster, we recommend to retrieve "
+-					+ "the full application log using this command:\n"
+-					+ "\tyarn logs -appReport " + appReport.getApplicationId() + "\n"
++					+ "the full application log using this command:"
++					+ System.lineSeparator()
++					+ "\tyarn logs -applicationId " + appReport.getApplicationId()
++					+ System.lineSeparator()
+ 					+ "(It sometimes takes a few seconds until the logs are aggregated)");
+ 			}
+ 		} catch (Exception e) {
+diff --git a/flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterClient.java b/flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterClient.java
+index e620f21..cd447d7 100644
+--- a/flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterClient.java
++++ b/flink-yarn/src/main/java/org/apache/flink/yarn/YarnClusterClient.java
+@@ -419,8 +419,10 @@
+ 				== YarnApplicationState.KILLED) {
+ 				LOG.warn("Application failed. Diagnostics " + appReport.getDiagnostics());
+ 				LOG.warn("If log aggregation is activated in the Hadoop cluster, we recommend to retrieve "
+-					+ "the full application log using this command:\n"
+-					+ "\tyarn logs -appReport " + appReport.getApplicationId() + "\n"
++					+ "the full application log using this command:"
++					+ System.lineSeparator()
++					+ "\tyarn logs -applicationId " + appReport.getApplicationId()
++					+ System.lineSeparator()
+ 					+ "(It sometimes takes a few seconds until the logs are aggregated)");
+ 			}
+ 		} catch (Exception e) {

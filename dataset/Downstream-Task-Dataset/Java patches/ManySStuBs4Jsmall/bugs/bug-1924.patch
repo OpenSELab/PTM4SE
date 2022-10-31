@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+index 2c35da4..65816b4 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+@@ -1262,7 +1262,7 @@
+ 
+                 if (duplicate) {
+                     AtmosphereResourceImpl dup = (AtmosphereResourceImpl) config.resourcesFactory().find(r.uuid());
+-                    if (dup != null && dup.hashCode() != r.hashCode()) {
++                    if (dup != null && dup != r) {
+                         logger.warn("Duplicate resource {}. Could be caused by a dead connection not detected by your server. Replacing the old one with the fresh one", r.uuid());
+                         AtmosphereResourceImpl.class.cast(dup).dirtyClose();
+                     } else {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+index 2c35da4..65816b4 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+@@ -1262,7 +1262,7 @@
+ 
+                 if (duplicate) {
+                     AtmosphereResourceImpl dup = (AtmosphereResourceImpl) config.resourcesFactory().find(r.uuid());
+-                    if (dup != null && dup.hashCode() != r.hashCode()) {
++                    if (dup != null && dup != r) {
+                         logger.warn("Duplicate resource {}. Could be caused by a dead connection not detected by your server. Replacing the old one with the fresh one", r.uuid());
+                         AtmosphereResourceImpl.class.cast(dup).dirtyClose();
+                     } else {

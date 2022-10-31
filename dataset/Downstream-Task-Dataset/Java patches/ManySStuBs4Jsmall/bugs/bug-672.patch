@@ -1,0 +1,28 @@
+diff --git a/core/server/src/test/java/alluxio/worker/netty/NettyDataServerTest.java b/core/server/src/test/java/alluxio/worker/netty/NettyDataServerTest.java
+index 3c6fff4..eadd632 100644
+--- a/core/server/src/test/java/alluxio/worker/netty/NettyDataServerTest.java
++++ b/core/server/src/test/java/alluxio/worker/netty/NettyDataServerTest.java
+@@ -251,7 +251,8 @@
+     Channel channel = f.channel();
+     try {
+       SingleResponseListener listener = new SingleResponseListener();
+-      channel.pipeline().get(ClientHandler.class).addListener(listener);
++      ((ClientHandler) channel.pipeline().addLast(new ClientHandler()).last())
++          .addListener(listener);
+       channel.writeAndFlush(rpcBlockWriteRequest);
+       return listener.get(NettyClient.TIMEOUT_MS, TimeUnit.MILLISECONDS);
+     } finally {
+diff --git a/core/server/src/test/java/alluxio/worker/netty/NettyDataServerTest.java b/core/server/src/test/java/alluxio/worker/netty/NettyDataServerTest.java
+index 3c6fff4..eadd632 100644
+--- a/core/server/src/test/java/alluxio/worker/netty/NettyDataServerTest.java
++++ b/core/server/src/test/java/alluxio/worker/netty/NettyDataServerTest.java
+@@ -251,7 +251,8 @@
+     Channel channel = f.channel();
+     try {
+       SingleResponseListener listener = new SingleResponseListener();
+-      channel.pipeline().get(ClientHandler.class).addListener(listener);
++      ((ClientHandler) channel.pipeline().addLast(new ClientHandler()).last())
++          .addListener(listener);
+       channel.writeAndFlush(rpcBlockWriteRequest);
+       return listener.get(NettyClient.TIMEOUT_MS, TimeUnit.MILLISECONDS);
+     } finally {

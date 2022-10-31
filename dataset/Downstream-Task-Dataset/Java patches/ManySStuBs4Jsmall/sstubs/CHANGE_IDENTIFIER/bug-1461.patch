@@ -1,0 +1,13 @@
+diff --git a/server/src/main/java/io/druid/client/FilteredServerViewProvider.java b/server/src/main/java/io/druid/client/FilteredServerViewProvider.java
+index f9b2010..4570c7e 100644
+--- a/server/src/main/java/io/druid/client/FilteredServerViewProvider.java
++++ b/server/src/main/java/io/druid/client/FilteredServerViewProvider.java
+@@ -24,7 +24,7 @@
+ import com.fasterxml.jackson.annotation.JsonTypeInfo;
+ import com.google.inject.Provider;
+ 
+-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = SingleServerInventoryProvider.class)
++@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = FilteredBatchServerViewProvider.class)
+ @JsonSubTypes(value = {
+     @JsonSubTypes.Type(name = "legacy", value = FilteredSingleServerViewProvider.class),
+     @JsonSubTypes.Type(name = "batch", value = FilteredBatchServerViewProvider.class)

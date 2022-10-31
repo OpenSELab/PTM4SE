@@ -1,0 +1,156 @@
+diff --git a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/GarageDoorData.java b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/GarageDoorData.java
+index 37c3e9f..00545c6 100644
+--- a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/GarageDoorData.java
++++ b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/GarageDoorData.java
+@@ -32,9 +32,13 @@
+ 	/**
+ 	 * Matching pattern for door device types, some models have spaces in them,
+ 	 * some don't
++	 *
++	 * "VGDO"
++	 * "Garage Door Opener WGDO"
++	 * "GarageDoorOpener"
+ 	 */
+ 	private static final Pattern DEVICE_TYPE_PATTERN = Pattern
+-			.compile("Garage\\s?Door\\s?Opener");
++			.compile("Garage\\s?Door\\s?Opener|VGDO");
+ 
+ 	LinkedList<GarageDoorDevice> devices = new LinkedList<GarageDoorDevice>();
+ 
+@@ -68,7 +72,7 @@
+ 									int doorstate = attributes.get(j)
+ 											.get("Value").asInt();
+ 									logger.trace(
+-											"DeviceID: {} DeviceName: {} DeviceType: {} Doorstate : ",
++											"DeviceID: {} DeviceName: {} DeviceType: {} Doorstate : {}",
+ 											deviceId, deviceName, deviceType,
+ 											doorstate);
+ 
+diff --git a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/LoginData.java b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/LoginData.java
+index ebbcfdb..52ffb6d 100644
+--- a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/LoginData.java
++++ b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/LoginData.java
+@@ -46,7 +46,7 @@
+ 			throw new InvalidDataException(
+ 					"Could not find SecurityToken in JSON data");
+ 		securityToken = data.toString();
+-		logger.debug("myq securityToken: {}", securityToken);
++		logger.trace("myq securityToken: {}", securityToken);
+ 	}
+ 
+ 	/**
+diff --git a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
+index 461ea4d..2595728 100644
+--- a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
++++ b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
+@@ -189,7 +189,7 @@
+ 	 */
+ 	private void poll() {
+ 		if (invalidCredentials || this.myqOnlineData == null) {
+-			logger.debug("Invalid Account Credentials");
++			logger.trace("Invalid Account Credentials");
+ 			return;
+ 		}
+ 
+@@ -278,7 +278,7 @@
+ 	@Override
+ 	public void internalReceiveCommand(String itemName, Command command) {
+ 		super.internalReceiveCommand(itemName, command);
+-		logger.debug("MyQ binding received command '{}' for item '{}'",
++		logger.trace("MyQ binding received command '{}' for item '{}'",
+ 				command, itemName);
+ 		if (myqOnlineData != null) {
+ 			computeCommandForItem(command, itemName);
+@@ -357,7 +357,7 @@
+ 		if (pollFuture != null && !pollFuture.isCancelled())
+ 			pollFuture.cancel(false);
+ 
+-		logger.debug("rapidRefreshFuture scheduleing for {} millis", millis);
++		logger.trace("rapidRefreshFuture scheduleing for {} millis", millis);
+ 		// start polling at the RAPID_REFRESH_SECS interval
+ 		pollFuture = pollService.scheduleAtFixedRate(new Runnable() {
+ 			@Override
+@@ -374,7 +374,7 @@
+ 		// stop rapid polling after MAX_RAPID_REFRESH_SECS
+ 		pollResetFuture = pollService.schedule(new Runnable() {
+ 			public void run() {
+-				logger.debug("rapidRefreshFutureEnd stopping");
++				logger.trace("rapidRefreshFutureEnd stopping");
+ 				schedulePoll(refreshInterval);
+ 			}
+ 		}, MAX_RAPID_REFRESH, TimeUnit.MILLISECONDS);
+diff --git a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqData.java b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqData.java
+index 89010de..010aef6 100644
+--- a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqData.java
++++ b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqData.java
+@@ -98,7 +98,7 @@
+ 	 */
+ 	public GarageDoorData getGarageData() throws InvalidLoginException,
+ 			IOException {
+-		logger.debug("Retreiveing door data");
++		logger.trace("Retreiveing door data");
+ 		String url = String.format(
+ 				"%s/api/v4/userdevicedetails/get?appId=%s&SecurityToken=%s",
+ 				WEBSITE, enc(appId), enc(getSecurityToken()));
+@@ -112,7 +112,7 @@
+ 	 * Validates Username and Password then saved sercurityToken to a variable
+ 	 */
+ 	private void login() throws InvalidLoginException, IOException {
+-		logger.debug("attempting to login");
++		logger.trace("attempting to login");
+ 		String url = String
+ 				.format("%s/api/user/validate?appId=%s&SecurityToken=null&username=%s&password=%s",
+ 						WEBSITE, enc(appId), enc(userName), enc(password));
+@@ -183,13 +183,13 @@
+ 			String payload, String payloadType, boolean retry)
+ 			throws IOException, InvalidLoginException {
+ 
+-		logger.debug("Requsting URL {}", url);
++		logger.trace("Requsting URL {}", url);
+ 
+ 		String dataString = executeUrl(method, url, header,
+ 				payload == null ? null : IOUtils.toInputStream(payload),
+ 				payloadType, timeout);
+ 
+-		logger.debug("Received MyQ  JSON: {}", dataString);
++		logger.trace("Received MyQ  JSON: {}", dataString);
+ 
+ 		if (dataString == null) {
+ 			throw new IOException("Null response from MyQ server");
+@@ -199,7 +199,7 @@
+ 			ObjectMapper mapper = new ObjectMapper();
+ 			JsonNode rootNode = mapper.readTree(dataString);
+ 			int returnCode = rootNode.get("ReturnCode").asInt();
+-			logger.debug("myq ReturnCode: {}", returnCode);
++			logger.trace("myq ReturnCode: {}", returnCode);
+ 
+ 			MyQResponseCode rc = MyQResponseCode.fromCode(returnCode);
+ 
+diff --git a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/GarageDoorData.java b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/GarageDoorData.java
+index 37c3e9f..00545c6 100644
+--- a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/GarageDoorData.java
++++ b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/GarageDoorData.java
+@@ -32,9 +32,13 @@
+ 	/**
+ 	 * Matching pattern for door device types, some models have spaces in them,
+ 	 * some don't
++	 *
++	 * "VGDO"
++	 * "Garage Door Opener WGDO"
++	 * "GarageDoorOpener"
+ 	 */
+ 	private static final Pattern DEVICE_TYPE_PATTERN = Pattern
+-			.compile("Garage\\s?Door\\s?Opener");
++			.compile("Garage\\s?Door\\s?Opener|VGDO");
+ 
+ 	LinkedList<GarageDoorDevice> devices = new LinkedList<GarageDoorDevice>();
+ 
+@@ -68,7 +72,7 @@
+ 									int doorstate = attributes.get(j)
+ 											.get("Value").asInt();
+ 									logger.trace(
+-											"DeviceID: {} DeviceName: {} DeviceType: {} Doorstate : ",
++											"DeviceID: {} DeviceName: {} DeviceType: {} Doorstate : {}",
+ 											deviceId, deviceName, deviceType,
+ 											doorstate);
+ 

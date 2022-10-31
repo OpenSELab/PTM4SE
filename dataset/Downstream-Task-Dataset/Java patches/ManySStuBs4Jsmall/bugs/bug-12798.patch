@@ -1,0 +1,78 @@
+diff --git a/presto-benchmark-driver/src/main/java/com/facebook/presto/benchmark/driver/BenchmarkDriverOptions.java b/presto-benchmark-driver/src/main/java/com/facebook/presto/benchmark/driver/BenchmarkDriverOptions.java
+index 0685b71..7e97b21 100644
+--- a/presto-benchmark-driver/src/main/java/com/facebook/presto/benchmark/driver/BenchmarkDriverOptions.java
++++ b/presto-benchmark-driver/src/main/java/com/facebook/presto/benchmark/driver/BenchmarkDriverOptions.java
+@@ -110,7 +110,7 @@
+ 
+         HostAndPort host = HostAndPort.fromString(server);
+         try {
+-            return new URI("http", null, host.getHostText(), host.getPortOrDefault(80), null, null, null);
++            return new URI("http", null, host.getHost(), host.getPortOrDefault(80), null, null, null);
+         }
+         catch (URISyntaxException e) {
+             throw new IllegalArgumentException(e);
+diff --git a/presto-cli/src/main/java/com/facebook/presto/cli/ClientOptions.java b/presto-cli/src/main/java/com/facebook/presto/cli/ClientOptions.java
+index 819fc93..7b62737 100644
+--- a/presto-cli/src/main/java/com/facebook/presto/cli/ClientOptions.java
++++ b/presto-cli/src/main/java/com/facebook/presto/cli/ClientOptions.java
+@@ -171,7 +171,7 @@
+ 
+         HostAndPort host = HostAndPort.fromString(server);
+         try {
+-            return new URI("http", null, host.getHostText(), host.getPortOrDefault(80), null, null, null);
++            return new URI("http", null, host.getHost(), host.getPortOrDefault(80), null, null, null);
+         }
+         catch (URISyntaxException e) {
+             throw new IllegalArgumentException(e);
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/StaticHiveCluster.java b/presto-hive/src/main/java/com/facebook/presto/hive/StaticHiveCluster.java
+index 3a37c83..4facd97 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/StaticHiveCluster.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/StaticHiveCluster.java
+@@ -71,7 +71,7 @@
+         TTransportException lastException = null;
+         for (HostAndPort metastore : metastores) {
+             try {
+-                return clientFactory.create(metastore.getHostText(), metastore.getPort());
++                return clientFactory.create(metastore.getHost(), metastore.getPort());
+             }
+             catch (TTransportException e) {
+                 lastException = e;
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/thrift/Transport.java b/presto-hive/src/main/java/com/facebook/presto/hive/thrift/Transport.java
+index b9bdd52..a8ffe3d 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/thrift/Transport.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/thrift/Transport.java
+@@ -82,7 +82,7 @@
+ 
+     private static Socket createSocksSocket(HostAndPort proxy)
+     {
+-        SocketAddress address = InetSocketAddress.createUnresolved(proxy.getHostText(), proxy.getPort());
++        SocketAddress address = InetSocketAddress.createUnresolved(proxy.getHost(), proxy.getPort());
+         return new Socket(new Proxy(Proxy.Type.SOCKS, address));
+     }
+ 
+diff --git a/presto-jdbc/src/main/java/com/facebook/presto/jdbc/PrestoDriverUri.java b/presto-jdbc/src/main/java/com/facebook/presto/jdbc/PrestoDriverUri.java
+index 3590804..f56ec18 100644
+--- a/presto-jdbc/src/main/java/com/facebook/presto/jdbc/PrestoDriverUri.java
++++ b/presto-jdbc/src/main/java/com/facebook/presto/jdbc/PrestoDriverUri.java
+@@ -126,7 +126,7 @@
+ 
+         return uriBuilder()
+                 .scheme(scheme)
+-                .host(address.getHostText()).port(address.getPort())
++                .host(address.getHost()).port(address.getPort())
+                 .build();
+     }
+ 
+diff --git a/presto-benchmark-driver/src/main/java/com/facebook/presto/benchmark/driver/BenchmarkDriverOptions.java b/presto-benchmark-driver/src/main/java/com/facebook/presto/benchmark/driver/BenchmarkDriverOptions.java
+index 0685b71..7e97b21 100644
+--- a/presto-benchmark-driver/src/main/java/com/facebook/presto/benchmark/driver/BenchmarkDriverOptions.java
++++ b/presto-benchmark-driver/src/main/java/com/facebook/presto/benchmark/driver/BenchmarkDriverOptions.java
+@@ -110,7 +110,7 @@
+ 
+         HostAndPort host = HostAndPort.fromString(server);
+         try {
+-            return new URI("http", null, host.getHostText(), host.getPortOrDefault(80), null, null, null);
++            return new URI("http", null, host.getHost(), host.getPortOrDefault(80), null, null, null);
+         }
+         catch (URISyntaxException e) {
+             throw new IllegalArgumentException(e);

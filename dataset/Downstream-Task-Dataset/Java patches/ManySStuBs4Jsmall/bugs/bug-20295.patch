@@ -1,0 +1,45 @@
+diff --git a/api/src/main/java/org/openmrs/api/context/ServiceContext.java b/api/src/main/java/org/openmrs/api/context/ServiceContext.java
+index b05074f..554c030 100644
+--- a/api/src/main/java/org/openmrs/api/context/ServiceContext.java
++++ b/api/src/main/java/org/openmrs/api/context/ServiceContext.java
+@@ -816,7 +816,10 @@
+ 					if (log.isDebugEnabled()) {
+ 						log.debug("cls2 classloader: " + cls.getClass().getClassLoader() + " uid: "
+ 						        + cls.getClass().getClassLoader().hashCode());
+-						log.debug("cls==cls2: " + String.valueOf(cls == cls));
++						//pay attention that here, cls = Class.forName(classString), the system class loader and
++						//cls2 is the openmrs class loader, like above.
++						log.debug("cls==cls2: " + String.valueOf(cls == 
++								OpenmrsClassLoader.getInstance().loadClass(classString)));
+ 					}
+ 				}
+ 				catch (Exception e) { /*pass*/}
+diff --git a/api/src/main/java/org/openmrs/reporting/export/DataExportReportObject.java b/api/src/main/java/org/openmrs/reporting/export/DataExportReportObject.java
+index 8ffe873..466a41c 100644
+--- a/api/src/main/java/org/openmrs/reporting/export/DataExportReportObject.java
++++ b/api/src/main/java/org/openmrs/reporting/export/DataExportReportObject.java
+@@ -192,7 +192,7 @@
+ 			cohort = new Cohort(getPatientIds());
+ 		}
+ 		
+-		if (location != null && !location.equals("")) {
++        if (location != null) {
+ 			cohort = intersectFast(cohort, pss.getPatientsHavingLocation(getLocation()));
+ 		}
+ 		
+diff --git a/api/src/main/java/org/openmrs/api/context/ServiceContext.java b/api/src/main/java/org/openmrs/api/context/ServiceContext.java
+index b05074f..554c030 100644
+--- a/api/src/main/java/org/openmrs/api/context/ServiceContext.java
++++ b/api/src/main/java/org/openmrs/api/context/ServiceContext.java
+@@ -816,7 +816,10 @@
+ 					if (log.isDebugEnabled()) {
+ 						log.debug("cls2 classloader: " + cls.getClass().getClassLoader() + " uid: "
+ 						        + cls.getClass().getClassLoader().hashCode());
+-						log.debug("cls==cls2: " + String.valueOf(cls == cls));
++						//pay attention that here, cls = Class.forName(classString), the system class loader and
++						//cls2 is the openmrs class loader, like above.
++						log.debug("cls==cls2: " + String.valueOf(cls == 
++								OpenmrsClassLoader.getInstance().loadClass(classString)));
+ 					}
+ 				}
+ 				catch (Exception e) { /*pass*/}

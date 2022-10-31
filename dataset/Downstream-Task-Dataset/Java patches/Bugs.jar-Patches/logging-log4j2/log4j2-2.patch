@@ -1,0 +1,13 @@
+diff --git a/core/src/main/java/org/apache/logging/log4j/core/appender/SyslogAppender.java b/core/src/main/java/org/apache/logging/log4j/core/appender/SyslogAppender.java
+index d2392e9..39fbd38 100644
+--- a/core/src/main/java/org/apache/logging/log4j/core/appender/SyslogAppender.java
++++ b/core/src/main/java/org/apache/logging/log4j/core/appender/SyslogAppender.java
+@@ -111,7 +111,7 @@ public class SyslogAppender extends SocketAppender {
+                 LOGGER.error("Charset " + charset + " is not supported for layout, using " + c.displayName());
+             }
+         }
+-        Layout layout = (format.equalsIgnoreCase(RFC5424)) ?
++        Layout layout = (RFC5424.equalsIgnoreCase(format)) ?
+             RFC5424Layout.createLayout(facility, id, ein, includeMDC, mdcId, includeNL, appName,  msgId,
+                 excludes, includes, required, charset, config) :
+             SyslogLayout.createLayout(facility, includeNL, charset);

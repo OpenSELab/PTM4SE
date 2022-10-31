@@ -1,0 +1,53 @@
+diff --git a/core/client/src/main/java/alluxio/client/block/LocalBlockInStream.java b/core/client/src/main/java/alluxio/client/block/LocalBlockInStream.java
+index 0f20c1a..79ae72d 100644
+--- a/core/client/src/main/java/alluxio/client/block/LocalBlockInStream.java
++++ b/core/client/src/main/java/alluxio/client/block/LocalBlockInStream.java
+@@ -67,7 +67,7 @@
+       mReader = mCloser.register(new LocalFileBlockReader(result.getBlockPath()));
+     } catch (BlockDoesNotExistException e) {
+       mCloser.close();
+-      throw new IOException(ExceptionMessage.BLOCK_NOT_LOCALLY_AVAILABLE.getMessage(mBlockId));
++      throw new IOException(ExceptionMessage.BLOCK_NOT_LOCALLY_AVAILABLE.getMessage(mBlockId), e);
+     } catch (AlluxioException e) {
+       mCloser.close();
+       throw new IOException(e);
+diff --git a/core/client/src/main/java/alluxio/client/block/RemoteBlockInStream.java b/core/client/src/main/java/alluxio/client/block/RemoteBlockInStream.java
+index dcd966a..a5bf996 100644
+--- a/core/client/src/main/java/alluxio/client/block/RemoteBlockInStream.java
++++ b/core/client/src/main/java/alluxio/client/block/RemoteBlockInStream.java
+@@ -78,7 +78,7 @@
+       mLockId = result.getLockId();
+     } catch (BlockDoesNotExistException e) {
+       mCloser.close();
+-      throw new IOException(ExceptionMessage.BLOCK_UNAVAILABLE.getMessage(blockId));
++      throw new IOException(ExceptionMessage.BLOCK_UNAVAILABLE.getMessage(blockId), e);
+     } catch (AlluxioException e) {
+       mCloser.close();
+       throw new IOException(e);
+diff --git a/core/server/src/test/java/alluxio/worker/block/TieredBlockStoreTest.java b/core/server/src/test/java/alluxio/worker/block/TieredBlockStoreTest.java
+index 7d605a0..648b515 100644
+--- a/core/server/src/test/java/alluxio/worker/block/TieredBlockStoreTest.java
++++ b/core/server/src/test/java/alluxio/worker/block/TieredBlockStoreTest.java
+@@ -138,8 +138,7 @@
+   @Test
+   public void lockNonExistingBlock() throws Exception {
+     mThrown.expect(BlockDoesNotExistException.class);
+-    mThrown.expectMessage(ExceptionMessage.LOCK_RECORD_NOT_FOUND_FOR_BLOCK_AND_SESSION
+-        .getMessage(BLOCK_ID1, SESSION_ID1));
++    mThrown.expectMessage(ExceptionMessage.NO_BLOCK_ID_FOUND.getMessage(BLOCK_ID1));
+ 
+     mBlockStore.lockBlock(SESSION_ID1, BLOCK_ID1);
+   }
+diff --git a/core/client/src/main/java/alluxio/client/block/LocalBlockInStream.java b/core/client/src/main/java/alluxio/client/block/LocalBlockInStream.java
+index 0f20c1a..79ae72d 100644
+--- a/core/client/src/main/java/alluxio/client/block/LocalBlockInStream.java
++++ b/core/client/src/main/java/alluxio/client/block/LocalBlockInStream.java
+@@ -67,7 +67,7 @@
+       mReader = mCloser.register(new LocalFileBlockReader(result.getBlockPath()));
+     } catch (BlockDoesNotExistException e) {
+       mCloser.close();
+-      throw new IOException(ExceptionMessage.BLOCK_NOT_LOCALLY_AVAILABLE.getMessage(mBlockId));
++      throw new IOException(ExceptionMessage.BLOCK_NOT_LOCALLY_AVAILABLE.getMessage(mBlockId), e);
+     } catch (AlluxioException e) {
+       mCloser.close();
+       throw new IOException(e);

@@ -1,0 +1,26 @@
+diff --git a/jpa/src/main/java/org/jboss/as/jpa/injectors/PersistenceContextBindingSourceDescription.java b/jpa/src/main/java/org/jboss/as/jpa/injectors/PersistenceContextBindingSourceDescription.java
+index 8a8f6b5..10a93f7 100644
+--- a/jpa/src/main/java/org/jboss/as/jpa/injectors/PersistenceContextBindingSourceDescription.java
++++ b/jpa/src/main/java/org/jboss/as/jpa/injectors/PersistenceContextBindingSourceDescription.java
+@@ -164,7 +164,7 @@
+                     throw new RuntimeException("couldn't load " + injectionTypeName + " from JPA modules classloader", e);
+                 }
+                 Object targetValueToInject = entityManager.unwrap(extensionClass);
+-                new ValueManagedReference(new ImmediateValue<Object>(targetValueToInject));
++                return new ValueManagedReference(new ImmediateValue<Object>(targetValueToInject));
+             }
+ 
+             return new ValueManagedReference(new ImmediateValue<Object>(entityManager));
+diff --git a/jpa/src/main/java/org/jboss/as/jpa/injectors/PersistenceContextBindingSourceDescription.java b/jpa/src/main/java/org/jboss/as/jpa/injectors/PersistenceContextBindingSourceDescription.java
+index 8a8f6b5..10a93f7 100644
+--- a/jpa/src/main/java/org/jboss/as/jpa/injectors/PersistenceContextBindingSourceDescription.java
++++ b/jpa/src/main/java/org/jboss/as/jpa/injectors/PersistenceContextBindingSourceDescription.java
+@@ -164,7 +164,7 @@
+                     throw new RuntimeException("couldn't load " + injectionTypeName + " from JPA modules classloader", e);
+                 }
+                 Object targetValueToInject = entityManager.unwrap(extensionClass);
+-                new ValueManagedReference(new ImmediateValue<Object>(targetValueToInject));
++                return new ValueManagedReference(new ImmediateValue<Object>(targetValueToInject));
+             }
+ 
+             return new ValueManagedReference(new ImmediateValue<Object>(entityManager));

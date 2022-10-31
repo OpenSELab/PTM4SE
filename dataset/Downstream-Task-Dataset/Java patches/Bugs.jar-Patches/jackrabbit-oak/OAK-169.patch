@@ -1,0 +1,15 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/cache/CacheLIRS.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/cache/CacheLIRS.java
+index 6eb74dc..26e44e7 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/cache/CacheLIRS.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/cache/CacheLIRS.java
+@@ -409,8 +409,8 @@ public class CacheLIRS<K, V> implements LoadingCache<K, V> {
+      * @param maxMemory the maximum size (1 or larger)
+      */
+     public void setMaxMemory(long maxMemory) {
+-        if (maxMemory <= 0) {
+-            throw new IllegalArgumentException("Max memory must be larger than 0");
++        if (maxMemory < 0) {
++            throw new IllegalArgumentException("Max memory must not be negative");
+         }
+         this.maxMemory = maxMemory;
+         if (segments != null) {

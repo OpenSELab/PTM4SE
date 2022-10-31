@@ -1,0 +1,9 @@
+--- a/apollo-adminservice/src/main/java/com/ctrip/framework/apollo/adminservice/controller/ClusterController.java
++++ b/apollo-adminservice/src/main/java/com/ctrip/framework/apollo/adminservice/controller/ClusterController.java
+@@ -58,10 +62,17 @@ public class ClusterController {
++    if(ConfigConsts.CLUSTER_NAME_DEFAULT.equals(entity.getName())){
++      throw new BadRequestException("default cluster can not be delete.");
++    }
++
+     clusterService.delete(entity.getId(), operator);
+   }

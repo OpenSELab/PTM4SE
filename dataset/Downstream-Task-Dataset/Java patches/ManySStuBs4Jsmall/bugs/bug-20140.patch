@@ -1,0 +1,51 @@
+diff --git a/api/src/main/java/org/openmrs/validator/UserValidator.java b/api/src/main/java/org/openmrs/validator/UserValidator.java
+index 38f51fe..6cc35b5 100644
+--- a/api/src/main/java/org/openmrs/validator/UserValidator.java
++++ b/api/src/main/java/org/openmrs/validator/UserValidator.java
+@@ -40,7 +40,7 @@
+ 	protected final Log log = LogFactory.getLog(getClass());
+ 	
+ 	private static final Pattern EMAIL_PATTERN = Pattern
+-	        .compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
++	        .compile("^.+@.+\\..+$");
+ 	
+ 	@Autowired
+ 	private PersonValidator personValidator;
+diff --git a/api/src/test/java/org/openmrs/validator/UserValidatorTest.java b/api/src/test/java/org/openmrs/validator/UserValidatorTest.java
+index b125fd3..8cc827a 100644
+--- a/api/src/test/java/org/openmrs/validator/UserValidatorTest.java
++++ b/api/src/test/java/org/openmrs/validator/UserValidatorTest.java
+@@ -196,9 +196,8 @@
+ 	 */
+ 	@Test
+ 	public void isUserNameAsEmailValid_shouldReturnFalseIfEmailInvalid() throws Exception {
+-		String[] invalids = new String[] { "mkyong", "mkyong@.com.my", "mkyong123@gmail.a", "mkyong123@.com",
+-		        "mkyong123@.com.com", ".mkyong@mkyong.com", "mkyong()*@gmail.com", "mkyong@%*.com",
+-		        "mkyong..2002@gmail.com", "mkyong.@gmail.com", "mkyong@mkyong@gmail.com", "mkyong@gmail.com.1a" };
++		String[] invalids = new String[] { "mkyong", "mkyong123@.com", "my@kong", "my.kong", 
++				"my.@kong", "@kong.my" };
+ 		for (String email : invalids) {
+ 			Assert.assertFalse(validator.isUserNameAsEmailValid(email));
+ 		}
+@@ -212,7 +211,7 @@
+ 	public void isUserNameAsEmailValid_shouldReturnTrueIfEmailValid() throws Exception {
+ 		String[] valids = new String[] { "mkyong@yahoo.com", "mkyong-100@yahoo.com", "mkyong.100@yahoo.com",
+ 		        "mkyong111@mkyong.com", "mkyong-100@mkyong.net", "mkyong.100@mkyong.com.au", "mkyong@1.com",
+-		        "mkyong@gmail.com.com" };
++		        "mkyong@gmail.com.com", "mk@t-yong.de" };
+ 		for (String email : valids) {
+ 			Assert.assertTrue(validator.isUserNameAsEmailValid(email));
+ 		}
+diff --git a/api/src/main/java/org/openmrs/validator/UserValidator.java b/api/src/main/java/org/openmrs/validator/UserValidator.java
+index 38f51fe..6cc35b5 100644
+--- a/api/src/main/java/org/openmrs/validator/UserValidator.java
++++ b/api/src/main/java/org/openmrs/validator/UserValidator.java
+@@ -40,7 +40,7 @@
+ 	protected final Log log = LogFactory.getLog(getClass());
+ 	
+ 	private static final Pattern EMAIL_PATTERN = Pattern
+-	        .compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
++	        .compile("^.+@.+\\..+$");
+ 	
+ 	@Autowired
+ 	private PersonValidator personValidator;

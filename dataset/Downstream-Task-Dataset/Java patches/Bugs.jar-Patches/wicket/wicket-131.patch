@@ -1,0 +1,115 @@
+diff --git a/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/PageParametersEncoder.java b/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/PageParametersEncoder.java
+index 2312995..5687a71 100644
+--- a/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/PageParametersEncoder.java
++++ b/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/PageParametersEncoder.java
+@@ -16,9 +16,13 @@
+  */
+ package org.apache.wicket.request.mapper.parameter;
+ 
++import java.util.List;
++
++import org.apache.wicket.request.IRequestParameters;
+ import org.apache.wicket.request.Request;
+ import org.apache.wicket.request.Url;
+ import org.apache.wicket.request.Url.QueryParameter;
++import org.apache.wicket.util.string.StringValue;
+ 
+ /**
+  * Simple encoder with direct indexed/named parameters mapping.
+@@ -47,10 +51,15 @@ public class PageParametersEncoder implements IPageParametersEncoder
+ 			parameters.set(i, s);
+ 			++i;
+ 		}
+-
+-		for (QueryParameter p : request.getUrl().getQueryParameters())
++		
++		IRequestParameters requestParameters = request.getRequestParameters();
++		for (String paramName : requestParameters.getParameterNames())
+ 		{
+-			parameters.add(p.getName(), p.getValue());
++			List<StringValue> parameterValues = requestParameters.getParameterValues(paramName);
++			for (StringValue paramValue : parameterValues)
++			{
++				parameters.add(paramName, paramValue);
++			}
+ 		}
+ 
+ 		return parameters.isEmpty() ? null : parameters;
+diff --git a/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/UrlPathPageParametersEncoder.java b/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/UrlPathPageParametersEncoder.java
+index db3ea51..f31f5c1 100644
+--- a/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/UrlPathPageParametersEncoder.java
++++ b/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/UrlPathPageParametersEncoder.java
+@@ -25,9 +25,12 @@ import org.apache.wicket.util.string.Strings;
+ 
+ 
+ /**
++ * <p>
+  * Encodes page parameters into Url path fragments instead of the query string like the default
+  * {@link PageParametersEncoder}. The parameters are encoded in the following format:
+  * {@code /param1Name/param1Value/param2Name/param2Value}.
++ * </p>
++ * <strong>Note</strong>: Because of the nature of the encoder it doesn't support POST request parameters.
+  * <p>
+  * This used to be the default way of encoding page parameters in 1.4.x applications. Newer 1.5.x+
+  * applications use the query string, by default. This class facilitates backwards compatibility and
+diff --git a/wicket-request/src/main/java/org/apache/wicket/request/parameter/CombinedRequestParametersAdapter.java b/wicket-request/src/main/java/org/apache/wicket/request/parameter/CombinedRequestParametersAdapter.java
+index e895f3b..b5792cc 100755
+--- a/wicket-request/src/main/java/org/apache/wicket/request/parameter/CombinedRequestParametersAdapter.java
++++ b/wicket-request/src/main/java/org/apache/wicket/request/parameter/CombinedRequestParametersAdapter.java
+@@ -19,10 +19,12 @@ package org.apache.wicket.request.parameter;
+ import java.util.ArrayList;
+ import java.util.Collections;
+ import java.util.HashSet;
++import java.util.LinkedHashSet;
+ import java.util.List;
+ import java.util.Set;
+ 
+ import org.apache.wicket.request.IRequestParameters;
++import org.apache.wicket.util.lang.Args;
+ import org.apache.wicket.util.string.StringValue;
+ 
+ /**
+@@ -41,11 +43,7 @@ public class CombinedRequestParametersAdapter implements IRequestParameters
+ 	 */
+ 	public CombinedRequestParametersAdapter(final IRequestParameters... parameters)
+ 	{
+-		if (parameters == null)
+-		{
+-			throw new IllegalStateException("Argument 'parameters' may not be null");
+-		}
+-		this.parameters = parameters;
++		this.parameters = Args.notNull(parameters, "parameters");
+ 	}
+ 
+ 	/**
+@@ -53,7 +51,7 @@ public class CombinedRequestParametersAdapter implements IRequestParameters
+ 	 */
+ 	public Set<String> getParameterNames()
+ 	{
+-		Set<String> result = new HashSet<String>();
++		Set<String> result = new LinkedHashSet<String>();
+ 		for (IRequestParameters p : parameters)
+ 		{
+ 			result.addAll(p.getParameterNames());
+diff --git a/wicket-request/src/main/java/org/apache/wicket/request/parameter/UrlRequestParametersAdapter.java b/wicket-request/src/main/java/org/apache/wicket/request/parameter/UrlRequestParametersAdapter.java
+index d65d1d6..bbdd1da 100755
+--- a/wicket-request/src/main/java/org/apache/wicket/request/parameter/UrlRequestParametersAdapter.java
++++ b/wicket-request/src/main/java/org/apache/wicket/request/parameter/UrlRequestParametersAdapter.java
+@@ -18,7 +18,7 @@ package org.apache.wicket.request.parameter;
+ 
+ import java.util.ArrayList;
+ import java.util.Collections;
+-import java.util.HashSet;
++import java.util.LinkedHashSet;
+ import java.util.List;
+ import java.util.Set;
+ 
+@@ -55,7 +55,7 @@ public class UrlRequestParametersAdapter implements IRequestParameters
+ 	 */
+ 	public Set<String> getParameterNames()
+ 	{
+-		Set<String> result = new HashSet<String>();
++		Set<String> result = new LinkedHashSet<String>();
+ 		for (QueryParameter parameter : url.getQueryParameters())
+ 		{
+ 			result.add(parameter.getName());

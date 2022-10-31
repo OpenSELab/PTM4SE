@@ -1,0 +1,36 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/component/seda/SedaConsumerStartStopTest.java b/camel-core/src/test/java/org/apache/camel/component/seda/SedaConsumerStartStopTest.java
+index 2b4ea69..21d4ce4 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/seda/SedaConsumerStartStopTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/seda/SedaConsumerStartStopTest.java
+@@ -43,9 +43,12 @@
+         executor.execute(new Runnable() {
+             public void run() {
+                 for (int i = 0; i < 20; i++) {
++                    // TODO when this delay is removed, the seda endpoint has
++                    // ordering issues
+                     try {
+                         // do some random sleep to simulate spread in user activity
+-                        Thread.sleep(new Random().nextInt(10));
++                        // range is 5-15
++                        Thread.sleep(new Random().nextInt(10) + 5);
+                     } catch (InterruptedException e) {
+                         // ignore
+                     }
+diff --git a/camel-core/src/test/java/org/apache/camel/component/seda/SedaConsumerStartStopTest.java b/camel-core/src/test/java/org/apache/camel/component/seda/SedaConsumerStartStopTest.java
+index 2b4ea69..21d4ce4 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/seda/SedaConsumerStartStopTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/seda/SedaConsumerStartStopTest.java
+@@ -43,9 +43,12 @@
+         executor.execute(new Runnable() {
+             public void run() {
+                 for (int i = 0; i < 20; i++) {
++                    // TODO when this delay is removed, the seda endpoint has
++                    // ordering issues
+                     try {
+                         // do some random sleep to simulate spread in user activity
+-                        Thread.sleep(new Random().nextInt(10));
++                        // range is 5-15
++                        Thread.sleep(new Random().nextInt(10) + 5);
+                     } catch (InterruptedException e) {
+                         // ignore
+                     }

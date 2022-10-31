@@ -1,0 +1,34 @@
+diff --git a/api/src/main/java/org/openmrs/module/ModuleClassLoader.java b/api/src/main/java/org/openmrs/module/ModuleClassLoader.java
+index a2d12f6..cc4d206 100644
+--- a/api/src/main/java/org/openmrs/module/ModuleClassLoader.java
++++ b/api/src/main/java/org/openmrs/module/ModuleClassLoader.java
+@@ -132,10 +132,10 @@
+ 	private void addClassFilePackages(Collection<File> files, int dirLength) {
+ 		for (File file : files) {
+ 			String name = file.getAbsolutePath().substring(dirLength);
+-			Integer indexOfLastSlash = name.lastIndexOf("/");
++			Integer indexOfLastSlash = name.lastIndexOf(File.separator);
+ 			if (indexOfLastSlash > 0) {
+ 				String packageName = name.substring(0, indexOfLastSlash);
+-				packageName = packageName.replaceAll("/", ".");
++				packageName = packageName.replaceAll(File.separator, ".");
+ 				providedPackages.add(packageName);
+ 			}
+ 		}
+diff --git a/api/src/main/java/org/openmrs/module/ModuleClassLoader.java b/api/src/main/java/org/openmrs/module/ModuleClassLoader.java
+index a2d12f6..cc4d206 100644
+--- a/api/src/main/java/org/openmrs/module/ModuleClassLoader.java
++++ b/api/src/main/java/org/openmrs/module/ModuleClassLoader.java
+@@ -132,10 +132,10 @@
+ 	private void addClassFilePackages(Collection<File> files, int dirLength) {
+ 		for (File file : files) {
+ 			String name = file.getAbsolutePath().substring(dirLength);
+-			Integer indexOfLastSlash = name.lastIndexOf("/");
++			Integer indexOfLastSlash = name.lastIndexOf(File.separator);
+ 			if (indexOfLastSlash > 0) {
+ 				String packageName = name.substring(0, indexOfLastSlash);
+-				packageName = packageName.replaceAll("/", ".");
++				packageName = packageName.replaceAll(File.separator, ".");
+ 				providedPackages.add(packageName);
+ 			}
+ 		}

@@ -1,0 +1,30 @@
+diff --git a/guava/src/com/google/common/base/CaseFormat.java b/guava/src/com/google/common/base/CaseFormat.java
+index 1f4d3d6..eec7a2a 100644
+--- a/guava/src/com/google/common/base/CaseFormat.java
++++ b/guava/src/com/google/common/base/CaseFormat.java
+@@ -218,6 +218,9 @@
+   private static String firstCharOnlyToUpper(String word) {
+     return (word.isEmpty())
+         ? word
+-        : Ascii.toUpperCase(word.charAt(0)) + Ascii.toLowerCase(word.substring(1));
++        : new StringBuilder(word.length())
++            .append(Ascii.toUpperCase(word.charAt(0)))
++            .append(Ascii.toLowerCase(word.substring(1)))
++            .toString();
+   }
+ }
+diff --git a/guava/src/com/google/common/base/CaseFormat.java b/guava/src/com/google/common/base/CaseFormat.java
+index 1f4d3d6..eec7a2a 100644
+--- a/guava/src/com/google/common/base/CaseFormat.java
++++ b/guava/src/com/google/common/base/CaseFormat.java
+@@ -218,6 +218,9 @@
+   private static String firstCharOnlyToUpper(String word) {
+     return (word.isEmpty())
+         ? word
+-        : Ascii.toUpperCase(word.charAt(0)) + Ascii.toLowerCase(word.substring(1));
++        : new StringBuilder(word.length())
++            .append(Ascii.toUpperCase(word.charAt(0)))
++            .append(Ascii.toLowerCase(word.substring(1)))
++            .toString();
+   }
+ }

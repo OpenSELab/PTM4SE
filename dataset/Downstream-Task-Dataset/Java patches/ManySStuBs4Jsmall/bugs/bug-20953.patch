@@ -1,0 +1,13 @@
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/servlet/server/AbstractServletWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/servlet/server/AbstractServletWebServerFactoryTests.java
+index e071584..bd0715d 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/servlet/server/AbstractServletWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/servlet/server/AbstractServletWebServerFactoryTests.java
+@@ -305,7 +305,7 @@
+ 	public void multipleConfigurations() throws Exception {
+ 		AbstractServletWebServerFactory factory = getFactory();
+ 		ServletContextInitializer[] initializers = new ServletContextInitializer[6];
+-		Arrays.setAll(initializers, i -> mock(ServletContextInitializer.class));
++		Arrays.setAll(initializers, (i) -> mock(ServletContextInitializer.class));
+ 		factory.setInitializers(Arrays.asList(initializers[2], initializers[3]));
+ 		factory.addInitializers(initializers[4], initializers[5]);
+ 		this.webServer = factory.getWebServer(initializers[0], initializers[1]);

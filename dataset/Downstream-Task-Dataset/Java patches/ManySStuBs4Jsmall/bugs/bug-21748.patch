@@ -1,0 +1,121 @@
+diff --git a/okhttp-tests/src/test/java/okhttp3/internal/cache/DiskLruCacheTest.java b/okhttp-tests/src/test/java/okhttp3/internal/cache/DiskLruCacheTest.java
+index 04ba571..cf782fa 100644
+--- a/okhttp-tests/src/test/java/okhttp3/internal/cache/DiskLruCacheTest.java
++++ b/okhttp-tests/src/test/java/okhttp3/internal/cache/DiskLruCacheTest.java
+@@ -129,35 +129,35 @@
+     try {
+       key = "has_space ";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+     try {
+       key = "has_CR\r";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+     try {
+       key = "has_LF\n";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+     try {
+       key = "has_invalid/";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+     try {
+       key = "has_invalid\u2603";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+@@ -165,7 +165,7 @@
+       key = "this_is_way_too_long_this_is_way_too_long_this_is_way_too_long_"
+           + "this_is_way_too_long_this_is_way_too_long_this_is_way_too_long";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was too long.");
++      fail("Expecting an IllegalArgumentException as the key was too long.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+diff --git a/okhttp-tests/src/test/java/okhttp3/internal/http2/HttpOverHttp2Test.java b/okhttp-tests/src/test/java/okhttp3/internal/http2/HttpOverHttp2Test.java
+index eb0acf4..29b096a 100644
+--- a/okhttp-tests/src/test/java/okhttp3/internal/http2/HttpOverHttp2Test.java
++++ b/okhttp-tests/src/test/java/okhttp3/internal/http2/HttpOverHttp2Test.java
+@@ -352,7 +352,7 @@
+     waitForDataFrames(Http2Connection.OKHTTP_CLIENT_WINDOW_SIZE);
+ 
+     // Cancel the call and close the response body. This should discard the buffered data and update
+-    // the connnection flow-control window.
++    // the connection flow-control window.
+     call1.cancel();
+     response1.close();
+ 
+diff --git a/okhttp-tests/src/test/java/okhttp3/internal/cache/DiskLruCacheTest.java b/okhttp-tests/src/test/java/okhttp3/internal/cache/DiskLruCacheTest.java
+index 04ba571..cf782fa 100644
+--- a/okhttp-tests/src/test/java/okhttp3/internal/cache/DiskLruCacheTest.java
++++ b/okhttp-tests/src/test/java/okhttp3/internal/cache/DiskLruCacheTest.java
+@@ -129,35 +129,35 @@
+     try {
+       key = "has_space ";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+     try {
+       key = "has_CR\r";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+     try {
+       key = "has_LF\n";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+     try {
+       key = "has_invalid/";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+     try {
+       key = "has_invalid\u2603";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was invalid.");
++      fail("Expecting an IllegalArgumentException as the key was invalid.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }
+@@ -165,7 +165,7 @@
+       key = "this_is_way_too_long_this_is_way_too_long_this_is_way_too_long_"
+           + "this_is_way_too_long_this_is_way_too_long_this_is_way_too_long";
+       cache.edit(key);
+-      fail("Exepcting an IllegalArgumentException as the key was too long.");
++      fail("Expecting an IllegalArgumentException as the key was too long.");
+     } catch (IllegalArgumentException iae) {
+       assertEquals("keys must match regex [a-z0-9_-]{1,120}: \"" + key + "\"", iae.getMessage());
+     }

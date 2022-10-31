@@ -1,0 +1,51 @@
+diff --git a/src/main/java/spark/FilterImpl.java b/src/main/java/spark/FilterImpl.java
+index b1ac4b1..4c867f1 100644
+--- a/src/main/java/spark/FilterImpl.java
++++ b/src/main/java/spark/FilterImpl.java
+@@ -26,7 +26,7 @@
+  *
+  * @author Per Wendel
+  */
+-public abstract class FilterImpl {
++public abstract class FilterImpl implements Filter {
+ 
+     private static final String DEFAUT_CONTENT_TYPE = "text/html";
+ 
+diff --git a/src/main/java/spark/Route.java b/src/main/java/spark/Route.java
+index 601efa3..0aa82fd 100644
+--- a/src/main/java/spark/Route.java
++++ b/src/main/java/spark/Route.java
+@@ -12,6 +12,6 @@
+      * @param response The response object providing functionality for modifying the response
+      * @return The content to be set in the response
+      */
+-    Object handle(Request request, Response response);
++    Object handle(Request request, Response response)  throws Exception;
+ 
+ }
+diff --git a/src/main/java/spark/RouteImpl.java b/src/main/java/spark/RouteImpl.java
+index b927da6..a1f22f7 100644
+--- a/src/main/java/spark/RouteImpl.java
++++ b/src/main/java/spark/RouteImpl.java
+@@ -24,7 +24,7 @@
+  *
+  * @author Per Wendel
+  */
+-public abstract class RouteImpl {
++public abstract class RouteImpl implements Route {
+ 
+     private static final String DEFAULT_ACCEPT_TYPE = "*/*";
+ 
+diff --git a/src/main/java/spark/FilterImpl.java b/src/main/java/spark/FilterImpl.java
+index b1ac4b1..4c867f1 100644
+--- a/src/main/java/spark/FilterImpl.java
++++ b/src/main/java/spark/FilterImpl.java
+@@ -26,7 +26,7 @@
+  *
+  * @author Per Wendel
+  */
+-public abstract class FilterImpl {
++public abstract class FilterImpl implements Filter {
+ 
+     private static final String DEFAUT_CONTENT_TYPE = "text/html";
+ 

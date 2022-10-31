@@ -1,0 +1,610 @@
+diff --git a/components/camel-atmosphere-websocket/src/main/java/org/apache/camel/component/atmosphere/websocket/WebsocketEndpoint.java b/components/camel-atmosphere-websocket/src/main/java/org/apache/camel/component/atmosphere/websocket/WebsocketEndpoint.java
+index d449ca1..4fb273b 100644
+--- a/components/camel-atmosphere-websocket/src/main/java/org/apache/camel/component/atmosphere/websocket/WebsocketEndpoint.java
++++ b/components/camel-atmosphere-websocket/src/main/java/org/apache/camel/component/atmosphere/websocket/WebsocketEndpoint.java
+@@ -40,9 +40,9 @@
+ 
+     @UriPath
+     private String servicePath;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean sendToAll;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean useStreaming;
+     
+     public WebsocketEndpoint(String endPointURI, WebsocketComponent component, URI httpUri, HttpClientParams params, HttpConnectionManager httpConnectionManager,
+diff --git a/components/camel-avro/src/main/java/org/apache/camel/component/avro/AvroConfiguration.java b/components/camel-avro/src/main/java/org/apache/camel/component/avro/AvroConfiguration.java
+index 3398c9b..de9642f 100644
+--- a/components/camel-avro/src/main/java/org/apache/camel/component/avro/AvroConfiguration.java
++++ b/components/camel-avro/src/main/java/org/apache/camel/component/avro/AvroConfiguration.java
+@@ -48,9 +48,9 @@
+     private String protocolClassName;
+     @UriParam
+     private String uriAuthority;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean reflectionProtocol;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean singleParameter;
+ 
+     public AvroConfiguration copy() {
+diff --git a/components/camel-aws/src/main/java/org/apache/camel/component/aws/ddb/DdbConfiguration.java b/components/camel-aws/src/main/java/org/apache/camel/component/aws/ddb/DdbConfiguration.java
+index 691a104..ff9f063 100644
+--- a/components/camel-aws/src/main/java/org/apache/camel/component/aws/ddb/DdbConfiguration.java
++++ b/components/camel-aws/src/main/java/org/apache/camel/component/aws/ddb/DdbConfiguration.java
+@@ -35,7 +35,7 @@
+     private AmazonDynamoDB amazonDDBClient;
+     @UriParam
+     private String amazonDdbEndpoint;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private Boolean consistentRead;
+     @UriParam(defaultValue = "PutItem")
+     private DdbOperations operation = DdbOperations.PutItem;
+diff --git a/components/camel-aws/src/main/java/org/apache/camel/component/aws/s3/S3Configuration.java b/components/camel-aws/src/main/java/org/apache/camel/component/aws/s3/S3Configuration.java
+index 1b5243e..ab19d46 100644
+--- a/components/camel-aws/src/main/java/org/apache/camel/component/aws/s3/S3Configuration.java
++++ b/components/camel-aws/src/main/java/org/apache/camel/component/aws/s3/S3Configuration.java
+@@ -41,9 +41,9 @@
+     private String region;
+     @UriParam(defaultValue = "true")
+     private boolean deleteAfterRead = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean deleteAfterWrite;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean multiPartUpload;
+     @UriParam(defaultValue = "" + 25 * 1024 * 1024)
+     private long partSize = 25 * 1024 * 1024;
+diff --git a/components/camel-aws/src/main/java/org/apache/camel/component/aws/sdb/SdbConfiguration.java b/components/camel-aws/src/main/java/org/apache/camel/component/aws/sdb/SdbConfiguration.java
+index 38b9ff5..e6ce0cd 100644
+--- a/components/camel-aws/src/main/java/org/apache/camel/component/aws/sdb/SdbConfiguration.java
++++ b/components/camel-aws/src/main/java/org/apache/camel/component/aws/sdb/SdbConfiguration.java
+@@ -37,7 +37,7 @@
+     private String amazonSdbEndpoint;
+     @UriParam
+     private Integer maxNumberOfDomains;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private Boolean consistentRead;
+     @UriParam(defaultValue = "PutAttributes")
+     private SdbOperations operation = SdbOperations.PutAttributes;
+diff --git a/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConfiguration.java b/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConfiguration.java
+index aabae7f..31a3a2e 100644
+--- a/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConfiguration.java
++++ b/components/camel-aws/src/main/java/org/apache/camel/component/aws/sqs/SqsConfiguration.java
+@@ -57,7 +57,7 @@
+     private Integer waitTimeSeconds;
+     @UriParam
+     private Integer defaultVisibilityTimeout;
+-    @UriParam(defaultValue = "false")
++    @UriParam(defaultValue = "Boolean.FALSE")
+     private Boolean extendMessageVisibility = Boolean.FALSE;
+     @UriParam(defaultValue = "1")
+     private Integer concurrentConsumers = 1;
+diff --git a/components/camel-box/src/main/java/org/apache/camel/component/box/BoxConfiguration.java b/components/camel-box/src/main/java/org/apache/camel/component/box/BoxConfiguration.java
+index db2df83..e2d3cb0 100644
+--- a/components/camel-box/src/main/java/org/apache/camel/component/box/BoxConfiguration.java
++++ b/components/camel-box/src/main/java/org/apache/camel/component/box/BoxConfiguration.java
+@@ -59,7 +59,7 @@
+     @UriParam
+     private OAuthRefreshListener refreshListener;
+ 
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean revokeOnShutdown;
+ 
+     @UriParam
+diff --git a/components/camel-cache/src/main/java/org/apache/camel/component/cache/CacheConfiguration.java b/components/camel-cache/src/main/java/org/apache/camel/component/cache/CacheConfiguration.java
+index 1e74491..e55d6c4 100755
+--- a/components/camel-cache/src/main/java/org/apache/camel/component/cache/CacheConfiguration.java
++++ b/components/camel-cache/src/main/java/org/apache/camel/component/cache/CacheConfiguration.java
+@@ -38,15 +38,15 @@
+     private boolean overflowToDisk = true;
+     @UriParam
+     private String diskStorePath;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean eternal;
+     @UriParam(defaultValue = "300")
+     private long timeToLiveSeconds = 300;
+     @UriParam(defaultValue = "300")
+     private long timeToIdleSeconds = 300;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean diskPersistent;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private long diskExpiryThreadIntervalSeconds;
+     @UriParam
+     private boolean objectCache;
+diff --git a/components/camel-cmis/src/main/java/org/apache/camel/component/cmis/CMISSessionFacade.java b/components/camel-cmis/src/main/java/org/apache/camel/component/cmis/CMISSessionFacade.java
+index 230479e..1f4bed4 100644
+--- a/components/camel-cmis/src/main/java/org/apache/camel/component/cmis/CMISSessionFacade.java
++++ b/components/camel-cmis/src/main/java/org/apache/camel/component/cmis/CMISSessionFacade.java
+@@ -51,7 +51,7 @@
+     private int pageSize = 100;
+     @UriParam
+     private int readCount;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean readContent;
+     @UriParam
+     private String username;
+diff --git a/components/camel-cometd/src/main/java/org/apache/camel/component/cometd/CometdEndpoint.java b/components/camel-cometd/src/main/java/org/apache/camel/component/cometd/CometdEndpoint.java
+index 7d124d5..bde31bd 100644
+--- a/components/camel-cometd/src/main/java/org/apache/camel/component/cometd/CometdEndpoint.java
++++ b/components/camel-cometd/src/main/java/org/apache/camel/component/cometd/CometdEndpoint.java
+@@ -59,11 +59,11 @@
+     private int multiFrameInterval = 1500;
+     @UriParam(defaultValue = "true")
+     private boolean jsonCommented = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean sessionHeadersEnabled;
+     @UriParam(defaultValue = "1")
+     private int logLevel = 1;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean crossOriginFilterOn;
+     @UriParam
+     private String allowedOrigins;
+diff --git a/components/camel-couchdb/src/main/java/org/apache/camel/component/couchdb/CouchDbEndpoint.java b/components/camel-couchdb/src/main/java/org/apache/camel/component/couchdb/CouchDbEndpoint.java
+index b185917..98358e3 100644
+--- a/components/camel-couchdb/src/main/java/org/apache/camel/component/couchdb/CouchDbEndpoint.java
++++ b/components/camel-couchdb/src/main/java/org/apache/camel/component/couchdb/CouchDbEndpoint.java
+@@ -55,7 +55,7 @@
+     private String password;
+     @UriParam(defaultValue = "" + DEFAULT_HEARTBEAT)
+     private long heartbeat = DEFAULT_HEARTBEAT;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean createDatabase;
+     @UriParam(defaultValue = "true")
+     private boolean deletes = true;
+diff --git a/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/DisruptorEndpoint.java b/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/DisruptorEndpoint.java
+index ba38651..8132472 100644
+--- a/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/DisruptorEndpoint.java
++++ b/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/DisruptorEndpoint.java
+@@ -56,13 +56,13 @@
+     private String name;
+     @UriParam(defaultValue = "1")
+     private final int concurrentConsumers;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private final boolean multipleConsumers;
+     @UriParam(defaultValue = "IfReplyExpected")
+     private WaitForTaskToComplete waitForTaskToComplete = WaitForTaskToComplete.IfReplyExpected;
+     @UriParam(defaultValue = "30000")
+     private long timeout = 30000;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean blockWhenFull;
+     @UriParam(defaultValue = "Blocking")
+     private DisruptorWaitStrategy waitStrategy;
+diff --git a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpsConfiguration.java b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpsConfiguration.java
+index a4ecce9..d5e135f 100644
+--- a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpsConfiguration.java
++++ b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/FtpsConfiguration.java
+@@ -31,9 +31,9 @@
+ 
+     @UriParam(defaultValue = "TLS")
+     private String securityProtocol = "TLS";
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean isImplicit;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean disableSecureDataChannelDefaults;
+     @UriParam
+     private String execProt;
+diff --git a/components/camel-hdfs2/src/main/java/org/apache/camel/component/hdfs2/HdfsConfiguration.java b/components/camel-hdfs2/src/main/java/org/apache/camel/component/hdfs2/HdfsConfiguration.java
+index 58d602e..7dd5e55 100644
+--- a/components/camel-hdfs2/src/main/java/org/apache/camel/component/hdfs2/HdfsConfiguration.java
++++ b/components/camel-hdfs2/src/main/java/org/apache/camel/component/hdfs2/HdfsConfiguration.java
+@@ -41,9 +41,9 @@
+     private String path;
+     @UriParam(defaultValue = "true")
+     private boolean overwrite = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean append;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean wantAppend;
+     @UriParam(defaultValue = "" + HdfsConstants.DEFAULT_BUFFERSIZE)
+     private int bufferSize = HdfsConstants.DEFAULT_BUFFERSIZE;
+diff --git a/components/camel-irc/src/main/java/org/apache/camel/component/irc/IrcConfiguration.java b/components/camel-irc/src/main/java/org/apache/camel/component/irc/IrcConfiguration.java
+index 9c2adf4..0a71a27 100644
+--- a/components/camel-irc/src/main/java/org/apache/camel/component/irc/IrcConfiguration.java
++++ b/components/camel-irc/src/main/java/org/apache/camel/component/irc/IrcConfiguration.java
+@@ -75,7 +75,7 @@
+     private boolean onMode = true;
+     @UriParam(defaultValue = "true")
+     private boolean onPart = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean onReply;
+     @UriParam(defaultValue = "true")
+     private boolean onTopic = true;
+diff --git a/components/camel-javaspace/src/main/java/org/apache/camel/component/javaspace/JavaSpaceEndpoint.java b/components/camel-javaspace/src/main/java/org/apache/camel/component/javaspace/JavaSpaceEndpoint.java
+index f09ab9b..4b9e6ff 100644
+--- a/components/camel-javaspace/src/main/java/org/apache/camel/component/javaspace/JavaSpaceEndpoint.java
++++ b/components/camel-javaspace/src/main/java/org/apache/camel/component/javaspace/JavaSpaceEndpoint.java
+@@ -42,7 +42,7 @@
+     private int concurrentConsumers = 1;
+     @UriParam
+     private String spaceName;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean transactional;
+     @UriParam
+     private long transactionTimeout = Long.MAX_VALUE;
+diff --git a/components/camel-jdbc/src/main/java/org/apache/camel/component/jdbc/JdbcEndpoint.java b/components/camel-jdbc/src/main/java/org/apache/camel/component/jdbc/JdbcEndpoint.java
+index c0bb843..ff77f51 100755
+--- a/components/camel-jdbc/src/main/java/org/apache/camel/component/jdbc/JdbcEndpoint.java
++++ b/components/camel-jdbc/src/main/java/org/apache/camel/component/jdbc/JdbcEndpoint.java
+@@ -38,7 +38,7 @@
+     private DataSource dataSource;
+     @UriParam
+     private int readSize;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean transacted;
+     @UriParam(defaultValue = "true")
+     private boolean resetAutoCommit = true;
+@@ -49,7 +49,7 @@
+     private JdbcPrepareStatementStrategy prepareStatementStrategy = new DefaultJdbcPrepareStatementStrategy();
+     @UriParam(defaultValue = "true")
+     private boolean allowNamedParameters = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean useHeadersAsParameters;
+     @UriParam(defaultValue = "SelectList")
+     private JdbcOutputType outputType = JdbcOutputType.SelectList;
+diff --git a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsConfiguration.java b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsConfiguration.java
+index 6229517..58a290c 100644
+--- a/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsConfiguration.java
++++ b/components/camel-jms/src/main/java/org/apache/camel/component/jms/JmsConfiguration.java
+@@ -83,7 +83,7 @@
+     private boolean errorHandlerLogStackTrace = true;
+     @UriParam(defaultValue = "true")
+     private boolean autoStartup = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean acceptMessagesWhileStopping;
+     @UriParam
+     private String clientId;
+@@ -93,7 +93,7 @@
+     @UriParam
+     private boolean exposeListenerSession = true;
+     private TaskExecutor taskExecutor;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean pubSubNoLocal;
+     @UriParam(defaultValue = "1")
+     private int concurrentConsumers = 1;
+@@ -121,7 +121,7 @@
+     @UriParam
+     private int replyToMaxConcurrentConsumers;
+     // JmsTemplate only
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private Boolean explicitQosEnabled;
+     @UriParam(defaultValue = "true")
+     private boolean deliveryPersistent = true;
+@@ -141,7 +141,7 @@
+     @UriParam(defaultValue = "-1")
+     private int priority = -1;
+     // Transaction related configuration
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean transacted;
+     private boolean transactedInOut;
+     @UriParam(defaultValue = "true")
+@@ -151,16 +151,16 @@
+     private String transactionName;
+     @UriParam(defaultValue = "-1")
+     private int transactionTimeout = -1;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean preserveMessageQos;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean disableReplyTo;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean eagerLoadingOfProperties;
+     // Always make a JMS message copy when it's passed to Producer
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean alwaysCopyMessage;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean useMessageIDAsCorrelationID;
+     private JmsProviderMetadata providerMetadata = new JmsProviderMetadata();
+     private JmsOperations metadataJmsOperations;
+@@ -174,26 +174,26 @@
+     private JmsMessageType jmsMessageType;
+     @UriParam
+     private JmsKeyFormatStrategy jmsKeyFormatStrategy;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean transferExchange;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean transferException;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean testConnectionOnStartup;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean asyncStartListener;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean asyncStopListener;
+     // if the message is a JmsMessage and mapJmsMessage=false, force the
+     // producer to send the javax.jms.Message body to the next JMS destination
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean forceSendOriginalMessage;
+     // to force disabling time to live (works in both in-only or in-out mode)
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean disableTimeToLive;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private ReplyToType replyToType;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean asyncConsumer;
+     // the cacheLevelName of reply manager
+     @UriParam
+@@ -201,10 +201,10 @@
+     @UriParam(defaultValue = "true")
+     private boolean allowNullBody = true;
+     private MessageListenerContainerFactory messageListenerContainerFactory;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean includeSentJMSMessageID;
+     private DefaultTaskExecutorType defaultTaskExecutorType;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean includeAllJMSXProperties;
+ 
+     public JmsConfiguration() {
+diff --git a/components/camel-mqtt/src/main/java/org/apache/camel/component/mqtt/MQTTConfiguration.java b/components/camel-mqtt/src/main/java/org/apache/camel/component/mqtt/MQTTConfiguration.java
+index b7252a5..9bccf2e 100644
+--- a/components/camel-mqtt/src/main/java/org/apache/camel/component/mqtt/MQTTConfiguration.java
++++ b/components/camel-mqtt/src/main/java/org/apache/camel/component/mqtt/MQTTConfiguration.java
+@@ -93,7 +93,7 @@
+     private int disconnectWaitInSeconds = 5;
+     @UriParam(defaultValue = "5")
+     private int sendWaitInSeconds = 5;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean byDefaultRetain;
+     @UriParam
+     private QoS qos = QoS.AT_LEAST_ONCE;
+diff --git a/components/camel-netty/src/main/java/org/apache/camel/component/netty/NettyConfiguration.java b/components/camel-netty/src/main/java/org/apache/camel/component/netty/NettyConfiguration.java
+index 8b9d983..700fa0a 100644
+--- a/components/camel-netty/src/main/java/org/apache/camel/component/netty/NettyConfiguration.java
++++ b/components/camel-netty/src/main/java/org/apache/camel/component/netty/NettyConfiguration.java
+@@ -62,7 +62,7 @@
+     private boolean disconnect;
+     @UriParam(defaultValue = "true")
+     private boolean lazyChannelCreation = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean transferExchange;
+     @UriParam(defaultValue = "true")
+     private boolean disconnectOnNoReply = true;
+@@ -90,11 +90,11 @@
+     private long producerPoolMinEvictableIdle = 5 * 60 * 1000L;
+     @UriParam(defaultValue = "true")
+     private boolean producerPoolEnabled = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean udpConnectionlessSending;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean clientMode;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean useChannelBuffer;
+ 
+     /**
+diff --git a/components/camel-netty4-http/src/main/java/org/apache/camel/component/netty4/http/NettyHttpEndpoint.java b/components/camel-netty4-http/src/main/java/org/apache/camel/component/netty4/http/NettyHttpEndpoint.java
+index 1b022bc..310f9d5 100644
+--- a/components/camel-netty4-http/src/main/java/org/apache/camel/component/netty4/http/NettyHttpEndpoint.java
++++ b/components/camel-netty4-http/src/main/java/org/apache/camel/component/netty4/http/NettyHttpEndpoint.java
+@@ -46,7 +46,7 @@
+     private HeaderFilterStrategy headerFilterStrategy;
+     @UriParam
+     private NettyHttpConfiguration configuration;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean traceEnabled;
+     @UriParam
+     private String httpMethodRestrict;
+diff --git a/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQEndpoint.java b/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQEndpoint.java
+index 135d357..69c1dc5 100644
+--- a/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQEndpoint.java
++++ b/components/camel-rabbitmq/src/main/java/org/apache/camel/component/rabbitmq/RabbitMQEndpoint.java
+@@ -70,7 +70,7 @@
+     private boolean autoDelete = true;
+     @UriParam(defaultValue = "true")
+     private boolean durable = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean bridgeEndpoint;
+     @UriParam
+     private String queue = String.valueOf(UUID.randomUUID().toString().hashCode());
+@@ -139,9 +139,9 @@
+     //Maximum time (in milliseconds) waiting for channel
+     @UriParam(defaultValue = "1000")
+     private long channelPoolMaxWait = 1000;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean mandatory;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean immediate;
+     @UriParam
+     private ArgsConfigurer queueArgsConfigurer;
+diff --git a/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/SjmsEndpoint.java b/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/SjmsEndpoint.java
+index 7135ad7..e3ad68d 100644
+--- a/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/SjmsEndpoint.java
++++ b/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/SjmsEndpoint.java
+@@ -78,9 +78,9 @@
+     private int transactionBatchCount = -1;
+     @UriParam(defaultValue = "5000")
+     private long transactionBatchTimeout = 5000;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean asyncStartListener;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean asyncStopListener;
+     @UriParam(defaultValue = "true")
+     private boolean prefillPool = true;
+diff --git a/components/camel-smpp/src/main/java/org/apache/camel/component/smpp/SmppConfiguration.java b/components/camel-smpp/src/main/java/org/apache/camel/component/smpp/SmppConfiguration.java
+index 3f29c25..903916e 100644
+--- a/components/camel-smpp/src/main/java/org/apache/camel/component/smpp/SmppConfiguration.java
++++ b/components/camel-smpp/src/main/java/org/apache/camel/component/smpp/SmppConfiguration.java
+@@ -89,13 +89,13 @@
+     private byte typeOfNumber = TypeOfNumber.UNKNOWN.value();
+     @UriParam
+     private byte numberingPlanIndicator = NumberingPlanIndicator.UNKNOWN.value();
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean usingSSL;
+     @UriParam(defaultValue = "5000")
+     private long initialReconnectDelay = 5000;
+     @UriParam(defaultValue = "5000")
+     private long reconnectDelay = 5000;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean lazySessionCreation;
+     @UriParam
+     private String httpProxyHost;
+diff --git a/components/camel-solr/src/main/java/org/apache/camel/component/solr/SolrEndpoint.java b/components/camel-solr/src/main/java/org/apache/camel/component/solr/SolrEndpoint.java
+index 696a2df..d63883b 100644
+--- a/components/camel-solr/src/main/java/org/apache/camel/component/solr/SolrEndpoint.java
++++ b/components/camel-solr/src/main/java/org/apache/camel/component/solr/SolrEndpoint.java
+@@ -55,9 +55,9 @@
+     private Integer defaultMaxConnectionsPerHost;
+     @UriParam
+     private Integer maxTotalConnections;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private Boolean followRedirects;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private Boolean allowCompression;
+     @UriParam
+     private String zkHost;
+diff --git a/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlSignatureConfiguration.java b/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlSignatureConfiguration.java
+index 2289220..52b8097 100644
+--- a/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlSignatureConfiguration.java
++++ b/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlSignatureConfiguration.java
+@@ -39,12 +39,12 @@
+     private String baseUri;
+ 
+     @UriParam
+-    private Map<String, ? extends Object> cryptoContextProperties;
++    private Map<String, ?> cryptoContextProperties;
+ 
+-    @UriParam(defaultValue = "true")
++    @UriParam(defaultValue = "Boolean.TRUE")
+     private Boolean disallowDoctypeDecl = Boolean.TRUE;
+ 
+-    @UriParam(defaultValue = "false")
++    @UriParam(defaultValue = "Boolean.FALSE")
+     private Boolean omitXmlDeclaration = Boolean.FALSE;
+ 
+     @UriParam(defaultValue = "true")
+diff --git a/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlSignerConfiguration.java b/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlSignerConfiguration.java
+index 3872349..50bfaab 100644
+--- a/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlSignerConfiguration.java
++++ b/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlSignerConfiguration.java
+@@ -111,7 +111,7 @@
+      * value can be overwritten by the header
+      * {@link XmlSignatureConstants#HEADER_MESSAGE_IS_PLAIN_TEXT}.
+      */
+-    @UriParam(defaultValue = "false")
++    @UriParam(defaultValue = "Boolean.FALSE")
+     private Boolean plainText = Boolean.FALSE;
+ 
+     /**
+diff --git a/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlVerifierConfiguration.java b/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlVerifierConfiguration.java
+index edd43e5..f6fdde1 100644
+--- a/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlVerifierConfiguration.java
++++ b/components/camel-xmlsecurity/src/main/java/org/apache/camel/component/xmlsecurity/processor/XmlVerifierConfiguration.java
+@@ -59,10 +59,10 @@
+     @UriParam(defaultValue = DefaultXmlSignature2Message.OUTPUT_NODE_SEARCH_TYPE_DEFAULT)
+     private String outputNodeSearchType = DefaultXmlSignature2Message.OUTPUT_NODE_SEARCH_TYPE_DEFAULT;
+ 
+-    @UriParam(defaultValue = "false")
++    @UriParam(defaultValue = "Boolean.FALSE")
+     private Boolean removeSignatureElements = Boolean.FALSE;
+ 
+-    @UriParam(defaultValue = "false")
++    @UriParam(defaultValue = "Boolean.TRUE")
+     private Boolean secureValidation = Boolean.TRUE;
+ 
+     public XmlVerifierConfiguration() {
+diff --git a/components/camel-xmpp/src/main/java/org/apache/camel/component/xmpp/XmppEndpoint.java b/components/camel-xmpp/src/main/java/org/apache/camel/component/xmpp/XmppEndpoint.java
+index bbb070a..9cbbf47 100644
+--- a/components/camel-xmpp/src/main/java/org/apache/camel/component/xmpp/XmppEndpoint.java
++++ b/components/camel-xmpp/src/main/java/org/apache/camel/component/xmpp/XmppEndpoint.java
+@@ -74,7 +74,7 @@
+     private String resource = "Camel";
+     @UriParam(defaultValue = "true")
+     private boolean login = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean createAccount;
+     @UriParam
+     private String room;
+diff --git a/components/camel-zookeeper/src/main/java/org/apache/camel/component/zookeeper/ZooKeeperConfiguration.java b/components/camel-zookeeper/src/main/java/org/apache/camel/component/zookeeper/ZooKeeperConfiguration.java
+index 315166f..89b43a8 100644
+--- a/components/camel-zookeeper/src/main/java/org/apache/camel/component/zookeeper/ZooKeeperConfiguration.java
++++ b/components/camel-zookeeper/src/main/java/org/apache/camel/component/zookeeper/ZooKeeperConfiguration.java
+@@ -49,13 +49,13 @@
+     private long backoff = 5000;
+     @UriParam(defaultValue = "true")
+     private boolean awaitExistence = true;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean repeat;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean listChildren;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean shouldCreate;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private String createMode;
+     @UriParam(defaultValue = "true")
+     private boolean sendEmptyMessageOnDelete = true;
+diff --git a/components/camel-atmosphere-websocket/src/main/java/org/apache/camel/component/atmosphere/websocket/WebsocketEndpoint.java b/components/camel-atmosphere-websocket/src/main/java/org/apache/camel/component/atmosphere/websocket/WebsocketEndpoint.java
+index d449ca1..4fb273b 100644
+--- a/components/camel-atmosphere-websocket/src/main/java/org/apache/camel/component/atmosphere/websocket/WebsocketEndpoint.java
++++ b/components/camel-atmosphere-websocket/src/main/java/org/apache/camel/component/atmosphere/websocket/WebsocketEndpoint.java
+@@ -40,9 +40,9 @@
+ 
+     @UriPath
+     private String servicePath;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean sendToAll;
+-    @UriParam(defaultValue = "false")
++    @UriParam
+     private boolean useStreaming;
+     
+     public WebsocketEndpoint(String endPointURI, WebsocketComponent component, URI httpUri, HttpClientParams params, HttpConnectionManager httpConnectionManager,

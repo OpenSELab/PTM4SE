@@ -1,0 +1,150 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
+index 3bc88cb..97ac319 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
+@@ -49,7 +49,7 @@
+      * @param defaultFormat default format
+      * @throws ConversionException unable to parse defaultFormat
+      */
+-    public AbstractFormatCheck(String defaultFormat) {
++    protected AbstractFormatCheck(String defaultFormat) {
+         this(defaultFormat, 0);
+     }
+ 
+@@ -60,7 +60,7 @@
+      * See {@link Pattern#compile(String, int)}
+      * @throws ConversionException unable to parse defaultFormat
+      */
+-    public AbstractFormatCheck(String defaultFormat, int compileFlags) {
++    protected AbstractFormatCheck(String defaultFormat, int compileFlags) {
+         updateRegexp(defaultFormat, compileFlags);
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractOptionCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractOptionCheck.java
+index 2975377..e9c0e0d 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractOptionCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractOptionCheck.java
+@@ -48,7 +48,7 @@
+      * @param optionClass the class for the option. Required due to a quirk
+      *        in the Java language.
+      */
+-    public AbstractOptionCheck(T literalDefault, Class<T> optionClass) {
++    protected AbstractOptionCheck(T literalDefault, Class<T> optionClass) {
+         option = literalDefault;
+         this.optionClass = optionClass;
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractIllegalMethodCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractIllegalMethodCheck.java
+index 7fa4468..b829ab7 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractIllegalMethodCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractIllegalMethodCheck.java
+@@ -39,7 +39,7 @@
+      * @param methodName name of the method to disallow.
+      * @param errorKey the error key to report with.
+      */
+-    public AbstractIllegalMethodCheck(String methodName, String errorKey) {
++    protected AbstractIllegalMethodCheck(String methodName, String errorKey) {
+         this.methodName = methodName;
+         this.errorKey = errorKey;
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractNestedDepthCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractNestedDepthCheck.java
+index 7738d88..4e14b0f 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractNestedDepthCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractNestedDepthCheck.java
+@@ -37,7 +37,7 @@
+      * Creates new instance of checks.
+      * @param max default allowed nesting depth.
+      */
+-    public AbstractNestedDepthCheck(int max) {
++    protected AbstractNestedDepthCheck(int max) {
+         setMax(max);
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/indentation/AbstractExpressionHandler.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/indentation/AbstractExpressionHandler.java
+index e4f47b6..672b87b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/indentation/AbstractExpressionHandler.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/indentation/AbstractExpressionHandler.java
+@@ -82,8 +82,8 @@
+      * @param expr          the abstract syntax tree
+      * @param parent        the parent handler
+      */
+-    public AbstractExpressionHandler(IndentationCheck indentCheck,
+-            String typeName, DetailAST expr, AbstractExpressionHandler parent) {
++    protected AbstractExpressionHandler(IndentationCheck indentCheck, String typeName,
++            DetailAST expr, AbstractExpressionHandler parent) {
+         this.indentCheck = indentCheck;
+         this.typeName = typeName;
+         mainAst = expr;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractAccessControlNameCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractAccessControlNameCheck.java
+index bb86d78..0327177 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractAccessControlNameCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractAccessControlNameCheck.java
+@@ -65,7 +65,7 @@
+      * @param format
+      *                format to check with
+      */
+-    public AbstractAccessControlNameCheck(String format) {
++    protected AbstractAccessControlNameCheck(String format) {
+         super(format);
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractNameCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractNameCheck.java
+index 5f3ad6e..ddd2982 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractNameCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractNameCheck.java
+@@ -39,7 +39,7 @@
+      * Creates a new <code>AbstractNameCheck</code> instance.
+      * @param format format to check with
+      */
+-    public AbstractNameCheck(String format) {
++    protected AbstractNameCheck(String format) {
+         super(format);
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractTypeParameterNameCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractTypeParameterNameCheck.java
+index 40441e7..071a044 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractTypeParameterNameCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/AbstractTypeParameterNameCheck.java
+@@ -39,7 +39,7 @@
+      * Creates a new <code>AbstractTypeParameterNameCheck</code> instance.
+      * @param format format to check with
+      */
+-    public AbstractTypeParameterNameCheck(String format) {
++    protected AbstractTypeParameterNameCheck(String format) {
+         super(format);
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/AbstractTreeTableModel.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/AbstractTreeTableModel.java
+index 93041e8..4402c2a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/AbstractTreeTableModel.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/AbstractTreeTableModel.java
+@@ -76,7 +76,7 @@
+     private final Object root;
+     private final EventListenerList listenerList = new EventListenerList();
+ 
+-    public AbstractTreeTableModel(Object root) {
++    protected AbstractTreeTableModel(Object root) {
+         this.root = root;
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
+index 3bc88cb..97ac319 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractFormatCheck.java
+@@ -49,7 +49,7 @@
+      * @param defaultFormat default format
+      * @throws ConversionException unable to parse defaultFormat
+      */
+-    public AbstractFormatCheck(String defaultFormat) {
++    protected AbstractFormatCheck(String defaultFormat) {
+         this(defaultFormat, 0);
+     }
+ 
+@@ -60,7 +60,7 @@
+      * See {@link Pattern#compile(String, int)}
+      * @throws ConversionException unable to parse defaultFormat
+      */
+-    public AbstractFormatCheck(String defaultFormat, int compileFlags) {
++    protected AbstractFormatCheck(String defaultFormat, int compileFlags) {
+         updateRegexp(defaultFormat, compileFlags);
+     }
+ 

@@ -1,0 +1,44 @@
+diff --git a/gdx/src/com/badlogic/gdx/files/FileHandle.java b/gdx/src/com/badlogic/gdx/files/FileHandle.java
+index ec23ce0..072f90b 100644
+--- a/gdx/src/com/badlogic/gdx/files/FileHandle.java
++++ b/gdx/src/com/badlogic/gdx/files/FileHandle.java
+@@ -110,7 +110,7 @@
+ 	 * @throw GdxRuntimeException if the file handle represents a directory, doesn't exist, or could not be read. */
+ 	public InputStream read () {
+ 		if (type == FileType.Classpath || (type == FileType.Internal && !file.exists()) || (type == FileType.Local && !file.exists())) {
+-			InputStream input = FileHandle.class.getResourceAsStream("/" + file.getPath().replace('\\', '/'));
++			InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("/" + file.getPath().replace('\\', '/'));
+ 			if (input == null) throw new GdxRuntimeException("File not found: " + file + " (" + type + ")");
+ 			return input;
+ 		}
+@@ -479,7 +479,7 @@
+ 			if (file.exists()) return true;
+ 			// Fall through.
+ 		case Classpath:
+-			return FileHandle.class.getResource("/" + file.getPath().replace('\\', '/')) != null;
++			return Thread.currentThread().getContextClassLoader().getResource("/" + file.getPath().replace('\\', '/')) != null;
+ 		}
+ 		return file().exists();
+ 	}
+diff --git a/gdx/src/com/badlogic/gdx/files/FileHandle.java b/gdx/src/com/badlogic/gdx/files/FileHandle.java
+index ec23ce0..072f90b 100644
+--- a/gdx/src/com/badlogic/gdx/files/FileHandle.java
++++ b/gdx/src/com/badlogic/gdx/files/FileHandle.java
+@@ -110,7 +110,7 @@
+ 	 * @throw GdxRuntimeException if the file handle represents a directory, doesn't exist, or could not be read. */
+ 	public InputStream read () {
+ 		if (type == FileType.Classpath || (type == FileType.Internal && !file.exists()) || (type == FileType.Local && !file.exists())) {
+-			InputStream input = FileHandle.class.getResourceAsStream("/" + file.getPath().replace('\\', '/'));
++			InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("/" + file.getPath().replace('\\', '/'));
+ 			if (input == null) throw new GdxRuntimeException("File not found: " + file + " (" + type + ")");
+ 			return input;
+ 		}
+@@ -479,7 +479,7 @@
+ 			if (file.exists()) return true;
+ 			// Fall through.
+ 		case Classpath:
+-			return FileHandle.class.getResource("/" + file.getPath().replace('\\', '/')) != null;
++			return Thread.currentThread().getContextClassLoader().getResource("/" + file.getPath().replace('\\', '/')) != null;
+ 		}
+ 		return file().exists();
+ 	}

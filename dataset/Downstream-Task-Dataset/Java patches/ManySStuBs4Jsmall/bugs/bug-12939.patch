@@ -1,0 +1,28 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/NullabilityAnalyzer.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/NullabilityAnalyzer.java
+index a727b54..421321a 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/NullabilityAnalyzer.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/NullabilityAnalyzer.java
+@@ -55,7 +55,8 @@
+         @Override
+         protected Void visitCast(Cast node, AtomicBoolean result)
+         {
+-            result.set(node.isSafe()); // try_cast
++            // try_cast and cast(JSON 'null' AS ...) can return null
++            result.set(true);
+             return null;
+         }
+ 
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/NullabilityAnalyzer.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/NullabilityAnalyzer.java
+index a727b54..421321a 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/NullabilityAnalyzer.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/NullabilityAnalyzer.java
+@@ -55,7 +55,8 @@
+         @Override
+         protected Void visitCast(Cast node, AtomicBoolean result)
+         {
+-            result.set(node.isSafe()); // try_cast
++            // try_cast and cast(JSON 'null' AS ...) can return null
++            result.set(true);
+             return null;
+         }
+ 

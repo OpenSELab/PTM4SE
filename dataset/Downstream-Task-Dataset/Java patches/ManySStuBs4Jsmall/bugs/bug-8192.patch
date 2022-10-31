@@ -1,0 +1,55 @@
+diff --git a/src/jvm/storm/trident/state/OpaqueValue.java b/src/jvm/storm/trident/state/OpaqueValue.java
+index 3f8f83d..5290c7d 100644
+--- a/src/jvm/storm/trident/state/OpaqueValue.java
++++ b/src/jvm/storm/trident/state/OpaqueValue.java
+@@ -17,14 +17,14 @@
+         this(currTxid, val, null);
+     }
+     
+-    public OpaqueValue update(Long batchTxid, T newVal) {
++    public OpaqueValue<T> update(Long batchTxid, T newVal) {
+         T prev;
+         if(batchTxid!=null && batchTxid.equals(this.currTxid)) {
+             prev = this.prev;
+         } else {
+             prev = this.curr;
+         }
+-        return new OpaqueValue(batchTxid, newVal, prev);
++        return new OpaqueValue<T>(batchTxid, newVal, prev);
+     }
+     
+     public T get(Long batchTxid) {
+diff --git a/src/jvm/storm/trident/testing/LRUMemoryMapState.java b/src/jvm/storm/trident/testing/LRUMemoryMapState.java
+index dd523fc..9be0f3f 100644
+--- a/src/jvm/storm/trident/testing/LRUMemoryMapState.java
++++ b/src/jvm/storm/trident/testing/LRUMemoryMapState.java
+@@ -50,7 +50,7 @@
+ 
+     @Override
+     public List<T> multiGet(List<List<Object>> keys) {
+-        List<T> ret = new ArrayList();
++        List<T> ret = new ArrayList<T>();
+         for(List<Object> key: keys) {
+             ret.add(db.get(key));
+         }
+diff --git a/src/jvm/storm/trident/state/OpaqueValue.java b/src/jvm/storm/trident/state/OpaqueValue.java
+index 3f8f83d..5290c7d 100644
+--- a/src/jvm/storm/trident/state/OpaqueValue.java
++++ b/src/jvm/storm/trident/state/OpaqueValue.java
+@@ -17,14 +17,14 @@
+         this(currTxid, val, null);
+     }
+     
+-    public OpaqueValue update(Long batchTxid, T newVal) {
++    public OpaqueValue<T> update(Long batchTxid, T newVal) {
+         T prev;
+         if(batchTxid!=null && batchTxid.equals(this.currTxid)) {
+             prev = this.prev;
+         } else {
+             prev = this.curr;
+         }
+-        return new OpaqueValue(batchTxid, newVal, prev);
++        return new OpaqueValue<T>(batchTxid, newVal, prev);
+     }
+     
+     public T get(Long batchTxid) {

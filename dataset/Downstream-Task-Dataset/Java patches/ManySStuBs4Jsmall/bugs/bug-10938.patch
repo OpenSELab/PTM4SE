@@ -1,0 +1,51 @@
+diff --git a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/buffer/BaseCudaDataBuffer.java b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/buffer/BaseCudaDataBuffer.java
+index be6cdc9..c511ba3 100644
+--- a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/buffer/BaseCudaDataBuffer.java
++++ b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/buffer/BaseCudaDataBuffer.java
+@@ -450,11 +450,12 @@
+ 
+             freed.set(false);
+         } else {
+-            // we've got here because we've requested the same offset pointer as was allocated before, so we'll just update counters
++            // we've got here because we've requested the same pointer as was allocated before, so we'll just update counters
+             if (referencedOffsets.containsKey(Pair.of(name, Triple.of(offset, length, stride)))) {
+                 referencedOffsets.get(Pair.of(name, Triple.of(offset, length, stride))).incrementAndGet();
+             } else {
+-                log.warn("Unmanaged offset!");
++                // if reference offset wasn't been added before - add it now
++                referencedOffsets.put(Pair.of(name, Triple.of(offset, length, stride)), new AtomicInteger(1));
+             }
+         }
+ 
+diff --git a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/test/java/jcuda/CudaAccumTests.java b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/test/java/jcuda/CudaAccumTests.java
+index b2bf48c..3656132 100644
+--- a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/test/java/jcuda/CudaAccumTests.java
++++ b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/test/java/jcuda/CudaAccumTests.java
+@@ -18,7 +18,7 @@
+ public class CudaAccumTests {
+ 
+     /**
+-     * Norm2 + cuBlas call
++     * Norm2 + cuBlas dot call
+      *
+      * @throws Exception
+      */
+diff --git a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/buffer/BaseCudaDataBuffer.java b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/buffer/BaseCudaDataBuffer.java
+index be6cdc9..c511ba3 100644
+--- a/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/buffer/BaseCudaDataBuffer.java
++++ b/nd4j-jcublas-parent/nd4j-jcublas-7.5/src/main/java/org/nd4j/linalg/jcublas/buffer/BaseCudaDataBuffer.java
+@@ -450,11 +450,12 @@
+ 
+             freed.set(false);
+         } else {
+-            // we've got here because we've requested the same offset pointer as was allocated before, so we'll just update counters
++            // we've got here because we've requested the same pointer as was allocated before, so we'll just update counters
+             if (referencedOffsets.containsKey(Pair.of(name, Triple.of(offset, length, stride)))) {
+                 referencedOffsets.get(Pair.of(name, Triple.of(offset, length, stride))).incrementAndGet();
+             } else {
+-                log.warn("Unmanaged offset!");
++                // if reference offset wasn't been added before - add it now
++                referencedOffsets.put(Pair.of(name, Triple.of(offset, length, stride)), new AtomicInteger(1));
+             }
+         }
+ 

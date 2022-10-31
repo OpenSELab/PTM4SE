@@ -1,0 +1,41 @@
+diff --git a/handler/src/main/java/io/netty/handler/logging/LoggingHandler.java b/handler/src/main/java/io/netty/handler/logging/LoggingHandler.java
+index ae2577f..3573fd3 100644
+--- a/handler/src/main/java/io/netty/handler/logging/LoggingHandler.java
++++ b/handler/src/main/java/io/netty/handler/logging/LoggingHandler.java
+@@ -312,7 +312,7 @@
+         String arg1Str = String.valueOf(firstArg);
+         String arg2Str = secondArg.toString();
+         StringBuilder buf = new StringBuilder(
+-                chStr.length() + 1 + eventName + 2 + arg1Str.length() + 2 + arg2Str.length());
++                chStr.length() + 1 + eventName.length() + 2 + arg1Str.length() + 2 + arg2Str.length());
+         buf.append(chStr).append(' ').append(eventName).append(": ").append(arg1Str).append(", ").append(arg2Str);
+         return buf.toString();
+     }
+diff --git a/handler/src/test/java/io/netty/handler/logging/LoggingHandlerTest.java b/handler/src/test/java/io/netty/handler/logging/LoggingHandlerTest.java
+index 436fbad..2841688 100644
+--- a/handler/src/test/java/io/netty/handler/logging/LoggingHandlerTest.java
++++ b/handler/src/test/java/io/netty/handler/logging/LoggingHandlerTest.java
+@@ -146,8 +146,8 @@
+     public void shouldLogChannelConnectWithLocalAddress() throws Exception {
+         EmbeddedChannel channel = new EmbeddedChannel(new LoggingHandler());
+         channel.connect(new InetSocketAddress(80), new InetSocketAddress(81)).await();
+-        verify(appender).doAppend(argThat(
+-                new RegexLogMatcher(".+CONNECT: 0.0.0.0/0.0.0.0:80, 0.0.0.0/0.0.0.0:81$")));
++        verify(appender).doAppend(argThat(new RegexLogMatcher(
++                "^\\[id: 0xembedded, L:embedded - R:embedded\\] CONNECT: 0.0.0.0/0.0.0.0:80, 0.0.0.0/0.0.0.0:81$")));
+     }
+ 
+     @Test
+diff --git a/handler/src/main/java/io/netty/handler/logging/LoggingHandler.java b/handler/src/main/java/io/netty/handler/logging/LoggingHandler.java
+index ae2577f..3573fd3 100644
+--- a/handler/src/main/java/io/netty/handler/logging/LoggingHandler.java
++++ b/handler/src/main/java/io/netty/handler/logging/LoggingHandler.java
+@@ -312,7 +312,7 @@
+         String arg1Str = String.valueOf(firstArg);
+         String arg2Str = secondArg.toString();
+         StringBuilder buf = new StringBuilder(
+-                chStr.length() + 1 + eventName + 2 + arg1Str.length() + 2 + arg2Str.length());
++                chStr.length() + 1 + eventName.length() + 2 + arg1Str.length() + 2 + arg2Str.length());
+         buf.append(chStr).append(' ').append(eventName).append(": ").append(arg1Str).append(", ").append(arg2Str);
+         return buf.toString();
+     }

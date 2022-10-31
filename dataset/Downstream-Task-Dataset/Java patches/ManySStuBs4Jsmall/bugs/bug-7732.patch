@@ -1,0 +1,28 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorExtractRow.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorExtractRow.java
+index 631dcb2..94eaf56 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorExtractRow.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorExtractRow.java
+@@ -306,7 +306,8 @@
+                 maxLengths[logicalColumnIndex]);
+ 
+             HiveCharWritable hiveCharWritable = (HiveCharWritable) primitiveWritable;
+-            hiveCharWritable.set(new String(bytes, start, adjustedLength, Charsets.UTF_8), -1);
++            hiveCharWritable.set(new String(bytes, start, adjustedLength, Charsets.UTF_8),
++                maxLengths[logicalColumnIndex]);
+             return primitiveWritable;
+           }
+         case DECIMAL:
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorExtractRow.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorExtractRow.java
+index 631dcb2..94eaf56 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorExtractRow.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/VectorExtractRow.java
+@@ -306,7 +306,8 @@
+                 maxLengths[logicalColumnIndex]);
+ 
+             HiveCharWritable hiveCharWritable = (HiveCharWritable) primitiveWritable;
+-            hiveCharWritable.set(new String(bytes, start, adjustedLength, Charsets.UTF_8), -1);
++            hiveCharWritable.set(new String(bytes, start, adjustedLength, Charsets.UTF_8),
++                maxLengths[logicalColumnIndex]);
+             return primitiveWritable;
+           }
+         case DECIMAL:

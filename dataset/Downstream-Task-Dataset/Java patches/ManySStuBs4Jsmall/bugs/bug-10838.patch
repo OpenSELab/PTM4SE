@@ -1,0 +1,26 @@
+diff --git a/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java b/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
+index e951919..5c439f2 100644
+--- a/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
++++ b/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
+@@ -24,7 +24,7 @@
+ 
+     @Override
+     public Pair<DataBuffer, DataBuffer> getTADOnlyShapeInfo(INDArray array, int[] dimension) {
+-        if (dimension == null || dimension[0] == Integer.MAX_VALUE) {
++        if (dimension == null || dimension.length == 0 || dimension[0] == Integer.MAX_VALUE) {
+             return new Pair<DataBuffer, DataBuffer>(array.shapeInfoDataBuffer(), null);
+         } else {
+             Arrays.sort(dimension);
+diff --git a/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java b/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
+index e951919..5c439f2 100644
+--- a/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
++++ b/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
+@@ -24,7 +24,7 @@
+ 
+     @Override
+     public Pair<DataBuffer, DataBuffer> getTADOnlyShapeInfo(INDArray array, int[] dimension) {
+-        if (dimension == null || dimension[0] == Integer.MAX_VALUE) {
++        if (dimension == null || dimension.length == 0 || dimension[0] == Integer.MAX_VALUE) {
+             return new Pair<DataBuffer, DataBuffer>(array.shapeInfoDataBuffer(), null);
+         } else {
+             Arrays.sort(dimension);

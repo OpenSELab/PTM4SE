@@ -1,0 +1,22 @@
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/SolrHealthIndicatorTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/SolrHealthIndicatorTests.java
+index 14e045c..252c765 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/SolrHealthIndicatorTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/SolrHealthIndicatorTests.java
+@@ -72,7 +72,7 @@
+ 		SolrHealthIndicator healthIndicator = new SolrHealthIndicator(solrClient);
+ 		Health health = healthIndicator.health();
+ 		assertThat(health.getStatus()).isEqualTo(Status.UP);
+-		assertThat(health.getDetails().get("solrStatus")).isEqualTo("OK");
++		assertThat(health.getDetails().get("status")).isEqualTo(0);
+ 	}
+ 
+ 	@Test
+@@ -83,7 +83,7 @@
+ 		SolrHealthIndicator healthIndicator = new SolrHealthIndicator(solrClient);
+ 		Health health = healthIndicator.health();
+ 		assertThat(health.getStatus()).isEqualTo(Status.DOWN);
+-		assertThat(health.getDetails().get("solrStatus")).isEqualTo(400);
++		assertThat(health.getDetails().get("status")).isEqualTo(400);
+ 	}
+ 
+ 	@Test

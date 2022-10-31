@@ -1,0 +1,12 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/replicatedmap/record/WrappedExecutorService.java b/hazelcast/src/main/java/com/hazelcast/replicatedmap/record/WrappedExecutorService.java
+index d90ece7..281d987 100644
+--- a/hazelcast/src/main/java/com/hazelcast/replicatedmap/record/WrappedExecutorService.java
++++ b/hazelcast/src/main/java/com/hazelcast/replicatedmap/record/WrappedExecutorService.java
+@@ -112,6 +112,6 @@
+ 
+     @Override
+     public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit) {
+-        return scheduleWithFixedDelay(command, initialDelay, delay, unit);
++        return executorService.scheduleWithFixedDelay(command, initialDelay, delay, unit);
+     }
+ }

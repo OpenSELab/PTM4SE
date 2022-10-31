@@ -1,0 +1,26 @@
+diff --git a/metrics-graphite/src/main/java/com/yammer/metrics/reporting/GraphiteReporter.java b/metrics-graphite/src/main/java/com/yammer/metrics/reporting/GraphiteReporter.java
+index 63b786c..b1ba352 100644
+--- a/metrics-graphite/src/main/java/com/yammer/metrics/reporting/GraphiteReporter.java
++++ b/metrics-graphite/src/main/java/com/yammer/metrics/reporting/GraphiteReporter.java
+@@ -353,7 +353,7 @@
+         }
+ 
+         for (Entry<String, VirtualMachineMetrics.GarbageCollectorStats> entry : vm.garbageCollectors().entrySet()) {
+-            final String name = "jvm.gc." + entry.getKey();
++            final String name = "jvm.gc." + sanitizeString(entry.getKey());
+             sendInt(epoch, name, "time", entry.getValue().getTime(TimeUnit.MILLISECONDS));
+             sendInt(epoch, name, "runs", entry.getValue().getRuns());
+         }
+diff --git a/metrics-graphite/src/main/java/com/yammer/metrics/reporting/GraphiteReporter.java b/metrics-graphite/src/main/java/com/yammer/metrics/reporting/GraphiteReporter.java
+index 63b786c..b1ba352 100644
+--- a/metrics-graphite/src/main/java/com/yammer/metrics/reporting/GraphiteReporter.java
++++ b/metrics-graphite/src/main/java/com/yammer/metrics/reporting/GraphiteReporter.java
+@@ -353,7 +353,7 @@
+         }
+ 
+         for (Entry<String, VirtualMachineMetrics.GarbageCollectorStats> entry : vm.garbageCollectors().entrySet()) {
+-            final String name = "jvm.gc." + entry.getKey();
++            final String name = "jvm.gc." + sanitizeString(entry.getKey());
+             sendInt(epoch, name, "time", entry.getValue().getTime(TimeUnit.MILLISECONDS));
+             sendInt(epoch, name, "runs", entry.getValue().getRuns());
+         }

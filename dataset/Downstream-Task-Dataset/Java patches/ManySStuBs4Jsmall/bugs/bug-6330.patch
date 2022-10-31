@@ -1,0 +1,26 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/state/heap/CopyOnWriteStateTableSnapshot.java b/flink-runtime/src/main/java/org/apache/flink/runtime/state/heap/CopyOnWriteStateTableSnapshot.java
+index 11a23bf..21abf8d 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/state/heap/CopyOnWriteStateTableSnapshot.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/state/heap/CopyOnWriteStateTableSnapshot.java
+@@ -268,7 +268,7 @@
+ 		int tryAddToSource(int currentIndex, CopyOnWriteStateTable.StateTableEntry<K, N, S> entry) {
+ 			CopyOnWriteStateTable.StateTableEntry<K, N, S> filteredEntry = filterEntry(entry);
+ 			if (filteredEntry != null) {
+-				return tryAddToSource(currentIndex, filteredEntry);
++				return super.tryAddToSource(currentIndex, filteredEntry);
+ 			}
+ 			return currentIndex;
+ 		}
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/state/heap/CopyOnWriteStateTableSnapshot.java b/flink-runtime/src/main/java/org/apache/flink/runtime/state/heap/CopyOnWriteStateTableSnapshot.java
+index 11a23bf..21abf8d 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/state/heap/CopyOnWriteStateTableSnapshot.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/state/heap/CopyOnWriteStateTableSnapshot.java
+@@ -268,7 +268,7 @@
+ 		int tryAddToSource(int currentIndex, CopyOnWriteStateTable.StateTableEntry<K, N, S> entry) {
+ 			CopyOnWriteStateTable.StateTableEntry<K, N, S> filteredEntry = filterEntry(entry);
+ 			if (filteredEntry != null) {
+-				return tryAddToSource(currentIndex, filteredEntry);
++				return super.tryAddToSource(currentIndex, filteredEntry);
+ 			}
+ 			return currentIndex;
+ 		}

@@ -1,0 +1,47 @@
+diff --git a/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java b/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
+index 73c4621..8bbfe97 100644
+--- a/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
++++ b/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
+@@ -517,10 +517,10 @@
+ 
+     private void writeDomainController(final XMLExtendedStreamWriter writer, final ModelNode modelNode) throws XMLStreamException {
+         writer.writeStartElement(Element.DOMAIN_CONTROLLER.getLocalName());
+-        if (modelNode.has(LOCAL)) {
++        if (modelNode.hasDefined(LOCAL)) {
+             writer.writeEmptyElement(Element.LOCAL.getLocalName());
+         }
+-        if (modelNode.has(REMOTE)) {
++        else if (modelNode.hasDefined(REMOTE)) {
+             writer.writeStartElement(Element.REMOTE.getLocalName());
+             final ModelNode remote = modelNode.get(REMOTE);
+             if (remote.has(HOST)) {
+diff --git a/host-controller/src/main/java/org/jboss/as/host/controller/HostControllerBootstrap.java b/host-controller/src/main/java/org/jboss/as/host/controller/HostControllerBootstrap.java
+index e360a39..db75896 100644
+--- a/host-controller/src/main/java/org/jboss/as/host/controller/HostControllerBootstrap.java
++++ b/host-controller/src/main/java/org/jboss/as/host/controller/HostControllerBootstrap.java
+@@ -247,7 +247,7 @@
+             final boolean backupDomainFiles, final boolean useCachedDc) {
+ 
+         final FileRepository fileRepository = new LocalFileRepository(environment);
+-        boolean slave = !host.get(DOMAIN_CONTROLLER, LOCAL).isDefined();
++        boolean slave = !(host.get(DOMAIN_CONTROLLER).hasDefined(LOCAL));
+         if (slave) {
+             installRemoteDomainControllerConnection(environment, host, serviceTarget, fileRepository);
+         }
+diff --git a/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java b/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
+index 73c4621..8bbfe97 100644
+--- a/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
++++ b/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
+@@ -517,10 +517,10 @@
+ 
+     private void writeDomainController(final XMLExtendedStreamWriter writer, final ModelNode modelNode) throws XMLStreamException {
+         writer.writeStartElement(Element.DOMAIN_CONTROLLER.getLocalName());
+-        if (modelNode.has(LOCAL)) {
++        if (modelNode.hasDefined(LOCAL)) {
+             writer.writeEmptyElement(Element.LOCAL.getLocalName());
+         }
+-        if (modelNode.has(REMOTE)) {
++        else if (modelNode.hasDefined(REMOTE)) {
+             writer.writeStartElement(Element.REMOTE.getLocalName());
+             final ModelNode remote = modelNode.get(REMOTE);
+             if (remote.has(HOST)) {

@@ -1,0 +1,28 @@
+diff --git a/dropwizard-db/src/main/java/com/yammer/dropwizard/db/ManagedPooledDataSource.java b/dropwizard-db/src/main/java/com/yammer/dropwizard/db/ManagedPooledDataSource.java
+index ca9f788..525b246 100644
+--- a/dropwizard-db/src/main/java/com/yammer/dropwizard/db/ManagedPooledDataSource.java
++++ b/dropwizard-db/src/main/java/com/yammer/dropwizard/db/ManagedPooledDataSource.java
+@@ -14,7 +14,8 @@
+         this.pool = pool;
+     }
+ 
+-    @Override
++    // JDK6 has JDBC 4.0 which doesn't have this -- don't add @Override
++    @SuppressWarnings("override")
+     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+         throw new SQLFeatureNotSupportedException("Doesn't use java.util.logging");
+     }
+diff --git a/dropwizard-db/src/main/java/com/yammer/dropwizard/db/ManagedPooledDataSource.java b/dropwizard-db/src/main/java/com/yammer/dropwizard/db/ManagedPooledDataSource.java
+index ca9f788..525b246 100644
+--- a/dropwizard-db/src/main/java/com/yammer/dropwizard/db/ManagedPooledDataSource.java
++++ b/dropwizard-db/src/main/java/com/yammer/dropwizard/db/ManagedPooledDataSource.java
+@@ -14,7 +14,8 @@
+         this.pool = pool;
+     }
+ 
+-    @Override
++    // JDK6 has JDBC 4.0 which doesn't have this -- don't add @Override
++    @SuppressWarnings("override")
+     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+         throw new SQLFeatureNotSupportedException("Doesn't use java.util.logging");
+     }

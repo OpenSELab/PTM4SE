@@ -1,0 +1,39 @@
+diff --git a/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsAuthenticationTest.java b/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsAuthenticationTest.java
+index 808da0b..abe96aa 100644
+--- a/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsAuthenticationTest.java
++++ b/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsAuthenticationTest.java
+@@ -38,7 +38,7 @@
+     public void httpsGetWithAuthentication() throws Exception {
+         localServer.register("/", new AuthenticationValidationHandler("GET", null, null, getExpectedContent(), user, password));
+ 
+-        Exchange exchange = template.request("https://" + getHostName() + ":" + getPort() + "/?username=camel&password=password", new Processor() {
++        Exchange exchange = template.request("https://127.0.0.1:" + getPort() + "/?username=camel&password=password", new Processor() {
+             public void process(Exchange exchange) throws Exception {
+             }
+         });
+diff --git a/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsGetTest.java b/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsGetTest.java
+index 07f6125..56bde3f 100644
+--- a/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsGetTest.java
++++ b/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsGetTest.java
+@@ -31,7 +31,7 @@
+     public void httpsGet() throws Exception {
+         localServer.register("/mail/", new BasicValidationHandler("GET", null, null, getExpectedContent()));
+ 
+-        Exchange exchange = template.request("https://" + getHostName() + ":" + getPort() + "/mail/", new Processor() {
++        Exchange exchange = template.request("https://127.0.0.1:" + getPort() + "/mail/", new Processor() {
+             public void process(Exchange exchange) throws Exception {
+             }
+         });
+diff --git a/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsAuthenticationTest.java b/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsAuthenticationTest.java
+index 808da0b..abe96aa 100644
+--- a/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsAuthenticationTest.java
++++ b/components/camel-http/src/test/java/org/apache/camel/component/http/HttpsAuthenticationTest.java
+@@ -38,7 +38,7 @@
+     public void httpsGetWithAuthentication() throws Exception {
+         localServer.register("/", new AuthenticationValidationHandler("GET", null, null, getExpectedContent(), user, password));
+ 
+-        Exchange exchange = template.request("https://" + getHostName() + ":" + getPort() + "/?username=camel&password=password", new Processor() {
++        Exchange exchange = template.request("https://127.0.0.1:" + getPort() + "/?username=camel&password=password", new Processor() {
+             public void process(Exchange exchange) throws Exception {
+             }
+         });

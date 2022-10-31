@@ -1,0 +1,26 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
+index 3c73e43..0f51bc8 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
+@@ -177,7 +177,7 @@
+ 		SpilledSubpartitionView spilled = spilledView;
+ 		if (spilled != null) {
+ 			if (current != null) {
+-				return new BufferAndBacklog(current, isMoreAvailable, newBacklog, spilled.nextBufferIsEvent());
++				return new BufferAndBacklog(current, spilled.isAvailable(), newBacklog, spilled.nextBufferIsEvent());
+ 			} else {
+ 				return spilled.getNextBuffer();
+ 			}
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
+index 3c73e43..0f51bc8 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
+@@ -177,7 +177,7 @@
+ 		SpilledSubpartitionView spilled = spilledView;
+ 		if (spilled != null) {
+ 			if (current != null) {
+-				return new BufferAndBacklog(current, isMoreAvailable, newBacklog, spilled.nextBufferIsEvent());
++				return new BufferAndBacklog(current, spilled.isAvailable(), newBacklog, spilled.nextBufferIsEvent());
+ 			} else {
+ 				return spilled.getNextBuffer();
+ 			}

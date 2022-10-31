@@ -1,0 +1,13 @@
+diff --git a/client/src/test/java/org/asynchttpclient/reactivestreams/ReactiveStreamsTest.java b/client/src/test/java/org/asynchttpclient/reactivestreams/ReactiveStreamsTest.java
+index 4186f4d..c0cc483 100644
+--- a/client/src/test/java/org/asynchttpclient/reactivestreams/ReactiveStreamsTest.java
++++ b/client/src/test/java/org/asynchttpclient/reactivestreams/ReactiveStreamsTest.java
+@@ -133,7 +133,7 @@
+             List<HttpResponseBodyPart> bodyParts = subscriber.getElements();
+             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+             for (HttpResponseBodyPart part : bodyParts) {
+-                part.writeTo(bytes);
++                bytes.write(part.getBodyPartBytes());
+             }
+             return bytes.toByteArray();
+         }

@@ -1,0 +1,15 @@
+diff --git a/server/src/main/java/org/jboss/as/server/mgmt/ServerControllerOperationHandlerService.java b/server/src/main/java/org/jboss/as/server/mgmt/ServerControllerOperationHandlerService.java
+index fccdb6c..ca86549 100644
+--- a/server/src/main/java/org/jboss/as/server/mgmt/ServerControllerOperationHandlerService.java
++++ b/server/src/main/java/org/jboss/as/server/mgmt/ServerControllerOperationHandlerService.java
+@@ -46,7 +46,9 @@
+     @Override
+     public void start(StartContext context) throws StartException {
+         super.start(context);
+-        managementCommunicationService.getValue().addHandler(getValue());
++        // FIXME enable when remoting is added
++//        managementCommunicationService.getValue().addHandler(getValue());
++        log.error("FIXME re-enable management comms");
+     }
+ 
+     public void stop(StartContext context) {

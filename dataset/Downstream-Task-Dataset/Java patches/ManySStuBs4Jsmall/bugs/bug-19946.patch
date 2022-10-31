@@ -1,0 +1,44 @@
+diff --git a/bundles/model/org.openhab.model.script/src/org/openhab/model/script/lib/NumberExtensions.java b/bundles/model/org.openhab.model.script/src/org/openhab/model/script/lib/NumberExtensions.java
+index 2db1fce..abc9d65 100644
+--- a/bundles/model/org.openhab.model.script/src/org/openhab/model/script/lib/NumberExtensions.java
++++ b/bundles/model/org.openhab.model.script/src/org/openhab/model/script/lib/NumberExtensions.java
+@@ -100,7 +100,7 @@
+ 		if(type instanceof DecimalType) {
+ 			return ((DecimalType)type).toBigDecimal().compareTo(new BigDecimal(x.toString()))==0;
+ 		} else {
+-			return false;
++			return type==x; // both might be null, then we should return true
+ 		}
+ 	}
+ 
+@@ -108,7 +108,7 @@
+ 		if(type instanceof DecimalType) {
+ 			return ((DecimalType)type).toBigDecimal().compareTo(new BigDecimal(x.toString()))!=0;
+ 		} else {
+-			return false;
++			return type!=x; // both might be null, then we should return false, otherwise true
+ 		}
+ 	}
+ 
+diff --git a/bundles/model/org.openhab.model.script/src/org/openhab/model/script/lib/NumberExtensions.java b/bundles/model/org.openhab.model.script/src/org/openhab/model/script/lib/NumberExtensions.java
+index 2db1fce..abc9d65 100644
+--- a/bundles/model/org.openhab.model.script/src/org/openhab/model/script/lib/NumberExtensions.java
++++ b/bundles/model/org.openhab.model.script/src/org/openhab/model/script/lib/NumberExtensions.java
+@@ -100,7 +100,7 @@
+ 		if(type instanceof DecimalType) {
+ 			return ((DecimalType)type).toBigDecimal().compareTo(new BigDecimal(x.toString()))==0;
+ 		} else {
+-			return false;
++			return type==x; // both might be null, then we should return true
+ 		}
+ 	}
+ 
+@@ -108,7 +108,7 @@
+ 		if(type instanceof DecimalType) {
+ 			return ((DecimalType)type).toBigDecimal().compareTo(new BigDecimal(x.toString()))!=0;
+ 		} else {
+-			return false;
++			return type!=x; // both might be null, then we should return false, otherwise true
+ 		}
+ 	}
+ 

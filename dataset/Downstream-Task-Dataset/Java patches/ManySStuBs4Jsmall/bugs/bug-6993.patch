@@ -1,0 +1,22 @@
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/localizer/ResourceLocalizationService.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/localizer/ResourceLocalizationService.java
+index 64a0b37..a092b59 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/localizer/ResourceLocalizationService.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/java/org/apache/hadoop/yarn/server/nodemanager/containermanager/localizer/ResourceLocalizationService.java
+@@ -801,7 +801,7 @@
+             try {
+               Path local = completed.get();
+               if (null == assoc) {
+-                LOG.error("Localized unkonwn resource to " + completed);
++                LOG.error("Localized unknown resource to " + completed);
+                 // TODO delete
+                 return;
+               }
+@@ -810,7 +810,7 @@
+                 .getDU(new File(local.toUri()))));
+               assoc.getResource().unlock();
+             } catch (ExecutionException e) {
+-              LOG.info("Failed to download rsrc " + assoc.getResource(),
++              LOG.info("Failed to download resource " + assoc.getResource(),
+                   e.getCause());
+               LocalResourceRequest req = assoc.getResource().getRequest();
+               publicRsrc.handle(new ResourceFailedLocalizationEvent(req,

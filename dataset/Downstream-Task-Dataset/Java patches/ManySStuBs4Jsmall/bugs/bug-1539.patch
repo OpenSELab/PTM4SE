@@ -1,0 +1,44 @@
+diff --git a/src/main/java/tachyon/client/RemoteBlockInStream.java b/src/main/java/tachyon/client/RemoteBlockInStream.java
+index 35c2961..f936e1c 100644
+--- a/src/main/java/tachyon/client/RemoteBlockInStream.java
++++ b/src/main/java/tachyon/client/RemoteBlockInStream.java
+@@ -218,7 +218,7 @@
+         updateCurrentBuffer();
+       }
+       if (mCurrentBuffer != null) {
+-        int ret = mCurrentBuffer.get();
++        int ret = mCurrentBuffer.get() & 0xFF;
+         if (mRecache) {
+           mBlockOutStream.write(ret);
+         }
+@@ -227,7 +227,7 @@
+       setupStreamFromUnderFs(mBlockInfo.offset + mReadByte - 1);
+     }
+ 
+-    int ret = mCheckpointInputStream.read();
++    int ret = mCheckpointInputStream.read() & 0xFF;
+     if (mRecache) {
+       mBlockOutStream.write(ret);
+     }
+diff --git a/src/main/java/tachyon/client/RemoteBlockInStream.java b/src/main/java/tachyon/client/RemoteBlockInStream.java
+index 35c2961..f936e1c 100644
+--- a/src/main/java/tachyon/client/RemoteBlockInStream.java
++++ b/src/main/java/tachyon/client/RemoteBlockInStream.java
+@@ -218,7 +218,7 @@
+         updateCurrentBuffer();
+       }
+       if (mCurrentBuffer != null) {
+-        int ret = mCurrentBuffer.get();
++        int ret = mCurrentBuffer.get() & 0xFF;
+         if (mRecache) {
+           mBlockOutStream.write(ret);
+         }
+@@ -227,7 +227,7 @@
+       setupStreamFromUnderFs(mBlockInfo.offset + mReadByte - 1);
+     }
+ 
+-    int ret = mCheckpointInputStream.read();
++    int ret = mCheckpointInputStream.read() & 0xFF;
+     if (mRecache) {
+       mBlockOutStream.write(ret);
+     }

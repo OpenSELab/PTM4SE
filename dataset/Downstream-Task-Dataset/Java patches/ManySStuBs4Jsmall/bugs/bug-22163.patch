@@ -1,0 +1,26 @@
+diff --git a/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java b/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
+index aec2461..9de0dbc 100644
+--- a/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
++++ b/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
+@@ -897,7 +897,7 @@
+           mentionProto.getMentionID(),
+           mentionProto.getSentenceIndex() + 1,
+           new IntTuple(new int[]{ mentionProto.getSentenceIndex() + 1, mentionProto.getPosition() }),
+-          mentionSpan.substring(1));
++          mentionSpan.substring(mentionSpan.length() > 0 ? 1 : 0));
+       // Register mention
+       IntPair key = new IntPair(mentionProto.getSentenceIndex() - 1, mentionProto.getHeadIndex() - 1);
+       if (!mentions.containsKey(key)) { mentions.put(key, new HashSet<CorefChain.CorefMention>()); }
+diff --git a/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java b/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
+index aec2461..9de0dbc 100644
+--- a/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
++++ b/src/edu/stanford/nlp/pipeline/ProtobufAnnotationSerializer.java
+@@ -897,7 +897,7 @@
+           mentionProto.getMentionID(),
+           mentionProto.getSentenceIndex() + 1,
+           new IntTuple(new int[]{ mentionProto.getSentenceIndex() + 1, mentionProto.getPosition() }),
+-          mentionSpan.substring(1));
++          mentionSpan.substring(mentionSpan.length() > 0 ? 1 : 0));
+       // Register mention
+       IntPair key = new IntPair(mentionProto.getSentenceIndex() - 1, mentionProto.getHeadIndex() - 1);
+       if (!mentions.containsKey(key)) { mentions.put(key, new HashSet<CorefChain.CorefMention>()); }

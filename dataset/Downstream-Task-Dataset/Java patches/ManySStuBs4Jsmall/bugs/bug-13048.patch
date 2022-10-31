@@ -1,0 +1,26 @@
+diff --git a/presto-spi/src/test/java/com/facebook/presto/spi/type/TestingTypeManager.java b/presto-spi/src/test/java/com/facebook/presto/spi/type/TestingTypeManager.java
+index 20c1056..d6652a6 100644
+--- a/presto-spi/src/test/java/com/facebook/presto/spi/type/TestingTypeManager.java
++++ b/presto-spi/src/test/java/com/facebook/presto/spi/type/TestingTypeManager.java
+@@ -36,7 +36,7 @@
+     public Type getType(TypeSignature signature)
+     {
+         for (Type type : getTypes()) {
+-            if (signature.equals(type.getTypeSignature())) {
++            if (signature.getBase().equals(type.getTypeSignature().getBase())) {
+                 return type;
+             }
+         }
+diff --git a/presto-spi/src/test/java/com/facebook/presto/spi/type/TestingTypeManager.java b/presto-spi/src/test/java/com/facebook/presto/spi/type/TestingTypeManager.java
+index 20c1056..d6652a6 100644
+--- a/presto-spi/src/test/java/com/facebook/presto/spi/type/TestingTypeManager.java
++++ b/presto-spi/src/test/java/com/facebook/presto/spi/type/TestingTypeManager.java
+@@ -36,7 +36,7 @@
+     public Type getType(TypeSignature signature)
+     {
+         for (Type type : getTypes()) {
+-            if (signature.equals(type.getTypeSignature())) {
++            if (signature.getBase().equals(type.getTypeSignature().getBase())) {
+                 return type;
+             }
+         }

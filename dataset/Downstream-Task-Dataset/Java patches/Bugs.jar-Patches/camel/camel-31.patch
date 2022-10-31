@@ -1,0 +1,51 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
+index 8727bef..f9b361e 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
+@@ -797,6 +797,12 @@ public class MulticastProcessor extends ServiceSupport implements AsyncProcessor
+             result.add(createProcessorExchangePair(index++, processor, copy, routeContext));
+         }
+ 
++        if (exchange.getException() != null) {
++            // force any exceptions occurred during creation of exchange paris to be thrown
++            // before returning the answer;
++            throw exchange.getException();
++        }
++
+         return result;
+     }
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/Splitter.java b/camel-core/src/main/java/org/apache/camel/processor/Splitter.java
+index bb7783a..ce14657 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/Splitter.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/Splitter.java
+@@ -98,14 +98,26 @@ public class Splitter extends MulticastProcessor implements AsyncProcessor, Trac
+     }
+ 
+     @Override
+-    protected Iterable<ProcessorExchangePair> createProcessorExchangePairs(Exchange exchange) {
++    protected Iterable<ProcessorExchangePair> createProcessorExchangePairs(Exchange exchange) throws Exception {
+         Object value = expression.evaluate(exchange, Object.class);
++        if (exchange.getException() != null) {
++            // force any exceptions occurred during evaluation to be thrown
++            throw exchange.getException();
++        }
+ 
++        Iterable<ProcessorExchangePair> answer;
+         if (isStreaming()) {
+-            return createProcessorExchangePairsIterable(exchange, value);
++            answer = createProcessorExchangePairsIterable(exchange, value);
+         } else {
+-            return createProcessorExchangePairsList(exchange, value);
++            answer = createProcessorExchangePairsList(exchange, value);
++        }
++        if (exchange.getException() != null) {
++            // force any exceptions occurred during creation of exchange paris to be thrown
++            // before returning the answer;
++            throw exchange.getException();
+         }
++
++        return answer;
+     }
+ 
+     @SuppressWarnings("unchecked")

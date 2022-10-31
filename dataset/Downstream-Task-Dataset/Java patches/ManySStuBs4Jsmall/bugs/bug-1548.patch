@@ -1,0 +1,42 @@
+diff --git a/src/main/java/tachyon/hadoop/TFS.java b/src/main/java/tachyon/hadoop/TFS.java
+index a55ddfd..8db586c 100644
+--- a/src/main/java/tachyon/hadoop/TFS.java
++++ b/src/main/java/tachyon/hadoop/TFS.java
+@@ -72,14 +72,14 @@
+         ", " + bufferSize + ", " + replication + ", " + blockSize + ", " + progress + ")");
+ 
+     if (cPath.toString().contains(SPECIAL_PATH) && !cPath.toString().contains("SUCCESS")) {
+-      String path = cPath.toString();
++      String path = Utils.getPathWithoutScheme(cPath);
+       mTFS.createFile(path, blockSize);
+       path = path.substring(
+           path.indexOf("tachyon_special_path/dep/") + "tachyon_special_path/dep/".length());
+       path = path.substring(0, path.indexOf("/"));
+       int depId = Integer.parseInt(path);
+       LOG.info("create(" + cPath + ") : " + path + " " + depId);
+-      path = cPath.toString();
++      path = Utils.getPathWithoutScheme(cPath);
+       path = path.substring(path.indexOf("part-") + 5);
+       int index = Integer.parseInt(path);
+       ClientDependencyInfo info = mTFS.getClientDependencyInfo(depId);
+diff --git a/src/main/java/tachyon/hadoop/TFS.java b/src/main/java/tachyon/hadoop/TFS.java
+index a55ddfd..8db586c 100644
+--- a/src/main/java/tachyon/hadoop/TFS.java
++++ b/src/main/java/tachyon/hadoop/TFS.java
+@@ -72,14 +72,14 @@
+         ", " + bufferSize + ", " + replication + ", " + blockSize + ", " + progress + ")");
+ 
+     if (cPath.toString().contains(SPECIAL_PATH) && !cPath.toString().contains("SUCCESS")) {
+-      String path = cPath.toString();
++      String path = Utils.getPathWithoutScheme(cPath);
+       mTFS.createFile(path, blockSize);
+       path = path.substring(
+           path.indexOf("tachyon_special_path/dep/") + "tachyon_special_path/dep/".length());
+       path = path.substring(0, path.indexOf("/"));
+       int depId = Integer.parseInt(path);
+       LOG.info("create(" + cPath + ") : " + path + " " + depId);
+-      path = cPath.toString();
++      path = Utils.getPathWithoutScheme(cPath);
+       path = path.substring(path.indexOf("part-") + 5);
+       int index = Integer.parseInt(path);
+       ClientDependencyInfo info = mTFS.getClientDependencyInfo(depId);

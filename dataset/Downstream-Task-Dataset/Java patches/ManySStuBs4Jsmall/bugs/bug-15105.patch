@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/batching/PartitionAwareCallableBatchingRunnable.java b/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/batching/PartitionAwareCallableBatchingRunnable.java
+index d9cd15b..6e40d21 100644
+--- a/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/batching/PartitionAwareCallableBatchingRunnable.java
++++ b/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/batching/PartitionAwareCallableBatchingRunnable.java
+@@ -108,7 +108,7 @@
+                 break;
+             }
+             PartitionAwareCallable task = factory.create();
+-            if (partition.isLocal()) {
++            if (partition.isLocal() && !partition.isMigrating()) {
+                 try {
+                     results.add(task.call(currentPartitionId));
+                 } catch (Exception ex) {
+diff --git a/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/batching/PartitionAwareCallableBatchingRunnable.java b/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/batching/PartitionAwareCallableBatchingRunnable.java
+index d9cd15b..6e40d21 100644
+--- a/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/batching/PartitionAwareCallableBatchingRunnable.java
++++ b/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/batching/PartitionAwareCallableBatchingRunnable.java
+@@ -108,7 +108,7 @@
+                 break;
+             }
+             PartitionAwareCallable task = factory.create();
+-            if (partition.isLocal()) {
++            if (partition.isLocal() && !partition.isMigrating()) {
+                 try {
+                     results.add(task.call(currentPartitionId));
+                 } catch (Exception ex) {

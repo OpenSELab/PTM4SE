@@ -1,0 +1,84 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 8fe2316..3ef0072 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -3324,7 +3324,7 @@
+ 
+     public String apiFilename(String templateName, String tag) {
+         String suffix = apiTemplateFiles().get(templateName);
+-        return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
++        return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
+     }
+ 
+     /**
+@@ -3337,7 +3337,7 @@
+      */
+     public String apiDocFilename(String templateName, String tag) {
+         String suffix = apiDocTemplateFiles().get(templateName);
+-        return apiDocFileFolder() + '/' + toApiDocFilename(tag) + suffix;
++        return apiDocFileFolder() + File.separator + toApiDocFilename(tag) + suffix;
+     }
+ 
+     /**
+@@ -3350,7 +3350,7 @@
+      */
+     public String apiTestFilename(String templateName, String tag) {
+         String suffix = apiTestTemplateFiles().get(templateName);
+-        return apiTestFileFolder() + '/' + toApiTestFilename(tag) + suffix;
++        return apiTestFileFolder() + File.separator + toApiTestFilename(tag) + suffix;
+     }
+ 
+     public boolean shouldOverwrite(String filename) {
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/NodeJSServerCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/NodeJSServerCodegen.java
+index 8d52e0e..f5bac82 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/NodeJSServerCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/NodeJSServerCodegen.java
+@@ -85,7 +85,7 @@
+         additionalProperties.put("serverPort", serverPort);
+         additionalProperties.put("implFolder", implFolder);
+ 
+-        supportingFiles.add(new SupportingFile("writer.mustache", ("utils").replace(".", "/"), "writer.js"));
++        supportingFiles.add(new SupportingFile("writer.mustache", ("utils").replace(".", File.separator), "writer.js"));
+ 
+         cliOptions.add(CliOption.newBoolean(GOOGLE_CLOUD_FUNCTIONS,
+                 "When specified, it will generate the code which runs within Google Cloud Functions "
+@@ -164,7 +164,7 @@
+     }
+ 
+     private String implFileFolder(String output) {
+-        return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
++        return outputFolder + File.separator + output + File.separator + apiPackage().replace('.', File.separatorChar);
+     }
+ 
+     /**
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 8fe2316..3ef0072 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -3324,7 +3324,7 @@
+ 
+     public String apiFilename(String templateName, String tag) {
+         String suffix = apiTemplateFiles().get(templateName);
+-        return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
++        return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
+     }
+ 
+     /**
+@@ -3337,7 +3337,7 @@
+      */
+     public String apiDocFilename(String templateName, String tag) {
+         String suffix = apiDocTemplateFiles().get(templateName);
+-        return apiDocFileFolder() + '/' + toApiDocFilename(tag) + suffix;
++        return apiDocFileFolder() + File.separator + toApiDocFilename(tag) + suffix;
+     }
+ 
+     /**
+@@ -3350,7 +3350,7 @@
+      */
+     public String apiTestFilename(String templateName, String tag) {
+         String suffix = apiTestTemplateFiles().get(templateName);
+-        return apiTestFileFolder() + '/' + toApiTestFilename(tag) + suffix;
++        return apiTestFileFolder() + File.separator + toApiTestFilename(tag) + suffix;
+     }
+ 
+     public boolean shouldOverwrite(String filename) {

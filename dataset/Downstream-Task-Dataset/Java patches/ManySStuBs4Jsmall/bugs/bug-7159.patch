@@ -1,0 +1,13 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/web/resources/DatanodeWebHdfsMethods.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/web/resources/DatanodeWebHdfsMethods.java
+index d8af04c..2aaf157 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/web/resources/DatanodeWebHdfsMethods.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/web/resources/DatanodeWebHdfsMethods.java
+@@ -411,7 +411,7 @@
+       }
+       
+       final long n = length.getValue() != null? length.getValue()
+-          : in.getVisibleLength();
++        : in.getVisibleLength() - offset.getValue();
+       return Response.ok(new OpenEntity(in, n, dfsclient)).type(
+           MediaType.APPLICATION_OCTET_STREAM).build();
+     }

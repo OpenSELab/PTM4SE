@@ -1,0 +1,107 @@
+diff --git a/flink-contrib/flink-storm-compatibility/flink-storm-compatibility-core/src/main/java/org/apache/flink/stormcompatibility/api/FlinkTopologyBuilder.java b/flink-contrib/flink-storm-compatibility/flink-storm-compatibility-core/src/main/java/org/apache/flink/stormcompatibility/api/FlinkTopologyBuilder.java
+index a739c23..e4d880f 100644
+--- a/flink-contrib/flink-storm-compatibility/flink-storm-compatibility-core/src/main/java/org/apache/flink/stormcompatibility/api/FlinkTopologyBuilder.java
++++ b/flink-contrib/flink-storm-compatibility/flink-storm-compatibility-core/src/main/java/org/apache/flink/stormcompatibility/api/FlinkTopologyBuilder.java
+@@ -78,8 +78,8 @@ public class FlinkTopologyBuilder {
+ 	 */
+ 	@SuppressWarnings({"rawtypes", "unchecked"})
+ 	public FlinkTopology createTopology() {
+-		final StormTopology stormTopolgoy = this.stormBuilder.createTopology();
+-		final FlinkTopology env = new FlinkTopology(stormTopolgoy);
++		final StormTopology stormTopology = this.stormBuilder.createTopology();
++		final FlinkTopology env = new FlinkTopology(stormTopology);
+ 		env.setParallelism(1);
+ 
+ 		final HashMap<String, HashMap<String, DataStream>> availableInputs = new HashMap<String, HashMap<String, DataStream>>();
+@@ -121,7 +121,7 @@ public class FlinkTopologyBuilder {
+ 			availableInputs.put(spoutId, outputStreams);
+ 
+ 			int dop = 1;
+-			final ComponentCommon common = stormTopolgoy.get_spouts().get(spoutId).get_common();
++			final ComponentCommon common = stormTopology.get_spouts().get(spoutId).get_common();
+ 			if (common.is_set_parallelism_hint()) {
+ 				dop = common.get_parallelism_hint();
+ 				source.setParallelism(dop);
+@@ -155,7 +155,7 @@ public class FlinkTopologyBuilder {
+ 				final String boltId = bolt.getKey();
+ 				final IRichBolt userBolt = bolt.getValue();
+ 
+-				final ComponentCommon common = stormTopolgoy.get_bolts().get(boltId).get_common();
++				final ComponentCommon common = stormTopology.get_bolts().get(boltId).get_common();
+ 
+ 				Set<Entry<GlobalStreamId, Grouping>> unprocessedInputs = unprocessdInputsPerBolt.get(boltId);
+ 				if (unprocessedInputs == null) {
+@@ -194,9 +194,17 @@ public class FlinkTopologyBuilder {
+ 								final List<String> fields = grouping.get_fields();
+ 								if (fields.size() > 0) {
+ 									FlinkOutputFieldsDeclarer prodDeclarer = this.declarers.get(producerId);
+-									inputStream = inputStream.groupBy(prodDeclarer
+-											.getGroupingFieldIndexes(inputStreamId,
+-													grouping.get_fields()));
++									if (producer.size() == 1) {
++										inputStream = inputStream.groupBy(prodDeclarer
++												.getGroupingFieldIndexes(inputStreamId,
++														grouping.get_fields()));
++									} else {
++										inputStream = inputStream
++												.groupBy(new SplitStreamTypeKeySelector(
++														prodDeclarer.getGroupingFieldIndexes(
++																inputStreamId,
++																grouping.get_fields())));
++									}
+ 								} else {
+ 									inputStream = inputStream.global();
+ 								}
+diff --git a/flink-contrib/flink-storm-compatibility/flink-storm-compatibility-core/src/main/java/org/apache/flink/stormcompatibility/api/SplitStreamTypeKeySelector.java b/flink-contrib/flink-storm-compatibility/flink-storm-compatibility-core/src/main/java/org/apache/flink/stormcompatibility/api/SplitStreamTypeKeySelector.java
+new file mode 100644
+index 0000000..30227b8
+--- /dev/null
++++ b/flink-contrib/flink-storm-compatibility/flink-storm-compatibility-core/src/main/java/org/apache/flink/stormcompatibility/api/SplitStreamTypeKeySelector.java
+@@ -0,0 +1,47 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.flink.stormcompatibility.api;
++
++import org.apache.flink.api.java.functions.KeySelector;
++import org.apache.flink.api.java.tuple.Tuple;
++import org.apache.flink.stormcompatibility.util.SplitStreamType;
++import org.apache.flink.streaming.util.keys.KeySelectorUtil;
++import org.apache.flink.streaming.util.keys.KeySelectorUtil.ArrayKeySelector;
++
++/**
++ * {@link SplitStreamTypeKeySelector} is a specific grouping key selector for streams that are selected via
++ * {@link FlinkStormStreamSelector} from a Spout or Bolt that declares multiple output streams.
++ * 
++ * It extracts the wrapped {@link Tuple} type from the {@link SplitStreamType} tuples and applies a regular
++ * {@link ArrayKeySelector} on it.
++ */
++public class SplitStreamTypeKeySelector implements KeySelector<SplitStreamType<Tuple>, Tuple> {
++	private static final long serialVersionUID = 4672434660037669254L;
++
++	private final ArrayKeySelector<Tuple> selector;
++
++	public SplitStreamTypeKeySelector(int... fields) {
++		this.selector = new KeySelectorUtil.ArrayKeySelector<Tuple>(fields);
++	}
++
++	@Override
++	public Tuple getKey(SplitStreamType<Tuple> value) throws Exception {
++		return selector.getKey(value.value);
++	}
++
++}

@@ -1,0 +1,13 @@
+diff --git a/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java b/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+index 1413de4..5fd1bca 100644
+--- a/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
++++ b/src/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+@@ -445,7 +445,7 @@
+           // second waits. The second thread will not do find.
+           
+           if (!useCache || rootRegionLocation == null) {
+-            return locateRootRegion();
++            this.rootRegionLocation = locateRootRegion();
+           }
+           return rootRegionLocation;
+         }        

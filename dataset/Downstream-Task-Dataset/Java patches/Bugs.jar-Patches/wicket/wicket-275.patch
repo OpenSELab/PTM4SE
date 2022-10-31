@@ -1,0 +1,562 @@
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractDecimalConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractDecimalConverter.java
+index 09485fa..f16ad92 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractDecimalConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractDecimalConverter.java
+@@ -16,14 +16,11 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
+-import java.text.DecimalFormat;
+ import java.text.NumberFormat;
+ import java.util.Locale;
+-import java.util.Map;
+-import java.util.concurrent.ConcurrentHashMap;
+ 
+ /**
+- * Base class for all number converters.
++ * Base class for all converters of decimal numbers.
+  * 
+  * @author Jonathan Locke
+  * @param <N>
+@@ -32,25 +29,6 @@ public abstract class AbstractDecimalConverter<N extends Number> extends Abstrac
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
+-	/** The date format to use */
+-	private final Map<Locale, NumberFormat> numberFormats = new ConcurrentHashMap<>();
+-
+-	/**
+-	 * @param locale
+-	 * @return Returns the numberFormat.
+-	 */
+-	@Override
+-	public NumberFormat getNumberFormat(final Locale locale)
+-	{
+-		NumberFormat numberFormat = numberFormats.get(locale);
+-		if (numberFormat == null)
+-		{
+-			numberFormat = newNumberFormat(locale);
+-			setNumberFormat(locale, numberFormat);
+-		}
+-		return (NumberFormat)numberFormat.clone();
+-	}
+-
+ 	/**
+ 	 * Creates a new {@link NumberFormat} for the given locale. The instance is later cached and is
+ 	 * accessible through {@link #getNumberFormat(Locale)}
+@@ -58,24 +36,9 @@ public abstract class AbstractDecimalConverter<N extends Number> extends Abstrac
+ 	 * @param locale
+ 	 * @return number format
+ 	 */
++	@Override
+ 	protected NumberFormat newNumberFormat(final Locale locale)
+ 	{
+ 		return NumberFormat.getInstance(locale);
+ 	}
+-
+-	/**
+-	 * @param locale
+-	 *            The Locale that was used for this NumberFormat
+-	 * @param numberFormat
+-	 *            The numberFormat to set.
+-	 */
+-	public final void setNumberFormat(final Locale locale, final NumberFormat numberFormat)
+-	{
+-		if (numberFormat instanceof DecimalFormat)
+-		{
+-			((DecimalFormat)numberFormat).setParseBigDecimal(true);
+-		}
+-
+-		numberFormats.put(locale, numberFormat);
+-	}
+ }
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractIntegerConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractIntegerConverter.java
+index 88639c0..0499814 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractIntegerConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractIntegerConverter.java
+@@ -18,10 +18,9 @@ package org.apache.wicket.util.convert.converter;
+ 
+ import java.text.NumberFormat;
+ import java.util.Locale;
+-import java.util.concurrent.ConcurrentHashMap;
+ 
+ /**
+- * Base class for all number converters.
++ * Base class for all converters of integer numbers.
+  * 
+  * @author Jonathan Locke
+  * @param <I>
+@@ -30,29 +29,12 @@ public abstract class AbstractIntegerConverter<I extends Number> extends Abstrac
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
+-	/** The date format to use */
+-	private final ConcurrentHashMap<Locale, NumberFormat> numberFormats = new ConcurrentHashMap<>();
+-
+-	/**
+-	 * @param locale
+-	 *            The locale
+-	 * @return Returns the numberFormat.
+-	 */
+ 	@Override
+-	public NumberFormat getNumberFormat(final Locale locale)
++	protected NumberFormat newNumberFormat(Locale locale)
+ 	{
+-		NumberFormat numberFormat = numberFormats.get(locale);
+-		if (numberFormat == null)
+-		{
+-			numberFormat = NumberFormat.getIntegerInstance(locale);
+-			numberFormat.setParseIntegerOnly(true);
+-			numberFormat.setGroupingUsed(false);
+-			NumberFormat tmpNumberFormat = numberFormats.putIfAbsent(locale, numberFormat);
+-			if (tmpNumberFormat != null)
+-			{
+-				numberFormat = tmpNumberFormat;
+-			}
+-		}
+-		return (NumberFormat)numberFormat.clone();
++		NumberFormat numberFormat  = NumberFormat.getIntegerInstance(locale);
++		numberFormat.setParseIntegerOnly(true);
++		numberFormat.setGroupingUsed(false);
++		return numberFormat;
+ 	}
+ }
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractNumberConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractNumberConverter.java
+index 5c448c0..da3df42 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractNumberConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/AbstractNumberConverter.java
+@@ -16,8 +16,11 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
++import java.math.BigDecimal;
++import java.text.DecimalFormat;
+ import java.text.NumberFormat;
+ import java.util.Locale;
++import java.util.concurrent.ConcurrentHashMap;
+ 
+ import org.apache.wicket.util.convert.ConversionException;
+ 
+@@ -32,11 +35,45 @@ public abstract class AbstractNumberConverter<N extends Number> extends Abstract
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
++	/** The date format to use */
++	private final ConcurrentHashMap<Locale, NumberFormat> numberFormats = new ConcurrentHashMap<>();
++
+ 	/**
+ 	 * @param locale
++	 *            The locale
+ 	 * @return Returns the numberFormat.
+ 	 */
+-	public abstract NumberFormat getNumberFormat(Locale locale);
++	public NumberFormat getNumberFormat(final Locale locale)
++	{
++		NumberFormat numberFormat = numberFormats.get(locale);
++		if (numberFormat == null)
++		{
++			numberFormat = newNumberFormat(locale);
++
++			if (numberFormat instanceof DecimalFormat)
++			{
++				// always try to parse BigDecimals
++				((DecimalFormat)numberFormat).setParseBigDecimal(true);
++			}
++
++			NumberFormat tmpNumberFormat = numberFormats.putIfAbsent(locale, numberFormat);
++			if (tmpNumberFormat != null)
++			{
++				numberFormat = tmpNumberFormat;
++			}
++		}
++		// return a clone because NumberFormat.get..Instance use a pool
++		return (NumberFormat)numberFormat.clone();
++	}
++
++	/**
++	 * Creates a new {@link NumberFormat} for the given locale. The instance is later cached and is
++	 * accessible through {@link #getNumberFormat(Locale)}
++	 *
++	 * @param locale
++	 * @return number format
++	 */
++	protected abstract NumberFormat newNumberFormat(final Locale locale);
+ 
+ 	/**
+ 	 * Parses a value as a String and returns a Number.
+@@ -44,15 +81,15 @@ public abstract class AbstractNumberConverter<N extends Number> extends Abstract
+ 	 * @param value
+ 	 *            The object to parse (after converting with toString())
+ 	 * @param min
+-	 *            The minimum allowed value
++	 *            The minimum allowed value or {@code null} if none
+ 	 * @param max
+-	 *            The maximum allowed value
++	 *            The maximum allowed value or {@code null} if none
+ 	 * @param locale
+ 	 * @return The number
+ 	 * @throws ConversionException
+ 	 *             if value is unparsable or out of range
+ 	 */
+-	protected N parse(Object value, final double min, final double max, Locale locale)
++	protected BigDecimal parse(Object value, final BigDecimal min, final BigDecimal max, Locale locale)
+ 	{
+ 		if (locale == null)
+ 		{
+@@ -78,19 +115,30 @@ public abstract class AbstractNumberConverter<N extends Number> extends Abstract
+ 			return null;
+ 		}
+ 
+-		if (number.doubleValue() < min)
++		BigDecimal bigDecimal;
++		if (number instanceof BigDecimal)
++		{
++			bigDecimal = (BigDecimal)number;
++		}
++		else
++		{
++			// should occur rarely, see #getNumberFormat(Locale)
++			bigDecimal = new BigDecimal(number.toString());
++		}
++
++		if (min != null && bigDecimal.compareTo(min) < 0)
+ 		{
+-			throw newConversionException("Value cannot be less than " + min, value, locale).setFormat(
+-				numberFormat);
++			throw newConversionException("Value cannot be less than " + min, value, locale)
++					.setFormat(numberFormat);
+ 		}
+ 
+-		if (number.doubleValue() > max)
++		if (max != null && bigDecimal.compareTo(max) > 0)
+ 		{
+-			throw newConversionException("Value cannot be greater than " + max, value, locale).setFormat(
+-				numberFormat);
++			throw newConversionException("Value cannot be greater than " + max, value, locale)
++					.setFormat(numberFormat);
+ 		}
+ 
+-		return number;
++		return bigDecimal;
+ 	}
+ 
+ 	@Override
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/BigDecimalConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/BigDecimalConverter.java
+index dd6e0ba..162a6de 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/BigDecimalConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/BigDecimalConverter.java
+@@ -44,33 +44,6 @@ public class BigDecimalConverter extends AbstractDecimalConverter<BigDecimal>
+ 			return null;
+ 		}
+ 
+-		final Number number = parse(value, -Double.MAX_VALUE, Double.MAX_VALUE, locale);
+-
+-		if (number instanceof BigDecimal)
+-		{
+-			return (BigDecimal)number;
+-		}
+-		else if (number instanceof Double)
+-		{
+-			// See link why the String is preferred for doubles
+-			// http://java.sun.com/j2se/1.4.2/docs/api/java/math/BigDecimal.html#BigDecimal%28double%29
+-			return new BigDecimal(Double.toString(number.doubleValue()));
+-		}
+-		else if (number instanceof Long)
+-		{
+-			return new BigDecimal(number.longValue());
+-		}
+-		else if (number instanceof Float)
+-		{
+-			return new BigDecimal(number.floatValue());
+-		}
+-		else if (number instanceof Integer)
+-		{
+-			return new BigDecimal(number.intValue());
+-		}
+-		else
+-		{
+-			return new BigDecimal(value);
+-		}
++		return parse(value, null, null, locale);
+ 	}
+ }
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/BigIntegerConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/BigIntegerConverter.java
+index 22077be..5da0034 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/BigIntegerConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/BigIntegerConverter.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
++import java.math.BigDecimal;
+ import java.math.BigInteger;
+ import java.util.Locale;
+ 
+@@ -44,23 +45,13 @@ public class BigIntegerConverter extends AbstractIntegerConverter<BigInteger>
+ 			return null;
+ 		}
+ 
+-		final Number number = parse(value, -Double.MAX_VALUE, Double.MAX_VALUE, locale);
++		final BigDecimal number = parse(value, null, null, locale);
+ 
+-		if (number instanceof BigInteger)
++		if (number == null)
+ 		{
+-			return (BigInteger)number;
+-		}
+-		else if (number instanceof Long)
+-		{
+-			return BigInteger.valueOf(number.longValue());
+-		}
+-		else if (number instanceof Integer)
+-		{
+-			return BigInteger.valueOf(number.intValue());
+-		}
+-		else
+-		{
+-			return new BigInteger(value);
++			return null;
+ 		}
++
++		return new BigInteger(number.toString());
+ 	}
+ }
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ByteConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ByteConverter.java
+index 8c351e4..8850165 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ByteConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ByteConverter.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
++import java.math.BigDecimal;
+ import java.util.Locale;
+ 
+ import org.apache.wicket.util.convert.IConverter;
+@@ -31,6 +32,9 @@ public class ByteConverter extends AbstractIntegerConverter<Byte>
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
++	private static final BigDecimal MIN_VALUE = new BigDecimal(Byte.MIN_VALUE);
++	private static final BigDecimal MAX_VALUE = new BigDecimal(Byte.MAX_VALUE);
++
+ 	/**
+ 	 * The singleton instance for a byte converter
+ 	 */
+@@ -42,7 +46,7 @@ public class ByteConverter extends AbstractIntegerConverter<Byte>
+ 	@Override
+ 	public Byte convertToObject(final String value, final Locale locale)
+ 	{
+-		final Number number = parse(value, Byte.MIN_VALUE, Byte.MAX_VALUE, locale);
++		final BigDecimal number = parse(value, MIN_VALUE, MAX_VALUE, locale);
+ 
+ 		if (number == null)
+ 		{
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/DoubleConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/DoubleConverter.java
+index fbf5862..ce2ca99 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/DoubleConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/DoubleConverter.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
++import java.math.BigDecimal;
+ import java.util.Locale;
+ 
+ import org.apache.wicket.util.convert.IConverter;
+@@ -31,6 +32,11 @@ public class DoubleConverter extends AbstractDecimalConverter<Double>
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
++	// Double.MIN is the smallest nonzero positive number, not the largest
++	// negative number
++	private static final BigDecimal MIN_VALUE = new BigDecimal(-Double.MAX_VALUE);
++	private static final BigDecimal MAX_VALUE = new BigDecimal(Double.MAX_VALUE);
++
+ 	/**
+ 	 * The singleton instance for a double converter
+ 	 */
+@@ -42,9 +48,7 @@ public class DoubleConverter extends AbstractDecimalConverter<Double>
+ 	@Override
+ 	public Double convertToObject(final String value, final Locale locale)
+ 	{
+-		final Number number = parse(value, -Double.MAX_VALUE, Double.MAX_VALUE, locale);
+-		// Double.MIN is the smallest nonzero positive number, not the largest
+-		// negative number
++		final BigDecimal number = parse(value, MIN_VALUE, MAX_VALUE, locale);
+ 
+ 		if (number == null)
+ 		{
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/FloatConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/FloatConverter.java
+index bc1562a..c4b2b79 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/FloatConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/FloatConverter.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
++import java.math.BigDecimal;
+ import java.util.Locale;
+ 
+ import org.apache.wicket.util.convert.IConverter;
+@@ -31,6 +32,11 @@ public class FloatConverter extends AbstractDecimalConverter<Float>
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
++	// Float.MIN is the smallest nonzero positive number, not the largest
++	// negative number
++	private static final BigDecimal MIN_VALUE = new BigDecimal(-Float.MAX_VALUE);
++	private static final BigDecimal MAX_VALUE = new BigDecimal(Float.MAX_VALUE);
++
+ 	/**
+ 	 * The singleton instance for a float converter
+ 	 */
+@@ -42,7 +48,7 @@ public class FloatConverter extends AbstractDecimalConverter<Float>
+ 	@Override
+ 	public Float convertToObject(final String value, final Locale locale)
+ 	{
+-		final Number number = parse(value, -Float.MAX_VALUE, Float.MAX_VALUE, locale);
++		final BigDecimal number = parse(value, MIN_VALUE, MAX_VALUE, locale);
+ 
+ 		if (number == null)
+ 		{
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/IntegerConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/IntegerConverter.java
+index 8fd1edf..5055d4a 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/IntegerConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/IntegerConverter.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
++import java.math.BigDecimal;
+ import java.util.Locale;
+ 
+ import org.apache.wicket.util.convert.IConverter;
+@@ -31,6 +32,9 @@ public class IntegerConverter extends AbstractIntegerConverter<Integer>
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
++	private static final BigDecimal MIN_VALUE = new BigDecimal(Integer.MIN_VALUE);
++	private static final BigDecimal MAX_VALUE = new BigDecimal(Integer.MAX_VALUE);
++
+ 	/**
+ 	 * The singleton instance for a integer converter
+ 	 */
+@@ -42,7 +46,7 @@ public class IntegerConverter extends AbstractIntegerConverter<Integer>
+ 	@Override
+ 	public Integer convertToObject(final String value, final Locale locale)
+ 	{
+-		final Number number = parse(value, Integer.MIN_VALUE, Integer.MAX_VALUE, locale);
++		final BigDecimal number = parse(value, MIN_VALUE, MAX_VALUE, locale);
+ 
+ 		if (number == null)
+ 		{
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/LongConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/LongConverter.java
+index 67401b2..0cf8db6 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/LongConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/LongConverter.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
++import java.math.BigDecimal;
+ import java.util.Locale;
+ 
+ import org.apache.wicket.util.convert.IConverter;
+@@ -31,6 +32,9 @@ public class LongConverter extends AbstractIntegerConverter<Long>
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
++	private static final BigDecimal MIN_VALUE = new BigDecimal(Long.MIN_VALUE);
++	private static final BigDecimal MAX_VALUE = new BigDecimal(Long.MAX_VALUE);
++
+ 	/**
+ 	 * The singleton instance for a long converter
+ 	 */
+@@ -42,7 +46,7 @@ public class LongConverter extends AbstractIntegerConverter<Long>
+ 	@Override
+ 	public Long convertToObject(final String value, final Locale locale)
+ 	{
+-		final Number number = parse(value, Long.MIN_VALUE, Long.MAX_VALUE, locale);
++		final BigDecimal number = parse(value, MIN_VALUE, MAX_VALUE, locale);
+ 
+ 		if (number == null)
+ 		{
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ShortConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ShortConverter.java
+index 4d2a2fa..30aa1b7 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ShortConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ShortConverter.java
+@@ -16,6 +16,7 @@
+  */
+ package org.apache.wicket.util.convert.converter;
+ 
++import java.math.BigDecimal;
+ import java.util.Locale;
+ 
+ import org.apache.wicket.util.convert.IConverter;
+@@ -31,6 +32,9 @@ public class ShortConverter extends AbstractIntegerConverter<Short>
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
++	private static final BigDecimal MIN_VALUE = new BigDecimal(Short.MIN_VALUE);
++	private static final BigDecimal MAX_VALUE = new BigDecimal(Short.MAX_VALUE);
++
+ 	/**
+ 	 * The singleton instance for a short converter
+ 	 */
+@@ -42,7 +46,7 @@ public class ShortConverter extends AbstractIntegerConverter<Short>
+ 	@Override
+ 	public Short convertToObject(final String value, final Locale locale)
+ 	{
+-		final Number number = parse(value, Short.MIN_VALUE, Short.MAX_VALUE, locale);
++		final BigDecimal number = parse(value, MIN_VALUE, MAX_VALUE, locale);
+ 
+ 		if (number == null)
+ 		{
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ZeroPaddingIntegerConverter.java b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ZeroPaddingIntegerConverter.java
+index 84c4f62..181be0b 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ZeroPaddingIntegerConverter.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/convert/converter/ZeroPaddingIntegerConverter.java
+@@ -24,8 +24,10 @@ import java.util.Locale;
+  * @author Eelco Hillenius
+  * @author Jonathan Locke
+  * @author Al Maw
++ * 
++ * @deprecated use an {@link IntegerConverter} with suitable format string instead
+  */
+-public class ZeroPaddingIntegerConverter extends AbstractIntegerConverter<Integer>
++public class ZeroPaddingIntegerConverter extends IntegerConverter
+ {
+ 	private static final long serialVersionUID = 1L;
+ 
+@@ -58,29 +60,4 @@ public class ZeroPaddingIntegerConverter extends AbstractIntegerConverter<Intege
+ 
+ 		return result;
+ 	}
+-
+-	/**
+-	 * @see org.apache.wicket.util.convert.IConverter#convertToObject(java.lang.String,Locale)
+-	 */
+-	@Override
+-	public Integer convertToObject(final String value, final Locale locale)
+-	{
+-		final Number number = parse(value, Integer.MIN_VALUE, Integer.MAX_VALUE, locale);
+-
+-		if (number == null)
+-		{
+-			return null;
+-		}
+-
+-		return number.intValue();
+-	}
+-
+-	/**
+-	 * @see org.apache.wicket.util.convert.converter.AbstractConverter#getTargetType()
+-	 */
+-	@Override
+-	protected Class<Integer> getTargetType()
+-	{
+-		return Integer.class;
+-	}
+ }
+\ No newline at end of file

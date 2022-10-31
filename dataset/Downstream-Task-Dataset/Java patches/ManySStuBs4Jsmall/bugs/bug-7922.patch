@@ -1,0 +1,15 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxLong.java
+index 7dfa207..909b44a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxLong.java
+@@ -297,8 +297,8 @@
+         long[] vector = inputVector.vector;
+         
+         if (inputVector.isRepeating) {
+-          if ((inputVector.noNulls || !inputVector.isNull[0]) &&
+-            myagg.isNull || vector[0] < myagg.value) {
++          if (inputVector.noNulls &&
++            (myagg.isNull || (vector[0] > myagg.value))) {
+             myagg.isNull = false;
+             myagg.value = vector[0];
+           }

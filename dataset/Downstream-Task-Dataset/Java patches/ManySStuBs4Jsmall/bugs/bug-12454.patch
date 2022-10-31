@@ -1,0 +1,39 @@
+diff --git a/Essentials/src/com/earth2me/essentials/signs/SignDisposal.java b/Essentials/src/com/earth2me/essentials/signs/SignDisposal.java
+index 46272a6..f747ac0 100644
+--- a/Essentials/src/com/earth2me/essentials/signs/SignDisposal.java
++++ b/Essentials/src/com/earth2me/essentials/signs/SignDisposal.java
+@@ -15,7 +15,7 @@
+ 	@Override
+ 	protected boolean onSignInteract(final ISign sign, final User player, final String username, final IEssentials ess)
+ 	{
+-		ShowInventory.showEmptyInventory(player);
++		ShowInventory.showEmptyInventory(player.getBase());
+ 		return true;
+ 	}
+ }
+diff --git a/Essentials/src/com/earth2me/essentials/signs/SignFree.java b/Essentials/src/com/earth2me/essentials/signs/SignFree.java
+index 197c060..7af7dff 100644
+--- a/Essentials/src/com/earth2me/essentials/signs/SignFree.java
++++ b/Essentials/src/com/earth2me/essentials/signs/SignFree.java
+@@ -33,7 +33,7 @@
+ 		}
+ 
+ 		item.setAmount(item.getType().getMaxStackSize() * 9 * 4);
+-		ShowInventory.showFilledInventory(player, item);
++		ShowInventory.showFilledInventory(player.getBase(), item);
+ 		Trade.log("Sign", "Free", "Interact", username, null, username, new Trade(item, ess), sign.getBlock().getLocation(), ess);
+ 		return true;
+ 	}
+diff --git a/Essentials/src/com/earth2me/essentials/signs/SignDisposal.java b/Essentials/src/com/earth2me/essentials/signs/SignDisposal.java
+index 46272a6..f747ac0 100644
+--- a/Essentials/src/com/earth2me/essentials/signs/SignDisposal.java
++++ b/Essentials/src/com/earth2me/essentials/signs/SignDisposal.java
+@@ -15,7 +15,7 @@
+ 	@Override
+ 	protected boolean onSignInteract(final ISign sign, final User player, final String username, final IEssentials ess)
+ 	{
+-		ShowInventory.showEmptyInventory(player);
++		ShowInventory.showEmptyInventory(player.getBase());
+ 		return true;
+ 	}
+ }

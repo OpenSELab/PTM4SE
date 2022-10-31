@@ -1,0 +1,15 @@
+diff --git a/src/main/java/org/apache/hadoop/hbase/mapreduce/ImportTsv.java b/src/main/java/org/apache/hadoop/hbase/mapreduce/ImportTsv.java
+index bfe18e7..aed7846 100644
+--- a/src/main/java/org/apache/hadoop/hbase/mapreduce/ImportTsv.java
++++ b/src/main/java/org/apache/hadoop/hbase/mapreduce/ImportTsv.java
+@@ -198,8 +198,8 @@
+     // by re-encoding the passed separator as a Base64 string.
+     String actualSeparator = conf.get(SEPARATOR_CONF_KEY);
+     if (actualSeparator != null) {
+-      conf.set(SEPARATOR_CONF_KEY, new String(
+-      Base64.encodeBytes(actualSeparator.getBytes())));
++      conf.set(SEPARATOR_CONF_KEY,
++               Base64.encodeBytes(actualSeparator.getBytes()));
+     }
+ 
+     // See if a non-default Mapper was set

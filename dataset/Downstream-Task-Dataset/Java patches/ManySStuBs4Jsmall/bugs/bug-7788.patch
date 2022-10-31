@@ -1,0 +1,28 @@
+diff --git a/service/src/java/org/apache/hive/service/cli/thrift/ThriftCLIService.java b/service/src/java/org/apache/hive/service/cli/thrift/ThriftCLIService.java
+index 886492a..2938338 100644
+--- a/service/src/java/org/apache/hive/service/cli/thrift/ThriftCLIService.java
++++ b/service/src/java/org/apache/hive/service/cli/thrift/ThriftCLIService.java
+@@ -641,7 +641,8 @@
+       if (opException != null) {
+         resp.setSqlState(opException.getSQLState());
+         resp.setErrorCode(opException.getErrorCode());
+-        resp.setErrorMessage(opException.getMessage());
++        resp.setErrorMessage(org.apache.hadoop.util.StringUtils.
++            stringifyException(opException));
+       }
+       resp.setStatus(OK_STATUS);
+     } catch (Exception e) {
+diff --git a/service/src/java/org/apache/hive/service/cli/thrift/ThriftCLIService.java b/service/src/java/org/apache/hive/service/cli/thrift/ThriftCLIService.java
+index 886492a..2938338 100644
+--- a/service/src/java/org/apache/hive/service/cli/thrift/ThriftCLIService.java
++++ b/service/src/java/org/apache/hive/service/cli/thrift/ThriftCLIService.java
+@@ -641,7 +641,8 @@
+       if (opException != null) {
+         resp.setSqlState(opException.getSQLState());
+         resp.setErrorCode(opException.getErrorCode());
+-        resp.setErrorMessage(opException.getMessage());
++        resp.setErrorMessage(org.apache.hadoop.util.StringUtils.
++            stringifyException(opException));
+       }
+       resp.setStatus(OK_STATUS);
+     } catch (Exception e) {

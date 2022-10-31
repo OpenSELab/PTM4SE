@@ -1,0 +1,44 @@
+diff --git a/src/main/java/org/jsoup/parser/TokeniserState.java b/src/main/java/org/jsoup/parser/TokeniserState.java
+index 1d375cd..d89a6ae 100644
+--- a/src/main/java/org/jsoup/parser/TokeniserState.java
++++ b/src/main/java/org/jsoup/parser/TokeniserState.java
+@@ -971,7 +971,7 @@
+                     t.transition(AfterAttributeValue_quoted);
+                     break;
+                 case '&':
+-                    char[] ref = t.consumeCharacterReference('"', true);
++                    char[] ref = t.consumeCharacterReference('\'', true);
+                     if (ref != null && ref.length>0)
+                         t.tagPending.appendAttributeValue(new String(ref));
+                     else
+@@ -1005,7 +1005,7 @@
+                     t.transition(BeforeAttributeName);
+                     break;
+                 case '&':
+-                    char[] ref = t.consumeCharacterReference('"', true);
++                    char[] ref = t.consumeCharacterReference('>', true);
+                     if (ref != null && ref.length>0)
+                         t.tagPending.appendAttributeValue(new String(ref));
+                     else
+diff --git a/src/main/java/org/jsoup/parser/TokeniserState.java b/src/main/java/org/jsoup/parser/TokeniserState.java
+index 1d375cd..d89a6ae 100644
+--- a/src/main/java/org/jsoup/parser/TokeniserState.java
++++ b/src/main/java/org/jsoup/parser/TokeniserState.java
+@@ -971,7 +971,7 @@
+                     t.transition(AfterAttributeValue_quoted);
+                     break;
+                 case '&':
+-                    char[] ref = t.consumeCharacterReference('"', true);
++                    char[] ref = t.consumeCharacterReference('\'', true);
+                     if (ref != null && ref.length>0)
+                         t.tagPending.appendAttributeValue(new String(ref));
+                     else
+@@ -1005,7 +1005,7 @@
+                     t.transition(BeforeAttributeName);
+                     break;
+                 case '&':
+-                    char[] ref = t.consumeCharacterReference('"', true);
++                    char[] ref = t.consumeCharacterReference('>', true);
+                     if (ref != null && ref.length>0)
+                         t.tagPending.appendAttributeValue(new String(ref));
+                     else

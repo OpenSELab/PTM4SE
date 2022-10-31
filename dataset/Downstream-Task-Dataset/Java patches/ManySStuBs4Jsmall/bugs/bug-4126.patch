@@ -1,0 +1,116 @@
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/Parser.java b/runtime/Java/src/org/antlr/v4/runtime/Parser.java
+index ea4b5bf..16fb7e2 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/Parser.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/Parser.java
+@@ -299,7 +299,7 @@
+ 	}
+ 
+ 	protected void addContextToParseTree() {
+-		ParserRuleContext parent = (ParserRuleContext)_ctx.parent;
++		ParserRuleContext<?> parent = (ParserRuleContext<?>)_ctx.parent;
+ 		// add current context to parent if we have a parent
+ 		if ( parent!=null )	{
+ 			parent.addChild(_ctx);
+@@ -331,7 +331,7 @@
+ 		// if we have new localctx, make sure we replace existing ctx
+ 		// that is previous child of parse tree
+ 		if ( _buildParseTrees && _ctx != localctx ) {
+-			ParserRuleContext parent = (ParserRuleContext)_ctx.parent;
++			ParserRuleContext<?> parent = (ParserRuleContext<?>)_ctx.parent;
+ 			parent.removeLastChild();
+ 			if ( parent!=null )	parent.addChild(localctx);
+ 		}
+@@ -385,7 +385,7 @@
+     public boolean isExpectedToken(int symbol) {
+ //   		return getInterpreter().atn.nextTokens(_ctx);
+         ATN atn = getInterpreter().atn;
+-		ParserRuleContext ctx = _ctx;
++		ParserRuleContext<?> ctx = _ctx;
+         ATNState s = atn.states.get(ctx.s);
+         IntervalSet following = atn.nextTokens(s);
+         if (following.contains(symbol)) {
+@@ -402,7 +402,7 @@
+                 return true;
+             }
+ 
+-            ctx = (ParserRuleContext)ctx.parent;
++            ctx = (ParserRuleContext<?>)ctx.parent;
+         }
+ 
+         if ( following.contains(Token.EPSILON) && symbol == Token.EOF ) {
+@@ -417,7 +417,7 @@
+ 	 */
+     public IntervalSet getExpectedTokens() {
+         ATN atn = getInterpreter().atn;
+-		ParserRuleContext ctx = _ctx;
++		ParserRuleContext<?> ctx = _ctx;
+         ATNState s = atn.states.get(ctx.s);
+         IntervalSet following = atn.nextTokens(s);
+ //        System.out.println("following "+s+"="+following);
+@@ -431,7 +431,7 @@
+             following = atn.nextTokens(rt.followState);
+             expected.addAll(following);
+             expected.remove(Token.EPSILON);
+-            ctx = (ParserRuleContext)ctx.parent;
++            ctx = (ParserRuleContext<?>)ctx.parent;
+         }
+         if ( following.contains(Token.EPSILON) ) {
+             expected.add(Token.EOF);
+diff --git a/runtime/Java/src/org/antlr/v4/runtime/Parser.java b/runtime/Java/src/org/antlr/v4/runtime/Parser.java
+index ea4b5bf..16fb7e2 100644
+--- a/runtime/Java/src/org/antlr/v4/runtime/Parser.java
++++ b/runtime/Java/src/org/antlr/v4/runtime/Parser.java
+@@ -299,7 +299,7 @@
+ 	}
+ 
+ 	protected void addContextToParseTree() {
+-		ParserRuleContext parent = (ParserRuleContext)_ctx.parent;
++		ParserRuleContext<?> parent = (ParserRuleContext<?>)_ctx.parent;
+ 		// add current context to parent if we have a parent
+ 		if ( parent!=null )	{
+ 			parent.addChild(_ctx);
+@@ -331,7 +331,7 @@
+ 		// if we have new localctx, make sure we replace existing ctx
+ 		// that is previous child of parse tree
+ 		if ( _buildParseTrees && _ctx != localctx ) {
+-			ParserRuleContext parent = (ParserRuleContext)_ctx.parent;
++			ParserRuleContext<?> parent = (ParserRuleContext<?>)_ctx.parent;
+ 			parent.removeLastChild();
+ 			if ( parent!=null )	parent.addChild(localctx);
+ 		}
+@@ -385,7 +385,7 @@
+     public boolean isExpectedToken(int symbol) {
+ //   		return getInterpreter().atn.nextTokens(_ctx);
+         ATN atn = getInterpreter().atn;
+-		ParserRuleContext ctx = _ctx;
++		ParserRuleContext<?> ctx = _ctx;
+         ATNState s = atn.states.get(ctx.s);
+         IntervalSet following = atn.nextTokens(s);
+         if (following.contains(symbol)) {
+@@ -402,7 +402,7 @@
+                 return true;
+             }
+ 
+-            ctx = (ParserRuleContext)ctx.parent;
++            ctx = (ParserRuleContext<?>)ctx.parent;
+         }
+ 
+         if ( following.contains(Token.EPSILON) && symbol == Token.EOF ) {
+@@ -417,7 +417,7 @@
+ 	 */
+     public IntervalSet getExpectedTokens() {
+         ATN atn = getInterpreter().atn;
+-		ParserRuleContext ctx = _ctx;
++		ParserRuleContext<?> ctx = _ctx;
+         ATNState s = atn.states.get(ctx.s);
+         IntervalSet following = atn.nextTokens(s);
+ //        System.out.println("following "+s+"="+following);
+@@ -431,7 +431,7 @@
+             following = atn.nextTokens(rt.followState);
+             expected.addAll(following);
+             expected.remove(Token.EPSILON);
+-            ctx = (ParserRuleContext)ctx.parent;
++            ctx = (ParserRuleContext<?>)ctx.parent;
+         }
+         if ( following.contains(Token.EPSILON) ) {
+             expected.add(Token.EOF);

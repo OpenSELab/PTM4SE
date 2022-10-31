@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java b/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
+index 4179402..ac889f5 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
+@@ -375,7 +375,7 @@
+             ((BroadcastFilterLifecycle) e).init(config);
+         }
+ 
+-        if (init) {
++        if (init && ClusterBroadcastFilter.class.isAssignableFrom(e.getClass())) {
+             Broadcaster b = BroadcasterFactory.getDefault().lookup(name, false);
+             if (b != null) {
+                 synchronized (e) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java b/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
+index 4179402..ac889f5 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/BroadcasterConfig.java
+@@ -375,7 +375,7 @@
+             ((BroadcastFilterLifecycle) e).init(config);
+         }
+ 
+-        if (init) {
++        if (init && ClusterBroadcastFilter.class.isAssignableFrom(e.getClass())) {
+             Broadcaster b = BroadcasterFactory.getDefault().lookup(name, false);
+             if (b != null) {
+                 synchronized (e) {

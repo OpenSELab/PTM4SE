@@ -1,0 +1,41 @@
+diff --git a/src/com/google/javascript/rhino/jstype/JSTypeRegistry.java b/src/com/google/javascript/rhino/jstype/JSTypeRegistry.java
+index 65b2cda..bc7f764 100644
+--- a/src/com/google/javascript/rhino/jstype/JSTypeRegistry.java
++++ b/src/com/google/javascript/rhino/jstype/JSTypeRegistry.java
+@@ -1570,7 +1570,7 @@
+         reporter.warning(
+             "Duplicate record field " + fieldName,
+             sourceName,
+-            n.getLineno(), "", n.getCharno());
++            n.getLineno(), "", fieldNameNode.getCharno());
+       }
+     }
+ 
+diff --git a/test/com/google/javascript/jscomp/TypeCheckTest.java b/test/com/google/javascript/jscomp/TypeCheckTest.java
+index aad881c..ad14177 100644
+--- a/test/com/google/javascript/jscomp/TypeCheckTest.java
++++ b/test/com/google/javascript/jscomp/TypeCheckTest.java
+@@ -8443,8 +8443,8 @@
+          + "* @param {{name:string,number:x,number:y}} a"
+          + " */"
+          + "function f(a) {};",
+-         new String[] { "Parse error. Duplicate record field number",
+-           "Bad type annotation. Unknown type x",
++         new String[] {"Bad type annotation. Unknown type x",
++           "Parse error. Duplicate record field number",
+            "Bad type annotation. Unknown type y"});
+   }
+ 
+diff --git a/src/com/google/javascript/rhino/jstype/JSTypeRegistry.java b/src/com/google/javascript/rhino/jstype/JSTypeRegistry.java
+index 65b2cda..bc7f764 100644
+--- a/src/com/google/javascript/rhino/jstype/JSTypeRegistry.java
++++ b/src/com/google/javascript/rhino/jstype/JSTypeRegistry.java
+@@ -1570,7 +1570,7 @@
+         reporter.warning(
+             "Duplicate record field " + fieldName,
+             sourceName,
+-            n.getLineno(), "", n.getCharno());
++            n.getLineno(), "", fieldNameNode.getCharno());
+       }
+     }
+ 

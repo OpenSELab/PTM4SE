@@ -1,0 +1,26 @@
+diff --git a/okio/src/main/java/okio/AsyncTimeout.java b/okio/src/main/java/okio/AsyncTimeout.java
+index 32303ed..2520e03 100644
+--- a/okio/src/main/java/okio/AsyncTimeout.java
++++ b/okio/src/main/java/okio/AsyncTimeout.java
+@@ -165,7 +165,7 @@
+           // Count how many bytes to write. This loop guarantees we split on a segment boundary.
+           long toWrite = 0L;
+           for (Segment s = source.head; toWrite < TIMEOUT_WRITE_SIZE; s = s.next) {
+-            int segmentSize = source.head.limit - source.head.pos;
++            int segmentSize = s.limit - s.pos;
+             toWrite += segmentSize;
+             if (toWrite >= byteCount) {
+               toWrite = byteCount;
+diff --git a/okio/src/main/java/okio/AsyncTimeout.java b/okio/src/main/java/okio/AsyncTimeout.java
+index 32303ed..2520e03 100644
+--- a/okio/src/main/java/okio/AsyncTimeout.java
++++ b/okio/src/main/java/okio/AsyncTimeout.java
+@@ -165,7 +165,7 @@
+           // Count how many bytes to write. This loop guarantees we split on a segment boundary.
+           long toWrite = 0L;
+           for (Segment s = source.head; toWrite < TIMEOUT_WRITE_SIZE; s = s.next) {
+-            int segmentSize = source.head.limit - source.head.pos;
++            int segmentSize = s.limit - s.pos;
+             toWrite += segmentSize;
+             if (toWrite >= byteCount) {
+               toWrite = byteCount;

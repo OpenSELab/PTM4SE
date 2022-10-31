@@ -1,0 +1,22 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/HftpFileSystem.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/HftpFileSystem.java
+index 7d97c97..9d9cde4 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/HftpFileSystem.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/HftpFileSystem.java
+@@ -251,7 +251,7 @@
+                                                   ) throws IOException {
+     try {
+       //Renew TGT if needed
+-      ugi.reloginFromKeytab();
++      ugi.checkTGTAndReloginFromKeytab();
+       return ugi.doAs(new PrivilegedExceptionAction<Token<?>>() {
+         @Override
+         public Token<?> run() throws IOException {
+@@ -704,7 +704,7 @@
+     public long renew(Token<?> token, 
+                       Configuration conf) throws IOException {
+       // update the kerberos credentials, if they are coming from a keytab
+-      UserGroupInformation.getLoginUser().reloginFromKeytab();
++      UserGroupInformation.getLoginUser().checkTGTAndReloginFromKeytab();
+       // use http to renew the token
+       InetSocketAddress serviceAddr = SecurityUtil.getTokenServiceAddr(token);
+       return 

@@ -1,0 +1,153 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/CompactionMap.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/CompactionMap.java
+index a33cba5..bbf5d30 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/CompactionMap.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/CompactionMap.java
+@@ -93,6 +93,19 @@ public class CompactionMap {
+         return after.equals(get(before));
+     }
+ 
++    /**
++     * Checks whether content in the segment with the given identifier was
++     * compacted to new segments.
++     *
++     * @param id segment identifier
++     * @return whether the identified segment was compacted
++     */
++    boolean wasCompacted(SegmentId id) {
++        long msb = id.getMostSignificantBits();
++        long lsb = id.getLeastSignificantBits();
++        return findEntry(msb, lsb) != -1;
++    }
++
+     public RecordId get(RecordId before) {
+         RecordId after = recent.get(before);
+         if (after != null) {
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/Compactor.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/Compactor.java
+index 45bbbcc..14278ca 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/Compactor.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/Compactor.java
+@@ -75,7 +75,8 @@ public class Compactor {
+ 
+     public Compactor(SegmentWriter writer) {
+         this.writer = writer;
+-        this.builder = writer.writeNode(EMPTY_NODE).builder();
++        this.builder =
++                new SegmentNodeBuilder(writer.writeNode(EMPTY_NODE), writer);
+     }
+ 
+     public SegmentNodeState compact(NodeState before, NodeState after) {
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/Record.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/Record.java
+index f65a168..ec8fbfd 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/Record.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/Record.java
+@@ -65,6 +65,15 @@ class Record {
+     }
+ 
+     /**
++     * Returns the tracker of the segment that contains this record.
++     *
++     * @return segment tracker
++     */
++    protected SegmentTracker getTracker() {
++        return segmentId.getTracker();
++    }
++
++    /**
+      * Returns the segment that contains this record.
+      *
+      * @return segment that contains this record
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeBuilder.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeBuilder.java
+index 7fc474f..d532bdf 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeBuilder.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeBuilder.java
+@@ -33,8 +33,12 @@ public class SegmentNodeBuilder extends MemoryNodeBuilder {
+     private long updateCount = 0;
+ 
+     SegmentNodeBuilder(SegmentNodeState base) {
++        this(base, base.getTracker().getWriter());
++    }
++
++    SegmentNodeBuilder(SegmentNodeState base, SegmentWriter writer) {
+         super(base);
+-        this.writer = base.getRecordId().getSegmentId().getTracker().getWriter();
++        this.writer = writer;
+     }
+ 
+     //-------------------------------------------------< MemoryNodeBuilder >--
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
+index 41fc1ef..a11b931 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
+@@ -940,10 +940,22 @@ public class SegmentWriter {
+         return id;
+     }
+ 
++    private SegmentNodeState uncompact(SegmentNodeState state) {
++        RecordId id = tracker.getCompactionMap().get(state.getRecordId());
++        if (id != null) {
++            return new SegmentNodeState(id);
++        } else {
++            return state;
++        }
++    }
++
+     public SegmentNodeState writeNode(NodeState state) {
+-        if (state instanceof SegmentNodeState
+-                && store.containsSegment(((SegmentNodeState) state).getRecordId().getSegmentId())) {
+-            return (SegmentNodeState) state;
++        if (state instanceof SegmentNodeState) {
++            SegmentNodeState sns = uncompact((SegmentNodeState) state);
++            if (sns != state || store.containsSegment(
++                    sns.getRecordId().getSegmentId())) {
++                return sns;
++            }
+         }
+ 
+         SegmentNodeState before = null;
+@@ -952,10 +964,13 @@ public class SegmentWriter {
+         if (state instanceof ModifiedNodeState) {
+             after = (ModifiedNodeState) state;
+             NodeState base = after.getBaseState();
+-            if (base instanceof SegmentNodeState
+-                    && store.containsSegment(((SegmentNodeState) base).getRecordId().getSegmentId())) {
+-                before = (SegmentNodeState) base;
+-                beforeTemplate = before.getTemplate();
++            if (base instanceof SegmentNodeState) {
++                SegmentNodeState sns = uncompact((SegmentNodeState) base);
++                if (sns != base || store.containsSegment(
++                        sns.getRecordId().getSegmentId())) {
++                    before = sns;
++                    beforeTemplate = before.getTemplate();
++                }
+             }
+         }
+ 
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/file/FileStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/file/FileStore.java
+index 3243572..f378247 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/file/FileStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/file/FileStore.java
+@@ -415,6 +415,7 @@ public class FileStore implements SegmentStore {
+ 
+         SegmentNodeState before = getHead();
+         SegmentNodeState after = compactor.compact(EMPTY_NODE, before);
++        writer.flush();
+         while (!setHead(before, after)) {
+             // Some other concurrent changes have been made.
+             // Rebase (and compact) those changes on top of the
+@@ -422,9 +423,16 @@ public class FileStore implements SegmentStore {
+             SegmentNodeState head = getHead();
+             after = compactor.compact(before, head);
+             before = head;
++            writer.flush();
+         }
+         tracker.setCompactionMap(compactor.getCompactionMap());
+ 
++        // Drop the SegmentWriter caches and flush any existing state
++        // in an attempt to prevent new references to old pre-compacted
++        // content. TODO: There should be a cleaner way to do this.
++        tracker.getWriter().dropCache();
++        tracker.getWriter().flush();
++
+         log.info("TarMK compaction completed in {}ms", MILLISECONDS
+                 .convert(System.nanoTime() - start, NANOSECONDS));
+         cleanupNeeded.set(true);

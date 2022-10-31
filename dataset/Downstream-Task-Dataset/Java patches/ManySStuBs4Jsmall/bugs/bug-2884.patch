@@ -1,0 +1,52 @@
+diff --git a/app/controllers/SearchApiController.java b/app/controllers/SearchApiController.java
+index 2088f5d..8b0d472 100644
+--- a/app/controllers/SearchApiController.java
++++ b/app/controllers/SearchApiController.java
+@@ -36,7 +36,7 @@
+  */
+ public class SearchApiController extends AuthenticatedController {
+ 
+-    public Result fieldStats(String q, String field, String rangeType, int relative, String interval) {
++    public Result fieldStats(String q, String field, String rangeType, int relative, String from, String to, String keyword, String interval) {
+         if (q == null || q.isEmpty()) {
+             q = "*";
+         }
+@@ -56,10 +56,10 @@
+                     timerange = new RelativeRange(relative);
+                     break;
+                 case ABSOLUTE:
+-                    timerange = new AbsoluteRange("foo", "bar");
++                    timerange = new AbsoluteRange(from, to);
+                     break;
+                 case KEYWORD:
+-                    timerange = new KeywordRange("ZOMG");
++                    timerange = new KeywordRange(keyword);
+                     break;
+                 default:
+                     throw new InvalidRangeParametersException();
+diff --git a/app/controllers/SearchApiController.java b/app/controllers/SearchApiController.java
+index 2088f5d..8b0d472 100644
+--- a/app/controllers/SearchApiController.java
++++ b/app/controllers/SearchApiController.java
+@@ -36,7 +36,7 @@
+  */
+ public class SearchApiController extends AuthenticatedController {
+ 
+-    public Result fieldStats(String q, String field, String rangeType, int relative, String interval) {
++    public Result fieldStats(String q, String field, String rangeType, int relative, String from, String to, String keyword, String interval) {
+         if (q == null || q.isEmpty()) {
+             q = "*";
+         }
+@@ -56,10 +56,10 @@
+                     timerange = new RelativeRange(relative);
+                     break;
+                 case ABSOLUTE:
+-                    timerange = new AbsoluteRange("foo", "bar");
++                    timerange = new AbsoluteRange(from, to);
+                     break;
+                 case KEYWORD:
+-                    timerange = new KeywordRange("ZOMG");
++                    timerange = new KeywordRange(keyword);
+                     break;
+                 default:
+                     throw new InvalidRangeParametersException();

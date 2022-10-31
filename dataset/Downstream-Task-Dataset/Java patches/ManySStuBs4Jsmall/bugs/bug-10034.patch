@@ -1,0 +1,26 @@
+diff --git a/src/jvm/clojure/lang/TransactionalHashMap.java b/src/jvm/clojure/lang/TransactionalHashMap.java
+index 656f4ee..66700ec 100644
+--- a/src/jvm/clojure/lang/TransactionalHashMap.java
++++ b/src/jvm/clojure/lang/TransactionalHashMap.java
+@@ -124,7 +124,7 @@
+ 		{
+ 		IPersistentMap map = mapAt(i);
+ 		if(map.count() > 0)
+-			entries.addAll((Collection) map);
++			entries.addAll((Collection) RT.seq(map));
+ 		}
+ 	return new AbstractSet<Entry<K, V>>(){
+ 		public Iterator iterator(){
+diff --git a/src/jvm/clojure/lang/TransactionalHashMap.java b/src/jvm/clojure/lang/TransactionalHashMap.java
+index 656f4ee..66700ec 100644
+--- a/src/jvm/clojure/lang/TransactionalHashMap.java
++++ b/src/jvm/clojure/lang/TransactionalHashMap.java
+@@ -124,7 +124,7 @@
+ 		{
+ 		IPersistentMap map = mapAt(i);
+ 		if(map.count() > 0)
+-			entries.addAll((Collection) map);
++			entries.addAll((Collection) RT.seq(map));
+ 		}
+ 	return new AbstractSet<Entry<K, V>>(){
+ 		public Iterator iterator(){

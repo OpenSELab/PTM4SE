@@ -1,0 +1,34 @@
+diff --git a/components/camel-csv/src/test/java/org/apache/camel/dataformat/csv/CsvRouteTest.java b/components/camel-csv/src/test/java/org/apache/camel/dataformat/csv/CsvRouteTest.java
+index 5c0c336..e4ea16d 100644
+--- a/components/camel-csv/src/test/java/org/apache/camel/dataformat/csv/CsvRouteTest.java
++++ b/components/camel-csv/src/test/java/org/apache/camel/dataformat/csv/CsvRouteTest.java
+@@ -70,7 +70,11 @@
+ 
+             log.debug("Received " + text);
+             assertNotNull("Should be able to convert received body to a string", text);
+-            assertEquals("text body", "abc,123", text.trim());
++            
++            // order is not guaranteed with a Map (which was passed in before)
++            // so we need to check for both combinations
++            assertTrue("Text body has wrong value.", "abc,123".equals(text.trim()) 
++                       || "123,abc".equals(text.trim()));
+         }
+     }
+ 
+diff --git a/components/camel-csv/src/test/java/org/apache/camel/dataformat/csv/CsvRouteTest.java b/components/camel-csv/src/test/java/org/apache/camel/dataformat/csv/CsvRouteTest.java
+index 5c0c336..e4ea16d 100644
+--- a/components/camel-csv/src/test/java/org/apache/camel/dataformat/csv/CsvRouteTest.java
++++ b/components/camel-csv/src/test/java/org/apache/camel/dataformat/csv/CsvRouteTest.java
+@@ -70,7 +70,11 @@
+ 
+             log.debug("Received " + text);
+             assertNotNull("Should be able to convert received body to a string", text);
+-            assertEquals("text body", "abc,123", text.trim());
++            
++            // order is not guaranteed with a Map (which was passed in before)
++            // so we need to check for both combinations
++            assertTrue("Text body has wrong value.", "abc,123".equals(text.trim()) 
++                       || "123,abc".equals(text.trim()));
+         }
+     }
+ 

@@ -1,0 +1,61 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/QueryPlanner.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/QueryPlanner.java
+index 4d597c3..cb34b79 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/QueryPlanner.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/QueryPlanner.java
+@@ -306,7 +306,7 @@
+                         rewritten,
+                         coercion.getTypeSignature().toString(),
+                         false,
+-                        isTypeOnlyCoercion(type.getTypeSignature(), coercion.getTypeSignature()));
++                        isTypeOnlyCoercion(type, coercion));
+             }
+             projections.put(symbol, rewritten);
+             translations.put(expression, symbol);
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/TranslationMap.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/TranslationMap.java
+index 3ea1ff0..394eb97 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/TranslationMap.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/TranslationMap.java
+@@ -188,7 +188,7 @@
+                             rewrittenExpression,
+                             coercion.getTypeSignature().toString(),
+                             false,
+-                            isTypeOnlyCoercion(type.getTypeSignature(), coercion.getTypeSignature()));
++                            isTypeOnlyCoercion(type, coercion));
+                 }
+ 
+                 return rewrittenExpression;
+@@ -242,7 +242,7 @@
+                             rewrittenExpression,
+                             coercion.getTypeSignature().toString(),
+                             false,
+-                            isTypeOnlyCoercion(type.getTypeSignature(), coercion.getTypeSignature()));
++                            isTypeOnlyCoercion(type, coercion));
+                 }
+                 return rewrittenExpression;
+             }
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/scalar/FunctionAssertions.java b/presto-main/src/test/java/com/facebook/presto/operator/scalar/FunctionAssertions.java
+index d18e919..3968aa9 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/scalar/FunctionAssertions.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/scalar/FunctionAssertions.java
+@@ -431,7 +431,7 @@
+                             rewrittenExpression,
+                             coercion.getTypeSignature().toString(),
+                             false,
+-                            isTypeOnlyCoercion(type.getTypeSignature(), coercion.getTypeSignature()));
++                            isTypeOnlyCoercion(type, coercion));
+                 }
+ 
+                 return rewrittenExpression;
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/QueryPlanner.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/QueryPlanner.java
+index 4d597c3..cb34b79 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/QueryPlanner.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/QueryPlanner.java
+@@ -306,7 +306,7 @@
+                         rewritten,
+                         coercion.getTypeSignature().toString(),
+                         false,
+-                        isTypeOnlyCoercion(type.getTypeSignature(), coercion.getTypeSignature()));
++                        isTypeOnlyCoercion(type, coercion));
+             }
+             projections.put(symbol, rewritten);
+             translations.put(expression, symbol);

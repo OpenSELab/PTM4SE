@@ -1,0 +1,17 @@
+diff --git a/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesStrategyTest.java b/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesStrategyTest.java
+index 10bb6af..dccf3e3 100644
+--- a/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesStrategyTest.java
++++ b/components/camel-stream/src/test/java/org/apache/camel/component/stream/StreamGroupLinesStrategyTest.java
+@@ -57,10 +57,10 @@
+         assertMockEndpointsSatisfied();
+ 
+         Object result = mock.getExchanges().get(0).getIn().getBody();
+-        assertEquals("Get a wrong result.", "A\nB\nC\n", result);
++        assertEquals("Get a wrong result.", "A" + LS + "B" + LS + "C" + LS, result);
+ 
+         Object result2 = mock.getExchanges().get(1).getIn().getBody();
+-        assertEquals("Get a wrong result.", "D\nE\nF\n", result2);
++        assertEquals("Get a wrong result.", "D" + LS + "E" + LS + "F" + LS, result2);
+     }
+ 
+     @Override

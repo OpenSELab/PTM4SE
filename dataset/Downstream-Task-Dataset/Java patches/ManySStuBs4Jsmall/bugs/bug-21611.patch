@@ -1,0 +1,48 @@
+diff --git a/src/main/java/org/springframework/samples/petclinic/vet/VetController.java b/src/main/java/org/springframework/samples/petclinic/vet/VetController.java
+index 7ce8374..562bbfc 100644
+--- a/src/main/java/org/springframework/samples/petclinic/vet/VetController.java
++++ b/src/main/java/org/springframework/samples/petclinic/vet/VetController.java
+@@ -48,7 +48,7 @@
+         return "vets/vetList";
+     }
+ 
+-    @GetMapping({ "/vets.json", "/vets.xml" })
++    @GetMapping({ "/vets" })
+     public @ResponseBody Vets showResourcesVetList() {
+         // Here we are returning an object of type 'Vets' rather than a collection of Vet
+         // objects so it is simpler for JSon/Object mapping
+diff --git a/src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java b/src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java
+index ce6adf8..bc3b6c0 100644
+--- a/src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java
++++ b/src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java
+@@ -65,7 +65,7 @@
+ 
+     @Test
+     public void testShowResourcesVetList() throws Exception {
+-        ResultActions actions = mockMvc.perform(get("/vets.json").accept(MediaType.APPLICATION_JSON))
++        ResultActions actions = mockMvc.perform(get("/vets").accept(MediaType.APPLICATION_JSON))
+             .andExpect(status().isOk());
+         actions.andExpect(content().contentType("application/json;charset=UTF-8"))
+             .andExpect(jsonPath("$.vetList[0].id").value(1));
+@@ -73,7 +73,7 @@
+ 
+     @Test
+     public void testShowVetListXml() throws Exception {
+-        mockMvc.perform(get("/vets.xml").accept(MediaType.APPLICATION_XML))
++        mockMvc.perform(get("/vets").accept(MediaType.APPLICATION_XML))
+             .andExpect(status().isOk())
+             .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+             .andExpect(content().node(hasXPath("/vets/vetList[id=1]/id")));
+diff --git a/src/main/java/org/springframework/samples/petclinic/vet/VetController.java b/src/main/java/org/springframework/samples/petclinic/vet/VetController.java
+index 7ce8374..562bbfc 100644
+--- a/src/main/java/org/springframework/samples/petclinic/vet/VetController.java
++++ b/src/main/java/org/springframework/samples/petclinic/vet/VetController.java
+@@ -48,7 +48,7 @@
+         return "vets/vetList";
+     }
+ 
+-    @GetMapping({ "/vets.json", "/vets.xml" })
++    @GetMapping({ "/vets" })
+     public @ResponseBody Vets showResourcesVetList() {
+         // Here we are returning an object of type 'Vets' rather than a collection of Vet
+         // objects so it is simpler for JSon/Object mapping

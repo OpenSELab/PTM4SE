@@ -1,0 +1,13 @@
+diff --git a/api/src/main/java/org/openmrs/api/impl/PatientServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/PatientServiceImpl.java
+index 5e08ae3..af0f202 100644
+--- a/api/src/main/java/org/openmrs/api/impl/PatientServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/PatientServiceImpl.java
+@@ -1583,7 +1583,7 @@
+ 	public void checkIfPatientIdentifierTypesAreLocked() {
+ 		String locked = Context.getAdministrationService().getGlobalProperty(
+ 		    OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_TYPES_LOCKED, "false");
+-		if (locked.toLowerCase().equals("true")) {
++		if ("true".equals(locked.toLowerCase())) {
+ 			throw new PatientIdentifierTypeLockedException();
+ 		}
+ 	}

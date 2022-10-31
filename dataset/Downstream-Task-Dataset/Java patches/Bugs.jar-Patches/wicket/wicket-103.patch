@@ -1,0 +1,73 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/RestartResponseAtInterceptPageException.java b/wicket-core/src/main/java/org/apache/wicket/RestartResponseAtInterceptPageException.java
+index 1a31878..98668ad 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/RestartResponseAtInterceptPageException.java
++++ b/wicket-core/src/main/java/org/apache/wicket/RestartResponseAtInterceptPageException.java
+@@ -165,7 +165,7 @@ public class RestartResponseAtInterceptPageException extends ResetResponseExcept
+ 	{
+ 		public int getCompatibilityScore(Request request)
+ 		{
+-			return 0;
++			return matchedData(request) != null ? Integer.MAX_VALUE : 0;
+ 		}
+ 
+ 		public Url mapHandler(IRequestHandler requestHandler)
+@@ -175,23 +175,30 @@ public class RestartResponseAtInterceptPageException extends ResetResponseExcept
+ 
+ 		public IRequestHandler mapRequest(Request request)
+ 		{
+-			InterceptData data = InterceptData.get();
++			InterceptData data = matchedData(request);
+ 			if (data != null)
+ 			{
+-				if (data.originalUrl.equals(request.getOriginalUrl()))
++				if (data.postParameters.isEmpty() == false &&
++					request.getPostParameters() instanceof IWritableRequestParameters)
+ 				{
+-					if (data.postParameters.isEmpty() == false &&
+-						request.getPostParameters() instanceof IWritableRequestParameters)
++					IWritableRequestParameters parameters = (IWritableRequestParameters)request.getPostParameters();
++					parameters.reset();
++					for (String s : data.postParameters.keySet())
+ 					{
+-						IWritableRequestParameters parameters = (IWritableRequestParameters)request.getPostParameters();
+-						parameters.reset();
+-						for (String s : data.postParameters.keySet())
+-						{
+-							parameters.setParameterValues(s, data.postParameters.get(s));
+-						}
++						parameters.setParameterValues(s, data.postParameters.get(s));
+ 					}
+-					InterceptData.clear();
+ 				}
++				InterceptData.clear();
++			}
++			return null;
++		}
++		
++		private InterceptData matchedData(Request request)
++		{
++			InterceptData data = InterceptData.get();
++			if(data != null && data.originalUrl.equals(request.getOriginalUrl()))
++			{
++				return data;
+ 			}
+ 			return null;
+ 		}
+diff --git a/wicket-core/src/main/java/org/apache/wicket/SystemMapper.java b/wicket-core/src/main/java/org/apache/wicket/SystemMapper.java
+index e0eea63..7412737 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/SystemMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/SystemMapper.java
+@@ -46,12 +46,12 @@ public class SystemMapper extends CompoundRequestMapper
+ 	public SystemMapper(final Application application)
+ 	{
+ 		this.application = application;
+-		add(RestartResponseAtInterceptPageException.MAPPER);
+ 		add(new PageInstanceMapper());
+ 		add(new BookmarkableMapper());
+ 		add(new HomePageMapper(new HomePageProvider<Page>(application)));
+ 		add(new ResourceReferenceMapper(new PageParametersEncoder(),
+ 			new ParentFolderPlaceholderProvider(application), getResourceCachingStrategy()));
++		add(RestartResponseAtInterceptPageException.MAPPER);
+ 		add(new BufferedResponseMapper());
+ 	}
+ 

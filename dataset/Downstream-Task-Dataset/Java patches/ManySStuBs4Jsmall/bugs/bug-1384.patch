@@ -1,0 +1,39 @@
+diff --git a/servers/src/main/java/tachyon/worker/block/TieredBlockStore.java b/servers/src/main/java/tachyon/worker/block/TieredBlockStore.java
+index 37fec3e..a6adfaa 100644
+--- a/servers/src/main/java/tachyon/worker/block/TieredBlockStore.java
++++ b/servers/src/main/java/tachyon/worker/block/TieredBlockStore.java
+@@ -288,7 +288,7 @@
+     // TODO: Cleanup the user folder across tiered storage.
+     for (String dirName : dirs) {
+       if (!new File(dirName).delete()) {
+-        LOG.error("Error in cleanup userId {}: cannot delete directory ", userId, dirName);
++        LOG.error("Error in cleanup userId {}: cannot delete directory {}", userId, dirName);
+       }
+     }
+ 
+diff --git a/servers/src/test/java/tachyon/worker/block/BlockMetadataManagerTest.java b/servers/src/test/java/tachyon/worker/block/BlockMetadataManagerTest.java
+index 8dada26..43f857c 100644
+--- a/servers/src/test/java/tachyon/worker/block/BlockMetadataManagerTest.java
++++ b/servers/src/test/java/tachyon/worker/block/BlockMetadataManagerTest.java
+@@ -270,7 +270,7 @@
+     for (TempBlockMeta tempBlockMeta : toRemove) {
+       toRemoveBlockIds.add(tempBlockMeta.getBlockId());
+     }
+-    Assert.assertEquals(Sets.<TempBlockMeta>newHashSet(), new HashSet<TempBlockMeta>(toRemove));
++    Assert.assertTrue(toRemove.isEmpty());
+ 
+     // Clean up userId1 again, expect nothing to happen
+     mMetaManager.cleanupUserTempBlocks(userId1, toRemoveBlockIds);
+diff --git a/servers/src/main/java/tachyon/worker/block/TieredBlockStore.java b/servers/src/main/java/tachyon/worker/block/TieredBlockStore.java
+index 37fec3e..a6adfaa 100644
+--- a/servers/src/main/java/tachyon/worker/block/TieredBlockStore.java
++++ b/servers/src/main/java/tachyon/worker/block/TieredBlockStore.java
+@@ -288,7 +288,7 @@
+     // TODO: Cleanup the user folder across tiered storage.
+     for (String dirName : dirs) {
+       if (!new File(dirName).delete()) {
+-        LOG.error("Error in cleanup userId {}: cannot delete directory ", userId, dirName);
++        LOG.error("Error in cleanup userId {}: cannot delete directory {}", userId, dirName);
+       }
+     }
+ 

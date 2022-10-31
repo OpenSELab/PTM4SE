@@ -1,0 +1,270 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/NodeDocument.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/NodeDocument.java
+index e0eb865..e63e2d8 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/NodeDocument.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/NodeDocument.java
+@@ -1205,7 +1205,7 @@ public final class NodeDocument extends Document implements CachedNodeDocument{
+ 
+     public static void setModified(@Nonnull UpdateOp op,
+                                    @Nonnull Revision revision) {
+-        checkNotNull(op).set(MODIFIED_IN_SECS, getModifiedInSecs(checkNotNull(revision).getTimestamp()));
++        checkNotNull(op).max(MODIFIED_IN_SECS, getModifiedInSecs(checkNotNull(revision).getTimestamp()));
+     }
+ 
+     public static void setRevision(@Nonnull UpdateOp op,
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateOp.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateOp.java
+index f00df7a..b957c37 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateOp.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateOp.java
+@@ -131,9 +131,7 @@ public final class UpdateOp {
+      * @param value the value
+      */
+     void setMapEntry(@Nonnull String property, @Nonnull Revision revision, String value) {
+-        Operation op = new Operation();
+-        op.type = Operation.Type.SET_MAP_ENTRY;
+-        op.value = value;
++        Operation op = new Operation(Operation.Type.SET_MAP_ENTRY, value);
+         changes.put(new Key(property, checkNotNull(revision)), op);
+     }
+ 
+@@ -145,8 +143,7 @@ public final class UpdateOp {
+      * @param revision the revision
+      */
+     public void removeMapEntry(@Nonnull String property, @Nonnull Revision revision) {
+-        Operation op = new Operation();
+-        op.type = Operation.Type.REMOVE_MAP_ENTRY;
++        Operation op = new Operation(Operation.Type.REMOVE_MAP_ENTRY, null);
+         changes.put(new Key(property, checkNotNull(revision)), op);
+     }
+ 
+@@ -157,9 +154,23 @@ public final class UpdateOp {
+      * @param value the value
+      */
+     void set(String property, Object value) {
+-        Operation op = new Operation();
+-        op.type = Operation.Type.SET;
+-        op.value = value;
++        Operation op = new Operation(Operation.Type.SET, value);
++        changes.put(new Key(property, null), op);
++    }
++
++    /**
++     * Set the property to the given value if the new value is higher than the
++     * existing value. The property is also set to the given value if the
++     * property does not yet exist.
++     * <p>
++     * The result of a max operation with different types of values is
++     * undefined.
++     *
++     * @param property the name of the property to set.
++     * @param value the new value for the property.
++     */
++    <T> void max(String property, Comparable<T> value) {
++        Operation op = new Operation(Operation.Type.MAX, value);
+         changes.put(new Key(property, null), op);
+     }
+ 
+@@ -187,9 +198,7 @@ public final class UpdateOp {
+         if (isNew) {
+             throw new IllegalStateException("Cannot use containsMapEntry() on new document");
+         }
+-        Operation op = new Operation();
+-        op.type = Operation.Type.CONTAINS_MAP_ENTRY;
+-        op.value = exists;
++        Operation op = new Operation(Operation.Type.CONTAINS_MAP_ENTRY, exists);
+         changes.put(new Key(property, checkNotNull(revision)), op);
+     }
+ 
+@@ -200,9 +209,7 @@ public final class UpdateOp {
+      * @param value the increment
+      */
+     public void increment(@Nonnull String property, long value) {
+-        Operation op = new Operation();
+-        op.type = Operation.Type.INCREMENT;
+-        op.value = value;
++        Operation op = new Operation(Operation.Type.INCREMENT, value);
+         changes.put(new Key(property, null), op);
+     }
+ 
+@@ -239,6 +246,14 @@ public final class UpdateOp {
+             SET,
+ 
+             /**
++             * Set the value if the new value is higher than the existing value.
++             * The new value is also considered higher, when there is no
++             * existing value.
++             * The sub-key is not used.
++             */
++            MAX,
++
++            /**
+              * Increment the Long value with the provided Long value.
+              * The sub-key is not used.
+              */
+@@ -267,12 +282,17 @@ public final class UpdateOp {
+         /**
+          * The operation type.
+          */
+-        public Type type;
++        public final Type type;
+ 
+         /**
+          * The value, if any.
+          */
+-        public Object value;
++        public final Object value;
++
++        Operation(Type type, Object value) {
++            this.type = checkNotNull(type);
++            this.value = value;
++        }
+ 
+         @Override
+         public String toString() {
+@@ -283,18 +303,16 @@ public final class UpdateOp {
+             Operation reverse = null;
+             switch (type) {
+             case INCREMENT:
+-                reverse = new Operation();
+-                reverse.type = Type.INCREMENT;
+-                reverse.value = -(Long) value;
++                reverse = new Operation(Type.INCREMENT, -(Long) value);
+                 break;
+             case SET:
++            case MAX:
+             case REMOVE_MAP_ENTRY:
+             case CONTAINS_MAP_ENTRY:
+                 // nothing to do
+                 break;
+             case SET_MAP_ENTRY:
+-                reverse = new Operation();
+-                reverse.type = Type.REMOVE_MAP_ENTRY;
++                reverse = new Operation(Type.REMOVE_MAP_ENTRY, null);
+                 break;
+             }
+             return reverse;
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateUtils.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateUtils.java
+index b8015ff..240665d 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateUtils.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateUtils.java
+@@ -44,7 +44,9 @@ public class UpdateUtils {
+      * @param comparator
+      *            the revision comparator.
+      */
+-    public static void applyChanges(@Nonnull Document doc, @Nonnull UpdateOp update, @Nonnull Comparator<Revision> comparator) {
++    public static void applyChanges(@Nonnull Document doc,
++                                    @Nonnull UpdateOp update,
++                                    @Nonnull Comparator<Revision> comparator) {
+         for (Entry<Key, Operation> e : checkNotNull(update).getChanges().entrySet()) {
+             Key k = e.getKey();
+             Operation op = e.getValue();
+@@ -53,6 +55,15 @@ public class UpdateUtils {
+                     doc.put(k.toString(), op.value);
+                     break;
+                 }
++                case MAX: {
++                    Comparable newValue = (Comparable) op.value;
++                    Object old = doc.get(k.toString());
++                    //noinspection unchecked
++                    if (old == null || newValue.compareTo(old) > 0) {
++                        doc.put(k.toString(), op.value);
++                    }
++                    break;
++                }
+                 case INCREMENT: {
+                     Object old = doc.get(k.toString());
+                     Long x = (Long) op.value;
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/mongo/MongoDocumentStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/mongo/MongoDocumentStore.java
+index 0266e38..684f39f 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/mongo/MongoDocumentStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/mongo/MongoDocumentStore.java
+@@ -29,6 +29,8 @@ import java.util.TreeMap;
+ import java.util.concurrent.Callable;
+ import java.util.concurrent.ExecutionException;
+ import java.util.concurrent.locks.Lock;
++import java.util.regex.Matcher;
++import java.util.regex.Pattern;
+ 
+ import javax.annotation.CheckForNull;
+ import javax.annotation.Nonnull;
+@@ -127,6 +129,7 @@ public class MongoDocumentStore implements CachingDocumentStore {
+     private String lastReadWriteMode;
+ 
+     public MongoDocumentStore(DB db, DocumentMK.Builder builder) {
++        checkVersion(db);
+         nodes = db.getCollection(
+                 Collection.NODES.toString());
+         clusterNodes = db.getCollection(
+@@ -179,6 +182,24 @@ public class MongoDocumentStore implements CachingDocumentStore {
+                 builder.getDocumentCacheSize());
+     }
+ 
++    private static void checkVersion(DB db) {
++        String version = db.command("buildInfo").getString("version");
++        Matcher m = Pattern.compile("^(\\d+)\\.(\\d+)\\..*").matcher(version);
++        if (!m.matches()) {
++            throw new IllegalArgumentException("Malformed MongoDB version: " + version);
++        }
++        int major = Integer.parseInt(m.group(1));
++        int minor = Integer.parseInt(m.group(2));
++        if (major > 2) {
++            return;
++        }
++        if (minor < 6) {
++            String msg = "MongoDB version 2.6.0 or higher required. " +
++                    "Currently connected to a MongoDB with version: " + version;
++            throw new RuntimeException(msg);
++        }
++    }
++
+     private Cache<CacheValue, NodeDocument> createOffHeapCache(
+             DocumentMK.Builder builder) {
+         ForwardingListener<CacheValue, NodeDocument> listener = ForwardingListener.newInstance();
+@@ -570,6 +591,7 @@ public class MongoDocumentStore implements CachingDocumentStore {
+                 Operation op = entry.getValue();
+                 switch (op.type) {
+                     case SET:
++                    case MAX:
+                     case INCREMENT: {
+                         inserts[i].put(k.toString(), op.value);
+                         break;
+@@ -965,6 +987,7 @@ public class MongoDocumentStore implements CachingDocumentStore {
+     @Nonnull
+     private static DBObject createUpdate(UpdateOp updateOp) {
+         BasicDBObject setUpdates = new BasicDBObject();
++        BasicDBObject maxUpdates = new BasicDBObject();
+         BasicDBObject incUpdates = new BasicDBObject();
+         BasicDBObject unsetUpdates = new BasicDBObject();
+ 
+@@ -980,16 +1003,17 @@ public class MongoDocumentStore implements CachingDocumentStore {
+             }
+             Operation op = entry.getValue();
+             switch (op.type) {
+-                case SET: {
++                case SET:
++                case SET_MAP_ENTRY: {
+                     setUpdates.append(k.toString(), op.value);
+                     break;
+                 }
+-                case INCREMENT: {
+-                    incUpdates.append(k.toString(), op.value);
++                case MAX: {
++                    maxUpdates.append(k.toString(), op.value);
+                     break;
+                 }
+-                case SET_MAP_ENTRY: {
+-                    setUpdates.append(k.toString(), op.value);
++                case INCREMENT: {
++                    incUpdates.append(k.toString(), op.value);
+                     break;
+                 }
+                 case REMOVE_MAP_ENTRY: {
+@@ -1003,6 +1027,9 @@ public class MongoDocumentStore implements CachingDocumentStore {
+         if (!setUpdates.isEmpty()) {
+             update.append("$set", setUpdates);
+         }
++        if (!maxUpdates.isEmpty()) {
++            update.append("$max", maxUpdates);
++        }
+         if (!incUpdates.isEmpty()) {
+             update.append("$inc", incUpdates);
+         }

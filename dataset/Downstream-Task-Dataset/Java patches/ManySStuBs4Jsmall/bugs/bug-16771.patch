@@ -1,0 +1,13 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectSet.java b/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
+index 4191c35..7ee0631 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
+@@ -79,7 +79,7 @@
+ 
+ 	/** Creates a new set identical to the specified set. */
+ 	public ObjectSet (ObjectSet set) {
+-		this(set.capacity, set.loadFactor);
++		this((int)Math.floor(set.capacity * set.loadFactor), set.loadFactor);
+ 		stashSize = set.stashSize;
+ 		System.arraycopy(set.keyTable, 0, keyTable, 0, set.keyTable.length);
+ 		size = set.size;

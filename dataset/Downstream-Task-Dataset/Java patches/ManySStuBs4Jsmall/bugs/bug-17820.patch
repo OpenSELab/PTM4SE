@@ -1,0 +1,254 @@
+diff --git a/src/main/java/org/apache/ibatis/mapping/CacheBuilder.java b/src/main/java/org/apache/ibatis/mapping/CacheBuilder.java
+index ace4a33..821f5a1 100644
+--- a/src/main/java/org/apache/ibatis/mapping/CacheBuilder.java
++++ b/src/main/java/org/apache/ibatis/mapping/CacheBuilder.java
+@@ -120,11 +120,11 @@
+   private void setCacheProperties(Cache cache) {
+     if (properties != null) {
+       MetaObject metaCache = MetaObject.forObject(cache);
+-      for (Map.Entry entry : properties.entrySet()) {
++      for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+         String name = (String) entry.getKey();
+         String value = (String) entry.getValue();
+         if (metaCache.hasSetter(name)) {
+-          Class type = metaCache.getSetterType(name);
++          Class<?> type = metaCache.getSetterType(name);
+           if (String.class == type) {
+             metaCache.setValue(name, value);
+           } else if (int.class == type
+diff --git a/src/main/java/org/apache/ibatis/mapping/ParameterMap.java b/src/main/java/org/apache/ibatis/mapping/ParameterMap.java
+index 79c6da9..62169b8 100644
+--- a/src/main/java/org/apache/ibatis/mapping/ParameterMap.java
++++ b/src/main/java/org/apache/ibatis/mapping/ParameterMap.java
+@@ -23,7 +23,7 @@
+ public class ParameterMap {
+ 
+   private String id;
+-  private Class type;
++  private Class<?> type;
+   private List<ParameterMapping> parameterMappings;
+ 
+   private ParameterMap() {
+@@ -32,13 +32,13 @@
+   public static class Builder {
+     private ParameterMap parameterMap = new ParameterMap();
+ 
+-    public Builder(Configuration configuration, String id, Class type, List<ParameterMapping> parameterMappings) {
++    public Builder(Configuration configuration, String id, Class<?> type, List<ParameterMapping> parameterMappings) {
+       parameterMap.id = id;
+       parameterMap.type = type;
+       parameterMap.parameterMappings = parameterMappings;
+     }
+ 
+-    public Class type() {
++    public Class<?> type() {
+       return parameterMap.type;
+     }
+ 
+@@ -53,7 +53,7 @@
+     return id;
+   }
+ 
+-  public Class getType() {
++  public Class<?> getType() {
+     return type;
+   }
+ 
+diff --git a/src/main/java/org/apache/ibatis/mapping/ParameterMapping.java b/src/main/java/org/apache/ibatis/mapping/ParameterMapping.java
+index d96b01f..10585b3 100644
+--- a/src/main/java/org/apache/ibatis/mapping/ParameterMapping.java
++++ b/src/main/java/org/apache/ibatis/mapping/ParameterMapping.java
+@@ -26,10 +26,10 @@
+ 
+   private String property;
+   private ParameterMode mode;
+-  private Class javaType = Object.class;
++  private Class<?> javaType = Object.class;
+   private JdbcType jdbcType;
+   private Integer numericScale;
+-  private TypeHandler typeHandler;
++  private TypeHandler<?> typeHandler;
+   private String resultMapId;
+   private String jdbcTypeName;
+ 
+@@ -39,14 +39,14 @@
+   public static class Builder {
+     private ParameterMapping parameterMapping = new ParameterMapping();
+ 
+-    public Builder(Configuration configuration, String property, TypeHandler typeHandler) {
++    public Builder(Configuration configuration, String property, TypeHandler<?> typeHandler) {
+       parameterMapping.configuration = configuration;
+       parameterMapping.property = property;
+       parameterMapping.typeHandler = typeHandler;
+       parameterMapping.mode = ParameterMode.IN;
+     }
+ 
+-    public Builder(Configuration configuration, String property, Class javaType) {
++    public Builder(Configuration configuration, String property, Class<?> javaType) {
+       parameterMapping.configuration = configuration;
+       parameterMapping.property = property;
+       parameterMapping.javaType = javaType;
+@@ -58,7 +58,7 @@
+       return this;
+     }
+ 
+-    public Builder javaType(Class javaType) {
++    public Builder javaType(Class<?> javaType) {
+       parameterMapping.javaType = javaType;
+       return this;
+     }
+@@ -78,7 +78,7 @@
+       return this;
+     }
+ 
+-    public Builder typeHandler(TypeHandler typeHandler) {
++    public Builder typeHandler(TypeHandler<?> typeHandler) {
+       parameterMapping.typeHandler = typeHandler;
+       return this;
+     }
+@@ -114,7 +114,7 @@
+     return mode;
+   }
+ 
+-  public Class getJavaType() {
++  public Class<?> getJavaType() {
+     return javaType;
+   }
+ 
+@@ -126,7 +126,7 @@
+     return numericScale;
+   }
+ 
+-  public TypeHandler getTypeHandler() {
++  public TypeHandler<?> getTypeHandler() {
+     return typeHandler;
+   }
+ 
+diff --git a/src/main/java/org/apache/ibatis/mapping/ResultMap.java b/src/main/java/org/apache/ibatis/mapping/ResultMap.java
+index ba56dad..7a63fb0 100644
+--- a/src/main/java/org/apache/ibatis/mapping/ResultMap.java
++++ b/src/main/java/org/apache/ibatis/mapping/ResultMap.java
+@@ -21,7 +21,7 @@
+ 
+ public class ResultMap {
+   private String id;
+-  private Class type;
++  private Class<?> type;
+   private List<ResultMapping> resultMappings;
+   private List<ResultMapping> idResultMappings;
+   private List<ResultMapping> constructorResultMappings;
+@@ -37,7 +37,7 @@
+   public static class Builder {
+     private ResultMap resultMap = new ResultMap();
+ 
+-    public Builder(Configuration configuration, String id, Class type, List<ResultMapping> resultMappings) {
++    public Builder(Configuration configuration, String id, Class<?> type, List<ResultMapping> resultMappings) {
+       resultMap.id = id;
+       resultMap.type = type;
+       resultMap.resultMappings = resultMappings;
+@@ -48,7 +48,7 @@
+       return this;
+     }
+ 
+-    public Class type() {
++    public Class<?> type() {
+       return resultMap.type;
+     }
+ 
+@@ -105,7 +105,7 @@
+     return hasNestedQueries;
+   }
+ 
+-  public Class getType() {
++  public Class<?> getType() {
+     return type;
+   }
+ 
+diff --git a/src/main/java/org/apache/ibatis/mapping/ResultMapping.java b/src/main/java/org/apache/ibatis/mapping/ResultMapping.java
+index f66b887..7970906 100644
+--- a/src/main/java/org/apache/ibatis/mapping/ResultMapping.java
++++ b/src/main/java/org/apache/ibatis/mapping/ResultMapping.java
+@@ -30,9 +30,9 @@
+   private Configuration configuration;
+   private String property;
+   private String column;
+-  private Class javaType;
++  private Class<?> javaType;
+   private JdbcType jdbcType;
+-  private TypeHandler typeHandler;
++  private TypeHandler<?> typeHandler;
+   private String nestedResultMapId;
+   private String nestedQueryId;
+   private Set<String> notNullColumns;
+@@ -45,7 +45,7 @@
+   public static class Builder {
+     private ResultMapping resultMapping = new ResultMapping();
+ 
+-    public Builder(Configuration configuration, String property, String column, TypeHandler typeHandler) {
++    public Builder(Configuration configuration, String property, String column, TypeHandler<?> typeHandler) {
+       resultMapping.configuration = configuration;
+       resultMapping.property = property;
+       resultMapping.column = column;
+@@ -54,7 +54,7 @@
+       resultMapping.composites = new ArrayList<ResultMapping>();
+     }
+ 
+-    public Builder(Configuration configuration, String property, String column, Class javaType) {
++    public Builder(Configuration configuration, String property, String column, Class<?> javaType) {
+       resultMapping.configuration = configuration;
+       resultMapping.property = property;
+       resultMapping.column = column;
+@@ -70,7 +70,7 @@
+       resultMapping.composites = new ArrayList<ResultMapping>();
+     }
+ 
+-    public Builder javaType(Class javaType) {
++    public Builder javaType(Class<?> javaType) {
+       resultMapping.javaType = javaType;
+       return this;
+     }
+@@ -100,7 +100,7 @@
+       return this;
+     }
+ 
+-    public Builder typeHandler(TypeHandler typeHandler) {
++    public Builder typeHandler(TypeHandler<?> typeHandler) {
+       resultMapping.typeHandler = typeHandler;
+       return this;
+     }
+@@ -142,7 +142,7 @@
+     return column;
+   }
+ 
+-  public Class getJavaType() {
++  public Class<?> getJavaType() {
+     return javaType;
+   }
+ 
+@@ -150,7 +150,7 @@
+     return jdbcType;
+   }
+ 
+-  public TypeHandler getTypeHandler() {
++  public TypeHandler<?> getTypeHandler() {
+     return typeHandler;
+   }
+ 
+diff --git a/src/main/java/org/apache/ibatis/mapping/CacheBuilder.java b/src/main/java/org/apache/ibatis/mapping/CacheBuilder.java
+index ace4a33..821f5a1 100644
+--- a/src/main/java/org/apache/ibatis/mapping/CacheBuilder.java
++++ b/src/main/java/org/apache/ibatis/mapping/CacheBuilder.java
+@@ -120,11 +120,11 @@
+   private void setCacheProperties(Cache cache) {
+     if (properties != null) {
+       MetaObject metaCache = MetaObject.forObject(cache);
+-      for (Map.Entry entry : properties.entrySet()) {
++      for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+         String name = (String) entry.getKey();
+         String value = (String) entry.getValue();
+         if (metaCache.hasSetter(name)) {
+-          Class type = metaCache.getSetterType(name);
++          Class<?> type = metaCache.getSetterType(name);
+           if (String.class == type) {
+             metaCache.setValue(name, value);
+           } else if (int.class == type

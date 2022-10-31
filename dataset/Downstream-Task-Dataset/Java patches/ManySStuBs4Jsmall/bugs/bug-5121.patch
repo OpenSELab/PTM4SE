@@ -1,0 +1,13 @@
+diff --git a/components/camel-jackson/src/test/java/org/apache/camel/component/jackson/SpringJacksonJsonDataFormatTest.java b/components/camel-jackson/src/test/java/org/apache/camel/component/jackson/SpringJacksonJsonDataFormatTest.java
+index b1ef3ad..45e789f 100644
+--- a/components/camel-jackson/src/test/java/org/apache/camel/component/jackson/SpringJacksonJsonDataFormatTest.java
++++ b/components/camel-jackson/src/test/java/org/apache/camel/component/jackson/SpringJacksonJsonDataFormatTest.java
+@@ -61,7 +61,7 @@
+ 
+         Object marshalled = template.requestBody("direct:inPretty", in);
+         String marshalledAsString = context.getTypeConverter().convertTo(String.class, marshalled);
+-        String expected = String.format("{%s  \"name\" : \"Camel\"%s}", System.lineSeparator(), System.lineSeparator());
++        String expected = String.format("{%s  \"name\" : \"Camel\"%s}", LS, LS);
+         assertEquals(expected, marshalledAsString);
+ 
+         template.sendBody("direct:back", marshalled);

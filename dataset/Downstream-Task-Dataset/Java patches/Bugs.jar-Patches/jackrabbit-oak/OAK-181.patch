@@ -1,0 +1,169 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/CompiledPermissionImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/CompiledPermissionImpl.java
+index 84f16ae..153884f 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/CompiledPermissionImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/CompiledPermissionImpl.java
+@@ -145,7 +145,8 @@ final class CompiledPermissionImpl implements CompiledPermissions, PermissionCon
+         return new RepositoryPermission() {
+             @Override
+             public boolean isGranted(long repositoryPermissions) {
+-                return hasPermissions(getEntryIterator(new EntryPredicate()), repositoryPermissions, null);
++                EntryPredicate predicate = new EntryPredicate();
++                return hasPermissions(getEntryIterator(predicate), predicate, repositoryPermissions, null);
+             }
+         };
+     }
+@@ -242,8 +243,8 @@ final class CompiledPermissionImpl implements CompiledPermissions, PermissionCon
+ 
+     @Override
+     public boolean isGranted(@Nonnull String path, long permissions) {
+-        Iterator<PermissionEntry> it = getEntryIterator(new EntryPredicate(path, Permissions.respectParentPermissions(permissions)));
+-        return hasPermissions(it, permissions, path);
++        EntryPredicate predicate = new EntryPredicate(path, Permissions.respectParentPermissions(permissions));
++        return hasPermissions(getEntryIterator(predicate), predicate, permissions, path);
+     }
+ 
+     @Nonnull
+@@ -260,11 +261,12 @@ final class CompiledPermissionImpl implements CompiledPermissions, PermissionCon
+     //------------------------------------------------------------< private >---
+ 
+     private boolean internalIsGranted(@Nonnull Tree tree, @Nullable PropertyState property, long permissions) {
+-        Iterator<PermissionEntry> it = getEntryIterator(tree, property, permissions);
+-        return hasPermissions(it, permissions, tree.getPath());
++        EntryPredicate predicate = new EntryPredicate(tree, property, Permissions.respectParentPermissions(permissions));
++        return hasPermissions(getEntryIterator(predicate), predicate, permissions, tree.getPath());
+     }
+ 
+     private boolean hasPermissions(@Nonnull Iterator<PermissionEntry> entries,
++                                   @Nonnull EntryPredicate predicate,
+                                    long permissions, @Nullable String path) {
+         // calculate readable paths if the given permissions includes any read permission.
+         boolean isReadable = Permissions.diff(Permissions.READ, permissions) != Permissions.READ && readPolicy.isReadablePath(path, false);
+@@ -310,14 +312,18 @@ final class CompiledPermissionImpl implements CompiledPermissions, PermissionCon
+             }
+ 
+             if (entry.isAllow) {
+-                allowBits.addDifference(entry.privilegeBits, denyBits);
++                if (!respectParent || predicate.apply(entry, false)) {
++                    allowBits.addDifference(entry.privilegeBits, denyBits);
++                }
+                 long ap = PrivilegeBits.calculatePermissions(allowBits, parentAllowBits, true);
+                 allows |= Permissions.diff(ap, denies);
+                 if ((allows | ~permissions) == -1) {
+                     return true;
+                 }
+             } else {
+-                denyBits.addDifference(entry.privilegeBits, allowBits);
++                if (!respectParent || predicate.apply(entry, false)) {
++                    denyBits.addDifference(entry.privilegeBits, allowBits);
++                }
+                 long dp = PrivilegeBits.calculatePermissions(denyBits, parentDenyBits, false);
+                 denies |= Permissions.diff(dp, allows);
+                 if (Permissions.includes(denies, permissions)) {
+@@ -377,11 +383,6 @@ final class CompiledPermissionImpl implements CompiledPermissions, PermissionCon
+     }
+ 
+     @Nonnull
+-    private Iterator<PermissionEntry> getEntryIterator(@Nonnull Tree tree, @Nullable PropertyState property, long permissions) {
+-        return getEntryIterator(new EntryPredicate(tree, property, Permissions.respectParentPermissions(permissions)));
+-    }
+-
+-    @Nonnull
+     private Iterator<PermissionEntry> getEntryIterator(@Nonnull EntryPredicate predicate) {
+         Iterator<PermissionEntry> userEntries = userStore.getEntryIterator(predicate);
+         Iterator<PermissionEntry> groupEntries = groupStore.getEntryIterator(predicate);
+@@ -526,12 +527,16 @@ final class CompiledPermissionImpl implements CompiledPermissions, PermissionCon
+ 
+         @Override
+         public boolean isGranted(long permissions) {
+-            return hasPermissions(getIterator(null, permissions), permissions, tree.getPath());
++            EntryPredicate predicate = new EntryPredicate(tree, null, Permissions.respectParentPermissions(permissions));
++            Iterator<PermissionEntry> it = concat(new LazyIterator(this, true, predicate), new LazyIterator(this, false, predicate));
++            return hasPermissions(it, predicate, permissions, tree.getPath());
+         }
+ 
+         @Override
+         public boolean isGranted(long permissions, @Nonnull PropertyState property) {
+-            return hasPermissions(getIterator(property, permissions), permissions, tree.getPath());
++            EntryPredicate predicate = new EntryPredicate(tree, property, Permissions.respectParentPermissions(permissions));
++            Iterator<PermissionEntry> it = concat(new LazyIterator(this, true, predicate), new LazyIterator(this, false, predicate));
++            return hasPermissions(it, predicate, permissions, tree.getPath());
+         }
+ 
+         //--------------------------------------------------------< private >---
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/EntryPredicate.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/EntryPredicate.java
+index 20fe765..023e18e 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/EntryPredicate.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/EntryPredicate.java
+@@ -37,6 +37,7 @@ final class EntryPredicate implements Predicate<PermissionEntry> {
+ 
+     private final String parentPath;
+     private final Tree parent;
++    private final boolean respectParent;
+ 
+     public EntryPredicate(@Nonnull Tree tree, @Nullable PropertyState property,
+                           boolean respectParent) {
+@@ -64,6 +65,7 @@ final class EntryPredicate implements Predicate<PermissionEntry> {
+             parentPath = null;
+             parent = null;
+         }
++        this.respectParent = parent != null || parentPath != null;
+     }
+ 
+     @CheckForNull
+@@ -73,25 +75,22 @@ final class EntryPredicate implements Predicate<PermissionEntry> {
+ 
+     @Override
+     public boolean apply(@Nullable PermissionEntry entry) {
++        return apply(entry, true);
++    }
++
++    public boolean apply(@Nullable PermissionEntry entry, boolean respectParent) {
+         if (entry == null) {
+             return false;
+         }
++        respectParent &= this.respectParent;
++
+         if (tree != null) {
+-            return entry.matches(tree, property) || applyToParent(entry);
++            return entry.matches(tree, property) || (respectParent && parent != null && entry.matches(parent, null));
+         } else if (path != null) {
+-            return entry.matches(path) || applyToParent(entry);
++            return entry.matches(path) || (respectParent && parentPath != null && entry.matches(parentPath));
+         } else {
+             return entry.matches();
+         }
+     }
+ 
+-    private boolean applyToParent(@Nonnull PermissionEntry entry) {
+-        if (parent != null) {
+-            return entry.matches(parent, null);
+-        } else if (parentPath != null) {
+-            return entry.matches(parentPath);
+-        } else {
+-            return false;
+-        }
+-    }
+ }
+\ No newline at end of file
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/PermissionEntry.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/PermissionEntry.java
+index 36dbe01..136ccb9 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/PermissionEntry.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/PermissionEntry.java
+@@ -122,4 +122,16 @@ final class PermissionEntry implements Comparable<PermissionEntry>, PermissionCo
+     public int hashCode() {
+         return Objects.hashCode(privilegeBits, index, path, isAllow, restriction);
+     }
++
++    @Override
++    public String toString() {
++        final StringBuilder sb = new StringBuilder("PermissionEntry{");
++        sb.append("isAllow=").append(isAllow);
++        sb.append(", privilegeBits=").append(privilegeBits);
++        sb.append(", index=").append(index);
++        sb.append(", path='").append(path).append('\'');
++        sb.append(", restriction=").append(restriction);
++        sb.append('}');
++        return sb.toString();
++    }
+ }
+\ No newline at end of file

@@ -1,0 +1,12 @@
+--- a/src/main/java/com/gdssecurity/pmd/rules/dfa/DfaSecurityRule.java
++++ b/src/main/java/com/gdssecurity/pmd/rules/dfa/DfaSecurityRule.java
+@@ -544,6 +544,9 @@ public class DfaSecurityRule extends BaseSecurityRule implements Executable {
+ 	private boolean isAnyArgumentTainted(Node simpleNode) {
+ 		ASTArgumentList argListNode = simpleNode.getFirstDescendantOfType(ASTArgumentList.class);
+ 		if (argListNode != null) {
++			if (isSanitized(argListNode)) {
++				return false;
++			}
+ 			int numChildren = argListNode.jjtGetNumChildren();
+ 			for (int i = 0; i < numChildren; i++) {
+ 				Node argument = argListNode.jjtGetChild(i);

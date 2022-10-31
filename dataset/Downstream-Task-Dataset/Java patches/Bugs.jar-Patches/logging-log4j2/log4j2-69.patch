@@ -1,0 +1,155 @@
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/FormattedMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/FormattedMessage.java
+index 1c540dd..3ca4b82 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/FormattedMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/FormattedMessage.java
+@@ -46,12 +46,11 @@ public class FormattedMessage implements Message {
+         this.messagePattern = messagePattern;
+         this.argArray = arguments;
+         this.throwable = throwable;
++        getFormattedMessage(); // LOG4J2-763 take snapshot of parameters at message construction time
+     }
+ 
+     public FormattedMessage(final String messagePattern, final Object[] arguments) {
+-        this.messagePattern = messagePattern;
+-        this.argArray = arguments;
+-        this.throwable = null;
++        this(messagePattern, arguments, null);
+     }
+ 
+     /**
+@@ -60,9 +59,7 @@ public class FormattedMessage implements Message {
+      * @param arg The parameter.
+      */
+     public FormattedMessage(final String messagePattern, final Object arg) {
+-        this.messagePattern = messagePattern;
+-        this.argArray = new Object[] {arg};
+-        this.throwable = null;
++        this(messagePattern, new Object[] {arg}, null);
+     }
+ 
+     /**
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/LocalizedMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/LocalizedMessage.java
+index c6839b8..2a2246b 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/LocalizedMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/LocalizedMessage.java
+@@ -78,6 +78,7 @@ public class LocalizedMessage implements Message, LoggerNameAwareMessage {
+         this.baseName = baseName;
+         this.resourceBundle = null;
+         this.locale = locale;
++        getFormattedMessage(); // LOG4J2-763 take snapshot of parameters at message construction time
+     }
+ 
+     public LocalizedMessage(final ResourceBundle bundle, final Locale locale, final String key,
+@@ -88,6 +89,7 @@ public class LocalizedMessage implements Message, LoggerNameAwareMessage {
+         this.baseName = null;
+         this.resourceBundle = bundle;
+         this.locale = locale;
++        getFormattedMessage(); // LOG4J2-763 take snapshot of parameters at message construction time
+     }
+ 
+     public LocalizedMessage(final Locale locale, final String key, final Object[] arguments) {
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/MapMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/MapMessage.java
+index db6826a..4cbef35 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/MapMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/MapMessage.java
+@@ -26,6 +26,11 @@ import org.apache.logging.log4j.util.Strings;
+ 
+ /**
+  * Represents a Message that consists of a Map.
++ * <p>
++ * Thread-safety note: the contents of this message can be modified after construction.
++ * When using asynchronous loggers and appenders it is not recommended to modify this message after the message is
++ * logged, because it is undefined whether the logged message string will contain the old values or the modified
++ * values.
+  */
+ public class MapMessage implements MultiformatMessage {
+     /**
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/MessageFormatMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/MessageFormatMessage.java
+index 0493b0f..f728324 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/MessageFormatMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/MessageFormatMessage.java
+@@ -49,6 +49,7 @@ public class MessageFormatMessage implements Message {
+         if (arguments != null && arguments.length > 0 && arguments[arguments.length - 1] instanceof Throwable) {
+             this.throwable = (Throwable) arguments[arguments.length - 1];
+         }
++        getFormattedMessage(); // LOG4J2-763 take snapshot of parameters at message construction time
+     }
+ 
+     /**
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/ObjectMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/ObjectMessage.java
+index 27f288e..dcccf46 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/ObjectMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/ObjectMessage.java
+@@ -29,6 +29,7 @@ public class ObjectMessage implements Message {
+     private static final long serialVersionUID = -5903272448334166185L;
+ 
+     private transient Object obj;
++    private final String objectString;
+ 
+     /**
+      * Create the ObjectMessage.
+@@ -39,6 +40,9 @@ public class ObjectMessage implements Message {
+             obj = "null";
+         }
+         this.obj = obj;
++        
++        // LOG4J2-763: take snapshot of parameters at message construction time
++        objectString = String.valueOf(obj);
+     }
+ 
+     /**
+@@ -47,7 +51,7 @@ public class ObjectMessage implements Message {
+      */
+     @Override
+     public String getFormattedMessage() {
+-        return obj.toString();
++        return objectString;
+     }
+ 
+     /**
+@@ -56,7 +60,7 @@ public class ObjectMessage implements Message {
+      */
+     @Override
+     public String getFormat() {
+-        return obj.toString();
++        return objectString;
+     }
+ 
+     /**
+@@ -89,7 +93,7 @@ public class ObjectMessage implements Message {
+ 
+     @Override
+     public String toString() {
+-        return "ObjectMessage[obj=" + obj.toString() + ']';
++        return "ObjectMessage[obj=" + objectString + ']';
+     }
+ 
+     private void writeObject(final ObjectOutputStream out) throws IOException {
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/StringFormattedMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/StringFormattedMessage.java
+index f6007e4..91df370 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/StringFormattedMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/StringFormattedMessage.java
+@@ -48,6 +48,7 @@ public class StringFormattedMessage implements Message {
+         if (arguments != null && arguments.length > 0 && arguments[arguments.length - 1] instanceof Throwable) {
+             this.throwable = (Throwable) arguments[arguments.length - 1];
+         }
++        getFormattedMessage(); // LOG4J2-763 take snapshot of parameters at message construction time
+     }
+ 
+     /**
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/StructuredDataMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/StructuredDataMessage.java
+index 246e11b..f6300ee 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/StructuredDataMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/StructuredDataMessage.java
+@@ -22,6 +22,11 @@ import org.apache.logging.log4j.util.EnglishEnums;
+ 
+ /**
+  * Represents a Message that conforms to an RFC 5424 StructuredData element along with the syslog message.
++ * <p>
++ * Thread-safety note: the contents of this message can be modified after construction.
++ * When using asynchronous loggers and appenders it is not recommended to modify this message after the message is
++ * logged, because it is undefined whether the logged message string will contain the old values or the modified
++ * values.
+  *
+  * @see <a href="https://tools.ietf.org/html/rfc5424">RFC 5424</a>
+  */

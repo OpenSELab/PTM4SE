@@ -1,0 +1,32 @@
+diff --git a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
+index e5c8889..04a8aea 100644
+--- a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
++++ b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
+@@ -70,9 +70,9 @@
+ 	@Transactional(readOnly = true)
+ 	public Collection<Owner> findByLastName(String lastName) throws DataAccessException {
+ 		Map<String, Object> params = new HashMap<String, Object>();
+-		params.put("lastName", lastName);
++		params.put("lastName", lastName+"%");
+ 		List<Owner> owners = this.namedParameterJdbcTemplate.query(
+-				"SELECT id, first_name, last_name, address, city, telephone FROM owners WHERE last_name like :lastName%",
++				"SELECT id, first_name, last_name, address, city, telephone FROM owners WHERE last_name like :lastName",
+ 				params, 
+ 				ParameterizedBeanPropertyRowMapper.newInstance(Owner.class)
+ 				);
+diff --git a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
+index e5c8889..04a8aea 100644
+--- a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
++++ b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcOwnerRepositoryImpl.java
+@@ -70,9 +70,9 @@
+ 	@Transactional(readOnly = true)
+ 	public Collection<Owner> findByLastName(String lastName) throws DataAccessException {
+ 		Map<String, Object> params = new HashMap<String, Object>();
+-		params.put("lastName", lastName);
++		params.put("lastName", lastName+"%");
+ 		List<Owner> owners = this.namedParameterJdbcTemplate.query(
+-				"SELECT id, first_name, last_name, address, city, telephone FROM owners WHERE last_name like :lastName%",
++				"SELECT id, first_name, last_name, address, city, telephone FROM owners WHERE last_name like :lastName",
+ 				params, 
+ 				ParameterizedBeanPropertyRowMapper.newInstance(Owner.class)
+ 				);

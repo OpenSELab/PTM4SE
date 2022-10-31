@@ -1,0 +1,32 @@
+diff --git a/realtime/src/main/java/com/metamx/druid/realtime/plumber/RealtimePlumberSchool.java b/realtime/src/main/java/com/metamx/druid/realtime/plumber/RealtimePlumberSchool.java
+index 21a2806..00a0891 100644
+--- a/realtime/src/main/java/com/metamx/druid/realtime/plumber/RealtimePlumberSchool.java
++++ b/realtime/src/main/java/com/metamx/druid/realtime/plumber/RealtimePlumberSchool.java
+@@ -514,8 +514,9 @@
+ 
+                     log.info("Starting merge and push.");
+ 
+-                    long minTimestamp = segmentGranularity.truncate(rejectionPolicy.getCurrMaxTime()).getMillis()
+-                                        - windowMillis;
++                    long minTimestamp = segmentGranularity.truncate(
++                        rejectionPolicy.getCurrMaxTime().minus(windowMillis)
++                    ).getMillis();
+ 
+                     List<Map.Entry<Long, Sink>> sinksToPush = Lists.newArrayList();
+                     for (Map.Entry<Long, Sink> entry : sinks.entrySet()) {
+diff --git a/realtime/src/main/java/com/metamx/druid/realtime/plumber/RealtimePlumberSchool.java b/realtime/src/main/java/com/metamx/druid/realtime/plumber/RealtimePlumberSchool.java
+index 21a2806..00a0891 100644
+--- a/realtime/src/main/java/com/metamx/druid/realtime/plumber/RealtimePlumberSchool.java
++++ b/realtime/src/main/java/com/metamx/druid/realtime/plumber/RealtimePlumberSchool.java
+@@ -514,8 +514,9 @@
+ 
+                     log.info("Starting merge and push.");
+ 
+-                    long minTimestamp = segmentGranularity.truncate(rejectionPolicy.getCurrMaxTime()).getMillis()
+-                                        - windowMillis;
++                    long minTimestamp = segmentGranularity.truncate(
++                        rejectionPolicy.getCurrMaxTime().minus(windowMillis)
++                    ).getMillis();
+ 
+                     List<Map.Entry<Long, Sink>> sinksToPush = Lists.newArrayList();
+                     for (Map.Entry<Long, Sink> entry : sinks.entrySet()) {

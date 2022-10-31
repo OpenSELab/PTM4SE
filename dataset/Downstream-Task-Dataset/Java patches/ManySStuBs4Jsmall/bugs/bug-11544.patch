@@ -1,0 +1,13 @@
+diff --git a/processing/src/main/java/org/apache/druid/segment/writeout/SegmentWriteOutMediumFactory.java b/processing/src/main/java/org/apache/druid/segment/writeout/SegmentWriteOutMediumFactory.java
+index be55b4f..bf4afef 100644
+--- a/processing/src/main/java/org/apache/druid/segment/writeout/SegmentWriteOutMediumFactory.java
++++ b/processing/src/main/java/org/apache/druid/segment/writeout/SegmentWriteOutMediumFactory.java
+@@ -27,7 +27,7 @@
+ import java.io.IOException;
+ import java.util.Set;
+ 
+-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, defaultImpl = TmpFileSegmentWriteOutMediumFactory.class)
++@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = TmpFileSegmentWriteOutMediumFactory.class)
+ @JsonSubTypes(value = {
+     @JsonSubTypes.Type(name = "tmpFile", value = TmpFileSegmentWriteOutMediumFactory.class),
+     @JsonSubTypes.Type(name = "offHeapMemory", value = OffHeapMemorySegmentWriteOutMediumFactory.class),

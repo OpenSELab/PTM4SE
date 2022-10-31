@@ -1,0 +1,43 @@
+diff --git a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/NodeDelegate.java b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/NodeDelegate.java
+index 351ae8b..bda7280 100644
+--- a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/NodeDelegate.java
++++ b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/NodeDelegate.java
+@@ -291,6 +291,10 @@ public class NodeDelegate extends ItemDelegate {
+         return new PropertyDelegate(sessionDelegate, getTree(), propertyState);
+     }
+ 
++    public void removeProperty(String name) throws InvalidItemStateException {
++        getTree().removeProperty(name);
++    }
++
+     /**
+      * Set a multi valued property
+      * @param name  oak name
+diff --git a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/NodeImpl.java b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/NodeImpl.java
+index 70d0494..fbb8b10 100644
+--- a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/NodeImpl.java
++++ b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/NodeImpl.java
+@@ -264,15 +264,16 @@ public class NodeImpl extends ItemImpl<NodeDelegate> implements Node {
+             throws RepositoryException {
+         checkStatus();
+ 
+-        int targetType = getTargetType(value, type);
+-        Value targetValue = ValueHelper.convert(value, targetType, getValueFactory());
++        String oakName = sessionDelegate.getOakPathOrThrow(jcrName);
+         if (value == null) {
+-            Property p = getProperty(jcrName);
+-            p.remove();
+-            return p;
++            dlg.removeProperty(oakName);
++            return null;
+         } else {
+-            String oakName = sessionDelegate.getOakPathOrThrow(jcrName);
+-            CoreValue oakValue = ValueConverter.toCoreValue(targetValue, sessionDelegate);
++            int targetType = getTargetType(value, type);
++            Value targetValue =
++                    ValueHelper.convert(value, targetType, getValueFactory());
++            CoreValue oakValue =
++                    ValueConverter.toCoreValue(targetValue, sessionDelegate);
+             return new PropertyImpl(dlg.setProperty(oakName, oakValue));
+         }
+     }

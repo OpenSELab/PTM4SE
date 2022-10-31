@@ -1,0 +1,48 @@
+diff --git a/core/src/main/java/cucumber/runtime/xstream/LocalizedXStreams.java b/core/src/main/java/cucumber/runtime/xstream/LocalizedXStreams.java
+index be6d20b..7b8c723 100644
+--- a/core/src/main/java/cucumber/runtime/xstream/LocalizedXStreams.java
++++ b/core/src/main/java/cucumber/runtime/xstream/LocalizedXStreams.java
+@@ -77,16 +77,16 @@
+                     SingleValueConverterWrapperExt converterWrapper = (SingleValueConverterWrapperExt) getConverterLookup().lookupConverterForType(timeClass);
+                     TimeConverter timeConverter = (TimeConverter) converterWrapper.getConverter();
+                     timeConverter.setParameterInfoAndLocale(parameterInfo, locale);
+-                    timeConverters.add(timeConverter);
++                    timeConverters.get().add(timeConverter);
+                 }
+             }
+         }
+ 
+         public void unsetParameterInfo() {
+-            for (TimeConverter timeConverter : timeConverters) {
++            for (TimeConverter timeConverter : timeConverters.get()) {
+                 timeConverter.removeOnlyFormat();
+             }
+-            timeConverters.clear();
++            timeConverters.get().clear();
+         }
+ 
+         public SingleValueConverter getSingleValueConverter(Type type) {
+diff --git a/core/src/main/java/cucumber/runtime/xstream/LocalizedXStreams.java b/core/src/main/java/cucumber/runtime/xstream/LocalizedXStreams.java
+index be6d20b..7b8c723 100644
+--- a/core/src/main/java/cucumber/runtime/xstream/LocalizedXStreams.java
++++ b/core/src/main/java/cucumber/runtime/xstream/LocalizedXStreams.java
+@@ -77,16 +77,16 @@
+                     SingleValueConverterWrapperExt converterWrapper = (SingleValueConverterWrapperExt) getConverterLookup().lookupConverterForType(timeClass);
+                     TimeConverter timeConverter = (TimeConverter) converterWrapper.getConverter();
+                     timeConverter.setParameterInfoAndLocale(parameterInfo, locale);
+-                    timeConverters.add(timeConverter);
++                    timeConverters.get().add(timeConverter);
+                 }
+             }
+         }
+ 
+         public void unsetParameterInfo() {
+-            for (TimeConverter timeConverter : timeConverters) {
++            for (TimeConverter timeConverter : timeConverters.get()) {
+                 timeConverter.removeOnlyFormat();
+             }
+-            timeConverters.clear();
++            timeConverters.get().clear();
+         }
+ 
+         public SingleValueConverter getSingleValueConverter(Type type) {

@@ -1,0 +1,44 @@
+diff --git a/graylog2-rest-models/src/main/java/org/graylog2/rest/models/system/indexer/responses/IndexRangeSummary.java b/graylog2-rest-models/src/main/java/org/graylog2/rest/models/system/indexer/responses/IndexRangeSummary.java
+index a1f843a..72d35a7 100644
+--- a/graylog2-rest-models/src/main/java/org/graylog2/rest/models/system/indexer/responses/IndexRangeSummary.java
++++ b/graylog2-rest-models/src/main/java/org/graylog2/rest/models/system/indexer/responses/IndexRangeSummary.java
+@@ -33,7 +33,7 @@
+     @Nullable @JsonProperty("calculated_at")
+     public abstract DateTime calculatedAt();
+ 
+-    @JsonProperty("start")
++    @JsonProperty("starts")
+     public abstract DateTime start();
+ 
+     @JsonProperty("calculation_took_ms")
+@@ -42,7 +42,7 @@
+     @JsonCreator
+     public static IndexRangeSummary create(@JsonProperty("index") String indexName,
+                                            @Nullable @JsonProperty("calculated_at") DateTime calculatedAt,
+-                                           @JsonProperty("start") DateTime start,
++                                           @JsonProperty("starts") DateTime start,
+                                            @JsonProperty("calculation_took_ms") int calculationTookMs) {
+         return new AutoValue_IndexRangeSummary(indexName, calculatedAt, start, calculationTookMs);
+     }
+diff --git a/graylog2-rest-models/src/main/java/org/graylog2/rest/models/system/indexer/responses/IndexRangeSummary.java b/graylog2-rest-models/src/main/java/org/graylog2/rest/models/system/indexer/responses/IndexRangeSummary.java
+index a1f843a..72d35a7 100644
+--- a/graylog2-rest-models/src/main/java/org/graylog2/rest/models/system/indexer/responses/IndexRangeSummary.java
++++ b/graylog2-rest-models/src/main/java/org/graylog2/rest/models/system/indexer/responses/IndexRangeSummary.java
+@@ -33,7 +33,7 @@
+     @Nullable @JsonProperty("calculated_at")
+     public abstract DateTime calculatedAt();
+ 
+-    @JsonProperty("start")
++    @JsonProperty("starts")
+     public abstract DateTime start();
+ 
+     @JsonProperty("calculation_took_ms")
+@@ -42,7 +42,7 @@
+     @JsonCreator
+     public static IndexRangeSummary create(@JsonProperty("index") String indexName,
+                                            @Nullable @JsonProperty("calculated_at") DateTime calculatedAt,
+-                                           @JsonProperty("start") DateTime start,
++                                           @JsonProperty("starts") DateTime start,
+                                            @JsonProperty("calculation_took_ms") int calculationTookMs) {
+         return new AutoValue_IndexRangeSummary(indexName, calculatedAt, start, calculationTookMs);
+     }

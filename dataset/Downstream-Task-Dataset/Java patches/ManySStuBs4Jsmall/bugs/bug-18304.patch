@@ -1,0 +1,26 @@
+diff --git a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
+index b4d5023..d2936f0 100644
+--- a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
++++ b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
+@@ -83,7 +83,7 @@
+                             Object[] args = message.<Object[]>getPayload();
+                             String name = ( String ) args[0];
+                             URI[] clusterInstanceUris = ( URI[] ) args[1];
+-                            context.joining( name, Iterables.iterable( clusterInstanceUris ) );
++                            context.joining( name, Iterables.<URI,URI>iterable( clusterInstanceUris ) );
+ 
+                             for ( URI potentialClusterInstanceUri : clusterInstanceUris )
+                             {
+diff --git a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
+index b4d5023..d2936f0 100644
+--- a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
++++ b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
+@@ -83,7 +83,7 @@
+                             Object[] args = message.<Object[]>getPayload();
+                             String name = ( String ) args[0];
+                             URI[] clusterInstanceUris = ( URI[] ) args[1];
+-                            context.joining( name, Iterables.iterable( clusterInstanceUris ) );
++                            context.joining( name, Iterables.<URI,URI>iterable( clusterInstanceUris ) );
+ 
+                             for ( URI potentialClusterInstanceUri : clusterInstanceUris )
+                             {

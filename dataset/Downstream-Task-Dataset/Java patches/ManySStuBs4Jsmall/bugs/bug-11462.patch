@@ -1,0 +1,19 @@
+diff --git a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/GarbageCollectorMetricSet.java b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/GarbageCollectorMetricSet.java
+index 5389b9e..4b1785c 100644
+--- a/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/GarbageCollectorMetricSet.java
++++ b/metrics-jvm/src/main/java/io/dropwizard/metrics/jvm/GarbageCollectorMetricSet.java
+@@ -33,12 +33,12 @@
+      * @param garbageCollectors    the garbage collectors
+      */
+     public GarbageCollectorMetricSet(Collection<GarbageCollectorMXBean> garbageCollectors) {
+-        this.garbageCollectors = new ArrayList<GarbageCollectorMXBean>(garbageCollectors);
++        this.garbageCollectors = new ArrayList<>(garbageCollectors);
+     }
+ 
+     @Override
+     public Map<MetricName, Metric> getMetrics() {
+-        final Map<MetricName, Metric> gauges = new HashMap<MetricName, Metric>();
++        final Map<MetricName, Metric> gauges = new HashMap<>();
+         for (final GarbageCollectorMXBean gc : garbageCollectors) {
+             final String name = WHITESPACE.matcher(gc.getName()).replaceAll("-");
+             gauges.put(name(name, "count"), new Gauge<Long>() {

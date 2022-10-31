@@ -1,0 +1,44 @@
+diff --git a/components/camel-rmi/src/test/java/org/apache/camel/component/rmi/RmiRouteEndpointTest.java b/components/camel-rmi/src/test/java/org/apache/camel/component/rmi/RmiRouteEndpointTest.java
+index d7f405a..20750f2 100644
+--- a/components/camel-rmi/src/test/java/org/apache/camel/component/rmi/RmiRouteEndpointTest.java
++++ b/components/camel-rmi/src/test/java/org/apache/camel/component/rmi/RmiRouteEndpointTest.java
+@@ -37,7 +37,7 @@
+             public void configure() throws Exception {
+                 RmiEndpoint say = new RmiEndpoint();
+                 say.setCamelContext(context);
+-                say.setUri(new URI("uri://localhost:37542/bye"));
++                say.setUri(new URI("rmi://localhost:37542/bye"));
+ 
+                 from("direct:hello").to(say);
+ 
+@@ -46,7 +46,7 @@
+                 RmiEndpoint bye = new RmiEndpoint();
+                 bye.setCamelContext(context);
+                 bye.setRemoteInterfaces(ISay.class);
+-                bye.setUri(new URI("uri://localhost:37542/bye"));
++                bye.setUri(new URI("rmi://localhost:37542/bye"));
+ 
+                 from(bye).to("bean:bye");
+             }
+diff --git a/components/camel-rmi/src/test/java/org/apache/camel/component/rmi/RmiRouteEndpointTest.java b/components/camel-rmi/src/test/java/org/apache/camel/component/rmi/RmiRouteEndpointTest.java
+index d7f405a..20750f2 100644
+--- a/components/camel-rmi/src/test/java/org/apache/camel/component/rmi/RmiRouteEndpointTest.java
++++ b/components/camel-rmi/src/test/java/org/apache/camel/component/rmi/RmiRouteEndpointTest.java
+@@ -37,7 +37,7 @@
+             public void configure() throws Exception {
+                 RmiEndpoint say = new RmiEndpoint();
+                 say.setCamelContext(context);
+-                say.setUri(new URI("uri://localhost:37542/bye"));
++                say.setUri(new URI("rmi://localhost:37542/bye"));
+ 
+                 from("direct:hello").to(say);
+ 
+@@ -46,7 +46,7 @@
+                 RmiEndpoint bye = new RmiEndpoint();
+                 bye.setCamelContext(context);
+                 bye.setRemoteInterfaces(ISay.class);
+-                bye.setUri(new URI("uri://localhost:37542/bye"));
++                bye.setUri(new URI("rmi://localhost:37542/bye"));
+ 
+                 from(bye).to("bean:bye");
+             }

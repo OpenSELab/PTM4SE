@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/PlanPrinter.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/PlanPrinter.java
+index 7cd3985..bb2d6d6 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/PlanPrinter.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/PlanPrinter.java
+@@ -452,7 +452,7 @@
+         {
+             for (PlanFragmentId planFragmentId : node.getSourceFragmentIds()) {
+                 PlanFragment target = fragmentsById.get().get(planFragmentId);
+-                target.getRoot().accept(this, indent);
++                target.getRoot().accept(new Visitor(target.getSymbols(), fragmentsById), indent);
+             }
+             return null;
+         }
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/PlanPrinter.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/PlanPrinter.java
+index 7cd3985..bb2d6d6 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/PlanPrinter.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/PlanPrinter.java
+@@ -452,7 +452,7 @@
+         {
+             for (PlanFragmentId planFragmentId : node.getSourceFragmentIds()) {
+                 PlanFragment target = fragmentsById.get().get(planFragmentId);
+-                target.getRoot().accept(this, indent);
++                target.getRoot().accept(new Visitor(target.getSymbols(), fragmentsById), indent);
+             }
+             return null;
+         }

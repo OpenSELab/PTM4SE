@@ -1,0 +1,98 @@
+diff --git a/Essentials/src/com/earth2me/essentials/EssentialsBlockListener.java b/Essentials/src/com/earth2me/essentials/EssentialsBlockListener.java
+index 1a7271c..bd36b3e 100644
+--- a/Essentials/src/com/earth2me/essentials/EssentialsBlockListener.java
++++ b/Essentials/src/com/earth2me/essentials/EssentialsBlockListener.java
+@@ -70,7 +70,7 @@
+ 					event.setLine(0, "§1[Protection]");
+ 				else
+ 					event.setLine(0, "§4[Protection]");
+-				event.setLine(3, user.getName());
++				event.setLine(3, user.getName().substring(0, 14));
+ 				return;
+ 			}
+ 			if (event.getLine(0).equalsIgnoreCase("[Disposal]"))
+@@ -249,11 +249,11 @@
+ 						if (user.inGroup(line)) {
+ 							return ALLOWED;
+ 						}
+-					} else if (line.equalsIgnoreCase(user.getName())) {
++					} else if (line.equalsIgnoreCase(user.getName().substring(0, 14))) {
+ 						return ALLOWED;
+ 					}
+ 				}
+-				if (sign.getLine(3).equalsIgnoreCase(user.getName()))
++				if (sign.getLine(3).equalsIgnoreCase(user.getName().substring(0, 14)))
+ 				{
+ 					return OWNER;
+ 				}
+diff --git a/Essentials/src/com/earth2me/essentials/EssentialsEcoBlockListener.java b/Essentials/src/com/earth2me/essentials/EssentialsEcoBlockListener.java
+index 71812d4..9e1f14e 100644
+--- a/Essentials/src/com/earth2me/essentials/EssentialsEcoBlockListener.java
++++ b/Essentials/src/com/earth2me/essentials/EssentialsEcoBlockListener.java
+@@ -23,7 +23,7 @@
+ 
+ 		if (sign.getLine(0).equals("§1[Trade]"))
+ 		{
+-			if (!sign.getLine(3).substring(2).equals(user.getName())) {
++			if (!sign.getLine(3).substring(2).equals(user.getName().substring(0, 14))) {
+ 				if (!user.isOp()) {
+ 					event.setCancelled(true);
+ 				}
+@@ -149,7 +149,7 @@
+ 				event.setLine(0, "§1[Trade]");
+ 				event.setLine(1, (m1 ? "$" + q1 : q1 + " " + l1[1]) + ":0");
+ 				event.setLine(2, (m2 ? "$" + q2 : q2 + " " + l2[1]) + ":" + r2);
+-				event.setLine(3, "§8" + user.getName());
++				event.setLine(3, "§8" + user.getName().substring(0, 14));
+ 			}
+ 			catch (Throwable ex)
+ 			{
+@@ -157,7 +157,7 @@
+ 				event.setLine(0, "§4[Trade]");
+ 				event.setLine(1, "# ItemOr$");
+ 				event.setLine(2, "# ItemOr$:#");
+-				event.setLine(3, "§8" + user.getName());
++				event.setLine(3, "§8" + user.getName().substring(0, 14));
+ 			}
+ 			return;
+ 		}
+diff --git a/Essentials/src/com/earth2me/essentials/EssentialsEcoPlayerListener.java b/Essentials/src/com/earth2me/essentials/EssentialsEcoPlayerListener.java
+index 5025176..bbeb8d3 100644
+--- a/Essentials/src/com/earth2me/essentials/EssentialsEcoPlayerListener.java
++++ b/Essentials/src/com/earth2me/essentials/EssentialsEcoPlayerListener.java
+@@ -85,7 +85,7 @@
+ 				ItemStack qi1 = m1 ? null : ItemDb.get(l1[1], q1);
+ 				ItemStack qi2 = m2 ? null : ItemDb.get(l2[1], q2);
+ 
+-				if (user.getName().equals(sign.getLines()[3].substring(2)))
++				if (user.getName().substring(0, 14).equals(sign.getLines()[3].substring(2)))
+ 				{
+ 					if (m1)
+ 					{
+diff --git a/Essentials/src/com/earth2me/essentials/EssentialsBlockListener.java b/Essentials/src/com/earth2me/essentials/EssentialsBlockListener.java
+index 1a7271c..bd36b3e 100644
+--- a/Essentials/src/com/earth2me/essentials/EssentialsBlockListener.java
++++ b/Essentials/src/com/earth2me/essentials/EssentialsBlockListener.java
+@@ -70,7 +70,7 @@
+ 					event.setLine(0, "§1[Protection]");
+ 				else
+ 					event.setLine(0, "§4[Protection]");
+-				event.setLine(3, user.getName());
++				event.setLine(3, user.getName().substring(0, 14));
+ 				return;
+ 			}
+ 			if (event.getLine(0).equalsIgnoreCase("[Disposal]"))
+@@ -249,11 +249,11 @@
+ 						if (user.inGroup(line)) {
+ 							return ALLOWED;
+ 						}
+-					} else if (line.equalsIgnoreCase(user.getName())) {
++					} else if (line.equalsIgnoreCase(user.getName().substring(0, 14))) {
+ 						return ALLOWED;
+ 					}
+ 				}
+-				if (sign.getLine(3).equalsIgnoreCase(user.getName()))
++				if (sign.getLine(3).equalsIgnoreCase(user.getName().substring(0, 14)))
+ 				{
+ 					return OWNER;
+ 				}

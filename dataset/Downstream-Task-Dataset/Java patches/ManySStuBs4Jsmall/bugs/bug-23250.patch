@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/thinkaurelius/titan/graphdb/blueprints/TitanBlueprintsTransaction.java b/src/main/java/com/thinkaurelius/titan/graphdb/blueprints/TitanBlueprintsTransaction.java
+index 4e3e2e6..ad26a0f 100644
+--- a/src/main/java/com/thinkaurelius/titan/graphdb/blueprints/TitanBlueprintsTransaction.java
++++ b/src/main/java/com/thinkaurelius/titan/graphdb/blueprints/TitanBlueprintsTransaction.java
+@@ -122,7 +122,7 @@
+ 
+     @Override
+     public <T extends Element> Set<String> getIndexedKeys(Class<T> elementClass) {
+-        Preconditions.checkArgument(elementClass.equals(Vertex.class),"Only vertex indexing is supported");
++        Preconditions.checkArgument(elementClass==null || elementClass.equals(Vertex.class),"Only vertex indexing is supported");
+ 
+         Set<String> indexedkeys = new HashSet<String>();
+         for (TitanVertex v : getVertices(SystemKey.TypeClass, TitanTypeClass.KEY)) {
+diff --git a/src/main/java/com/thinkaurelius/titan/graphdb/blueprints/TitanBlueprintsTransaction.java b/src/main/java/com/thinkaurelius/titan/graphdb/blueprints/TitanBlueprintsTransaction.java
+index 4e3e2e6..ad26a0f 100644
+--- a/src/main/java/com/thinkaurelius/titan/graphdb/blueprints/TitanBlueprintsTransaction.java
++++ b/src/main/java/com/thinkaurelius/titan/graphdb/blueprints/TitanBlueprintsTransaction.java
+@@ -122,7 +122,7 @@
+ 
+     @Override
+     public <T extends Element> Set<String> getIndexedKeys(Class<T> elementClass) {
+-        Preconditions.checkArgument(elementClass.equals(Vertex.class),"Only vertex indexing is supported");
++        Preconditions.checkArgument(elementClass==null || elementClass.equals(Vertex.class),"Only vertex indexing is supported");
+ 
+         Set<String> indexedkeys = new HashSet<String>();
+         for (TitanVertex v : getVertices(SystemKey.TypeClass, TitanTypeClass.KEY)) {

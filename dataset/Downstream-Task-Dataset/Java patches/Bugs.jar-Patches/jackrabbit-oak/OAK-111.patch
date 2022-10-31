@@ -1,0 +1,61 @@
+diff --git a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexEditor.java b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexEditor.java
+index 5277652..e13e7ef 100644
+--- a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexEditor.java
++++ b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexEditor.java
+@@ -38,6 +38,7 @@ import org.apache.jackrabbit.oak.api.PropertyState;
+ import org.apache.jackrabbit.oak.api.Type;
+ import org.apache.jackrabbit.oak.plugins.index.IndexEditor;
+ import org.apache.jackrabbit.oak.plugins.index.IndexUpdateCallback;
++import org.apache.jackrabbit.oak.plugins.memory.EmptyNodeState;
+ import org.apache.jackrabbit.oak.plugins.nodetype.TypePredicate;
+ import org.apache.jackrabbit.oak.spi.commit.Editor;
+ import org.apache.jackrabbit.oak.spi.state.NodeBuilder;
+@@ -122,6 +123,9 @@ public class LuceneIndexEditor implements IndexEditor {
+     @Override
+     public void enter(NodeState before, NodeState after)
+             throws CommitFailedException {
++        if (EmptyNodeState.MISSING_NODE == before && parent == null){
++            context.enableReindexMode();
++        }
+     }
+ 
+     @Override
+diff --git a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexEditorContext.java b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexEditorContext.java
+index 686db73..a25bc41 100644
+--- a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexEditorContext.java
++++ b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexEditorContext.java
+@@ -101,6 +101,8 @@ public class LuceneIndexEditorContext {
+ 
+     private final IndexUpdateCallback updateCallback;
+ 
++    private boolean reindex;
++
+     LuceneIndexEditorContext(NodeBuilder definition, Analyzer analyzer, IndexUpdateCallback updateCallback) {
+         this.definitionBuilder = definition;
+         this.definition = new IndexDefinition(definitionBuilder);
+@@ -132,6 +134,14 @@ public class LuceneIndexEditorContext {
+      * close writer if it's not null
+      */
+     void closeWriter() throws IOException {
++        //If reindex or fresh index and write is null on close
++        //it indicates that the index is empty. In such a case trigger
++        //creation of write such that an empty Lucene index state is persisted
++        //in directory
++        if (reindex && writer == null){
++            getWriter();
++        }
++
+         if (writer != null) {
+             writer.close();
+ 
+@@ -144,6 +154,10 @@ public class LuceneIndexEditorContext {
+         }
+     }
+ 
++    public void enableReindexMode(){
++        reindex = true;
++    }
++
+     public long incIndexedNodes() {
+         indexedNodes++;
+         return indexedNodes;

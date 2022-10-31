@@ -1,0 +1,189 @@
+diff --git a/src/main/java/org/jboss/netty/handler/codec/frame/FrameDecoder.java b/src/main/java/org/jboss/netty/handler/codec/frame/FrameDecoder.java
+index 626ca84..d5701b4 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/frame/FrameDecoder.java
++++ b/src/main/java/org/jboss/netty/handler/codec/frame/FrameDecoder.java
+@@ -279,7 +279,7 @@
+                 for (int i = 0; i < length; i ++) {
+                     Channels.fireMessageReceived(context, Array.get(result, i), remoteAddress);
+                 }
+-            } else if (result instanceof Iterable) {
++            } else if (result instanceof Iterable<?>) {
+                 for (Object r: (Iterable<?>) result) {
+                     Channels.fireMessageReceived(context, r, remoteAddress);
+                 }
+diff --git a/src/main/java/org/jboss/netty/handler/codec/http/DefaultHttpMessage.java b/src/main/java/org/jboss/netty/handler/codec/http/DefaultHttpMessage.java
+index ce8f69f..719d317 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/http/DefaultHttpMessage.java
++++ b/src/main/java/org/jboss/netty/handler/codec/http/DefaultHttpMessage.java
+@@ -93,7 +93,7 @@
+             throw new IllegalArgumentException("values is empty.");
+         }
+ 
+-        if (values instanceof List) {
++        if (values instanceof List<?>) {
+             headers.put(name, (List<String>) values);
+         } else {
+             List<String> valueList = new LinkedList<String>();
+diff --git a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoder.java b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoder.java
+index 382b61a..e9976c5 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoder.java
++++ b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoder.java
+@@ -457,7 +457,7 @@
+                 for (int i = 0; i < length; i ++) {
+                     Channels.fireMessageReceived(context, Array.get(result, i), remoteAddress);
+                 }
+-            } else if (result instanceof Iterable) {
++            } else if (result instanceof Iterable<?>) {
+                 for (Object r: (Iterable<?>) result) {
+                     Channels.fireMessageReceived(context, r, remoteAddress);
+                 }
+diff --git a/src/main/java/org/jboss/netty/util/DefaultObjectSizeEstimator.java b/src/main/java/org/jboss/netty/util/DefaultObjectSizeEstimator.java
+index f233a4d..217699e 100644
+--- a/src/main/java/org/jboss/netty/util/DefaultObjectSizeEstimator.java
++++ b/src/main/java/org/jboss/netty/util/DefaultObjectSizeEstimator.java
+@@ -83,7 +83,7 @@
+             answer += ((ByteBuffer) o).remaining();
+         } else if (o instanceof CharSequence) {
+             answer += ((CharSequence) o).length() << 1;
+-        } else if (o instanceof Iterable) {
++        } else if (o instanceof Iterable<?>) {
+             for (Object m : (Iterable<?>) o) {
+                 answer += estimateSize(m);
+             }
+diff --git a/src/main/java/org/jboss/netty/util/internal/ConcurrentHashMap.java b/src/main/java/org/jboss/netty/util/internal/ConcurrentHashMap.java
+index cb98754..e2fa5a8 100644
+--- a/src/main/java/org/jboss/netty/util/internal/ConcurrentHashMap.java
++++ b/src/main/java/org/jboss/netty/util/internal/ConcurrentHashMap.java
+@@ -1259,7 +1259,7 @@
+ 
+         @Override
+         public boolean equals(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             @SuppressWarnings("unchecked")
+@@ -1390,7 +1390,7 @@
+ 
+         @Override
+         public boolean contains(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+@@ -1400,7 +1400,7 @@
+ 
+         @Override
+         public boolean remove(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+diff --git a/src/main/java/org/jboss/netty/util/internal/ConcurrentIdentityHashMap.java b/src/main/java/org/jboss/netty/util/internal/ConcurrentIdentityHashMap.java
+index daef025..cfd03ee 100644
+--- a/src/main/java/org/jboss/netty/util/internal/ConcurrentIdentityHashMap.java
++++ b/src/main/java/org/jboss/netty/util/internal/ConcurrentIdentityHashMap.java
+@@ -1261,7 +1261,7 @@
+ 
+         @Override
+         public boolean equals(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             @SuppressWarnings("unchecked")
+@@ -1392,7 +1392,7 @@
+ 
+         @Override
+         public boolean contains(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+@@ -1402,7 +1402,7 @@
+ 
+         @Override
+         public boolean remove(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+diff --git a/src/main/java/org/jboss/netty/util/internal/ConcurrentIdentityWeakKeyHashMap.java b/src/main/java/org/jboss/netty/util/internal/ConcurrentIdentityWeakKeyHashMap.java
+index b03f554..26b5571 100644
+--- a/src/main/java/org/jboss/netty/util/internal/ConcurrentIdentityWeakKeyHashMap.java
++++ b/src/main/java/org/jboss/netty/util/internal/ConcurrentIdentityWeakKeyHashMap.java
+@@ -1339,7 +1339,7 @@
+ 
+         @Override
+         public boolean equals(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             @SuppressWarnings("unchecked")
+@@ -1470,7 +1470,7 @@
+ 
+         @Override
+         public boolean contains(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+@@ -1480,7 +1480,7 @@
+ 
+         @Override
+         public boolean remove(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+diff --git a/src/main/java/org/jboss/netty/util/internal/ConcurrentWeakKeyHashMap.java b/src/main/java/org/jboss/netty/util/internal/ConcurrentWeakKeyHashMap.java
+index 55d7114..af8b1e8 100644
+--- a/src/main/java/org/jboss/netty/util/internal/ConcurrentWeakKeyHashMap.java
++++ b/src/main/java/org/jboss/netty/util/internal/ConcurrentWeakKeyHashMap.java
+@@ -1339,7 +1339,7 @@
+ 
+         @Override
+         public boolean equals(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             @SuppressWarnings("unchecked")
+@@ -1470,7 +1470,7 @@
+ 
+         @Override
+         public boolean contains(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+@@ -1480,7 +1480,7 @@
+ 
+         @Override
+         public boolean remove(Object o) {
+-            if (!(o instanceof Map.Entry)) {
++            if (!(o instanceof Map.Entry<?, ?>)) {
+                 return false;
+             }
+             Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
+diff --git a/src/main/java/org/jboss/netty/handler/codec/frame/FrameDecoder.java b/src/main/java/org/jboss/netty/handler/codec/frame/FrameDecoder.java
+index 626ca84..d5701b4 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/frame/FrameDecoder.java
++++ b/src/main/java/org/jboss/netty/handler/codec/frame/FrameDecoder.java
+@@ -279,7 +279,7 @@
+                 for (int i = 0; i < length; i ++) {
+                     Channels.fireMessageReceived(context, Array.get(result, i), remoteAddress);
+                 }
+-            } else if (result instanceof Iterable) {
++            } else if (result instanceof Iterable<?>) {
+                 for (Object r: (Iterable<?>) result) {
+                     Channels.fireMessageReceived(context, r, remoteAddress);
+                 }

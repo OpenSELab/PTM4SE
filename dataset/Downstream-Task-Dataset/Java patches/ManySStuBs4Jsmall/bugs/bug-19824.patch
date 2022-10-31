@@ -1,0 +1,28 @@
+diff --git a/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/common/AstroConfig.java b/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/common/AstroConfig.java
+index 58c4922..b7f2e3c 100644
+--- a/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/common/AstroConfig.java
++++ b/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/common/AstroConfig.java
+@@ -133,7 +133,7 @@
+ 		tzInfo.append(")");
+ 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("latitude", latitude)
+ 				.append("longitude", longitude).append("interval", intervallMessage)
+-				.append("systemTimezone", tzInfo.toString()).append("daylightSavings", tz.getDSTSavings() != 0)
+-				.toString();
++				.append("systemTimezone", tzInfo.toString())
++				.append("daylightSavings", Calendar.getInstance().get(Calendar.DST_OFFSET) != 0).toString();
+ 	}
+ }
+diff --git a/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/common/AstroConfig.java b/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/common/AstroConfig.java
+index 58c4922..b7f2e3c 100644
+--- a/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/common/AstroConfig.java
++++ b/bundles/binding/org.openhab.binding.astro/src/main/java/org/openhab/binding/astro/internal/common/AstroConfig.java
+@@ -133,7 +133,7 @@
+ 		tzInfo.append(")");
+ 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("latitude", latitude)
+ 				.append("longitude", longitude).append("interval", intervallMessage)
+-				.append("systemTimezone", tzInfo.toString()).append("daylightSavings", tz.getDSTSavings() != 0)
+-				.toString();
++				.append("systemTimezone", tzInfo.toString())
++				.append("daylightSavings", Calendar.getInstance().get(Calendar.DST_OFFSET) != 0).toString();
+ 	}
+ }

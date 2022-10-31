@@ -1,0 +1,172 @@
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpCompressTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpCompressTest.java
+index 1697c75..92481ec 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpCompressTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpCompressTest.java
+@@ -49,7 +49,7 @@
+         Map<String, Object> headers = new HashMap<String, Object>();
+         headers.put("content-type", "text/plain; charset=\"UTF-8\"");
+         headers.put("Accept-Encoding", "compress, gzip");
+-        String out = template.requestBodyAndHeaders("netty4-http:http://0.0.0.0:9001/foo?decoders=#myDecoders", data,
++        String out = template.requestBodyAndHeaders("netty4-http:http://localhost:9001/foo?decoders=#myDecoders", data,
+                 headers, String.class);
+         // The decoded out has some space to clean up.
+         assertEquals("Bye World", out.trim());
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpContentTypeTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpContentTypeTest.java
+index 6a9fbcb..c56a1b6 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpContentTypeTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpContentTypeTest.java
+@@ -29,11 +29,11 @@
+         getMockEndpoint("mock:input").expectedBodiesReceived("Hello World");
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.CONTENT_TYPE, "text/plain; charset=\"iso-8859-1\"");
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_CHARACTER_ENCODING, "iso-8859-1");
+-        getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL, "http://0.0.0.0:" + getPort() + "/foo");
++        getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL, "http://localhost:" + getPort() + "/foo");
+         getMockEndpoint("mock:input").expectedPropertyReceived(Exchange.CHARSET_NAME, "iso-8859-1");
+ 
+         byte[] data = "Hello World".getBytes(Charset.forName("iso-8859-1"));
+-        String out = template.requestBodyAndHeader("netty4-http:http://0.0.0.0:{{port}}/foo", data,
++        String out = template.requestBodyAndHeader("netty4-http:http://localhost:{{port}}/foo", data,
+                 "content-type", "text/plain; charset=\"iso-8859-1\"", String.class);
+         assertEquals("Bye World", out);
+ 
+@@ -45,11 +45,11 @@
+         getMockEndpoint("mock:input").expectedBodiesReceived("Hello World");
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.CONTENT_TYPE, "text/plain;charset=\"iso-8859-1\";action=\"http://somewhere.com/foo\"");
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_CHARACTER_ENCODING, "iso-8859-1");
+-        getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL, "http://0.0.0.0:" + getPort() + "/foo");
++        getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL, "http://localhost:" + getPort() + "/foo");
+         getMockEndpoint("mock:input").expectedPropertyReceived(Exchange.CHARSET_NAME, "iso-8859-1");
+ 
+         byte[] data = "Hello World".getBytes(Charset.forName("iso-8859-1"));
+-        String out = template.requestBodyAndHeader("netty4-http:http://0.0.0.0:{{port}}/foo", data,
++        String out = template.requestBodyAndHeader("netty4-http:http://localhost:{{port}}/foo", data,
+                 "content-type", "text/plain;charset=\"iso-8859-1\";action=\"http://somewhere.com/foo\"", String.class);
+         assertEquals("Bye World", out);
+ 
+@@ -61,11 +61,11 @@
+         getMockEndpoint("mock:input").expectedBodiesReceived("Hello World");
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.CONTENT_TYPE, "application/soap+xml;charset=\"utf-8\";action=\"http://somewhere.com/foo\"");
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_CHARACTER_ENCODING, "utf-8");
+-        getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL, "http://0.0.0.0:" + getPort() + "/foo");
++        getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL, "http://localhost:" + getPort() + "/foo");
+         getMockEndpoint("mock:input").expectedPropertyReceived(Exchange.CHARSET_NAME, "utf-8");
+ 
+         byte[] data = "Hello World".getBytes(Charset.forName("utf-8"));
+-        String out = template.requestBodyAndHeader("netty4-http:http://0.0.0.0:{{port}}/foo", data,
++        String out = template.requestBodyAndHeader("netty4-http:http://localhost:{{port}}/foo", data,
+                 "content-type", "application/soap+xml;charset=\"utf-8\";action=\"http://somewhere.com/foo\"", String.class);
+         assertEquals("Bye World", out);
+ 
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpProducerBridgeTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpProducerBridgeTest.java
+index 8592817..ecee0c5 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpProducerBridgeTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpProducerBridgeTest.java
+@@ -26,7 +26,7 @@
+ 
+     @Test
+     public void testProxy() throws Exception {
+-        String reply = template.requestBody("netty4-http:http://0.0.0.0:" + port1 + "/foo", "World", String.class);
++        String reply = template.requestBody("netty4-http:http://localhost:" + port1 + "/foo", "World", String.class);
+         assertEquals("Bye World", reply);
+     }
+ 
+@@ -39,7 +39,7 @@
+                 port2 = getNextPort();
+ 
+                 from("netty4-http:http://0.0.0.0:" + port1 + "/foo")
+-                        .to("netty4-http:http://0.0.0.0:" + port2 + "/bar?bridgeEndpoint=true&throwExceptionOnFailure=false");
++                        .to("netty4-http:http://localhost:" + port2 + "/bar?bridgeEndpoint=true&throwExceptionOnFailure=false");
+ 
+                 from("netty4-http:http://0.0.0.0:" + port2 + "/bar")
+                         .transform().simple("Bye ${body}");
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpProducerQueryParamTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpProducerQueryParamTest.java
+index 4bfee57..82da3b6 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpProducerQueryParamTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpProducerQueryParamTest.java
+@@ -25,7 +25,7 @@
+ 
+ public class NettyHttpProducerQueryParamTest extends BaseNettyTest {
+ 
+-    private String url = "netty4-http:http://0.0.0.0:" + getPort() + "/cheese?urlDecodeHeaders=true";
++    private String url = "netty4-http:http://localhost:" + getPort() + "/cheese?urlDecodeHeaders=true";
+ 
+     @Test
+     public void testQueryParameters() throws Exception {
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyMixedCaseHttpPathTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyMixedCaseHttpPathTest.java
+index 6d17045..e9a1a6a 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyMixedCaseHttpPathTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyMixedCaseHttpPathTest.java
+@@ -26,7 +26,7 @@
+     public void testMixedCase() throws Exception {
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_PATH, "/HelloWorld");
+ 
+-        String out = template.requestBody("netty4-http:http://0.0.0.0:{{port}}/SHoppING/HelloWorld", "Camel", String.class);
++        String out = template.requestBody("netty4-http:http://localhost:{{port}}/SHoppING/HelloWorld", "Camel", String.class);
+         assertEquals("Bye Camel", out);
+ 
+         assertMockEndpointsSatisfied();
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyProxyMixedCasePathTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyProxyMixedCasePathTest.java
+index f4cbfa7..ae50b91 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyProxyMixedCasePathTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyProxyMixedCasePathTest.java
+@@ -23,10 +23,10 @@
+ 
+     @Test
+     public void testMixedCase() throws Exception {
+-        String out = template.requestBody("netty4-http:http://0.0.0.0:{{port}}/Shopping", "Camel", String.class);
++        String out = template.requestBody("netty4-http:http://localhost:{{port}}/Shopping", "Camel", String.class);
+         assertEquals("Bye Camel", out);
+ 
+-        out = template.requestBody("netty4-http:http://0.0.0.0:{{port}}/shopping", "World", String.class);
++        out = template.requestBody("netty4-http:http://localhost:{{port}}/shopping", "World", String.class);
+         assertEquals("Bye World", out);
+     }
+ 
+@@ -35,7 +35,7 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("netty4-http:http://0.0.0.0:{{port}}/Shopping").to("netty4-http:http://0.0.0.0:{{port}}/ws/svc/Shopping");
++                from("netty4-http:http://0.0.0.0:{{port}}/Shopping").to("netty4-http:http://localhost:{{port}}/ws/svc/Shopping");
+ 
+                 from("netty4-http:http://0.0.0.0:{{port}}/ws/svc/Shopping").transform(body().prepend("Bye "));
+             }
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRecipientListHttpBaseTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRecipientListHttpBaseTest.java
+index 7ca68b8..81c157b 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRecipientListHttpBaseTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRecipientListHttpBaseTest.java
+@@ -45,7 +45,7 @@
+                     .transform(body().prepend("Bye "));
+ 
+                 from("direct:start")
+-                    .recipientList().constant("netty4-http:http://0.0.0.0:{{port}}");
++                    .recipientList().constant("netty4-http:http://localhost:{{port}}");
+             }
+         };
+     }
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRouteSimpleTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRouteSimpleTest.java
+index da7abf5..a7ce942 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRouteSimpleTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRouteSimpleTest.java
+@@ -41,7 +41,7 @@
+             public void configure() throws Exception {
+                 from("netty4-http:http://0.0.0.0:{{port}}/foo")
+                     .to("mock:input1")
+-                    .to("netty4-http:http://0.0.0.0:" + port2 + "/bar");
++                    .to("netty4-http:http://localhost:" + port2 + "/bar");
+                 from("netty4-http:http://0.0.0.0:" + port2 + "/bar")
+                     .to("mock:input2")
+                     .transform().constant("Bye World");
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpCompressTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpCompressTest.java
+index 1697c75..92481ec 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpCompressTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyHttpCompressTest.java
+@@ -49,7 +49,7 @@
+         Map<String, Object> headers = new HashMap<String, Object>();
+         headers.put("content-type", "text/plain; charset=\"UTF-8\"");
+         headers.put("Accept-Encoding", "compress, gzip");
+-        String out = template.requestBodyAndHeaders("netty4-http:http://0.0.0.0:9001/foo?decoders=#myDecoders", data,
++        String out = template.requestBodyAndHeaders("netty4-http:http://localhost:9001/foo?decoders=#myDecoders", data,
+                 headers, String.class);
+         // The decoded out has some space to clean up.
+         assertEquals("Bye World", out.trim());

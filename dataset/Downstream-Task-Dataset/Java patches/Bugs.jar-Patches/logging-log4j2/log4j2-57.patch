@@ -1,0 +1,19 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/jmx/Server.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/jmx/Server.java
+index 537b029..898e5e1 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/jmx/Server.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/jmx/Server.java
+@@ -87,6 +87,14 @@ public final class Server {
+                 // no need to escape these, but value must be quoted
+                 needsQuotes = true;
+                 break;
++            case '\r':
++                // replace by \\r, no need to quote
++                sb.append("\\r");
++                continue;
++            case '\n':
++                // replace by \\n, no need to quote
++                sb.append("\\n");
++                continue;
+             }
+             sb.append(c);
+         }

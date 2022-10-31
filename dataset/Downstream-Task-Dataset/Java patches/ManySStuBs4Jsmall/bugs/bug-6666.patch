@@ -1,0 +1,23 @@
+diff --git a/stratosphere-runtime/src/main/java/eu/stratosphere/nephele/taskmanager/TaskManager.java b/stratosphere-runtime/src/main/java/eu/stratosphere/nephele/taskmanager/TaskManager.java
+index 12df70c..a78bff0 100644
+--- a/stratosphere-runtime/src/main/java/eu/stratosphere/nephele/taskmanager/TaskManager.java
++++ b/stratosphere-runtime/src/main/java/eu/stratosphere/nephele/taskmanager/TaskManager.java
+@@ -934,15 +934,15 @@
+ 			final File f = new File(dir);
+ 
+ 			if (!f.exists()) {
+-				throw new Exception("Temporary file directory #" + (i + 1) + " does not exist.");
++				throw new Exception("Temporary file directory '" + f.getAbsolutePath() + "' does not exist.");
+ 			}
+ 
+ 			if (!f.isDirectory()) {
+-				throw new Exception("Temporary file directory #" + (i + 1) + " is not a directory.");
++				throw new Exception("Temporary file directory '" + f.getAbsolutePath() + "' is not a directory.");
+ 			}
+ 
+ 			if (!f.canWrite()) {
+-				throw new Exception("Temporary file directory #" + (i + 1) + " is not writable.");
++				throw new Exception("Temporary file directory '" + f.getAbsolutePath() + "' is not writable.");
+ 			}
+ 		}
+ 	}

@@ -1,0 +1,26 @@
+diff --git a/src/main/java/io/vertx/core/eventbus/impl/HandlerRegistration.java b/src/main/java/io/vertx/core/eventbus/impl/HandlerRegistration.java
+index 8d02ebb..55ba03b 100644
+--- a/src/main/java/io/vertx/core/eventbus/impl/HandlerRegistration.java
++++ b/src/main/java/io/vertx/core/eventbus/impl/HandlerRegistration.java
+@@ -212,7 +212,7 @@
+       theHandler.handle(message);
+       metrics.endHandleMessage(metric, null);
+     } catch (Exception e) {
+-      log.error("Failed to handleMessage", e);
++      log.error("Failed to handleMessage. address: " + message.address(), e);
+       metrics.endHandleMessage(metric, e);
+       throw e;
+     }
+diff --git a/src/main/java/io/vertx/core/eventbus/impl/HandlerRegistration.java b/src/main/java/io/vertx/core/eventbus/impl/HandlerRegistration.java
+index 8d02ebb..55ba03b 100644
+--- a/src/main/java/io/vertx/core/eventbus/impl/HandlerRegistration.java
++++ b/src/main/java/io/vertx/core/eventbus/impl/HandlerRegistration.java
+@@ -212,7 +212,7 @@
+       theHandler.handle(message);
+       metrics.endHandleMessage(metric, null);
+     } catch (Exception e) {
+-      log.error("Failed to handleMessage", e);
++      log.error("Failed to handleMessage. address: " + message.address(), e);
+       metrics.endHandleMessage(metric, e);
+       throw e;
+     }

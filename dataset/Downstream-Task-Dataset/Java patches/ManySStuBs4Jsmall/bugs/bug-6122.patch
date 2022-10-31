@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/enricher/PollEnricherTest.java b/camel-core/src/test/java/org/apache/camel/processor/enricher/PollEnricherTest.java
+index ab28e7d..ad612e0 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/enricher/PollEnricherTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/enricher/PollEnricherTest.java
+@@ -103,7 +103,7 @@
+     public void testPollEnrichInOutPlusHeader() throws InterruptedException {
+         template.sendBody("seda:foo4", "blah");
+ 
+-        Exchange exchange = template.send("direct:enricher-test-4", ExchangePattern.InOut, new Processor() {
++        Exchange exchange = template.request("direct:enricher-test-4", new Processor() {
+             public void process(Exchange exchange) {
+                 exchange.getIn().setHeader("foo", "bar");
+                 exchange.getIn().setBody("test");
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/enricher/PollEnricherTest.java b/camel-core/src/test/java/org/apache/camel/processor/enricher/PollEnricherTest.java
+index ab28e7d..ad612e0 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/enricher/PollEnricherTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/enricher/PollEnricherTest.java
+@@ -103,7 +103,7 @@
+     public void testPollEnrichInOutPlusHeader() throws InterruptedException {
+         template.sendBody("seda:foo4", "blah");
+ 
+-        Exchange exchange = template.send("direct:enricher-test-4", ExchangePattern.InOut, new Processor() {
++        Exchange exchange = template.request("direct:enricher-test-4", new Processor() {
+             public void process(Exchange exchange) {
+                 exchange.getIn().setHeader("foo", "bar");
+                 exchange.getIn().setBody("test");

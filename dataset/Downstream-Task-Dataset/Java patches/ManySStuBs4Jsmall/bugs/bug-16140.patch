@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/proxy/MapProxySupport.java b/hazelcast/src/main/java/com/hazelcast/map/proxy/MapProxySupport.java
+index 120e0df..faa83eb 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/proxy/MapProxySupport.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/proxy/MapProxySupport.java
+@@ -124,7 +124,7 @@
+             for (int i = 0; i <= backupCount; i++) {
+                 int partitionId = partitionService.getPartitionId(key);
+                 PartitionView partition = partitionService.getPartition(partitionId);
+-                if (partition.getReplicaAddress(i).equals(getNodeEngine().getThisAddress())) {
++                if (getNodeEngine().getThisAddress().equals(partition.getReplicaAddress(i))) {
+                     Object val = mapService.getPartitionContainer(partitionId).getRecordStore(name).get(key);
+                     if (val != null) {
+                         mapService.interceptAfterGet(name, val);
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/proxy/MapProxySupport.java b/hazelcast/src/main/java/com/hazelcast/map/proxy/MapProxySupport.java
+index 120e0df..faa83eb 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/proxy/MapProxySupport.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/proxy/MapProxySupport.java
+@@ -124,7 +124,7 @@
+             for (int i = 0; i <= backupCount; i++) {
+                 int partitionId = partitionService.getPartitionId(key);
+                 PartitionView partition = partitionService.getPartition(partitionId);
+-                if (partition.getReplicaAddress(i).equals(getNodeEngine().getThisAddress())) {
++                if (getNodeEngine().getThisAddress().equals(partition.getReplicaAddress(i))) {
+                     Object val = mapService.getPartitionContainer(partitionId).getRecordStore(name).get(key);
+                     if (val != null) {
+                         mapService.interceptAfterGet(name, val);

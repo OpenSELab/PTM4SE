@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
+index 6ab27ec..50bbdd1 100644
+--- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
++++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
+@@ -242,7 +242,7 @@
+     public void removeClass(String name) {
+         Class<?> clazz = classes.remove(name);
+         
+-        if (ConfigurationSerializable.class.isAssignableFrom(clazz)) {
++        if ((clazz != null) && (ConfigurationSerializable.class.isAssignableFrom(clazz))) {
+             Class<? extends ConfigurationSerializable> serializable = (Class<? extends ConfigurationSerializable>)clazz;
+             ConfigurationSerialization.unregisterClass(serializable);
+         }
+diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
+index 6ab27ec..50bbdd1 100644
+--- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
++++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
+@@ -242,7 +242,7 @@
+     public void removeClass(String name) {
+         Class<?> clazz = classes.remove(name);
+         
+-        if (ConfigurationSerializable.class.isAssignableFrom(clazz)) {
++        if ((clazz != null) && (ConfigurationSerializable.class.isAssignableFrom(clazz))) {
+             Class<? extends ConfigurationSerializable> serializable = (Class<? extends ConfigurationSerializable>)clazz;
+             ConfigurationSerialization.unregisterClass(serializable);
+         }

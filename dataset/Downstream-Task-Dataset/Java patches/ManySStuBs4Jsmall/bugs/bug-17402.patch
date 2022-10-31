@@ -1,0 +1,26 @@
+diff --git a/gdx/src/com/badlogic/gdx/graphics/glutils/ETC1TextureData.java b/gdx/src/com/badlogic/gdx/graphics/glutils/ETC1TextureData.java
+index cf4b59a..2318983 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/glutils/ETC1TextureData.java
++++ b/gdx/src/com/badlogic/gdx/graphics/glutils/ETC1TextureData.java
+@@ -75,7 +75,7 @@
+ 	public void consumeCompressedData () {
+ 		if (!isPrepared) throw new GdxRuntimeException("Call prepare() before calling consumeCompressedData()");
+ 
+-		if (Gdx.app.getType() == ApplicationType.Desktop || Gdx.graphics.isGL20Available() == false) {
++		if (!Gdx.graphics.supportsExtension("GL_OES_compressed_ETC1_RGB8_texture") || Gdx.graphics.isGL20Available() == false) {
+ 			Pixmap pixmap = ETC1.decodeImage(data, Format.RGB565);
+ 			Gdx.gl.glTexImage2D(GL10.GL_TEXTURE_2D, 0, pixmap.getGLInternalFormat(), pixmap.getWidth(), pixmap.getHeight(), 0,
+ 				pixmap.getGLFormat(), pixmap.getGLType(), pixmap.getPixels());
+diff --git a/gdx/src/com/badlogic/gdx/graphics/glutils/ETC1TextureData.java b/gdx/src/com/badlogic/gdx/graphics/glutils/ETC1TextureData.java
+index cf4b59a..2318983 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/glutils/ETC1TextureData.java
++++ b/gdx/src/com/badlogic/gdx/graphics/glutils/ETC1TextureData.java
+@@ -75,7 +75,7 @@
+ 	public void consumeCompressedData () {
+ 		if (!isPrepared) throw new GdxRuntimeException("Call prepare() before calling consumeCompressedData()");
+ 
+-		if (Gdx.app.getType() == ApplicationType.Desktop || Gdx.graphics.isGL20Available() == false) {
++		if (!Gdx.graphics.supportsExtension("GL_OES_compressed_ETC1_RGB8_texture") || Gdx.graphics.isGL20Available() == false) {
+ 			Pixmap pixmap = ETC1.decodeImage(data, Format.RGB565);
+ 			Gdx.gl.glTexImage2D(GL10.GL_TEXTURE_2D, 0, pixmap.getGLInternalFormat(), pixmap.getWidth(), pixmap.getHeight(), 0,
+ 				pixmap.getGLFormat(), pixmap.getGLType(), pixmap.getPixels());

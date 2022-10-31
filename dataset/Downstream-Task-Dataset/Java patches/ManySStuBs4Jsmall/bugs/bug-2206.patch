@@ -1,0 +1,215 @@
+diff --git a/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java b/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
+index 597fd0e..fc5c6c4 100644
+--- a/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
++++ b/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
+@@ -284,7 +284,7 @@
+             assertNotNull(r);
+             assertEquals(r.getStatusCode(), 200);
+             String resume = r.getResponseBody();
+-            assertEquals(resume, AtmosphereResourceImpl.createStreamingPadding(null));
++            assertEquals(resume.trim(), "");
+         } catch (Exception e) {
+             logger.error("test failed", e);
+             fail(e.getMessage());
+@@ -383,7 +383,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -455,7 +455,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -537,7 +537,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -686,7 +686,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -767,7 +767,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -847,7 +847,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -921,7 +921,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -1128,7 +1128,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -1195,7 +1195,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/ApplicationConfig.java b/modules/cpr/src/main/java/org/atmosphere/cpr/ApplicationConfig.java
+index b16e4fd..a813726 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/ApplicationConfig.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/ApplicationConfig.java
+@@ -164,7 +164,8 @@
+      */
+     String ALLOW_QUERYSTRING_AS_REQUEST = ApplicationConfig.class.getPackage().getName() + ".allowQueryStreamAsPostOrGet";
+     /**
+-     * Configure the padding used when streaming is used. Value can be atmosphere or whitespace. Default is ATMOSPHERE {@link org.atmosphere.cpr.AtmosphereResourceImpl#createStreamingPadding(String)} ()}
++     * Configure the padding used when streaming is used. Value can be atmosphere, legacy or whitespace.
++     * Default is whitespace {@link org.atmosphere.cpr.AtmosphereResourceImpl#createStreamingPadding(String)} ()}
+      */
+     String STREAMING_PADDING_MODE = ApplicationConfig.class.getPackage().getName() + ".padding";
+     /**
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+index 910a81c..80c0680 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+@@ -671,7 +671,7 @@
+     public static String createStreamingPadding(String padding) {
+         StringBuilder s = new StringBuilder();
+ 
+-        if (padding == null || padding.equalsIgnoreCase("atmosphere")) {
++        if (padding != null && (padding.equalsIgnoreCase("atmosphere") || padding.equalsIgnoreCase("legacy"))) {
+             s.append("<!-- ----------------------------------------------------------" +
+                     "------ http://github.com/Atmosphere ----------------------------" +
+                     "-------------------------------------------- -->\n");
+diff --git a/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java b/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
+index 597fd0e..fc5c6c4 100644
+--- a/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
++++ b/integration-tests/cpr/src/test/java/org/atmosphere/tests/http/BaseTest.java
+@@ -284,7 +284,7 @@
+             assertNotNull(r);
+             assertEquals(r.getStatusCode(), 200);
+             String resume = r.getResponseBody();
+-            assertEquals(resume, AtmosphereResourceImpl.createStreamingPadding(null));
++            assertEquals(resume.trim(), "");
+         } catch (Exception e) {
+             logger.error("test failed", e);
+             fail(e.getMessage());
+@@ -383,7 +383,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -455,7 +455,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -537,7 +537,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -686,7 +686,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -767,7 +767,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -847,7 +847,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -921,7 +921,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -1128,7 +1128,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }
+@@ -1195,7 +1195,7 @@
+                 public String onCompleted(Response response) throws Exception {
+                     try {
+                         assertEquals(response.getResponseBody(),
+-                                AtmosphereResourceImpl.createStreamingPadding(null));
++                                "");
+                     } finally {
+                         latch.countDown();
+                     }

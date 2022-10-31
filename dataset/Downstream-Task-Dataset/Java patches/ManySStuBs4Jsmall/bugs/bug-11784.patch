@@ -1,0 +1,100 @@
+diff --git a/server/src/main/java/io/druid/server/coordination/BaseZkCoordinator.java b/server/src/main/java/io/druid/server/coordination/BaseZkCoordinator.java
+index d489d74..e751041 100644
+--- a/server/src/main/java/io/druid/server/coordination/BaseZkCoordinator.java
++++ b/server/src/main/java/io/druid/server/coordination/BaseZkCoordinator.java
+@@ -107,7 +107,7 @@
+                         child.getData(), DataSegmentChangeRequest.class
+                     );
+ 
+-                    log.info("New node[%s] with request[%s]", path, request.asString());
++                    log.info("New request[%s] with node[%s].", request.asString(), path);
+ 
+                     try {
+                       request.go(
+@@ -122,7 +122,7 @@
+                               try {
+                                 if (!hasRun) {
+                                   curator.delete().guaranteed().forPath(path);
+-                                  log.info("Completed request and deleting node[%s]", path);
++                                  log.info("Completed request [%s]", request.asString());
+                                   hasRun = true;
+                                 }
+                               }
+@@ -156,7 +156,7 @@
+ 
+                     break;
+                   case CHILD_REMOVED:
+-                    log.info("node[%s] was removed", event.getData().getPath());
++                    log.info("Node[%s] was removed", event.getData().getPath());
+                     break;
+                   default:
+                     log.info("Ignoring event[%s]", event);
+diff --git a/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestDrop.java b/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestDrop.java
+index a64a51e..5da8ff9 100644
+--- a/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestDrop.java
++++ b/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestDrop.java
+@@ -54,7 +54,7 @@
+   @Override
+   public String asString()
+   {
+-    return String.format("load %s", segment.getIdentifier());
++    return String.format("DROP: %s", segment.getIdentifier());
+   }
+ 
+   @Override
+diff --git a/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestLoad.java b/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestLoad.java
+index 76d539d..3142c28 100644
+--- a/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestLoad.java
++++ b/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestLoad.java
+@@ -54,7 +54,7 @@
+   @Override
+   public String asString()
+   {
+-    return String.format("drop %s", segment.getIdentifier());
++    return String.format("LOAD: %s", segment.getIdentifier());
+   }
+ 
+   @Override
+diff --git a/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestNoop.java b/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestNoop.java
+index 454d861..a5f254b 100644
+--- a/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestNoop.java
++++ b/server/src/main/java/io/druid/server/coordination/SegmentChangeRequestNoop.java
+@@ -32,6 +32,6 @@
+   @Override
+   public String asString()
+   {
+-    return "noop";
++    return "NOOP";
+   }
+ }
+diff --git a/server/src/main/java/io/druid/server/coordination/BaseZkCoordinator.java b/server/src/main/java/io/druid/server/coordination/BaseZkCoordinator.java
+index d489d74..e751041 100644
+--- a/server/src/main/java/io/druid/server/coordination/BaseZkCoordinator.java
++++ b/server/src/main/java/io/druid/server/coordination/BaseZkCoordinator.java
+@@ -107,7 +107,7 @@
+                         child.getData(), DataSegmentChangeRequest.class
+                     );
+ 
+-                    log.info("New node[%s] with request[%s]", path, request.asString());
++                    log.info("New request[%s] with node[%s].", request.asString(), path);
+ 
+                     try {
+                       request.go(
+@@ -122,7 +122,7 @@
+                               try {
+                                 if (!hasRun) {
+                                   curator.delete().guaranteed().forPath(path);
+-                                  log.info("Completed request and deleting node[%s]", path);
++                                  log.info("Completed request [%s]", request.asString());
+                                   hasRun = true;
+                                 }
+                               }
+@@ -156,7 +156,7 @@
+ 
+                     break;
+                   case CHILD_REMOVED:
+-                    log.info("node[%s] was removed", event.getData().getPath());
++                    log.info("Node[%s] was removed", event.getData().getPath());
+                     break;
+                   default:
+                     log.info("Ignoring event[%s]", event);

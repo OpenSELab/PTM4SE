@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateTimeoutWithExecutorServiceTest.java b/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateTimeoutWithExecutorServiceTest.java
+index 2792819..8ff53ff 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateTimeoutWithExecutorServiceTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateTimeoutWithExecutorServiceTest.java
+@@ -57,7 +57,7 @@
+         Thread[] threads = new Thread[threadGroup.activeCount()];
+         threadGroup.enumerate(threads);
+         for (Thread thread : threads) {
+-            if (thread.getName().contains(AggregateProcessor.AGGREGATE_TIMEOUT_CHECKER)) {
++            if (thread != null && thread.getName().contains(AggregateProcessor.AGGREGATE_TIMEOUT_CHECKER)) {
+                 ++count;
+             }
+         }
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateTimeoutWithExecutorServiceTest.java b/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateTimeoutWithExecutorServiceTest.java
+index 2792819..8ff53ff 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateTimeoutWithExecutorServiceTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateTimeoutWithExecutorServiceTest.java
+@@ -57,7 +57,7 @@
+         Thread[] threads = new Thread[threadGroup.activeCount()];
+         threadGroup.enumerate(threads);
+         for (Thread thread : threads) {
+-            if (thread.getName().contains(AggregateProcessor.AGGREGATE_TIMEOUT_CHECKER)) {
++            if (thread != null && thread.getName().contains(AggregateProcessor.AGGREGATE_TIMEOUT_CHECKER)) {
+                 ++count;
+             }
+         }

@@ -1,0 +1,25 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/security/token/AuthenticationTokenSecretManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/security/token/AuthenticationTokenSecretManager.java
+index de66827..5b488a9 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/security/token/AuthenticationTokenSecretManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/security/token/AuthenticationTokenSecretManager.java
+@@ -107,7 +107,7 @@
+       // try to become leader
+       this.leaderElector.start();
+     } catch (KeeperException ke) {
+-      LOG.error("Zookeeper initialization failed", ke);
++      LOG.error("ZooKeeper initialization failed", ke);
+     }
+   }
+ 
+@@ -145,9 +145,9 @@
+     AuthenticationKey masterKey = allKeys.get(identifier.getKeyId());
+     if(masterKey == null) {
+       if(zkWatcher.getWatcher().isAborted()) {
+-        LOG.error("ZookeeperWatcher is abort");
++        LOG.error("ZooKeeperWatcher is abort");
+         throw new InvalidToken("Token keys could not be sync from zookeeper"
+-            + " because of ZookeeperWatcher abort");
++            + " because of ZooKeeperWatcher abort");
+       }
+       synchronized (this) {
+         if (!leaderElector.isAlive() || leaderElector.isStopped()) {

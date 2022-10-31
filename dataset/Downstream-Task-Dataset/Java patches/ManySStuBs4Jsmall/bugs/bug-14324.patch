@@ -1,0 +1,70 @@
+diff --git a/src/com/google/javascript/jscomp/FunctionTypeBuilder.java b/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
+index 76c0ff1..7c8819b 100644
+--- a/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
++++ b/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
+@@ -812,7 +812,7 @@
+    * care of most scope-declaring.
+    */
+   private Scope getScopeDeclaredIn() {
+-    int dotIndex = fnName.indexOf(".");
++    int dotIndex = fnName.indexOf('.');
+     if (dotIndex != -1) {
+       String rootVarName = fnName.substring(0, dotIndex);
+       Var rootVar = scope.getVar(rootVarName);
+diff --git a/src/com/google/javascript/jscomp/ScopedAliases.java b/src/com/google/javascript/jscomp/ScopedAliases.java
+index 0b74104..13b7046 100644
+--- a/src/com/google/javascript/jscomp/ScopedAliases.java
++++ b/src/com/google/javascript/jscomp/ScopedAliases.java
+@@ -208,7 +208,7 @@
+     public abstract void applyAlias();
+   }
+ 
+-  private class AliasedNode extends AliasUsage {
++  private static class AliasedNode extends AliasUsage {
+     AliasedNode(Var aliasVar, Node aliasReference) {
+       super(aliasVar, aliasReference);
+     }
+@@ -222,7 +222,7 @@
+     }
+   }
+ 
+-  private class AliasedTypeNode extends AliasUsage {
++  private static class AliasedTypeNode extends AliasUsage {
+     AliasedTypeNode(Var aliasVar, Node aliasReference) {
+       super(aliasVar, aliasReference);
+     }
+@@ -459,7 +459,7 @@
+         aliasVar.getInitialValue().getQualifiedName();
+       transformation.addAlias(name, qualifiedName);
+ 
+-      int rootIndex = qualifiedName.indexOf(".");
++      int rootIndex = qualifiedName.indexOf('.');
+       if (rootIndex != -1) {
+         String qNameRoot = qualifiedName.substring(0, rootIndex);
+         if (!aliases.containsKey(qNameRoot)) {
+diff --git a/src/com/google/javascript/jscomp/SymbolTable.java b/src/com/google/javascript/jscomp/SymbolTable.java
+index 1161085..cfd0591 100644
+--- a/src/com/google/javascript/jscomp/SymbolTable.java
++++ b/src/com/google/javascript/jscomp/SymbolTable.java
+@@ -1220,7 +1220,7 @@
+         return fullyNamedSym;
+       }
+ 
+-      int dot = name.lastIndexOf(".");
++      int dot = name.lastIndexOf('.');
+       if (dot != -1) {
+         Symbol owner = getQualifiedSlot(name.substring(0, dot));
+         if (owner != null && owner.getPropertyScope() != null) {
+diff --git a/src/com/google/javascript/jscomp/FunctionTypeBuilder.java b/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
+index 76c0ff1..7c8819b 100644
+--- a/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
++++ b/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
+@@ -812,7 +812,7 @@
+    * care of most scope-declaring.
+    */
+   private Scope getScopeDeclaredIn() {
+-    int dotIndex = fnName.indexOf(".");
++    int dotIndex = fnName.indexOf('.');
+     if (dotIndex != -1) {
+       String rootVarName = fnName.substring(0, dotIndex);
+       Var rootVar = scope.getVar(rootVarName);

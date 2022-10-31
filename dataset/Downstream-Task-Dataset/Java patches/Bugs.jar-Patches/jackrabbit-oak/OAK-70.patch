@@ -1,0 +1,22 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+index 36b242a..cc5ea66 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+@@ -280,7 +280,17 @@ public final class DocumentNodeStore
+             if (blob instanceof BlobStoreBlob) {
+                 return ((BlobStoreBlob) blob).getBlobId();
+             }
++
+             String id;
++
++            String reference = blob.getReference();
++            if(reference != null){
++                id = blobStore.getBlobId(reference);
++                if(id != null){
++                    return id;
++                }
++            }
++
+             try {
+                 id = createBlob(blob.getNewStream()).getBlobId();
+             } catch (IOException e) {

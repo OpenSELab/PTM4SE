@@ -1,0 +1,34 @@
+diff --git a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+index a9c2e16..f0200f3 100644
+--- a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
++++ b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+@@ -757,7 +757,11 @@
+                 // current thread, calling wrap() will lead to a dead lock
+                 // i.e. pendingUnencryptedWrites -> handshakeLock vs.
+                 //      handshakeLock -> pendingUnencryptedLock -> handshakeLock
+-                if (!Thread.holdsLock(handshakeLock)) {
++                //
++                // There is also a same issue between pendingEncryptedWrites
++                // and pendingUnencryptedWrites.
++                if (!Thread.holdsLock(handshakeLock) &&
++                    !Thread.holdsLock(pendingEncryptedWrites)) {
+                     wrap(ctx, channel);
+                 }
+             }
+diff --git a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+index a9c2e16..f0200f3 100644
+--- a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
++++ b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+@@ -757,7 +757,11 @@
+                 // current thread, calling wrap() will lead to a dead lock
+                 // i.e. pendingUnencryptedWrites -> handshakeLock vs.
+                 //      handshakeLock -> pendingUnencryptedLock -> handshakeLock
+-                if (!Thread.holdsLock(handshakeLock)) {
++                //
++                // There is also a same issue between pendingEncryptedWrites
++                // and pendingUnencryptedWrites.
++                if (!Thread.holdsLock(handshakeLock) &&
++                    !Thread.holdsLock(pendingEncryptedWrites)) {
+                     wrap(ctx, channel);
+                 }
+             }

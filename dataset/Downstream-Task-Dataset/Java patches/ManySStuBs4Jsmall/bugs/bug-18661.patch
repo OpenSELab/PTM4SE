@@ -1,0 +1,26 @@
+diff --git a/example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java b/example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java
+index 5e2ad9f..2aaedc5 100644
+--- a/example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java
++++ b/example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java
+@@ -76,7 +76,7 @@
+             throws Exception {
+         if (headers.isEndStream()) {
+             ByteBuf content = ctx.alloc().buffer();
+-            content.writeBytes(RESPONSE_BYTES);
++            content.writeBytes(RESPONSE_BYTES.duplicate());
+             ByteBufUtil.writeAscii(content, " - via HTTP/2");
+             sendResponse(ctx, content);
+         }
+diff --git a/example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java b/example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java
+index 5e2ad9f..2aaedc5 100644
+--- a/example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java
++++ b/example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java
+@@ -76,7 +76,7 @@
+             throws Exception {
+         if (headers.isEndStream()) {
+             ByteBuf content = ctx.alloc().buffer();
+-            content.writeBytes(RESPONSE_BYTES);
++            content.writeBytes(RESPONSE_BYTES.duplicate());
+             ByteBufUtil.writeAscii(content, " - via HTTP/2");
+             sendResponse(ctx, content);
+         }

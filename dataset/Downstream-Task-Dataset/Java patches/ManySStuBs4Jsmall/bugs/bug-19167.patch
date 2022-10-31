@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/jboss/netty/channel/socket/oio/OioServerSocketPipelineSink.java b/src/main/java/org/jboss/netty/channel/socket/oio/OioServerSocketPipelineSink.java
+index e318224..f3a5dfb 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/oio/OioServerSocketPipelineSink.java
++++ b/src/main/java/org/jboss/netty/channel/socket/oio/OioServerSocketPipelineSink.java
+@@ -218,7 +218,7 @@
+                 } catch (IOException e) {
+                     // Don't log the exception if the server socket was closed
+                     // by a user.
+-                    if (!channel.isBound() || !channel.isOpen()) {
++                    if (!channel.socket.isBound() || channel.socket.isClosed()) {
+                         break;
+                     }
+ 
+diff --git a/src/main/java/org/jboss/netty/channel/socket/oio/OioServerSocketPipelineSink.java b/src/main/java/org/jboss/netty/channel/socket/oio/OioServerSocketPipelineSink.java
+index e318224..f3a5dfb 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/oio/OioServerSocketPipelineSink.java
++++ b/src/main/java/org/jboss/netty/channel/socket/oio/OioServerSocketPipelineSink.java
+@@ -218,7 +218,7 @@
+                 } catch (IOException e) {
+                     // Don't log the exception if the server socket was closed
+                     // by a user.
+-                    if (!channel.isBound() || !channel.isOpen()) {
++                    if (!channel.socket.isBound() || channel.socket.isClosed()) {
+                         break;
+                     }
+ 

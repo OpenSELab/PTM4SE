@@ -1,0 +1,28 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index 9a4c93d..f402220 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -204,7 +204,8 @@
+         final String name = aChildConf.getName();
+         final Object module = mModuleFactory.createModule(name);
+         if (!(module instanceof Check)) {
+-            throw new CheckstyleException(name + " is not a Check");
++            throw new CheckstyleException(
++                "TreeWalker is not allowed as a parent of " + name);
+         }
+         final Check c = (Check) module;
+         c.contextualize(mChildContext);
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index 9a4c93d..f402220 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -204,7 +204,8 @@
+         final String name = aChildConf.getName();
+         final Object module = mModuleFactory.createModule(name);
+         if (!(module instanceof Check)) {
+-            throw new CheckstyleException(name + " is not a Check");
++            throw new CheckstyleException(
++                "TreeWalker is not allowed as a parent of " + name);
+         }
+         final Check c = (Check) module;
+         c.contextualize(mChildContext);

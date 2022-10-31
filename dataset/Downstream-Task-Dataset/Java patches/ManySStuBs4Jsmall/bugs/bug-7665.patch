@@ -1,0 +1,26 @@
+diff --git a/llap-ext-client/src/java/org/apache/hadoop/hive/llap/LlapBaseInputFormat.java b/llap-ext-client/src/java/org/apache/hadoop/hive/llap/LlapBaseInputFormat.java
+index 02f88c2..fc360d4 100644
+--- a/llap-ext-client/src/java/org/apache/hadoop/hive/llap/LlapBaseInputFormat.java
++++ b/llap-ext-client/src/java/org/apache/hadoop/hive/llap/LlapBaseInputFormat.java
+@@ -474,7 +474,7 @@
+     public void submissionFailed(String fragmentId, Throwable throwable) {
+       try {
+         sendOrQueueEvent(ReaderEvent.errorEvent(
+-            "Received submission failed event for fragment ID " + fragmentId));
++            "Received submission failed event for fragment ID " + fragmentId + ": " + throwable.toString()));
+       } catch (Exception err) {
+         LOG.error("Error during heartbeat responder:", err);
+       }
+diff --git a/llap-ext-client/src/java/org/apache/hadoop/hive/llap/LlapBaseInputFormat.java b/llap-ext-client/src/java/org/apache/hadoop/hive/llap/LlapBaseInputFormat.java
+index 02f88c2..fc360d4 100644
+--- a/llap-ext-client/src/java/org/apache/hadoop/hive/llap/LlapBaseInputFormat.java
++++ b/llap-ext-client/src/java/org/apache/hadoop/hive/llap/LlapBaseInputFormat.java
+@@ -474,7 +474,7 @@
+     public void submissionFailed(String fragmentId, Throwable throwable) {
+       try {
+         sendOrQueueEvent(ReaderEvent.errorEvent(
+-            "Received submission failed event for fragment ID " + fragmentId));
++            "Received submission failed event for fragment ID " + fragmentId + ": " + throwable.toString()));
+       } catch (Exception err) {
+         LOG.error("Error during heartbeat responder:", err);
+       }

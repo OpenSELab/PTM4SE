@@ -1,0 +1,43 @@
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
+index 92fab78..4110b22 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
+@@ -85,8 +85,8 @@
+ 		MongoHealthIndicator healthIndicator = new MongoHealthIndicator(mongoTemplate);
+ 		Health health = healthIndicator.health();
+ 		assertThat(health.getStatus()).isEqualTo(Status.DOWN);
+-		assertThat(((String) health.getDetails().get("error"))
+-				.contains("Connection failed"));
++		assertThat((String) health.getDetails().get("error"))
++				.contains("Connection failed");
+ 		verify(mongoTemplate).executeCommand("{ buildInfo: 1 }");
+ 	}
+ 
+diff --git a/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java b/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
+index 917a127..ba3ea54 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
+@@ -816,7 +816,7 @@
+ 		this.context = application.run();
+ 		assertThat(this.context.getEnvironment())
+ 				.isNotInstanceOf(StandardServletEnvironment.class);
+-		assertThat(this.context.getEnvironment().getProperty("foo"));
++		assertThat(this.context.getEnvironment().getProperty("foo")).isEqualTo("bar");
+ 		assertThat(this.context.getEnvironment().getPropertySources().iterator().next()
+ 				.getName()).isEqualTo(
+ 						TestPropertySourceUtils.INLINED_PROPERTIES_PROPERTY_SOURCE_NAME);
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
+index 92fab78..4110b22 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/MongoHealthIndicatorTests.java
+@@ -85,8 +85,8 @@
+ 		MongoHealthIndicator healthIndicator = new MongoHealthIndicator(mongoTemplate);
+ 		Health health = healthIndicator.health();
+ 		assertThat(health.getStatus()).isEqualTo(Status.DOWN);
+-		assertThat(((String) health.getDetails().get("error"))
+-				.contains("Connection failed"));
++		assertThat((String) health.getDetails().get("error"))
++				.contains("Connection failed");
+ 		verify(mongoTemplate).executeCommand("{ buildInfo: 1 }");
+ 	}
+ 

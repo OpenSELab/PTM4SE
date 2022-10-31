@@ -1,0 +1,15 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/BlockReceiver.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/BlockReceiver.java
+index 90e2194..2e11600 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/BlockReceiver.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/BlockReceiver.java
+@@ -262,8 +262,8 @@
+       
+       // check if there is a disk error
+       IOException cause = DatanodeUtil.getCauseIfDiskError(ioe);
+-      DataNode.LOG.warn("IOException in BlockReceiver constructor. Cause is ",
+-          cause);
++      DataNode.LOG.warn("IOException in BlockReceiver constructor"
++          + (cause == null ? "" : ". Cause is "), cause);
+       
+       if (cause != null) { // possible disk error
+         ioe = cause;

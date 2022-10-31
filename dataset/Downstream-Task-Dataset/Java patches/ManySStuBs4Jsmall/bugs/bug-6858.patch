@@ -1,0 +1,28 @@
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionVertex.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionVertex.java
+index bd20f1e..6944364 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionVertex.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionVertex.java
+@@ -409,7 +409,8 @@
+ 						final ExecutionVertex connectedVertex = this.executionGraph.getVertexByChannelID(outputChannel
+ 							.getConnectedChannelID());
+ 						final ExecutionState state = connectedVertex.getExecutionState();
+-						if (state == ExecutionState.READY || state == ExecutionState.RUNNING) {
++						if (state == ExecutionState.READY || state == ExecutionState.STARTING
++							|| state == ExecutionState.RUNNING) {
+ 							activeOutputChannels.add(outputChannel.getID());
+ 						}
+ 					}
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionVertex.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionVertex.java
+index bd20f1e..6944364 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionVertex.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionVertex.java
+@@ -409,7 +409,8 @@
+ 						final ExecutionVertex connectedVertex = this.executionGraph.getVertexByChannelID(outputChannel
+ 							.getConnectedChannelID());
+ 						final ExecutionState state = connectedVertex.getExecutionState();
+-						if (state == ExecutionState.READY || state == ExecutionState.RUNNING) {
++						if (state == ExecutionState.READY || state == ExecutionState.STARTING
++							|| state == ExecutionState.RUNNING) {
+ 							activeOutputChannels.add(outputChannel.getID());
+ 						}
+ 					}

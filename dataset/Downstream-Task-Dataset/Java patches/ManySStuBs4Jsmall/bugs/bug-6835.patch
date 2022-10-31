@@ -1,0 +1,38 @@
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+index a1ad345..2469c9e 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+@@ -738,12 +738,12 @@
+ 					// not null, so read the offset value, if we are not the first non-null fields
+ 					if (lastNonNullField >= 0) {
+ 						// offset value is variable length encoded
+-						int start = data[pos--];
++						int start = data[pos--] & 0xff;
+ 						if (start >= MAX_BIT) {
+ 							int shift = 7;
+ 							int curr;
+ 							start = start & 0x7f;
+-							while ((curr = data[pos--]) >= MAX_BIT) {
++							while ((curr = data[pos--] & 0xff) >= MAX_BIT) {
+ 								start |= (curr & 0x7f) << shift;
+ 								shift += 7;
+ 							}
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+index a1ad345..2469c9e 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+@@ -738,12 +738,12 @@
+ 					// not null, so read the offset value, if we are not the first non-null fields
+ 					if (lastNonNullField >= 0) {
+ 						// offset value is variable length encoded
+-						int start = data[pos--];
++						int start = data[pos--] & 0xff;
+ 						if (start >= MAX_BIT) {
+ 							int shift = 7;
+ 							int curr;
+ 							start = start & 0x7f;
+-							while ((curr = data[pos--]) >= MAX_BIT) {
++							while ((curr = data[pos--] & 0xff) >= MAX_BIT) {
+ 								start |= (curr & 0x7f) << shift;
+ 								shift += 7;
+ 							}

@@ -1,0 +1,244 @@
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/HttpProducerQueryParamTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/HttpProducerQueryParamTest.java
+index b98a554..3447653 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/HttpProducerQueryParamTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/HttpProducerQueryParamTest.java
+@@ -28,7 +28,7 @@
+  */
+ public class HttpProducerQueryParamTest extends BaseJettyTest {
+ 
+-    private String url = "http://0.0.0.0:" + getPort() + "/cheese";
++    private String url = "http://127.0.0.1:" + getPort() + "/cheese";
+ 
+     @Test
+     public void testQueryParameters() throws Exception {
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/JettyHttpContentTypeTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/JettyHttpContentTypeTest.java
+index 3c8ff87..f03afac 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/JettyHttpContentTypeTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/JettyHttpContentTypeTest.java
+@@ -34,11 +34,11 @@
+                                                              "text/plain; charset=\"" + CHARSET + "\"");
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_CHARACTER_ENCODING, CHARSET);
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL,
+-                                                             "http://0.0.0.0:" + getPort() + "/foo");
++                                                             "http://127.0.0.1:" + getPort() + "/foo");
+         getMockEndpoint("mock:input").expectedPropertyReceived(Exchange.CHARSET_NAME, CHARSET);
+ 
+         byte[] data = "Hello World".getBytes(Charset.forName(CHARSET));
+-        String out = template.requestBodyAndHeader("jetty:http://0.0.0.0:{{port}}/foo", data,
++        String out = template.requestBodyAndHeader("jetty:http://127.0.0.1:{{port}}/foo", data,
+                 "content-type", "text/plain; charset=\"" + CHARSET + "\"", String.class);
+         assertEquals("Bye World", out);
+ 
+@@ -51,11 +51,11 @@
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.CONTENT_TYPE,
+                                                              "text/plain;charset=\"" + CHARSET + "\";action=\"http://somewhere.com/foo\"");
+         getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_CHARACTER_ENCODING, CHARSET);
+-        getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL, "http://0.0.0.0:" + getPort() + "/foo");
++        getMockEndpoint("mock:input").expectedHeaderReceived(Exchange.HTTP_URL, "http://127.0.0.1:" + getPort() + "/foo");
+         getMockEndpoint("mock:input").expectedPropertyReceived(Exchange.CHARSET_NAME, CHARSET);
+ 
+         byte[] data = "Hello World".getBytes(Charset.forName(CHARSET));
+-        String out = template.requestBodyAndHeader("jetty:http://0.0.0.0:{{port}}/foo", data,
++        String out = template.requestBodyAndHeader("jetty:http://127.0.0.1:{{port}}/foo", data,
+                 "content-type", "text/plain;charset=\"" + CHARSET + "\";action=\"http://somewhere.com/foo\"", String.class);
+         assertEquals("Bye World", out);
+ 
+@@ -67,7 +67,7 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("jetty:http://0.0.0.0:{{port}}/foo")
++                from("jetty:http://127.0.0.1:{{port}}/foo")
+                         .to("mock:input")
+                         .transform().constant("Bye World");
+             }
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerAsyncTimeoutTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerAsyncTimeoutTest.java
+index b84bc7a..3632443 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerAsyncTimeoutTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerAsyncTimeoutTest.java
+@@ -26,7 +26,7 @@
+  */
+ public class JettyHttpProducerAsyncTimeoutTest extends BaseJettyTest {
+ 
+-    private String url = "jetty://http://0.0.0.0:" + getPort() + "/timeout?httpClient.timeout=2000";
++    private String url = "jetty://http://127.0.0.1:" + getPort() + "/timeout?httpClient.timeout=2000";
+ 
+     @Test
+     public void testTimeout() throws Exception {
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerAsynchronousTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerAsynchronousTest.java
+index 98ed6c5..b222fd7 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerAsynchronousTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerAsynchronousTest.java
+@@ -33,7 +33,7 @@
+     private static String thread1;
+     private static String thread2;
+ 
+-    private String url = "jetty://http://0.0.0.0:" + getPort() + "/foo";
++    private String url = "jetty://http://127.0.0.1:" + getPort() + "/foo";
+ 
+     @Test
+     public void testAsynchronous() throws Exception {
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgePathWithSpacesAtEndTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgePathWithSpacesAtEndTest.java
+index e33e2df..2f30c4e 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgePathWithSpacesAtEndTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgePathWithSpacesAtEndTest.java
+@@ -38,11 +38,11 @@
+         // give Jetty time to startup properly
+         Thread.sleep(2000);
+ 
+-        String reply = template.requestBody("jetty:http://0.0.0.0:" + port1 + "/foo ", "World", String.class);
++        String reply = template.requestBody("jetty:http://127.0.0.1:" + port1 + "/foo ", "World", String.class);
+         assertEquals("Bye World", reply);
+ 
+         // and with more spaces
+-        String reply2 = template.requestBody("jetty:http://0.0.0.0:" + port1 + "/foo /bar baz", "Camel", String.class);
++        String reply2 = template.requestBody("jetty:http://127.0.0.1:" + port1 + "/foo /bar baz", "Camel", String.class);
+         assertEquals("Bye Camel", reply2);
+     }
+ 
+@@ -54,10 +54,10 @@
+                 port1 = getPort();
+                 port2 = getNextPort();
+ 
+-                from("jetty:http://0.0.0.0:" + port1 + "/foo ?matchOnUriPrefix=true")
+-                    .to("jetty:http://0.0.0.0:" + port2 + "/proxy foo ?bridgeEndpoint=true&throwExceptionOnFailure=false");
++                from("jetty:http://127.0.0.1:" + port1 + "/foo ?matchOnUriPrefix=true")
++                    .to("jetty:http://127.0.0.1:" + port2 + "/proxy foo ?bridgeEndpoint=true&throwExceptionOnFailure=false");
+ 
+-                from("jetty:http://0.0.0.0:" + port2 + "/proxy foo ?matchOnUriPrefix=true")
++                from("jetty:http://127.0.0.1:" + port2 + "/proxy foo ?matchOnUriPrefix=true")
+                     .transform().simple("Bye ${body}");
+             }
+         };
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgePathWithSpacesTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgePathWithSpacesTest.java
+index 14033c6..2541d03 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgePathWithSpacesTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgePathWithSpacesTest.java
+@@ -38,7 +38,7 @@
+         // give Jetty time to startup properly
+         Thread.sleep(2000);
+ 
+-        String reply = template.requestBody("jetty:http://0.0.0.0:" + port1 + "/foo bar", "World", String.class);
++        String reply = template.requestBody("jetty:http://127.0.0.1:" + port1 + "/foo bar", "World", String.class);
+         assertEquals("Bye World", reply);
+     }
+ 
+@@ -50,10 +50,10 @@
+                 port1 = getPort();
+                 port2 = getNextPort();
+ 
+-                from("jetty:http://0.0.0.0:" + port1 + "/foo bar?matchOnUriPrefix=true")
+-                    .to("jetty:http://0.0.0.0:" + port2 + "/proxy bar?bridgeEndpoint=true&throwExceptionOnFailure=false");
++                from("jetty:http://127.0.0.1:" + port1 + "/foo bar?matchOnUriPrefix=true")
++                    .to("jetty:http://127.0.0.1:" + port2 + "/proxy bar?bridgeEndpoint=true&throwExceptionOnFailure=false");
+ 
+-                from("jetty:http://0.0.0.0:" + port2 + "/proxy bar?matchOnUriPrefix=true")
++                from("jetty:http://127.0.0.1:" + port2 + "/proxy bar?matchOnUriPrefix=true")
+                     .transform().simple("Bye ${body}");
+             }
+         };
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgeTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgeTest.java
+index 569c668..8424604 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgeTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerBridgeTest.java
+@@ -38,7 +38,7 @@
+         // give Jetty time to startup properly
+         Thread.sleep(2000);
+ 
+-        String reply = template.requestBody("jetty:http://0.0.0.0:" + port1 + "/foo", "World", String.class);
++        String reply = template.requestBody("jetty:http://127.0.0.1:" + port1 + "/foo", "World", String.class);
+         assertEquals("Bye World", reply);
+     }
+ 
+@@ -50,10 +50,10 @@
+                 port1 = getPort();
+                 port2 = getNextPort();
+ 
+-                from("jetty:http://0.0.0.0:" + port1 + "/foo")
+-                    .to("jetty:http://0.0.0.0:" + port2 + "/bar?bridgeEndpoint=true&throwExceptionOnFailure=false");
++                from("jetty:http://127.0.0.1:" + port1 + "/foo")
++                    .to("jetty:http://127.0.0.1:" + port2 + "/bar?bridgeEndpoint=true&throwExceptionOnFailure=false");
+ 
+-                from("jetty:http://0.0.0.0:" + port2 + "/bar")
++                from("jetty:http://127.0.0.1:" + port2 + "/bar")
+                     .transform().simple("Bye ${body}");
+             }
+         };
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerQueryParamTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerQueryParamTest.java
+index b9a4db7..166eb46 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerQueryParamTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerQueryParamTest.java
+@@ -29,7 +29,7 @@
+  */
+ public class JettyHttpProducerQueryParamTest extends BaseJettyTest {
+ 
+-    private String url = "jetty://http://0.0.0.0:" + getPort() + "/cheese";
++    private String url = "jetty://http://127.0.0.1:" + getPort() + "/cheese";
+ 
+     @Test
+     public void testQueryParameters() throws Exception {
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSimulate404ErrorTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSimulate404ErrorTest.java
+index 72a3edd..573eb36 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSimulate404ErrorTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSimulate404ErrorTest.java
+@@ -28,7 +28,7 @@
+  */
+ public class JettyHttpProducerSimulate404ErrorTest extends BaseJettyTest {
+ 
+-    private String url = "jetty://http://0.0.0.0:" + getPort() + "/bar";
++    private String url = "jetty://http://127.0.0.1:" + getPort() + "/bar";
+ 
+     @Test
+     public void test404() throws Exception {
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSynchronousFalseTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSynchronousFalseTest.java
+index 551fcec..067363f 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSynchronousFalseTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSynchronousFalseTest.java
+@@ -29,7 +29,7 @@
+ 
+     private static String beforeThreadName;
+     private static String afterThreadName;
+-    private String url = "jetty://http://0.0.0.0:" + getPort() + "/sync?synchronous=false";
++    private String url = "jetty://http://127.0.0.1:" + getPort() + "/sync?synchronous=false";
+ 
+     @Test
+     public void testSynchronous() throws Exception {
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSynchronousTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSynchronousTest.java
+index c7d45df..cf3a1ef 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSynchronousTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerSynchronousTest.java
+@@ -29,7 +29,7 @@
+ 
+     private static String beforeThreadName;
+     private static String afterThreadName;
+-    private String url = "jetty://http://0.0.0.0:" + getPort() + "/sync?synchronous=true";
++    private String url = "jetty://http://127.0.0.1:" + getPort() + "/sync?synchronous=true";
+ 
+     @Test
+     public void testSynchronous() throws Exception {
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerTimeoutTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerTimeoutTest.java
+index b316c96..6bf3653 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerTimeoutTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/jettyproducer/JettyHttpProducerTimeoutTest.java
+@@ -28,7 +28,7 @@
+  */
+ public class JettyHttpProducerTimeoutTest extends BaseJettyTest {
+ 
+-    private String url = "jetty://http://0.0.0.0:" + getPort() + "/timeout?httpClient.timeout=2000";
++    private String url = "jetty://http://127.0.0.1:" + getPort() + "/timeout?httpClient.timeout=2000";
+ 
+     @Test
+     public void testTimeout() throws Exception {
+diff --git a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/HttpProducerQueryParamTest.java b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/HttpProducerQueryParamTest.java
+index b98a554..3447653 100644
+--- a/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/HttpProducerQueryParamTest.java
++++ b/components/camel-jetty9/src/test/java/org/apache/camel/component/jetty/HttpProducerQueryParamTest.java
+@@ -28,7 +28,7 @@
+  */
+ public class HttpProducerQueryParamTest extends BaseJettyTest {
+ 
+-    private String url = "http://0.0.0.0:" + getPort() + "/cheese";
++    private String url = "http://127.0.0.1:" + getPort() + "/cheese";
+ 
+     @Test
+     public void testQueryParameters() throws Exception {

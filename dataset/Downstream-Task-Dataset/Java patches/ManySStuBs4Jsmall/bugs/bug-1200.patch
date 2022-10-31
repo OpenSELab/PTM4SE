@@ -1,0 +1,47 @@
+diff --git a/common/src/main/java/tachyon/security/group/UserToGroupsMappingService.java b/common/src/main/java/tachyon/security/group/UserToGroupsMappingService.java
+index a6b7a97..922823d 100644
+--- a/common/src/main/java/tachyon/security/group/UserToGroupsMappingService.java
++++ b/common/src/main/java/tachyon/security/group/UserToGroupsMappingService.java
+@@ -34,7 +34,7 @@
+  * cluster.
+  */
+ public final class UserToGroupsMappingService {
+-  private static final Logger LOG = LoggerFactory.getLogger(UserToGroupsMappingService.class);
++  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
+ 
+   private final GroupMappingService mGroupMappingService;
+ 
+diff --git a/common/src/main/java/tachyon/util/ShellUtils.java b/common/src/main/java/tachyon/util/ShellUtils.java
+index 134327f..c7520eb 100644
+--- a/common/src/main/java/tachyon/util/ShellUtils.java
++++ b/common/src/main/java/tachyon/util/ShellUtils.java
+@@ -50,7 +50,7 @@
+    *
+    * @param perm the permission of file
+    * @param filePath the file path
+-   * @return the Unix command to
++   * @return the Unix command to set permission
+    */
+   public static String[] getSetPermissionCommand(String perm, String filePath) {
+     return new String[] {SET_PERMISSION_COMMAND, perm, filePath};
+@@ -205,6 +205,7 @@
+    *
+    * @param cmd shell command to execute
+    * @return the output of the executed command
++   * @throws IOException if command ran failed
+    */
+   public static String execCommand(String... cmd) throws IOException {
+     ShellUtils exec = new ShellUtils(cmd);
+diff --git a/common/src/main/java/tachyon/security/group/UserToGroupsMappingService.java b/common/src/main/java/tachyon/security/group/UserToGroupsMappingService.java
+index a6b7a97..922823d 100644
+--- a/common/src/main/java/tachyon/security/group/UserToGroupsMappingService.java
++++ b/common/src/main/java/tachyon/security/group/UserToGroupsMappingService.java
+@@ -34,7 +34,7 @@
+  * cluster.
+  */
+ public final class UserToGroupsMappingService {
+-  private static final Logger LOG = LoggerFactory.getLogger(UserToGroupsMappingService.class);
++  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
+ 
+   private final GroupMappingService mGroupMappingService;
+ 

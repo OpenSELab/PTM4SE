@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/proxy/AtomicLongProxy.java b/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/proxy/AtomicLongProxy.java
+index 5c078af..260d4c0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/proxy/AtomicLongProxy.java
++++ b/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/proxy/AtomicLongProxy.java
+@@ -67,7 +67,7 @@
+         try {
+             SetOperation operation = new SetOperation(name, newValue);
+             Invocation inv = getNodeEngine().getOperationService().createInvocationBuilder(AtomicLongService.SERVICE_NAME, operation, partitionId).build();
+-            inv.invoke();
++            inv.invoke().get();
+         } catch (Throwable throwable) {
+             throw ExceptionUtil.rethrow(throwable);
+         }
+diff --git a/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/proxy/AtomicLongProxy.java b/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/proxy/AtomicLongProxy.java
+index 5c078af..260d4c0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/proxy/AtomicLongProxy.java
++++ b/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/proxy/AtomicLongProxy.java
+@@ -67,7 +67,7 @@
+         try {
+             SetOperation operation = new SetOperation(name, newValue);
+             Invocation inv = getNodeEngine().getOperationService().createInvocationBuilder(AtomicLongService.SERVICE_NAME, operation, partitionId).build();
+-            inv.invoke();
++            inv.invoke().get();
+         } catch (Throwable throwable) {
+             throw ExceptionUtil.rethrow(throwable);
+         }

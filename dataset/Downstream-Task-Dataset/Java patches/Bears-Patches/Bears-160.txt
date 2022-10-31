@@ -1,0 +1,10 @@
+--- a/debezium-connector-mysql/src/main/java/io/debezium/connector/mysql/MySqlDdlParser.java
++++ b/debezium-connector-mysql/src/main/java/io/debezium/connector/mysql/MySqlDdlParser.java
+@@ -1225,6 +1225,7 @@ protected void parseAlterSpecification(Marker start, TableEditor table, Consumer
+                 }
+                 String columnName = parseColumnName();
+                 table.removeColumn(columnName);
++                tokens.canConsume("RESTRICT");
+             }
+         } else if (tokens.canConsume("ALTER")) {
+             if (!isNextTokenQuotedIdentifier()) {

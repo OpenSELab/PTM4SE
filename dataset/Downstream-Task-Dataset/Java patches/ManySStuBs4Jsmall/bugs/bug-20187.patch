@@ -1,0 +1,22 @@
+diff --git a/web/src/main/java/org/openmrs/web/controller/encounter/LocationListController.java b/web/src/main/java/org/openmrs/web/controller/encounter/LocationListController.java
+index 8af74b9..6a670e1 100644
+--- a/web/src/main/java/org/openmrs/web/controller/encounter/LocationListController.java
++++ b/web/src/main/java/org/openmrs/web/controller/encounter/LocationListController.java
+@@ -80,7 +80,7 @@
+ 					//TODO convenience method deleteLocation(Integer) ??
+ 					try {
+ 						ls.purgeLocation(ls.getLocation(Integer.valueOf(p)));
+-						if (!"".equals(success)) {
++						if (!"".equals(success.toString())) {
+ 							success.append("<br/>");
+ 						}
+ 						success.append(p).append(" ").append(deleted);
+@@ -97,7 +97,7 @@
+ 			}
+ 			
+ 			view = getSuccessView();
+-			if (!"".equals(success)) {
++			if (!"".equals(success.toString())) {
+ 				httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, success.toString());
+ 			}
+ 			if (!"".equals(error)) {

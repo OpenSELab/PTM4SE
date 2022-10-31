@@ -1,0 +1,44 @@
+diff --git a/cli/src/main/java/org/jboss/as/cli/impl/CliConfigImpl.java b/cli/src/main/java/org/jboss/as/cli/impl/CliConfigImpl.java
+index d335904..ca0f741 100644
+--- a/cli/src/main/java/org/jboss/as/cli/impl/CliConfigImpl.java
++++ b/cli/src/main/java/org/jboss/as/cli/impl/CliConfigImpl.java
+@@ -476,7 +476,7 @@
+                 } else if ("trustStorePassword".equals(localName)) {
+                     config.setTrustStorePassword(reader.getElementText());
+                 } else if ("modifyTrustStore".equals(localName)) {
+-                    config.setModifyTrustStore(Boolean.getBoolean(reader.getElementText()));
++                    config.setModifyTrustStore(resolveBoolean(reader.getElementText()));
+                 } else {
+                     throw new XMLStreamException("Unexpected child of ssl : " + localName);
+                 }
+@@ -505,7 +505,7 @@
+                 } else if ("trust-store-password".equals(localName) || "trustStorePassword".equals(localName)) {
+                     config.setTrustStorePassword(reader.getElementText());
+                 } else if ("modify-trust-store".equals(localName) || "modifyTrustStore".equals(localName)) {
+-                    config.setModifyTrustStore(Boolean.getBoolean(reader.getElementText()));
++                    config.setModifyTrustStore(resolveBoolean(reader.getElementText()));
+                 } else {
+                     throw new XMLStreamException("Unexpected child of ssl : " + localName);
+                 }
+diff --git a/cli/src/main/java/org/jboss/as/cli/impl/CliConfigImpl.java b/cli/src/main/java/org/jboss/as/cli/impl/CliConfigImpl.java
+index d335904..ca0f741 100644
+--- a/cli/src/main/java/org/jboss/as/cli/impl/CliConfigImpl.java
++++ b/cli/src/main/java/org/jboss/as/cli/impl/CliConfigImpl.java
+@@ -476,7 +476,7 @@
+                 } else if ("trustStorePassword".equals(localName)) {
+                     config.setTrustStorePassword(reader.getElementText());
+                 } else if ("modifyTrustStore".equals(localName)) {
+-                    config.setModifyTrustStore(Boolean.getBoolean(reader.getElementText()));
++                    config.setModifyTrustStore(resolveBoolean(reader.getElementText()));
+                 } else {
+                     throw new XMLStreamException("Unexpected child of ssl : " + localName);
+                 }
+@@ -505,7 +505,7 @@
+                 } else if ("trust-store-password".equals(localName) || "trustStorePassword".equals(localName)) {
+                     config.setTrustStorePassword(reader.getElementText());
+                 } else if ("modify-trust-store".equals(localName) || "modifyTrustStore".equals(localName)) {
+-                    config.setModifyTrustStore(Boolean.getBoolean(reader.getElementText()));
++                    config.setModifyTrustStore(resolveBoolean(reader.getElementText()));
+                 } else {
+                     throw new XMLStreamException("Unexpected child of ssl : " + localName);
+                 }

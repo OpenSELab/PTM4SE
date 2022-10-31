@@ -1,0 +1,39 @@
+diff --git a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
+index a923b76..62bf430 100644
+--- a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
++++ b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
+@@ -81,7 +81,7 @@
+     @Override
+     public List<Visit> findByPetId(Integer petId) {
+         return this.jdbcTemplate.query(
+-                "SELECT id as visit_id, visit_date, description FROM visits WHERE pet_id=?",
++                "SELECT id, visit_date, description FROM visits WHERE pet_id=?",
+                 new JdbcVisitRowMapper(), petId);
+     }
+ 
+diff --git a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRowMapper.java b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRowMapper.java
+index d6dd0cb..0577182 100644
+--- a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRowMapper.java
++++ b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRowMapper.java
+@@ -33,7 +33,7 @@
+     @Override
+     public Visit mapRow(ResultSet rs, int row) throws SQLException {
+         Visit visit = new Visit();
+-        visit.setId(rs.getInt("visits.id"));
++        visit.setId(rs.getInt("id"));
+         Date visitDate = rs.getDate("visit_date");
+         visit.setDate(new DateTime(visitDate));
+         visit.setDescription(rs.getString("description"));
+diff --git a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
+index a923b76..62bf430 100644
+--- a/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
++++ b/src/main/java/org/springframework/samples/petclinic/repository/jdbc/JdbcVisitRepositoryImpl.java
+@@ -81,7 +81,7 @@
+     @Override
+     public List<Visit> findByPetId(Integer petId) {
+         return this.jdbcTemplate.query(
+-                "SELECT id as visit_id, visit_date, description FROM visits WHERE pet_id=?",
++                "SELECT id, visit_date, description FROM visits WHERE pet_id=?",
+                 new JdbcVisitRowMapper(), petId);
+     }
+ 

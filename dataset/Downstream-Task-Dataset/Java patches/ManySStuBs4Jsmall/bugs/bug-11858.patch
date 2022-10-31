@@ -1,0 +1,26 @@
+diff --git a/server/src/main/java/io/druid/client/cache/BytesBoundedLinkedQueue.java b/server/src/main/java/io/druid/client/cache/BytesBoundedLinkedQueue.java
+index 50ca475..f0ab976 100644
+--- a/server/src/main/java/io/druid/client/cache/BytesBoundedLinkedQueue.java
++++ b/server/src/main/java/io/druid/client/cache/BytesBoundedLinkedQueue.java
+@@ -129,7 +129,7 @@
+     try {
+       while (currentSize.get() >= capacity) {
+         if (nanos <= 0) {
+-          break;
++          return false;
+         }
+         nanos = notFull.awaitNanos(nanos);
+       }
+diff --git a/server/src/main/java/io/druid/client/cache/BytesBoundedLinkedQueue.java b/server/src/main/java/io/druid/client/cache/BytesBoundedLinkedQueue.java
+index 50ca475..f0ab976 100644
+--- a/server/src/main/java/io/druid/client/cache/BytesBoundedLinkedQueue.java
++++ b/server/src/main/java/io/druid/client/cache/BytesBoundedLinkedQueue.java
+@@ -129,7 +129,7 @@
+     try {
+       while (currentSize.get() >= capacity) {
+         if (nanos <= 0) {
+-          break;
++          return false;
+         }
+         nanos = notFull.awaitNanos(nanos);
+       }

@@ -1,0 +1,26 @@
+diff --git a/core/common/src/main/java/alluxio/collections/NonUniqueFieldIndex.java b/core/common/src/main/java/alluxio/collections/NonUniqueFieldIndex.java
+index fffe39b..6f397c0 100644
+--- a/core/common/src/main/java/alluxio/collections/NonUniqueFieldIndex.java
++++ b/core/common/src/main/java/alluxio/collections/NonUniqueFieldIndex.java
+@@ -66,7 +66,7 @@
+     ConcurrentHashSet<T> objSet = mIndexMap.get(fieldValue);
+     if (objSet != null) {
+       synchronized (objSet) {
+-        objSet.remove(object);
++        res = objSet.remove(object);
+         if (objSet.isEmpty()) {
+           res =  mIndexMap.remove(fieldValue, objSet);
+         }
+diff --git a/core/common/src/main/java/alluxio/collections/NonUniqueFieldIndex.java b/core/common/src/main/java/alluxio/collections/NonUniqueFieldIndex.java
+index fffe39b..6f397c0 100644
+--- a/core/common/src/main/java/alluxio/collections/NonUniqueFieldIndex.java
++++ b/core/common/src/main/java/alluxio/collections/NonUniqueFieldIndex.java
+@@ -66,7 +66,7 @@
+     ConcurrentHashSet<T> objSet = mIndexMap.get(fieldValue);
+     if (objSet != null) {
+       synchronized (objSet) {
+-        objSet.remove(object);
++        res = objSet.remove(object);
+         if (objSet.isEmpty()) {
+           res =  mIndexMap.remove(fieldValue, objSet);
+         }

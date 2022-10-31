@@ -1,0 +1,40 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/CamelInternalProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/CamelInternalProcessor.java
+index 46b2b24..7ebd726 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/CamelInternalProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/CamelInternalProcessor.java
+@@ -519,7 +519,7 @@
+                         backlogTracer.isBodyIncludeStreams(), backlogTracer.isBodyIncludeFiles(), backlogTracer.getBodyMaxChars());
+ 
+                 // if first we should add a pseudo trace message as well, so we have a starting message (eg from the route)
+-                String routeId = routeDefinition.getId();
++                String routeId = routeDefinition != null ? routeDefinition.getId() : null;
+                 if (first) {
+                     Date created = exchange.getProperty(Exchange.CREATED_TIMESTAMP, timestamp, Date.class);
+                     DefaultBacklogTracerEventMessage pseudo = new DefaultBacklogTracerEventMessage(backlogTracer.incrementTraceCounter(), created, routeId, null, exchangeId, messageAsXml);
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/interceptor/DefaultBacklogTracerEventMessage.java b/camel-core/src/main/java/org/apache/camel/processor/interceptor/DefaultBacklogTracerEventMessage.java
+index 4cb5dff..0db7283 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/interceptor/DefaultBacklogTracerEventMessage.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/interceptor/DefaultBacklogTracerEventMessage.java
+@@ -91,7 +91,8 @@
+         sb.append(prefix).append("  <uid>").append(uid).append("</uid>\n");
+         String ts = new SimpleDateFormat(TIMESTAMP_FORMAT).format(timestamp);
+         sb.append(prefix).append("  <timestamp>").append(ts).append("</timestamp>\n");
+-        sb.append(prefix).append("  <routeId>").append(routeId).append("</routeId>\n");
++        // route id is optional and we then use an empty value for no route id
++        sb.append(prefix).append("  <routeId>").append(routeId != null ? routeId : "").append("</routeId>\n");
+         if (toNode != null) {
+             sb.append(prefix).append("  <toNode>").append(toNode).append("</toNode>\n");
+         } else {
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/CamelInternalProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/CamelInternalProcessor.java
+index 46b2b24..7ebd726 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/CamelInternalProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/CamelInternalProcessor.java
+@@ -519,7 +519,7 @@
+                         backlogTracer.isBodyIncludeStreams(), backlogTracer.isBodyIncludeFiles(), backlogTracer.getBodyMaxChars());
+ 
+                 // if first we should add a pseudo trace message as well, so we have a starting message (eg from the route)
+-                String routeId = routeDefinition.getId();
++                String routeId = routeDefinition != null ? routeDefinition.getId() : null;
+                 if (first) {
+                     Date created = exchange.getProperty(Exchange.CREATED_TIMESTAMP, timestamp, Date.class);
+                     DefaultBacklogTracerEventMessage pseudo = new DefaultBacklogTracerEventMessage(backlogTracer.incrementTraceCounter(), created, routeId, null, exchangeId, messageAsXml);

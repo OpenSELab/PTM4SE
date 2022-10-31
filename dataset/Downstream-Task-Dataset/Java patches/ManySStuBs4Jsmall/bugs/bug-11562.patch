@@ -1,0 +1,46 @@
+diff --git a/api/src/main/java/io/druid/indexer/TaskStatusPlus.java b/api/src/main/java/io/druid/indexer/TaskStatusPlus.java
+index 8985326..af60cd9 100644
+--- a/api/src/main/java/io/druid/indexer/TaskStatusPlus.java
++++ b/api/src/main/java/io/druid/indexer/TaskStatusPlus.java
+@@ -50,15 +50,15 @@
+       @JsonProperty("statusCode") @Nullable TaskState state,
+       @JsonProperty("duration") @Nullable Long duration,
+       @JsonProperty("location") TaskLocation location,
+-      @JsonProperty("dataSource") String dataSource,
+-      @JsonProperty("errorMsg") String errorMsg
++      @JsonProperty("dataSource") @Nullable String dataSource, // nullable for backward compatibility
++      @JsonProperty("errorMsg") @Nullable String errorMsg
+   )
+   {
+     if (state != null && state.isComplete()) {
+       Preconditions.checkNotNull(duration, "duration");
+     }
+     this.id = Preconditions.checkNotNull(id, "id");
+-    this.type = Preconditions.checkNotNull(type, "type");
++    this.type = type;
+     this.createdTime = Preconditions.checkNotNull(createdTime, "createdTime");
+     this.queueInsertionTime = Preconditions.checkNotNull(queueInsertionTime, "queueInsertionTime");
+     this.state = state;
+diff --git a/api/src/main/java/io/druid/indexer/TaskStatusPlus.java b/api/src/main/java/io/druid/indexer/TaskStatusPlus.java
+index 8985326..af60cd9 100644
+--- a/api/src/main/java/io/druid/indexer/TaskStatusPlus.java
++++ b/api/src/main/java/io/druid/indexer/TaskStatusPlus.java
+@@ -50,15 +50,15 @@
+       @JsonProperty("statusCode") @Nullable TaskState state,
+       @JsonProperty("duration") @Nullable Long duration,
+       @JsonProperty("location") TaskLocation location,
+-      @JsonProperty("dataSource") String dataSource,
+-      @JsonProperty("errorMsg") String errorMsg
++      @JsonProperty("dataSource") @Nullable String dataSource, // nullable for backward compatibility
++      @JsonProperty("errorMsg") @Nullable String errorMsg
+   )
+   {
+     if (state != null && state.isComplete()) {
+       Preconditions.checkNotNull(duration, "duration");
+     }
+     this.id = Preconditions.checkNotNull(id, "id");
+-    this.type = Preconditions.checkNotNull(type, "type");
++    this.type = type;
+     this.createdTime = Preconditions.checkNotNull(createdTime, "createdTime");
+     this.queueInsertionTime = Preconditions.checkNotNull(queueInsertionTime, "queueInsertionTime");
+     this.state = state;

@@ -1,0 +1,34 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/NettyMessage.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/NettyMessage.java
+index e73f61d..89fb9e8 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/NettyMessage.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/NettyMessage.java
+@@ -52,8 +52,11 @@
+ 
+ /**
+  * A simple and generic interface to serialize messages to Netty's buffer space.
++ *
++ * <p>This class must be public as long as we are using a Netty version prior to 4.0.45. Please check FLINK-7845 for
++ * more information.
+  */
+-abstract class NettyMessage {
++public abstract class NettyMessage {
+ 
+ 	// ------------------------------------------------------------------------
+ 	// Note: Every NettyMessage subtype needs to have a public 0-argument
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/NettyMessage.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/NettyMessage.java
+index e73f61d..89fb9e8 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/NettyMessage.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/NettyMessage.java
+@@ -52,8 +52,11 @@
+ 
+ /**
+  * A simple and generic interface to serialize messages to Netty's buffer space.
++ *
++ * <p>This class must be public as long as we are using a Netty version prior to 4.0.45. Please check FLINK-7845 for
++ * more information.
+  */
+-abstract class NettyMessage {
++public abstract class NettyMessage {
+ 
+ 	// ------------------------------------------------------------------------
+ 	// Note: Every NettyMessage subtype needs to have a public 0-argument

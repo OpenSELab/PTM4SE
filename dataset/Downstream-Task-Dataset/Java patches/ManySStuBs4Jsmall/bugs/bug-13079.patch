@@ -1,0 +1,99 @@
+diff --git a/presto-hive-cdh4/src/test/java/com/facebook/presto/hive/TestHiveClient.java b/presto-hive-cdh4/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+index 8f01eed..a37e48c 100644
+--- a/presto-hive-cdh4/src/test/java/com/facebook/presto/hive/TestHiveClient.java
++++ b/presto-hive-cdh4/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+@@ -23,9 +23,8 @@
+ {
+     @Parameters({"hive.cdh4.metastoreHost", "hive.cdh4.metastorePort", "hive.cdh4.databaseName", "hive.cdh4.timeZone"})
+     @BeforeClass
+-    @Override
+-    public void setup(String host, int port, String databaseName, String timeZone)
++    public void initialize(String host, int port, String databaseName, String timeZone)
+     {
+-        super.setup(host, port, databaseName, timeZone);
++        setup(host, port, databaseName, timeZone);
+     }
+ }
+diff --git a/presto-hive-cdh5/src/test/java/com/facebook/presto/hive/TestHiveClient.java b/presto-hive-cdh5/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+index 3f05d45..2998318 100644
+--- a/presto-hive-cdh5/src/test/java/com/facebook/presto/hive/TestHiveClient.java
++++ b/presto-hive-cdh5/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+@@ -23,9 +23,8 @@
+ {
+     @Parameters({"hive.cdh5.metastoreHost", "hive.cdh5.metastorePort", "hive.cdh5.databaseName", "hive.cdh5.timeZone"})
+     @BeforeClass
+-    @Override
+-    public void setup(String host, int port, String databaseName, String timeZone)
++    public void initialize(String host, int port, String databaseName, String timeZone)
+     {
+-        super.setup(host, port, databaseName, timeZone);
++        setup(host, port, databaseName, timeZone);
+     }
+ }
+diff --git a/presto-hive-hadoop1/src/test/java/com/facebook/presto/hive/TestHiveClient.java b/presto-hive-hadoop1/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+index 25f3fc8..9d4156a 100644
+--- a/presto-hive-hadoop1/src/test/java/com/facebook/presto/hive/TestHiveClient.java
++++ b/presto-hive-hadoop1/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+@@ -23,9 +23,8 @@
+ {
+     @Parameters({"hive.hadoop1.metastoreHost", "hive.hadoop1.metastorePort", "hive.hadoop1.databaseName", "hive.hadoop1.timeZone"})
+     @BeforeClass
+-    @Override
+-    public void setup(String host, int port, String databaseName, String timeZone)
++    public void initialize(String host, int port, String databaseName, String timeZone)
+     {
+-        super.setup(host, port, databaseName, timeZone);
++        setup(host, port, databaseName, timeZone);
+     }
+ }
+diff --git a/presto-hive-hadoop2/src/test/java/com/facebook/presto/hive/TestHiveClient.java b/presto-hive-hadoop2/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+index 4571940..33710ec 100644
+--- a/presto-hive-hadoop2/src/test/java/com/facebook/presto/hive/TestHiveClient.java
++++ b/presto-hive-hadoop2/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+@@ -23,9 +23,8 @@
+ {
+     @Parameters({"hive.hadoop2.metastoreHost", "hive.hadoop2.metastorePort", "hive.hadoop2.databaseName", "hive.hadoop2.timeZone"})
+     @BeforeClass
+-    @Override
+-    public void setup(String host, int port, String databaseName, String timeZone)
++    public void initialize(String host, int port, String databaseName, String timeZone)
+     {
+-        super.setup(host, port, databaseName, timeZone);
++        setup(host, port, databaseName, timeZone);
+     }
+ }
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+index 84c40e6..f5df5e6 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveClient.java
+@@ -403,12 +403,12 @@
+         timeZone = DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId));
+     }
+ 
+-    protected void setup(String host, int port, String databaseName, String timeZone)
++    protected final void setup(String host, int port, String databaseName, String timeZone)
+     {
+         setup(host, port, databaseName, timeZone, "hive-test", 100, 50);
+     }
+ 
+-    protected void setup(String host, int port, String databaseName, String timeZoneId, String connectorName, int maxOutstandingSplits, int maxThreads)
++    protected final void setup(String host, int port, String databaseName, String timeZoneId, String connectorName, int maxOutstandingSplits, int maxThreads)
+     {
+         setupHive(connectorName, databaseName, timeZoneId);
+ 
+diff --git a/presto-hive-cdh4/src/test/java/com/facebook/presto/hive/TestHiveClient.java b/presto-hive-cdh4/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+index 8f01eed..a37e48c 100644
+--- a/presto-hive-cdh4/src/test/java/com/facebook/presto/hive/TestHiveClient.java
++++ b/presto-hive-cdh4/src/test/java/com/facebook/presto/hive/TestHiveClient.java
+@@ -23,9 +23,8 @@
+ {
+     @Parameters({"hive.cdh4.metastoreHost", "hive.cdh4.metastorePort", "hive.cdh4.databaseName", "hive.cdh4.timeZone"})
+     @BeforeClass
+-    @Override
+-    public void setup(String host, int port, String databaseName, String timeZone)
++    public void initialize(String host, int port, String databaseName, String timeZone)
+     {
+-        super.setup(host, port, databaseName, timeZone);
++        setup(host, port, databaseName, timeZone);
+     }
+ }

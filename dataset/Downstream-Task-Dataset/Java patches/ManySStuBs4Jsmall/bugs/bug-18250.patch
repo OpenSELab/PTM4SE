@@ -1,0 +1,44 @@
+diff --git a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
+index d7872ac..81596ae 100644
+--- a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
++++ b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
+@@ -194,7 +194,7 @@
+                             if ( context.hasJoinBeenDenied() )
+                             {
+                                 outgoing.offer( internal( ClusterMessage.joinFailure,
+-                                        new ClusterEntryDeniedException( context.me, context.configuration ) ) );
++                                        new ClusterEntryDeniedException( context.getMyId(), context.getConfiguration() ) ) );
+                                 return start;
+                             }
+                             ClusterMessage.ConfigurationTimeoutState state = message.getPayload();
+@@ -362,7 +362,7 @@
+                             if ( context.hasJoinBeenDenied() )
+                             {
+                                 outgoing.offer( internal( ClusterMessage.joinFailure,
+-                                    new ClusterEntryDeniedException( context.me, context.configuration ) ) );
++                                    new ClusterEntryDeniedException( context.getMyId(), context.getConfiguration()) ) );
+                                 return start;
+                             }
+ 
+diff --git a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
+index d7872ac..81596ae 100644
+--- a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
++++ b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/cluster/ClusterState.java
+@@ -194,7 +194,7 @@
+                             if ( context.hasJoinBeenDenied() )
+                             {
+                                 outgoing.offer( internal( ClusterMessage.joinFailure,
+-                                        new ClusterEntryDeniedException( context.me, context.configuration ) ) );
++                                        new ClusterEntryDeniedException( context.getMyId(), context.getConfiguration() ) ) );
+                                 return start;
+                             }
+                             ClusterMessage.ConfigurationTimeoutState state = message.getPayload();
+@@ -362,7 +362,7 @@
+                             if ( context.hasJoinBeenDenied() )
+                             {
+                                 outgoing.offer( internal( ClusterMessage.joinFailure,
+-                                    new ClusterEntryDeniedException( context.me, context.configuration ) ) );
++                                    new ClusterEntryDeniedException( context.getMyId(), context.getConfiguration()) ) );
+                                 return start;
+                             }
+ 

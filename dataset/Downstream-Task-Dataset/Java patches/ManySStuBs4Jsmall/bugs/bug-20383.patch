@@ -1,0 +1,88 @@
+diff --git a/web/src/main/java/org/openmrs/web/controller/visit/VisitFormController.java b/web/src/main/java/org/openmrs/web/controller/visit/VisitFormController.java
+index e77009c..b019898 100644
+--- a/web/src/main/java/org/openmrs/web/controller/visit/VisitFormController.java
++++ b/web/src/main/java/org/openmrs/web/controller/visit/VisitFormController.java
+@@ -186,7 +186,8 @@
+ 				for (Encounter encounter : encountersToSave)
+ 					es.saveEncounter(encounter);
+ 				
+-				return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
++				return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId() + "&patientId="
++				        + visit.getPatient().getPatientId();
+ 			}
+ 			catch (APIException e) {
+ 				log.warn("Error while saving visit(s)", e);
+@@ -220,7 +221,8 @@
+ 				log.debug("Voided visit with id: " + visit.getId());
+ 			request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,
+ 			    Context.getMessageSourceService().getMessage("Visit.voided"), WebRequest.SCOPE_SESSION);
+-			return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
++			return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId() + "&patientId="
++			        + visit.getPatient().getPatientId();
+ 		}
+ 		catch (APIException e) {
+ 			log.warn("Error occurred while attempting to void visit", e);
+@@ -250,7 +252,8 @@
+ 				log.debug("Unvoided visit with id: " + visit.getId());
+ 			request.setAttribute(WebConstants.OPENMRS_MSG_ATTR, Context.getMessageSourceService().getMessage(
+ 			    "Visit.unvoided"), WebRequest.SCOPE_SESSION);
+-			return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
++			return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId() + "&patientId="
++			        + visit.getPatient().getPatientId();
+ 		}
+ 		catch (APIException e) {
+ 			log.warn("Error occurred while attempting to unvoid visit", e);
+@@ -289,7 +292,8 @@
+ 			    "Visit.purge.error"), WebRequest.SCOPE_SESSION);
+ 		}
+ 		//there was an exception thrown
+-		return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
++		return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId() + "&patientId="
++		        + visit.getPatient().getPatientId();
+ 	}
+ 	
+ 	@ModelAttribute("visitTypes")
+diff --git a/web/src/main/java/org/openmrs/web/controller/visit/VisitFormController.java b/web/src/main/java/org/openmrs/web/controller/visit/VisitFormController.java
+index e77009c..b019898 100644
+--- a/web/src/main/java/org/openmrs/web/controller/visit/VisitFormController.java
++++ b/web/src/main/java/org/openmrs/web/controller/visit/VisitFormController.java
+@@ -186,7 +186,8 @@
+ 				for (Encounter encounter : encountersToSave)
+ 					es.saveEncounter(encounter);
+ 				
+-				return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
++				return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId() + "&patientId="
++				        + visit.getPatient().getPatientId();
+ 			}
+ 			catch (APIException e) {
+ 				log.warn("Error while saving visit(s)", e);
+@@ -220,7 +221,8 @@
+ 				log.debug("Voided visit with id: " + visit.getId());
+ 			request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,
+ 			    Context.getMessageSourceService().getMessage("Visit.voided"), WebRequest.SCOPE_SESSION);
+-			return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
++			return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId() + "&patientId="
++			        + visit.getPatient().getPatientId();
+ 		}
+ 		catch (APIException e) {
+ 			log.warn("Error occurred while attempting to void visit", e);
+@@ -250,7 +252,8 @@
+ 				log.debug("Unvoided visit with id: " + visit.getId());
+ 			request.setAttribute(WebConstants.OPENMRS_MSG_ATTR, Context.getMessageSourceService().getMessage(
+ 			    "Visit.unvoided"), WebRequest.SCOPE_SESSION);
+-			return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
++			return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId() + "&patientId="
++			        + visit.getPatient().getPatientId();
+ 		}
+ 		catch (APIException e) {
+ 			log.warn("Error occurred while attempting to unvoid visit", e);
+@@ -289,7 +292,8 @@
+ 			    "Visit.purge.error"), WebRequest.SCOPE_SESSION);
+ 		}
+ 		//there was an exception thrown
+-		return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
++		return "redirect:" + VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId() + "&patientId="
++		        + visit.getPatient().getPatientId();
+ 	}
+ 	
+ 	@ModelAttribute("visitTypes")

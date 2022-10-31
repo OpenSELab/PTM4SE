@@ -1,0 +1,26 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/ExecReducer.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/ExecReducer.java
+index 8b526ba..28fc965 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/ExecReducer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/ExecReducer.java
+@@ -198,7 +198,7 @@
+         } catch (SerDeException e) {
+           throw new HiveException("Unable to deserialize reduce input value (tag=" + tag.get()
+               + ") from " + 
+-              Utilities.formatBinaryString(valueWritable.getBytes(), 0, valueWritable.getLength())
++              Utilities.formatBinaryString(valueWritable.get(), 0, valueWritable.getSize())
+               + " with properties " + valueTableDesc[tag.get()].getProperties(),
+               e);
+         }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/ExecReducer.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/ExecReducer.java
+index 8b526ba..28fc965 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/ExecReducer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/ExecReducer.java
+@@ -198,7 +198,7 @@
+         } catch (SerDeException e) {
+           throw new HiveException("Unable to deserialize reduce input value (tag=" + tag.get()
+               + ") from " + 
+-              Utilities.formatBinaryString(valueWritable.getBytes(), 0, valueWritable.getLength())
++              Utilities.formatBinaryString(valueWritable.get(), 0, valueWritable.getSize())
+               + " with properties " + valueTableDesc[tag.get()].getProperties(),
+               e);
+         }

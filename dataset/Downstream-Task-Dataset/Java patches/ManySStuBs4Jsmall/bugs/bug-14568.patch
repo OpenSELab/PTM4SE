@@ -1,0 +1,41 @@
+diff --git a/src/com/google/javascript/jscomp/FunctionTypeBuilder.java b/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
+index 70bc311..04fb620 100644
+--- a/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
++++ b/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
+@@ -320,8 +320,7 @@
+       while (!worklist.isEmpty()) {
+         Node current = worklist.remove(worklist.size() - 1);
+         int cType = current.getType();
+-        if (cType == Token.RETURN && current.getFirstChild() != null ||
+-            cType == Token.THROW) {
++        if (cType == Token.RETURN && current.getFirstChild() != null) {
+           hasNonEmptyReturns = true;
+           break;
+         } else if (NodeUtil.isStatementBlock(current) ||
+diff --git a/test/com/google/javascript/jscomp/TypedScopeCreatorTest.java b/test/com/google/javascript/jscomp/TypedScopeCreatorTest.java
+index 47fcfaa..39f8289 100644
+--- a/test/com/google/javascript/jscomp/TypedScopeCreatorTest.java
++++ b/test/com/google/javascript/jscomp/TypedScopeCreatorTest.java
+@@ -923,7 +923,7 @@
+   public void testReturnTypeInference4() {
+     testSame("function f() { throw Error(); }");
+     assertEquals(
+-        "function (): ?",
++        "function (): undefined",
+         findNameType("f", globalScope).toString());
+   }
+ 
+diff --git a/src/com/google/javascript/jscomp/FunctionTypeBuilder.java b/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
+index 70bc311..04fb620 100644
+--- a/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
++++ b/src/com/google/javascript/jscomp/FunctionTypeBuilder.java
+@@ -320,8 +320,7 @@
+       while (!worklist.isEmpty()) {
+         Node current = worklist.remove(worklist.size() - 1);
+         int cType = current.getType();
+-        if (cType == Token.RETURN && current.getFirstChild() != null ||
+-            cType == Token.THROW) {
++        if (cType == Token.RETURN && current.getFirstChild() != null) {
+           hasNonEmptyReturns = true;
+           break;
+         } else if (NodeUtil.isStatementBlock(current) ||

@@ -1,0 +1,28 @@
+diff --git a/common/src/main/java/io/netty/util/ResourceLeakDetector.java b/common/src/main/java/io/netty/util/ResourceLeakDetector.java
+index 3872c07..c29320a 100644
+--- a/common/src/main/java/io/netty/util/ResourceLeakDetector.java
++++ b/common/src/main/java/io/netty/util/ResourceLeakDetector.java
+@@ -369,7 +369,8 @@
+             // be collected via the WeakReference.
+             trackedHash = System.identityHashCode(referent);
+             allLeaks.put(this, LeakEntry.INSTANCE);
+-            headUpdater.set(this, Record.BOTTOM);
++            // Create a new Record so we always have the creation stacktrace included.
++            headUpdater.set(this, new Record(Record.BOTTOM));
+             this.allLeaks = allLeaks;
+         }
+ 
+diff --git a/common/src/main/java/io/netty/util/ResourceLeakDetector.java b/common/src/main/java/io/netty/util/ResourceLeakDetector.java
+index 3872c07..c29320a 100644
+--- a/common/src/main/java/io/netty/util/ResourceLeakDetector.java
++++ b/common/src/main/java/io/netty/util/ResourceLeakDetector.java
+@@ -369,7 +369,8 @@
+             // be collected via the WeakReference.
+             trackedHash = System.identityHashCode(referent);
+             allLeaks.put(this, LeakEntry.INSTANCE);
+-            headUpdater.set(this, Record.BOTTOM);
++            // Create a new Record so we always have the creation stacktrace included.
++            headUpdater.set(this, new Record(Record.BOTTOM));
+             this.allLeaks = allLeaks;
+         }
+ 

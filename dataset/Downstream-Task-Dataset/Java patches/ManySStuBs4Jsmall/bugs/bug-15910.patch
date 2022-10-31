@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/AbstractMapServiceContextSupport.java b/hazelcast/src/main/java/com/hazelcast/map/AbstractMapServiceContextSupport.java
+index b23d094..82fb1a2 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/AbstractMapServiceContextSupport.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/AbstractMapServiceContextSupport.java
+@@ -48,7 +48,7 @@
+         }
+         final long expirationTime = now + ttl;
+         // detect potential overflow.
+-        if (!((now ^ expirationTime) >= 0)) {
++        if (expirationTime < 0L) {
+             return Long.MAX_VALUE;
+         }
+         return expirationTime;
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/AbstractMapServiceContextSupport.java b/hazelcast/src/main/java/com/hazelcast/map/AbstractMapServiceContextSupport.java
+index b23d094..82fb1a2 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/AbstractMapServiceContextSupport.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/AbstractMapServiceContextSupport.java
+@@ -48,7 +48,7 @@
+         }
+         final long expirationTime = now + ttl;
+         // detect potential overflow.
+-        if (!((now ^ expirationTime) >= 0)) {
++        if (expirationTime < 0L) {
+             return Long.MAX_VALUE;
+         }
+         return expirationTime;

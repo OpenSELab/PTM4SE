@@ -1,0 +1,56 @@
+diff --git a/containers/jersey-servlet/src/main/java/org/glassfish/jersey/servlet/init/JerseyServletContainerInitializer.java b/containers/jersey-servlet/src/main/java/org/glassfish/jersey/servlet/init/JerseyServletContainerInitializer.java
+index 8c47319..db35050 100644
+--- a/containers/jersey-servlet/src/main/java/org/glassfish/jersey/servlet/init/JerseyServletContainerInitializer.java
++++ b/containers/jersey-servlet/src/main/java/org/glassfish/jersey/servlet/init/JerseyServletContainerInitializer.java
+@@ -275,7 +275,8 @@
+         final ApplicationPath ap = clazz.getAnnotation(ApplicationPath.class);
+         if (ap != null) {
+             // App is annotated with ApplicationPath
+-            final ResourceConfig resourceConfig = ResourceConfig.forApplicationClass(clazz, defaultClasses);
++            final ResourceConfig resourceConfig = ResourceConfig.forApplicationClass(clazz, defaultClasses)
++                    .addProperties(Utils.getContextParams(context));
+             final ServletContainer s = new ServletContainer(resourceConfig);
+             final ServletRegistration.Dynamic dsr = context.addServlet(clazz.getName(), s);
+             dsr.setAsyncSupported(true);
+diff --git a/incubator/rx/rx-client-java8/src/main/java/org/glassfish/jersey/client/rx/java8/RxCompletionStage.java b/incubator/rx/rx-client-java8/src/main/java/org/glassfish/jersey/client/rx/java8/RxCompletionStage.java
+index 3da69e2..0885424 100644
+--- a/incubator/rx/rx-client-java8/src/main/java/org/glassfish/jersey/client/rx/java8/RxCompletionStage.java
++++ b/incubator/rx/rx-client-java8/src/main/java/org/glassfish/jersey/client/rx/java8/RxCompletionStage.java
+@@ -67,9 +67,10 @@
+      * the {@link java.util.concurrent.CompletionStage completion stage} from Java 8. Reactive requests,
+      * invoked using {@link org.glassfish.jersey.client.rx.RxInvocationBuilder#rx() rx(...)} methods, are executed via
+      * {@link java.util.concurrent.Executors#newCachedThreadPool() "new thread pool" service}.
+-     * <p/>
++     * <p>
+      * Instance is initialized with a JAX-RS client created using the default client builder implementation class provided by the
+      * JAX-RS implementation provider.
++     * <p>
+      *
+      * @return new reactive client extension.
+      * @see Rx#newClient(Class)
+@@ -83,9 +84,10 @@
+      * the {@link java.util.concurrent.CompletionStage completion stage} from Java 8. Reactive requests,
+      * invoked using {@link org.glassfish.jersey.client.rx.RxInvocationBuilder#rx() rx(...)} method, are executed via given
+      * {@link java.util.concurrent.ExecutorService executor service}.
+-     * <p/>
++     * <p>
+      * Instance is initialized with a JAX-RS client created using the default client builder implementation class provided by the
+      * JAX-RS implementation provider.
++     * </p>
+      *
+      * @param executor the executor service to execute reactive requests.
+      * @return new reactive client extension.
+diff --git a/containers/jersey-servlet/src/main/java/org/glassfish/jersey/servlet/init/JerseyServletContainerInitializer.java b/containers/jersey-servlet/src/main/java/org/glassfish/jersey/servlet/init/JerseyServletContainerInitializer.java
+index 8c47319..db35050 100644
+--- a/containers/jersey-servlet/src/main/java/org/glassfish/jersey/servlet/init/JerseyServletContainerInitializer.java
++++ b/containers/jersey-servlet/src/main/java/org/glassfish/jersey/servlet/init/JerseyServletContainerInitializer.java
+@@ -275,7 +275,8 @@
+         final ApplicationPath ap = clazz.getAnnotation(ApplicationPath.class);
+         if (ap != null) {
+             // App is annotated with ApplicationPath
+-            final ResourceConfig resourceConfig = ResourceConfig.forApplicationClass(clazz, defaultClasses);
++            final ResourceConfig resourceConfig = ResourceConfig.forApplicationClass(clazz, defaultClasses)
++                    .addProperties(Utils.getContextParams(context));
+             final ServletContainer s = new ServletContainer(resourceConfig);
+             final ServletRegistration.Dynamic dsr = context.addServlet(clazz.getName(), s);
+             dsr.setAsyncSupported(true);

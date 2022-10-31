@@ -1,0 +1,23 @@
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/security/AccessDeniedException.java b/presto-spi/src/main/java/com/facebook/presto/spi/security/AccessDeniedException.java
+index eac0a36..890d9e9 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/security/AccessDeniedException.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/security/AccessDeniedException.java
+@@ -199,14 +199,14 @@
+         throw new AccessDeniedException(format("Cannot create view %s%s", viewName, formatExtraInfo(extraInfo)));
+     }
+ 
+-    public static void denyCreateViewWithSelect(String sourceName)
++    public static void denyCreateViewWithSelect(String sourceName, Identity identity)
+     {
+-        denyCreateViewWithSelect(sourceName, null);
++        denyCreateViewWithSelect(sourceName, identity, null);
+     }
+ 
+-    public static void denyCreateViewWithSelect(String sourceName, String extraInfo)
++    public static void denyCreateViewWithSelect(String sourceName, Identity identity, String extraInfo)
+     {
+-        throw new AccessDeniedException(format("Cannot create view that selects from %s%s", sourceName, formatExtraInfo(extraInfo)));
++        throw new AccessDeniedException(format("View owner '%s' cannot create view that selects from %s%s", identity.getUser(), sourceName, formatExtraInfo(extraInfo)));
+     }
+ 
+     public static void denyDropView(String viewName)

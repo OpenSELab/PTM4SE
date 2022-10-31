@@ -1,0 +1,13 @@
+diff --git a/profiler/src/main/java/com/navercorp/pinpoint/profiler/receiver/service/ActiveThreadCountService.java b/profiler/src/main/java/com/navercorp/pinpoint/profiler/receiver/service/ActiveThreadCountService.java
+index 70f8535..03e9e85 100644
+--- a/profiler/src/main/java/com/navercorp/pinpoint/profiler/receiver/service/ActiveThreadCountService.java
++++ b/profiler/src/main/java/com/navercorp/pinpoint/profiler/receiver/service/ActiveThreadCountService.java
+@@ -179,7 +179,7 @@
+                     case CLOSED:
+                     case ILLEGAL_STATE:
+                         boolean removed = streamChannelRepository.remove(streamChannel);
+-                        if (removed && streamChannelRepository.size() == 0) {
++                        if (removed && streamChannelRepository.isEmpty()) {
+                             boolean turnOff = onTimerTask.compareAndSet(true, false);
+                             if (turnOff) {
+                                 logger.info("turn off ActiveThreadCountTimerTask.");

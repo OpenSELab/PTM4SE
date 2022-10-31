@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/type/DecimalCasts.java b/presto-main/src/main/java/com/facebook/presto/type/DecimalCasts.java
+index 30553c5..434669b 100644
+--- a/presto-main/src/main/java/com/facebook/presto/type/DecimalCasts.java
++++ b/presto-main/src/main/java/com/facebook/presto/type/DecimalCasts.java
+@@ -251,7 +251,7 @@
+     {
+         BigInteger decimalBigInteger = BigInteger.valueOf(value).multiply(BigInteger.valueOf(tenToScale));
+         if (overflows(decimalBigInteger, (int) precision)) {
+-            throw new PrestoException(INVALID_CAST_ARGUMENT, format("Cannot cast BIGINT '%s' to DECIMAL(%s, %s)", value, precision, scale));
++            throw new PrestoException(INVALID_CAST_ARGUMENT, format("Cannot cast INTEGER '%s' to DECIMAL(%s, %s)", value, precision, scale));
+         }
+         return encodeUnscaledValue(decimalBigInteger);
+     }
+diff --git a/presto-main/src/main/java/com/facebook/presto/type/DecimalCasts.java b/presto-main/src/main/java/com/facebook/presto/type/DecimalCasts.java
+index 30553c5..434669b 100644
+--- a/presto-main/src/main/java/com/facebook/presto/type/DecimalCasts.java
++++ b/presto-main/src/main/java/com/facebook/presto/type/DecimalCasts.java
+@@ -251,7 +251,7 @@
+     {
+         BigInteger decimalBigInteger = BigInteger.valueOf(value).multiply(BigInteger.valueOf(tenToScale));
+         if (overflows(decimalBigInteger, (int) precision)) {
+-            throw new PrestoException(INVALID_CAST_ARGUMENT, format("Cannot cast BIGINT '%s' to DECIMAL(%s, %s)", value, precision, scale));
++            throw new PrestoException(INVALID_CAST_ARGUMENT, format("Cannot cast INTEGER '%s' to DECIMAL(%s, %s)", value, precision, scale));
+         }
+         return encodeUnscaledValue(decimalBigInteger);
+     }

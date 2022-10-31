@@ -1,0 +1,22 @@
+diff --git a/modules/activiti-jmx/src/main/java/org/activiti/management/jmx/mbeans/JobExecutorMBean.java b/modules/activiti-jmx/src/main/java/org/activiti/management/jmx/mbeans/JobExecutorMBean.java
+index 8e89f88..a96b537 100755
+--- a/modules/activiti-jmx/src/main/java/org/activiti/management/jmx/mbeans/JobExecutorMBean.java
++++ b/modules/activiti-jmx/src/main/java/org/activiti/management/jmx/mbeans/JobExecutorMBean.java
+@@ -21,7 +21,7 @@
+ /**
+  * @author Saeid Mirzaei
+  */
+-@ManagedResource(description = "Process definition MBean")
++@ManagedResource(description = "Job executor MBean")
+ public class JobExecutorMBean {
+ 
+   JobExecutor jobExecutor;
+@@ -34,7 +34,7 @@
+ 
+   @ManagedAttribute(description = "check if the job executor is activated")
+   public boolean isJobExecutorActivated() {
+-    return jobExecutor == null || jobExecutor.isActive();
++    return jobExecutor != null && jobExecutor.isActive();
+   }
+ 
+   @ManagedOperation(description = "set job executor activate")

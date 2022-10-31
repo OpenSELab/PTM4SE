@@ -1,0 +1,22 @@
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/graph/InDegreeRangeBuilder.java b/FiltersPlugin/src/org/gephi/filters/plugin/graph/InDegreeRangeBuilder.java
+index 0929896..21ba1b7 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/graph/InDegreeRangeBuilder.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/graph/InDegreeRangeBuilder.java
+@@ -105,7 +105,7 @@
+ 
+         private Range range;
+         //States
+-        private List<Integer> values;
++        private List<Integer> values = new ArrayList<Integer>();
+ 
+         public String getName() {
+             return NbBundle.getMessage(InDegreeRangeBuilder.class, "InDegreeRangeBuilder.name");
+@@ -171,7 +171,7 @@
+         }
+ 
+         public void setRange(Range range) {
+-            if (range.getMinimum() == null && range.getMaximum() == null) {
++            if (range.getMinimum() == null && range.getMaximum() == null && this.range != null) {
+                 //Opening project
+                 this.range = new Range(range.getLowerBound(), range.getUpperBound(), this.range.getMinimum(), this.range.getMaximum());
+             } else {

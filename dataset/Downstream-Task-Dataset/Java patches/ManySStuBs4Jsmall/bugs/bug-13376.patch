@@ -1,0 +1,83 @@
+diff --git a/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/Degree.java b/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/Degree.java
+index 7372b12..e2a0b07 100644
+--- a/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/Degree.java
++++ b/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/Degree.java
+@@ -171,7 +171,7 @@
+             Progress.progress(progress);
+         }
+ 
+-        averageDegree /= graph.getNodeCount();
++        averageDegree /=  (isDirected ? 2.0 : 1.0) * graph.getNodeCount();
+ 
+         return averageDegree;
+     }
+diff --git a/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/WeightedDegree.java b/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/WeightedDegree.java
+index 22c3c86..e05638b 100644
+--- a/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/WeightedDegree.java
++++ b/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/WeightedDegree.java
+@@ -150,7 +150,7 @@
+             Progress.progress(progress);
+         }
+ 
+-        averageWeightedDegree /= graph.getNodeCount();
++        averageWeightedDegree /= (isDirected ? 2.0 : 1.0) * graph.getNodeCount();
+ 
+         return averageWeightedDegree;
+ 
+diff --git a/modules/StatisticsPlugin/src/test/java/org/gephi/statistics/plugin/DegreeNGTest.java b/modules/StatisticsPlugin/src/test/java/org/gephi/statistics/plugin/DegreeNGTest.java
+index 6c9f1b5..bb5fd2c 100644
+--- a/modules/StatisticsPlugin/src/test/java/org/gephi/statistics/plugin/DegreeNGTest.java
++++ b/modules/StatisticsPlugin/src/test/java/org/gephi/statistics/plugin/DegreeNGTest.java
+@@ -176,7 +176,7 @@
+         assertEquals(inDegree1, 0);
+         assertEquals(inDegree2, 1);
+         assertEquals(outDegree1, 1);
+-        assertEquals(avDegree, 1.0);
++        assertEquals(avDegree, 0.5);
+     }
+ 
+     @Test
+@@ -194,7 +194,7 @@
+         assertEquals(inDegree3, 1);
+         assertEquals(degree1, 2);
+         assertEquals(outDegree5, 1);
+-        assertEquals(avDegree, 2.0);
++        assertEquals(avDegree, 1.0);
+     }
+ 
+     @Test
+diff --git a/modules/StatisticsPlugin/src/test/java/org/gephi/statistics/plugin/WeightedDegreeNGTest.java b/modules/StatisticsPlugin/src/test/java/org/gephi/statistics/plugin/WeightedDegreeNGTest.java
+index 77afe32..1a6c81e 100644
+--- a/modules/StatisticsPlugin/src/test/java/org/gephi/statistics/plugin/WeightedDegreeNGTest.java
++++ b/modules/StatisticsPlugin/src/test/java/org/gephi/statistics/plugin/WeightedDegreeNGTest.java
+@@ -181,7 +181,7 @@
+         assertEquals(inDegree1, 0.0);
+         assertEquals(inDegree2, 1.0);
+         assertEquals(outDegree1, 1.0);
+-        assertEquals(avDegree, 1.0);
++        assertEquals(avDegree, 0.5);
+     }
+ 
+     @Test
+@@ -200,7 +200,7 @@
+         assertEquals(inDegree3, 1.0);
+         assertEquals(degree1, 2.0);
+         assertEquals(outDegree5, 1.0);
+-        assertEquals(avDegree, 2.0);
++        assertEquals(avDegree, 1.0);
+     }
+ 
+     @Test
+diff --git a/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/Degree.java b/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/Degree.java
+index 7372b12..e2a0b07 100644
+--- a/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/Degree.java
++++ b/modules/StatisticsPlugin/src/main/java/org/gephi/statistics/plugin/Degree.java
+@@ -171,7 +171,7 @@
+             Progress.progress(progress);
+         }
+ 
+-        averageDegree /= graph.getNodeCount();
++        averageDegree /=  (isDirected ? 2.0 : 1.0) * graph.getNodeCount();
+ 
+         return averageDegree;
+     }

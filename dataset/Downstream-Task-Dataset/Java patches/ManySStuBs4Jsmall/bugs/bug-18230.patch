@@ -1,0 +1,26 @@
+diff --git a/community/server/src/test/java/org/neo4j/server/rest/transactional/integration/TransactionErrorIT.java b/community/server/src/test/java/org/neo4j/server/rest/transactional/integration/TransactionErrorIT.java
+index aa305b2..5ba22b3 100644
+--- a/community/server/src/test/java/org/neo4j/server/rest/transactional/integration/TransactionErrorIT.java
++++ b/community/server/src/test/java/org/neo4j/server/rest/transactional/integration/TransactionErrorIT.java
+@@ -96,7 +96,7 @@
+             out.println("3");
+             out.close();
+ 
+-            String url = "file://" + file.getAbsolutePath();
++            String url = file.toURI().toURL().toString().replace("\\", "\\\\");
+             String query = "USING PERIODIC COMMIT 1 LOAD CSV FROM \\\"" + url + "\\\" AS line CREATE ({name: 1/toInt(line[0])});";
+ 
+             // begin and execute and commit
+diff --git a/community/server/src/test/java/org/neo4j/server/rest/transactional/integration/TransactionErrorIT.java b/community/server/src/test/java/org/neo4j/server/rest/transactional/integration/TransactionErrorIT.java
+index aa305b2..5ba22b3 100644
+--- a/community/server/src/test/java/org/neo4j/server/rest/transactional/integration/TransactionErrorIT.java
++++ b/community/server/src/test/java/org/neo4j/server/rest/transactional/integration/TransactionErrorIT.java
+@@ -96,7 +96,7 @@
+             out.println("3");
+             out.close();
+ 
+-            String url = "file://" + file.getAbsolutePath();
++            String url = file.toURI().toURL().toString().replace("\\", "\\\\");
+             String query = "USING PERIODIC COMMIT 1 LOAD CSV FROM \\\"" + url + "\\\" AS line CREATE ({name: 1/toInt(line[0])});";
+ 
+             // begin and execute and commit

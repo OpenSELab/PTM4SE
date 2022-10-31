@@ -1,0 +1,109 @@
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestDecoder.java b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestDecoder.java
+index 13b3391..e1cb2df 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestDecoder.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestDecoder.java
+@@ -780,7 +780,8 @@
+             Attribute nameAttribute = currentFieldAttributes.get(HttpPostBodyUtil.NAME);
+             if (currentAttribute == null) {
+                 try {
+-                    currentAttribute = factory.createAttribute(request, nameAttribute.getValue());
++                    currentAttribute = factory.createAttribute(request,
++                            decodeAttribute(nameAttribute.getValue(), charset));
+                 } catch (NullPointerException e) {
+                     throw new ErrorDataDecoderException(e);
+                 } catch (IllegalArgumentException e) {
+@@ -954,7 +955,8 @@
+                         String[] values = StringUtil.split(contents[i], '=');
+                         Attribute attribute;
+                         try {
+-                            attribute = factory.createAttribute(request, values[0].trim(),
++                            attribute = factory.createAttribute(request,
++                                    decodeAttribute(values[0].trim(), charset),
+                                     decodeAttribute(cleanString(values[1]), charset));
+                         } catch (NullPointerException e) {
+                             throw new ErrorDataDecoderException(e);
+@@ -1014,7 +1016,8 @@
+                         } else {
+                             Attribute attribute;
+                             try {
+-                                attribute = factory.createAttribute(request, contents[0].trim(),
++                                attribute = factory.createAttribute(request,
++                                        decodeAttribute(contents[0].trim(), charset),
+                                         decodeAttribute(cleanString(contents[i]), charset));
+                             } catch (NullPointerException e) {
+                                 throw new ErrorDataDecoderException(e);
+@@ -1115,8 +1118,10 @@
+                 size = 0;
+             }
+             try {
+-                currentFileUpload = factory.createFileUpload(request, nameAttribute.getValue(),
+-                        filenameAttribute.getValue(), contentTypeAttribute.getValue(), mechanism.value(), localCharset,
++                currentFileUpload = factory.createFileUpload(request,
++                        decodeAttribute(nameAttribute.getValue(), charset),
++                        decodeAttribute(filenameAttribute.getValue(), charset),
++                        contentTypeAttribute.getValue(), mechanism.value(), localCharset,
+                         size);
+             } catch (NullPointerException e) {
+                 throw new ErrorDataDecoderException(e);
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestEncoder.java b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestEncoder.java
+index 1095acf..7aa2197 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestEncoder.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestEncoder.java
+@@ -486,7 +486,9 @@
+             Charset localcharset = attribute.getCharset();
+             if (localcharset != null) {
+                 // Content-Type: charset=charset
+-                internal.addValue(HttpHeaders.Names.CONTENT_TYPE + ": " + HttpHeaders.Values.CHARSET + '='
++                internal.addValue(HttpHeaders.Names.CONTENT_TYPE + ": " +
++                        HttpPostBodyUtil.DEFAULT_TEXT_CONTENT_TYPE + "; " +
++                        HttpHeaders.Values.CHARSET + '='
+                         + localcharset + "\r\n");
+             }
+             // CRLF between body header and data
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestDecoder.java b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestDecoder.java
+index 13b3391..e1cb2df 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestDecoder.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestDecoder.java
+@@ -780,7 +780,8 @@
+             Attribute nameAttribute = currentFieldAttributes.get(HttpPostBodyUtil.NAME);
+             if (currentAttribute == null) {
+                 try {
+-                    currentAttribute = factory.createAttribute(request, nameAttribute.getValue());
++                    currentAttribute = factory.createAttribute(request,
++                            decodeAttribute(nameAttribute.getValue(), charset));
+                 } catch (NullPointerException e) {
+                     throw new ErrorDataDecoderException(e);
+                 } catch (IllegalArgumentException e) {
+@@ -954,7 +955,8 @@
+                         String[] values = StringUtil.split(contents[i], '=');
+                         Attribute attribute;
+                         try {
+-                            attribute = factory.createAttribute(request, values[0].trim(),
++                            attribute = factory.createAttribute(request,
++                                    decodeAttribute(values[0].trim(), charset),
+                                     decodeAttribute(cleanString(values[1]), charset));
+                         } catch (NullPointerException e) {
+                             throw new ErrorDataDecoderException(e);
+@@ -1014,7 +1016,8 @@
+                         } else {
+                             Attribute attribute;
+                             try {
+-                                attribute = factory.createAttribute(request, contents[0].trim(),
++                                attribute = factory.createAttribute(request,
++                                        decodeAttribute(contents[0].trim(), charset),
+                                         decodeAttribute(cleanString(contents[i]), charset));
+                             } catch (NullPointerException e) {
+                                 throw new ErrorDataDecoderException(e);
+@@ -1115,8 +1118,10 @@
+                 size = 0;
+             }
+             try {
+-                currentFileUpload = factory.createFileUpload(request, nameAttribute.getValue(),
+-                        filenameAttribute.getValue(), contentTypeAttribute.getValue(), mechanism.value(), localCharset,
++                currentFileUpload = factory.createFileUpload(request,
++                        decodeAttribute(nameAttribute.getValue(), charset),
++                        decodeAttribute(filenameAttribute.getValue(), charset),
++                        contentTypeAttribute.getValue(), mechanism.value(), localCharset,
+                         size);
+             } catch (NullPointerException e) {
+                 throw new ErrorDataDecoderException(e);

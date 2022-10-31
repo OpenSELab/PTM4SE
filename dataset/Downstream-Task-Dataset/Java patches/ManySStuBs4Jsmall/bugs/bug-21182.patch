@@ -1,0 +1,66 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/client/OAuth2RestOperationsConfiguration.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/client/OAuth2RestOperationsConfiguration.java
+index 2f93b81..55e30f6 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/client/OAuth2RestOperationsConfiguration.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/client/OAuth2RestOperationsConfiguration.java
+@@ -200,7 +200,7 @@
+ 
+ 	static class ClientCredentialsCondition extends AnyNestedCondition {
+ 
+-		public ClientCredentialsCondition() {
++		ClientCredentialsCondition() {
+ 			super(ConfigurationPhase.PARSE_CONFIGURATION);
+ 		}
+ 
+@@ -215,7 +215,7 @@
+ 
+ 	static class NotClientCredentialsCondition extends NoneNestedConditions {
+ 
+-		public NotClientCredentialsCondition() {
++		NotClientCredentialsCondition() {
+ 			super(ConfigurationPhase.PARSE_CONFIGURATION);
+ 		}
+ 
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
+index dc32c4d..750f009 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/security/oauth2/OAuth2AutoConfigurationTests.java
+@@ -196,7 +196,7 @@
+ 				"security.oauth2.client.clientId=client",
+ 				"security.oauth2.client.grantType=client_credentials");
+ 		this.context.refresh();
+-		assertThat(context.getBean(OAuth2ClientContext.class).getAccessTokenRequest())
++		assertThat(this.context.getBean(OAuth2ClientContext.class).getAccessTokenRequest())
+ 				.isNotNull();
+ 		assertThat(countBeans(ClientCredentialsResourceDetails.class)).isEqualTo(1);
+ 		assertThat(countBeans(OAuth2ClientContext.class)).isEqualTo(1);
+@@ -212,7 +212,7 @@
+ 				"security.oauth2.client.grantType=client_credentials");
+ 		this.context.refresh();
+ 		// Thr primary context is fine (not session scoped):
+-		assertThat(context.getBean(OAuth2ClientContext.class).getAccessTokenRequest())
++		assertThat(this.context.getBean(OAuth2ClientContext.class).getAccessTokenRequest())
+ 				.isNotNull();
+ 		assertThat(countBeans(ClientCredentialsResourceDetails.class)).isEqualTo(1);
+ 		/*
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/client/OAuth2RestOperationsConfiguration.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/client/OAuth2RestOperationsConfiguration.java
+index 2f93b81..55e30f6 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/client/OAuth2RestOperationsConfiguration.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/oauth2/client/OAuth2RestOperationsConfiguration.java
+@@ -200,7 +200,7 @@
+ 
+ 	static class ClientCredentialsCondition extends AnyNestedCondition {
+ 
+-		public ClientCredentialsCondition() {
++		ClientCredentialsCondition() {
+ 			super(ConfigurationPhase.PARSE_CONFIGURATION);
+ 		}
+ 
+@@ -215,7 +215,7 @@
+ 
+ 	static class NotClientCredentialsCondition extends NoneNestedConditions {
+ 
+-		public NotClientCredentialsCondition() {
++		NotClientCredentialsCondition() {
+ 			super(ConfigurationPhase.PARSE_CONFIGURATION);
+ 		}
+ 

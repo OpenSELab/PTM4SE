@@ -1,0 +1,21 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/config/properties/PropertiesConfigurationFactory.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/config/properties/PropertiesConfigurationFactory.java
+index 50f9285..27644d8 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/config/properties/PropertiesConfigurationFactory.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/config/properties/PropertiesConfigurationFactory.java
+@@ -130,7 +130,7 @@ public class PropertiesConfigurationFactory extends ConfigurationFactory {
+             }
+         }
+         String loggerProp = properties.getProperty("loggers");
+-        if (appenderProp != null) {
++        if (loggerProp != null) {
+             String[] loggerNames = loggerProp.split(",");
+             for (String loggerName : loggerNames) {
+                 String name = loggerName.trim();
+@@ -343,7 +343,6 @@ public class PropertiesConfigurationFactory extends ConfigurationFactory {
+         return componentBuilder;
+     }
+ 
+-    @SuppressWarnings({"unchecked", "rawtypes"})
+     private void processRemainingProperties(ComponentBuilder<?> builder, String name, Properties properties) {
+         while (properties.size() > 0) {
+             String propertyName = properties.stringPropertyNames().iterator().next();

@@ -1,0 +1,28 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/cache/impl/AbstractCacheRecordStore.java b/hazelcast/src/main/java/com/hazelcast/cache/impl/AbstractCacheRecordStore.java
+index fb39ddc..67c1e8b 100644
+--- a/hazelcast/src/main/java/com/hazelcast/cache/impl/AbstractCacheRecordStore.java
++++ b/hazelcast/src/main/java/com/hazelcast/cache/impl/AbstractCacheRecordStore.java
+@@ -104,7 +104,8 @@
+         this.cacheService = cacheService;
+         this.cacheConfig = cacheService.getCacheConfig(name);
+         if (cacheConfig == null) {
+-            throw new CacheNotExistsException("Cache already destroyed, node " + nodeEngine.getLocalMember());
++            throw new CacheNotExistsException("Cache is already destroyed or not created yet, on "
++                    + nodeEngine.getLocalMember());
+         }
+         this.records = createRecordCacheMap();
+         if (cacheConfig.getCacheLoaderFactory() != null) {
+diff --git a/hazelcast/src/main/java/com/hazelcast/cache/impl/AbstractCacheRecordStore.java b/hazelcast/src/main/java/com/hazelcast/cache/impl/AbstractCacheRecordStore.java
+index fb39ddc..67c1e8b 100644
+--- a/hazelcast/src/main/java/com/hazelcast/cache/impl/AbstractCacheRecordStore.java
++++ b/hazelcast/src/main/java/com/hazelcast/cache/impl/AbstractCacheRecordStore.java
+@@ -104,7 +104,8 @@
+         this.cacheService = cacheService;
+         this.cacheConfig = cacheService.getCacheConfig(name);
+         if (cacheConfig == null) {
+-            throw new CacheNotExistsException("Cache already destroyed, node " + nodeEngine.getLocalMember());
++            throw new CacheNotExistsException("Cache is already destroyed or not created yet, on "
++                    + nodeEngine.getLocalMember());
+         }
+         this.records = createRecordCacheMap();
+         if (cacheConfig.getCacheLoaderFactory() != null) {

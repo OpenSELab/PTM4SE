@@ -1,0 +1,36 @@
+diff --git a/hbase-common/src/test/java/org/apache/hadoop/hbase/Waiter.java b/hbase-common/src/test/java/org/apache/hadoop/hbase/Waiter.java
+index 1110f20..cd31ce5 100644
+--- a/hbase-common/src/test/java/org/apache/hadoop/hbase/Waiter.java
++++ b/hbase-common/src/test/java/org/apache/hadoop/hbase/Waiter.java
+@@ -207,11 +207,11 @@
+         } else if (failIfTimeout) {
+           String msg = getExplanation(predicate);
+           fail(MessageFormat
+-              .format("Waiting timed out after [{0}] msec" + msg, adjustedTimeout));
++              .format("Waiting timed out after [{0}] msec", adjustedTimeout) + msg);
+         } else {
+           String msg = getExplanation(predicate);
+           LOG.warn(
+-              MessageFormat.format("Waiting timed out after [{0}] msec" + msg, adjustedTimeout));
++              MessageFormat.format("Waiting timed out after [{0}] msec", adjustedTimeout) + msg);
+         }
+       }
+       return (eval || interrupted) ? (System.currentTimeMillis() - started) : -1;
+diff --git a/hbase-common/src/test/java/org/apache/hadoop/hbase/Waiter.java b/hbase-common/src/test/java/org/apache/hadoop/hbase/Waiter.java
+index 1110f20..cd31ce5 100644
+--- a/hbase-common/src/test/java/org/apache/hadoop/hbase/Waiter.java
++++ b/hbase-common/src/test/java/org/apache/hadoop/hbase/Waiter.java
+@@ -207,11 +207,11 @@
+         } else if (failIfTimeout) {
+           String msg = getExplanation(predicate);
+           fail(MessageFormat
+-              .format("Waiting timed out after [{0}] msec" + msg, adjustedTimeout));
++              .format("Waiting timed out after [{0}] msec", adjustedTimeout) + msg);
+         } else {
+           String msg = getExplanation(predicate);
+           LOG.warn(
+-              MessageFormat.format("Waiting timed out after [{0}] msec" + msg, adjustedTimeout));
++              MessageFormat.format("Waiting timed out after [{0}] msec", adjustedTimeout) + msg);
+         }
+       }
+       return (eval || interrupted) ? (System.currentTimeMillis() - started) : -1;

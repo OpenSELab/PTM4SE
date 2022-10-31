@@ -1,0 +1,32 @@
+diff --git a/servers/src/main/java/tachyon/worker/netty/NettyDataServer.java b/servers/src/main/java/tachyon/worker/netty/NettyDataServer.java
+index bad09b9..626971d 100644
+--- a/servers/src/main/java/tachyon/worker/netty/NettyDataServer.java
++++ b/servers/src/main/java/tachyon/worker/netty/NettyDataServer.java
+@@ -73,9 +73,9 @@
+     // set write buffer
+     // this is the default, but its recommended to set it in case of change in future netty.
+     boot.childOption(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK,
+-        mTachyonConf.getInt(Constants.WORKER_NETTY_WATERMARK_HIGH, 32 * 1024));
++        (int)mTachyonConf.getBytes(Constants.WORKER_NETTY_WATERMARK_HIGH, 32 * 1024));
+     boot.childOption(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK,
+-        mTachyonConf.getInt(Constants.WORKER_NETTY_WATERMARK_LOW, 8 * 1024));
++        (int)mTachyonConf.getBytes(Constants.WORKER_NETTY_WATERMARK_LOW, 8 * 1024));
+ 
+     // more buffer settings
+     final int optBacklog = mTachyonConf.getInt(Constants.WORKER_NETTY_BACKLOG, -1);
+diff --git a/servers/src/main/java/tachyon/worker/netty/NettyDataServer.java b/servers/src/main/java/tachyon/worker/netty/NettyDataServer.java
+index bad09b9..626971d 100644
+--- a/servers/src/main/java/tachyon/worker/netty/NettyDataServer.java
++++ b/servers/src/main/java/tachyon/worker/netty/NettyDataServer.java
+@@ -73,9 +73,9 @@
+     // set write buffer
+     // this is the default, but its recommended to set it in case of change in future netty.
+     boot.childOption(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK,
+-        mTachyonConf.getInt(Constants.WORKER_NETTY_WATERMARK_HIGH, 32 * 1024));
++        (int)mTachyonConf.getBytes(Constants.WORKER_NETTY_WATERMARK_HIGH, 32 * 1024));
+     boot.childOption(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK,
+-        mTachyonConf.getInt(Constants.WORKER_NETTY_WATERMARK_LOW, 8 * 1024));
++        (int)mTachyonConf.getBytes(Constants.WORKER_NETTY_WATERMARK_LOW, 8 * 1024));
+ 
+     // more buffer settings
+     final int optBacklog = mTachyonConf.getInt(Constants.WORKER_NETTY_BACKLOG, -1);

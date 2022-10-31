@@ -1,0 +1,13 @@
+diff --git a/processing/src/main/java/io/druid/segment/incremental/OnheapIncrementalIndex.java b/processing/src/main/java/io/druid/segment/incremental/OnheapIncrementalIndex.java
+index cbc034c..23e1471 100644
+--- a/processing/src/main/java/io/druid/segment/incremental/OnheapIncrementalIndex.java
++++ b/processing/src/main/java/io/druid/segment/incremental/OnheapIncrementalIndex.java
+@@ -151,7 +151,7 @@
+ 
+       // Last ditch sanity checks
+       if (numEntries.get() >= maxRowCount && !facts.containsKey(key)) {
+-        throw new IndexSizeExceededException("Maximum number of rows reached");
++        throw new IndexSizeExceededException("Maximum number of rows [%d] reached", maxRowCount);
+       }
+       final Integer prev = facts.putIfAbsent(key, rowIndex);
+       if (null == prev) {

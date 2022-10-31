@@ -1,0 +1,43 @@
+diff --git a/web/src/main/java/org/jboss/as/web/WebMessages.java b/web/src/main/java/org/jboss/as/web/WebMessages.java
+index 2e80641..2699691 100644
+--- a/web/src/main/java/org/jboss/as/web/WebMessages.java
++++ b/web/src/main/java/org/jboss/as/web/WebMessages.java
+@@ -237,8 +237,8 @@
+     @Message(id = 18061, value = "Interrupted acquiring ownership of %s")
+     RuntimeException interruptedAcquiringOwnership(String id, @Cause Throwable t);
+ 
+-    @Message(id = 18062, value = "Specified attribute cannot be replicated")
+-    IllegalArgumentException failToReplicateAttribute();
++    @Message(id = 18062, value = "'%s' attribute with type '%s' cannot be replicated")
++    IllegalArgumentException failToReplicateAttribute(String attributeName, String className);
+ 
+     @Message(id = 18063, value = "Error calling value bound session listener")
+     String errorValueBoundEvent(@Cause Throwable t);
+diff --git a/web/src/main/java/org/jboss/as/web/session/ClusteredSession.java b/web/src/main/java/org/jboss/as/web/session/ClusteredSession.java
+index c9c46af..0b3cb66 100644
+--- a/web/src/main/java/org/jboss/as/web/session/ClusteredSession.java
++++ b/web/src/main/java/org/jboss/as/web/session/ClusteredSession.java
+@@ -805,7 +805,7 @@
+         }
+ 
+         if (canAttributeBeReplicated(value) == false) {
+-            throw MESSAGES.failToReplicateAttribute();
++            throw MESSAGES.failToReplicateAttribute(name, value.getClass().getCanonicalName());
+         }
+ 
+         // Construct an event with the new value
+diff --git a/web/src/main/java/org/jboss/as/web/WebMessages.java b/web/src/main/java/org/jboss/as/web/WebMessages.java
+index 2e80641..2699691 100644
+--- a/web/src/main/java/org/jboss/as/web/WebMessages.java
++++ b/web/src/main/java/org/jboss/as/web/WebMessages.java
+@@ -237,8 +237,8 @@
+     @Message(id = 18061, value = "Interrupted acquiring ownership of %s")
+     RuntimeException interruptedAcquiringOwnership(String id, @Cause Throwable t);
+ 
+-    @Message(id = 18062, value = "Specified attribute cannot be replicated")
+-    IllegalArgumentException failToReplicateAttribute();
++    @Message(id = 18062, value = "'%s' attribute with type '%s' cannot be replicated")
++    IllegalArgumentException failToReplicateAttribute(String attributeName, String className);
+ 
+     @Message(id = 18063, value = "Error calling value bound session listener")
+     String errorValueBoundEvent(@Cause Throwable t);

@@ -1,0 +1,28 @@
+diff --git a/components/camel-ibatis/src/test/java/org/apache/camel/component/ibatis/IBatisRouteTest.java b/components/camel-ibatis/src/test/java/org/apache/camel/component/ibatis/IBatisRouteTest.java
+index f887ea8..6be03e3 100644
+--- a/components/camel-ibatis/src/test/java/org/apache/camel/component/ibatis/IBatisRouteTest.java
++++ b/components/camel-ibatis/src/test/java/org/apache/camel/component/ibatis/IBatisRouteTest.java
+@@ -60,7 +60,8 @@
+     protected RouteBuilder createRouteBuilder() throws Exception {
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+-                from("ibatis:selectAllAccounts").to("mock:results");
++                //Delaying the query so we will not get the "java.sql.SQLException: Table not found in statement" on the slower box
++                from("timer://pollTheDatabase?delay=2000").to("ibatis:selectAllAccounts").to("mock:results");
+ 
+                 from("direct:start").to("ibatis:insertAccount");
+             }
+diff --git a/components/camel-ibatis/src/test/java/org/apache/camel/component/ibatis/IBatisRouteTest.java b/components/camel-ibatis/src/test/java/org/apache/camel/component/ibatis/IBatisRouteTest.java
+index f887ea8..6be03e3 100644
+--- a/components/camel-ibatis/src/test/java/org/apache/camel/component/ibatis/IBatisRouteTest.java
++++ b/components/camel-ibatis/src/test/java/org/apache/camel/component/ibatis/IBatisRouteTest.java
+@@ -60,7 +60,8 @@
+     protected RouteBuilder createRouteBuilder() throws Exception {
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+-                from("ibatis:selectAllAccounts").to("mock:results");
++                //Delaying the query so we will not get the "java.sql.SQLException: Table not found in statement" on the slower box
++                from("timer://pollTheDatabase?delay=2000").to("ibatis:selectAllAccounts").to("mock:results");
+ 
+                 from("direct:start").to("ibatis:insertAccount");
+             }

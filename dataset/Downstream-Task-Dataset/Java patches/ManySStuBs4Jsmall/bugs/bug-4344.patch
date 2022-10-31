@@ -1,0 +1,28 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/util/LRUCache.java b/camel-core/src/main/java/org/apache/camel/util/LRUCache.java
+index 41dc71f..d66cd0e 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/LRUCache.java
++++ b/camel-core/src/main/java/org/apache/camel/util/LRUCache.java
+@@ -75,7 +75,8 @@
+      * @throws IllegalArgumentException if the initial capacity is negative
+      */
+     public LRUCache(int initialCapacity, int maximumCacheSize) {
+-        this(initialCapacity, maximumCacheSize, true);
++        //Do not stop service if ConcurrentLinkedHashMap try to evict entry when its max capacity is zero.
++        this(initialCapacity, maximumCacheSize, maximumCacheSize>0);
+     }
+ 
+     /**
+diff --git a/camel-core/src/main/java/org/apache/camel/util/LRUCache.java b/camel-core/src/main/java/org/apache/camel/util/LRUCache.java
+index 41dc71f..d66cd0e 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/LRUCache.java
++++ b/camel-core/src/main/java/org/apache/camel/util/LRUCache.java
+@@ -75,7 +75,8 @@
+      * @throws IllegalArgumentException if the initial capacity is negative
+      */
+     public LRUCache(int initialCapacity, int maximumCacheSize) {
+-        this(initialCapacity, maximumCacheSize, true);
++        //Do not stop service if ConcurrentLinkedHashMap try to evict entry when its max capacity is zero.
++        this(initialCapacity, maximumCacheSize, maximumCacheSize>0);
+     }
+ 
+     /**

@@ -1,0 +1,13 @@
+diff --git a/commons/src/main/java/com/navercorp/pinpoint/common/bo/SqlMetaDataBo.java b/commons/src/main/java/com/navercorp/pinpoint/common/bo/SqlMetaDataBo.java
+index b189e43..46a2a47 100644
+--- a/commons/src/main/java/com/navercorp/pinpoint/common/bo/SqlMetaDataBo.java
++++ b/commons/src/main/java/com/navercorp/pinpoint/common/bo/SqlMetaDataBo.java
+@@ -79,7 +79,7 @@
+     }
+ 
+     public void readRowKey(byte[] rowKey) {
+-        this.agentId = BytesUtils.toString(rowKey, 0, PinpointConstants.AGENT_NAME_MAX_LEN).trim();
++        this.agentId = BytesUtils.safeTrim(BytesUtils.toString(rowKey, 0, PinpointConstants.AGENT_NAME_MAX_LEN));
+         this.startTime = TimeUtils.recoveryTimeMillis(readTime(rowKey));
+         this.hashCode = readKeyCode(rowKey);
+     }

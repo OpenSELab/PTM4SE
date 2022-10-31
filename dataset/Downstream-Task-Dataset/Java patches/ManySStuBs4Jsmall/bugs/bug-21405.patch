@@ -1,0 +1,28 @@
+diff --git a/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java b/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
+index d85af62..d80a3e4 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
+@@ -188,7 +188,8 @@
+ 		application.setWebEnvironment(false);
+ 		application.run("--banner.location=classpath:test-banner-with-placeholder.txt",
+ 				"--test.property=123456");
+-		assertThat(this.output.toString(), startsWith("Running a Test!\n\n123456"));
++		assertThat(this.output.toString(),
++				startsWith(String.format("Running a Test!%n%n123456")));
+ 	}
+ 
+ 	@Test
+diff --git a/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java b/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
+index d85af62..d80a3e4 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/SpringApplicationTests.java
+@@ -188,7 +188,8 @@
+ 		application.setWebEnvironment(false);
+ 		application.run("--banner.location=classpath:test-banner-with-placeholder.txt",
+ 				"--test.property=123456");
+-		assertThat(this.output.toString(), startsWith("Running a Test!\n\n123456"));
++		assertThat(this.output.toString(),
++				startsWith(String.format("Running a Test!%n%n123456")));
+ 	}
+ 
+ 	@Test

@@ -1,0 +1,80 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/config/AtmosphereHandler.java b/modules/cpr/src/main/java/org/atmosphere/config/AtmosphereHandler.java
+index 7c33d3c..0c24b41 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/config/AtmosphereHandler.java
++++ b/modules/cpr/src/main/java/org/atmosphere/config/AtmosphereHandler.java
+@@ -23,7 +23,7 @@
+  */
+ public class AtmosphereHandler {
+ 
+-    private String supportSession;
++    private boolean supportSession = false;
+     private String contextRoot;
+     private String className;
+     private String broadcaster;
+@@ -35,11 +35,11 @@
+     private List<ApplicationConfig> applicationConfig = new ArrayList<ApplicationConfig>();
+     private List<FrameworkConfig> frameworkConfig = new ArrayList<FrameworkConfig>();
+ 
+-    public String getSupportSession() {
++    public boolean getSupportSession() {
+         return supportSession;
+     }
+ 
+-    public void setSupportSession(String supportSession) {
++    public void setSupportSession(boolean supportSession) {
+         this.supportSession = supportSession;
+     }
+ 
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index c27b495..c91a682 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -847,7 +847,7 @@
+ 
+                 config.setSupportSession(!isJersey);
+ 
+-                if (!atmoHandler.getSupportSession().equals("")) {
++                if (!atmoHandler.getSupportSession()) {
+                     sessionSupport(Boolean.valueOf(atmoHandler.getSupportSession()));
+                 }
+ 
+diff --git a/modules/cpr/src/main/java/org/atmosphere/util/AtmosphereConfigReader.java b/modules/cpr/src/main/java/org/atmosphere/util/AtmosphereConfigReader.java
+index 3acf8c3..d550880 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/util/AtmosphereConfigReader.java
++++ b/modules/cpr/src/main/java/org/atmosphere/util/AtmosphereConfigReader.java
+@@ -128,7 +128,7 @@
+                 Node attribute = root.getAttributes().item(j);
+ 
+                 if (attribute.getNodeName().equals("support-session")) {
+-                    atmoHandler.setSupportSession(attribute.getFirstChild().getNodeValue());
++                    atmoHandler.setSupportSession(Boolean.valueOf(attribute.getFirstChild().getNodeValue()));
+                 } else if (attribute.getNodeName().equals("context-root")) {
+                     atmoHandler.setContextRoot(attribute.getFirstChild().getNodeValue());
+                 } else if (attribute.getNodeName().equals("class-name")) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/config/AtmosphereHandler.java b/modules/cpr/src/main/java/org/atmosphere/config/AtmosphereHandler.java
+index 7c33d3c..0c24b41 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/config/AtmosphereHandler.java
++++ b/modules/cpr/src/main/java/org/atmosphere/config/AtmosphereHandler.java
+@@ -23,7 +23,7 @@
+  */
+ public class AtmosphereHandler {
+ 
+-    private String supportSession;
++    private boolean supportSession = false;
+     private String contextRoot;
+     private String className;
+     private String broadcaster;
+@@ -35,11 +35,11 @@
+     private List<ApplicationConfig> applicationConfig = new ArrayList<ApplicationConfig>();
+     private List<FrameworkConfig> frameworkConfig = new ArrayList<FrameworkConfig>();
+ 
+-    public String getSupportSession() {
++    public boolean getSupportSession() {
+         return supportSession;
+     }
+ 
+-    public void setSupportSession(String supportSession) {
++    public void setSupportSession(boolean supportSession) {
+         this.supportSession = supportSession;
+     }
+ 

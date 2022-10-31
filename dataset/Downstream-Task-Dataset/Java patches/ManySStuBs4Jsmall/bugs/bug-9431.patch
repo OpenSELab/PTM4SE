@@ -1,0 +1,50 @@
+diff --git a/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java b/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
+index 4be8921..e872768 100644
+--- a/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
++++ b/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
+@@ -127,16 +127,16 @@
+         if (match.matches()) {
+             final int expectedLevel = Integer.parseInt(match.group(1));
+ 
+-            return (expectedLevel == indentInComment) && !isWarnComment
+-                    || (expectedLevel != indentInComment) && isWarnComment;
++            return expectedLevel == indentInComment && !isWarnComment
++                    || expectedLevel != indentInComment && isWarnComment;
+         }
+ 
+         match = NONSTRICT_LEVEL_COMMENT_REGEX.matcher(comment);
+         if (match.matches()) {
+             final int expectedMinimalIndent = Integer.parseInt(match.group(1));
+ 
+-            return (indentInComment >= expectedMinimalIndent) && !isWarnComment
+-                    || (indentInComment < expectedMinimalIndent) && isWarnComment;
++            return indentInComment >= expectedMinimalIndent && !isWarnComment
++                    || indentInComment < expectedMinimalIndent && isWarnComment;
+         }
+ 
+         throw new IllegalArgumentException();
+diff --git a/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java b/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
+index 4be8921..e872768 100644
+--- a/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
++++ b/src/it/java/com/google/checkstyle/test/base/IndentationConfigurationBuilder.java
+@@ -127,16 +127,16 @@
+         if (match.matches()) {
+             final int expectedLevel = Integer.parseInt(match.group(1));
+ 
+-            return (expectedLevel == indentInComment) && !isWarnComment
+-                    || (expectedLevel != indentInComment) && isWarnComment;
++            return expectedLevel == indentInComment && !isWarnComment
++                    || expectedLevel != indentInComment && isWarnComment;
+         }
+ 
+         match = NONSTRICT_LEVEL_COMMENT_REGEX.matcher(comment);
+         if (match.matches()) {
+             final int expectedMinimalIndent = Integer.parseInt(match.group(1));
+ 
+-            return (indentInComment >= expectedMinimalIndent) && !isWarnComment
+-                    || (indentInComment < expectedMinimalIndent) && isWarnComment;
++            return indentInComment >= expectedMinimalIndent && !isWarnComment
++                    || indentInComment < expectedMinimalIndent && isWarnComment;
+         }
+ 
+         throw new IllegalArgumentException();

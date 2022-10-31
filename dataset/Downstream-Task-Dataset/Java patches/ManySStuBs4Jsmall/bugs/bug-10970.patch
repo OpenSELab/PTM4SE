@@ -1,0 +1,28 @@
+diff --git a/nd4j-api/src/main/java/org/nd4j/linalg/api/parallel/tasks/cpu/accumulation/CPUAccumulationTask.java b/nd4j-api/src/main/java/org/nd4j/linalg/api/parallel/tasks/cpu/accumulation/CPUAccumulationTask.java
+index 46b4d26..41f3223 100644
+--- a/nd4j-api/src/main/java/org/nd4j/linalg/api/parallel/tasks/cpu/accumulation/CPUAccumulationTask.java
++++ b/nd4j-api/src/main/java/org/nd4j/linalg/api/parallel/tasks/cpu/accumulation/CPUAccumulationTask.java
+@@ -58,7 +58,8 @@
+             }
+         }
+ 
+-        if (outerTask) {
++        if (outerTask && subTasks != null) {
++            //subTasks == null in FJ, op.getAndSetFinalResult already called for FJ if(outerTask) by this point
+             return op.getAndSetFinalResult(accum);
+         }
+         return accum;
+diff --git a/nd4j-api/src/main/java/org/nd4j/linalg/api/parallel/tasks/cpu/accumulation/CPUAccumulationTask.java b/nd4j-api/src/main/java/org/nd4j/linalg/api/parallel/tasks/cpu/accumulation/CPUAccumulationTask.java
+index 46b4d26..41f3223 100644
+--- a/nd4j-api/src/main/java/org/nd4j/linalg/api/parallel/tasks/cpu/accumulation/CPUAccumulationTask.java
++++ b/nd4j-api/src/main/java/org/nd4j/linalg/api/parallel/tasks/cpu/accumulation/CPUAccumulationTask.java
+@@ -58,7 +58,8 @@
+             }
+         }
+ 
+-        if (outerTask) {
++        if (outerTask && subTasks != null) {
++            //subTasks == null in FJ, op.getAndSetFinalResult already called for FJ if(outerTask) by this point
+             return op.getAndSetFinalResult(accum);
+         }
+         return accum;

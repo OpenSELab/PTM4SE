@@ -1,0 +1,13 @@
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/factory/providers/RpcFactoryProvider.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/factory/providers/RpcFactoryProvider.java
+index d5c5ce1..1c6e142 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/factory/providers/RpcFactoryProvider.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/factory/providers/RpcFactoryProvider.java
+@@ -73,7 +73,7 @@
+ 
+   private static Object getFactoryClassInstance(String factoryClassName) {
+     try {
+-      Class clazz = Class.forName(factoryClassName);
++      Class<?> clazz = Class.forName(factoryClassName);
+       Method method = clazz.getMethod("get", null);
+       method.setAccessible(true);
+       return method.invoke(null, null);

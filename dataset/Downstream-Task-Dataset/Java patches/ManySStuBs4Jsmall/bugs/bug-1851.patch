@@ -1,0 +1,26 @@
+diff --git a/modules/runtime/src/main/java/org/atmosphere/runtime/AtmosphereResourceImpl.java b/modules/runtime/src/main/java/org/atmosphere/runtime/AtmosphereResourceImpl.java
+index a71850b..d3cfc9e 100644
+--- a/modules/runtime/src/main/java/org/atmosphere/runtime/AtmosphereResourceImpl.java
++++ b/modules/runtime/src/main/java/org/atmosphere/runtime/AtmosphereResourceImpl.java
+@@ -647,7 +647,7 @@
+                 if (!disconnected.getAndSet(true)) {
+                     onDisconnect(event);
+                 } else {
+-                    logger.trace("Skipping notification, already disconnected {}", event.getResource().uuid());
++                    logger.trace("Skipping notification, already disconnected {}", event.getResource() != null ? event.getResource().uuid() : uuid());
+                 }
+             } else if (event.isResuming() || event.isResumedOnTimeout()) {
+                 onResume(event);
+diff --git a/modules/runtime/src/main/java/org/atmosphere/runtime/AtmosphereResourceImpl.java b/modules/runtime/src/main/java/org/atmosphere/runtime/AtmosphereResourceImpl.java
+index a71850b..d3cfc9e 100644
+--- a/modules/runtime/src/main/java/org/atmosphere/runtime/AtmosphereResourceImpl.java
++++ b/modules/runtime/src/main/java/org/atmosphere/runtime/AtmosphereResourceImpl.java
+@@ -647,7 +647,7 @@
+                 if (!disconnected.getAndSet(true)) {
+                     onDisconnect(event);
+                 } else {
+-                    logger.trace("Skipping notification, already disconnected {}", event.getResource().uuid());
++                    logger.trace("Skipping notification, already disconnected {}", event.getResource() != null ? event.getResource().uuid() : uuid());
+                 }
+             } else if (event.isResuming() || event.isResumedOnTimeout()) {
+                 onResume(event);

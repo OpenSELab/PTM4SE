@@ -1,0 +1,39 @@
+diff --git a/src/edu/stanford/nlp/ie/KBPStatisticalExtractor.java b/src/edu/stanford/nlp/ie/KBPStatisticalExtractor.java
+index c5e0fa3..8a92777 100644
+--- a/src/edu/stanford/nlp/ie/KBPStatisticalExtractor.java
++++ b/src/edu/stanford/nlp/ie/KBPStatisticalExtractor.java
+@@ -669,7 +669,7 @@
+     String best = Counters.argmax(scores);
+     // While it doesn't type check, continue going down the list.
+     // NO_RELATION is always an option somewhere in there, so safe to keep going...
+-    while (!NO_RELATION.equals(best) &&
++    while (!NO_RELATION.equals(best) && scores.size() > 1 &&
+         (!KBPRelationExtractor.RelationType.fromString(best).get().validNamedEntityLabels.contains(input.objectType) ||
+          RelationType.fromString(best).get().entityType != input.subjectType) ) {
+       scores.remove(best);
+diff --git a/src/edu/stanford/nlp/pipeline/KBPAnnotator.java b/src/edu/stanford/nlp/pipeline/KBPAnnotator.java
+index a8002b6..974793d 100644
+--- a/src/edu/stanford/nlp/pipeline/KBPAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/KBPAnnotator.java
+@@ -49,7 +49,7 @@
+   @ArgumentParser.Option(name="kbp.semgrex", gloss="Semgrex patterns directory, set to \"none\" to not use semgrex")
+   private String semgrexdir = DefaultPaths.DEFAULT_KBP_SEMGREX_DIR;
+ 
+-  @ArgumentParser.Option(name="kbp.tokensregex", gloss="Tokensregex patterns directory, set to \"none\" to not use tokensregex")
++  @ArgumentParser.Option(name="kbp.tokensregex", gloss="Tokensregex patterns directory, set to \"none\" ot not use tokensregex")
+   private String tokensregexdir = DefaultPaths.DEFAULT_KBP_TOKENSREGEX_DIR;
+ 
+   @ArgumentParser.Option(name="kbp.verbose", gloss="Print out KBP logging info")
+diff --git a/src/edu/stanford/nlp/ie/KBPStatisticalExtractor.java b/src/edu/stanford/nlp/ie/KBPStatisticalExtractor.java
+index c5e0fa3..8a92777 100644
+--- a/src/edu/stanford/nlp/ie/KBPStatisticalExtractor.java
++++ b/src/edu/stanford/nlp/ie/KBPStatisticalExtractor.java
+@@ -669,7 +669,7 @@
+     String best = Counters.argmax(scores);
+     // While it doesn't type check, continue going down the list.
+     // NO_RELATION is always an option somewhere in there, so safe to keep going...
+-    while (!NO_RELATION.equals(best) &&
++    while (!NO_RELATION.equals(best) && scores.size() > 1 &&
+         (!KBPRelationExtractor.RelationType.fromString(best).get().validNamedEntityLabels.contains(input.objectType) ||
+          RelationType.fromString(best).get().entityType != input.subjectType) ) {
+       scores.remove(best);

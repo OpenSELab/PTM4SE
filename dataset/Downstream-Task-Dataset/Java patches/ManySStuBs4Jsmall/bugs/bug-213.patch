@@ -1,0 +1,26 @@
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/parser/BpmnParse.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/parser/BpmnParse.java
+index d368f9c..6d0d2fa 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/parser/BpmnParse.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/parser/BpmnParse.java
+@@ -2618,7 +2618,7 @@
+ 
+     CallActivityBehavior callActivityBehaviour = null;
+     String expressionRegex = "\\$+\\{+.+\\}";
+-    if (calledElement.matches(expressionRegex)) {
++    if (calledElement != null && calledElement.matches(expressionRegex)) {
+       callActivityBehaviour = new CallActivityBehavior(expressionManager.createExpression(calledElement));
+     } else {
+       callActivityBehaviour = new CallActivityBehavior(calledElement);
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/parser/BpmnParse.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/parser/BpmnParse.java
+index d368f9c..6d0d2fa 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/parser/BpmnParse.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/parser/BpmnParse.java
+@@ -2618,7 +2618,7 @@
+ 
+     CallActivityBehavior callActivityBehaviour = null;
+     String expressionRegex = "\\$+\\{+.+\\}";
+-    if (calledElement.matches(expressionRegex)) {
++    if (calledElement != null && calledElement.matches(expressionRegex)) {
+       callActivityBehaviour = new CallActivityBehavior(expressionManager.createExpression(calledElement));
+     } else {
+       callActivityBehaviour = new CallActivityBehavior(calledElement);

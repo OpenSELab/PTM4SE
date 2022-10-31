@@ -1,0 +1,26 @@
+diff --git a/src/test/java/org/apache/hadoop/hbase/replication/TestReplication.java b/src/test/java/org/apache/hadoop/hbase/replication/TestReplication.java
+index 6ca4bd5..bd813de 100644
+--- a/src/test/java/org/apache/hadoop/hbase/replication/TestReplication.java
++++ b/src/test/java/org/apache/hadoop/hbase/replication/TestReplication.java
+@@ -178,7 +178,7 @@
+       Result[] res = scanner.next(NB_ROWS_IN_BIG_BATCH);
+       scanner.close();
+       if (res.length != 0) {
+-       if (lastCount < res.length) {
++       if (res.length < lastCount) {
+           i--; // Don't increment timeout if we make progress
+         }
+         lastCount = res.length;
+diff --git a/src/test/java/org/apache/hadoop/hbase/replication/TestReplication.java b/src/test/java/org/apache/hadoop/hbase/replication/TestReplication.java
+index 6ca4bd5..bd813de 100644
+--- a/src/test/java/org/apache/hadoop/hbase/replication/TestReplication.java
++++ b/src/test/java/org/apache/hadoop/hbase/replication/TestReplication.java
+@@ -178,7 +178,7 @@
+       Result[] res = scanner.next(NB_ROWS_IN_BIG_BATCH);
+       scanner.close();
+       if (res.length != 0) {
+-       if (lastCount < res.length) {
++       if (res.length < lastCount) {
+           i--; // Don't increment timeout if we make progress
+         }
+         lastCount = res.length;

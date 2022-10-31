@@ -1,0 +1,107 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/AnnotationUtility.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/AnnotationUtility.java
+index 3f85374..9676c4e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/AnnotationUtility.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/AnnotationUtility.java
+@@ -91,7 +91,7 @@
+     public static DetailAST getAnnotationHolder(DetailAST ast)
+     {
+         if (ast == null) {
+-            throw new NullPointerException("the ast is null");
++            throw new IllegalArgumentException("the ast is null");
+         }
+ 
+         final DetailAST annotationHolder;
+@@ -136,11 +136,11 @@
+         String annotation)
+     {
+         if (ast == null) {
+-            throw new NullPointerException("the ast is null");
++            throw new IllegalArgumentException("the ast is null");
+         }
+ 
+         if (annotation == null) {
+-            throw new NullPointerException("the annotation is null");
++            throw new IllegalArgumentException("the annotation is null");
+         }
+ 
+         if (StringUtils.isBlank(annotation)) {
+@@ -179,7 +179,7 @@
+     public static DetailAST annotatingWhat(DetailAST ast)
+     {
+         if (ast == null) {
+-            throw new NullPointerException("the ast is null");
++            throw new IllegalArgumentException("the ast is null");
+         }
+ 
+         if (ast.getType() != TokenTypes.ANNOTATION) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/JavadocTagInfo.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/JavadocTagInfo.java
+index 93b2823..5f4f3f0 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/JavadocTagInfo.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/JavadocTagInfo.java
+@@ -566,7 +566,7 @@
+     public static JavadocTagInfo fromText(final String text)
+     {
+         if (text == null) {
+-            throw new NullPointerException("the text is null");
++            throw new IllegalArgumentException("the text is null");
+         }
+ 
+         final JavadocTagInfo tag = TEXT_TO_TAG.get(text);
+@@ -590,7 +590,7 @@
+     public static JavadocTagInfo fromName(final String name)
+     {
+         if (name == null) {
+-            throw new NullPointerException("the name is null");
++            throw new IllegalArgumentException("the name is null");
+         }
+ 
+         final JavadocTagInfo tag = NAME_TO_TAG.get(name);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
+index 8984d36..72ded6d 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
+@@ -443,7 +443,7 @@
+         protected ClassInfo(final Token className)
+         {
+             if (className == null) {
+-                throw new NullPointerException(
++                throw new IllegalArgumentException(
+                     "ClassInfo's name should be non-null");
+             }
+             name = className;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/AnnotationUtility.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/AnnotationUtility.java
+index 3f85374..9676c4e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/AnnotationUtility.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/AnnotationUtility.java
+@@ -91,7 +91,7 @@
+     public static DetailAST getAnnotationHolder(DetailAST ast)
+     {
+         if (ast == null) {
+-            throw new NullPointerException("the ast is null");
++            throw new IllegalArgumentException("the ast is null");
+         }
+ 
+         final DetailAST annotationHolder;
+@@ -136,11 +136,11 @@
+         String annotation)
+     {
+         if (ast == null) {
+-            throw new NullPointerException("the ast is null");
++            throw new IllegalArgumentException("the ast is null");
+         }
+ 
+         if (annotation == null) {
+-            throw new NullPointerException("the annotation is null");
++            throw new IllegalArgumentException("the annotation is null");
+         }
+ 
+         if (StringUtils.isBlank(annotation)) {
+@@ -179,7 +179,7 @@
+     public static DetailAST annotatingWhat(DetailAST ast)
+     {
+         if (ast == null) {
+-            throw new NullPointerException("the ast is null");
++            throw new IllegalArgumentException("the ast is null");
+         }
+ 
+         if (ast.getType() != TokenTypes.ANNOTATION) {

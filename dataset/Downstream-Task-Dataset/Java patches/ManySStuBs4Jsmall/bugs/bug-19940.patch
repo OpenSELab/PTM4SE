@@ -1,0 +1,26 @@
+diff --git a/bundles/binding/org.openhab.binding.hue/src/main/java/org/openhab/binding/hue/internal/HueBinding.java b/bundles/binding/org.openhab.binding.hue/src/main/java/org/openhab/binding/hue/internal/HueBinding.java
+index 856321d..cc66ea4 100644
+--- a/bundles/binding/org.openhab.binding.hue/src/main/java/org/openhab/binding/hue/internal/HueBinding.java
++++ b/bundles/binding/org.openhab.binding.hue/src/main/java/org/openhab/binding/hue/internal/HueBinding.java
+@@ -145,7 +145,7 @@
+ 			} else if (IncreaseDecreaseType.DECREASE.equals(command)) {
+ 				int resultingValue = bulb.decreaseBrightness(deviceConfig.getStepSize());
+ 				eventPublisher.postUpdate(itemName, new PercentType(resultingValue));
+-			} else if (command instanceof PercentType) {
++			} else if ((command instanceof PercentType) && !(command instanceof HSBType)) {
+ 				bulb.setBrightness((255 / 100)
+ 						* ((PercentType) command).intValue());
+ 			}
+diff --git a/bundles/binding/org.openhab.binding.hue/src/main/java/org/openhab/binding/hue/internal/HueBinding.java b/bundles/binding/org.openhab.binding.hue/src/main/java/org/openhab/binding/hue/internal/HueBinding.java
+index 856321d..cc66ea4 100644
+--- a/bundles/binding/org.openhab.binding.hue/src/main/java/org/openhab/binding/hue/internal/HueBinding.java
++++ b/bundles/binding/org.openhab.binding.hue/src/main/java/org/openhab/binding/hue/internal/HueBinding.java
+@@ -145,7 +145,7 @@
+ 			} else if (IncreaseDecreaseType.DECREASE.equals(command)) {
+ 				int resultingValue = bulb.decreaseBrightness(deviceConfig.getStepSize());
+ 				eventPublisher.postUpdate(itemName, new PercentType(resultingValue));
+-			} else if (command instanceof PercentType) {
++			} else if ((command instanceof PercentType) && !(command instanceof HSBType)) {
+ 				bulb.setBrightness((255 / 100)
+ 						* ((PercentType) command).intValue());
+ 			}

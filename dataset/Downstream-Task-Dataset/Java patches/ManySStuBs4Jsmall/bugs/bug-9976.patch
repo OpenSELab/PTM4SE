@@ -1,0 +1,44 @@
+diff --git a/src/jvm/clojure/lang/LispReader.java b/src/jvm/clojure/lang/LispReader.java
+index 0b5c38e..ccde4c1 100644
+--- a/src/jvm/clojure/lang/LispReader.java
++++ b/src/jvm/clojure/lang/LispReader.java
+@@ -718,7 +718,7 @@
+ 		if(r instanceof LineNumberingPushbackReader)
+       {
+ 			line = ((LineNumberingPushbackReader) r).getLineNumber();
+-			column = ((LineNumberingPushbackReader) r).getColumnNumber();
++			column = ((LineNumberingPushbackReader) r).getColumnNumber()-1;
+       }
+ 		Object meta = read(r, true, null, true);
+ 		if(meta instanceof Symbol || meta instanceof String)
+@@ -974,7 +974,7 @@
+ 		if(r instanceof LineNumberingPushbackReader)
+       {
+ 			line = ((LineNumberingPushbackReader) r).getLineNumber();
+-			column = ((LineNumberingPushbackReader) r).getColumnNumber();
++			column = ((LineNumberingPushbackReader) r).getColumnNumber()-1;
+       }
+ 		List list = readDelimitedList(')', r, true);
+ 		if(list.isEmpty())
+diff --git a/src/jvm/clojure/lang/LispReader.java b/src/jvm/clojure/lang/LispReader.java
+index 0b5c38e..ccde4c1 100644
+--- a/src/jvm/clojure/lang/LispReader.java
++++ b/src/jvm/clojure/lang/LispReader.java
+@@ -718,7 +718,7 @@
+ 		if(r instanceof LineNumberingPushbackReader)
+       {
+ 			line = ((LineNumberingPushbackReader) r).getLineNumber();
+-			column = ((LineNumberingPushbackReader) r).getColumnNumber();
++			column = ((LineNumberingPushbackReader) r).getColumnNumber()-1;
+       }
+ 		Object meta = read(r, true, null, true);
+ 		if(meta instanceof Symbol || meta instanceof String)
+@@ -974,7 +974,7 @@
+ 		if(r instanceof LineNumberingPushbackReader)
+       {
+ 			line = ((LineNumberingPushbackReader) r).getLineNumber();
+-			column = ((LineNumberingPushbackReader) r).getColumnNumber();
++			column = ((LineNumberingPushbackReader) r).getColumnNumber()-1;
+       }
+ 		List list = readDelimitedList(')', r, true);
+ 		if(list.isEmpty())

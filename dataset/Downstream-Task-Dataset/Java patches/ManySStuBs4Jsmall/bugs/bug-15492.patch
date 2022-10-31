@@ -1,0 +1,44 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/internal/serialization/impl/SerializationServiceV1.java b/hazelcast/src/main/java/com/hazelcast/internal/serialization/impl/SerializationServiceV1.java
+index 323d258..d7ccb97 100644
+--- a/hazelcast/src/main/java/com/hazelcast/internal/serialization/impl/SerializationServiceV1.java
++++ b/hazelcast/src/main/java/com/hazelcast/internal/serialization/impl/SerializationServiceV1.java
+@@ -111,7 +111,7 @@
+         return portableContext;
+     }
+ 
+-    protected void registerConstantSerializers() {
++    private void registerConstantSerializers() {
+         registerConstant(null, nullSerializerAdapter);
+         registerConstant(DataSerializable.class, dataSerializerAdapter);
+         registerConstant(Portable.class, portableSerializerAdapter);
+@@ -137,7 +137,7 @@
+         registerConstant(String[].class, new StringArraySerializer());
+     }
+ 
+-    protected void registerJavaTypeSerializers() {
++    private void registerJavaTypeSerializers() {
+         //Java extensions: more serializers
+         registerConstant(Date.class, new DateSerializer());
+         registerConstant(BigInteger.class, new BigIntegerSerializer());
+diff --git a/hazelcast/src/main/java/com/hazelcast/internal/serialization/impl/SerializationServiceV1.java b/hazelcast/src/main/java/com/hazelcast/internal/serialization/impl/SerializationServiceV1.java
+index 323d258..d7ccb97 100644
+--- a/hazelcast/src/main/java/com/hazelcast/internal/serialization/impl/SerializationServiceV1.java
++++ b/hazelcast/src/main/java/com/hazelcast/internal/serialization/impl/SerializationServiceV1.java
+@@ -111,7 +111,7 @@
+         return portableContext;
+     }
+ 
+-    protected void registerConstantSerializers() {
++    private void registerConstantSerializers() {
+         registerConstant(null, nullSerializerAdapter);
+         registerConstant(DataSerializable.class, dataSerializerAdapter);
+         registerConstant(Portable.class, portableSerializerAdapter);
+@@ -137,7 +137,7 @@
+         registerConstant(String[].class, new StringArraySerializer());
+     }
+ 
+-    protected void registerJavaTypeSerializers() {
++    private void registerJavaTypeSerializers() {
+         //Java extensions: more serializers
+         registerConstant(Date.class, new DateSerializer());
+         registerConstant(BigInteger.class, new BigIntegerSerializer());

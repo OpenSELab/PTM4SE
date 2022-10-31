@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/version/JSR356WebSocket.java b/modules/cpr/src/main/java/org/atmosphere/container/version/JSR356WebSocket.java
+index a88199a..c5db342 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/version/JSR356WebSocket.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/version/JSR356WebSocket.java
+@@ -95,7 +95,7 @@
+             acquired = semaphore.tryAcquire(writeTimeout, TimeUnit.MILLISECONDS);
+             if (acquired) {
+                 ByteBuffer b = ByteBuffer.wrap(data, offset, length);
+-                session.getAsyncRemote().sendBinary(ByteBuffer.wrap(data, offset, length),
++                session.getAsyncRemote().sendBinary(b,
+                         new WriteResult(resource(), b.array()));
+             } else {
+                 throw new IOException("Socket closed");
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/version/JSR356WebSocket.java b/modules/cpr/src/main/java/org/atmosphere/container/version/JSR356WebSocket.java
+index a88199a..c5db342 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/version/JSR356WebSocket.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/version/JSR356WebSocket.java
+@@ -95,7 +95,7 @@
+             acquired = semaphore.tryAcquire(writeTimeout, TimeUnit.MILLISECONDS);
+             if (acquired) {
+                 ByteBuffer b = ByteBuffer.wrap(data, offset, length);
+-                session.getAsyncRemote().sendBinary(ByteBuffer.wrap(data, offset, length),
++                session.getAsyncRemote().sendBinary(b,
+                         new WriteResult(resource(), b.array()));
+             } else {
+                 throw new IOException("Socket closed");

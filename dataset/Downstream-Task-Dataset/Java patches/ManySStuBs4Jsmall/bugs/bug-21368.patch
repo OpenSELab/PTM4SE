@@ -1,0 +1,26 @@
+diff --git a/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RunMojo.java b/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RunMojo.java
+index 8a7f611..4256bd1 100644
+--- a/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RunMojo.java
++++ b/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RunMojo.java
+@@ -53,7 +53,7 @@
+ 			throws MojoExecutionException {
+ 		IsolatedThreadGroup threadGroup = new IsolatedThreadGroup(startClassName);
+ 		Thread launchThread = new Thread(threadGroup, new LaunchRunner(startClassName,
+-				arguments), startClassName + ".main()");
++				arguments), "main");
+ 		launchThread.setContextClassLoader(new URLClassLoader(getClassPathUrls()));
+ 		launchThread.start();
+ 		join(threadGroup);
+diff --git a/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RunMojo.java b/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RunMojo.java
+index 8a7f611..4256bd1 100644
+--- a/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RunMojo.java
++++ b/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RunMojo.java
+@@ -53,7 +53,7 @@
+ 			throws MojoExecutionException {
+ 		IsolatedThreadGroup threadGroup = new IsolatedThreadGroup(startClassName);
+ 		Thread launchThread = new Thread(threadGroup, new LaunchRunner(startClassName,
+-				arguments), startClassName + ".main()");
++				arguments), "main");
+ 		launchThread.setContextClassLoader(new URLClassLoader(getClassPathUrls()));
+ 		launchThread.start();
+ 		join(threadGroup);

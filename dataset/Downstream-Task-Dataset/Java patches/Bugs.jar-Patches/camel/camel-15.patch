@@ -1,0 +1,14 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index a8b9c80..f1dd98d 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -891,7 +891,8 @@ public class DefaultCamelContext extends ServiceSupport implements CamelContext,
+             if (service instanceof IsSingleton) {
+                 singleton = ((IsSingleton) service).isSingleton();
+             }
+-            if (singleton) {
++            // do not add endpoints as they have their own list
++            if (singleton && !(service instanceof Endpoint)) {
+                 servicesToClose.add(service);
+             }
+         }

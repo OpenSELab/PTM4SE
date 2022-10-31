@@ -1,0 +1,13 @@
+diff --git a/ql/src/test/org/apache/hadoop/hive/ql/TestTxnCommands.java b/ql/src/test/org/apache/hadoop/hive/ql/TestTxnCommands.java
+index 536281d..9a4322d 100644
+--- a/ql/src/test/org/apache/hadoop/hive/ql/TestTxnCommands.java
++++ b/ql/src/test/org/apache/hadoop/hive/ql/TestTxnCommands.java
+@@ -108,7 +108,7 @@
+     Assert.assertEquals(1, rs.size());
+     Assert.assertEquals("1", rs.get(0));
+     hiveConf.setBoolVar(HiveConf.ConfVars.HIVETESTMODEROLLBACKTXN, true);
+-    runStatementOnDriver("insert into " + Table.ACIDTBL + " values(3,2)");
++    runStatementOnDriver("insert overwrite table " + Table.ACIDTBL + " values(3,2)");
+     hiveConf.setBoolVar(HiveConf.ConfVars.HIVETESTMODEROLLBACKTXN, false);
+     runStatementOnDriver("insert into " + Table.ACIDTBL + " values(5,6)");
+     rs = runStatementOnDriver("select a from " + Table.ACIDTBL + " order by a");

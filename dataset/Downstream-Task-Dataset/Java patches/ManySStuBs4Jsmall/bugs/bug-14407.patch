@@ -1,0 +1,118 @@
+diff --git a/src/com/google/javascript/jscomp/CleanupPasses.java b/src/com/google/javascript/jscomp/CleanupPasses.java
+index f283e6c..0c4ab7f 100644
+--- a/src/com/google/javascript/jscomp/CleanupPasses.java
++++ b/src/com/google/javascript/jscomp/CleanupPasses.java
+@@ -51,7 +51,7 @@
+   }
+ 
+   @Override
+-  State getIntermediateState() {
++  protected State getIntermediateState() {
+     return state;
+   }
+ 
+@@ -61,7 +61,7 @@
+   }
+ 
+   @Override
+-  void setIntermediateState(State state) {
++  protected void setIntermediateState(State state) {
+     this.state = state;
+   }
+ 
+diff --git a/src/com/google/javascript/jscomp/DefaultPassConfig.java b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+index 671e66b..1bb44bf 100644
+--- a/src/com/google/javascript/jscomp/DefaultPassConfig.java
++++ b/src/com/google/javascript/jscomp/DefaultPassConfig.java
+@@ -144,7 +144,7 @@
+   }
+ 
+   @Override
+-  State getIntermediateState() {
++  protected State getIntermediateState() {
+     return new State(
+         cssNames == null ? null : Maps.newHashMap(cssNames),
+         exportedNames == null ? null :
+@@ -154,7 +154,7 @@
+   }
+ 
+   @Override
+-  void setIntermediateState(State state) {
++  protected void setIntermediateState(State state) {
+     this.cssNames = state.cssNames == null ? null :
+         Maps.newHashMap(state.cssNames);
+     this.exportedNames = state.exportedNames == null ? null :
+diff --git a/src/com/google/javascript/jscomp/PassConfig.java b/src/com/google/javascript/jscomp/PassConfig.java
+index 19ffdd7..95f04e0 100644
+--- a/src/com/google/javascript/jscomp/PassConfig.java
++++ b/src/com/google/javascript/jscomp/PassConfig.java
+@@ -224,13 +224,13 @@
+    * Get intermediate state for a running pass config, so it can
+    * be paused and started again later.
+    */
+-  abstract State getIntermediateState();
++  protected abstract State getIntermediateState();
+ 
+   /**
+    * Set the intermediate state for a pass config, to restart
+    * a compilation process that had been previously paused.
+    */
+-  abstract void setIntermediateState(State state);
++  protected abstract void setIntermediateState(State state);
+ 
+   /**
+    * An implementation of PassConfig that just proxies all its method calls
+@@ -261,11 +261,11 @@
+       return delegate.getTopScope();
+     }
+ 
+-    @Override State getIntermediateState() {
++    @Override protected State getIntermediateState() {
+       return delegate.getIntermediateState();
+     }
+ 
+-    @Override void setIntermediateState(State state) {
++    @Override protected void setIntermediateState(State state) {
+       delegate.setIntermediateState(state);
+     }
+   }
+@@ -273,7 +273,7 @@
+   /**
+    * Intermediate state for a running pass configuration.
+    */
+-  static class State implements Serializable {
++  public static class State implements Serializable {
+     private static final long serialVersionUID = 1L;
+ 
+     final Map<String, Integer> cssNames;
+@@ -286,7 +286,7 @@
+     final FunctionNames functionNames;
+     final String idGeneratorMap;
+ 
+-    State(Map<String, Integer> cssNames, Set<String> exportedNames,
++    public State(Map<String, Integer> cssNames, Set<String> exportedNames,
+           CrossModuleMethodMotion.IdGenerator crossModuleIdGenerator,
+           VariableMap variableMap, VariableMap propertyMap,
+           VariableMap anonymousFunctionNameMap,
+diff --git a/src/com/google/javascript/jscomp/CleanupPasses.java b/src/com/google/javascript/jscomp/CleanupPasses.java
+index f283e6c..0c4ab7f 100644
+--- a/src/com/google/javascript/jscomp/CleanupPasses.java
++++ b/src/com/google/javascript/jscomp/CleanupPasses.java
+@@ -51,7 +51,7 @@
+   }
+ 
+   @Override
+-  State getIntermediateState() {
++  protected State getIntermediateState() {
+     return state;
+   }
+ 
+@@ -61,7 +61,7 @@
+   }
+ 
+   @Override
+-  void setIntermediateState(State state) {
++  protected void setIntermediateState(State state) {
+     this.state = state;
+   }
+ 

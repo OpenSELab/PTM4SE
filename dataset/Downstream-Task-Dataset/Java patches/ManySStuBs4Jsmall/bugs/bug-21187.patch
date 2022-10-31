@@ -1,0 +1,175 @@
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfiguration.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfiguration.java
+index 6fb736d..fff3c09 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfiguration.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfiguration.java
+@@ -295,7 +295,7 @@
+ 			CRaSHPlugin<AuthenticationPlugin> implements AuthenticationPlugin<String> {
+ 
+ 		private static final PropertyDescriptor<String> ROLES = PropertyDescriptor.create(
+-				"auth.spring.roles", "ADMIN",
++				"auth.spring.roles", "ACTUATOR",
+ 				"Comma separated list of roles required to access the shell");
+ 
+ 		@Autowired
+@@ -305,7 +305,7 @@
+ 		@Qualifier("shellAccessDecisionManager")
+ 		private AccessDecisionManager accessDecisionManager;
+ 
+-		private String[] roles = new String[] { "ADMIN" };
++		private String[] roles = new String[] { "ACTUATOR" };
+ 
+ 		@Override
+ 		public boolean authenticate(String username, String password) throws Exception {
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/ManagementServerProperties.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/ManagementServerProperties.java
+index 75a14db..f32b5a4 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/ManagementServerProperties.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/ManagementServerProperties.java
+@@ -168,7 +168,7 @@
+ 		/**
+ 		 * Comma-separated list of roles that can access the management endpoint.
+ 		 */
+-		private List<String> roles = Arrays.asList("ADMIN");
++		private List<String> roles = Arrays.asList("ACTUATOR");
+ 
+ 		/**
+ 		 * Session creating policy for security use (always, never, if_required,
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/ShellProperties.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/ShellProperties.java
+index fe02b23..4521c95 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/ShellProperties.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/ShellProperties.java
+@@ -524,7 +524,7 @@
+ 		/**
+ 		 * Comma-separated list of required roles to login to the CRaSH console.
+ 		 */
+-		private String[] roles = new String[] { "ADMIN" };
++		private String[] roles = new String[] { "ACTUATOR" };
+ 
+ 		@Override
+ 		protected void applyToCrshShellConfig(Properties config) {
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/endpoint/mvc/HealthMvcEndpoint.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/endpoint/mvc/HealthMvcEndpoint.java
+index a44df8f..53bd7ed 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/endpoint/mvc/HealthMvcEndpoint.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/endpoint/mvc/HealthMvcEndpoint.java
+@@ -194,7 +194,7 @@
+ 			Authentication authentication = (Authentication) principal;
+ 			List<String> roles = Arrays.asList(StringUtils
+ 					.trimArrayElements(StringUtils.commaDelimitedListToStringArray(
+-							this.roleResolver.getProperty("roles", "ROLE_ADMIN"))));
++							this.roleResolver.getProperty("roles", "ROLE_ACTUATOR"))));
+ 			for (GrantedAuthority authority : authentication.getAuthorities()) {
+ 				String name = authority.getAuthority();
+ 				for (String role : roles) {
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
+index 764605e..20d5497 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
+@@ -347,7 +347,7 @@
+ 						authentication = new UsernamePasswordAuthenticationToken(
+ 								authentication.getPrincipal(),
+ 								authentication.getCredentials(), Collections
+-										.singleton(new SimpleGrantedAuthority("ADMIN")));
++										.singleton(new SimpleGrantedAuthority("ACTUATOR")));
+ 					}
+ 					else {
+ 						throw new BadCredentialsException(
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/ManagementWebSecurityAutoConfigurationTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/ManagementWebSecurityAutoConfigurationTests.java
+index 731e3bd..b9f6d8b 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/ManagementWebSecurityAutoConfigurationTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/ManagementWebSecurityAutoConfigurationTests.java
+@@ -120,7 +120,7 @@
+ 		ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(
+ 				user.getAuthorities());
+ 		assertThat(authorities).containsAll(AuthorityUtils
+-				.commaSeparatedStringToAuthorityList("ROLE_USER,ROLE_ADMIN"));
++				.commaSeparatedStringToAuthorityList("ROLE_USER,ROLE_ACTUATOR"));
+ 	}
+ 
+ 	private UserDetails getUser() {
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/MvcEndpointIntegrationTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/MvcEndpointIntegrationTests.java
+index 1fa3785..7a0f72e 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/MvcEndpointIntegrationTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/MvcEndpointIntegrationTests.java
+@@ -68,7 +68,7 @@
+ 	@Test
+ 	public void defaultJsonResponseIsNotIndented() throws Exception {
+ 		TestSecurityContextHolder.getContext().setAuthentication(
+-				new TestingAuthenticationToken("user", "N/A", "ROLE_ADMIN"));
++				new TestingAuthenticationToken("user", "N/A", "ROLE_ACTUATOR"));
+ 		this.context = new AnnotationConfigWebApplicationContext();
+ 		this.context.register(SecureConfiguration.class);
+ 		MockMvc mockMvc = createSecureMockMvc();
+@@ -103,7 +103,7 @@
+ 	@Test
+ 	public void jsonExtensionProvided() throws Exception {
+ 		TestSecurityContextHolder.getContext().setAuthentication(
+-				new TestingAuthenticationToken("user", "N/A", "ROLE_ADMIN"));
++				new TestingAuthenticationToken("user", "N/A", "ROLE_ACTUATOR"));
+ 		this.context = new AnnotationConfigWebApplicationContext();
+ 		this.context.register(SecureConfiguration.class);
+ 		MockMvc mockMvc = createSecureMockMvc();
+@@ -151,7 +151,7 @@
+ 	}
+ 
+ 	@Test
+-	public void sensitiveEndpointsAreSecureWithNonAdminRoleWithCustomContextPath()
++	public void sensitiveEndpointsAreSecureWithNonActuatorRoleWithCustomContextPath()
+ 			throws Exception {
+ 		TestSecurityContextHolder.getContext().setAuthentication(
+ 				new TestingAuthenticationToken("user", "N/A", "ROLE_USER"));
+@@ -164,10 +164,10 @@
+ 	}
+ 
+ 	@Test
+-	public void sensitiveEndpointsAreSecureWithAdminRoleWithCustomContextPath()
++	public void sensitiveEndpointsAreSecureWithActuatorRoleWithCustomContextPath()
+ 			throws Exception {
+ 		TestSecurityContextHolder.getContext().setAuthentication(
+-				new TestingAuthenticationToken("user", "N/A", "ROLE_ADMIN"));
++				new TestingAuthenticationToken("user", "N/A", "ROLE_ACTUATOR"));
+ 		this.context = new AnnotationConfigWebApplicationContext();
+ 		this.context.register(SecureConfiguration.class);
+ 		EnvironmentTestUtils.addEnvironment(this.context,
+@@ -199,7 +199,7 @@
+ 
+ 	private void assertIndentedJsonResponse(Class<?> configuration) throws Exception {
+ 		TestSecurityContextHolder.getContext().setAuthentication(
+-				new TestingAuthenticationToken("user", "N/A", "ROLE_ADMIN"));
++				new TestingAuthenticationToken("user", "N/A", "ROLE_ACTUATOR"));
+ 		this.context = new AnnotationConfigWebApplicationContext();
+ 		this.context.register(configuration);
+ 		EnvironmentTestUtils.addEnvironment(this.context,
+diff --git a/spring-boot-samples/spring-boot-sample-web-method-security/src/main/java/sample/security/method/SampleMethodSecurityApplication.java b/spring-boot-samples/spring-boot-sample-web-method-security/src/main/java/sample/security/method/SampleMethodSecurityApplication.java
+index 93847c0..3dfbeff 100644
+--- a/spring-boot-samples/spring-boot-sample-web-method-security/src/main/java/sample/security/method/SampleMethodSecurityApplication.java
++++ b/spring-boot-samples/spring-boot-sample-web-method-security/src/main/java/sample/security/method/SampleMethodSecurityApplication.java
+@@ -73,7 +73,7 @@
+ 		@Override
+ 		public void init(AuthenticationManagerBuilder auth) throws Exception {
+ 			auth.inMemoryAuthentication().withUser("admin").password("admin")
+-					.roles("ADMIN", "USER").and().withUser("user").password("user")
++					.roles("ADMIN", "USER", "ACTUATOR").and().withUser("user").password("user")
+ 					.roles("USER");
+ 		}
+ 
+diff --git a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfiguration.java b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfiguration.java
+index 6fb736d..fff3c09 100644
+--- a/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfiguration.java
++++ b/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfiguration.java
+@@ -295,7 +295,7 @@
+ 			CRaSHPlugin<AuthenticationPlugin> implements AuthenticationPlugin<String> {
+ 
+ 		private static final PropertyDescriptor<String> ROLES = PropertyDescriptor.create(
+-				"auth.spring.roles", "ADMIN",
++				"auth.spring.roles", "ACTUATOR",
+ 				"Comma separated list of roles required to access the shell");
+ 
+ 		@Autowired
+@@ -305,7 +305,7 @@
+ 		@Qualifier("shellAccessDecisionManager")
+ 		private AccessDecisionManager accessDecisionManager;
+ 
+-		private String[] roles = new String[] { "ADMIN" };
++		private String[] roles = new String[] { "ACTUATOR" };
+ 
+ 		@Override
+ 		public boolean authenticate(String username, String password) throws Exception {

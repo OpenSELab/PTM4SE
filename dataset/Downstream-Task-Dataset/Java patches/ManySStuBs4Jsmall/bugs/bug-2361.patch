@@ -1,0 +1,39 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+index c2f991a..314a6d7 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+@@ -395,7 +395,7 @@
+     }
+ 
+     protected boolean retrieveTrackedBroadcast(final AtmosphereResource<?, ?> r, final AtmosphereResourceEvent e) {
+-        List<Object> missedMsg = broadcasterCache.retrieveFromCache(r);
++        List<?> missedMsg = broadcasterCache.retrieveFromCache(r);
+         if (!missedMsg.isEmpty()) {
+             e.setMessage(missedMsg);
+             return true;
+diff --git a/modules/jersey/src/main/java/org/atmosphere/jersey/util/JerseyBroadcasterUtil.java b/modules/jersey/src/main/java/org/atmosphere/jersey/util/JerseyBroadcasterUtil.java
+index 82c6ebb..1d7dfa2 100644
+--- a/modules/jersey/src/main/java/org/atmosphere/jersey/util/JerseyBroadcasterUtil.java
++++ b/modules/jersey/src/main/java/org/atmosphere/jersey/util/JerseyBroadcasterUtil.java
+@@ -43,7 +43,7 @@
+                 cr.getHttpHeaders().add(HttpHeaders.CONTENT_TYPE, m);
+                 cr.write();
+             } else if (e.getMessage() instanceof List) {
+-                for (String msg : (List<String>) e.getMessage()) {
++                for (Object msg : (List<Object>) e.getMessage()) {
+                     cr.setResponse(Response.ok(msg).build());
+                     cr.getHttpHeaders().add(HttpHeaders.CONTENT_TYPE, m);
+                     cr.write();
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+index c2f991a..314a6d7 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+@@ -395,7 +395,7 @@
+     }
+ 
+     protected boolean retrieveTrackedBroadcast(final AtmosphereResource<?, ?> r, final AtmosphereResourceEvent e) {
+-        List<Object> missedMsg = broadcasterCache.retrieveFromCache(r);
++        List<?> missedMsg = broadcasterCache.retrieveFromCache(r);
+         if (!missedMsg.isEmpty()) {
+             e.setMessage(missedMsg);
+             return true;

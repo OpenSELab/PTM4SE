@@ -1,0 +1,30 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/core/LockReleaser.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/core/LockReleaser.java
+index 63b619d..6bd913e 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/core/LockReleaser.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/core/LockReleaser.java
+@@ -468,8 +468,8 @@
+                 CowRelElement relElement = entry.getValue();
+                 if ( param == Status.STATUS_COMMITTED )
+                 {
+-                    rel.commitPropertyMaps( relElement.getPropertyAddMap( false ),
+-                        relElement.getPropertyRemoveMap( false ), Record.NO_NEXT_PROPERTY.intValue() );
++                    rel.commitPropertyMaps( relElement.propertyAddMap,
++                        relElement.propertyRemoveMap, Record.NO_NEXT_PROPERTY.intValue() );
+                 }
+                 else if ( param != Status.STATUS_ROLLEDBACK )
+                 {
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/core/LockReleaser.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/core/LockReleaser.java
+index 63b619d..6bd913e 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/core/LockReleaser.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/core/LockReleaser.java
+@@ -468,8 +468,8 @@
+                 CowRelElement relElement = entry.getValue();
+                 if ( param == Status.STATUS_COMMITTED )
+                 {
+-                    rel.commitPropertyMaps( relElement.getPropertyAddMap( false ),
+-                        relElement.getPropertyRemoveMap( false ), Record.NO_NEXT_PROPERTY.intValue() );
++                    rel.commitPropertyMaps( relElement.propertyAddMap,
++                        relElement.propertyRemoveMap, Record.NO_NEXT_PROPERTY.intValue() );
+                 }
+                 else if ( param != Status.STATUS_ROLLEDBACK )
+                 {

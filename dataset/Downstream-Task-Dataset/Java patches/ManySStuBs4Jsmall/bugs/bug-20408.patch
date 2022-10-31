@@ -1,0 +1,30 @@
+diff --git a/api/src/main/java/org/openmrs/api/handler/ExistingOrNewVisitAssignmentHandler.java b/api/src/main/java/org/openmrs/api/handler/ExistingOrNewVisitAssignmentHandler.java
+index 98187ae..0d90754 100644
+--- a/api/src/main/java/org/openmrs/api/handler/ExistingOrNewVisitAssignmentHandler.java
++++ b/api/src/main/java/org/openmrs/api/handler/ExistingOrNewVisitAssignmentHandler.java
+@@ -102,8 +102,8 @@
+ 			}
+ 			
+ 			//Reaching here means this encounter type is not in the user's mapping.
+-			throw new APIException("Failed to find visit type for encounterTypeId:"
+-			        + encounter.getEncounterType().getEncounterTypeId());
++			throw new APIException("Global Property: visit.encounterTypeToVisitTypeMapping does not have a mapping for encounter type: "
++			        + encounter.getEncounterType().getName());
+ 		}
+ 		
+ 		return Context.getVisitService().getAllVisitTypes().get(0);
+diff --git a/api/src/main/java/org/openmrs/api/handler/ExistingOrNewVisitAssignmentHandler.java b/api/src/main/java/org/openmrs/api/handler/ExistingOrNewVisitAssignmentHandler.java
+index 98187ae..0d90754 100644
+--- a/api/src/main/java/org/openmrs/api/handler/ExistingOrNewVisitAssignmentHandler.java
++++ b/api/src/main/java/org/openmrs/api/handler/ExistingOrNewVisitAssignmentHandler.java
+@@ -102,8 +102,8 @@
+ 			}
+ 			
+ 			//Reaching here means this encounter type is not in the user's mapping.
+-			throw new APIException("Failed to find visit type for encounterTypeId:"
+-			        + encounter.getEncounterType().getEncounterTypeId());
++			throw new APIException("Global Property: visit.encounterTypeToVisitTypeMapping does not have a mapping for encounter type: "
++			        + encounter.getEncounterType().getName());
+ 		}
+ 		
+ 		return Context.getVisitService().getAllVisitTypes().get(0);

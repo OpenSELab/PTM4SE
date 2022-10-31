@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/util/CamelContextHelper.java b/camel-core/src/main/java/org/apache/camel/util/CamelContextHelper.java
+index 8e593d8..03b5422 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/CamelContextHelper.java
++++ b/camel-core/src/main/java/org/apache/camel/util/CamelContextHelper.java
+@@ -356,7 +356,7 @@
+     public static SortedMap<String, Properties> findComponents(CamelContext camelContext) throws LoadPropertiesException {
+         SortedMap<String, Properties> map = new TreeMap<String, Properties>();
+         Enumeration<URL> iter = camelContext.getClassResolver().loadResourcesAsURL(COMPONENT_DESCRIPTOR);
+-        while (iter.hasMoreElements()) {
++        while (iter != null && iter.hasMoreElements()) {
+             URL url = iter.nextElement();
+             try {
+                 Properties properties = new Properties();
+diff --git a/camel-core/src/main/java/org/apache/camel/util/CamelContextHelper.java b/camel-core/src/main/java/org/apache/camel/util/CamelContextHelper.java
+index 8e593d8..03b5422 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/CamelContextHelper.java
++++ b/camel-core/src/main/java/org/apache/camel/util/CamelContextHelper.java
+@@ -356,7 +356,7 @@
+     public static SortedMap<String, Properties> findComponents(CamelContext camelContext) throws LoadPropertiesException {
+         SortedMap<String, Properties> map = new TreeMap<String, Properties>();
+         Enumeration<URL> iter = camelContext.getClassResolver().loadResourcesAsURL(COMPONENT_DESCRIPTOR);
+-        while (iter.hasMoreElements()) {
++        while (iter != null && iter.hasMoreElements()) {
+             URL url = iter.nextElement();
+             try {
+                 Properties properties = new Properties();

@@ -1,0 +1,21 @@
+diff --git a/test/com/google/javascript/jscomp/deps/ClosureBundlerTest.java b/test/com/google/javascript/jscomp/deps/ClosureBundlerTest.java
+index 28f3e70..6eac0ac 100644
+--- a/test/com/google/javascript/jscomp/deps/ClosureBundlerTest.java
++++ b/test/com/google/javascript/jscomp/deps/ClosureBundlerTest.java
+@@ -90,7 +90,7 @@
+     new ClosureBundler()
+         .useEval(true)
+         .appendTo(sb, TRADITIONAL, "\"a string\"");
+-    assertThat(sb.toString()).isEqualTo("(0,eval(\"\\x22a string\\x22\"));");
++    assertThat(sb.toString()).isEqualTo("(0,eval)(\"\\x22a string\\x22\");");
+   }
+ 
+   public void testTraditionalWithEvalWithSourceUrl() throws IOException {
+@@ -100,6 +100,6 @@
+         .withSourceUrl("URL")
+         .appendTo(sb, TRADITIONAL, "\"a string\"");
+     assertThat(sb.toString())
+-        .isEqualTo("(0,eval(\"\\x22a string\\x22\\n//# sourceURL\\x3dURL\\n\"));");
++        .isEqualTo("(0,eval)(\"\\x22a string\\x22\\n//# sourceURL\\x3dURL\\n\");");
+   }
+ }

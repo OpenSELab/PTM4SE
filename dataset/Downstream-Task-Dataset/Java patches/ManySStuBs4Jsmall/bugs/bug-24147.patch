@@ -1,0 +1,42 @@
+diff --git a/src/main/java/redis/clients/jedis/BasicRedisPipeline.java b/src/main/java/redis/clients/jedis/BasicRedisPipeline.java
+index 90f9295..474b197 100644
+--- a/src/main/java/redis/clients/jedis/BasicRedisPipeline.java
++++ b/src/main/java/redis/clients/jedis/BasicRedisPipeline.java
+@@ -11,7 +11,7 @@
+ 
+   Response<String> bgsave();
+ 
+-  Response<String> configGet(String pattern);
++  Response<List<String>> configGet(String pattern);
+ 
+   Response<String> configSet(String parameter, String value);
+ 
+diff --git a/src/main/java/redis/clients/jedis/MultiKeyPipelineBase.java b/src/main/java/redis/clients/jedis/MultiKeyPipelineBase.java
+index 5858941..b4f1368 100644
+--- a/src/main/java/redis/clients/jedis/MultiKeyPipelineBase.java
++++ b/src/main/java/redis/clients/jedis/MultiKeyPipelineBase.java
+@@ -296,9 +296,9 @@
+ 		return getResponse(BuilderFactory.STRING);
+ 	}
+ 
+-	public Response<String> configGet(String pattern) {
++	public Response<List<String>> configGet(String pattern) {
+ 		client.configGet(pattern);
+-		return getResponse(BuilderFactory.STRING);
++		return getResponse(BuilderFactory.STRING_LIST);
+ 	}
+ 
+ 	public Response<String> configSet(String parameter, String value) {
+diff --git a/src/main/java/redis/clients/jedis/BasicRedisPipeline.java b/src/main/java/redis/clients/jedis/BasicRedisPipeline.java
+index 90f9295..474b197 100644
+--- a/src/main/java/redis/clients/jedis/BasicRedisPipeline.java
++++ b/src/main/java/redis/clients/jedis/BasicRedisPipeline.java
+@@ -11,7 +11,7 @@
+ 
+   Response<String> bgsave();
+ 
+-  Response<String> configGet(String pattern);
++  Response<List<String>> configGet(String pattern);
+ 
+   Response<String> configSet(String parameter, String value);
+ 

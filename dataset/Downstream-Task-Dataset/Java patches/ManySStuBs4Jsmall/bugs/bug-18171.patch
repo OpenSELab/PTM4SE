@@ -1,0 +1,59 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/helpers/FutureAdapter.java b/community/kernel/src/main/java/org/neo4j/helpers/FutureAdapter.java
+index 9cf11b9..03b4d2c 100644
+--- a/community/kernel/src/main/java/org/neo4j/helpers/FutureAdapter.java
++++ b/community/kernel/src/main/java/org/neo4j/helpers/FutureAdapter.java
+@@ -77,7 +77,8 @@
+ 
+     public static final Future<Void> VOID = new Present<>( null );
+ 
+-    public static <T> Future<T> latchGuardedValue( final ValueGetter<T> value, final CountDownLatch guardedByLatch )
++    public static <T> Future<T> latchGuardedValue( final ValueGetter<T> value, final CountDownLatch guardedByLatch,
++            final String jobDescription )
+     {
+         return new FutureAdapter<T>()
+         {
+@@ -100,7 +101,7 @@
+             {
+                 if ( !guardedByLatch.await( timeout, unit ) )
+                 {
+-                    throw new TimeoutException( "Index population job cancel didn't complete within " +
++                    throw new TimeoutException( jobDescription + " didn't complete within " +
+                             timeout + " " + unit );
+                 }
+                 return value.get();
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/api/index/IndexPopulationJob.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/api/index/IndexPopulationJob.java
+index b03bd1f..8e1cc85 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/api/index/IndexPopulationJob.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/api/index/IndexPopulationJob.java
+@@ -247,7 +247,7 @@
+             storeScan.stop();
+         }
+ 
+-        return latchGuardedValue( NO_VALUE, doneSignal );
++        return latchGuardedValue( NO_VALUE, doneSignal, "Index population job cancel" );
+     }
+ 
+     /**
+diff --git a/community/kernel/src/main/java/org/neo4j/helpers/FutureAdapter.java b/community/kernel/src/main/java/org/neo4j/helpers/FutureAdapter.java
+index 9cf11b9..03b4d2c 100644
+--- a/community/kernel/src/main/java/org/neo4j/helpers/FutureAdapter.java
++++ b/community/kernel/src/main/java/org/neo4j/helpers/FutureAdapter.java
+@@ -77,7 +77,8 @@
+ 
+     public static final Future<Void> VOID = new Present<>( null );
+ 
+-    public static <T> Future<T> latchGuardedValue( final ValueGetter<T> value, final CountDownLatch guardedByLatch )
++    public static <T> Future<T> latchGuardedValue( final ValueGetter<T> value, final CountDownLatch guardedByLatch,
++            final String jobDescription )
+     {
+         return new FutureAdapter<T>()
+         {
+@@ -100,7 +101,7 @@
+             {
+                 if ( !guardedByLatch.await( timeout, unit ) )
+                 {
+-                    throw new TimeoutException( "Index population job cancel didn't complete within " +
++                    throw new TimeoutException( jobDescription + " didn't complete within " +
+                             timeout + " " + unit );
+                 }
+                 return value.get();

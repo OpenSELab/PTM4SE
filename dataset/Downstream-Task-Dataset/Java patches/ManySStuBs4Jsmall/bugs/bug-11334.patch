@@ -1,0 +1,32 @@
+diff --git a/dropwizard-core/src/main/java/com/yammer/dropwizard/config/LoggingConfiguration.java b/dropwizard-core/src/main/java/com/yammer/dropwizard/config/LoggingConfiguration.java
+index 0059036..66e9a84 100644
+--- a/dropwizard-core/src/main/java/com/yammer/dropwizard/config/LoggingConfiguration.java
++++ b/dropwizard-core/src/main/java/com/yammer/dropwizard/config/LoggingConfiguration.java
+@@ -110,7 +110,10 @@
+ 
+         @NotNull
+         @JsonProperty
+-        @Pattern(regexp = "(auth|authpriv|daemon|cron|ftp|lpr|kern|mail|news|syslog|user|uucp|local[0-7])")
++        @Pattern(
++                regexp = "(auth|authpriv|daemon|cron|ftp|lpr|kern|mail|news|syslog|user|uucp|local[0-7])",
++                message = "must be a valid syslog facility"
++        )
+         private String facility = "local0";
+ 
+         public boolean isEnabled() {
+diff --git a/dropwizard-core/src/main/java/com/yammer/dropwizard/config/LoggingConfiguration.java b/dropwizard-core/src/main/java/com/yammer/dropwizard/config/LoggingConfiguration.java
+index 0059036..66e9a84 100644
+--- a/dropwizard-core/src/main/java/com/yammer/dropwizard/config/LoggingConfiguration.java
++++ b/dropwizard-core/src/main/java/com/yammer/dropwizard/config/LoggingConfiguration.java
+@@ -110,7 +110,10 @@
+ 
+         @NotNull
+         @JsonProperty
+-        @Pattern(regexp = "(auth|authpriv|daemon|cron|ftp|lpr|kern|mail|news|syslog|user|uucp|local[0-7])")
++        @Pattern(
++                regexp = "(auth|authpriv|daemon|cron|ftp|lpr|kern|mail|news|syslog|user|uucp|local[0-7])",
++                message = "must be a valid syslog facility"
++        )
+         private String facility = "local0";
+ 
+         public boolean isEnabled() {

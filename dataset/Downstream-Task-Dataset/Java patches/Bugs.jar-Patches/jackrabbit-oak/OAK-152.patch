@@ -1,0 +1,17 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/AuthorizationContext.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/AuthorizationContext.java
+index 953d00b..49bfe47 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/AuthorizationContext.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/AuthorizationContext.java
+@@ -47,7 +47,11 @@ final class AuthorizationContext implements Context, AccessControlConstants, Per
+     @Override
+     public boolean definesContextRoot(@Nonnull Tree tree) {
+         String name = tree.getName();
+-        return POLICY_NODE_NAMES.contains(name) || REP_PERMISSION_STORE.equals(name);
++        if (POLICY_NODE_NAMES.contains(name)) {
++            return NT_REP_ACL.equals(TreeUtil.getPrimaryTypeName(tree));
++        } else {
++            return REP_PERMISSION_STORE.equals(name);
++        }
+     }
+ 
+     @Override

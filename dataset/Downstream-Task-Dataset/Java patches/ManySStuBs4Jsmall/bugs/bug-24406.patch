@@ -1,0 +1,89 @@
+diff --git a/src/main/java/twitter4j/Twitter.java b/src/main/java/twitter4j/Twitter.java
+index ddaf48e..5dbf9e3 100644
+--- a/src/main/java/twitter4j/Twitter.java
++++ b/src/main/java/twitter4j/Twitter.java
+@@ -49,7 +49,7 @@
+     private boolean usePostForcibly = false;
+     private static final int MAX_COUNT = 200;
+     private static final long serialVersionUID = -7550633067620779906L;
+-    /*package*/ static final String VERSION = "1.1.8";
++    /*package*/ static final String VERSION = "1.1.9";
+ 
+     public Twitter() {
+         http = new HttpClient();
+@@ -897,8 +897,8 @@
+      * @throws TwitterException when Twitter service or network is unavailable
+      */
+     public synchronized List<User> getFriends(String id) throws TwitterException {
+-        return User.constructUsers(get(baseURL + "statuses/friends.xml",
+-                "id", id, true).asDocument(), this);
++        return User.constructUsers(get(baseURL + "statuses/friends/" + id + ".xml"
++                , true).asDocument(), this);
+     }
+ 
+     /**
+@@ -910,8 +910,8 @@
+      * @throws TwitterException when Twitter service or network is unavailable
+      */
+     public synchronized List<User> getFriends(String id, int page) throws TwitterException {
+-        return User.constructUsers(get(baseURL + "statuses/friends.xml",
+-                "id", id, "page", String.valueOf(page), true).asDocument(), this);
++        return User.constructUsers(get(baseURL + "statuses/friends/" + id + ".xml"
++                , "page", String.valueOf(page), true).asDocument(), this);
+     }
+ 
+     /**
+diff --git a/src/test/java/twitter4j/TwitterTestUnit.java b/src/test/java/twitter4j/TwitterTestUnit.java
+index 54c440c..eae74c5 100644
+--- a/src/test/java/twitter4j/TwitterTestUnit.java
++++ b/src/test/java/twitter4j/TwitterTestUnit.java
+@@ -249,12 +249,12 @@
+         twitterAPI1.destroyStatus(status.getId());
+     }
+     public void testGetFriends() throws Exception{
+-        List<User> actualReturn = twitterAPI1.getFriends(id2);
++        List<User> actualReturn = twitterAPI1.getFriends("al3x");
+         boolean found = false;
+         for(User user: actualReturn){
+             found = found || user.getName().equals("Yusuke Yamamoto");
+         }
+-        assertTrue(found);
++        assertFalse(found);
+         assertTrue(90 < twitterAPI2.getFriends("akr",2).size());
+     }
+     public void testAccountMethods() throws Exception{
+diff --git a/src/main/java/twitter4j/Twitter.java b/src/main/java/twitter4j/Twitter.java
+index ddaf48e..5dbf9e3 100644
+--- a/src/main/java/twitter4j/Twitter.java
++++ b/src/main/java/twitter4j/Twitter.java
+@@ -49,7 +49,7 @@
+     private boolean usePostForcibly = false;
+     private static final int MAX_COUNT = 200;
+     private static final long serialVersionUID = -7550633067620779906L;
+-    /*package*/ static final String VERSION = "1.1.8";
++    /*package*/ static final String VERSION = "1.1.9";
+ 
+     public Twitter() {
+         http = new HttpClient();
+@@ -897,8 +897,8 @@
+      * @throws TwitterException when Twitter service or network is unavailable
+      */
+     public synchronized List<User> getFriends(String id) throws TwitterException {
+-        return User.constructUsers(get(baseURL + "statuses/friends.xml",
+-                "id", id, true).asDocument(), this);
++        return User.constructUsers(get(baseURL + "statuses/friends/" + id + ".xml"
++                , true).asDocument(), this);
+     }
+ 
+     /**
+@@ -910,8 +910,8 @@
+      * @throws TwitterException when Twitter service or network is unavailable
+      */
+     public synchronized List<User> getFriends(String id, int page) throws TwitterException {
+-        return User.constructUsers(get(baseURL + "statuses/friends.xml",
+-                "id", id, "page", String.valueOf(page), true).asDocument(), this);
++        return User.constructUsers(get(baseURL + "statuses/friends/" + id + ".xml"
++                , "page", String.valueOf(page), true).asDocument(), this);
+     }
+ 
+     /**

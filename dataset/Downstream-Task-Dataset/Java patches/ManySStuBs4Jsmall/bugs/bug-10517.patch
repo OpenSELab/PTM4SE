@@ -1,0 +1,13 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/LSTM.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/LSTM.java
+index 763712b..757b71e 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/LSTM.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/LSTM.java
+@@ -64,7 +64,7 @@
+             if(constraints == null){
+                 constraints = new ArrayList<>();
+             }
+-            for (LayerConstraint c : builder.allParamConstraints) {
++            for (LayerConstraint c : ((Builder) builder).recurrentConstraints) {
+                 LayerConstraint c2 = c.clone();
+                 c2.setParams(Collections.singleton(LSTMParamInitializer.RECURRENT_WEIGHT_KEY));
+                 constraints.add(c2);

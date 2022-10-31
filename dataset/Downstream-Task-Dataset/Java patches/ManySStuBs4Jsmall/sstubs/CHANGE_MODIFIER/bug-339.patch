@@ -1,0 +1,87 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/PackageNamesLoader.java b/src/main/java/com/puppycrawl/tools/checkstyle/PackageNamesLoader.java
+index 7941730..414550b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/PackageNamesLoader.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/PackageNamesLoader.java
+@@ -132,7 +132,7 @@
+     public static Set<String> getPackageNames(ClassLoader classLoader)
+             throws CheckstyleException {
+ 
+-        Set<String> result;
++        final Set<String> result;
+         try {
+             //create the loader outside the loop to prevent PackageObjectFactory
+             //being created anew for each file
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java b/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
+index 08ef8b9..fb5ee5e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ant/CheckstyleAntTask.java
+@@ -345,7 +345,7 @@
+                 + " files", Project.MSG_INFO);
+         log("Using configuration " + configLocation, Project.MSG_VERBOSE);
+ 
+-        int numErrs;
++        final int numErrs;
+ 
+         try {
+             final long processingStartTime = System.currentTimeMillis();
+@@ -380,7 +380,7 @@
+      * @return new instance of {@code Checker}
+      */
+     private Checker createChecker() {
+-        Checker checker;
++        final Checker checker;
+         try {
+             final Properties props = createOverridingProperties();
+             final Configuration config =
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/SuppressWarningsHolder.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/SuppressWarningsHolder.java
+index cf423bb..50af412 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/SuppressWarningsHolder.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/SuppressWarningsHolder.java
+@@ -306,7 +306,7 @@
+      * @return get target of annotation
+      */
+     private static DetailAST getAnnotationTarget(DetailAST ast) {
+-        DetailAST targetAST;
++        final DetailAST targetAST;
+         final DetailAST parentAST = ast.getParent();
+         switch (parentAST.getType()) {
+             case TokenTypes.MODIFIERS:
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/ImportControlLoader.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/ImportControlLoader.java
+index 878d587..95c09a3 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/ImportControlLoader.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/ImportControlLoader.java
+@@ -143,7 +143,7 @@
+      * @throws CheckstyleException if an error occurs.
+      */
+     static PkgControl load(final URI uri) throws CheckstyleException {
+-        InputStream inputStream;
++        final InputStream inputStream;
+         try {
+             inputStream = uri.toURL().openStream();
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilter.java b/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilter.java
+index 70bdd86..dfcee3c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilter.java
+@@ -333,7 +333,7 @@
+                 }
+                 format = CommonUtils.fillTemplateWithStringsByRegexp(
+                         filter.influenceFormat, text, filter.commentRegexp);
+-                int influence;
++                final int influence;
+                 try {
+                     if (CommonUtils.startsWithChar(format, '+')) {
+                         format = format.substring(1);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/PackageNamesLoader.java b/src/main/java/com/puppycrawl/tools/checkstyle/PackageNamesLoader.java
+index 7941730..414550b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/PackageNamesLoader.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/PackageNamesLoader.java
+@@ -132,7 +132,7 @@
+     public static Set<String> getPackageNames(ClassLoader classLoader)
+             throws CheckstyleException {
+ 
+-        Set<String> result;
++        final Set<String> result;
+         try {
+             //create the loader outside the loop to prevent PackageObjectFactory
+             //being created anew for each file

@@ -1,0 +1,19 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandhat.java b/Essentials/src/com/earth2me/essentials/commands/Commandhat.java
+index 703d8e5..cb10466 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandhat.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandhat.java
+@@ -39,12 +39,12 @@
+ 		{
+ 			if (user.getItemInHand().getType() != Material.AIR)
+ 			{
+-				final ItemStack hand = user.getItemInHand();
++				final ItemStack hand = user.getItemInHand().clone();
+ 				if (hand.getType().getMaxDurability() == 0)
+ 				{
+ 					final PlayerInventory inv = user.getInventory();
+ 					final ItemStack head = inv.getHelmet();
+-					inv.removeItem(hand.clone());
++					inv.removeItem(hand);
+ 					inv.setHelmet(hand);
+ 					inv.setItemInHand(head);
+ 					user.sendMessage(_("hatPlaced"));

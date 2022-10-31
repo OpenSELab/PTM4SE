@@ -1,0 +1,39 @@
+diff --git a/controller/src/main/java/org/jboss/as/controller/operations/validation/ModelTypeValidator.java b/controller/src/main/java/org/jboss/as/controller/operations/validation/ModelTypeValidator.java
+index 7b0744c..e346e52 100644
+--- a/controller/src/main/java/org/jboss/as/controller/operations/validation/ModelTypeValidator.java
++++ b/controller/src/main/java/org/jboss/as/controller/operations/validation/ModelTypeValidator.java
+@@ -122,7 +122,7 @@
+     public void validateParameter(String parameterName, ModelNode value) throws OperationFailedException {
+         if (!value.isDefined()) {
+             if (!nullable)
+-                throw new OperationFailedException(new ModelNode().set(parameterName + " may not be null ")); //TODO i18n
++                throw new OperationFailedException(new ModelNode().set(parameterName + " may not be null.")); //TODO i18n
+         } else  {
+             boolean matched = false;
+             if (strictType) {
+diff --git a/threads/src/main/java/org/jboss/as/threads/BoundedQueueThreadPoolAdd.java b/threads/src/main/java/org/jboss/as/threads/BoundedQueueThreadPoolAdd.java
+index 5c81253..ace8048 100644
+--- a/threads/src/main/java/org/jboss/as/threads/BoundedQueueThreadPoolAdd.java
++++ b/threads/src/main/java/org/jboss/as/threads/BoundedQueueThreadPoolAdd.java
+@@ -92,7 +92,7 @@
+         if (params.getQueueLength() != null) {
+             model.get(QUEUE_LENGTH).set(operation.get(QUEUE_LENGTH));
+         } else {
+-            throw new OperationFailedException(new ModelNode().set("Parameter " + QUEUE_LENGTH + " may not be null "));
++            throw new OperationFailedException(new ModelNode().set("Parameter " + QUEUE_LENGTH + " may not be null."));
+         }
+ 
+         if (params.getCoreThreads() != null) {
+diff --git a/controller/src/main/java/org/jboss/as/controller/operations/validation/ModelTypeValidator.java b/controller/src/main/java/org/jboss/as/controller/operations/validation/ModelTypeValidator.java
+index 7b0744c..e346e52 100644
+--- a/controller/src/main/java/org/jboss/as/controller/operations/validation/ModelTypeValidator.java
++++ b/controller/src/main/java/org/jboss/as/controller/operations/validation/ModelTypeValidator.java
+@@ -122,7 +122,7 @@
+     public void validateParameter(String parameterName, ModelNode value) throws OperationFailedException {
+         if (!value.isDefined()) {
+             if (!nullable)
+-                throw new OperationFailedException(new ModelNode().set(parameterName + " may not be null ")); //TODO i18n
++                throw new OperationFailedException(new ModelNode().set(parameterName + " may not be null.")); //TODO i18n
+         } else  {
+             boolean matched = false;
+             if (strictType) {

@@ -1,0 +1,74 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/Component.java b/wicket/src/main/java/org/apache/wicket/Component.java
+index aeba674..1660a13 100644
+--- a/wicket/src/main/java/org/apache/wicket/Component.java
++++ b/wicket/src/main/java/org/apache/wicket/Component.java
+@@ -64,6 +64,7 @@ import org.apache.wicket.request.resource.ResourceReference;
+ import org.apache.wicket.settings.IDebugSettings;
+ import org.apache.wicket.util.IHierarchical;
+ import org.apache.wicket.util.convert.IConverter;
++import org.apache.wicket.util.lang.Args;
+ import org.apache.wicket.util.lang.Classes;
+ import org.apache.wicket.util.lang.WicketObjects;
+ import org.apache.wicket.util.string.ComponentStrings;
+@@ -224,8 +225,6 @@ public abstract class Component
+ 		IEventSink,
+ 		IEventSource
+ {
+-
+-
+ 	/** Log. */
+ 	private static final Logger log = LoggerFactory.getLogger(Component.class);
+ 
+@@ -2775,6 +2774,21 @@ public abstract class Component
+ 	}
+ 
+ 	/**
++	 * Copy markupId
++	 * 
++	 * @param comp
++	 */
++	final void setMarkupId(Component comp)
++	{
++		Args.notNull(comp, "comp");
++
++		generatedMarkupId = comp.generatedMarkupId;
++		setMetaData(MARKUP_ID_KEY, comp.getMetaData(MARKUP_ID_KEY));
++		setOutputMarkupId(comp.getOutputMarkupId());
++		return;
++	}
++
++	/**
+ 	 * Sets this component's markup id to a user defined value. It is up to the user to ensure this
+ 	 * value is unique.
+ 	 * <p>
+diff --git a/wicket/src/main/java/org/apache/wicket/MarkupContainer.java b/wicket/src/main/java/org/apache/wicket/MarkupContainer.java
+index 07536ee..cff9056 100644
+--- a/wicket/src/main/java/org/apache/wicket/MarkupContainer.java
++++ b/wicket/src/main/java/org/apache/wicket/MarkupContainer.java
+@@ -804,7 +804,7 @@ public abstract class MarkupContainer extends Component implements Iterable<Comp
+ 			addedComponent(child);
+ 
+ 			// The generated markup id remains the same
+-			child.setMarkupIdImpl(replaced.getMarkupIdImpl());
++			child.setMarkupId(replaced);
+ 		}
+ 
+ 		return this;
+diff --git a/wicket/src/main/java/org/apache/wicket/markup/html/panel/Panel.java b/wicket/src/main/java/org/apache/wicket/markup/html/panel/Panel.java
+index 8fa10e2..3245a54 100644
+--- a/wicket/src/main/java/org/apache/wicket/markup/html/panel/Panel.java
++++ b/wicket/src/main/java/org/apache/wicket/markup/html/panel/Panel.java
+@@ -106,6 +106,13 @@ public abstract class Panel extends WebMarkupContainerWithAssociatedMarkup
+ 			// <span wicket:id="myPanel">...</span>
+ 			tag.setType(XmlTag.OPEN);
+ 		}
++
++// IMarkupFragment markup = getMarkup(null);
++// ComponentTag panelTag = (ComponentTag)markup.get(0);
++// for (String key : panelTag.getAttributes().keySet())
++// {
++// tag.append(key, panelTag.getAttribute(key), ", ");
++// }
+ 		super.onComponentTag(tag);
+ 	}
+ 

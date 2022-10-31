@@ -1,0 +1,103 @@
+diff --git a/community/embedded-examples/src/test/java/org/neo4j/examples/AclExampleTest.java b/community/embedded-examples/src/test/java/org/neo4j/examples/AclExampleTest.java
+index 9e31759..18e9212 100644
+--- a/community/embedded-examples/src/test/java/org/neo4j/examples/AclExampleTest.java
++++ b/community/embedded-examples/src/test/java/org/neo4j/examples/AclExampleTest.java
+@@ -185,7 +185,7 @@
+         
+         //Files
+         //TODO: can we do open ended?
+-        String query = "start root=node:node_auto_index(name = 'FileRoot') match (root)-[:contains*]->()-[:leaf]->(file) return file";
++        String query = "start root=node:node_auto_index(name = 'FileRoot') match (root)-[:contains*0..]->()-[:leaf]->(file) return file";
+         gen.get().addSnippet( "query1", createCypherSnippet( query ) );
+         String result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("File1") );
+@@ -193,7 +193,7 @@
+                 .addSnippet( "result1", createQueryResultSnippet( result ) );
+         
+         //Ownership
+-        query = "start root=node:node_auto_index(name = 'FileRoot') match (root)-[:contains*]->()-[:leaf]->(file)<-[:owns]-(user) return file, user";
++        query = "start root=node:node_auto_index(name = 'FileRoot') match (root)-[:contains*0..]->()-[:leaf]->(file)<-[:owns]-(user) return file, user";
+         gen.get().addSnippet( "query2", createCypherSnippet( query ) );
+         result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("File1") );
+@@ -209,11 +209,8 @@
+         query = "START file=node:node_auto_index('name:File*') " +
+         		"MATCH " +
+         		"file<-[:leaf]-dir, " +
+-        		"path = dir<-[:contains*]-parent, " +
+-        		"parent<-[?:canRead]-role2-[:member]->readUserMoreThan1DirUp, " +
+-                "dir<-[?:canRead]-role1-[:member]->readUser1DirUp " +
+-        		//TODO: would like to get results the order I specify
+-        		"RETURN file, role1, readUser1DirUp, role2, readUserMoreThan1DirUp";
++        		"dir<-[:contains*0..]-parent<-[?:canRead]-role-[:member]->readUser " +
++        		"RETURN file, dir, role, readUser";
+         gen.get().addSnippet( "query3", createCypherSnippet( query ) );
+         result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("File1") );
+diff --git a/community/embedded-examples/src/test/java/org/neo4j/examples/RolesTest.java b/community/embedded-examples/src/test/java/org/neo4j/examples/RolesTest.java
+index 844e07f..5dacbb8 100644
+--- a/community/embedded-examples/src/test/java/org/neo4j/examples/RolesTest.java
++++ b/community/embedded-examples/src/test/java/org/neo4j/examples/RolesTest.java
+@@ -172,7 +172,7 @@
+         // END SNIPPET: get-admins
+         
+         gen.get().addSnippet( "o-get-admins", createOutputSnippet( traverserToString( traverser ) ) );
+-        String query = "start admins=node("+ admins.getId() +") match admins<-[:MEMBER_OF]-directUser, admins<-[:PART_OF*]-subrole<-[:MEMBER_OF]-indUser return directUser, indUser, subrole";
++        String query = "start admins=node("+ admins.getId() +") match admins<-[:PART_OF*0..]-subrole<-[:MEMBER_OF]-user return user, subrole";
+         gen.get().addSnippet( "query-get-admins", createCypherSnippet( query ) );
+         String result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("Engin") );
+@@ -188,7 +188,7 @@
+                 Direction.OUTGOING, RoleRels.PART_OF, Direction.OUTGOING );
+         // END SNIPPET: get-user-memberships
+         gen.get().addSnippet( "o-get-user-memberships", createOutputSnippet( traverserToString( traverser ) ) );
+-        query = "start jale=node("+ jale.getId() +") match jale-[:MEMBER_OF]->directRole-[:PART_OF*]->superRole return jale, directRole, superRole";
++        query = "start jale=node("+ jale.getId() +") match jale-[:MEMBER_OF]->()-[:PART_OF*0..]->role return jale, role";
+         gen.get().addSnippet( "query-get-user-memberships", createCypherSnippet( query ) );
+         result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("Users") );
+@@ -206,7 +206,7 @@
+                 Direction.INCOMING, RoleRels.PART_OF, Direction.INCOMING );
+         // END SNIPPET: get-groups
+         gen.get().addSnippet( "o-get-groups", createOutputSnippet( traverserToString( traverser ) ) );
+-        query = "start refNode=node("+ referenceNode.getId() +") match refNode<-[:ROOT]->topGroup<-[:PART_OF*]-subGroup return refNode, topGroup, subGroup";
++        query = "start refNode=node("+ referenceNode.getId() +") match refNode<-[:ROOT]->()<-[:PART_OF*0..]-group return group";
+         gen.get().addSnippet( "query-get-groups", createCypherSnippet( query ) );
+         result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("Users") );
+diff --git a/community/embedded-examples/src/test/java/org/neo4j/examples/AclExampleTest.java b/community/embedded-examples/src/test/java/org/neo4j/examples/AclExampleTest.java
+index 9e31759..18e9212 100644
+--- a/community/embedded-examples/src/test/java/org/neo4j/examples/AclExampleTest.java
++++ b/community/embedded-examples/src/test/java/org/neo4j/examples/AclExampleTest.java
+@@ -185,7 +185,7 @@
+         
+         //Files
+         //TODO: can we do open ended?
+-        String query = "start root=node:node_auto_index(name = 'FileRoot') match (root)-[:contains*]->()-[:leaf]->(file) return file";
++        String query = "start root=node:node_auto_index(name = 'FileRoot') match (root)-[:contains*0..]->()-[:leaf]->(file) return file";
+         gen.get().addSnippet( "query1", createCypherSnippet( query ) );
+         String result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("File1") );
+@@ -193,7 +193,7 @@
+                 .addSnippet( "result1", createQueryResultSnippet( result ) );
+         
+         //Ownership
+-        query = "start root=node:node_auto_index(name = 'FileRoot') match (root)-[:contains*]->()-[:leaf]->(file)<-[:owns]-(user) return file, user";
++        query = "start root=node:node_auto_index(name = 'FileRoot') match (root)-[:contains*0..]->()-[:leaf]->(file)<-[:owns]-(user) return file, user";
+         gen.get().addSnippet( "query2", createCypherSnippet( query ) );
+         result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("File1") );
+@@ -209,11 +209,8 @@
+         query = "START file=node:node_auto_index('name:File*') " +
+         		"MATCH " +
+         		"file<-[:leaf]-dir, " +
+-        		"path = dir<-[:contains*]-parent, " +
+-        		"parent<-[?:canRead]-role2-[:member]->readUserMoreThan1DirUp, " +
+-                "dir<-[?:canRead]-role1-[:member]->readUser1DirUp " +
+-        		//TODO: would like to get results the order I specify
+-        		"RETURN file, role1, readUser1DirUp, role2, readUserMoreThan1DirUp";
++        		"dir<-[:contains*0..]-parent<-[?:canRead]-role-[:member]->readUser " +
++        		"RETURN file, dir, role, readUser";
+         gen.get().addSnippet( "query3", createCypherSnippet( query ) );
+         result = engine.execute( parser.parse( query ) ).toString();
+         assertTrue( result.contains("File1") );

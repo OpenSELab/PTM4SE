@@ -1,0 +1,26 @@
+diff --git a/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java b/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
+index 190028d..8d1bbf6 100644
+--- a/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
++++ b/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
+@@ -336,7 +336,7 @@
+                         nioBuffers[nioBufferCount ++] = buf.internalNioBuffer(readerIndex, readableBytes);
+                     } else {
+                         ByteBuffer[] nioBufs = buf.nioBuffers();
+-                        if (nioBufferCount + nioBufs.length == nioBuffers.length + 1) {
++                        if (nioBufferCount + nioBufs.length > nioBuffers.length) {
+                             this.nioBuffers = nioBuffers = doubleNioBufferArray(nioBuffers, nioBufferCount);
+                         }
+                         for (ByteBuffer nioBuf: nioBufs) {
+diff --git a/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java b/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
+index 190028d..8d1bbf6 100644
+--- a/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
++++ b/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
+@@ -336,7 +336,7 @@
+                         nioBuffers[nioBufferCount ++] = buf.internalNioBuffer(readerIndex, readableBytes);
+                     } else {
+                         ByteBuffer[] nioBufs = buf.nioBuffers();
+-                        if (nioBufferCount + nioBufs.length == nioBuffers.length + 1) {
++                        if (nioBufferCount + nioBufs.length > nioBuffers.length) {
+                             this.nioBuffers = nioBuffers = doubleNioBufferArray(nioBuffers, nioBufferCount);
+                         }
+                         for (ByteBuffer nioBuf: nioBufs) {

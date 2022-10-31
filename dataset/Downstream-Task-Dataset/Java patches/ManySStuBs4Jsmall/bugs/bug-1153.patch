@@ -1,0 +1,52 @@
+diff --git a/servers/src/main/java/tachyon/master/lineage/recompute/RecomputeExecutor.java b/servers/src/main/java/tachyon/master/lineage/recompute/RecomputeExecutor.java
+index 538e0fe..23ef45f 100644
+--- a/servers/src/main/java/tachyon/master/lineage/recompute/RecomputeExecutor.java
++++ b/servers/src/main/java/tachyon/master/lineage/recompute/RecomputeExecutor.java
+@@ -65,7 +65,7 @@
+ 
+   @Override
+   public void close() {
+-    mFixedExecutionService.shutdown();
++    mRecomputeLauncherService.shutdown();
+   }
+ 
+   /**
+diff --git a/servers/src/main/java/tachyon/worker/block/BlockMasterSync.java b/servers/src/main/java/tachyon/worker/block/BlockMasterSync.java
+index cf01953..28a7195 100644
+--- a/servers/src/main/java/tachyon/worker/block/BlockMasterSync.java
++++ b/servers/src/main/java/tachyon/worker/block/BlockMasterSync.java
+@@ -153,7 +153,7 @@
+ 
+   @Override
+   public void close() {
+-    mFixedExecutionService.shutdown();
++    mBlockRemovalService.shutdown();
+   }
+ 
+   /**
+diff --git a/servers/src/main/java/tachyon/worker/file/FileWorkerMasterSyncExecutor.java b/servers/src/main/java/tachyon/worker/file/FileWorkerMasterSyncExecutor.java
+index 440d3e6..568e65d 100644
+--- a/servers/src/main/java/tachyon/worker/file/FileWorkerMasterSyncExecutor.java
++++ b/servers/src/main/java/tachyon/worker/file/FileWorkerMasterSyncExecutor.java
+@@ -112,7 +112,7 @@
+ 
+   @Override
+   public void close() {
+-    mFixedExecutionService.shutdown();
++    mPersistFileService.shutdown();
+   }
+ 
+   /**
+diff --git a/servers/src/main/java/tachyon/master/lineage/recompute/RecomputeExecutor.java b/servers/src/main/java/tachyon/master/lineage/recompute/RecomputeExecutor.java
+index 538e0fe..23ef45f 100644
+--- a/servers/src/main/java/tachyon/master/lineage/recompute/RecomputeExecutor.java
++++ b/servers/src/main/java/tachyon/master/lineage/recompute/RecomputeExecutor.java
+@@ -65,7 +65,7 @@
+ 
+   @Override
+   public void close() {
+-    mFixedExecutionService.shutdown();
++    mRecomputeLauncherService.shutdown();
+   }
+ 
+   /**

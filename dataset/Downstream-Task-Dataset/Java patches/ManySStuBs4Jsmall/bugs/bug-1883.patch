@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index 09859a4..1ea18bb 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -1754,7 +1754,7 @@
+     protected void closeAtmosphereResource() {
+         for (AtmosphereResource r : config.resourcesFactory().findAll()) {
+             try {
+-                r.close();
++                r.resume().close();
+             } catch (IOException e) {
+                 logger.trace("", e);
+             }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index 09859a4..1ea18bb 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -1754,7 +1754,7 @@
+     protected void closeAtmosphereResource() {
+         for (AtmosphereResource r : config.resourcesFactory().findAll()) {
+             try {
+-                r.close();
++                r.resume().close();
+             } catch (IOException e) {
+                 logger.trace("", e);
+             }

@@ -1,0 +1,32 @@
+diff --git a/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/BlueprintCamelContext.java b/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/BlueprintCamelContext.java
+index 300720e..db6c6e6 100644
+--- a/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/BlueprintCamelContext.java
++++ b/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/BlueprintCamelContext.java
+@@ -121,8 +121,9 @@
+             LOG.debug("Service {} changed to {}", event, event.getType());
+         }
+         // look for blueprint container to be registered, and then we can start the CamelContext
+-        if (event.getType() == ServiceEvent.REGISTERED && event.getServiceReference().isAssignableTo(bundleContext.getBundle(),
+-                "org.osgi.service.blueprint.container.BlueprintContainer")) {
++        if (event.getType() == ServiceEvent.REGISTERED
++                && event.getServiceReference().isAssignableTo(bundleContext.getBundle(), "org.osgi.service.blueprint.container.BlueprintContainer")
++                && bundleContext.getBundle().equals(event.getServiceReference().getBundle())) {
+             try {
+                 maybeStart();
+             } catch (Exception e) {
+diff --git a/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/BlueprintCamelContext.java b/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/BlueprintCamelContext.java
+index 300720e..db6c6e6 100644
+--- a/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/BlueprintCamelContext.java
++++ b/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/BlueprintCamelContext.java
+@@ -121,8 +121,9 @@
+             LOG.debug("Service {} changed to {}", event, event.getType());
+         }
+         // look for blueprint container to be registered, and then we can start the CamelContext
+-        if (event.getType() == ServiceEvent.REGISTERED && event.getServiceReference().isAssignableTo(bundleContext.getBundle(),
+-                "org.osgi.service.blueprint.container.BlueprintContainer")) {
++        if (event.getType() == ServiceEvent.REGISTERED
++                && event.getServiceReference().isAssignableTo(bundleContext.getBundle(), "org.osgi.service.blueprint.container.BlueprintContainer")
++                && bundleContext.getBundle().equals(event.getServiceReference().getBundle())) {
+             try {
+                 maybeStart();
+             } catch (Exception e) {

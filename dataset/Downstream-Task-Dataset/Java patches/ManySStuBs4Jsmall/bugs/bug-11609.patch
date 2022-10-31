@@ -1,0 +1,39 @@
+diff --git a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
+index db41462..f677bc9 100644
+--- a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
++++ b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
+@@ -153,7 +153,7 @@
+       );
+       Long startOffset = lastOffsets.get(partition);
+       PartitionConsumerWorker worker = new PartitionConsumerWorker(
+-          feed, kafkaSimpleConsumer, partition, startOffset == null ? 0 : startOffset
++          feed, kafkaSimpleConsumer, partition, startOffset == null ? -1 : startOffset
+       );
+       consumerWorkers.add(worker);
+     }
+diff --git a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaSimpleConsumer.java b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaSimpleConsumer.java
+index dd1f93b..ecbd07b 100644
+--- a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaSimpleConsumer.java
++++ b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaSimpleConsumer.java
+@@ -238,7 +238,7 @@
+       }
+       catch (Exception e) {
+         ensureNotInterrupted(e);
+-        log.warn(e, "caughte exception in fetch {} - {}", topic, partitionId);
++        log.warn(e, "caught exception in fetch {} - {}", topic, partitionId);
+         response = null;
+       }
+ 
+diff --git a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
+index db41462..f677bc9 100644
+--- a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
++++ b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
+@@ -153,7 +153,7 @@
+       );
+       Long startOffset = lastOffsets.get(partition);
+       PartitionConsumerWorker worker = new PartitionConsumerWorker(
+-          feed, kafkaSimpleConsumer, partition, startOffset == null ? 0 : startOffset
++          feed, kafkaSimpleConsumer, partition, startOffset == null ? -1 : startOffset
+       );
+       consumerWorkers.add(worker);
+     }

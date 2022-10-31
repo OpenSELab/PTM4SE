@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/clustering/algorithm/BaseClusteringAlgorithm.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/clustering/algorithm/BaseClusteringAlgorithm.java
+index 7536bc4..af96f4b 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/clustering/algorithm/BaseClusteringAlgorithm.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/clustering/algorithm/BaseClusteringAlgorithm.java
+@@ -89,7 +89,7 @@
+ 	 */
+ 	private void iterations() {
+ 		int iterationCount = 0;
+-		while (!clusteringStrategy.getTerminationCondition().isSatisfied(iterationHistory) ||
++		while ((clusteringStrategy.getTerminationCondition() != null && !clusteringStrategy.getTerminationCondition().isSatisfied(iterationHistory)) ||
+ 				iterationHistory.getMostRecentIterationInfo().isStrategyApplied()) {
+ 			currentIteration++;
+ 			removePoints();
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/clustering/algorithm/BaseClusteringAlgorithm.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/clustering/algorithm/BaseClusteringAlgorithm.java
+index 7536bc4..af96f4b 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/clustering/algorithm/BaseClusteringAlgorithm.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/clustering/algorithm/BaseClusteringAlgorithm.java
+@@ -89,7 +89,7 @@
+ 	 */
+ 	private void iterations() {
+ 		int iterationCount = 0;
+-		while (!clusteringStrategy.getTerminationCondition().isSatisfied(iterationHistory) ||
++		while ((clusteringStrategy.getTerminationCondition() != null && !clusteringStrategy.getTerminationCondition().isSatisfied(iterationHistory)) ||
+ 				iterationHistory.getMostRecentIterationInfo().isStrategyApplied()) {
+ 			currentIteration++;
+ 			removePoints();

@@ -1,0 +1,59 @@
+diff --git a/wicket-request/src/main/java/org/apache/wicket/request/Url.java b/wicket-request/src/main/java/org/apache/wicket/request/Url.java
+index bbaf6ea..d387a13 100755
+--- a/wicket-request/src/main/java/org/apache/wicket/request/Url.java
++++ b/wicket-request/src/main/java/org/apache/wicket/request/Url.java
+@@ -298,7 +298,10 @@ public final class Url implements Serializable
+ 			String queryArray[] = Strings.split(queryString, '&');
+ 			for (String s : queryArray)
+ 			{
+-				result.parameters.add(parseQueryParameter(s, charset));
++				if (Strings.isEmpty(s) == false)
++				{
++					result.parameters.add(parseQueryParameter(s, charset));
++				}
+ 			}
+ 		}
+ 
+@@ -315,22 +318,13 @@ public final class Url implements Serializable
+ 	{
+ 		if (qp.indexOf('=') == -1)
+ 		{
++			// name => empty value
+ 			return new QueryParameter(decodeParameter(qp, charset), "");
+ 		}
++
+ 		String parts[] = Strings.split(qp, '=');
+-		if (parts.length == 0)
+-		{
+-			return new QueryParameter("", "");
+-		}
+-		else if (parts.length == 1)
+-		{
+-			return new QueryParameter("", decodeParameter(parts[0], charset));
+-		}
+-		else
+-		{
+-			return new QueryParameter(decodeParameter(parts[0], charset), decodeParameter(parts[1],
+-				charset));
+-		}
++		return new QueryParameter(decodeParameter(parts[0], charset), decodeParameter(parts[1],
++			charset));
+ 	}
+ 
+ 	/**
+diff --git a/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/INamedParameters.java b/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/INamedParameters.java
+index e84ed21..bcf16be 100644
+--- a/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/INamedParameters.java
++++ b/wicket-request/src/main/java/org/apache/wicket/request/mapper/parameter/INamedParameters.java
+@@ -49,9 +49,8 @@ public interface INamedParameters
+ 		 */
+ 		public NamedPair(final String key, final String value)
+ 		{
+-			Args.notEmpty(key, "key");
+-			this.key = key;
+-			this.value = value;
++			this.key = Args.notNull(key, "key");;
++			this.value = Args.notNull(value, "value");
+ 		}
+ 
+ 		/**

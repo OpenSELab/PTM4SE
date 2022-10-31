@@ -1,0 +1,60 @@
+diff --git a/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java b/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
+index ef4f1f5..0f68c6e 100644
+--- a/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
++++ b/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
+@@ -557,9 +557,7 @@
+                             partition = new AttributePartitionImpl(column, graph);
+                         }
+                         partitions.put(getIdCol(column), partition);
+-                    }
+-                    
+-                    if (forcedRanking.contains(id) || isRanking(graph, column)) {
++                    } else if (forcedRanking.contains(id) || (!forcedPartition.contains(id) && isRanking(graph, column))) {
+                         if (column.isIndexed()) {
+                             ranking = new AttributeRankingImpl(column, getIndex(localScale));
+                         } else {
+diff --git a/modules/FiltersPluginUI/src/main/java/org/gephi/ui/filters/plugin/partition/PartitionPanel.java b/modules/FiltersPluginUI/src/main/java/org/gephi/ui/filters/plugin/partition/PartitionPanel.java
+index 45bee82..3839458 100644
+--- a/modules/FiltersPluginUI/src/main/java/org/gephi/ui/filters/plugin/partition/PartitionPanel.java
++++ b/modules/FiltersPluginUI/src/main/java/org/gephi/ui/filters/plugin/partition/PartitionPanel.java
+@@ -199,7 +199,7 @@
+ 
+         @Override
+         public String toString() {
+-            String percentageStr = FORMATTER.format(percentage);
++            String percentageStr = FORMATTER.format(percentage / 100f);
+             return part.toString() + " (" + percentageStr + ")";
+         }
+ 
+diff --git a/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java b/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
+index 3bc24d1..38637c2 100644
+--- a/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
++++ b/modules/VisualizationImpl/src/main/java/org/gephi/visualization/component/LabelAttributesPanel.java
+@@ -133,10 +133,10 @@
+             target = nodeCheckBoxs;
+         } else {
+             for (Column c : graphController.getGraphModel().getEdgeTable()) {
+-                if (c.getOrigin().equals(Origin.DATA)) {
++                if (!c.isProperty()) {
+                     availableColumns.add(c);
+                 } else if (showProperties) {
+-                    if (c.getId().equalsIgnoreCase("label")) {
++                    if (showProperties && c.isProperty() && !c.getId().equals("timeset")) {
+                         availableColumns.add(c);
+                     }
+                 }
+diff --git a/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java b/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
+index ef4f1f5..0f68c6e 100644
+--- a/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
++++ b/modules/AppearanceAPI/src/main/java/org/gephi/appearance/AppearanceModelImpl.java
+@@ -557,9 +557,7 @@
+                             partition = new AttributePartitionImpl(column, graph);
+                         }
+                         partitions.put(getIdCol(column), partition);
+-                    }
+-                    
+-                    if (forcedRanking.contains(id) || isRanking(graph, column)) {
++                    } else if (forcedRanking.contains(id) || (!forcedPartition.contains(id) && isRanking(graph, column))) {
+                         if (column.isIndexed()) {
+                             ranking = new AttributeRankingImpl(column, getIndex(localScale));
+                         } else {

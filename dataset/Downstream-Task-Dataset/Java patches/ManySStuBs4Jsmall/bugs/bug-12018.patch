@@ -1,0 +1,26 @@
+diff --git a/server/src/main/java/com/metamx/druid/query/metadata/SegmentMetadataQueryEngine.java b/server/src/main/java/com/metamx/druid/query/metadata/SegmentMetadataQueryEngine.java
+index edc4ea3..7522b4b 100644
+--- a/server/src/main/java/com/metamx/druid/query/metadata/SegmentMetadataQueryEngine.java
++++ b/server/src/main/java/com/metamx/druid/query/metadata/SegmentMetadataQueryEngine.java
+@@ -72,7 +72,7 @@
+         final Indexed<String> lookup = adapter.getDimValueLookup(input);
+         for (String dimVal : lookup) {
+           ImmutableConciseSet index = adapter.getInvertedIndex(input, dimVal);
+-          size += index.size() * Charsets.UTF_8.encode(dimVal).capacity();
++          size += (dimVal == null) ? 0 : index.size() * Charsets.UTF_8.encode(dimVal).capacity();
+         }
+         return new SegmentMetadataResultValue.Dimension(
+             size,
+diff --git a/server/src/main/java/com/metamx/druid/query/metadata/SegmentMetadataQueryEngine.java b/server/src/main/java/com/metamx/druid/query/metadata/SegmentMetadataQueryEngine.java
+index edc4ea3..7522b4b 100644
+--- a/server/src/main/java/com/metamx/druid/query/metadata/SegmentMetadataQueryEngine.java
++++ b/server/src/main/java/com/metamx/druid/query/metadata/SegmentMetadataQueryEngine.java
+@@ -72,7 +72,7 @@
+         final Indexed<String> lookup = adapter.getDimValueLookup(input);
+         for (String dimVal : lookup) {
+           ImmutableConciseSet index = adapter.getInvertedIndex(input, dimVal);
+-          size += index.size() * Charsets.UTF_8.encode(dimVal).capacity();
++          size += (dimVal == null) ? 0 : index.size() * Charsets.UTF_8.encode(dimVal).capacity();
+         }
+         return new SegmentMetadataResultValue.Dimension(
+             size,

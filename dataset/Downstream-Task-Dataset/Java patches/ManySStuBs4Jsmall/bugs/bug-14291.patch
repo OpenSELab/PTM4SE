@@ -1,0 +1,25 @@
+diff --git a/test/com/google/javascript/jscomp/NewTypeInferenceTest.java b/test/com/google/javascript/jscomp/NewTypeInferenceTest.java
+index 4e8b258..c8426e5 100644
+--- a/test/com/google/javascript/jscomp/NewTypeInferenceTest.java
++++ b/test/com/google/javascript/jscomp/NewTypeInferenceTest.java
+@@ -7786,17 +7786,17 @@
+         TypeCheck.INEXISTENT_PROPERTY);
+ 
+     typeCheck(
+-        "/** @const */ var s = (true) ? null : null;\n" +
++        "/** @const */ var s = true ? null : null;\n" +
+         "function g() { s - 5; }",
+         NewTypeInference.INVALID_OPERAND_TYPE);
+ 
+     typeCheck(
+-        "/** @const */ var s = (true) ? void 0 : undefined;\n" +
++        "/** @const */ var s = true ? void 0 : undefined;\n" +
+         "function g() { s - 5; }",
+         NewTypeInference.INVALID_OPERAND_TYPE);
+ 
+     typeCheck(
+-        "/** @const */ var b = (true) ? (1<2) : ('' in {});\n" +
++        "/** @const */ var b = true ? (1<2) : ('' in {});\n" +
+         "function g() { b - 5; }",
+         NewTypeInference.INVALID_OPERAND_TYPE);
+ 

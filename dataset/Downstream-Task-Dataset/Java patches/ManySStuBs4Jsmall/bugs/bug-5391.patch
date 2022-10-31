@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/builder/xml/XsltTestErrorListenerTest.java b/camel-core/src/test/java/org/apache/camel/builder/xml/XsltTestErrorListenerTest.java
+index 1951310..dbcce70 100644
+--- a/camel-core/src/test/java/org/apache/camel/builder/xml/XsltTestErrorListenerTest.java
++++ b/camel-core/src/test/java/org/apache/camel/builder/xml/XsltTestErrorListenerTest.java
+@@ -35,7 +35,7 @@
+ 
+     public void testErrorListener() throws Exception {
+         // Xalan transformer cannot work as expected, so we just skip the test
+-        if (xsltBuilder.isXalanTransformer(xsltBuilder.getTemplate().newTransformer())) {
++        if (xsltBuilder.isXalanTransformer(xsltBuilder.getConverter().getTransformerFactory().newTransformer())) {
+             return;
+         }
+         errorListener.error(EasyMock.<TransformerException>anyObject());
+diff --git a/camel-core/src/test/java/org/apache/camel/builder/xml/XsltTestErrorListenerTest.java b/camel-core/src/test/java/org/apache/camel/builder/xml/XsltTestErrorListenerTest.java
+index 1951310..dbcce70 100644
+--- a/camel-core/src/test/java/org/apache/camel/builder/xml/XsltTestErrorListenerTest.java
++++ b/camel-core/src/test/java/org/apache/camel/builder/xml/XsltTestErrorListenerTest.java
+@@ -35,7 +35,7 @@
+ 
+     public void testErrorListener() throws Exception {
+         // Xalan transformer cannot work as expected, so we just skip the test
+-        if (xsltBuilder.isXalanTransformer(xsltBuilder.getTemplate().newTransformer())) {
++        if (xsltBuilder.isXalanTransformer(xsltBuilder.getConverter().getTransformerFactory().newTransformer())) {
+             return;
+         }
+         errorListener.error(EasyMock.<TransformerException>anyObject());

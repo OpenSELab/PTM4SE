@@ -1,0 +1,13 @@
+diff --git a/minicluster/src/main/java/org/apache/accumulo/minicluster/MiniAccumuloCluster.java b/minicluster/src/main/java/org/apache/accumulo/minicluster/MiniAccumuloCluster.java
+index 7c27dd8..43fa6cb 100644
+--- a/minicluster/src/main/java/org/apache/accumulo/minicluster/MiniAccumuloCluster.java
++++ b/minicluster/src/main/java/org/apache/accumulo/minicluster/MiniAccumuloCluster.java
+@@ -337,7 +337,7 @@ public class MiniAccumuloCluster {
+     if (!initialized) {
+       // sleep a little bit to let zookeeper come up before calling init, seems to work better
+       UtilWaitThread.sleep(250);
+-      Process initProcess = exec(Initialize.class, "--instance-name", config.getInstanceName(), "--password", config.getRootPassword(), "--username", "root");
++      Process initProcess = exec(Initialize.class, "--instance-name", config.getInstanceName(), "--password", config.getRootPassword());
+       int ret = initProcess.waitFor();
+       if (ret != 0) {
+         throw new RuntimeException("Initialize process returned " + ret);

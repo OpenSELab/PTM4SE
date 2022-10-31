@@ -1,0 +1,13 @@
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/core/MicroKernelImpl.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/core/MicroKernelImpl.java
+index 35126ae..05b6309 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/core/MicroKernelImpl.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/core/MicroKernelImpl.java
+@@ -411,7 +411,7 @@ public class MicroKernelImpl implements MicroKernel {
+             throw new IllegalArgumentException("absolute path expected: " + path);
+         }
+         if (jsonDiff == null || jsonDiff.length() == 0) {
+-            return getHeadRevision();
++            return revisionId != null ? revisionId : getHeadRevision();
+         }
+ 
+         Id revId = revisionId == null ? getHeadRevisionId() : Id.fromString(revisionId);

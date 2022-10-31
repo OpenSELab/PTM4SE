@@ -1,0 +1,405 @@
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/PinpointServerRepository.java b/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/PinpointServerRepository.java
+index b2d4219..40257d7 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/PinpointServerRepository.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/PinpointServerRepository.java
+@@ -39,7 +39,7 @@
+                 Set<PinpointServer> pinpointServerSet = pinpointServerRepository.get(key);
+                 pinpointServerSet.remove(pinpointServer);
+ 
+-                if (pinpointServerSet.size() == 0) {
++                if (pinpointServerSet.isEmpty()) {
+                     pinpointServerRepository.remove(key);
+                     return true;
+                 }
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/ZookeeperJobWorker.java b/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/ZookeeperJobWorker.java
+index 7f22013..2b68830 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/ZookeeperJobWorker.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/ZookeeperJobWorker.java
+@@ -216,7 +216,7 @@
+ 
+             long startTimeMillis = System.currentTimeMillis();
+ 
+-            while (jobQueue.size() == 0 && !isOverWaitTime(waitTime, startTimeMillis) && workerState.isStarted()) {
++            while (jobQueue.isEmpty() && !isOverWaitTime(waitTime, startTimeMillis) && workerState.isStarted()) {
+                 try {
+                     lock.wait(waitUnitTime);
+                 } catch (InterruptedException ignore) {
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/SpanStreamUDPPacketHandlerFactory.java b/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/SpanStreamUDPPacketHandlerFactory.java
+index e087e2a..58f11d1 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/SpanStreamUDPPacketHandlerFactory.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/SpanStreamUDPPacketHandlerFactory.java
+@@ -99,7 +99,7 @@
+                     }
+ 
+                     List<TBase<?, ?>> tbaseList = deserializer.deserializeList(componentData);
+-                    if (tbaseList == null || tbaseList.size() == 0) {
++                    if (tbaseList == null || tbaseList.isEmpty()) {
+                         continue;
+                     }
+                     
+@@ -145,7 +145,7 @@
+     }
+ 
+     private List<TSpanEvent> getSpanEventList(List<TBase<?, ?>> tbaseList) {
+-        if (tbaseList == null || tbaseList.size() == 0) {
++        if (tbaseList == null || tbaseList.isEmpty()) {
+             return new ArrayList<>(0);
+         }
+ 
+diff --git a/commons/src/main/java/com/navercorp/pinpoint/common/util/DefaultSqlParser.java b/commons/src/main/java/com/navercorp/pinpoint/common/util/DefaultSqlParser.java
+index 977b582..74c2096 100644
+--- a/commons/src/main/java/com/navercorp/pinpoint/common/util/DefaultSqlParser.java
++++ b/commons/src/main/java/com/navercorp/pinpoint/common/util/DefaultSqlParser.java
+@@ -466,7 +466,7 @@
+     }
+ 
+     public String combineBindValues(String sql, List<String> bindValues) {
+-        if(sql == null || sql.length() ==0 || bindValues == null || bindValues.size() == 0) {
++        if(sql == null || sql.isEmpty() || bindValues == null || bindValues.isEmpty()) {
+             return sql;
+         }
+ 
+diff --git a/profiler/src/main/java/com/navercorp/pinpoint/profiler/receiver/service/ActiveThreadCountService.java b/profiler/src/main/java/com/navercorp/pinpoint/profiler/receiver/service/ActiveThreadCountService.java
+index 70f8535..03e9e85 100644
+--- a/profiler/src/main/java/com/navercorp/pinpoint/profiler/receiver/service/ActiveThreadCountService.java
++++ b/profiler/src/main/java/com/navercorp/pinpoint/profiler/receiver/service/ActiveThreadCountService.java
+@@ -179,7 +179,7 @@
+                     case CLOSED:
+                     case ILLEGAL_STATE:
+                         boolean removed = streamChannelRepository.remove(streamChannel);
+-                        if (removed && streamChannelRepository.size() == 0) {
++                        if (removed && streamChannelRepository.isEmpty()) {
+                             boolean turnOff = onTimerTask.compareAndSet(true, false);
+                             if (turnOff) {
+                                 logger.info("turn off ActiveThreadCountTimerTask.");
+diff --git a/profiler/src/main/java/com/navercorp/pinpoint/profiler/sender/CompositeSpanStreamData.java b/profiler/src/main/java/com/navercorp/pinpoint/profiler/sender/CompositeSpanStreamData.java
+index 77af9a6..8e18db1 100644
+--- a/profiler/src/main/java/com/navercorp/pinpoint/profiler/sender/CompositeSpanStreamData.java
++++ b/profiler/src/main/java/com/navercorp/pinpoint/profiler/sender/CompositeSpanStreamData.java
+@@ -41,7 +41,7 @@
+             throw new NullPointerException("buffer may not be null.");
+         }
+ 
+-        if (componentsBufferIndexList == null || componentsBufferIndexList.size() == 0) {
++        if (componentsBufferIndexList == null || componentsBufferIndexList.isEmpty()) {
+             throw new NullPointerException("buffer may not be null or zero.");
+         }
+ 
+diff --git a/rpc/src/main/java/com/navercorp/pinpoint/rpc/util/ListUtils.java b/rpc/src/main/java/com/navercorp/pinpoint/rpc/util/ListUtils.java
+index a6bcaa0..2d79616 100644
+--- a/rpc/src/main/java/com/navercorp/pinpoint/rpc/util/ListUtils.java
++++ b/rpc/src/main/java/com/navercorp/pinpoint/rpc/util/ListUtils.java
+@@ -27,7 +27,7 @@
+     }
+ 
+     public static boolean isEmpty(List list) {
+-        if (list == null || list.size() == 0) {
++        if (list == null || list.isEmpty()) {
+             return true;
+         }
+ 
+diff --git a/rpc/src/test/java/com/navercorp/pinpoint/rpc/server/HandshakeTest.java b/rpc/src/test/java/com/navercorp/pinpoint/rpc/server/HandshakeTest.java
+index cb16d57..ad6c0b6 100644
+--- a/rpc/src/test/java/com/navercorp/pinpoint/rpc/server/HandshakeTest.java
++++ b/rpc/src/test/java/com/navercorp/pinpoint/rpc/server/HandshakeTest.java
+@@ -170,7 +170,7 @@
+             }
+         }
+ 
+-        if (result.size() == 0) {
++        if (result.isEmpty()) {
+             return null;
+         }
+ 
+diff --git a/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/ChunkHeaderBufferedTBaseSerializer.java b/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/ChunkHeaderBufferedTBaseSerializer.java
+index 93febcd..c2b9aeb 100644
+--- a/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/ChunkHeaderBufferedTBaseSerializer.java
++++ b/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/ChunkHeaderBufferedTBaseSerializer.java
+@@ -125,7 +125,7 @@
+ 
+         // write header
+         writeHeader(protocol, locator.headerLookup(base));
+-        if (list != null && list.size() > 0) {
++        if (list != null && !list.isEmpty()) {
+             protocol.addReplaceField(fieldName, list);
+         }
+ 
+diff --git a/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/TBaseStream.java b/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/TBaseStream.java
+index 4b9946c..6f7ac30 100644
+--- a/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/TBaseStream.java
++++ b/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/TBaseStream.java
+@@ -90,7 +90,7 @@
+         TBaseStreamNode node = null;
+         while ((node = nodes.peek()) != null) {
+             if (node.size() > maxSize) {
+-                if (list.size() == 0) {
++                if (list.isEmpty()) {
+                     // first node
+                     list.add(node);
+                     nodes.poll();
+diff --git a/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/TReplaceListProtocol.java b/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/TReplaceListProtocol.java
+index b7045aa..e1fb718 100644
+--- a/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/TReplaceListProtocol.java
++++ b/thrift/src/main/java/com/navercorp/pinpoint/thrift/io/TReplaceListProtocol.java
+@@ -55,7 +55,7 @@
+             throw new IllegalArgumentException("field name must not be null");
+         }
+ 
+-        if (outputs == null || outputs.size() == 0) {
++        if (outputs == null || outputs.isEmpty()) {
+             throw new IllegalArgumentException("stream nodes must not be empty");
+         }
+ 
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/applicationmap/ApplicationMapBuilder.java b/web/src/main/java/com/navercorp/pinpoint/web/applicationmap/ApplicationMapBuilder.java
+index db3bf05..4fb4831 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/applicationmap/ApplicationMapBuilder.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/applicationmap/ApplicationMapBuilder.java
+@@ -304,7 +304,7 @@
+                 if (fromLink.size() > 1) {
+                     logger.warn("Invalid from UserNode:{}", linkList);
+                     throw new IllegalArgumentException("Invalid from UserNode.size() :" + fromLink.size());
+-                } else if (fromLink.size() == 0) {
++                } else if (fromLink.isEmpty()) {
+                     logger.warn("from UserNode not found:{}", userNode);
+                     continue;
+                 }
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanAligner2.java b/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanAligner2.java
+index 2ec581d..3689761 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanAligner2.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanAligner2.java
+@@ -128,7 +128,7 @@
+ 
+     public CallTree sort() {
+         final List<SpanBo> rootList = spanIdMap.remove(rootSpanId);
+-        if (rootList == null || rootList.size() == 0) {
++        if (rootList == null || rootList.isEmpty()) {
+             throw new IllegalStateException("rootList span not found. rootSpanId=" + rootSpanId + ", map=" + spanIdMap.keySet());
+         }
+         if (rootList.size() > 1) {
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanCallTree.java b/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanCallTree.java
+index def03c3..6302641 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanCallTree.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanCallTree.java
+@@ -173,7 +173,7 @@
+         final List<CallTreeNode> events = new ArrayList<>();
+         final LinkedList<CallTreeNode> spans = new LinkedList<>();
+         splitChildSiblingNodes(parent, events, spans);
+-        if (spans.size() == 0) {
++        if (spans.isEmpty()) {
+             // not found span
+             return;
+         }
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanIdMatcher.java b/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanIdMatcher.java
+index 2ed6838..3b25ffb 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanIdMatcher.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/calltree/span/SpanIdMatcher.java
+@@ -41,7 +41,7 @@
+     public SpanBo approximateMatch(long spanEventBoStartTime) {
+         // TODO: need algorithm for matching
+         List<WeightSpanBo> weightSpanList = computeWeight(spanEventBoStartTime);
+-        if (weightSpanList.size() == 0) {
++        if (weightSpanList.isEmpty()) {
+             return null;
+         }
+         Collections.sort(weightSpanList, new Comparator<WeightSpanBo>() {
+@@ -119,7 +119,7 @@
+ 
+ 
+     public List<SpanBo> other() {
+-        if (nextSpanBoList.size() == 0) {
++        if (nextSpanBoList.isEmpty()) {
+             return null;
+         }
+         return nextSpanBoList;
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/cluster/ClusterManager.java b/web/src/main/java/com/navercorp/pinpoint/web/cluster/ClusterManager.java
+index 01b29a2..d336dbf 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/cluster/ClusterManager.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/cluster/ClusterManager.java
+@@ -116,7 +116,7 @@
+ 
+         // local ip addresses with all LOOPBACK addresses removed
+         List<String> ipList = NetUtils.getLocalV4IpList();
+-        if (ipList.size() > 0) {
++        if (!ipList.isEmpty()) {
+             return ipList.get(0);
+         }
+ 
+@@ -160,7 +160,7 @@
+         List<String> clusterIdList = clusterDataManager.getRegisteredAgentList(applicationName, agentId, startTimeStamp);
+ 
+         // having duplicate AgentName registered is an exceptional case
+-        if (clusterIdList.size() == 0) {
++        if (clusterIdList.isEmpty()) {
+             logger.warn("{}/{}/{} couldn't find agent.", applicationName, agentId, startTimeStamp);
+             return null;
+         } else if (clusterIdList.size() > 1) {
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/cluster/connection/ClusterConnectionManager.java b/web/src/main/java/com/navercorp/pinpoint/web/cluster/connection/ClusterConnectionManager.java
+index ca59c11..906a327 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/cluster/connection/ClusterConnectionManager.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/cluster/connection/ClusterConnectionManager.java
+@@ -58,7 +58,7 @@
+         }
+ 
+         String connectAddress = config.getClusterConnectAddress();
+-        if (connectAddress != null && connectAddress.trim().length() != 0) {
++        if (connectAddress != null && !connectAddress.trim().isEmpty()) {
+             clusterConnector = new ClusterConnector(config.getClusterConnectAddress());
+             clusterConnector.start();
+         }
+@@ -91,7 +91,7 @@
+ 
+         // local ip addresses with all LOOPBACK addresses removed
+         List<String> ipList = NetUtils.getLocalV4IpList();
+-        if (ipList.size() > 0) {
++        if (!ipList.isEmpty()) {
+             return ipList.get(0);
+         }
+ 
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/controller/CommandController.java b/web/src/main/java/com/navercorp/pinpoint/web/controller/CommandController.java
+index 0f02e9d..0da5c80 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/controller/CommandController.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/controller/CommandController.java
+@@ -209,7 +209,7 @@
+ 
+         List<String> locks = threadDump.getLockedSynchronizers();
+         if (locks != null) {
+-            if (locks.size() > 0) {
++            if (!locks.isEmpty()) {
+                 sb.append("\n\tNumber of locked synchronizers = ").append(locks.size());
+                 sb.append('\n');
+                 for (String li : locks) {
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/dao/hbase/HbaseMapResponseTimeDao.java b/web/src/main/java/com/navercorp/pinpoint/web/dao/hbase/HbaseMapResponseTimeDao.java
+index 653df73..4bc783c 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/dao/hbase/HbaseMapResponseTimeDao.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/dao/hbase/HbaseMapResponseTimeDao.java
+@@ -109,7 +109,7 @@
+                 logger.debug("Self data {}", responseTimeList);
+             }
+ 
+-            if (responseTimeList.size() > 0) {
++            if (!responseTimeList.isEmpty()) {
+                 return responseTimeList;
+             }
+         }
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/service/AlarmServiceImpl.java b/web/src/main/java/com/navercorp/pinpoint/web/service/AlarmServiceImpl.java
+index af6eac7..4fedf3c 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/service/AlarmServiceImpl.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/service/AlarmServiceImpl.java
+@@ -68,7 +68,7 @@
+         Map<String, CheckerResult> checkerResults = new HashMap<>();
+         List<CheckerResult> CheckerResultList = alarmDao.selectBeforeCheckerResultList(applicationId);
+         
+-        if (CheckerResultList.size() > 0) {
++        if (!CheckerResultList.isEmpty()) {
+             for (CheckerResult checkerResult : CheckerResultList) {
+                 checkerResults.put(checkerResult.getCheckerName(), checkerResult);
+             }
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/service/FilteredMapServiceImpl.java b/web/src/main/java/com/navercorp/pinpoint/web/service/FilteredMapServiceImpl.java
+index d2d4958..a88483e 100755
+--- a/web/src/main/java/com/navercorp/pinpoint/web/service/FilteredMapServiceImpl.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/service/FilteredMapServiceImpl.java
+@@ -396,7 +396,7 @@
+                 crashKey.add(transactionId);
+             }
+         }
+-        if (crashKey.size() != 0) {
++        if (!crashKey.isEmpty()) {
+             Set<TransactionId> filteredTransactionId = filterMap.keySet();
+             logger.info("transactionId crash found. original:{} filter:{} crashKey:{}", transactionIdList.size(), filteredTransactionId.size(), crashKey);
+             return filteredTransactionId;
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/service/ScatterChartServiceImpl.java b/web/src/main/java/com/navercorp/pinpoint/web/service/ScatterChartServiceImpl.java
+index d2aafee..6fb9109 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/service/ScatterChartServiceImpl.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/service/ScatterChartServiceImpl.java
+@@ -120,7 +120,7 @@
+         final List<SpanBo> result = new ArrayList<>(query.size());
+         int index = 0;
+         for (List<SpanBo> spans : selectedSpans) {
+-            if (spans.size() == 0) {
++            if (spans.isEmpty()) {
+                 // span data does not exist in storage - skip
+             } else if (spans.size() == 1) {
+                 // case with a single unique span data
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/service/TransactionInfoServiceImpl.java b/web/src/main/java/com/navercorp/pinpoint/web/service/TransactionInfoServiceImpl.java
+index 0fc8d60..b8fa89a 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/service/TransactionInfoServiceImpl.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/service/TransactionInfoServiceImpl.java
+@@ -212,7 +212,7 @@
+     // }
+ 
+     private long getStartTime(List<SpanAlign> spanAlignList) {
+-        if (spanAlignList == null || spanAlignList.size() == 0) {
++        if (spanAlignList == null || spanAlignList.isEmpty()) {
+             return 0;
+         }
+         SpanAlign spanAlign = spanAlignList.get(0);
+@@ -226,7 +226,7 @@
+     }
+ 
+     private long getEndTime(List<SpanAlign> spanAlignList) {
+-        if (spanAlignList == null || spanAlignList.size() == 0) {
++        if (spanAlignList == null || spanAlignList.isEmpty()) {
+             return 0;
+         }
+         SpanAlign spanAlign = spanAlignList.get(0);
+@@ -334,7 +334,7 @@
+                 }
+                 
+                 // add annotation record.
+-                if(align.getAnnotationBoList().size() > 0) {
++                if(!align.getAnnotationBoList().isEmpty()) {
+                     final List<Record> annotations = factory.getAnnotations(record.getTab() + 1, record.getId(), align);
+                     recordList.addAll(annotations);
+                 }
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/websocket/ActiveThreadCountHandler.java b/web/src/main/java/com/navercorp/pinpoint/web/websocket/ActiveThreadCountHandler.java
+index 9eedd70..a75ce7e 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/websocket/ActiveThreadCountHandler.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/websocket/ActiveThreadCountHandler.java
+@@ -162,7 +162,7 @@
+             unbindingResponseAggregator(closeSession);
+ 
+             sessionRepository.remove(closeSession);
+-            if (sessionRepository.size() == 0) {
++            if (sessionRepository.isEmpty()) {
+                 boolean turnOff = onTimerTask.compareAndSet(true, false);
+             }
+         }
+diff --git a/web/src/main/java/com/navercorp/pinpoint/web/websocket/ActiveThreadCountResponseAggregator.java b/web/src/main/java/com/navercorp/pinpoint/web/websocket/ActiveThreadCountResponseAggregator.java
+index b048ebb..1e59396 100644
+--- a/web/src/main/java/com/navercorp/pinpoint/web/websocket/ActiveThreadCountResponseAggregator.java
++++ b/web/src/main/java/com/navercorp/pinpoint/web/websocket/ActiveThreadCountResponseAggregator.java
+@@ -147,7 +147,7 @@
+             }
+ 
+             boolean removed = webSocketSessions.remove(webSocketSession);
+-            if (removed && webSocketSessions.size() == 0) {
++            if (removed && webSocketSessions.isEmpty()) {
+                 for (ActiveThreadCountWorker activeThreadCountWorker : activeThreadCountWorkerRepository.values()) {
+                     activeThreadCountWorker.stop();
+                 }
+diff --git a/web/src/test/java/com/navercorp/pinpoint/web/util/PinpointWebTestUtils.java b/web/src/test/java/com/navercorp/pinpoint/web/util/PinpointWebTestUtils.java
+index 00463f6..c9310c4 100644
+--- a/web/src/test/java/com/navercorp/pinpoint/web/util/PinpointWebTestUtils.java
++++ b/web/src/test/java/com/navercorp/pinpoint/web/util/PinpointWebTestUtils.java
+@@ -42,7 +42,7 @@
+ 
+         // local ip addresses with all LOOPBACK addresses removed
+         List<String> ipList = NetUtils.getLocalV4IpList();
+-        if (ipList.size() > 0) {
++        if (!ipList.isEmpty()) {
+             return ipList.get(0);
+         }
+ 
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/PinpointServerRepository.java b/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/PinpointServerRepository.java
+index b2d4219..40257d7 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/PinpointServerRepository.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/PinpointServerRepository.java
+@@ -39,7 +39,7 @@
+                 Set<PinpointServer> pinpointServerSet = pinpointServerRepository.get(key);
+                 pinpointServerSet.remove(pinpointServer);
+ 
+-                if (pinpointServerSet.size() == 0) {
++                if (pinpointServerSet.isEmpty()) {
+                     pinpointServerRepository.remove(key);
+                     return true;
+                 }

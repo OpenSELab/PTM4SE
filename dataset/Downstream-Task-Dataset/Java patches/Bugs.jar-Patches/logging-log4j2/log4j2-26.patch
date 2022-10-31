@@ -1,0 +1,16 @@
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/message/ReusableParameterizedMessage.java b/log4j-api/src/main/java/org/apache/logging/log4j/message/ReusableParameterizedMessage.java
+index abfd620..1f4e8b9 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/message/ReusableParameterizedMessage.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/message/ReusableParameterizedMessage.java
+@@ -121,8 +121,10 @@ public class ReusableParameterizedMessage implements ReusableMessage {
+     }
+ 
+     private void initThrowable(final Object[] params, final int argCount, final int usedParams) {
+-        if (usedParams < argCount && this.throwable == null && params[argCount - 1] instanceof Throwable) {
++        if (usedParams < argCount && params[argCount - 1] instanceof Throwable) {
+             this.throwable = (Throwable) params[argCount - 1];
++        } else {
++            this.throwable = null;
+         }
+     }
+ 

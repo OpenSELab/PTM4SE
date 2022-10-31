@@ -1,0 +1,48 @@
+diff --git a/maven-plugin-api/src/main/java/org/apache/maven/plugin/descriptor/PluginDescriptorBuilder.java b/maven-plugin-api/src/main/java/org/apache/maven/plugin/descriptor/PluginDescriptorBuilder.java
+index 8947094..66b1691 100644
+--- a/maven-plugin-api/src/main/java/org/apache/maven/plugin/descriptor/PluginDescriptorBuilder.java
++++ b/maven-plugin-api/src/main/java/org/apache/maven/plugin/descriptor/PluginDescriptorBuilder.java
+@@ -255,6 +255,13 @@ public class PluginDescriptorBuilder
+         }
+ 
+         // ----------------------------------------------------------------------
++        // Configuration
++        // ----------------------------------------------------------------------
++
++        PlexusConfiguration mojoConfig = c.getChild( "configuration" );
++        mojo.setMojoConfiguration( mojoConfig );
++
++        // ----------------------------------------------------------------------
+         // Parameters
+         // ----------------------------------------------------------------------
+ 
+@@ -292,6 +299,13 @@ public class PluginDescriptorBuilder
+ 
+             parameter.setImplementation( d.getChild( "implementation" ).getValue() );
+ 
++            PlexusConfiguration paramConfig = mojoConfig.getChild( parameter.getName(), false );
++            if ( paramConfig != null )
++            {
++                parameter.setExpression( paramConfig.getValue( null ) );
++                parameter.setDefaultValue( paramConfig.getAttribute( "default-value" ) );
++            }
++
+             parameters.add( parameter );
+         }
+ 
+@@ -300,15 +314,6 @@ public class PluginDescriptorBuilder
+         // TODO: this should not need to be handed off...
+ 
+         // ----------------------------------------------------------------------
+-        // Configuration
+-        // ----------------------------------------------------------------------
+-
+-        mojo.setMojoConfiguration( c.getChild( "configuration" ) );
+-
+-        // TODO: Go back to this when we get the container ready to configure mojos...
+-        //        mojo.setConfiguration( c.getChild( "configuration" ) );
+-
+-        // ----------------------------------------------------------------------
+         // Requirements
+         // ----------------------------------------------------------------------
+ 

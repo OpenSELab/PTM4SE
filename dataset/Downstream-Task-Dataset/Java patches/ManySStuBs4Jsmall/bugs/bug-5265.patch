@@ -1,0 +1,338 @@
+diff --git a/components/camel-univocity-parsers/src/main/java/org/apache/camel/dataformat/univocity/Marshaller.java b/components/camel-univocity-parsers/src/main/java/org/apache/camel/dataformat/univocity/Marshaller.java
+index a202b23..662c09b 100644
+--- a/components/camel-univocity-parsers/src/main/java/org/apache/camel/dataformat/univocity/Marshaller.java
++++ b/components/camel-univocity-parsers/src/main/java/org/apache/camel/dataformat/univocity/Marshaller.java
+@@ -62,7 +62,7 @@
+      */
+     public void marshal(Exchange exchange, Object body, W writer) throws NoTypeConversionAvailableException {
+         try {
+-            List list = convertToType(exchange, List.class, body);
++            List<?> list = convertToType(exchange, List.class, body);
+             if (list != null) {
+                 for (Object row : list) {
+                     writeRow(exchange, row, writer);
+@@ -84,7 +84,7 @@
+      * @throws NoTypeConversionAvailableException when it's not possible to convert the row as map.
+      */
+     private void writeRow(Exchange exchange, Object row, W writer) throws NoTypeConversionAvailableException {
+-        Map map = convertToMandatoryType(exchange, Map.class, row);
++        Map<?, ?> map = convertToMandatoryType(exchange, Map.class, row);
+         if (adaptHeaders) {
+             for (Object key : map.keySet()) {
+                 headers.add(convertToMandatoryType(exchange, String.class, key));
+diff --git a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityCsvDataFormatUnmarshalSpringTest.java b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityCsvDataFormatUnmarshalSpringTest.java
+index 949719f..348f3d4 100644
+--- a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityCsvDataFormatUnmarshalSpringTest.java
++++ b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityCsvDataFormatUnmarshalSpringTest.java
+@@ -50,7 +50,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(3, body.size());
+         assertEquals(Arrays.asList("A", "B", "C"), body.get(0));
+         assertEquals(Arrays.asList("1", "2", "3"), body.get(1));
+@@ -67,7 +67,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -83,7 +83,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -99,7 +99,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        Iterator body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
++        Iterator<?> body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
+ 
+         // Read first line
+         assertTrue(body.hasNext());
+@@ -139,7 +139,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(Arrays.asList("A", "B"), body.get(0));
+         assertEquals(Arrays.asList("N/A", "D  "), body.get(1));
+diff --git a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityCsvDataFormatUnmarshalTest.java b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityCsvDataFormatUnmarshalTest.java
+index 0d1370a..63a577a 100644
+--- a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityCsvDataFormatUnmarshalTest.java
++++ b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityCsvDataFormatUnmarshalTest.java
+@@ -52,7 +52,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(3, body.size());
+         assertEquals(Arrays.asList("A", "B", "C"), body.get(0));
+         assertEquals(Arrays.asList("1", "2", "3"), body.get(1));
+@@ -69,7 +69,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -85,7 +85,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -101,7 +101,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        Iterator body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
++        Iterator<?> body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
+ 
+         // Read first line
+         assertTrue(body.hasNext());
+@@ -141,7 +141,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(Arrays.asList("A", "B"), body.get(0));
+         assertEquals(Arrays.asList("N/A", "D  "), body.get(1));
+diff --git a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityFixedWidthDataFormatUnmarshalSpringTest.java b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityFixedWidthDataFormatUnmarshalSpringTest.java
+index 91ff0f9..c955c1c 100644
+--- a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityFixedWidthDataFormatUnmarshalSpringTest.java
++++ b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityFixedWidthDataFormatUnmarshalSpringTest.java
+@@ -50,7 +50,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(3, body.size());
+         assertEquals(Arrays.asList("A", "B", "C"), body.get(0));
+         assertEquals(Arrays.asList("1", "2", "3"), body.get(1));
+@@ -67,7 +67,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -83,7 +83,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -99,7 +99,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        Iterator body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
++        Iterator<?> body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
+ 
+         // Read first line
+         assertTrue(body.hasNext());
+@@ -139,7 +139,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(Arrays.asList("A", "B"), body.get(0));
+         assertEquals(Arrays.asList("N/A", "D"), body.get(1));
+diff --git a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityFixedWidthDataFormatUnmarshalTest.java b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityFixedWidthDataFormatUnmarshalTest.java
+index e2db7c6..6dc9f29 100644
+--- a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityFixedWidthDataFormatUnmarshalTest.java
++++ b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityFixedWidthDataFormatUnmarshalTest.java
+@@ -51,7 +51,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(3, body.size());
+         assertEquals(Arrays.asList("A", "B", "C"), body.get(0));
+         assertEquals(Arrays.asList("1", "2", "3"), body.get(1));
+@@ -68,7 +68,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -84,7 +84,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -100,7 +100,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        Iterator body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
++        Iterator<?> body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
+ 
+         // Read first line
+         assertTrue(body.hasNext());
+@@ -140,7 +140,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(Arrays.asList("A", "B"), body.get(0));
+         assertEquals(Arrays.asList("N/A", "D"), body.get(1));
+diff --git a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityTsvDataFormatUnmarshalSpringTest.java b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityTsvDataFormatUnmarshalSpringTest.java
+index ccecf5e..5966d2f 100644
+--- a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityTsvDataFormatUnmarshalSpringTest.java
++++ b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityTsvDataFormatUnmarshalSpringTest.java
+@@ -50,7 +50,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(3, body.size());
+         assertEquals(Arrays.asList("A", "B", "C"), body.get(0));
+         assertEquals(Arrays.asList("1", "2", "3"), body.get(1));
+@@ -67,7 +67,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -83,7 +83,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -99,7 +99,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        Iterator body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
++        Iterator<?> body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
+ 
+         // Read first line
+         assertTrue(body.hasNext());
+@@ -139,7 +139,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(Arrays.asList("A", "B"), body.get(0));
+         assertEquals(Arrays.asList("N/A", "D  "), body.get(1));
+diff --git a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityTsvDataFormatUnmarshalTest.java b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityTsvDataFormatUnmarshalTest.java
+index 42e2144..2ee4594 100644
+--- a/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityTsvDataFormatUnmarshalTest.java
++++ b/components/camel-univocity-parsers/src/test/java/org/apache/camel/dataformat/univocity/UniVocityTsvDataFormatUnmarshalTest.java
+@@ -51,7 +51,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(3, body.size());
+         assertEquals(Arrays.asList("A", "B", "C"), body.get(0));
+         assertEquals(Arrays.asList("1", "2", "3"), body.get(1));
+@@ -68,7 +68,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -84,7 +84,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(asMap("A", "1", "B", "2", "C", "3"), body.get(0));
+         assertEquals(asMap("A", "one", "B", "two", "C", "three"), body.get(1));
+@@ -100,7 +100,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        Iterator body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
++        Iterator<?> body = assertIsInstanceOf(Iterator.class, result.getExchanges().get(0).getIn().getBody());
+ 
+         // Read first line
+         assertTrue(body.hasNext());
+@@ -140,7 +140,7 @@
+         result.expectedMessageCount(1);
+         result.assertIsSatisfied();
+ 
+-        List body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
++        List<?> body = assertIsInstanceOf(List.class, result.getExchanges().get(0).getIn().getBody());
+         assertEquals(2, body.size());
+         assertEquals(Arrays.asList("A", "B"), body.get(0));
+         assertEquals(Arrays.asList("N/A", "D  "), body.get(1));
+diff --git a/components/camel-univocity-parsers/src/main/java/org/apache/camel/dataformat/univocity/Marshaller.java b/components/camel-univocity-parsers/src/main/java/org/apache/camel/dataformat/univocity/Marshaller.java
+index a202b23..662c09b 100644
+--- a/components/camel-univocity-parsers/src/main/java/org/apache/camel/dataformat/univocity/Marshaller.java
++++ b/components/camel-univocity-parsers/src/main/java/org/apache/camel/dataformat/univocity/Marshaller.java
+@@ -62,7 +62,7 @@
+      */
+     public void marshal(Exchange exchange, Object body, W writer) throws NoTypeConversionAvailableException {
+         try {
+-            List list = convertToType(exchange, List.class, body);
++            List<?> list = convertToType(exchange, List.class, body);
+             if (list != null) {
+                 for (Object row : list) {
+                     writeRow(exchange, row, writer);
+@@ -84,7 +84,7 @@
+      * @throws NoTypeConversionAvailableException when it's not possible to convert the row as map.
+      */
+     private void writeRow(Exchange exchange, Object row, W writer) throws NoTypeConversionAvailableException {
+-        Map map = convertToMandatoryType(exchange, Map.class, row);
++        Map<?, ?> map = convertToMandatoryType(exchange, Map.class, row);
+         if (adaptHeaders) {
+             for (Object key : map.keySet()) {
+                 headers.add(convertToMandatoryType(exchange, String.class, key));

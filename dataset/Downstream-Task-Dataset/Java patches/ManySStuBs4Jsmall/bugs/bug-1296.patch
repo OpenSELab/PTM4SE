@@ -1,0 +1,39 @@
+diff --git a/common/src/main/java/tachyon/worker/WorkerClient.java b/common/src/main/java/tachyon/worker/WorkerClient.java
+index bba660c..3e4c2d3 100644
+--- a/common/src/main/java/tachyon/worker/WorkerClient.java
++++ b/common/src/main/java/tachyon/worker/WorkerClient.java
+@@ -381,7 +381,7 @@
+     try {
+       return mClient.requestBlockLocation(mSessionId, blockId, initialBytes);
+     } catch (OutOfSpaceException e) {
+-      throw new IOException("Fail to request " + initialBytes, e);
++      throw new IOException("Failed to request " + initialBytes, e);
+     } catch (FileAlreadyExistException e) {
+       throw new IOException(e);
+     } catch (TException e) {
+diff --git a/minicluster/src/main/java/tachyon/master/LocalTachyonCluster.java b/minicluster/src/main/java/tachyon/master/LocalTachyonCluster.java
+index 4385aaa..06d6371 100644
+--- a/minicluster/src/main/java/tachyon/master/LocalTachyonCluster.java
++++ b/minicluster/src/main/java/tachyon/master/LocalTachyonCluster.java
+@@ -235,7 +235,7 @@
+ 
+   /**
+    * Starts both a master and a worker using the configurations in {@link MasterContext} and
+-   * {@link WorkerContext}.
++   * {@link WorkerContext} respectively.
+    *
+    * @throws IOException when the operation fails
+    */
+diff --git a/common/src/main/java/tachyon/worker/WorkerClient.java b/common/src/main/java/tachyon/worker/WorkerClient.java
+index bba660c..3e4c2d3 100644
+--- a/common/src/main/java/tachyon/worker/WorkerClient.java
++++ b/common/src/main/java/tachyon/worker/WorkerClient.java
+@@ -381,7 +381,7 @@
+     try {
+       return mClient.requestBlockLocation(mSessionId, blockId, initialBytes);
+     } catch (OutOfSpaceException e) {
+-      throw new IOException("Fail to request " + initialBytes, e);
++      throw new IOException("Failed to request " + initialBytes, e);
+     } catch (FileAlreadyExistException e) {
+       throw new IOException(e);
+     } catch (TException e) {

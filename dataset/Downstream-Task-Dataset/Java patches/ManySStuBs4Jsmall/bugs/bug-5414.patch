@@ -1,0 +1,44 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateCompletionIntervalTest.java b/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateCompletionIntervalTest.java
+index 02b45a9..3859672 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateCompletionIntervalTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateCompletionIntervalTest.java
+@@ -37,7 +37,7 @@
+         Thread.sleep(2000);
+         
+         for (int i = 0; i < 10; i++) {
+-            template.sendBodyAndHeader("direct:start", "Message " + i, "id", "1");
++            template.sendBodyAndHeader("seda:start", "Message " + i, "id", "1");
+         }
+ 
+         assertMockEndpointsSatisfied();
+@@ -49,7 +49,7 @@
+             @Override
+             public void configure() throws Exception {
+                 // START SNIPPET: e1
+-                from("direct:start")
++                from("seda:start")
+                     .aggregate(header("id"), new UseLatestAggregationStrategy())
+                         // trigger completion every 5th second
+                         .completionInterval(5000)
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateCompletionIntervalTest.java b/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateCompletionIntervalTest.java
+index 02b45a9..3859672 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateCompletionIntervalTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/aggregator/AggregateCompletionIntervalTest.java
+@@ -37,7 +37,7 @@
+         Thread.sleep(2000);
+         
+         for (int i = 0; i < 10; i++) {
+-            template.sendBodyAndHeader("direct:start", "Message " + i, "id", "1");
++            template.sendBodyAndHeader("seda:start", "Message " + i, "id", "1");
+         }
+ 
+         assertMockEndpointsSatisfied();
+@@ -49,7 +49,7 @@
+             @Override
+             public void configure() throws Exception {
+                 // START SNIPPET: e1
+-                from("direct:start")
++                from("seda:start")
+                     .aggregate(header("id"), new UseLatestAggregationStrategy())
+                         // trigger completion every 5th second
+                         .completionInterval(5000)

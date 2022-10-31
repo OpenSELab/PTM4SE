@@ -1,0 +1,19 @@
+diff --git a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/WebClientRestTemplateAutoConfiguration.java b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/WebClientRestTemplateAutoConfiguration.java
+index e3ef27a..8d16ffe 100644
+--- a/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/WebClientRestTemplateAutoConfiguration.java
++++ b/spring-boot-test-autoconfigure/src/main/java/org/springframework/boot/test/autoconfigure/web/client/WebClientRestTemplateAutoConfiguration.java
+@@ -29,12 +29,13 @@
+  * {@link AutoConfigureWebClient#registerRestTemplate()} is {@code true}.
+  *
+  * @author Phillip Webb
++ * @since 1.4.0
+  * @see AutoConfigureMockRestServiceServer
+  */
+ @Configuration
+ @ConditionalOnProperty(prefix = "spring.test.webclient", name = "register-rest-template")
+ @AutoConfigureAfter(WebClientAutoConfiguration.class)
+-class WebClientRestTemplateAutoConfiguration {
++public class WebClientRestTemplateAutoConfiguration {
+ 
+ 	@Bean
+ 	public RestTemplate restTemplate(RestTemplateBuilder builder) {

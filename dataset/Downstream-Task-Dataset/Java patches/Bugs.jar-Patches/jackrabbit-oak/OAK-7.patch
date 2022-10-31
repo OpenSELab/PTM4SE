@@ -1,0 +1,163 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/ComparisonImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/ComparisonImpl.java
+index 75e48bc..26a3a43 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/ComparisonImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/ast/ComparisonImpl.java
+@@ -118,7 +118,7 @@ public class ComparisonImpl extends ConstraintImpl {
+         case EQUAL:
+             return PropertyValues.match(p1, p2);
+         case NOT_EQUAL:
+-            return !PropertyValues.match(p1, p2);
++            return PropertyValues.notMatch(p1, p2);
+         case GREATER_OR_EQUAL:
+             return p1.compareTo(p2) >= 0;
+         case GREATER_THAN:
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
+index 6eb282e..b31e740 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
+@@ -252,16 +252,17 @@ public class FilterImpl implements Filter {
+         switch (op) {
+         case EQUAL:
+             if (x.first != null && x.last == x.first && x.firstIncluding && x.lastIncluding) {
+-                // there is already an equality condition on this property
+-                // we will keep this, as it could be a multi-valued property
+-                // (unlike in databases, "x = 1 and x = 2" can match a node
+-                // if x is a multi-valued property with value "{1, 2}")
+-                return;
++                // we keep the old equality condition if there is one;
++                // we can not use setAlwaysFalse, as this would not be correct
++                // for multi-valued properties:
++                // unlike in databases, "x = 1 and x = 2" can match a node
++                // if x is a multi-valued property with value {1, 2}
++            } else {
++                // all other conditions (range conditions) are replaced with this one
++                // (we can not use setAlwaysFalse for the same reason as above)
++                x.first = x.last = v;
++                x.firstIncluding = x.lastIncluding = true;
+             }
+-            x.first = maxValue(oldFirst, v);
+-            x.firstIncluding = x.first == oldFirst ? x.firstIncluding : true;
+-            x.last = minValue(oldLast, v);
+-            x.lastIncluding = x.last == oldLast ? x.lastIncluding : true;
+             break;
+         case NOT_EQUAL:
+             if (v != null) {
+@@ -269,25 +270,40 @@ public class FilterImpl implements Filter {
+             }
+             break;
+         case GREATER_THAN:
+-            x.first = maxValue(oldFirst, v);
+-            x.firstIncluding = false;
++            // we don't narrow the range because of multi-valued properties
++            if (x.first == null) {
++                x.first = maxValue(oldFirst, v);
++                x.firstIncluding = false;
++            }
+             break;
+         case GREATER_OR_EQUAL:
+-            x.first = maxValue(oldFirst, v);
+-            x.firstIncluding = x.first == oldFirst ? x.firstIncluding : true;
++            // we don't narrow the range because of multi-valued properties
++            if (x.first == null) {
++                x.first = maxValue(oldFirst, v);
++                x.firstIncluding = x.first == oldFirst ? x.firstIncluding : true;
++            }
+             break;
+         case LESS_THAN:
+-            x.last = minValue(oldLast, v);
+-            x.lastIncluding = false;
++            // we don't narrow the range because of multi-valued properties
++            if (x.last == null) {
++                x.last = minValue(oldLast, v);
++                x.lastIncluding = false;
++            }
+             break;
+         case LESS_OR_EQUAL:
+-            x.last = minValue(oldLast, v);
+-            x.lastIncluding = x.last == oldLast ? x.lastIncluding : true;
++            // we don't narrow the range because of multi-valued properties
++            if (x.last == null) {
++                x.last = minValue(oldLast, v);
++                x.lastIncluding = x.last == oldLast ? x.lastIncluding : true;
++            }
+             break;
+         case LIKE:
+-            // LIKE is handled in the fulltext index
+-            x.isLike = true;
+-            x.first = v;
++            // we don't narrow the range because of multi-valued properties
++            if (x.first == null) {
++                // LIKE is handled in the fulltext index
++                x.isLike = true;
++                x.first = v;
++            }
+             break;
+         case IN:
+             
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/PropertyValues.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/PropertyValues.java
+index 67e9cdb..5320a4f 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/PropertyValues.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/PropertyValues.java
+@@ -167,7 +167,7 @@ public final class PropertyValues {
+             }
+             if (!p1.isArray() && p2.isArray()) {
+                 return contains(p2.getValue(Type.BINARIES),
+-                        p2.getValue(Type.BINARY));
++                        p1.getValue(Type.BINARY));
+             }
+             break;
+         default:
+@@ -185,6 +185,53 @@ public final class PropertyValues {
+ 
+     }
+ 
++    public static boolean notMatch(PropertyValue p1, PropertyValue p2) {
++        if (p1.getType().tag() != p2.getType().tag()) {
++            return true;
++        }
++
++        switch (p1.getType().tag()) {
++        case PropertyType.BINARY:
++            if (p1.isArray() && !p2.isArray()) {
++                if (p1.count() > 1) {
++                    // a value can not possibly match multiple distinct values
++                    return true;
++                }
++                return !contains(p1.getValue(Type.BINARIES),
++                        p2.getValue(Type.BINARY));
++            }
++            if (!p1.isArray() && p2.isArray()) {
++                if (p2.count() > 1) {
++                    // a value can not possibly match multiple distinct values
++                    return true;
++                }
++                return !contains(p2.getValue(Type.BINARIES),
++                        p1.getValue(Type.BINARY));
++            }
++            break;
++        default:
++            if (p1.isArray() && !p2.isArray()) {
++                if (p1.count() > 1) {
++                    // a value can not possibly match multiple distinct values
++                    return true;
++                }
++                return !contains(p1.getValue(Type.STRINGS),
++                        p2.getValue(Type.STRING));
++            }
++            if (!p1.isArray() && p2.isArray()) {
++                if (p2.count() > 1) {
++                    // a value can not possibly match multiple distinct values
++                    return true;
++                }
++                return !contains(p2.getValue(Type.STRINGS),
++                        p1.getValue(Type.STRING));
++            }
++        }
++        // both arrays or both single values
++        return p1.compareTo(p2) != 0;
++
++    }
++
+     // --
+ 
+     /**

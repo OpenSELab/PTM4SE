@@ -1,0 +1,38 @@
+diff --git a/aws-java-sdk-cloudfront/src/main/java/com/amazonaws/services/cloudfront/util/SignerUtils.java b/aws-java-sdk-cloudfront/src/main/java/com/amazonaws/services/cloudfront/util/SignerUtils.java
+index 772153d..a76c838 100644
+--- a/aws-java-sdk-cloudfront/src/main/java/com/amazonaws/services/cloudfront/util/SignerUtils.java
++++ b/aws-java-sdk-cloudfront/src/main/java/com/amazonaws/services/cloudfront/util/SignerUtils.java
+@@ -63,9 +63,11 @@
+                 + "\"DateLessThan\":{\"AWS:EpochTime\":"
+                 + MILLISECONDS.toSeconds(activeFrom.getTime())
+                 + "}"
+-                + ",\"IpAddress\":{\"AWS:SourceIp\":\""
+-                + ipAddress
+-                + "\"}"
++                + (ipAddress == null
++                   ? ""
++                   : ",\"IpAddress\":{\"AWS:SourceIp\":\""
++                     + ipAddress + "\"}"
++                  )
+                 + (expiresOn == null
+                    ? ""
+                    : ",\"DateGreaterThan\":{\"AWS:EpochTime\":"
+diff --git a/aws-java-sdk-cloudfront/src/main/java/com/amazonaws/services/cloudfront/util/SignerUtils.java b/aws-java-sdk-cloudfront/src/main/java/com/amazonaws/services/cloudfront/util/SignerUtils.java
+index 772153d..a76c838 100644
+--- a/aws-java-sdk-cloudfront/src/main/java/com/amazonaws/services/cloudfront/util/SignerUtils.java
++++ b/aws-java-sdk-cloudfront/src/main/java/com/amazonaws/services/cloudfront/util/SignerUtils.java
+@@ -63,9 +63,11 @@
+                 + "\"DateLessThan\":{\"AWS:EpochTime\":"
+                 + MILLISECONDS.toSeconds(activeFrom.getTime())
+                 + "}"
+-                + ",\"IpAddress\":{\"AWS:SourceIp\":\""
+-                + ipAddress
+-                + "\"}"
++                + (ipAddress == null
++                   ? ""
++                   : ",\"IpAddress\":{\"AWS:SourceIp\":\""
++                     + ipAddress + "\"}"
++                  )
+                 + (expiresOn == null
+                    ? ""
+                    : ",\"DateGreaterThan\":{\"AWS:EpochTime\":"

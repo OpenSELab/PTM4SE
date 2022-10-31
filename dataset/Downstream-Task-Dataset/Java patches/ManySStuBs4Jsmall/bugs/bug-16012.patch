@@ -1,0 +1,49 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/config/SymmetricEncryptionConfig.java b/hazelcast/src/main/java/com/hazelcast/config/SymmetricEncryptionConfig.java
+index fbb3572..a9cde18 100644
+--- a/hazelcast/src/main/java/com/hazelcast/config/SymmetricEncryptionConfig.java
++++ b/hazelcast/src/main/java/com/hazelcast/config/SymmetricEncryptionConfig.java
+@@ -73,11 +73,11 @@
+     }
+ 
+     public byte[] getKey() {
+-        return Arrays.copyOf(key, key.length);
++        return key != null ? Arrays.copyOf(key, key.length) : null;
+     }
+ 
+     public SymmetricEncryptionConfig setKey(byte[] key) {
+-        this.key = Arrays.copyOf(key, key.length);
++        this.key = key != null ? Arrays.copyOf(key, key.length) : null;
+         return this;
+     }
+ 
+diff --git a/hazelcast/src/test/java/com/hazelcast/cluster/EncryptionTest.java b/hazelcast/src/test/java/com/hazelcast/cluster/EncryptionTest.java
+index dcea40f..6cdbc15 100644
+--- a/hazelcast/src/test/java/com/hazelcast/cluster/EncryptionTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/cluster/EncryptionTest.java
+@@ -48,7 +48,7 @@
+     /**
+      * Simple symmetric encryption test.
+      */
+-    @Test(timeout = 1000 * 30)
++    @Test
+     public void testSymmetricEncryption() throws Exception {
+         Config config = new Config();
+         SymmetricEncryptionConfig encryptionConfig = new SymmetricEncryptionConfig();
+diff --git a/hazelcast/src/main/java/com/hazelcast/config/SymmetricEncryptionConfig.java b/hazelcast/src/main/java/com/hazelcast/config/SymmetricEncryptionConfig.java
+index fbb3572..a9cde18 100644
+--- a/hazelcast/src/main/java/com/hazelcast/config/SymmetricEncryptionConfig.java
++++ b/hazelcast/src/main/java/com/hazelcast/config/SymmetricEncryptionConfig.java
+@@ -73,11 +73,11 @@
+     }
+ 
+     public byte[] getKey() {
+-        return Arrays.copyOf(key, key.length);
++        return key != null ? Arrays.copyOf(key, key.length) : null;
+     }
+ 
+     public SymmetricEncryptionConfig setKey(byte[] key) {
+-        this.key = Arrays.copyOf(key, key.length);
++        this.key = key != null ? Arrays.copyOf(key, key.length) : null;
+         return this;
+     }
+ 

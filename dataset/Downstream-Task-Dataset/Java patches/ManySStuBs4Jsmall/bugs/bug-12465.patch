@@ -1,0 +1,22 @@
+diff --git a/EssentialsGroupManager/src/org/anjocaido/groupmanager/permissions/AnjoPermissionsHandler.java b/EssentialsGroupManager/src/org/anjocaido/groupmanager/permissions/AnjoPermissionsHandler.java
+index 3546c75..e8911b4 100644
+--- a/EssentialsGroupManager/src/org/anjocaido/groupmanager/permissions/AnjoPermissionsHandler.java
++++ b/EssentialsGroupManager/src/org/anjocaido/groupmanager/permissions/AnjoPermissionsHandler.java
+@@ -658,7 +658,7 @@
+ 		if (result.resultType.equals(PermissionCheckResult.Type.EXCEPTION) || result.resultType.equals(PermissionCheckResult.Type.FOUND)) {
+ 			return true;
+ 		}
+-		if (Bukkit.getPlayer(user.getName()).hasPermission(permission))
++		if ((Bukkit.getPlayer(user.getName()) != null) && (Bukkit.getPlayer(user.getName()).hasPermission(permission)))
+ 			return true;
+ 
+ 		return false;
+@@ -700,7 +700,7 @@
+ 			}
+ 		}
+ 
+-		if (Bukkit.getPlayer(user.getName()).hasPermission(targetPermission)) {
++		if ((Bukkit.getPlayer(user.getName()) != null) && (Bukkit.getPlayer(user.getName()).hasPermission(targetPermission))) {
+ 			result.resultType = PermissionCheckResult.Type.FOUND;
+ 			result.owner = user;
+ 			return result;

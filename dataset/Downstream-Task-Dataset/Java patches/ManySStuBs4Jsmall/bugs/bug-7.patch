@@ -1,0 +1,48 @@
+diff --git a/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureServiceTaskBaseTest.java b/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureServiceTaskBaseTest.java
+index 0531c3e..e515670b 100644
+--- a/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureServiceTaskBaseTest.java
++++ b/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureServiceTaskBaseTest.java
+@@ -28,7 +28,7 @@
+     @Override
+     protected List<ProcessEngineConfigurator> getConfigurators() {
+         ProcessEngineConfigurator configurator = new SecureServiceTaskConfigurator()
+-                .setWhiteListedShellCommands(new HashSet<String>(Arrays.asList("ls", "pwd")));
++                .setWhiteListedShellCommands(new HashSet<String>(Arrays.asList("cmd","ls", "pwd")));
+ 
+         return Arrays.asList(configurator);
+     }
+diff --git a/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureShellTaskTest.java b/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureShellTaskTest.java
+index 7061345..e288bae 100644
+--- a/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureShellTaskTest.java
++++ b/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureShellTaskTest.java
+@@ -28,7 +28,7 @@
+     @Test
+     public void testClassWhiteListingNotAllowed() {
+         if (osType == OsType.WINDOWS) {
+-            deployProcessDefinition("ShellTaskTest.testEchoShellWindows.bpmn20.xml");
++            deployProcessDefinition("ShellTaskTest.testShellWindows.bpmn20.xml");
+         } else if (osType == OsType.LINUX) {
+             deployProcessDefinition("ShellTaskTest.testEchoShellLinux.bpmn20.xml");
+         } else if (osType == OsType.MAC) {
+@@ -38,7 +38,7 @@
+         }
+ 
+         try {
+-            runtimeService.startProcessInstanceByKey("shellCommandEcho");
++            runtimeService.startProcessInstanceByKey("shellCommandStart");
+             Assert.fail(); // Expecting exception
+         } catch (Exception e) {
+             e.printStackTrace();
+diff --git a/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureServiceTaskBaseTest.java b/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureServiceTaskBaseTest.java
+index 0531c3e..e515670b 100644
+--- a/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureServiceTaskBaseTest.java
++++ b/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureServiceTaskBaseTest.java
+@@ -28,7 +28,7 @@
+     @Override
+     protected List<ProcessEngineConfigurator> getConfigurators() {
+         ProcessEngineConfigurator configurator = new SecureServiceTaskConfigurator()
+-                .setWhiteListedShellCommands(new HashSet<String>(Arrays.asList("ls", "pwd")));
++                .setWhiteListedShellCommands(new HashSet<String>(Arrays.asList("cmd","ls", "pwd")));
+ 
+         return Arrays.asList(configurator);
+     }

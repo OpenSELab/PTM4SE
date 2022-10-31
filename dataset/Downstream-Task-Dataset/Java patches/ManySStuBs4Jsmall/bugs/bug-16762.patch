@@ -1,0 +1,143 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/IdentityMap.java b/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
+index b4379ae..3d6807c 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
+@@ -84,7 +84,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public IdentityMap (IdentityMap map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java b/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
+index b3c95f5..03ff1ad 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
+@@ -87,7 +87,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public IntFloatMap (IntFloatMap map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntIntMap.java b/gdx/src/com/badlogic/gdx/utils/IntIntMap.java
+index c011685..f7dcf74 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntIntMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntIntMap.java
+@@ -85,7 +85,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public IntIntMap (IntIntMap map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntMap.java b/gdx/src/com/badlogic/gdx/utils/IntMap.java
+index 3840e46..1b68c49 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntMap.java
+@@ -86,7 +86,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public IntMap (IntMap<? extends V> map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntSet.java b/gdx/src/com/badlogic/gdx/utils/IntSet.java
+index 2dde38c..b0f3b2b 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntSet.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntSet.java
+@@ -80,7 +80,7 @@
+ 
+ 	/** Creates a new set identical to the specified set. */
+ 	public IntSet (IntSet set) {
+-		this(set.capacity, set.loadFactor);
++		this((int)Math.floor(set.capacity * set.loadFactor), set.loadFactor);
+ 		stashSize = set.stashSize;
+ 		System.arraycopy(set.keyTable, 0, keyTable, 0, set.keyTable.length);
+ 		size = set.size;
+diff --git a/gdx/src/com/badlogic/gdx/utils/LongMap.java b/gdx/src/com/badlogic/gdx/utils/LongMap.java
+index bed3d22..79b6c7d 100644
+--- a/gdx/src/com/badlogic/gdx/utils/LongMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/LongMap.java
+@@ -86,7 +86,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public LongMap (LongMap<? extends V> map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectFloatMap.java b/gdx/src/com/badlogic/gdx/utils/ObjectFloatMap.java
+index 17930e5..e60a769 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectFloatMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectFloatMap.java
+@@ -83,7 +83,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public ObjectFloatMap (ObjectFloatMap<? extends K> map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectIntMap.java b/gdx/src/com/badlogic/gdx/utils/ObjectIntMap.java
+index 6a0268e..72deea4 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectIntMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectIntMap.java
+@@ -83,7 +83,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public ObjectIntMap (ObjectIntMap<? extends K> map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectMap.java b/gdx/src/com/badlogic/gdx/utils/ObjectMap.java
+index 5a9effc..4610422 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectMap.java
+@@ -83,7 +83,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public ObjectMap (ObjectMap<? extends K, ? extends V> map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectSet.java b/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
+index 4191c35..7ee0631 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
+@@ -79,7 +79,7 @@
+ 
+ 	/** Creates a new set identical to the specified set. */
+ 	public ObjectSet (ObjectSet set) {
+-		this(set.capacity, set.loadFactor);
++		this((int)Math.floor(set.capacity * set.loadFactor), set.loadFactor);
+ 		stashSize = set.stashSize;
+ 		System.arraycopy(set.keyTable, 0, keyTable, 0, set.keyTable.length);
+ 		size = set.size;
+diff --git a/gdx/src/com/badlogic/gdx/utils/IdentityMap.java b/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
+index b4379ae..3d6807c 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
+@@ -84,7 +84,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public IdentityMap (IdentityMap map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);

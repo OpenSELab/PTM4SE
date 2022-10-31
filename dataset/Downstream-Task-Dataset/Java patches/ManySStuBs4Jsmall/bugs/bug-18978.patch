@@ -1,0 +1,57 @@
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+index 5288590..333454a 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+@@ -64,7 +64,7 @@
+     final AtomicReference<ByteBridge> inByteBridge;
+     final AtomicReference<ByteBridge> outByteBridge;
+ 
+-    final AtomicBoolean suspendRead = new AtomicBoolean();
++    final AtomicBoolean readable = new AtomicBoolean(true);
+ 
+     // Runnables that calls handlers
+     final Runnable fireChannelRegisteredTask = new Runnable() {
+@@ -800,7 +800,7 @@
+ 
+     @Override
+     public boolean isReadable() {
+-        return !suspendRead.get();
++        return readable.get();
+     }
+ 
+     @Override
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java b/transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java
+index bb54ebc..34cd6f8 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java
+@@ -1450,7 +1450,7 @@
+     }
+ 
+     void readable(DefaultChannelHandlerContext ctx, boolean readable) {
+-        if (ctx.suspendRead.compareAndSet(!readable, readable)) {
++        if (ctx.readable.compareAndSet(!readable, readable)) {
+             if (!readable) {
+                 if (suspendRead.incrementAndGet() == 1) {
+                     unsafe.suspendRead();
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+index 5288590..333454a 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+@@ -64,7 +64,7 @@
+     final AtomicReference<ByteBridge> inByteBridge;
+     final AtomicReference<ByteBridge> outByteBridge;
+ 
+-    final AtomicBoolean suspendRead = new AtomicBoolean();
++    final AtomicBoolean readable = new AtomicBoolean(true);
+ 
+     // Runnables that calls handlers
+     final Runnable fireChannelRegisteredTask = new Runnable() {
+@@ -800,7 +800,7 @@
+ 
+     @Override
+     public boolean isReadable() {
+-        return !suspendRead.get();
++        return readable.get();
+     }
+ 
+     @Override

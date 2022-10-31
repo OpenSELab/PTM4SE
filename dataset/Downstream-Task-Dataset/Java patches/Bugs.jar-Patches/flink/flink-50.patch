@@ -1,0 +1,26 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/HashPartition.java b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/HashPartition.java
+index 32fd74a..97bef4a 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/HashPartition.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/hash/HashPartition.java
+@@ -207,7 +207,8 @@ public class HashPartition<BT, PT> extends AbstractPagedInputView implements See
+ 	 */
+ 	public int getNumOccupiedMemorySegments() {
+ 		// either the number of memory segments, or one for spilling
+-		final int numPartitionBuffers = this.partitionBuffers != null ? this.partitionBuffers.length : 1;
++		final int numPartitionBuffers = this.partitionBuffers != null ?
++			this.partitionBuffers.length : this.buildSideWriteBuffer.getNumOccupiedMemorySegments();
+ 		return numPartitionBuffers + numOverflowSegments;
+ 	}
+ 	
+@@ -541,6 +542,11 @@ public class HashPartition<BT, PT> extends AbstractPagedInputView implements See
+ 		int getBlockCount() {
+ 			return this.currentBlockNumber + 1;
+ 		}
++
++		int getNumOccupiedMemorySegments() {
++			// return the current segment + all filled segments
++			return this.targetList.size() + 1;
++		}
+ 		
+ 		int spill(BlockChannelWriter<MemorySegment> writer) throws IOException {
+ 			this.writer = writer;

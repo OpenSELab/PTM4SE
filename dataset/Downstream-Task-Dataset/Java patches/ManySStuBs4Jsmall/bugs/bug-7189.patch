@@ -1,0 +1,15 @@
+diff --git a/hadoop-mapreduce-project/src/contrib/streaming/src/java/org/apache/hadoop/streaming/StreamJob.java b/hadoop-mapreduce-project/src/contrib/streaming/src/java/org/apache/hadoop/streaming/StreamJob.java
+index 2762947..a019be7 100644
+--- a/hadoop-mapreduce-project/src/contrib/streaming/src/java/org/apache/hadoop/streaming/StreamJob.java
++++ b/hadoop-mapreduce-project/src/contrib/streaming/src/java/org/apache/hadoop/streaming/StreamJob.java
+@@ -180,7 +180,9 @@
+ 
+   void preProcessArgs() {
+     verbose_ = false;
+-    addTaskEnvironment_ = "";
++    // Unset HADOOP_ROOT_LOGGER in case streaming job
++    // invokes additional hadoop commands.
++    addTaskEnvironment_ = "HADOOP_ROOT_LOGGER=";
+   }
+ 
+   void postProcessArgs() throws IOException {

@@ -1,0 +1,66 @@
+diff --git a/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java b/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
+index fb626a2..824ede8 100644
+--- a/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
++++ b/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
+@@ -9,7 +9,7 @@
+  *
+  * @param <T>    the required configuration interface
+  */
+-public interface ConfiguredBundle<T> {
++public interface ConfiguredBundle<T extends Configuration> {
+     /**
+      * Initializes the environment.
+      *
+@@ -24,5 +24,5 @@
+      *
+      * @param bootstrap the application bootstrap
+      */
+-    void initialize(Bootstrap<?> bootstrap);
++    void initialize(Bootstrap<? extends T> bootstrap);
+ }
+diff --git a/dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/HibernateBundle.java b/dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/HibernateBundle.java
+index a04b782..5567a8b 100644
+--- a/dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/HibernateBundle.java
++++ b/dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/HibernateBundle.java
+@@ -31,7 +31,7 @@
+     }
+ 
+     @Override
+-    public final void initialize(Bootstrap<?> bootstrap) {
++    public final void initialize(Bootstrap<? extends T> bootstrap) {
+         bootstrap.getObjectMapper().registerModule(createHibernate4Module());
+     }
+ 
+diff --git a/dropwizard-views/src/main/java/io/dropwizard/views/ViewBundle.java b/dropwizard-views/src/main/java/io/dropwizard/views/ViewBundle.java
+index 501d2d0..48356cb 100644
+--- a/dropwizard-views/src/main/java/io/dropwizard/views/ViewBundle.java
++++ b/dropwizard-views/src/main/java/io/dropwizard/views/ViewBundle.java
+@@ -115,7 +115,7 @@
+     }
+ 
+     @Override
+-    public void initialize(Bootstrap<?> bootstrap) {
++    public void initialize(Bootstrap<? extends T> bootstrap) {
+         // nothing doing
+     }
+ }
+diff --git a/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java b/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
+index fb626a2..824ede8 100644
+--- a/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
++++ b/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
+@@ -9,7 +9,7 @@
+  *
+  * @param <T>    the required configuration interface
+  */
+-public interface ConfiguredBundle<T> {
++public interface ConfiguredBundle<T extends Configuration> {
+     /**
+      * Initializes the environment.
+      *
+@@ -24,5 +24,5 @@
+      *
+      * @param bootstrap the application bootstrap
+      */
+-    void initialize(Bootstrap<?> bootstrap);
++    void initialize(Bootstrap<? extends T> bootstrap);
+ }

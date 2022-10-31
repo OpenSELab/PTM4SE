@@ -1,0 +1,39 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/orc/HdfsOrcDataSource.java b/presto-hive/src/main/java/com/facebook/presto/hive/orc/HdfsOrcDataSource.java
+index 444fd3c..e523b03 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/orc/HdfsOrcDataSource.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/orc/HdfsOrcDataSource.java
+@@ -54,7 +54,7 @@
+             throw e;
+         }
+         catch (Exception e) {
+-            String message = format("HDFS error reading from %s at position %s", this, position);
++            String message = format("Error reading from %s at position %s", this, position);
+             if (e.getClass().getSimpleName().equals("BlockMissingException")) {
+                 throw new PrestoException(HIVE_MISSING_DATA, message, e);
+             }
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/parquet/HdfsParquetDataSource.java b/presto-hive/src/main/java/com/facebook/presto/hive/parquet/HdfsParquetDataSource.java
+index d01a4f2..6fbb272 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/parquet/HdfsParquetDataSource.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/parquet/HdfsParquetDataSource.java
+@@ -86,7 +86,7 @@
+             throw e;
+         }
+         catch (Exception e) {
+-            throw new PrestoException(HIVE_FILESYSTEM_ERROR, format("HDFS error reading from %s at position %s", name, position), e);
++            throw new PrestoException(HIVE_FILESYSTEM_ERROR, format("Error reading from %s at position %s", name, position), e);
+         }
+     }
+ 
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/orc/HdfsOrcDataSource.java b/presto-hive/src/main/java/com/facebook/presto/hive/orc/HdfsOrcDataSource.java
+index 444fd3c..e523b03 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/orc/HdfsOrcDataSource.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/orc/HdfsOrcDataSource.java
+@@ -54,7 +54,7 @@
+             throw e;
+         }
+         catch (Exception e) {
+-            String message = format("HDFS error reading from %s at position %s", this, position);
++            String message = format("Error reading from %s at position %s", this, position);
+             if (e.getClass().getSimpleName().equals("BlockMissingException")) {
+                 throw new PrestoException(HIVE_MISSING_DATA, message, e);
+             }

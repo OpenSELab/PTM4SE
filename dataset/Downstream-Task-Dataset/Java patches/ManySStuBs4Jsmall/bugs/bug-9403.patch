@@ -1,0 +1,313 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+index 263738a..cfc800e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+@@ -424,7 +424,7 @@
+          * @throws SAXException if an error occurs
+          * @throws ParserConfigurationException if an error occurs
+          */
+-        public InternalLoader()
++        InternalLoader()
+             throws SAXException, ParserConfigurationException {
+             super(createIdToResourceNameMap());
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/PackageObjectFactory.java b/src/main/java/com/puppycrawl/tools/checkstyle/PackageObjectFactory.java
+index 3bf5f81..1635a6e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/PackageObjectFactory.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/PackageObjectFactory.java
+@@ -49,7 +49,7 @@
+      * @param moduleClassLoader class loader used to load Checkstyle
+      *          core and custom modules
+      */
+-    public PackageObjectFactory(Set<String> packageNames,
++    PackageObjectFactory(Set<String> packageNames,
+             ClassLoader moduleClassLoader) {
+         if (moduleClassLoader == null) {
+             throw new IllegalArgumentException(
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
+index 792d889..98c5422 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
+@@ -323,7 +323,7 @@
+          * Creates new instance of ClassFrame
+          * @param parent parent frame
+          */
+-        public ClassFrame(LexicalFrame parent) {
++        ClassFrame(LexicalFrame parent) {
+             super(parent);
+             instanceMembers = Sets.newHashSet();
+             instanceMethods = Sets.newHashSet();
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
+index f8487b3..0c665d9 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
+@@ -429,7 +429,7 @@
+          * @param surroundingClass name of current surrounding class.
+          * @param check the check we use to load class.
+          */
+-        public RegularClass(final Token name,
++        RegularClass(final Token name,
+                              final String surroundingClass,
+                              final AbstractTypeAwareCheck check) {
+             super(name);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/SuppressWarningsHolder.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/SuppressWarningsHolder.java
+index 73ef8f1..b8f6a0c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/SuppressWarningsHolder.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/SuppressWarningsHolder.java
+@@ -449,7 +449,7 @@
+          * @param lastLine the last line of the suppression region
+          * @param lastColumn the last column of the suppression region
+          */
+-        public Entry(String checkName, int firstLine, int firstColumn,
++        Entry(String checkName, int firstLine, int firstColumn,
+             int lastLine, int lastColumn) {
+             this.checkName = checkName;
+             this.firstLine = firstLine;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractSuperCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractSuperCheck.java
+index db1511a..8d5fcda 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractSuperCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/AbstractSuperCheck.java
+@@ -204,7 +204,7 @@
+          * Constructs a stack node for a method definition.
+          * @param ast AST for the method definition.
+          */
+-        public MethodNode(DetailAST ast) {
++        MethodNode(DetailAST ast) {
+             method = ast;
+             callingSuper = false;
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/HiddenFieldCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/HiddenFieldCheck.java
+index 5a4d380..b0598b1 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/HiddenFieldCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/HiddenFieldCheck.java
+@@ -543,7 +543,7 @@
+          * @param staticType is this a static inner type (class or enum).
+          * @param frameName name associated with the frame, which can be a
+          */
+-        public FieldFrame(FieldFrame parent, boolean staticType, String frameName) {
++        FieldFrame(FieldFrame parent, boolean staticType, String frameName) {
+             this.parent = parent;
+             this.staticType = staticType;
+             this.frameName = frameName;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ReturnCountCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ReturnCountCheck.java
+index 802fefc..60b75e9 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ReturnCountCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ReturnCountCheck.java
+@@ -187,7 +187,7 @@
+          * Creates new method context.
+          * @param checking should we check this method or not.
+          */
+-        public Context(boolean checking) {
++        Context(boolean checking) {
+             this.checking = checking;
+             count = 0;
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
+index d2429dc..bd45bc7 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
+@@ -646,7 +646,7 @@
+          * @param messageKey message key
+          * @param messageArguments message arguments
+          */
+-        public ParseErrorMessage(int lineNumber, String messageKey, Object ... messageArguments) {
++        ParseErrorMessage(int lineNumber, String messageKey, Object ... messageArguments) {
+             this.lineNumber = lineNumber;
+             this.messageKey = messageKey;
+             this.messageArguments = messageArguments.clone();
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
+index 3f726ff..46e4e31 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
+@@ -210,7 +210,7 @@
+          * @param lineNo line of class definition.
+          * @param columnNo column of class definition.
+          */
+-        public Context(String className, int lineNo, int columnNo) {
++        Context(String className, int lineNo, int columnNo) {
+             this.className = className;
+             this.lineNo = lineNo;
+             this.columnNo = columnNo;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/BooleanExpressionComplexityCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/BooleanExpressionComplexityCheck.java
+index 17327c3..cc9a7a2 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/BooleanExpressionComplexityCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/BooleanExpressionComplexityCheck.java
+@@ -229,7 +229,7 @@
+          * Creates new instance.
+          * @param checking should we check in current context or not.
+          */
+-        public Context(boolean checking) {
++        Context(boolean checking) {
+             this.checking = checking;
+             count = 0;
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/ExecutableStatementCountCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/ExecutableStatementCountCheck.java
+index 448f6ef..62e606b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/ExecutableStatementCountCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/ExecutableStatementCountCheck.java
+@@ -203,7 +203,7 @@
+          * Creates new member context.
+          * @param ast member AST node.
+          */
+-        public Context(DetailAST ast) {
++        Context(DetailAST ast) {
+             this.ast = ast;
+             count = 0;
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/filters/CSVFilter.java b/src/main/java/com/puppycrawl/tools/checkstyle/filters/CSVFilter.java
+index 8a36333..2f66e40 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/filters/CSVFilter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/filters/CSVFilter.java
+@@ -47,7 +47,7 @@
+      * @throws NumberFormatException if a component substring does not
+      * contain a parsable integer.
+      */
+-    public CSVFilter(String pattern) {
++    CSVFilter(String pattern) {
+         final StringTokenizer tokenizer = new StringTokenizer(pattern, ",");
+         while (tokenizer.hasMoreTokens()) {
+             final String token = tokenizer.nextToken().trim();
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/filters/IntMatchFilter.java b/src/main/java/com/puppycrawl/tools/checkstyle/filters/IntMatchFilter.java
+index d0667b6..cdbd4dc 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/filters/IntMatchFilter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/filters/IntMatchFilter.java
+@@ -31,7 +31,7 @@
+      * Constructs a MatchFilter for an int.
+      * @param matchValue the matching int.
+      */
+-    public IntMatchFilter(int matchValue) {
++    IntMatchFilter(int matchValue) {
+         this.matchValue = matchValue;
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/filters/IntRangeFilter.java b/src/main/java/com/puppycrawl/tools/checkstyle/filters/IntRangeFilter.java
+index ee52398..d024171 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/filters/IntRangeFilter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/filters/IntRangeFilter.java
+@@ -38,7 +38,7 @@
+      * @param lowerBound the lower bound of the range.
+      * @param upperBound the upper bound of the range.
+      */
+-    public IntRangeFilter(int lowerBound, int upperBound) {
++    IntRangeFilter(int lowerBound, int upperBound) {
+         this.lowerBound = lowerBound;
+         this.upperBound = upperBound;
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/FileDrop.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/FileDrop.java
+index 46173be..87c3768 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/FileDrop.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/FileDrop.java
+@@ -245,7 +245,7 @@
+         private final Border dragBorder;
+         private final Listener listener;
+ 
+-        public FileDropTargetListener(Component component, Border dragBorder, Listener listener) {
++        FileDropTargetListener(Component component, Border dragBorder, Listener listener) {
+             this.component = component;
+             this.dragBorder = dragBorder;
+             this.listener = listener;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/JTreeTable.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/JTreeTable.java
+index a7e14a0..8cf55f7 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/JTreeTable.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/JTreeTable.java
+@@ -195,7 +195,7 @@
+         private int visibleRow;
+ 
+         /** Creates a new instance */
+-        public TreeTableCellRenderer(TreeModel model) {
++        TreeTableCellRenderer(TreeModel model) {
+             super(model);
+         }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/ListToTreeSelectionModelWrapper.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/ListToTreeSelectionModelWrapper.java
+index cba24db..75af5b4 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/ListToTreeSelectionModelWrapper.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/ListToTreeSelectionModelWrapper.java
+@@ -44,7 +44,7 @@
+     /**
+      * @param jTreeTable TreeTable to perform updates on.
+      */
+-    public ListToTreeSelectionModelWrapper(JTreeTable jTreeTable) {
++    ListToTreeSelectionModelWrapper(JTreeTable jTreeTable) {
+         treeTable = jTreeTable;
+         getListSelectionModel().addListSelectionListener(createListSelectionListener());
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/Main.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/Main.java
+index 153f177..1c00e1a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/Main.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/Main.java
+@@ -94,7 +94,7 @@
+         /**
+          * Contstructor
+          */
+-        public FrameShower(JFrame frame) {
++        FrameShower(JFrame frame) {
+             this.frame = frame;
+         }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/ParseTreeInfoPanel.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/ParseTreeInfoPanel.java
+index cdd3f1f..8cc2ab4 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/ParseTreeInfoPanel.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/ParseTreeInfoPanel.java
+@@ -223,7 +223,7 @@
+         /**
+          * Contstructor
+          */
+-        public FrameShower(Component parent, final String msg) {
++        FrameShower(Component parent, final String msg) {
+             this.parent = parent;
+             this.msg = msg;
+         }
+@@ -258,7 +258,7 @@
+          */
+         private static final long serialVersionUID = -1926935338069418119L;
+ 
+-        public FileSelectionAction() {
++        FileSelectionAction() {
+             super("Select Java File");
+             putValue(Action.MNEMONIC_KEY, KeyEvent.VK_S);
+         }
+@@ -283,7 +283,7 @@
+          */
+         private static final long serialVersionUID = -1021880396046355863L;
+ 
+-        public ReloadAction() {
++        ReloadAction() {
+             super("Reload Java File");
+             putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
+         }
+@@ -299,7 +299,7 @@
+     private class FileDropListener implements FileDrop.Listener {
+         private final JScrollPane scrollPane;
+ 
+-        public FileDropListener(JScrollPane scrollPane) {
++        FileDropListener(JScrollPane scrollPane) {
+             this.scrollPane = scrollPane;
+         }
+ 
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/DebugChecker.java b/src/test/java/com/puppycrawl/tools/checkstyle/DebugChecker.java
+index e90276c..a062b14 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/DebugChecker.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/DebugChecker.java
+@@ -8,7 +8,7 @@
+ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+ 
+ class DebugChecker extends Checker {
+-    public DebugChecker() {
++    DebugChecker() {
+     }
+ 
+     @Override
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+index 263738a..cfc800e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+@@ -424,7 +424,7 @@
+          * @throws SAXException if an error occurs
+          * @throws ParserConfigurationException if an error occurs
+          */
+-        public InternalLoader()
++        InternalLoader()
+             throws SAXException, ParserConfigurationException {
+             super(createIdToResourceNameMap());
+         }

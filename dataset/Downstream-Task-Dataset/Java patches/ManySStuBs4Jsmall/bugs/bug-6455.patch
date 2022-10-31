@@ -1,0 +1,80 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/overlays/FlinkDistributionOverlay.java b/flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/overlays/FlinkDistributionOverlay.java
+index a36cc67..0655554 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/overlays/FlinkDistributionOverlay.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/overlays/FlinkDistributionOverlay.java
+@@ -99,21 +99,21 @@
+ 				flinkBinPath = new File(System.getenv(ENV_FLINK_BIN_DIR));
+ 			}
+ 			else {
+-				throw new IllegalStateException(String.format("the {} environment variable must be set", ENV_FLINK_BIN_DIR));
++				throw new IllegalStateException(String.format("the %s environment variable must be set", ENV_FLINK_BIN_DIR));
+ 			}
+ 
+ 			if(env.containsKey(ENV_FLINK_CONF_DIR)) {
+ 				flinkConfPath = new File(System.getenv(ENV_FLINK_CONF_DIR));
+ 			}
+ 			else {
+-				throw new IllegalStateException(String.format("the {} environment variable must be set", ENV_FLINK_CONF_DIR));
++				throw new IllegalStateException(String.format("the %s environment variable must be set", ENV_FLINK_CONF_DIR));
+ 			}
+ 
+ 			if(env.containsKey(ENV_FLINK_LIB_DIR)) {
+ 				flinkLibPath = new File(System.getenv(ENV_FLINK_LIB_DIR));
+ 			}
+ 			else {
+-				throw new IllegalStateException(String.format("the {} environment variable must be set", ENV_FLINK_LIB_DIR));
++				throw new IllegalStateException(String.format("the %s environment variable must be set", ENV_FLINK_LIB_DIR));
+ 			}
+ 
+ 			return this;
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/Task.java b/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/Task.java
+index aaed9c7..a408990 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/Task.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/Task.java
+@@ -717,7 +717,7 @@
+ 						else {
+ 							if (transitionState(current, ExecutionState.FAILED, t)) {
+ 								// proper failure of the task. record the exception as the root cause
+-								String errorMessage = String.format("Execution of {} ({}) failed.", taskNameWithSubtask, executionId);
++								String errorMessage = String.format("Execution of %s (%s) failed.", taskNameWithSubtask, executionId);
+ 								failureCause = t;
+ 								cancelInvokable();
+ 
+@@ -1074,7 +1074,7 @@
+ 							resultPartitionId,
+ 							ExecutionState.RUNNING);
+ 					} else if (throwable instanceof PartitionProducerDisposedException) {
+-						String msg = String.format("Producer {} of partition {} disposed. Cancelling execution.",
++						String msg = String.format("Producer %s of partition %s disposed. Cancelling execution.",
+ 							resultPartitionId.getProducerId(), resultPartitionId.getPartitionId());
+ 						LOG.info(msg, throwable);
+ 						cancelExecution();
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/overlays/FlinkDistributionOverlay.java b/flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/overlays/FlinkDistributionOverlay.java
+index a36cc67..0655554 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/overlays/FlinkDistributionOverlay.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/clusterframework/overlays/FlinkDistributionOverlay.java
+@@ -99,21 +99,21 @@
+ 				flinkBinPath = new File(System.getenv(ENV_FLINK_BIN_DIR));
+ 			}
+ 			else {
+-				throw new IllegalStateException(String.format("the {} environment variable must be set", ENV_FLINK_BIN_DIR));
++				throw new IllegalStateException(String.format("the %s environment variable must be set", ENV_FLINK_BIN_DIR));
+ 			}
+ 
+ 			if(env.containsKey(ENV_FLINK_CONF_DIR)) {
+ 				flinkConfPath = new File(System.getenv(ENV_FLINK_CONF_DIR));
+ 			}
+ 			else {
+-				throw new IllegalStateException(String.format("the {} environment variable must be set", ENV_FLINK_CONF_DIR));
++				throw new IllegalStateException(String.format("the %s environment variable must be set", ENV_FLINK_CONF_DIR));
+ 			}
+ 
+ 			if(env.containsKey(ENV_FLINK_LIB_DIR)) {
+ 				flinkLibPath = new File(System.getenv(ENV_FLINK_LIB_DIR));
+ 			}
+ 			else {
+-				throw new IllegalStateException(String.format("the {} environment variable must be set", ENV_FLINK_LIB_DIR));
++				throw new IllegalStateException(String.format("the %s environment variable must be set", ENV_FLINK_LIB_DIR));
+ 			}
+ 
+ 			return this;

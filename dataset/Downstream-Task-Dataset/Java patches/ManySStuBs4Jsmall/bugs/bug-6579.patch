@@ -1,0 +1,26 @@
+diff --git a/flink-compiler/src/main/java/org/apache/flink/compiler/postpass/JavaApiPostPass.java b/flink-compiler/src/main/java/org/apache/flink/compiler/postpass/JavaApiPostPass.java
+index 2273461..6295170 100644
+--- a/flink-compiler/src/main/java/org/apache/flink/compiler/postpass/JavaApiPostPass.java
++++ b/flink-compiler/src/main/java/org/apache/flink/compiler/postpass/JavaApiPostPass.java
+@@ -294,7 +294,7 @@
+ 		}
+ 		else if (typeInfo instanceof AtomicType) {
+ 			// handle grouping of atomic types
+-			throw new UnsupportedOperationException("Grouping on atomic types is currently not implemented. " + typeInfo);
++			comparator = ((AtomicType) typeInfo).createComparator(sortOrder[0]);
+ 		}
+ 		else {
+ 			throw new RuntimeException("Unrecognized type: " + typeInfo);
+diff --git a/flink-compiler/src/main/java/org/apache/flink/compiler/postpass/JavaApiPostPass.java b/flink-compiler/src/main/java/org/apache/flink/compiler/postpass/JavaApiPostPass.java
+index 2273461..6295170 100644
+--- a/flink-compiler/src/main/java/org/apache/flink/compiler/postpass/JavaApiPostPass.java
++++ b/flink-compiler/src/main/java/org/apache/flink/compiler/postpass/JavaApiPostPass.java
+@@ -294,7 +294,7 @@
+ 		}
+ 		else if (typeInfo instanceof AtomicType) {
+ 			// handle grouping of atomic types
+-			throw new UnsupportedOperationException("Grouping on atomic types is currently not implemented. " + typeInfo);
++			comparator = ((AtomicType) typeInfo).createComparator(sortOrder[0]);
+ 		}
+ 		else {
+ 			throw new RuntimeException("Unrecognized type: " + typeInfo);

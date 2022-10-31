@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+index 364020a..571ee8a 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+@@ -1208,7 +1208,7 @@
+ 
+         //Calculate activations (which are stored in each layer, and used in backprop)
+         try(MemoryWorkspace wsAllActivations = workspaceMgr.notifyScopeEntered(ArrayType.ACTIVATIONS)) {
+-            Map<String, INDArray> activations = ffToLayerActivationsInWS(true, vertices.length, getOutputLayerIndices(),
++            Map<String, INDArray> activations = ffToLayerActivationsInWS(true, vertices.length-1, getOutputLayerIndices(),
+                     fwdType, tbptt, inputs, inputMaskArrays, labelMaskArrays, false);
+             if (!trainingListeners.isEmpty()) {
+                 try (MemoryWorkspace workspace = Nd4j.getMemoryManager().scopeOutOfWorkspaces()) {
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+index 364020a..571ee8a 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/ComputationGraph.java
+@@ -1208,7 +1208,7 @@
+ 
+         //Calculate activations (which are stored in each layer, and used in backprop)
+         try(MemoryWorkspace wsAllActivations = workspaceMgr.notifyScopeEntered(ArrayType.ACTIVATIONS)) {
+-            Map<String, INDArray> activations = ffToLayerActivationsInWS(true, vertices.length, getOutputLayerIndices(),
++            Map<String, INDArray> activations = ffToLayerActivationsInWS(true, vertices.length-1, getOutputLayerIndices(),
+                     fwdType, tbptt, inputs, inputMaskArrays, labelMaskArrays, false);
+             if (!trainingListeners.isEmpty()) {
+                 try (MemoryWorkspace workspace = Nd4j.getMemoryManager().scopeOutOfWorkspaces()) {

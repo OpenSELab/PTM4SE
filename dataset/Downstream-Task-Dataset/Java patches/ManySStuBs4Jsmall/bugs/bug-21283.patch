@@ -1,0 +1,92 @@
+diff --git a/spring-boot/src/main/java/org/springframework/boot/context/ContextIdApplicationContextInitializer.java b/spring-boot/src/main/java/org/springframework/boot/context/ContextIdApplicationContextInitializer.java
+index 4dabd46..cc40cf1 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/context/ContextIdApplicationContextInitializer.java
++++ b/spring-boot/src/main/java/org/springframework/boot/context/ContextIdApplicationContextInitializer.java
+@@ -50,12 +50,28 @@
+ 		ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
+ 
+ 	/**
+-	 * Placeholder pattern to resolve for application name.
++	 * Placeholder pattern to resolve for application name. The following order is used to
++	 * find the name:
++	 * <ul>
++	 * <li>{@code spring.application.name}</li>
++	 * <li>{@code vcap.application.name}</li>
++	 * <li>{@code spring.config.name}</li>
++	 * </ul>
++	 * This order allows the user defined name to take precedence over the platform
++	 * defined name. If no property is defined {@code 'application'} will be used.
+ 	 */
+-	private static final String NAME_PATTERN = "${vcap.application.name:${spring.application.name:${spring.config.name:application}}}";
++	private static final String NAME_PATTERN = "${spring.application.name:${vcap.application.name:${spring.config.name:application}}}";
+ 
+ 	/**
+-	 * Placeholder pattern to resolve for application index.
++	 * Placeholder pattern to resolve for application index. The following order is used
++	 * to find the name:
++	 * <ul>
++	 * <li>{@code vcap.application.instance_index}</li>
++	 * <li>{@code spring.application.index}</li>
++	 * <li>{@code server.port}</li>
++	 * <li>{@code PORT}</li>
++	 * </ul>
++	 * This order allows favors a platform defined index over any user defined value.
+ 	 */
+ 	private static final String INDEX_PATTERN = "${vcap.application.instance_index:${spring.application.index:${server.port:${PORT:null}}}}";
+ 
+diff --git a/spring-boot/src/test/java/org/springframework/boot/context/ContextIdApplicationContextInitializerTests.java b/spring-boot/src/test/java/org/springframework/boot/context/ContextIdApplicationContextInitializerTests.java
+index d9306e5..48df45a 100644
+--- a/spring-boot/src/test/java/org/springframework/boot/context/ContextIdApplicationContextInitializerTests.java
++++ b/spring-boot/src/test/java/org/springframework/boot/context/ContextIdApplicationContextInitializerTests.java
+@@ -69,13 +69,13 @@
+ 	}
+ 
+ 	@Test
+-	public void testExplicitName() {
++	public void testExplicitNameIsChosenInFavorOfCloudFoundry() {
+ 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext();
+ 		EnvironmentTestUtils.addEnvironment(context, "spring.application.name:spam",
+ 				"spring.config.name:foo", "PORT:8080", "vcap.application.name:bar",
+ 				"vcap.application.instance_index:2");
+ 		this.initializer.initialize(context);
+-		assertEquals("bar:2", context.getId());
++		assertEquals("spam:2", context.getId());
+ 	}
+ 
+ }
+diff --git a/spring-boot/src/main/java/org/springframework/boot/context/ContextIdApplicationContextInitializer.java b/spring-boot/src/main/java/org/springframework/boot/context/ContextIdApplicationContextInitializer.java
+index 4dabd46..cc40cf1 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/context/ContextIdApplicationContextInitializer.java
++++ b/spring-boot/src/main/java/org/springframework/boot/context/ContextIdApplicationContextInitializer.java
+@@ -50,12 +50,28 @@
+ 		ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
+ 
+ 	/**
+-	 * Placeholder pattern to resolve for application name.
++	 * Placeholder pattern to resolve for application name. The following order is used to
++	 * find the name:
++	 * <ul>
++	 * <li>{@code spring.application.name}</li>
++	 * <li>{@code vcap.application.name}</li>
++	 * <li>{@code spring.config.name}</li>
++	 * </ul>
++	 * This order allows the user defined name to take precedence over the platform
++	 * defined name. If no property is defined {@code 'application'} will be used.
+ 	 */
+-	private static final String NAME_PATTERN = "${vcap.application.name:${spring.application.name:${spring.config.name:application}}}";
++	private static final String NAME_PATTERN = "${spring.application.name:${vcap.application.name:${spring.config.name:application}}}";
+ 
+ 	/**
+-	 * Placeholder pattern to resolve for application index.
++	 * Placeholder pattern to resolve for application index. The following order is used
++	 * to find the name:
++	 * <ul>
++	 * <li>{@code vcap.application.instance_index}</li>
++	 * <li>{@code spring.application.index}</li>
++	 * <li>{@code server.port}</li>
++	 * <li>{@code PORT}</li>
++	 * </ul>
++	 * This order allows favors a platform defined index over any user defined value.
+ 	 */
+ 	private static final String INDEX_PATTERN = "${vcap.application.instance_index:${spring.application.index:${server.port:${PORT:null}}}}";
+ 

@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/iterative/rule/TransformCorrelatedInPredicateToJoin.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/iterative/rule/TransformCorrelatedInPredicateToJoin.java
+index 786375e..6c6ed24 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/iterative/rule/TransformCorrelatedInPredicateToJoin.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/iterative/rule/TransformCorrelatedInPredicateToJoin.java
+@@ -304,7 +304,7 @@
+      * TODO consult comon parts with {@link com.facebook.presto.sql.planner.optimizations.TransformCorrelatedScalarAggregationToJoin.Rewriter#decorrelateFilters}
+      */
+     private static class DecorrelatingVisitor
+-            extends PlanVisitor<PlanNode, Optional<Decorrelated>>
++            extends PlanVisitor<Optional<Decorrelated>, PlanNode>
+     {
+         private final Lookup lookup;
+         private final Set<Symbol> correlation;
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/iterative/rule/TransformCorrelatedInPredicateToJoin.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/iterative/rule/TransformCorrelatedInPredicateToJoin.java
+index 786375e..6c6ed24 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/iterative/rule/TransformCorrelatedInPredicateToJoin.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/iterative/rule/TransformCorrelatedInPredicateToJoin.java
+@@ -304,7 +304,7 @@
+      * TODO consult comon parts with {@link com.facebook.presto.sql.planner.optimizations.TransformCorrelatedScalarAggregationToJoin.Rewriter#decorrelateFilters}
+      */
+     private static class DecorrelatingVisitor
+-            extends PlanVisitor<PlanNode, Optional<Decorrelated>>
++            extends PlanVisitor<Optional<Decorrelated>, PlanNode>
+     {
+         private final Lookup lookup;
+         private final Set<Symbol> correlation;

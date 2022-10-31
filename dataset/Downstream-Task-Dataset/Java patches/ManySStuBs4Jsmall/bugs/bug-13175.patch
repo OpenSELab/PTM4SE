@@ -1,0 +1,76 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/MetadataQueryOptimizer.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/MetadataQueryOptimizer.java
+index b2864c2..7ac8c80 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/MetadataQueryOptimizer.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/MetadataQueryOptimizer.java
+@@ -98,13 +98,13 @@
+             // supported functions are only MIN/MAX/APPROX_DISTINCT or distinct aggregates
+             for (FunctionCall call : node.getAggregations().values()) {
+                 if (!ALLOWED_FUNCTIONS.contains(call.getName().toString()) && !call.isDistinct()) {
+-                    return null;
++                    return context.defaultRewrite(node);
+                 }
+             }
+ 
+             Optional<TableScanNode> result = findTableScan(node.getSource());
+             if (!result.isPresent()) {
+-                return null;
++                return context.defaultRewrite(node);
+             }
+ 
+             // verify all outputs of table scan are partition keys
+@@ -121,7 +121,7 @@
+                 if (!columnMetadata.isPartitionKey()) {
+                     // the optimization is only valid if the aggregation node only
+                     // relies on partition keys
+-                    return null;
++                    return context.defaultRewrite(node);
+                 }
+ 
+                 typesBuilder.put(symbol, columnMetadata.getType());
+@@ -154,7 +154,7 @@
+                     SerializableNativeValue value = entries.get(column);
+                     if (value == null) {
+                         // partition key does not have a single value, so bail out to be safe
+-                        return null;
++                        return context.defaultRewrite(node);
+                     }
+                     else {
+                         rowBuilder.add(LiteralInterpreter.toExpression(value.getValue(), type));
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/MetadataQueryOptimizer.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/MetadataQueryOptimizer.java
+index b2864c2..7ac8c80 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/MetadataQueryOptimizer.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/MetadataQueryOptimizer.java
+@@ -98,13 +98,13 @@
+             // supported functions are only MIN/MAX/APPROX_DISTINCT or distinct aggregates
+             for (FunctionCall call : node.getAggregations().values()) {
+                 if (!ALLOWED_FUNCTIONS.contains(call.getName().toString()) && !call.isDistinct()) {
+-                    return null;
++                    return context.defaultRewrite(node);
+                 }
+             }
+ 
+             Optional<TableScanNode> result = findTableScan(node.getSource());
+             if (!result.isPresent()) {
+-                return null;
++                return context.defaultRewrite(node);
+             }
+ 
+             // verify all outputs of table scan are partition keys
+@@ -121,7 +121,7 @@
+                 if (!columnMetadata.isPartitionKey()) {
+                     // the optimization is only valid if the aggregation node only
+                     // relies on partition keys
+-                    return null;
++                    return context.defaultRewrite(node);
+                 }
+ 
+                 typesBuilder.put(symbol, columnMetadata.getType());
+@@ -154,7 +154,7 @@
+                     SerializableNativeValue value = entries.get(column);
+                     if (value == null) {
+                         // partition key does not have a single value, so bail out to be safe
+-                        return null;
++                        return context.defaultRewrite(node);
+                     }
+                     else {
+                         rowBuilder.add(LiteralInterpreter.toExpression(value.getValue(), type));

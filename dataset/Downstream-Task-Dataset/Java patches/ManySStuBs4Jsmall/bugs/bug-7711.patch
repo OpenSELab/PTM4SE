@@ -1,0 +1,28 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/stats/StatsUtils.java b/ql/src/java/org/apache/hadoop/hive/ql/stats/StatsUtils.java
+index fde8c53..9ffd12a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/stats/StatsUtils.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/stats/StatsUtils.java
+@@ -1065,8 +1065,7 @@
+       // epoch, days since epoch
+       cs.setRange(0, 25201);
+     } else {
+-      // Columns statistics for complex datatypes are not supported yet
+-      return null;
++      cs.setAvgColLen(getSizeOfComplexTypes(conf, cinfo.getObjectInspector()));
+     }
+     return cs;
+   }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/stats/StatsUtils.java b/ql/src/java/org/apache/hadoop/hive/ql/stats/StatsUtils.java
+index fde8c53..9ffd12a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/stats/StatsUtils.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/stats/StatsUtils.java
+@@ -1065,8 +1065,7 @@
+       // epoch, days since epoch
+       cs.setRange(0, 25201);
+     } else {
+-      // Columns statistics for complex datatypes are not supported yet
+-      return null;
++      cs.setAvgColLen(getSizeOfComplexTypes(conf, cinfo.getObjectInspector()));
+     }
+     return cs;
+   }

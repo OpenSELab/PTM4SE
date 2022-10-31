@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
+index f44e2c6..b996cef 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
+@@ -581,7 +581,7 @@
+                 }
+ 
+                 schedulingComplete.set(DateTime.now());
+-                stageState.set(StageState.SCHEDULED);
++                stageState.compareAndSet(StageState.SCHEDULING, StageState.SCHEDULED);
+ 
+                 // add the missing exchanges output buffers
+                 updateNewExchangesAndBuffers(true);
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
+index f44e2c6..b996cef 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
+@@ -581,7 +581,7 @@
+                 }
+ 
+                 schedulingComplete.set(DateTime.now());
+-                stageState.set(StageState.SCHEDULED);
++                stageState.compareAndSet(StageState.SCHEDULING, StageState.SCHEDULED);
+ 
+                 // add the missing exchanges output buffers
+                 updateNewExchangesAndBuffers(true);

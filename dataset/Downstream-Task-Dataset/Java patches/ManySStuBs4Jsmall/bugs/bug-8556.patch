@@ -1,0 +1,19 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsAvoidNullCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsAvoidNullCheck.java
+index fc232b1..a88020e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsAvoidNullCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsAvoidNullCheck.java
+@@ -278,12 +278,10 @@
+                 && isCalledOnStringFieldOrVariable(objCalledOn)) {
+             final String methodName = methodCall.getFirstChild().getLastChild().getText();
+             if (EQUALS.equals(methodName)) {
+-                log(methodCall.getLineNo(), methodCall.getColumnNo(),
+-                    MSG_EQUALS_AVOID_NULL);
++                log(methodCall, MSG_EQUALS_AVOID_NULL);
+             }
+             else {
+-                log(methodCall.getLineNo(), methodCall.getColumnNo(),
+-                    MSG_EQUALS_IGNORE_CASE_AVOID_NULL);
++                log(methodCall, MSG_EQUALS_IGNORE_CASE_AVOID_NULL);
+             }
+         }
+     }

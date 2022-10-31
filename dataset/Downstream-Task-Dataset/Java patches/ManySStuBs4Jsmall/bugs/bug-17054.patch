@@ -1,0 +1,39 @@
+diff --git a/extensions/gdx-jnigen/src/com/badlogic/gdx/jnigen/JniGenSharedLibraryLoader.java b/extensions/gdx-jnigen/src/com/badlogic/gdx/jnigen/JniGenSharedLibraryLoader.java
+index cb58dec..6367e83 100644
+--- a/extensions/gdx-jnigen/src/com/badlogic/gdx/jnigen/JniGenSharedLibraryLoader.java
++++ b/extensions/gdx-jnigen/src/com/badlogic/gdx/jnigen/JniGenSharedLibraryLoader.java
+@@ -162,7 +162,7 @@
+ 		boolean isLinux = System.getProperty("os.name").contains("Linux");
+ 		boolean isMac = System.getProperty("os.name").contains("Mac");
+ 		boolean isAndroid = false;
+-		boolean is64Bit = System.getProperty("os.arch").equals("amd64");
++		boolean is64Bit = System.getProperty("os.arch").equals("amd64") || System.getProperty("os.arch").equals("x86_64");
+ 		String vm = System.getProperty("java.vm.name");
+ 		if (vm != null && vm.contains("Dalvik")) {
+ 			isAndroid = true;
+diff --git a/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java b/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
+index 2600033..f5b6f49 100644
+--- a/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
++++ b/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
+@@ -39,7 +39,7 @@
+ 	static public boolean isIos = false;
+ 	static public boolean isAndroid = false;
+ 	static public boolean isARM = System.getProperty("os.arch").startsWith("arm");
+-	static public boolean is64Bit = System.getProperty("os.arch").equals("amd64");
++	static public boolean is64Bit = System.getProperty("os.arch").equals("amd64") || System.getProperty("os.arch").equals("x86_64");
+ 
+ 	// JDK 8 only.
+ 	static public String abi = (System.getProperty("sun.arch.abi") != null ? System.getProperty("sun.arch.abi") : "");
+diff --git a/extensions/gdx-jnigen/src/com/badlogic/gdx/jnigen/JniGenSharedLibraryLoader.java b/extensions/gdx-jnigen/src/com/badlogic/gdx/jnigen/JniGenSharedLibraryLoader.java
+index cb58dec..6367e83 100644
+--- a/extensions/gdx-jnigen/src/com/badlogic/gdx/jnigen/JniGenSharedLibraryLoader.java
++++ b/extensions/gdx-jnigen/src/com/badlogic/gdx/jnigen/JniGenSharedLibraryLoader.java
+@@ -162,7 +162,7 @@
+ 		boolean isLinux = System.getProperty("os.name").contains("Linux");
+ 		boolean isMac = System.getProperty("os.name").contains("Mac");
+ 		boolean isAndroid = false;
+-		boolean is64Bit = System.getProperty("os.arch").equals("amd64");
++		boolean is64Bit = System.getProperty("os.arch").equals("amd64") || System.getProperty("os.arch").equals("x86_64");
+ 		String vm = System.getProperty("java.vm.name");
+ 		if (vm != null && vm.contains("Dalvik")) {
+ 			isAndroid = true;

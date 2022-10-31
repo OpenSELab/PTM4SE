@@ -1,0 +1,26 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriteUtils.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriteUtils.java
+index d74eb26..4951946 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriteUtils.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriteUtils.java
+@@ -475,7 +475,7 @@
+                 return isWritableType(listTypeInfo.getListElementTypeInfo());
+             case STRUCT:
+                 StructTypeInfo structTypeInfo = checkType(typeInfo, StructTypeInfo.class, "typeInfo");
+-                return structTypeInfo.getAllStructFieldTypeInfos().stream().allMatch(HiveType::isSupportedType);
++                return structTypeInfo.getAllStructFieldTypeInfos().stream().allMatch(HiveWriteUtils::isWritableType);
+         }
+         return false;
+     }
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriteUtils.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriteUtils.java
+index d74eb26..4951946 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriteUtils.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriteUtils.java
+@@ -475,7 +475,7 @@
+                 return isWritableType(listTypeInfo.getListElementTypeInfo());
+             case STRUCT:
+                 StructTypeInfo structTypeInfo = checkType(typeInfo, StructTypeInfo.class, "typeInfo");
+-                return structTypeInfo.getAllStructFieldTypeInfos().stream().allMatch(HiveType::isSupportedType);
++                return structTypeInfo.getAllStructFieldTypeInfos().stream().allMatch(HiveWriteUtils::isWritableType);
+         }
+         return false;
+     }

@@ -1,0 +1,46 @@
+diff --git a/core/server/src/test/java/alluxio/worker/block/evictor/EvictorContractTest.java b/core/server/src/test/java/alluxio/worker/block/evictor/EvictorContractTest.java
+index c414248..3dbd3ac 100644
+--- a/core/server/src/test/java/alluxio/worker/block/evictor/EvictorContractTest.java
++++ b/core/server/src/test/java/alluxio/worker/block/evictor/EvictorContractTest.java
+@@ -58,15 +58,15 @@
+   @Parameterized.Parameters
+   public static Collection<Object[]> data() {
+     // Run this test against all types of Evictors
+-    List<Object[]> list = new ArrayList<Object[]>();
++    List<Object[]> list = new ArrayList<>();
+     try {
+       String packageName = Reflection.getPackageName(Evictor.class);
+       ClassPath path = ClassPath.from(Thread.currentThread().getContextClassLoader());
+       List<ClassPath.ClassInfo> clazzInPackage =
+-          new ArrayList<ClassPath.ClassInfo>(path.getTopLevelClassesRecursive(packageName));
++          new ArrayList<>(path.getTopLevelClassesRecursive(packageName));
+       for (ClassPath.ClassInfo clazz : clazzInPackage) {
+         Set<Class<?>> interfaces =
+-            new HashSet<Class<?>>(Arrays.asList(clazz.load().getInterfaces()));
++            new HashSet<>(Arrays.asList(clazz.load().getInterfaces()));
+         if (!Modifier.isAbstract(clazz.load().getModifiers()) && interfaces.size() > 0
+             && interfaces.contains(Evictor.class)) {
+           list.add(new Object[] {clazz.getName()});
+diff --git a/core/server/src/test/java/alluxio/worker/block/evictor/EvictorContractTest.java b/core/server/src/test/java/alluxio/worker/block/evictor/EvictorContractTest.java
+index c414248..3dbd3ac 100644
+--- a/core/server/src/test/java/alluxio/worker/block/evictor/EvictorContractTest.java
++++ b/core/server/src/test/java/alluxio/worker/block/evictor/EvictorContractTest.java
+@@ -58,15 +58,15 @@
+   @Parameterized.Parameters
+   public static Collection<Object[]> data() {
+     // Run this test against all types of Evictors
+-    List<Object[]> list = new ArrayList<Object[]>();
++    List<Object[]> list = new ArrayList<>();
+     try {
+       String packageName = Reflection.getPackageName(Evictor.class);
+       ClassPath path = ClassPath.from(Thread.currentThread().getContextClassLoader());
+       List<ClassPath.ClassInfo> clazzInPackage =
+-          new ArrayList<ClassPath.ClassInfo>(path.getTopLevelClassesRecursive(packageName));
++          new ArrayList<>(path.getTopLevelClassesRecursive(packageName));
+       for (ClassPath.ClassInfo clazz : clazzInPackage) {
+         Set<Class<?>> interfaces =
+-            new HashSet<Class<?>>(Arrays.asList(clazz.load().getInterfaces()));
++            new HashSet<>(Arrays.asList(clazz.load().getInterfaces()));
+         if (!Modifier.isAbstract(clazz.load().getModifiers()) && interfaces.size() > 0
+             && interfaces.contains(Evictor.class)) {
+           list.add(new Object[] {clazz.getName()});

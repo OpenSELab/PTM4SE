@@ -1,0 +1,22 @@
+diff --git a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
+index 102a8d8..4508f18 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
++++ b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
+@@ -255,7 +255,7 @@
+         if (endIndex < 0) {
+             throw REPLAY;
+         }
+-        return readBytes(endIndex);
++        return buffer.readBytes(endIndex - buffer.readerIndex());
+     }
+ 
+     public int readBytes(GatheringByteChannel out, int length)
+@@ -275,7 +275,7 @@
+         if (endIndex < 0) {
+             throw REPLAY;
+         }
+-        return readSlice(endIndex);
++        return buffer.readSlice(endIndex - buffer.readerIndex());
+     }
+ 
+     public ChannelBuffer readSlice(int length) {

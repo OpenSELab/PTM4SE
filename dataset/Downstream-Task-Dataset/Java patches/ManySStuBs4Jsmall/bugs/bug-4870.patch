@@ -1,0 +1,30 @@
+diff --git a/components/camel-sql/src/main/java/org/apache/camel/component/sql/SqlConsumer.java b/components/camel-sql/src/main/java/org/apache/camel/component/sql/SqlConsumer.java
+index ab48133..bc72d6e 100644
+--- a/components/camel-sql/src/main/java/org/apache/camel/component/sql/SqlConsumer.java
++++ b/components/camel-sql/src/main/java/org/apache/camel/component/sql/SqlConsumer.java
+@@ -210,9 +210,8 @@
+     public int processBatch(Queue<Object> exchanges) throws Exception {
+         int total = exchanges.size();
+ 
+-        // limit if needed
+         if (maxMessagesPerPoll > 0 && total == maxMessagesPerPoll) {
+-            log.debug("Limiting to maximum messages to poll " + maxMessagesPerPoll + " as there was more messages in this poll.");
++            log.debug("Maximum messages to poll is {} and there were exactly {} messages in this poll.", maxMessagesPerPoll, total);
+         }
+ 
+         for (int index = 0; index < total && isBatchAllowed(); index++) {
+diff --git a/components/camel-sql/src/main/java/org/apache/camel/component/sql/SqlConsumer.java b/components/camel-sql/src/main/java/org/apache/camel/component/sql/SqlConsumer.java
+index ab48133..bc72d6e 100644
+--- a/components/camel-sql/src/main/java/org/apache/camel/component/sql/SqlConsumer.java
++++ b/components/camel-sql/src/main/java/org/apache/camel/component/sql/SqlConsumer.java
+@@ -210,9 +210,8 @@
+     public int processBatch(Queue<Object> exchanges) throws Exception {
+         int total = exchanges.size();
+ 
+-        // limit if needed
+         if (maxMessagesPerPoll > 0 && total == maxMessagesPerPoll) {
+-            log.debug("Limiting to maximum messages to poll " + maxMessagesPerPoll + " as there was more messages in this poll.");
++            log.debug("Maximum messages to poll is {} and there were exactly {} messages in this poll.", maxMessagesPerPoll, total);
+         }
+ 
+         for (int index = 0; index < total && isBatchAllowed(); index++) {

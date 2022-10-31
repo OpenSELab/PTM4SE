@@ -1,0 +1,72 @@
+diff --git a/src/main/java/org/apache/ibatis/reflection/invoker/GetFieldInvoker.java b/src/main/java/org/apache/ibatis/reflection/invoker/GetFieldInvoker.java
+index aa71601..1bdbf74 100644
+--- a/src/main/java/org/apache/ibatis/reflection/invoker/GetFieldInvoker.java
++++ b/src/main/java/org/apache/ibatis/reflection/invoker/GetFieldInvoker.java
+@@ -29,7 +29,7 @@
+     return field.get(target);
+   }
+ 
+-  public Class getType() {
++  public Class<?> getType() {
+     return field.getType();
+   }
+ }
+diff --git a/src/main/java/org/apache/ibatis/reflection/invoker/Invoker.java b/src/main/java/org/apache/ibatis/reflection/invoker/Invoker.java
+index 152f8ce..037fbe4 100644
+--- a/src/main/java/org/apache/ibatis/reflection/invoker/Invoker.java
++++ b/src/main/java/org/apache/ibatis/reflection/invoker/Invoker.java
+@@ -20,5 +20,5 @@
+ public interface Invoker {
+   Object invoke(Object target, Object[] args) throws IllegalAccessException, InvocationTargetException;
+ 
+-  Class getType();
++  Class<?> getType();
+ }
+diff --git a/src/main/java/org/apache/ibatis/reflection/invoker/MethodInvoker.java b/src/main/java/org/apache/ibatis/reflection/invoker/MethodInvoker.java
+index 1f73762..9ed9f67 100644
+--- a/src/main/java/org/apache/ibatis/reflection/invoker/MethodInvoker.java
++++ b/src/main/java/org/apache/ibatis/reflection/invoker/MethodInvoker.java
+@@ -20,7 +20,7 @@
+ 
+ public class MethodInvoker implements Invoker {
+ 
+-  private Class type;
++  private Class<?> type;
+   private Method method;
+ 
+   public MethodInvoker(Method method) {
+@@ -37,7 +37,7 @@
+     return method.invoke(target, args);
+   }
+ 
+-  public Class getType() {
++  public Class<?> getType() {
+     return type;
+   }
+ }
+diff --git a/src/main/java/org/apache/ibatis/reflection/invoker/SetFieldInvoker.java b/src/main/java/org/apache/ibatis/reflection/invoker/SetFieldInvoker.java
+index a0bb98d..443be5f 100644
+--- a/src/main/java/org/apache/ibatis/reflection/invoker/SetFieldInvoker.java
++++ b/src/main/java/org/apache/ibatis/reflection/invoker/SetFieldInvoker.java
+@@ -30,7 +30,7 @@
+     return null;
+   }
+ 
+-  public Class getType() {
++  public Class<?> getType() {
+     return field.getType();
+   }
+ }
+diff --git a/src/main/java/org/apache/ibatis/reflection/invoker/GetFieldInvoker.java b/src/main/java/org/apache/ibatis/reflection/invoker/GetFieldInvoker.java
+index aa71601..1bdbf74 100644
+--- a/src/main/java/org/apache/ibatis/reflection/invoker/GetFieldInvoker.java
++++ b/src/main/java/org/apache/ibatis/reflection/invoker/GetFieldInvoker.java
+@@ -29,7 +29,7 @@
+     return field.get(target);
+   }
+ 
+-  public Class getType() {
++  public Class<?> getType() {
+     return field.getType();
+   }
+ }

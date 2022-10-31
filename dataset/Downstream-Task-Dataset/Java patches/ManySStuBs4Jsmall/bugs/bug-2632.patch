@@ -1,0 +1,39 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterLoadBalancerStatusResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterLoadBalancerStatusResource.java
+index 49953e7..975c16f 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterLoadBalancerStatusResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterLoadBalancerStatusResource.java
+@@ -77,7 +77,7 @@
+     @ApiOperation(value = "Override load balancer status of this graylog2-server node. Next lifecycle " +
+             "change will override it again to its default. Set to ALIVE or DEAD.")
+     @Path("/override/{status}")
+-    public void override(@ApiParam(name = "nodeId", value = "The id of the node where processing will be paused.", required = true)
++    public void override(@ApiParam(name = "nodeId", value = "The id of the node whose LB status will be changed", required = true)
+                          @PathParam("nodeId") String nodeId,
+                          @ApiParam(name = "status") @PathParam("status") String status) throws IOException, NodeNotFoundException {
+         final Node targetNode = nodeService.byNodeId(nodeId);
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterSystemShutdownResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterSystemShutdownResource.java
+index 8e56aaf..1cd0287 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterSystemShutdownResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterSystemShutdownResource.java
+@@ -75,7 +75,7 @@
+     @ApiOperation(value = "Shutdown node gracefully.",
+             notes = "Attempts to process all buffered and cached messages before exiting, " +
+                     "shuts down inputs first to make sure that no new messages are accepted.")
+-    public void shutdown(@ApiParam(name = "nodeId", value = "The id of the node where processing will be paused.", required = true)
++    public void shutdown(@ApiParam(name = "nodeId", value = "The id of the node to shutdown.", required = true)
+                          @PathParam("nodeId") String nodeId) throws IOException, NodeNotFoundException {
+         final Node targetNode = nodeService.byNodeId(nodeId);
+ 
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterLoadBalancerStatusResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterLoadBalancerStatusResource.java
+index 49953e7..975c16f 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterLoadBalancerStatusResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/cluster/ClusterLoadBalancerStatusResource.java
+@@ -77,7 +77,7 @@
+     @ApiOperation(value = "Override load balancer status of this graylog2-server node. Next lifecycle " +
+             "change will override it again to its default. Set to ALIVE or DEAD.")
+     @Path("/override/{status}")
+-    public void override(@ApiParam(name = "nodeId", value = "The id of the node where processing will be paused.", required = true)
++    public void override(@ApiParam(name = "nodeId", value = "The id of the node whose LB status will be changed", required = true)
+                          @PathParam("nodeId") String nodeId,
+                          @ApiParam(name = "status") @PathParam("status") String status) throws IOException, NodeNotFoundException {
+         final Node targetNode = nodeService.byNodeId(nodeId);

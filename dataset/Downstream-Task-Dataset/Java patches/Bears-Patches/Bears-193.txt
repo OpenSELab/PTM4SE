@@ -1,0 +1,33 @@
+--- a/activiti-cloud-app-service/src/main/java/org/activiti/cloud/app/configuration/ApplicationServiceAutoConfiguration.java
++++ b/activiti-cloud-app-service/src/main/java/org/activiti/cloud/app/configuration/ApplicationServiceAutoConfiguration.java
+@@ -38,17 +39,11 @@ public class ApplicationServiceAutoConfiguration {
+     @Import({ApplicationsController.class, DeploymentsController.class})
+     public static class DefaultApplicationsServiceConfiguration implements SchedulingConfigurer {
+ 
+-        @Bean
+-        @ConditionalOnMissingBean(type = "ApplicationsService")
+-        ApplicationsService applicationsService() {
+-            return new ApplicationsService();
+-        }
++        @Autowired
++        private ApplicationsService applicationsService;
+ 
+-        @Bean
+-        @ConditionalOnMissingBean(type = "DeploymentsService")
+-        DeploymentsService deploymentsService() {
+-            return new DeploymentsService();
+-        }
++        @Autowired
++        private DeploymentsService deploymentService;
+ 
+         @Bean
+         @ConditionalOnMissingBean(type = "RestTemplate")
+@@ -74,7 +69,7 @@ public class ApplicationServiceAutoConfiguration {
+                     new Runnable() {
+                         @Override public void run() {
+                             LOGGER.debug(">>> Refreshing Apps now: " + System.currentTimeMillis());
+-                            applicationsService().refresh();
++                            applicationsService.refresh();
+                         }
+                     },
+                     new Trigger() {

@@ -1,0 +1,32 @@
+diff --git a/src/jvm/clojure/lang/Var.java b/src/jvm/clojure/lang/Var.java
+index 213beef..799a153 100644
+--- a/src/jvm/clojure/lang/Var.java
++++ b/src/jvm/clojure/lang/Var.java
+@@ -103,9 +103,9 @@
+ }
+ 
+ public static Object cloneThreadBindingFrame(){
+-	Frame f = (Frame) dvals.get().clone();
++	Frame f = dvals.get();
+ 	if(f != null)
+-		return f;
++		return f.clone();
+ 	return new Frame();
+ }
+ 
+diff --git a/src/jvm/clojure/lang/Var.java b/src/jvm/clojure/lang/Var.java
+index 213beef..799a153 100644
+--- a/src/jvm/clojure/lang/Var.java
++++ b/src/jvm/clojure/lang/Var.java
+@@ -103,9 +103,9 @@
+ }
+ 
+ public static Object cloneThreadBindingFrame(){
+-	Frame f = (Frame) dvals.get().clone();
++	Frame f = dvals.get();
+ 	if(f != null)
+-		return f;
++		return f.clone();
+ 	return new Frame();
+ }
+ 

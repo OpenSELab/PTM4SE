@@ -1,0 +1,302 @@
+diff --git a/src/com/google/debugging/sourcemap/SourceMapGeneratorV3.java b/src/com/google/debugging/sourcemap/SourceMapGeneratorV3.java
+index cb4d2ad..06041ce 100644
+--- a/src/com/google/debugging/sourcemap/SourceMapGeneratorV3.java
++++ b/src/com/google/debugging/sourcemap/SourceMapGeneratorV3.java
+@@ -478,7 +478,7 @@
+     addNameMap(out, originalNameMap);
+   }
+ 
+-  private void addNameMap(Appendable out, Map<String, Integer> map)
++  private static void addNameMap(Appendable out, Map<String, Integer> map)
+       throws IOException {
+     int i = 0;
+     for (Entry<String, Integer> entry : map.entrySet()) {
+@@ -801,7 +801,7 @@
+     out.append("\n}\n");
+   }
+ 
+-  private CharSequence offsetValue(int line, int column) throws IOException {
++  private static CharSequence offsetValue(int line, int column) throws IOException {
+     StringBuilder out = new StringBuilder();
+     out.append("{\n");
+     appendFirstField(out, "line", String.valueOf(line));
+diff --git a/src/com/google/javascript/jscomp/Compiler.java b/src/com/google/javascript/jscomp/Compiler.java
+index 4373b53..0886fd8 100644
+--- a/src/com/google/javascript/jscomp/Compiler.java
++++ b/src/com/google/javascript/jscomp/Compiler.java
+@@ -553,7 +553,7 @@
+    * base path is interpreted as a filename rather than a directory. E.g.:
+    *   getRelativeTo("../foo/bar.js", "baz/bam/qux.js") --> "baz/foo/bar.js"
+    */
+-  private String getRelativeTo(String relative, String base) {
++  private static String getRelativeTo(String relative, String base) {
+     return FileSystems.getDefault().getPath(base)
+         .resolveSibling(relative)
+         .normalize()
+diff --git a/src/com/google/javascript/jscomp/LightweightMessageFormatter.java b/src/com/google/javascript/jscomp/LightweightMessageFormatter.java
+index cf44343..1f6315b 100644
+--- a/src/com/google/javascript/jscomp/LightweightMessageFormatter.java
++++ b/src/com/google/javascript/jscomp/LightweightMessageFormatter.java
+@@ -128,7 +128,7 @@
+     return b.toString();
+   }
+ 
+-  private String formatPosition(String sourceName, int lineNumber) {
++  private static String formatPosition(String sourceName, int lineNumber) {
+     StringBuilder b = new StringBuilder();
+     if (sourceName != null) {
+       b.append(sourceName);
+diff --git a/src/com/google/javascript/jscomp/RhinoErrorReporter.java b/src/com/google/javascript/jscomp/RhinoErrorReporter.java
+index 978c547..6aa99ac 100644
+--- a/src/com/google/javascript/jscomp/RhinoErrorReporter.java
++++ b/src/com/google/javascript/jscomp/RhinoErrorReporter.java
+@@ -109,7 +109,7 @@
+    * holder {0} with a wild card that matches all possible strings.
+    * Also put the any non-place-holder in quotes for regex matching later.
+    */
+-  private Pattern replacePlaceHolders(String s) {
++  private static Pattern replacePlaceHolders(String s) {
+     s = Pattern.quote(s);
+     return Pattern.compile(s.replaceAll("\\{\\d+\\}", "\\\\E.*\\\\Q"));
+   }
+diff --git a/src/com/google/javascript/jscomp/TypeCheck.java b/src/com/google/javascript/jscomp/TypeCheck.java
+index 076d740..4a0dc69 100644
+--- a/src/com/google/javascript/jscomp/TypeCheck.java
++++ b/src/com/google/javascript/jscomp/TypeCheck.java
+@@ -1498,7 +1498,7 @@
+     }
+   }
+ 
+-  private SuggestionPair getClosestPropertySuggestion(
++  private static SuggestionPair getClosestPropertySuggestion(
+       JSType objectType, String propName) {
+     return null;
+   }
+diff --git a/src/com/google/javascript/jscomp/ant/CompileTask.java b/src/com/google/javascript/jscomp/ant/CompileTask.java
+index e6c737b..dc58ffa 100644
+--- a/src/com/google/javascript/jscomp/ant/CompileTask.java
++++ b/src/com/google/javascript/jscomp/ant/CompileTask.java
+@@ -750,7 +750,7 @@
+   /**
+    * Returns the last modified timestamp of the given File.
+    */
+-  private long getLastModifiedTime(File file) {
++  private static long getLastModifiedTime(File file) {
+     long fileLastModified = file.lastModified();
+     // If the file is absent, we don't know if it changed (maybe was deleted),
+     // so assume it has just changed.
+diff --git a/src/com/google/javascript/jscomp/parsing/parser/Scanner.java b/src/com/google/javascript/jscomp/parsing/parser/Scanner.java
+index b7501eb..bd68b85 100644
+--- a/src/com/google/javascript/jscomp/parsing/parser/Scanner.java
++++ b/src/com/google/javascript/jscomp/parsing/parser/Scanner.java
+@@ -210,11 +210,11 @@
+     return true;
+   }
+ 
+-  private boolean isRegularExpressionFirstChar(char ch) {
++  private static boolean isRegularExpressionFirstChar(char ch) {
+     return isRegularExpressionChar(ch) && ch != '*';
+   }
+ 
+-  private boolean isRegularExpressionChar(char ch) {
++  private static boolean isRegularExpressionChar(char ch) {
+     switch (ch) {
+     case '/':
+       return false;
+@@ -741,7 +741,7 @@
+     return value;
+   }
+ 
+-  private boolean isIdentifierStart(char ch) {
++  private static boolean isIdentifierStart(char ch) {
+     switch (ch) {
+     case '$':
+     case '_':
+@@ -752,7 +752,7 @@
+     }
+   }
+ 
+-  private boolean isIdentifierPart(char ch) {
++  private static boolean isIdentifierPart(char ch) {
+     // TODO: identifier part character classes
+     // CombiningMark
+     //   Non-Spacing mark (Mn)
+diff --git a/src/com/google/javascript/rhino/Node.java b/src/com/google/javascript/rhino/Node.java
+index 5f2d9ea..8db9b13 100644
+--- a/src/com/google/javascript/rhino/Node.java
++++ b/src/com/google/javascript/rhino/Node.java
+@@ -2456,7 +2456,7 @@
+   /**
+    * returns true if all the flags are set in value.
+    */
+-  private boolean areBitFlagsSet(int value, int flags) {
++  private static boolean areBitFlagsSet(int value, int flags) {
+     return (value & flags) == flags;
+   }
+ 
+diff --git a/src/com/google/javascript/rhino/SimpleErrorReporter.java b/src/com/google/javascript/rhino/SimpleErrorReporter.java
+index a0767b9..d0a9c37 100644
+--- a/src/com/google/javascript/rhino/SimpleErrorReporter.java
++++ b/src/com/google/javascript/rhino/SimpleErrorReporter.java
+@@ -72,7 +72,7 @@
+         errors.add(formatDetailedMessage(message, sourceName, line));
+     }
+ 
+-    private String formatDetailedMessage(
++    private static String formatDetailedMessage(
+         String message, String sourceName, int lineNumber) {
+       String details = message;
+       if (sourceName == null || lineNumber <= 0) {
+diff --git a/test/com/google/debugging/sourcemap/SourceMapGeneratorV3Test.java b/test/com/google/debugging/sourcemap/SourceMapGeneratorV3Test.java
+index abc88fe..da4946c 100644
+--- a/test/com/google/debugging/sourcemap/SourceMapGeneratorV3Test.java
++++ b/test/com/google/debugging/sourcemap/SourceMapGeneratorV3Test.java
+@@ -52,7 +52,7 @@
+     return SourceMap.Format.V3;
+   }
+ 
+-  private String getEncodedFileName() {
++  private static String getEncodedFileName() {
+     if (File.separatorChar == '\\') {
+       return "c:/myfile.js";
+     } else {
+diff --git a/test/com/google/javascript/jscomp/CheckConformanceTest.java b/test/com/google/javascript/jscomp/CheckConformanceTest.java
+index 8c95572..a806f38 100644
+--- a/test/com/google/javascript/jscomp/CheckConformanceTest.java
++++ b/test/com/google/javascript/jscomp/CheckConformanceTest.java
+@@ -1054,7 +1054,7 @@
+         "function f() {goog.asserts.assertInstanceof(this, Error);}");
+   }
+ 
+-  private String config(String rule, String message, String... fields) {
++  private static String config(String rule, String message, String... fields) {
+     String result = "requirement: {\n"
+         + "  type: CUSTOM\n"
+         + "  java_class: '" + rule + "'\n";
+@@ -1065,11 +1065,11 @@
+     return result;
+   }
+ 
+-  private String rule(String rule) {
++  private static String rule(String rule) {
+     return "com.google.javascript.jscomp.ConformanceRules$" + rule;
+   }
+ 
+-  private String value(String value) {
++  private static String value(String value) {
+     return "  value: '" + value + "'\n";
+   }
+ 
+diff --git a/test/com/google/javascript/jscomp/CommandLineRunnerTest.java b/test/com/google/javascript/jscomp/CommandLineRunnerTest.java
+index 8abacff..2446431 100644
+--- a/test/com/google/javascript/jscomp/CommandLineRunnerTest.java
++++ b/test/com/google/javascript/jscomp/CommandLineRunnerTest.java
+@@ -1759,7 +1759,7 @@
+         new PrintStream(errReader));
+   }
+ 
+-  private FlagEntry<JsSourceType> createZipFile(Map<String, String> entryContentsByName)
++  private static FlagEntry<JsSourceType> createZipFile(Map<String, String> entryContentsByName)
+       throws IOException {
+     File tempZipFile = File.createTempFile("testdata", ".js.zip");
+ 
+diff --git a/test/com/google/javascript/jscomp/CompilerTest.java b/test/com/google/javascript/jscomp/CompilerTest.java
+index 0e8c212..68c2d59 100644
+--- a/test/com/google/javascript/jscomp/CompilerTest.java
++++ b/test/com/google/javascript/jscomp/CompilerTest.java
+@@ -155,7 +155,7 @@
+         error.contains("Failed to load module \"missing\" at gin.js"));
+   }
+ 
+-  private String normalize(String path) {
++  private static String normalize(String path) {
+     return path.replace(File.separator, "/");
+   }
+ 
+diff --git a/test/com/google/javascript/jscomp/CompilerTestCase.java b/test/com/google/javascript/jscomp/CompilerTestCase.java
+index d47481d..46f8fb1 100644
+--- a/test/com/google/javascript/jscomp/CompilerTestCase.java
++++ b/test/com/google/javascript/jscomp/CompilerTestCase.java
+@@ -658,7 +658,7 @@
+     test(compiler, maybeCreateArray(expected), error, warning, description);
+   }
+ 
+-  private String[] maybeCreateArray(String expected) {
++  private static String[] maybeCreateArray(String expected) {
+     if (expected != null) {
+       return new String[] {expected};
+     }
+diff --git a/test/com/google/javascript/jscomp/MakeDeclaredNamesUniqueTest.java b/test/com/google/javascript/jscomp/MakeDeclaredNamesUniqueTest.java
+index a951335..1d47c2b 100644
+--- a/test/com/google/javascript/jscomp/MakeDeclaredNamesUniqueTest.java
++++ b/test/com/google/javascript/jscomp/MakeDeclaredNamesUniqueTest.java
+@@ -100,7 +100,7 @@
+     invert = false;
+   }
+ 
+-  private String wrapInFunction(String s) {
++  private static String wrapInFunction(String s) {
+     return "function f(){" + s + "}";
+   }
+ 
+diff --git a/test/com/google/javascript/jscomp/NormalizeTest.java b/test/com/google/javascript/jscomp/NormalizeTest.java
+index 45329b3..34b9088 100644
+--- a/test/com/google/javascript/jscomp/NormalizeTest.java
++++ b/test/com/google/javascript/jscomp/NormalizeTest.java
+@@ -187,7 +187,7 @@
+          "function f() { f(); if (true) {var bar = function () {}}}");
+   }
+ 
+-  private String inFunction(String code) {
++  private static String inFunction(String code) {
+     return "(function(){" + code + "})";
+   }
+ 
+diff --git a/test/com/google/javascript/jscomp/PeepholeFoldConstantsTest.java b/test/com/google/javascript/jscomp/PeepholeFoldConstantsTest.java
+index 5e792b9..f32ba84 100644
+--- a/test/com/google/javascript/jscomp/PeepholeFoldConstantsTest.java
++++ b/test/com/google/javascript/jscomp/PeepholeFoldConstantsTest.java
+@@ -1279,7 +1279,7 @@
+     foldSame("var x = 3 * (r ? Infinity : -Infinity);");
+   }
+ 
+-  private String join(String operandA, String op, String operandB) {
++  private static String join(String operandA, String op, String operandB) {
+     return operandA + " " + op + " " + operandB;
+   }
+ 
+diff --git a/test/com/google/javascript/jscomp/StrictModeCheckTest.java b/test/com/google/javascript/jscomp/StrictModeCheckTest.java
+index 6f39ba1..bf09cbd 100644
+--- a/test/com/google/javascript/jscomp/StrictModeCheckTest.java
++++ b/test/com/google/javascript/jscomp/StrictModeCheckTest.java
+@@ -340,7 +340,7 @@
+         "}"), StrictModeCheck.ARGUMENTS_CALLER_FORBIDDEN);
+   }
+ 
+-  private String inFn(String body) {
++  private static String inFn(String body) {
+     return "function func() {" + body + "}";
+   }
+ }
+diff --git a/src/com/google/debugging/sourcemap/SourceMapGeneratorV3.java b/src/com/google/debugging/sourcemap/SourceMapGeneratorV3.java
+index cb4d2ad..06041ce 100644
+--- a/src/com/google/debugging/sourcemap/SourceMapGeneratorV3.java
++++ b/src/com/google/debugging/sourcemap/SourceMapGeneratorV3.java
+@@ -478,7 +478,7 @@
+     addNameMap(out, originalNameMap);
+   }
+ 
+-  private void addNameMap(Appendable out, Map<String, Integer> map)
++  private static void addNameMap(Appendable out, Map<String, Integer> map)
+       throws IOException {
+     int i = 0;
+     for (Entry<String, Integer> entry : map.entrySet()) {
+@@ -801,7 +801,7 @@
+     out.append("\n}\n");
+   }
+ 
+-  private CharSequence offsetValue(int line, int column) throws IOException {
++  private static CharSequence offsetValue(int line, int column) throws IOException {
+     StringBuilder out = new StringBuilder();
+     out.append("{\n");
+     appendFirstField(out, "line", String.valueOf(line));

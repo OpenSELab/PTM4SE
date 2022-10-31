@@ -1,0 +1,26 @@
+diff --git a/buffer/src/main/java/io/netty/buffer/PooledHeapByteBuf.java b/buffer/src/main/java/io/netty/buffer/PooledHeapByteBuf.java
+index a03c8f9..6f24327 100644
+--- a/buffer/src/main/java/io/netty/buffer/PooledHeapByteBuf.java
++++ b/buffer/src/main/java/io/netty/buffer/PooledHeapByteBuf.java
+@@ -81,7 +81,7 @@
+         checkDstIndex(index, length, dstIndex, dst.capacity());
+         if (dst.hasMemoryAddress()) {
+             PlatformDependent.copyMemory(memory, idx(index), dst.memoryAddress() + dstIndex, length);
+-        } if (dst.hasArray()) {
++        } else if (dst.hasArray()) {
+             getBytes(index, dst.array(), dst.arrayOffset() + dstIndex, length);
+         } else {
+             dst.setBytes(dstIndex, memory, idx(index), length);
+diff --git a/buffer/src/main/java/io/netty/buffer/PooledHeapByteBuf.java b/buffer/src/main/java/io/netty/buffer/PooledHeapByteBuf.java
+index a03c8f9..6f24327 100644
+--- a/buffer/src/main/java/io/netty/buffer/PooledHeapByteBuf.java
++++ b/buffer/src/main/java/io/netty/buffer/PooledHeapByteBuf.java
+@@ -81,7 +81,7 @@
+         checkDstIndex(index, length, dstIndex, dst.capacity());
+         if (dst.hasMemoryAddress()) {
+             PlatformDependent.copyMemory(memory, idx(index), dst.memoryAddress() + dstIndex, length);
+-        } if (dst.hasArray()) {
++        } else if (dst.hasArray()) {
+             getBytes(index, dst.array(), dst.arrayOffset() + dstIndex, length);
+         } else {
+             dst.setBytes(dstIndex, memory, idx(index), length);

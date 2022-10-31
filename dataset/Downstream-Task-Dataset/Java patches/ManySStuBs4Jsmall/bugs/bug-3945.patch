@@ -1,0 +1,28 @@
+diff --git a/tool/src/org/antlr/v4/semantics/BasicSemanticChecks.java b/tool/src/org/antlr/v4/semantics/BasicSemanticChecks.java
+index f4793a6..0ef42fc 100644
+--- a/tool/src/org/antlr/v4/semantics/BasicSemanticChecks.java
++++ b/tool/src/org/antlr/v4/semantics/BasicSemanticChecks.java
+@@ -347,8 +347,7 @@
+ 		boolean outerMostAlt = blk.parent.getType() == RULE;
+ 		Tree rule = tree.getAncestor(RULE);
+ 		String fileName = tree.getToken().getInputStream().getSourceName();
+-		if ( !outerMostAlt || tree.getChildIndex() != alt.getChildCount()-1 ||
+-			 blk.getChildCount()>1 )
++		if ( !outerMostAlt || blk.getChildCount()>1 )
+ 		{
+ 			ErrorType e = ErrorType.LEXER_COMMAND_PLACEMENT_ISSUE;
+ 			if ( tree.getType() == ACTION ) e = ErrorType.LEXER_ACTION_PLACEMENT_ISSUE;
+diff --git a/tool/src/org/antlr/v4/semantics/BasicSemanticChecks.java b/tool/src/org/antlr/v4/semantics/BasicSemanticChecks.java
+index f4793a6..0ef42fc 100644
+--- a/tool/src/org/antlr/v4/semantics/BasicSemanticChecks.java
++++ b/tool/src/org/antlr/v4/semantics/BasicSemanticChecks.java
+@@ -347,8 +347,7 @@
+ 		boolean outerMostAlt = blk.parent.getType() == RULE;
+ 		Tree rule = tree.getAncestor(RULE);
+ 		String fileName = tree.getToken().getInputStream().getSourceName();
+-		if ( !outerMostAlt || tree.getChildIndex() != alt.getChildCount()-1 ||
+-			 blk.getChildCount()>1 )
++		if ( !outerMostAlt || blk.getChildCount()>1 )
+ 		{
+ 			ErrorType e = ErrorType.LEXER_COMMAND_PLACEMENT_ISSUE;
+ 			if ( tree.getType() == ACTION ) e = ErrorType.LEXER_ACTION_PLACEMENT_ISSUE;

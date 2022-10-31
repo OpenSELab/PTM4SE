@@ -1,0 +1,49 @@
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/mapper/thrift/stat/TFAgentStatBatchMapper.java b/collector/src/main/java/com/navercorp/pinpoint/collector/mapper/thrift/stat/TFAgentStatBatchMapper.java
+index d8b78d1..da7f421 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/mapper/thrift/stat/TFAgentStatBatchMapper.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/mapper/thrift/stat/TFAgentStatBatchMapper.java
+@@ -29,11 +29,11 @@
+  */
+ public class TFAgentStatBatchMapper {
+     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+-    public final TFAgentStatMappter tFAgentStatMappter = new TFAgentStatMappter();
++    public final TFAgentStatMapper tFAgentStatMapper = new TFAgentStatMapper();
+ 
+     public TFAgentStatBatch map(AgentStatBo agentStatBo) {
+         try {
+-            List<TFAgentStat> tFAgentstatList = tFAgentStatMappter.map(agentStatBo);
++            List<TFAgentStat> tFAgentstatList = tFAgentStatMapper.map(agentStatBo);
+             long startTimestamp = getStartTimestamp(agentStatBo);
+             TFAgentStatBatch tFAgentStatBatch = new TFAgentStatBatch(agentStatBo.getAgentId(), startTimestamp, tFAgentstatList);
+             return tFAgentStatBatch;
+diff --git a/flink/src/main/java/com/navercorp/pinpoint/flink/receiver/TcpSourceFunction.java b/flink/src/main/java/com/navercorp/pinpoint/flink/receiver/TcpSourceFunction.java
+index 38e11a3..2882a22 100644
+--- a/flink/src/main/java/com/navercorp/pinpoint/flink/receiver/TcpSourceFunction.java
++++ b/flink/src/main/java/com/navercorp/pinpoint/flink/receiver/TcpSourceFunction.java
+@@ -37,7 +37,7 @@
+     public void run(SourceContext<TBase> ctx) throws Exception {
+         final Bootstrap bootstrap = Bootstrap.getInstance();
+         bootstrap.setStatHandlerTcpDispatchHandler(ctx);
+-        FlinkServerRegister flinkServerRegister = bootstrap.initFlinkServerRegister();
++        bootstrap.initFlinkServerRegister();
+         tcpReceiver = bootstrap.initTcpReceiver();
+ 
+         Thread.sleep(Long.MAX_VALUE);
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/mapper/thrift/stat/TFAgentStatBatchMapper.java b/collector/src/main/java/com/navercorp/pinpoint/collector/mapper/thrift/stat/TFAgentStatBatchMapper.java
+index d8b78d1..da7f421 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/mapper/thrift/stat/TFAgentStatBatchMapper.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/mapper/thrift/stat/TFAgentStatBatchMapper.java
+@@ -29,11 +29,11 @@
+  */
+ public class TFAgentStatBatchMapper {
+     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+-    public final TFAgentStatMappter tFAgentStatMappter = new TFAgentStatMappter();
++    public final TFAgentStatMapper tFAgentStatMapper = new TFAgentStatMapper();
+ 
+     public TFAgentStatBatch map(AgentStatBo agentStatBo) {
+         try {
+-            List<TFAgentStat> tFAgentstatList = tFAgentStatMappter.map(agentStatBo);
++            List<TFAgentStat> tFAgentstatList = tFAgentStatMapper.map(agentStatBo);
+             long startTimestamp = getStartTimestamp(agentStatBo);
+             TFAgentStatBatch tFAgentStatBatch = new TFAgentStatBatch(agentStatBo.getAgentId(), startTimestamp, tFAgentstatList);
+             return tFAgentStatBatch;

@@ -1,0 +1,78 @@
+diff --git a/processing/src/test/java/io/druid/query/QueryRunnerTestHelper.java b/processing/src/test/java/io/druid/query/QueryRunnerTestHelper.java
+index 58c1e97..747ab09 100644
+--- a/processing/src/test/java/io/druid/query/QueryRunnerTestHelper.java
++++ b/processing/src/test/java/io/druid/query/QueryRunnerTestHelper.java
+@@ -110,7 +110,7 @@
+     return Arrays.asList(
+         new Object[][]{
+             {
+-                makeQueryRunner(factory, new IncrementalIndexSegment(rtIndex))
++                makeQueryRunner(factory, new IncrementalIndexSegment(rtIndex, null))
+             },
+             {
+                 makeQueryRunner(factory, new QueryableIndexSegment(null, mMappedTestIndex))
+diff --git a/processing/src/test/java/io/druid/query/metadata/SegmentAnalyzerTest.java b/processing/src/test/java/io/druid/query/metadata/SegmentAnalyzerTest.java
+index 55ed588..e1bc774 100644
+--- a/processing/src/test/java/io/druid/query/metadata/SegmentAnalyzerTest.java
++++ b/processing/src/test/java/io/druid/query/metadata/SegmentAnalyzerTest.java
+@@ -47,7 +47,7 @@
+   public void testIncrementalDoesNotWork() throws Exception
+   {
+     final List<SegmentAnalysis> results = getSegmentAnalysises(
+-        new IncrementalIndexSegment(TestIndex.getIncrementalTestIndex())
++        new IncrementalIndexSegment(TestIndex.getIncrementalTestIndex(), null)
+     );
+ 
+     Assert.assertEquals(0, results.size());
+diff --git a/processing/src/test/java/io/druid/query/timeseries/TimeseriesQueryRunnerBonusTest.java b/processing/src/test/java/io/druid/query/timeseries/TimeseriesQueryRunnerBonusTest.java
+index b31ff2b..d1497a1 100644
+--- a/processing/src/test/java/io/druid/query/timeseries/TimeseriesQueryRunnerBonusTest.java
++++ b/processing/src/test/java/io/druid/query/timeseries/TimeseriesQueryRunnerBonusTest.java
+@@ -90,7 +90,7 @@
+     final QueryRunnerFactory factory = TimeseriesQueryRunnerFactory.create();
+     final QueryRunner<Result<TimeseriesResultValue>> runner = makeQueryRunner(
+         factory,
+-        new IncrementalIndexSegment(index)
++        new IncrementalIndexSegment(index, null)
+     );
+ 
+     TimeseriesQuery query = Druids.newTimeseriesQueryBuilder()
+diff --git a/processing/src/test/java/io/druid/segment/filter/SpatialFilterBonusTest.java b/processing/src/test/java/io/druid/segment/filter/SpatialFilterBonusTest.java
+index 8e423df..0eb3279 100644
+--- a/processing/src/test/java/io/druid/segment/filter/SpatialFilterBonusTest.java
++++ b/processing/src/test/java/io/druid/segment/filter/SpatialFilterBonusTest.java
+@@ -83,7 +83,7 @@
+     return Arrays.asList(
+         new Object[][]{
+             {
+-                new IncrementalIndexSegment(rtIndex)
++                new IncrementalIndexSegment(rtIndex, null)
+             },
+             {
+                 new QueryableIndexSegment(null, mMappedTestIndex)
+diff --git a/processing/src/test/java/io/druid/segment/filter/SpatialFilterTest.java b/processing/src/test/java/io/druid/segment/filter/SpatialFilterTest.java
+index b59d4a3..d342c12 100644
+--- a/processing/src/test/java/io/druid/segment/filter/SpatialFilterTest.java
++++ b/processing/src/test/java/io/druid/segment/filter/SpatialFilterTest.java
+@@ -83,7 +83,7 @@
+     return Arrays.asList(
+         new Object[][]{
+             {
+-                new IncrementalIndexSegment(rtIndex)
++                new IncrementalIndexSegment(rtIndex, null)
+             },
+             {
+                 new QueryableIndexSegment(null, mMappedTestIndex)
+diff --git a/processing/src/test/java/io/druid/query/QueryRunnerTestHelper.java b/processing/src/test/java/io/druid/query/QueryRunnerTestHelper.java
+index 58c1e97..747ab09 100644
+--- a/processing/src/test/java/io/druid/query/QueryRunnerTestHelper.java
++++ b/processing/src/test/java/io/druid/query/QueryRunnerTestHelper.java
+@@ -110,7 +110,7 @@
+     return Arrays.asList(
+         new Object[][]{
+             {
+-                makeQueryRunner(factory, new IncrementalIndexSegment(rtIndex))
++                makeQueryRunner(factory, new IncrementalIndexSegment(rtIndex, null))
+             },
+             {
+                 makeQueryRunner(factory, new QueryableIndexSegment(null, mMappedTestIndex))

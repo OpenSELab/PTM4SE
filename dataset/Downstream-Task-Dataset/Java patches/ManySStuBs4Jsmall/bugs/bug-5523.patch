@@ -1,0 +1,71 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartCleanupTest.java b/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartCleanupTest.java
+index 6a19244..73dac64 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartCleanupTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartCleanupTest.java
+@@ -53,12 +53,12 @@
+         Long completed = (Long) mbeanServer.getAttribute(on, "ExchangesCompleted");
+         assertEquals(1, completed.longValue());
+ 
+-        // should be 1 consumer and 1 processor
++        // should be 1 consumer and 2 processors
+         Set<ObjectName> set = mbeanServer.queryNames(new ObjectName("*:type=consumers,*"), null);
+         assertEquals("Should be 1 consumer", 1, set.size());
+ 
+         set = mbeanServer.queryNames(new ObjectName("*:type=processors,*"), null);
+-        assertEquals("Should be 1 processor", 1, set.size());
++        assertEquals("Should be 2 processors", 2, set.size());
+ 
+         // stop
+         log.info(">>>>>>>>>>>>>>>>>> invoking stop <<<<<<<<<<<<<<<<<<<<<");
+@@ -102,7 +102,7 @@
+         assertEquals("Should be 1 consumer", 1, set.size());
+ 
+         set = mbeanServer.queryNames(new ObjectName("*:type=processors,*"), null);
+-        assertEquals("Should be 1 processor", 1, set.size());
++        assertEquals("Should be 2 processors", 2, set.size());
+ 
+         // this time the file is consumed
+         mock.assertIsSatisfied();
+diff --git a/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartTest.java b/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartTest.java
+index 2d522e2..c59624d 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartTest.java
+@@ -93,7 +93,9 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("file://target/managed").to("mock:result");
++                from("file://target/managed")
++                    .convertBodyTo(String.class)
++                    .to("mock:result");
+             }
+         };
+     }
+diff --git a/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartCleanupTest.java b/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartCleanupTest.java
+index 6a19244..73dac64 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartCleanupTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/ManagedRouteStopAndStartCleanupTest.java
+@@ -53,12 +53,12 @@
+         Long completed = (Long) mbeanServer.getAttribute(on, "ExchangesCompleted");
+         assertEquals(1, completed.longValue());
+ 
+-        // should be 1 consumer and 1 processor
++        // should be 1 consumer and 2 processors
+         Set<ObjectName> set = mbeanServer.queryNames(new ObjectName("*:type=consumers,*"), null);
+         assertEquals("Should be 1 consumer", 1, set.size());
+ 
+         set = mbeanServer.queryNames(new ObjectName("*:type=processors,*"), null);
+-        assertEquals("Should be 1 processor", 1, set.size());
++        assertEquals("Should be 2 processors", 2, set.size());
+ 
+         // stop
+         log.info(">>>>>>>>>>>>>>>>>> invoking stop <<<<<<<<<<<<<<<<<<<<<");
+@@ -102,7 +102,7 @@
+         assertEquals("Should be 1 consumer", 1, set.size());
+ 
+         set = mbeanServer.queryNames(new ObjectName("*:type=processors,*"), null);
+-        assertEquals("Should be 1 processor", 1, set.size());
++        assertEquals("Should be 2 processors", 2, set.size());
+ 
+         // this time the file is consumed
+         mock.assertIsSatisfied();

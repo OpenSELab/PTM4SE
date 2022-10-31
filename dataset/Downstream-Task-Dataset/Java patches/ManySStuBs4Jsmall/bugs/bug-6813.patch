@@ -1,0 +1,44 @@
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+index c85fbf0..e4c345e 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+@@ -682,7 +682,7 @@
+ 						if (off == NULL_INDICATOR_OFFSET) {
+ 							offsets[k] = NULL_INDICATOR_OFFSET;
+ 						} else {
+-							end = k;
++							end = sourceForRemainder.offsets[k]+sourceForRemainder.lengths[k];
+ 							if (begin == -1) {
+ 								// first non null column in the remainder
+ 								begin = sourceForRemainder.offsets[k];
+@@ -695,7 +695,7 @@
+ 					// copy the remaining fields directly as binary
+ 					if (begin != -1) {
+ 						this.serializer.write(sourceForRemainder.binaryData, begin, 
+-								sourceForRemainder.offsets[end] + sourceForRemainder.lengths[end] - begin);
++								end - begin);
+ 					}
+ 					
+ 					// the lengths can be copied directly
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+index c85fbf0..e4c345e 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+@@ -682,7 +682,7 @@
+ 						if (off == NULL_INDICATOR_OFFSET) {
+ 							offsets[k] = NULL_INDICATOR_OFFSET;
+ 						} else {
+-							end = k;
++							end = sourceForRemainder.offsets[k]+sourceForRemainder.lengths[k];
+ 							if (begin == -1) {
+ 								// first non null column in the remainder
+ 								begin = sourceForRemainder.offsets[k];
+@@ -695,7 +695,7 @@
+ 					// copy the remaining fields directly as binary
+ 					if (begin != -1) {
+ 						this.serializer.write(sourceForRemainder.binaryData, begin, 
+-								sourceForRemainder.offsets[end] + sourceForRemainder.lengths[end] - begin);
++								end - begin);
+ 					}
+ 					
+ 					// the lengths can be copied directly

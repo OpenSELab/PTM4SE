@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/jboss/netty/util/internal/jzlib/Inflate.java b/src/main/java/org/jboss/netty/util/internal/jzlib/Inflate.java
+index 3f1f197..78601da 100644
+--- a/src/main/java/org/jboss/netty/util/internal/jzlib/Inflate.java
++++ b/src/main/java/org/jboss/netty/util/internal/jzlib/Inflate.java
+@@ -429,7 +429,7 @@
+                         r = f;
+                         z.avail_in --;
+                         z.total_in ++;
+-                        gzipXLen = gzipXLen << 8 | z.next_in[z.next_in_index ++] & 0xff;
++                        gzipXLen |= (z.next_in[z.next_in_index ++] & 0xff) << (1 - gzipBytesToRead) * 8;
+                         gzipBytesToRead --;
+                     }
+                     gzipBytesToRead = gzipXLen;
+diff --git a/src/main/java/org/jboss/netty/util/internal/jzlib/Inflate.java b/src/main/java/org/jboss/netty/util/internal/jzlib/Inflate.java
+index 3f1f197..78601da 100644
+--- a/src/main/java/org/jboss/netty/util/internal/jzlib/Inflate.java
++++ b/src/main/java/org/jboss/netty/util/internal/jzlib/Inflate.java
+@@ -429,7 +429,7 @@
+                         r = f;
+                         z.avail_in --;
+                         z.total_in ++;
+-                        gzipXLen = gzipXLen << 8 | z.next_in[z.next_in_index ++] & 0xff;
++                        gzipXLen |= (z.next_in[z.next_in_index ++] & 0xff) << (1 - gzipBytesToRead) * 8;
+                         gzipBytesToRead --;
+                     }
+                     gzipBytesToRead = gzipXLen;

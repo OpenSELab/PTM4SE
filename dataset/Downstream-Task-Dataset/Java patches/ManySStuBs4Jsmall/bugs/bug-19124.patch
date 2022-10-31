@@ -1,0 +1,14 @@
+diff --git a/src/main/java/org/jboss/netty/channel/group/DefaultChannelGroupFuture.java b/src/main/java/org/jboss/netty/channel/group/DefaultChannelGroupFuture.java
+index 74ed7f2..2de49ac 100644
+--- a/src/main/java/org/jboss/netty/channel/group/DefaultChannelGroupFuture.java
++++ b/src/main/java/org/jboss/netty/channel/group/DefaultChannelGroupFuture.java
+@@ -308,7 +308,8 @@
+         if (IoWorkerRunnable.IN_IO_THREAD.get()) {
+             throw new IllegalStateException(
+                     "await*() in I/O thread causes a dead lock or " +
+-                    "sudden performance drop. Use addListener() instead.");
++                    "sudden performance drop. Use addListener() instead or " +
++                    "call await*() from a different thread.");
+         }
+     }
+ 

@@ -1,0 +1,67 @@
+diff --git a/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidator.java b/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidator.java
+index 531a4c0..2d23440 100644
+--- a/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidator.java
++++ b/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidator.java
+@@ -38,7 +38,7 @@
+     
+     private ValidatorFactory validatorFactory;
+     private Validator validator;
+-    private Class group;
++    private Class<?> group;
+     
+     public void process(Exchange exchange) throws Exception {
+         Object bean = exchange.getIn().getBody();
+@@ -68,11 +68,11 @@
+         return validator;
+     }
+     
+-    public Class getGroup() {
++    public Class<?> getGroup() {
+         return group;
+     }
+    
+-    public void setGroup(Class group) {
++    public void setGroup(Class<?> group) {
+         this.group = group;
+     }
+ 
+diff --git a/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidatorComponent.java b/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidatorComponent.java
+index 4a71f98..4491b55 100644
+--- a/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidatorComponent.java
++++ b/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidatorComponent.java
+@@ -44,7 +44,7 @@
+         ConstraintValidatorFactory constraintValidatorFactory = resolveAndRemoveReferenceParameter(parameters, "constraintValidatorFactory", ConstraintValidatorFactory.class);
+         String group = getAndRemoveParameter(parameters, "group", String.class);
+         
+-        Configuration configuration = Validation.byDefaultProvider().configure();
++        Configuration<?> configuration = Validation.byDefaultProvider().configure();
+         
+         if (messageInterpolator != null) {
+             configuration.messageInterpolator(messageInterpolator);
+diff --git a/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidator.java b/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidator.java
+index 531a4c0..2d23440 100644
+--- a/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidator.java
++++ b/components/camel-bean-validator/src/main/java/org/apache/camel/component/bean/validator/BeanValidator.java
+@@ -38,7 +38,7 @@
+     
+     private ValidatorFactory validatorFactory;
+     private Validator validator;
+-    private Class group;
++    private Class<?> group;
+     
+     public void process(Exchange exchange) throws Exception {
+         Object bean = exchange.getIn().getBody();
+@@ -68,11 +68,11 @@
+         return validator;
+     }
+     
+-    public Class getGroup() {
++    public Class<?> getGroup() {
+         return group;
+     }
+    
+-    public void setGroup(Class group) {
++    public void setGroup(Class<?> group) {
+         this.group = group;
+     }
+ 

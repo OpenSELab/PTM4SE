@@ -1,0 +1,55 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java b/wicket-core/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
+index 0c73aff..f6ff1ad 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
++++ b/wicket-core/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
+@@ -600,8 +600,8 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 			{
+ 				final StringResponse bodyResponse = new StringResponse();
+ 				contructResponseBody(bodyResponse, encoding);
+-				invokeResponseFilters(bodyResponse);
+-				response.write(bodyResponse.getBuffer());
++				CharSequence filteredResponse = invokeResponseFilters(bodyResponse);
++				response.write(filteredResponse);
+ 			}
+ 			finally
+ 			{
+@@ -670,8 +670,9 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 	 * 
+ 	 * @param contentResponse
+ 	 *            the Ajax {@link Response} body
++	 * @return filtered response
+ 	 */
+-	private void invokeResponseFilters(final StringResponse contentResponse)
++	private AppendingStringBuffer invokeResponseFilters(final StringResponse contentResponse)
+ 	{
+ 		AppendingStringBuffer responseBuffer = new AppendingStringBuffer(
+ 			contentResponse.getBuffer());
+@@ -684,9 +685,10 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 		{
+ 			for (IResponseFilter filter : responseFilters)
+ 			{
+-				filter.filter(responseBuffer);
++				responseBuffer = filter.filter(responseBuffer);
+ 			}
+ 		}
++		return responseBuffer;
+ 	}
+ 
+ 	/**
+diff --git a/wicket-core/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java b/wicket-core/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
+index 83c0556..03e18f9 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
++++ b/wicket-core/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
+@@ -142,10 +142,10 @@ public class BufferedWebResponse extends WebResponse implements IMetaDataBufferi
+ 			{
+ 				for (IResponseFilter filter : responseFilters)
+ 				{
+-					filter.filter(responseBuffer);
++					responseBuffer = filter.filter(responseBuffer);
+ 				}
+ 			}
+-			response.write(builder);
++			response.write(responseBuffer);
+ 		}
+ 
+ 		@Override

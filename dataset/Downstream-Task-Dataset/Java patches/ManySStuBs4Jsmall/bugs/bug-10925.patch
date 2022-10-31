@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+index 24be1c8..5e4fd25 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+@@ -704,7 +704,7 @@
+         if (input == null)
+             throw new IllegalStateException("Unable to perform feed forward; no input found");
+         else if (this.getLayerWiseConfigurations().getInputPreProcess(0) != null)
+-            setInput(getLayerWiseConfigurations().getInputPreProcess(0).preProcess(input,getInputMiniBatchSize()));
++            setInput(getLayerWiseConfigurations().getInputPreProcess(0).preProcess(input,input.size(0)));
+         else
+             setInput(input);
+         return feedForward();
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+index 24be1c8..5e4fd25 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+@@ -704,7 +704,7 @@
+         if (input == null)
+             throw new IllegalStateException("Unable to perform feed forward; no input found");
+         else if (this.getLayerWiseConfigurations().getInputPreProcess(0) != null)
+-            setInput(getLayerWiseConfigurations().getInputPreProcess(0).preProcess(input,getInputMiniBatchSize()));
++            setInput(getLayerWiseConfigurations().getInputPreProcess(0).preProcess(input,input.size(0)));
+         else
+             setInput(input);
+         return feedForward();

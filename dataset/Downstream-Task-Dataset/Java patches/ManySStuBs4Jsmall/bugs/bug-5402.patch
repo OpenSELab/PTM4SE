@@ -1,0 +1,39 @@
+diff --git a/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/BlueprintPropertyInjectRoute.java b/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/BlueprintPropertyInjectRoute.java
+index 2f1959c..230aaa8 100644
+--- a/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/BlueprintPropertyInjectRoute.java
++++ b/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/BlueprintPropertyInjectRoute.java
+@@ -26,7 +26,7 @@
+ 
+     @Override
+     public void configure() throws Exception {
+-        from("direct:start")
++        from("seda:start")
+                 .transform().constant(greeting)
+                 .to("{{destination}}");
+     }
+diff --git a/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/PropertyInjectTest.java b/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/PropertyInjectTest.java
+index 6336f7c..615edd1 100644
+--- a/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/PropertyInjectTest.java
++++ b/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/PropertyInjectTest.java
+@@ -29,7 +29,7 @@
+     public void testPropertyInject() throws Exception {
+         getMockEndpoint("mock:result").expectedBodiesReceived("Hello");
+ 
+-        template.sendBody("direct:start", "Camel");
++        template.sendBody("seda:start", "Camel");
+ 
+         assertMockEndpointsSatisfied();
+     }
+diff --git a/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/BlueprintPropertyInjectRoute.java b/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/BlueprintPropertyInjectRoute.java
+index 2f1959c..230aaa8 100644
+--- a/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/BlueprintPropertyInjectRoute.java
++++ b/components/camel-test-blueprint/src/test/java/org/apache/camel/test/blueprint/BlueprintPropertyInjectRoute.java
+@@ -26,7 +26,7 @@
+ 
+     @Override
+     public void configure() throws Exception {
+-        from("direct:start")
++        from("seda:start")
+                 .transform().constant(greeting)
+                 .to("{{destination}}");
+     }

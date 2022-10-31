@@ -1,0 +1,32 @@
+diff --git a/jstorm-core/src/main/java/com/alibaba/jstorm/daemon/nimbus/TopologyMetricsRunnable.java b/jstorm-core/src/main/java/com/alibaba/jstorm/daemon/nimbus/TopologyMetricsRunnable.java
+index bbc9dd2..c70e42b 100644
+--- a/jstorm-core/src/main/java/com/alibaba/jstorm/daemon/nimbus/TopologyMetricsRunnable.java
++++ b/jstorm-core/src/main/java/com/alibaba/jstorm/daemon/nimbus/TopologyMetricsRunnable.java
+@@ -478,9 +478,9 @@
+     private void syncMetaFromRemote(String topologyId, TopologyMetricContext context) {
+         try {
+             int memSize = context.getMemMeta().size();
+-            int zkSize = (Integer) stormClusterState.get_topology_metric(topologyId);
++            Integer zkSize = (Integer)stormClusterState.get_topology_metric(topologyId);
+ 
+-            if (memSize != zkSize) {
++            if (zkSize != null  && memSize != zkSize.intValue()) {
+                 ConcurrentMap<String, Long> memMeta = context.getMemMeta();
+                 for (MetaType metaType : MetaType.values()) {
+                     List<MetricMeta> metaList = metricQueryClient.getMetricMeta(clusterName, topologyId, metaType);
+diff --git a/jstorm-core/src/main/java/com/alibaba/jstorm/daemon/nimbus/TopologyMetricsRunnable.java b/jstorm-core/src/main/java/com/alibaba/jstorm/daemon/nimbus/TopologyMetricsRunnable.java
+index bbc9dd2..c70e42b 100644
+--- a/jstorm-core/src/main/java/com/alibaba/jstorm/daemon/nimbus/TopologyMetricsRunnable.java
++++ b/jstorm-core/src/main/java/com/alibaba/jstorm/daemon/nimbus/TopologyMetricsRunnable.java
+@@ -478,9 +478,9 @@
+     private void syncMetaFromRemote(String topologyId, TopologyMetricContext context) {
+         try {
+             int memSize = context.getMemMeta().size();
+-            int zkSize = (Integer) stormClusterState.get_topology_metric(topologyId);
++            Integer zkSize = (Integer)stormClusterState.get_topology_metric(topologyId);
+ 
+-            if (memSize != zkSize) {
++            if (zkSize != null  && memSize != zkSize.intValue()) {
+                 ConcurrentMap<String, Long> memMeta = context.getMemMeta();
+                 for (MetaType metaType : MetaType.values()) {
+                     List<MetricMeta> metaList = metricQueryClient.getMetricMeta(clusterName, topologyId, metaType);

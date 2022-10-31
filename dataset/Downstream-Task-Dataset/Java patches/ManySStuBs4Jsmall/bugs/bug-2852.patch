@@ -1,0 +1,34 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/messages/MessageResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/messages/MessageResource.java
+index b2624f9..e5eb387 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/messages/MessageResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/messages/MessageResource.java
+@@ -64,10 +64,10 @@
+ 		try {
+ 			return json(core.getIndexer().messages().get(messageId, index));
+ 		} catch (IndexMissingException e) {
+-        	LOG.error("Index does not exist. Returning HTTP 404.");
++        	LOG.error("Index {} does not exist. Returning HTTP 404.", e.index().name());
+         	throw new WebApplicationException(404);
+ 		} catch (DocumentNotFoundException e1) {
+-        	LOG.error("Message does not exist. Returning HTTP 404.");
++        	LOG.error("Message {} does not exist in index {}. Returning HTTP 404.", messageId, index);
+         	throw new WebApplicationException(404);
+ 		}
+     }
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/messages/MessageResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/messages/MessageResource.java
+index b2624f9..e5eb387 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/messages/MessageResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/messages/MessageResource.java
+@@ -64,10 +64,10 @@
+ 		try {
+ 			return json(core.getIndexer().messages().get(messageId, index));
+ 		} catch (IndexMissingException e) {
+-        	LOG.error("Index does not exist. Returning HTTP 404.");
++        	LOG.error("Index {} does not exist. Returning HTTP 404.", e.index().name());
+         	throw new WebApplicationException(404);
+ 		} catch (DocumentNotFoundException e1) {
+-        	LOG.error("Message does not exist. Returning HTTP 404.");
++        	LOG.error("Message {} does not exist in index {}. Returning HTTP 404.", messageId, index);
+         	throw new WebApplicationException(404);
+ 		}
+     }

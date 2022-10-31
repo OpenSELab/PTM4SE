@@ -1,0 +1,26 @@
+diff --git a/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java b/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
+index 4e76ef6..310de63 100644
+--- a/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
++++ b/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
+@@ -220,7 +220,7 @@
+ 		// Check if the new entry is in the table list
+ 		// If it's not in the list, then there was an error and we need to do some tidying up
+ 		// The item needs to be removed from the index table to avoid duplicates
+-		if(sqlTables.containsKey(tableName) == false) {
++		if(sqlTables.get(itemName) == null) {
+ 			logger.error("mySQL: Item '" + itemName + "' was not added to the table - removing index");
+ 			sqlCmd = new String("DELETE FROM Items WHERE ItemName='" + itemName+"'");
+ 			logger.debug("SQL: " + sqlCmd);
+diff --git a/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java b/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
+index 4e76ef6..310de63 100644
+--- a/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
++++ b/bundles/persistence/org.openhab.persistence.mysql/java/org/openhab/persistence/mysql/internal/MysqlPersistenceService.java
+@@ -220,7 +220,7 @@
+ 		// Check if the new entry is in the table list
+ 		// If it's not in the list, then there was an error and we need to do some tidying up
+ 		// The item needs to be removed from the index table to avoid duplicates
+-		if(sqlTables.containsKey(tableName) == false) {
++		if(sqlTables.get(itemName) == null) {
+ 			logger.error("mySQL: Item '" + itemName + "' was not added to the table - removing index");
+ 			sqlCmd = new String("DELETE FROM Items WHERE ItemName='" + itemName+"'");
+ 			logger.debug("SQL: " + sqlCmd);

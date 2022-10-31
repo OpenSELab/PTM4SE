@@ -1,0 +1,26 @@
+diff --git a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/http/IndexerCoordinatorResource.java b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/http/IndexerCoordinatorResource.java
+index e6f49b0..1211d69 100644
+--- a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/http/IndexerCoordinatorResource.java
++++ b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/http/IndexerCoordinatorResource.java
+@@ -78,7 +78,7 @@
+               .put("id", input.getTask().getId())
+               .put("dataSource", input.getTask().getDataSource())
+               .put("interval",
+-                   input.getTask().getImplicitLockInterval().get() == null
++                   !input.getTask().getImplicitLockInterval().isPresent()
+                    ? ""
+                    : input.getTask().getImplicitLockInterval().get()
+               )
+diff --git a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/http/IndexerCoordinatorResource.java b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/http/IndexerCoordinatorResource.java
+index e6f49b0..1211d69 100644
+--- a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/http/IndexerCoordinatorResource.java
++++ b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/http/IndexerCoordinatorResource.java
+@@ -78,7 +78,7 @@
+               .put("id", input.getTask().getId())
+               .put("dataSource", input.getTask().getDataSource())
+               .put("interval",
+-                   input.getTask().getImplicitLockInterval().get() == null
++                   !input.getTask().getImplicitLockInterval().isPresent()
+                    ? ""
+                    : input.getTask().getImplicitLockInterval().get()
+               )

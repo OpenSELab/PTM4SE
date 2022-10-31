@@ -1,0 +1,39 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/StreamResequencer.java b/camel-core/src/main/java/org/apache/camel/processor/StreamResequencer.java
+index e01a2e6..e6101b6 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/StreamResequencer.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/StreamResequencer.java
+@@ -193,7 +193,7 @@
+         
+         @Override
+         public void run() {
+-            while (true) {
++            while (isRunAllowed()) {
+                 try {
+                     deliveryRequestLock.lock();
+                     try {
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/resequencer/ResequencerEngine.java b/camel-core/src/main/java/org/apache/camel/processor/resequencer/ResequencerEngine.java
+index b20b7f6..a947807 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/resequencer/ResequencerEngine.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/resequencer/ResequencerEngine.java
+@@ -223,7 +223,7 @@
+     /**
+      * Attempts to deliver a single element from the head of the resequencer
+      * queue (sequence). Only elements which have not been scheduled for timing
+-     * out or which already timed out can be delivered. Elements are deliveref via
++     * out or which already timed out can be delivered. Elements are delivered via
+      * {@link SequenceSender#sendElement(Object)}.
+      *
+      * @return <code>true</code> if the element has been delivered
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/StreamResequencer.java b/camel-core/src/main/java/org/apache/camel/processor/StreamResequencer.java
+index e01a2e6..e6101b6 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/StreamResequencer.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/StreamResequencer.java
+@@ -193,7 +193,7 @@
+         
+         @Override
+         public void run() {
+-            while (true) {
++            while (isRunAllowed()) {
+                 try {
+                     deliveryRequestLock.lock();
+                     try {

@@ -1,0 +1,28 @@
+diff --git a/servers/src/main/java/tachyon/master/TachyonMaster.java b/servers/src/main/java/tachyon/master/TachyonMaster.java
+index 7e895f8..454e9f8 100644
+--- a/servers/src/main/java/tachyon/master/TachyonMaster.java
++++ b/servers/src/main/java/tachyon/master/TachyonMaster.java
+@@ -359,7 +359,8 @@
+     mIsServing = true;
+ 
+     // start web ui
+-    mWebServer = new MasterUIWebServer(ServiceType.MASTER_WEB, mMasterAddress, this, mTachyonConf);
++    mWebServer = new MasterUIWebServer(ServiceType.MASTER_WEB, NetworkAddressUtils.getBindAddress(
++        ServiceType.MASTER_WEB, mTachyonConf), this, mTachyonConf);
+     mWebServer.startWebServer();
+ 
+     String leaderStart = (mUseZookeeper) ? "(gained leadership)" : "";
+diff --git a/servers/src/main/java/tachyon/master/TachyonMaster.java b/servers/src/main/java/tachyon/master/TachyonMaster.java
+index 7e895f8..454e9f8 100644
+--- a/servers/src/main/java/tachyon/master/TachyonMaster.java
++++ b/servers/src/main/java/tachyon/master/TachyonMaster.java
+@@ -359,7 +359,8 @@
+     mIsServing = true;
+ 
+     // start web ui
+-    mWebServer = new MasterUIWebServer(ServiceType.MASTER_WEB, mMasterAddress, this, mTachyonConf);
++    mWebServer = new MasterUIWebServer(ServiceType.MASTER_WEB, NetworkAddressUtils.getBindAddress(
++        ServiceType.MASTER_WEB, mTachyonConf), this, mTachyonConf);
+     mWebServer.startWebServer();
+ 
+     String leaderStart = (mUseZookeeper) ? "(gained leadership)" : "";

@@ -1,0 +1,25 @@
+diff --git a/community/kernel/src/test/java/org/neo4j/kernel/api/index/PreexistingIndexEntryConflictExceptionTest.java b/community/kernel/src/test/java/org/neo4j/kernel/api/index/PreexistingIndexEntryConflictExceptionTest.java
+index 9be9828..32d33e0 100644
+--- a/community/kernel/src/test/java/org/neo4j/kernel/api/index/PreexistingIndexEntryConflictExceptionTest.java
++++ b/community/kernel/src/test/java/org/neo4j/kernel/api/index/PreexistingIndexEntryConflictExceptionTest.java
+@@ -35,8 +35,8 @@
+ 
+         // then
+         assertEquals( format( "Multiple nodes have property value 'value1':%n" +
+-                "  existing node(11)%n" +
+-                "  new node(22)" ), e.getMessage() );
++                "  node(11)%n" +
++                "  node(22)" ), e.getMessage() );
+     }
+ 
+     @Test
+@@ -47,7 +47,7 @@
+ 
+         // then
+         assertEquals( format( "Multiple nodes with label `Label1` have property `propertyKey1` = 'value1':%n" +
+-                "  existing node(11)%n" +
+-                "  new node(22)" ), e.evidenceMessage("Label1", "propertyKey1") );
++                "  node(11)%n" +
++                "  node(22)" ), e.evidenceMessage("Label1", "propertyKey1") );
+     }
+ }

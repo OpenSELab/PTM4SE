@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
+index 8c3f7ea..ad66c51 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
++++ b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
+@@ -152,7 +152,7 @@
+             channel = clientSocketChannelFactory.newChannel(channelPipeline);
+         }
+         SocketAddress connectAddress = new InetSocketAddress(url.getHost(), url.getPort());
+-        channel.connect(connectAddress);
++        channel.connect(connectAddress).awaitUninterruptibly();
+         StringBuilder builder = new StringBuilder();
+         builder.append("POST ").append(url.getRawPath()).append(" HTTP/1.1").append(HttpTunnelingClientSocketPipelineSink.LINE_TERMINATOR).
+                 append("Host: ").append(url.getHost()).append(":").append(url.getPort()).append(HttpTunnelingClientSocketPipelineSink.LINE_TERMINATOR).
+diff --git a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
+index 8c3f7ea..ad66c51 100644
+--- a/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
++++ b/src/main/java/org/jboss/netty/channel/socket/http/HttpTunnelingClientSocketChannel.java
+@@ -152,7 +152,7 @@
+             channel = clientSocketChannelFactory.newChannel(channelPipeline);
+         }
+         SocketAddress connectAddress = new InetSocketAddress(url.getHost(), url.getPort());
+-        channel.connect(connectAddress);
++        channel.connect(connectAddress).awaitUninterruptibly();
+         StringBuilder builder = new StringBuilder();
+         builder.append("POST ").append(url.getRawPath()).append(" HTTP/1.1").append(HttpTunnelingClientSocketPipelineSink.LINE_TERMINATOR).
+                 append("Host: ").append(url.getHost()).append(":").append(url.getPort()).append(HttpTunnelingClientSocketPipelineSink.LINE_TERMINATOR).

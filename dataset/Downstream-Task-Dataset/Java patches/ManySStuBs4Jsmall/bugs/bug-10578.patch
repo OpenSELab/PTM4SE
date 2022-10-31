@@ -1,0 +1,48 @@
+diff --git a/deeplearning4j-ui-parent/deeplearning4j-ui-remote-iterationlisteners/src/main/java/org/deeplearning4j/ui/weights/RemoteConvolutionalIterationListener.java b/deeplearning4j-ui-parent/deeplearning4j-ui-remote-iterationlisteners/src/main/java/org/deeplearning4j/ui/weights/RemoteConvolutionalIterationListener.java
+index bdb35f4..c77f820 100644
+--- a/deeplearning4j-ui-parent/deeplearning4j-ui-remote-iterationlisteners/src/main/java/org/deeplearning4j/ui/weights/RemoteConvolutionalIterationListener.java
++++ b/deeplearning4j-ui-parent/deeplearning4j-ui-remote-iterationlisteners/src/main/java/org/deeplearning4j/ui/weights/RemoteConvolutionalIterationListener.java
+@@ -96,7 +96,7 @@
+                     INDArray output = layer.activate();
+ 
+                     if (sampleDim < 0)
+-                        sampleDim = rnd.nextInt(output.shape()[0] - 1) + 1;
++                        sampleDim = output.shape()[0] == 1 ? 0 : rnd.nextInt(output.shape()[0] - 1) + 1;
+ 
+                     if (cnt == 0) {
+                         INDArray inputs = ((ConvolutionLayer) layer).input();
+diff --git a/deeplearning4j-ui-parent/deeplearning4j-ui/src/main/java/org/deeplearning4j/ui/weights/ConvolutionalIterationListener.java b/deeplearning4j-ui-parent/deeplearning4j-ui/src/main/java/org/deeplearning4j/ui/weights/ConvolutionalIterationListener.java
+index 5c8a78f..9ff41e8 100644
+--- a/deeplearning4j-ui-parent/deeplearning4j-ui/src/main/java/org/deeplearning4j/ui/weights/ConvolutionalIterationListener.java
++++ b/deeplearning4j-ui-parent/deeplearning4j-ui/src/main/java/org/deeplearning4j/ui/weights/ConvolutionalIterationListener.java
+@@ -135,7 +135,7 @@
+                 for (Layer layer : l.getLayers()) {
+                     if (!(layer instanceof FrozenLayer) && layer.type() == Layer.Type.CONVOLUTIONAL) {
+                         INDArray output = layer.activate();
+-                        int sampleDim = rnd.nextInt(output.shape()[0] - 1) + 1;
++                        int sampleDim = output.shape()[0] == 1 ? 0 : rnd.nextInt(output.shape()[0] - 1) + 1;
+                         if (cnt == 0) {
+                             INDArray inputs = ((ConvolutionLayer) layer).input();
+ 
+@@ -160,7 +160,7 @@
+                 for (Layer layer : l.getLayers()) {
+                     if (!(layer instanceof FrozenLayer) && layer.type() == Layer.Type.CONVOLUTIONAL) {
+                         INDArray output = layer.activate();
+-                        int sampleDim = rnd.nextInt(output.shape()[0] - 1) + 1;
++                        int sampleDim = output.shape()[0] == 1 ? 0 :rnd.nextInt(output.shape()[0] - 1) + 1;
+                         if (cnt == 0) {
+                             INDArray inputs = ((ConvolutionLayer) layer).input();
+ 
+diff --git a/deeplearning4j-ui-parent/deeplearning4j-ui-remote-iterationlisteners/src/main/java/org/deeplearning4j/ui/weights/RemoteConvolutionalIterationListener.java b/deeplearning4j-ui-parent/deeplearning4j-ui-remote-iterationlisteners/src/main/java/org/deeplearning4j/ui/weights/RemoteConvolutionalIterationListener.java
+index bdb35f4..c77f820 100644
+--- a/deeplearning4j-ui-parent/deeplearning4j-ui-remote-iterationlisteners/src/main/java/org/deeplearning4j/ui/weights/RemoteConvolutionalIterationListener.java
++++ b/deeplearning4j-ui-parent/deeplearning4j-ui-remote-iterationlisteners/src/main/java/org/deeplearning4j/ui/weights/RemoteConvolutionalIterationListener.java
+@@ -96,7 +96,7 @@
+                     INDArray output = layer.activate();
+ 
+                     if (sampleDim < 0)
+-                        sampleDim = rnd.nextInt(output.shape()[0] - 1) + 1;
++                        sampleDim = output.shape()[0] == 1 ? 0 : rnd.nextInt(output.shape()[0] - 1) + 1;
+ 
+                     if (cnt == 0) {
+                         INDArray inputs = ((ConvolutionLayer) layer).input();

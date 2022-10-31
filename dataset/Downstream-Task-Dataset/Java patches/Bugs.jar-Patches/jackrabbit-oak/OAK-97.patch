@@ -1,0 +1,13 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/AsyncIndexUpdate.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/AsyncIndexUpdate.java
+index 88eb0f7..6401f23 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/AsyncIndexUpdate.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/AsyncIndexUpdate.java
+@@ -318,7 +318,7 @@ public class AsyncIndexUpdate implements Runnable {
+                     throws CommitFailedException {
+                 // check for concurrent updates by this async task
+                 NodeState async = before.getChildNode(ASYNC);
+-                if (Objects.equal(checkpoint, async.getString(name))
++                if (checkpoint == null || Objects.equal(checkpoint, async.getString(name))
+                         && lease == async.getLong(name + "-lease")) {
+                     return after;
+                 } else {

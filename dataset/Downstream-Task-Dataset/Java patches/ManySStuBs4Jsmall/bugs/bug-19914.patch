@@ -1,0 +1,26 @@
+diff --git a/bundles/core/org.openhab.core.persistence/src/main/java/org/openhab/core/persistence/extensions/PersistenceExtensions.java b/bundles/core/org.openhab.core.persistence/src/main/java/org/openhab/core/persistence/extensions/PersistenceExtensions.java
+index 7503c44..7c66769 100644
+--- a/bundles/core/org.openhab.core.persistence/src/main/java/org/openhab/core/persistence/extensions/PersistenceExtensions.java
++++ b/bundles/core/org.openhab.core.persistence/src/main/java/org/openhab/core/persistence/extensions/PersistenceExtensions.java
+@@ -180,7 +180,7 @@
+ 	static public Boolean changedSince(Item item, AbstractInstant timestamp, String serviceName) {
+ 		Iterable<HistoricItem> result = getAllStatesSince(item, timestamp, serviceName);
+ 		Iterator<HistoricItem> it = result.iterator();
+-		State state = null;
++		State state = historicState(item, timestamp);
+ 		while(it.hasNext()) {
+ 			HistoricItem hItem = it.next();
+ 			if(state!=null && !hItem.getState().equals(state)) {
+diff --git a/bundles/core/org.openhab.core.persistence/src/main/java/org/openhab/core/persistence/extensions/PersistenceExtensions.java b/bundles/core/org.openhab.core.persistence/src/main/java/org/openhab/core/persistence/extensions/PersistenceExtensions.java
+index 7503c44..7c66769 100644
+--- a/bundles/core/org.openhab.core.persistence/src/main/java/org/openhab/core/persistence/extensions/PersistenceExtensions.java
++++ b/bundles/core/org.openhab.core.persistence/src/main/java/org/openhab/core/persistence/extensions/PersistenceExtensions.java
+@@ -180,7 +180,7 @@
+ 	static public Boolean changedSince(Item item, AbstractInstant timestamp, String serviceName) {
+ 		Iterable<HistoricItem> result = getAllStatesSince(item, timestamp, serviceName);
+ 		Iterator<HistoricItem> it = result.iterator();
+-		State state = null;
++		State state = historicState(item, timestamp);
+ 		while(it.hasNext()) {
+ 			HistoricItem hItem = it.next();
+ 			if(state!=null && !hItem.getState().equals(state)) {

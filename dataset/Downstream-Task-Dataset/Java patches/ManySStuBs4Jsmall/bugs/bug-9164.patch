@@ -1,0 +1,31 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/filters/SeverityMatchFilter.java b/src/main/java/com/puppycrawl/tools/checkstyle/filters/SeverityMatchFilter.java
+index d445424..ba91070 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/filters/SeverityMatchFilter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/filters/SeverityMatchFilter.java
+@@ -34,7 +34,7 @@
+     extends AutomaticBean
+     implements Filter {
+     /** The severity level to accept. */
+-    private SeverityLevel severityLevel = SeverityLevel.ERROR;
++    private SeverityLevel severity = SeverityLevel.ERROR;
+ 
+     /** Whether to accept or reject on severity matches. */
+     private boolean acceptOnMatch = true;
+@@ -47,7 +47,7 @@
+      * @see SeverityLevel
+      */
+     public final void setSeverity(String severity) {
+-        severityLevel = SeverityLevel.getInstance(severity);
++        this.severity = SeverityLevel.getInstance(severity);
+     }
+ 
+     /**
+@@ -61,7 +61,7 @@
+ 
+     @Override
+     public boolean accept(AuditEvent event) {
+-        final boolean result = severityLevel == event.getSeverityLevel();
++        final boolean result = severity == event.getSeverityLevel();
+         if (acceptOnMatch) {
+             return result;
+         }

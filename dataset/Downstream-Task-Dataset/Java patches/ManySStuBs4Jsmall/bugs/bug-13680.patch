@@ -1,0 +1,52 @@
+diff --git a/value/src/main/java/com/google/auto/value/processor/BuilderMethodClassifier.java b/value/src/main/java/com/google/auto/value/processor/BuilderMethodClassifier.java
+index 8f6cb5b..dabd867 100644
+--- a/value/src/main/java/com/google/auto/value/processor/BuilderMethodClassifier.java
++++ b/value/src/main/java/com/google/auto/value/processor/BuilderMethodClassifier.java
+@@ -416,8 +416,8 @@
+       return canMakeCopyUsing(copyOfMethods, valueGetter, setter);
+     }
+     String error = String.format(
+-        "Parameter type of setter method should be %s to match getter %s.%s",
+-        targetType, autoValueClass, valueGetter.getSimpleName());
++        "Parameter type %s of setter method should be %s to match getter %s.%s",
++        parameterType, targetType, autoValueClass, valueGetter.getSimpleName());
+     errorReporter.reportError(error, setter);
+     return false;
+   }
+diff --git a/value/src/test/java/com/google/auto/value/processor/CompilationTest.java b/value/src/test/java/com/google/auto/value/processor/CompilationTest.java
+index 4e47940..0eb98eb 100644
+--- a/value/src/test/java/com/google/auto/value/processor/CompilationTest.java
++++ b/value/src/test/java/com/google/auto/value/processor/CompilationTest.java
+@@ -1068,7 +1068,7 @@
+         .processedWith(new AutoValueProcessor(), new AutoValueBuilderProcessor())
+         .failsToCompile()
+         .withErrorContaining(
+-            "Parameter type of setter method should be int to match getter foo.bar.Baz.blim")
++            "Parameter type java.lang.String of setter method should be int to match getter foo.bar.Baz.blim")
+         .in(javaFileObject).onLine(12);
+   }
+ 
+@@ -1165,7 +1165,7 @@
+         .processedWith(new AutoValueProcessor(), new AutoValueBuilderProcessor())
+         .failsToCompile()
+         .withErrorContaining(
+-            "Parameter type of setter method should be int to match getter foo.bar.Baz.getBlim")
++            "Parameter type java.lang.String of setter method should be int to match getter foo.bar.Baz.getBlim")
+         .in(javaFileObject).onLine(12);
+   }
+ 
+diff --git a/value/src/main/java/com/google/auto/value/processor/BuilderMethodClassifier.java b/value/src/main/java/com/google/auto/value/processor/BuilderMethodClassifier.java
+index 8f6cb5b..dabd867 100644
+--- a/value/src/main/java/com/google/auto/value/processor/BuilderMethodClassifier.java
++++ b/value/src/main/java/com/google/auto/value/processor/BuilderMethodClassifier.java
+@@ -416,8 +416,8 @@
+       return canMakeCopyUsing(copyOfMethods, valueGetter, setter);
+     }
+     String error = String.format(
+-        "Parameter type of setter method should be %s to match getter %s.%s",
+-        targetType, autoValueClass, valueGetter.getSimpleName());
++        "Parameter type %s of setter method should be %s to match getter %s.%s",
++        parameterType, targetType, autoValueClass, valueGetter.getSimpleName());
+     errorReporter.reportError(error, setter);
+     return false;
+   }

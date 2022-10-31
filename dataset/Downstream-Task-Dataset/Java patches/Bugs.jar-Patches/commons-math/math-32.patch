@@ -1,0 +1,17 @@
+diff --git a/src/main/java/org/apache/commons/math4/random/EmpiricalDistribution.java b/src/main/java/org/apache/commons/math4/random/EmpiricalDistribution.java
+index 61bb65b..685c08b 100644
+--- a/src/main/java/org/apache/commons/math4/random/EmpiricalDistribution.java
++++ b/src/main/java/org/apache/commons/math4/random/EmpiricalDistribution.java
+@@ -610,7 +610,11 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
+         final double pB = pB(binIndex);
+         final RealDistribution kernel = k(x);
+         if (kernel instanceof ConstantRealDistribution) {
+-            return pBminus + pB;
++            if (x < kernel.getNumericalMean()) {
++                return pBminus;
++            } else {
++                return pBminus + pB;
++            }
+         }
+         final double[] binBounds = getUpperBounds();
+         final double kB = kB(binIndex);

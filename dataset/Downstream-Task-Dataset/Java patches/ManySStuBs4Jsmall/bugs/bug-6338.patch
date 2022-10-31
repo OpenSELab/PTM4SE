@@ -1,0 +1,32 @@
+diff --git a/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java b/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
+index 8201305..1586566 100644
+--- a/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
++++ b/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
+@@ -225,7 +225,10 @@
+ 
+ 			return location;
+ 		} else {
+-			return FutureUtils.completedExceptionally(new UnknownLocationException("Could not contact the state location oracle to retrieve the state location."));
++			return FutureUtils.completedExceptionally(
++				new UnknownLocationException(
++						"Could not retrieve location of state=" + queryableStateName + " of job=" + jobId +
++								". Potential reasons are: i) the state is not ready, or ii) the job does not exist."));
+ 		}
+ 	}
+ 
+diff --git a/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java b/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
+index 8201305..1586566 100644
+--- a/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
++++ b/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
+@@ -225,7 +225,10 @@
+ 
+ 			return location;
+ 		} else {
+-			return FutureUtils.completedExceptionally(new UnknownLocationException("Could not contact the state location oracle to retrieve the state location."));
++			return FutureUtils.completedExceptionally(
++				new UnknownLocationException(
++						"Could not retrieve location of state=" + queryableStateName + " of job=" + jobId +
++								". Potential reasons are: i) the state is not ready, or ii) the job does not exist."));
+ 		}
+ 	}
+ 

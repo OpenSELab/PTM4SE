@@ -1,0 +1,643 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+index a92fbeb..d7c8a72 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+@@ -207,7 +207,7 @@
+                 // omit this module if these should be omitted and the module
+                 // has the severity 'ignore'
+                 final boolean omitModule = omitIgnoredModules
+-                    && SeverityLevel.IGNORE == level;
++                    && level == SeverityLevel.IGNORE;
+ 
+                 if (omitModule && !configStack.isEmpty()) {
+                     final DefaultConfiguration parentModule =
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultConfiguration.java b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultConfiguration.java
+index 56caabd..7ad444c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultConfiguration.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultConfiguration.java
+@@ -110,7 +110,7 @@
+      */
+     public void addAttribute(String name, String value) {
+         final String current = attributeMap.put(name, value);
+-        if (null == current) {
++        if (current == null) {
+             attributeMap.put(name, value);
+         }
+         else {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
+index ff5e76c..c7f88d5 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/DefaultLogger.java
+@@ -100,7 +100,7 @@
+     @Override
+     public void addError(AuditEvent evt) {
+         final SeverityLevel severityLevel = evt.getSeverityLevel();
+-        if (SeverityLevel.IGNORE != severityLevel) {
++        if (severityLevel != SeverityLevel.IGNORE) {
+ 
+             final String fileName = evt.getFileName();
+             final String message = evt.getMessage();
+@@ -114,7 +114,7 @@
+             if (evt.getColumn() > 0) {
+                 sb.append(':').append(evt.getColumn());
+             }
+-            if (SeverityLevel.WARNING == severityLevel) {
++            if (severityLevel == SeverityLevel.WARNING) {
+                 sb.append(": warning");
+             }
+             sb.append(": ").append(message);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/XMLLogger.java b/src/main/java/com/puppycrawl/tools/checkstyle/XMLLogger.java
+index caaab29..8ea1f8e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/XMLLogger.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/XMLLogger.java
+@@ -120,7 +120,7 @@
+     /** {@inheritDoc} */
+     @Override
+     public void addError(AuditEvent evt) {
+-        if (SeverityLevel.IGNORE != evt.getSeverityLevel()) {
++        if (evt.getSeverityLevel() != SeverityLevel.IGNORE) {
+             writer.print("<error" + " line=\"" + evt.getLine() + "\"");
+             if (evt.getColumn() > 0) {
+                 writer.print(" column=\"" + evt.getColumn() + "\"");
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/FileText.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/FileText.java
+index 271c258..7b25391 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/FileText.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/FileText.java
+@@ -156,7 +156,7 @@
+             new BufferedReader(new StringReader(fullText));
+         while (true) {
+             final String line = br.readLine();
+-            if (null == line) {
++            if (line == null) {
+                 break;
+             }
+             lines.add(line);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/LocalizedMessage.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/LocalizedMessage.java
+index 85d6f8b..caf9488 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/LocalizedMessage.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/LocalizedMessage.java
+@@ -115,7 +115,7 @@
+         this.lineNo = lineNo;
+         this.colNo = colNo;
+         this.key = key;
+-        this.args = null == args ? null : args.clone();
++        this.args = args == null ? null : args.clone();
+         this.bundle = bundle;
+         this.severityLevel = severityLevel;
+         this.moduleId = moduleId;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounter.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounter.java
+index 92e06d4..cc2ad91 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/SeverityLevelCounter.java
+@@ -54,7 +54,7 @@
+     /** {@inheritDoc} */
+     @Override
+     public void addException(AuditEvent evt, Throwable throwable) {
+-        if (SeverityLevel.ERROR == level) {
++        if (level == SeverityLevel.ERROR) {
+             count++;
+         }
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/DescendantTokenCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/DescendantTokenCheck.java
+index 9273103..a19c01f 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/DescendantTokenCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/DescendantTokenCheck.java
+@@ -247,7 +247,7 @@
+                 final String descendantName = Utils
+                         .getTokenName(element);
+                 log(ast.getLineNo(), ast.getColumnNo(),
+-                        null == minimumMessage ? MSG_KEY_MIN
++                    minimumMessage == null ? MSG_KEY_MIN
+                                 : minimumMessage,
+                         String.valueOf(tokenCount),
+                         String.valueOf(minimumNumber),
+@@ -258,7 +258,7 @@
+                 final String descendantName = Utils
+                         .getTokenName(element);
+                 log(ast.getLineNo(), ast.getColumnNo(),
+-                        null == maximumMessage ? MSG_KEY_MAX
++                    maximumMessage == null ? MSG_KEY_MAX
+                                 : maximumMessage,
+                         String.valueOf(tokenCount),
+                         String.valueOf(maximumNumber),
+@@ -282,14 +282,14 @@
+         }
+         if (total < minimumNumber) {
+             log(ast.getLineNo(), ast.getColumnNo(),
+-                    null == minimumMessage ? MSG_KEY_SUM_MIN
++                minimumMessage == null ? MSG_KEY_SUM_MIN
+                             : minimumMessage,
+                     String.valueOf(total),
+                     String.valueOf(minimumNumber), name);
+         }
+         if (total > maximumNumber) {
+             log(ast.getLineNo(), ast.getColumnNo(),
+-                    null == maximumMessage ? MSG_KEY_SUM_MAX
++                maximumMessage == null ? MSG_KEY_SUM_MAX
+                             : maximumMessage,
+                     String.valueOf(total),
+                     String.valueOf(maximumNumber),
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/AnnotationUseStyleCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/AnnotationUseStyleCheck.java
+index 6b508a0..6ebeb54 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/AnnotationUseStyleCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/AnnotationUseStyleCheck.java
+@@ -393,12 +393,12 @@
+         //comma can be null if array is empty
+         final DetailAST comma = rCurly.getPreviousSibling();
+ 
+-        if (TrailingArrayComma.ALWAYS == this.comma
++        if (this.comma == TrailingArrayComma.ALWAYS
+             && (comma == null || comma.getType() != TokenTypes.COMMA)) {
+             this.log(rCurly.getLineNo(),
+                 rCurly.getColumnNo(), MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING);
+         }
+-        else if (TrailingArrayComma.NEVER == this.comma
++        else if (this.comma == TrailingArrayComma.NEVER
+             && comma != null && comma.getType() == TokenTypes.COMMA) {
+             this.log(comma.getLineNo(),
+                 comma.getColumnNo(), MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
+index d3f8f49..be74d76 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
+@@ -173,7 +173,7 @@
+             case TokenTypes.NUM_INT:
+             case TokenTypes.NUM_LONG:
+                 final String text = expr.getText();
+-                return 0.0 == CheckUtils.parseFloat(text, type);
++                return CheckUtils.parseFloat(text, type) == 0.0;
+             default:
+                 return false;
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
+index 96a13bb..fd6fc84 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
+@@ -109,7 +109,7 @@
+      *                 to report about violations.
+      */
+     public void setMessage(String message) {
+-        this.message = null == message ? "" : message;
++        this.message = message == null ? "" : message;
+     }
+ 
+     /**
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheck.java
+index 961704f..236471e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/MagicNumberCheck.java
+@@ -323,12 +323,12 @@
+ 
+         // find the method definition AST
+         DetailAST methodDefAST = ast.getParent();
+-        while (null != methodDefAST
+-                && TokenTypes.METHOD_DEF != methodDefAST.getType()) {
++        while (methodDefAST != null
++                && methodDefAST.getType() != TokenTypes.METHOD_DEF) {
+             methodDefAST = methodDefAST.getParent();
+         }
+ 
+-        if (null == methodDefAST) {
++        if (methodDefAST == null) {
+             return false;
+         }
+ 
+@@ -344,7 +344,7 @@
+             methodDefAST.findFirstToken(TokenTypes.PARAMETERS);
+         // we are in a 'public int hashCode()' method! The compiler will ensure
+         // the method returns an 'int' and is public.
+-        return 0 == paramAST.getChildCount();
++        return paramAST.getChildCount() == 0;
+     }
+ 
+     /**
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/InnerTypeLastCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/InnerTypeLastCheck.java
+index a9e77ab..7c20b5c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/InnerTypeLastCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/InnerTypeLastCheck.java
+@@ -61,7 +61,7 @@
+         }
+         else {
+             DetailAST nextSibling = ast.getNextSibling();
+-            while (null != nextSibling) {
++            while (nextSibling != null) {
+                 if (!ScopeUtils.inCodeBlock(ast)
+                     && (nextSibling.getType() == TokenTypes.VARIABLE_DEF
+                         || nextSibling.getType() == TokenTypes.METHOD_DEF)) {
+@@ -76,7 +76,7 @@
+     @Override
+     public void leaveToken(DetailAST ast) {
+         /** Is this a root class */
+-        if (null == ast.getParent()) {
++        if (ast.getParent() == null) {
+             rootClass = true;
+         }
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/AvoidStarImportCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/AvoidStarImportCheck.java
+index 8a5f2a5..fd5465e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/AvoidStarImportCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/AvoidStarImportCheck.java
+@@ -136,12 +136,12 @@
+ 
+     @Override
+     public void visitToken(final DetailAST ast) {
+-        if (!allowClassImports && TokenTypes.IMPORT == ast.getType()) {
++        if (!allowClassImports && ast.getType() == TokenTypes.IMPORT) {
+             final DetailAST startingDot = ast.getFirstChild();
+             logsStarredImportViolation(startingDot);
+         }
+         else if (!allowStaticMemberImports
+-            && TokenTypes.STATIC_IMPORT == ast.getType()) {
++            && ast.getType() == TokenTypes.STATIC_IMPORT) {
+             // must navigate past the static keyword
+             final DetailAST startingDot = ast.getFirstChild().getNextSibling();
+             logsStarredImportViolation(startingDot);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/ImportControlCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/ImportControlCheck.java
+index d9b6fe0..ee7f6ef 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/ImportControlCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/imports/ImportControlCheck.java
+@@ -119,7 +119,7 @@
+             }
+             final AccessResult access = currentLeaf.checkAccess(imp.getText(),
+                     inPkg);
+-            if (AccessResult.ALLOWED != access) {
++            if (access != AccessResult.ALLOWED) {
+                 log(ast, MSG_DISALLOWED, imp.getText());
+             }
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTag.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTag.java
+index c9594d2..cb40c76 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTag.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTag.java
+@@ -87,36 +87,36 @@
+ 
+     /** @return whether the tag is an 'return' tag **/
+     public boolean isReturnTag() {
+-        return JavadocTagInfo.RETURN == tagInfo;
++        return tagInfo == JavadocTagInfo.RETURN;
+     }
+ 
+     /** @return whether the tag is an 'param' tag **/
+     public boolean isParamTag() {
+-        return JavadocTagInfo.PARAM == tagInfo;
++        return tagInfo == JavadocTagInfo.PARAM;
+     }
+ 
+     /** @return whether the tag is an 'throws' or 'exception' tag **/
+     public boolean isThrowsTag() {
+-        return JavadocTagInfo.THROWS == tagInfo
+-            || JavadocTagInfo.EXCEPTION == tagInfo;
++        return tagInfo == JavadocTagInfo.THROWS
++            || tagInfo == JavadocTagInfo.EXCEPTION;
+     }
+ 
+     /** @return whether the tag is a 'see' or 'inheritDoc' tag **/
+     public boolean isSeeOrInheritDocTag() {
+-        return JavadocTagInfo.SEE == tagInfo || isInheritDocTag();
++        return tagInfo == JavadocTagInfo.SEE || isInheritDocTag();
+     }
+ 
+     /** @return whether the tag is a 'inheritDoc' tag **/
+     public boolean isInheritDocTag() {
+-        return JavadocTagInfo.INHERIT_DOC == tagInfo;
++        return tagInfo == JavadocTagInfo.INHERIT_DOC;
+     }
+ 
+     /** @return whether the tag can contain references to imported classes **/
+     public boolean canReferenceImports() {
+-        return JavadocTagInfo.SEE == tagInfo
+-                || JavadocTagInfo.LINK == tagInfo
+-                || JavadocTagInfo.LINKPLAIN == tagInfo
+-                || JavadocTagInfo.THROWS == tagInfo
+-                || JavadocTagInfo.EXCEPTION == tagInfo;
++        return tagInfo == JavadocTagInfo.SEE
++                || tagInfo == JavadocTagInfo.LINK
++                || tagInfo == JavadocTagInfo.LINKPLAIN
++                || tagInfo == JavadocTagInfo.THROWS
++                || tagInfo == JavadocTagInfo.EXCEPTION;
+     }
+ }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/JavaNCSSCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/JavaNCSSCheck.java
+index b8f57c7..ead7da1 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/JavaNCSSCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/JavaNCSSCheck.java
+@@ -193,11 +193,11 @@
+     public void visitToken(DetailAST ast) {
+         final int tokenType = ast.getType();
+ 
+-        if (TokenTypes.CLASS_DEF == tokenType
+-            || TokenTypes.METHOD_DEF == tokenType
+-            || TokenTypes.CTOR_DEF == tokenType
+-            || TokenTypes.STATIC_INIT == tokenType
+-            || TokenTypes.INSTANCE_INIT == tokenType) {
++        if (tokenType == TokenTypes.CLASS_DEF
++            || tokenType == TokenTypes.METHOD_DEF
++            || tokenType == TokenTypes.CTOR_DEF
++            || tokenType == TokenTypes.STATIC_INIT
++            || tokenType == TokenTypes.INSTANCE_INIT) {
+             //add a counter for this class/method
+             counters.push(new Counter());
+         }
+@@ -214,10 +214,10 @@
+     @Override
+     public void leaveToken(DetailAST ast) {
+         final int tokenType = ast.getType();
+-        if (TokenTypes.METHOD_DEF == tokenType
+-            || TokenTypes.CTOR_DEF == tokenType
+-            || TokenTypes.STATIC_INIT == tokenType
+-            || TokenTypes.INSTANCE_INIT == tokenType) {
++        if (tokenType == TokenTypes.METHOD_DEF
++            || tokenType == TokenTypes.CTOR_DEF
++            || tokenType == TokenTypes.STATIC_INIT
++            || tokenType == TokenTypes.INSTANCE_INIT) {
+             //pop counter from the stack
+             final Counter counter = counters.pop();
+ 
+@@ -227,7 +227,7 @@
+                         count, methodMax);
+             }
+         }
+-        else if (TokenTypes.CLASS_DEF == tokenType) {
++        else if (tokenType == TokenTypes.CLASS_DEF) {
+             //pop counter from the stack
+             final Counter counter = counters.pop();
+ 
+@@ -294,11 +294,11 @@
+         final int tokenType = ast.getType();
+ 
+         //check if an expression is countable
+-        if (TokenTypes.EXPR == tokenType) {
++        if (tokenType == TokenTypes.EXPR) {
+             countable = isExpressionCountable(ast);
+         }
+         //check if an variable definition is countable
+-        else if (TokenTypes.VARIABLE_DEF == tokenType) {
++        else if (tokenType == TokenTypes.VARIABLE_DEF) {
+             countable = isVariableDefCountable(ast);
+         }
+         return countable;
+@@ -317,8 +317,8 @@
+         // object block
+         final int parentType = ast.getParent().getType();
+ 
+-        if (TokenTypes.SLIST == parentType
+-            || TokenTypes.OBJBLOCK == parentType) {
++        if (parentType == TokenTypes.SLIST
++            || parentType == TokenTypes.OBJBLOCK) {
+             final DetailAST prevSibling = ast.getPreviousSibling();
+ 
+             //is countable if no previous sibling is found or
+@@ -326,7 +326,7 @@
+             //This is done because multiple assignment on one line are countes
+             // as 1
+             countable = prevSibling == null
+-                    || TokenTypes.COMMA != prevSibling.getType();
++                    || prevSibling.getType() != TokenTypes.COMMA;
+         }
+ 
+         return countable;
+@@ -356,7 +356,7 @@
+                 //don't count if or loop conditions
+                 final DetailAST prevSibling = ast.getPreviousSibling();
+                 countable = prevSibling == null
+-                    || TokenTypes.LPAREN != prevSibling.getType();
++                    || prevSibling.getType() != TokenTypes.LPAREN;
+                 break;
+             default :
+                 countable = false;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
+index 4dc01da..0adef80 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
+@@ -76,10 +76,10 @@
+ 
+     @Override
+     public void visitToken(DetailAST ast) {
+-        if (TokenTypes.INTERFACE_DEF == ast.getType()) {
++        if (ast.getType() == TokenTypes.INTERFACE_DEF) {
+             checkInterfaceModifiers(ast);
+         }
+-        else if (TokenTypes.CTOR_DEF == ast.getType()
++        else if (ast.getType() == TokenTypes.CTOR_DEF
+                 && isEnumMember(ast)) {
+             checkEnumConstructorModifiers(ast);
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/MethodNameCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/MethodNameCheck.java
+index ef8f86d..a94f1cb 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/MethodNameCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/MethodNameCheck.java
+@@ -129,7 +129,7 @@
+             // new Outclass.InnerInterface(x) { ... }
+             // Such a rare case, will not have the logic to handle parsing
+             // down the tree looking for the first ident.
+-            if (null != classIdent
++            if (classIdent != null
+                 && method.getText().equals(classIdent.getText())) {
+                 log(method.getLineNo(), method.getColumnNo(),
+                     MSG_KEY, method.getText());
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/CommentSuppressor.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/CommentSuppressor.java
+index e3b68a1..97cdcc2 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/CommentSuppressor.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/CommentSuppressor.java
+@@ -34,7 +34,7 @@
+     @Override
+     public boolean shouldSuppress(int startLineNo, int startColNo,
+             int endLineNo, int endColNo) {
+-        return null != currentContents
++        return currentContents != null
+                 && currentContents.hasIntersectionWithComment(startLineNo,
+                         startColNo, endLineNo, endColNo);
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
+index 3fc4940..b86b7b7 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
+@@ -110,7 +110,7 @@
+          */
+         int value(Scope scope) {
+             final Integer value = counts.get(scope);
+-            return null == value ? 0 : value;
++            return value == null ? 0 : value;
+         }
+ 
+         /** @return the total number of methods. */
+@@ -158,21 +158,21 @@
+ 
+     @Override
+     public void visitToken(DetailAST ast) {
+-        if (TokenTypes.METHOD_DEF == ast.getType()) {
++        if (ast.getType() == TokenTypes.METHOD_DEF) {
+             raiseCounter(ast);
+         }
+         else {
+-            final boolean inInterface = TokenTypes.INTERFACE_DEF == ast.getType();
++            final boolean inInterface = ast.getType() == TokenTypes.INTERFACE_DEF;
+             counters.push(new MethodCounter(inInterface));
+         }
+     }
+ 
+     @Override
+     public void leaveToken(DetailAST ast) {
+-        if (TokenTypes.CLASS_DEF == ast.getType()
+-            || TokenTypes.INTERFACE_DEF == ast.getType()
+-            || TokenTypes.ENUM_CONSTANT_DEF == ast.getType()
+-            || TokenTypes.ENUM_DEF == ast.getType()) {
++        if (ast.getType() == TokenTypes.CLASS_DEF
++            || ast.getType() == TokenTypes.INTERFACE_DEF
++            || ast.getType() == TokenTypes.ENUM_CONSTANT_DEF
++            || ast.getType() == TokenTypes.ENUM_DEF) {
+             final MethodCounter counter = counters.pop();
+             checkCounters(counter, ast);
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/OuterTypeNumberCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/OuterTypeNumberCheck.java
+index 1a8f6c0..b23a09d 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/OuterTypeNumberCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/OuterTypeNumberCheck.java
+@@ -69,7 +69,7 @@
+ 
+     @Override
+     public void visitToken(DetailAST ast) {
+-        if (0 == currentDepth) {
++        if (currentDepth == 0) {
+             outerNum++;
+         }
+         currentDepth++;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/AbstractParenPadCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/AbstractParenPadCheck.java
+index c7f5f0c..0a5949a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/AbstractParenPadCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/AbstractParenPadCheck.java
+@@ -72,11 +72,11 @@
+         final String line = getLines()[ast.getLineNo() - 1];
+         final int after = ast.getColumnNo() + 1;
+         if (after < line.length()) {
+-            if (PadOption.NOSPACE == getAbstractOption()
++            if (getAbstractOption() == PadOption.NOSPACE
+                 && Character.isWhitespace(line.charAt(after))) {
+                 log(ast.getLineNo(), after, WS_FOLLOWED, "(");
+             }
+-            else if (PadOption.SPACE == getAbstractOption()
++            else if (getAbstractOption() == PadOption.SPACE
+                      && !Character.isWhitespace(line.charAt(after))
+                      && line.charAt(after) != ')') {
+                 log(ast.getLineNo(), after, WS_NOT_FOLLOWED, "(");
+@@ -92,12 +92,12 @@
+         final String line = getLines()[ast.getLineNo() - 1];
+         final int before = ast.getColumnNo() - 1;
+         if (before >= 0) {
+-            if (PadOption.NOSPACE == getAbstractOption()
++            if (getAbstractOption() == PadOption.NOSPACE
+                 && Character.isWhitespace(line.charAt(before))
+                 && !Utils.whitespaceBefore(before, line)) {
+                 log(ast.getLineNo(), before, WS_PRECEDED, ")");
+             }
+-            else if (PadOption.SPACE == getAbstractOption()
++            else if (getAbstractOption() == PadOption.SPACE
+                 && !Character.isWhitespace(line.charAt(before))
+                 && line.charAt(before) != '(') {
+                 log(ast.getLineNo(), ast.getColumnNo(),
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForInitializerPadCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForInitializerPadCheck.java
+index 1d71496..93614de 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForInitializerPadCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForInitializerPadCheck.java
+@@ -91,11 +91,11 @@
+             //don't check if semi at beginning of line
+             if (!Utils.whitespaceBefore(before, line)) {
+                 final PadOption option = getAbstractOption();
+-                if (PadOption.NOSPACE == option
++                if (option == PadOption.NOSPACE
+                     && Character.isWhitespace(line.charAt(before))) {
+                     log(semi.getLineNo(), before, MSG_PRECEDED, ";");
+                 }
+-                else if (PadOption.SPACE == option
++                else if (option == PadOption.SPACE
+                          && !Character.isWhitespace(line.charAt(before))) {
+                     log(semi.getLineNo(), before, MSG_NOT_PRECEDED, ";");
+                 }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForIteratorPadCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForIteratorPadCheck.java
+index 65b49f7..e86e2b0 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForIteratorPadCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForIteratorPadCheck.java
+@@ -89,11 +89,11 @@
+             final int after = semi.getColumnNo() + 1;
+             //don't check if at end of line
+             if (after < line.length()) {
+-                if (PadOption.NOSPACE == getAbstractOption()
++                if (getAbstractOption() == PadOption.NOSPACE
+                     && Character.isWhitespace(line.charAt(after))) {
+                     log(semi.getLineNo(), after, WS_FOLLOWED, ";");
+                 }
+-                else if (PadOption.SPACE == getAbstractOption()
++                else if (getAbstractOption() == PadOption.SPACE
+                          && !Character.isWhitespace(line.charAt(after))) {
+                     log(semi.getLineNo(), after, WS_NOT_FOLLOWED, ";");
+                 }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyLineSeparatorCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyLineSeparatorCheck.java
+index 915f728..31a8ec1 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyLineSeparatorCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyLineSeparatorCheck.java
+@@ -331,7 +331,7 @@
+      */
+     private static boolean hasEmptyLineAfter(DetailAST token) {
+         DetailAST lastToken = token.getLastChild().getLastChild();
+-        if (null == lastToken) {
++        if (lastToken == null) {
+             lastToken = token.getLastChild();
+         }
+         return token.getNextSibling().getLineNo() - lastToken.getLineNo() > 1;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/GenericWhitespaceCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/GenericWhitespaceCheck.java
+index 5cf9cc5..10a866a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/GenericWhitespaceCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/GenericWhitespaceCheck.java
+@@ -147,7 +147,7 @@
+ 
+             // Check if the last Generic, in which case must be a whitespace
+             // or a '(),[.'.
+-            if (1 == depth) {
++            if (depth == 1) {
+                 processSingleGeneric(ast, line, after);
+             }
+             else {
+@@ -255,9 +255,9 @@
+             // Detect if the first case
+             final DetailAST parent = ast.getParent();
+             final DetailAST grandparent = parent.getParent();
+-            if (TokenTypes.TYPE_PARAMETERS == parent.getType()
+-                && (TokenTypes.CTOR_DEF == grandparent.getType()
+-                    || TokenTypes.METHOD_DEF == grandparent.getType())) {
++            if (parent.getType() == TokenTypes.TYPE_PARAMETERS
++                && (grandparent.getType() == TokenTypes.CTOR_DEF
++                    || grandparent.getType() == TokenTypes.METHOD_DEF)) {
+                 // Require whitespace
+                 if (!Character.isWhitespace(line.charAt(before))) {
+                     log(ast.getLineNo(), before, WS_NOT_PRECEDED, "<");
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/MethodParamPadCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/MethodParamPadCheck.java
+index 720226e..cf62d7a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/MethodParamPadCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/MethodParamPadCheck.java
+@@ -138,11 +138,11 @@
+         }
+         else {
+             final int before = parenAST.getColumnNo() - 1;
+-            if (PadOption.NOSPACE == getAbstractOption()
++            if (getAbstractOption() == PadOption.NOSPACE
+                 && Character.isWhitespace(line.charAt(before))) {
+                 log(parenAST , WS_PRECEDED, parenAST.getText());
+             }
+-            else if (PadOption.SPACE == getAbstractOption()
++            else if (getAbstractOption() == PadOption.SPACE
+                      && !Character.isWhitespace(line.charAt(before))) {
+                 log(parenAST, WS_NOT_PRECEDED, parenAST.getText());
+             }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+index a92fbeb..d7c8a72 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ConfigurationLoader.java
+@@ -207,7 +207,7 @@
+                 // omit this module if these should be omitted and the module
+                 // has the severity 'ignore'
+                 final boolean omitModule = omitIgnoredModules
+-                    && SeverityLevel.IGNORE == level;
++                    && level == SeverityLevel.IGNORE;
+ 
+                 if (omitModule && !configStack.isEmpty()) {
+                     final DefaultConfiguration parentModule =

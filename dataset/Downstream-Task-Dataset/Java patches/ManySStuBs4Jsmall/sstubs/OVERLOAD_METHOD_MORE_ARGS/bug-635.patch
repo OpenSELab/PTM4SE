@@ -1,0 +1,112 @@
+diff --git a/backends/gdx-openal/src/com/badlogic/gdx/backends/openal/OggInputStream.java b/backends/gdx-openal/src/com/badlogic/gdx/backends/openal/OggInputStream.java
+index 9ec64bf..2a42fcc 100644
+--- a/backends/gdx-openal/src/com/badlogic/gdx/backends/openal/OggInputStream.java
++++ b/backends/gdx-openal/src/com/badlogic/gdx/backends/openal/OggInputStream.java
+@@ -168,7 +168,7 @@
+ 		try {
+ 			bytes = input.read(buffer, index, 4096);
+ 		} catch (Exception e) {
+-			throw new GdxRuntimeException("Failure reading Vorbis.");
++			throw new GdxRuntimeException("Failure reading Vorbis.", e);
+ 		}
+ 		syncState.wrote(bytes);
+ 
+@@ -252,7 +252,7 @@
+ 			try {
+ 				bytes = input.read(buffer, index, 4096);
+ 			} catch (Exception e) {
+-				throw new GdxRuntimeException("Failed to read Vorbis.");
++				throw new GdxRuntimeException("Failed to read Vorbis.", e);
+ 			}
+ 			if (bytes == 0 && i < 2) {
+ 				throw new GdxRuntimeException("End of file before finding all Vorbis headers.");
+@@ -393,7 +393,7 @@
+ 						try {
+ 							bytes = input.read(buffer, index, 4096);
+ 						} catch (Exception e) {
+-							throw new GdxRuntimeException("Error during Vorbis decoding.");
++							throw new GdxRuntimeException("Error during Vorbis decoding.", e);
+ 						}
+ 					} else {
+ 						bytes = 0;
+diff --git a/gdx/src/com/badlogic/gdx/graphics/Pixmap.java b/gdx/src/com/badlogic/gdx/graphics/Pixmap.java
+index d2264cb..4e3a6f1 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/Pixmap.java
++++ b/gdx/src/com/badlogic/gdx/graphics/Pixmap.java
+@@ -129,7 +129,7 @@
+ 			in = file.read();
+ 			pixmap = new Gdx2DPixmap(in, 0);
+ 		} catch (Exception e) {
+-			throw new GdxRuntimeException("couldn't load file '" + file.name() + "', " + e.getMessage());
++			throw new GdxRuntimeException("couldn't load file '" + file.name() + "'", e);
+ 		} finally {
+ 			if(in != null);
+ 			try { in.close(); } catch(Exception e) { };
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g2d/tiled/TiledLoader.java b/gdx/src/com/badlogic/gdx/graphics/g2d/tiled/TiledLoader.java
+index e9ae0cc..dd02f51 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g2d/tiled/TiledLoader.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g2d/tiled/TiledLoader.java
+@@ -297,7 +297,7 @@
+ 								currentLayer.tile[row][col] = unsignedByteToInt(readTemp[0]) | unsignedByteToInt(readTemp[1]) << 8
+ 									| unsignedByteToInt(readTemp[2]) << 16 | unsignedByteToInt(readTemp[3]) << 24;
+ 							} catch (DataFormatException e) {
+-								throw new GdxRuntimeException("Error Reading TMX Layer Data - IOException: " + e.getMessage());
++								throw new GdxRuntimeException("Error Reading TMX Layer Data.", e);
+ 							}
+ 						}
+ 					}
+@@ -320,7 +320,7 @@
+ 								currentLayer.tile[row][col] = unsignedByteToInt(readTemp[0]) | unsignedByteToInt(readTemp[1]) << 8
+ 									| unsignedByteToInt(readTemp[2]) << 16 | unsignedByteToInt(readTemp[3]) << 24;
+ 							} catch (IOException e) {
+-								throw new GdxRuntimeException("Error Reading TMX Layer Data - IOException: " + e.getMessage());
++								throw new GdxRuntimeException("Error Reading TMX Layer Data.", e);
+ 							}
+ 						}
+ 					}
+@@ -341,11 +341,11 @@
+ 				}
+ 			});
+ 		} catch (ParserConfigurationException e) {
+-			throw new GdxRuntimeException("Error Parsing TMX file - Parser Configuration Exception: " + e.getMessage());
++			throw new GdxRuntimeException("Error Parsing TMX file.", e);
+ 		} catch (SAXException e) {
+-			throw new GdxRuntimeException("Error Parsing TMX file - SAX Exception: " + e.getMessage());
++			throw new GdxRuntimeException("Error Parsing TMX file.", e);
+ 		} catch (IOException e) {
+-			throw new GdxRuntimeException("Error Parsing TMX file - IOException: " + e.getMessage());
++			throw new GdxRuntimeException("Error Parsing TMX file.", e);
+ 		}
+ 
+ 		return map;
+diff --git a/backends/gdx-openal/src/com/badlogic/gdx/backends/openal/OggInputStream.java b/backends/gdx-openal/src/com/badlogic/gdx/backends/openal/OggInputStream.java
+index 9ec64bf..2a42fcc 100644
+--- a/backends/gdx-openal/src/com/badlogic/gdx/backends/openal/OggInputStream.java
++++ b/backends/gdx-openal/src/com/badlogic/gdx/backends/openal/OggInputStream.java
+@@ -168,7 +168,7 @@
+ 		try {
+ 			bytes = input.read(buffer, index, 4096);
+ 		} catch (Exception e) {
+-			throw new GdxRuntimeException("Failure reading Vorbis.");
++			throw new GdxRuntimeException("Failure reading Vorbis.", e);
+ 		}
+ 		syncState.wrote(bytes);
+ 
+@@ -252,7 +252,7 @@
+ 			try {
+ 				bytes = input.read(buffer, index, 4096);
+ 			} catch (Exception e) {
+-				throw new GdxRuntimeException("Failed to read Vorbis.");
++				throw new GdxRuntimeException("Failed to read Vorbis.", e);
+ 			}
+ 			if (bytes == 0 && i < 2) {
+ 				throw new GdxRuntimeException("End of file before finding all Vorbis headers.");
+@@ -393,7 +393,7 @@
+ 						try {
+ 							bytes = input.read(buffer, index, 4096);
+ 						} catch (Exception e) {
+-							throw new GdxRuntimeException("Error during Vorbis decoding.");
++							throw new GdxRuntimeException("Error during Vorbis decoding.", e);
+ 						}
+ 					} else {
+ 						bytes = 0;

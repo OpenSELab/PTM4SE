@@ -1,0 +1,80 @@
+diff --git a/src/main/java/com/nhn/pinpoint/web/filter/FromToResponseFilter.java b/src/main/java/com/nhn/pinpoint/web/filter/FromToResponseFilter.java
+index b7d1238..53c68bf 100644
+--- a/src/main/java/com/nhn/pinpoint/web/filter/FromToResponseFilter.java
++++ b/src/main/java/com/nhn/pinpoint/web/filter/FromToResponseFilter.java
+@@ -94,7 +94,7 @@
+ 						// 서버 맵 스펙하고 맞춰면 될 듯.
+ 						return span.getErrCode() > 0 && checkResponseCondition(span.getElapsed());
+ 					} else {
+-						return checkResponseCondition(span.getElapsed());
++						return span.getErrCode() == 0 && checkResponseCondition(span.getElapsed());
+ 					}
+ 				}
+ 			}
+@@ -111,7 +111,7 @@
+ 							if (findError) {
+ 								return event.hasException() && checkResponseCondition(event.getEndElapsed());
+ 							} else {
+-								return checkResponseCondition(event.getEndElapsed());
++								return !event.hasException() && checkResponseCondition(event.getEndElapsed());
+ 							}
+ 						}
+ 					}
+@@ -137,7 +137,7 @@
+ 								// 어떤게 맞지?? 서버 맵 스펙하고 맞춰면 될 듯.
+ 								return destSpan.getErrCode() > 0 && checkResponseCondition(destSpan.getElapsed());
+ 							} else {
+-								return checkResponseCondition(destSpan.getElapsed());
++								return destSpan.getErrCode() == 0 && checkResponseCondition(destSpan.getElapsed());
+ 							}
+ 						}
+ 					}
+@@ -155,7 +155,7 @@
+ 							if (findError) {
+ 								return event.hasException() && checkResponseCondition(event.getEndElapsed());
+ 							} else {
+-								return checkResponseCondition(event.getEndElapsed());
++								return !event.hasException() && checkResponseCondition(event.getEndElapsed());
+ 							}
+ 						}
+ 					}
+diff --git a/src/main/java/com/nhn/pinpoint/web/filter/FromToResponseFilter.java b/src/main/java/com/nhn/pinpoint/web/filter/FromToResponseFilter.java
+index b7d1238..53c68bf 100644
+--- a/src/main/java/com/nhn/pinpoint/web/filter/FromToResponseFilter.java
++++ b/src/main/java/com/nhn/pinpoint/web/filter/FromToResponseFilter.java
+@@ -94,7 +94,7 @@
+ 						// 서버 맵 스펙하고 맞춰면 될 듯.
+ 						return span.getErrCode() > 0 && checkResponseCondition(span.getElapsed());
+ 					} else {
+-						return checkResponseCondition(span.getElapsed());
++						return span.getErrCode() == 0 && checkResponseCondition(span.getElapsed());
+ 					}
+ 				}
+ 			}
+@@ -111,7 +111,7 @@
+ 							if (findError) {
+ 								return event.hasException() && checkResponseCondition(event.getEndElapsed());
+ 							} else {
+-								return checkResponseCondition(event.getEndElapsed());
++								return !event.hasException() && checkResponseCondition(event.getEndElapsed());
+ 							}
+ 						}
+ 					}
+@@ -137,7 +137,7 @@
+ 								// 어떤게 맞지?? 서버 맵 스펙하고 맞춰면 될 듯.
+ 								return destSpan.getErrCode() > 0 && checkResponseCondition(destSpan.getElapsed());
+ 							} else {
+-								return checkResponseCondition(destSpan.getElapsed());
++								return destSpan.getErrCode() == 0 && checkResponseCondition(destSpan.getElapsed());
+ 							}
+ 						}
+ 					}
+@@ -155,7 +155,7 @@
+ 							if (findError) {
+ 								return event.hasException() && checkResponseCondition(event.getEndElapsed());
+ 							} else {
+-								return checkResponseCondition(event.getEndElapsed());
++								return !event.hasException() && checkResponseCondition(event.getEndElapsed());
+ 							}
+ 						}
+ 					}

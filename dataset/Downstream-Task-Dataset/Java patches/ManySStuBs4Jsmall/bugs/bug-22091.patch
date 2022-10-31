@@ -1,0 +1,44 @@
+diff --git a/src/edu/stanford/nlp/dcoref/Rules.java b/src/edu/stanford/nlp/dcoref/Rules.java
+index 8aa625b..cb452dc 100644
+--- a/src/edu/stanford/nlp/dcoref/Rules.java
++++ b/src/edu/stanford/nlp/dcoref/Rules.java
+@@ -330,7 +330,7 @@
+   public static boolean entityExactStringMatch(CorefCluster mentionCluster, CorefCluster potentialAntecedent, Dictionaries dict, Set<Mention> roleSet){
+     boolean matched = false;
+     for(Mention m : mentionCluster.corefMentions){
+-      if(roleSet.contains(m)) return false;
++      if(roleSet!=null && roleSet.contains(m)) return false;
+       if(m.isPronominal()) {
+         continue;
+       }
+@@ -362,7 +362,7 @@
+       Mention ant,
+       Dictionaries dict,
+       Set<Mention> roleSet){
+-    if(roleSet.contains(mention)) return false;
++    if(roleSet!=null && roleSet.contains(mention)) return false;
+     if(mention.mentionType == MentionType.LIST || ant.mentionType == MentionType.LIST) return false;
+     if(mention.isPronominal() || ant.isPronominal()
+         || dict.allPronouns.contains(mention.lowercaseNormalizedSpanString())
+diff --git a/src/edu/stanford/nlp/dcoref/Rules.java b/src/edu/stanford/nlp/dcoref/Rules.java
+index 8aa625b..cb452dc 100644
+--- a/src/edu/stanford/nlp/dcoref/Rules.java
++++ b/src/edu/stanford/nlp/dcoref/Rules.java
+@@ -330,7 +330,7 @@
+   public static boolean entityExactStringMatch(CorefCluster mentionCluster, CorefCluster potentialAntecedent, Dictionaries dict, Set<Mention> roleSet){
+     boolean matched = false;
+     for(Mention m : mentionCluster.corefMentions){
+-      if(roleSet.contains(m)) return false;
++      if(roleSet!=null && roleSet.contains(m)) return false;
+       if(m.isPronominal()) {
+         continue;
+       }
+@@ -362,7 +362,7 @@
+       Mention ant,
+       Dictionaries dict,
+       Set<Mention> roleSet){
+-    if(roleSet.contains(mention)) return false;
++    if(roleSet!=null && roleSet.contains(mention)) return false;
+     if(mention.mentionType == MentionType.LIST || ant.mentionType == MentionType.LIST) return false;
+     if(mention.isPronominal() || ant.isPronominal()
+         || dict.allPronouns.contains(mention.lowercaseNormalizedSpanString())

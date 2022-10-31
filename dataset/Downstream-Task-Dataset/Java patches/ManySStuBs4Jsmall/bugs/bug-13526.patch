@@ -1,0 +1,13 @@
+diff --git a/ImportAPI/src/org/gephi/io/importer/impl/NodeDraftImpl.java b/ImportAPI/src/org/gephi/io/importer/impl/NodeDraftImpl.java
+index bc0e605..47a809e 100644
+--- a/ImportAPI/src/org/gephi/io/importer/impl/NodeDraftImpl.java
++++ b/ImportAPI/src/org/gephi/io/importer/impl/NodeDraftImpl.java
+@@ -207,7 +207,7 @@
+         if (column.getType().isDynamicType() && !(value instanceof DynamicType)) {
+             if (value instanceof String && !column.getType().equals(AttributeType.DYNAMIC_STRING)) {
+                 //Value needs to be parsed
+-                value = TypeConvertor.getStaticType(column.getType()).parse(value);
++                value = TypeConvertor.getStaticType(column.getType()).parse((String) value);
+             }
+             //Wrap value in a dynamic type
+             value = DynamicUtilities.createDynamicObject(column.getType(), new Interval(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, value));

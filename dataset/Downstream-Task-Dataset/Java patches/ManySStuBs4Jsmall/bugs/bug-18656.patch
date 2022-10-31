@@ -1,0 +1,26 @@
+diff --git a/handler/src/test/java/io/netty/handler/ssl/JdkSslEngineTest.java b/handler/src/test/java/io/netty/handler/ssl/JdkSslEngineTest.java
+index 640823a..d975b30 100644
+--- a/handler/src/test/java/io/netty/handler/ssl/JdkSslEngineTest.java
++++ b/handler/src/test/java/io/netty/handler/ssl/JdkSslEngineTest.java
+@@ -286,7 +286,7 @@
+     @Override
+     protected boolean mySetupMutualAuthServerIsValidException(Throwable cause) {
+         // TODO(scott): work around for a JDK issue. The exception should be SSLHandshakeException.
+-        return super.mySetupMutualAuthServerIsValidException(cause) || cause instanceof SSLException;
++        return super.mySetupMutualAuthServerIsValidException(cause) || causedBySSLException(cause);
+     }
+ 
+     private void runTest() throws Exception {
+diff --git a/handler/src/test/java/io/netty/handler/ssl/JdkSslEngineTest.java b/handler/src/test/java/io/netty/handler/ssl/JdkSslEngineTest.java
+index 640823a..d975b30 100644
+--- a/handler/src/test/java/io/netty/handler/ssl/JdkSslEngineTest.java
++++ b/handler/src/test/java/io/netty/handler/ssl/JdkSslEngineTest.java
+@@ -286,7 +286,7 @@
+     @Override
+     protected boolean mySetupMutualAuthServerIsValidException(Throwable cause) {
+         // TODO(scott): work around for a JDK issue. The exception should be SSLHandshakeException.
+-        return super.mySetupMutualAuthServerIsValidException(cause) || cause instanceof SSLException;
++        return super.mySetupMutualAuthServerIsValidException(cause) || causedBySSLException(cause);
+     }
+ 
+     private void runTest() throws Exception {

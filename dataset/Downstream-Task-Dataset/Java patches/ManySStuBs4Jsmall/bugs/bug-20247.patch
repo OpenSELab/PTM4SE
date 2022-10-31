@@ -1,0 +1,32 @@
+diff --git a/api/src/test/java/org/openmrs/api/OrderServiceTest.java b/api/src/test/java/org/openmrs/api/OrderServiceTest.java
+index 820d2c8..0bdefd6 100644
+--- a/api/src/test/java/org/openmrs/api/OrderServiceTest.java
++++ b/api/src/test/java/org/openmrs/api/OrderServiceTest.java
+@@ -1410,7 +1410,8 @@
+ 	}
+ 	
+ 	/**
+-	 * @verifies pass if an active drug order for the same concept and care setting but different formulation exists
++	 * @verifies pass if an active drug order for the same concept and care setting but different
++	 *           formulation exists
+ 	 * @see OrderService#saveOrder(org.openmrs.Order, OrderContext)
+ 	 */
+ 	@Test
+@@ -1445,7 +1446,7 @@
+ 	 * @see OrderService#saveOrder(org.openmrs.Order, OrderContext)
+ 	 */
+ 	@Test
+-	public void saveOrder_shouldFailIfAnActiveOrderForTheSanmeDrugFormulationExists() throws Exception {
++	public void saveOrder_shouldFailIfAnActiveDrugOrderForTheSameDrugFormulationExists() throws Exception {
+ 		executeDataSet("org/openmrs/api/include/OrderServiceTest-drugOrdersWitSameConceptAndDifferentFormAndStrength.xml");
+ 		final Patient patient = patientService.getPatient(2);
+ 		//sanity check that we have an active order for the same concept
+@@ -1467,7 +1468,7 @@
+ 		
+ 		expectedException.expect(APIException.class);
+ 		expectedException.expectMessage("Cannot have more than one active order for the same orderable and care setting");
+-		Order savedDrugOrder = orderService.saveOrder(order, null);
++		orderService.saveOrder(order, null);
+ 	}
+ 	
+ 	/**

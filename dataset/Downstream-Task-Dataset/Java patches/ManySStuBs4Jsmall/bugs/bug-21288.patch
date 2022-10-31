@@ -1,0 +1,39 @@
+diff --git a/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/log4j2/Log4J2RestartListener.java b/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/log4j2/Log4J2RestartListener.java
+index f992f1c..0bdea40 100644
+--- a/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/log4j2/Log4J2RestartListener.java
++++ b/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/log4j2/Log4J2RestartListener.java
+@@ -38,7 +38,7 @@
+ 
+ 	@Override
+ 	public void beforeRestart() {
+-		if (ClassUtils.isPresent("org.apache.logging.log4j.LogManager",
++		if (ClassUtils.isPresent("org.apache.logging.log4j.core.impl.Log4jContextFactory",
+ 				getClass().getClassLoader())) {
+ 			prepareLog4J2ForRestart();
+ 		}
+diff --git a/spring-boot/src/main/java/org/springframework/boot/logging/LoggingSystem.java b/spring-boot/src/main/java/org/springframework/boot/logging/LoggingSystem.java
+index 8b63406..1ae1951 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/logging/LoggingSystem.java
++++ b/spring-boot/src/main/java/org/springframework/boot/logging/LoggingSystem.java
+@@ -43,7 +43,7 @@
+ 		Map<String, String> systems = new LinkedHashMap<String, String>();
+ 		systems.put("ch.qos.logback.core.Appender",
+ 				"org.springframework.boot.logging.logback.LogbackLoggingSystem");
+-		systems.put("org.apache.logging.log4j.LogManager",
++		systems.put("org.apache.logging.log4j.core.impl.Log4jContextFactory",
+ 				"org.springframework.boot.logging.log4j2.Log4J2LoggingSystem");
+ 		systems.put("org.apache.log4j.PropertyConfigurator",
+ 				"org.springframework.boot.logging.log4j.Log4JLoggingSystem");
+diff --git a/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/log4j2/Log4J2RestartListener.java b/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/log4j2/Log4J2RestartListener.java
+index f992f1c..0bdea40 100644
+--- a/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/log4j2/Log4J2RestartListener.java
++++ b/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/log4j2/Log4J2RestartListener.java
+@@ -38,7 +38,7 @@
+ 
+ 	@Override
+ 	public void beforeRestart() {
+-		if (ClassUtils.isPresent("org.apache.logging.log4j.LogManager",
++		if (ClassUtils.isPresent("org.apache.logging.log4j.core.impl.Log4jContextFactory",
+ 				getClass().getClassLoader())) {
+ 			prepareLog4J2ForRestart();
+ 		}

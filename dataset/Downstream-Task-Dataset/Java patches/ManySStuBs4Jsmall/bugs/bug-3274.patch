@@ -1,0 +1,13 @@
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest2.java b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest2.java
+index dfa6d28..2f32dbf 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest2.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest2.java
+@@ -35,7 +35,7 @@
+                      "   WHERE RowNumber BETWEEN ? AND ?";
+ 
+         String expect = "SELECT *" +
+-        		"\nFROM (SELECT ROW_NUMBER() OVER () ORDER BY FAlertDate DESC, FAlertLevel, FAlertType AS RowNumber, *" +
++        		"\nFROM (SELECT ROW_NUMBER() OVER (ORDER BY FAlertDate DESC, FAlertLevel, FAlertType) AS RowNumber, *" +
+         		"\n\tFROM monitor_business" +
+         		"\n\tWHERE FRemoveAlert = ?" +
+         		"\n\t) temp_table" +

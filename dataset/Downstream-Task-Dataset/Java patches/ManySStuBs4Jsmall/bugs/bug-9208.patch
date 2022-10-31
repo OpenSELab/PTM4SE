@@ -1,0 +1,62 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/AllChecksTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/AllChecksTest.java
+index 7e58d3f..59c14f6 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/AllChecksTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/AllChecksTest.java
+@@ -80,7 +80,7 @@
+ 
+         for (Class<?> check : checkstyleChecks) {
+             if (Check.class.isAssignableFrom(check)) {
+-                final Check testedCheck = (Check) check.newInstance();
++                final Check testedCheck = (Check) check.getDeclaredConstructor().newInstance();
+                 final int[] defaultTokens = testedCheck.getDefaultTokens();
+                 final int[] acceptableTokens = testedCheck.getAcceptableTokens();
+ 
+@@ -100,7 +100,7 @@
+ 
+         for (Class<?> check : checkstyleChecks) {
+             if (Check.class.isAssignableFrom(check)) {
+-                final Check testedCheck = (Check) check.newInstance();
++                final Check testedCheck = (Check) check.getDeclaredConstructor().newInstance();
+                 final int[] requiredTokens = testedCheck.getRequiredTokens();
+                 final int[] acceptableTokens = testedCheck.getAcceptableTokens();
+ 
+@@ -120,7 +120,7 @@
+ 
+         for (Class<?> check : checkstyleChecks) {
+             if (Check.class.isAssignableFrom(check)) {
+-                final Check testedCheck = (Check) check.newInstance();
++                final Check testedCheck = (Check) check.getDeclaredConstructor().newInstance();
+                 final int[] defaultTokens = testedCheck.getDefaultTokens();
+                 final int[] requiredTokens = testedCheck.getRequiredTokens();
+ 
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/AllChecksTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/AllChecksTest.java
+index 7e58d3f..59c14f6 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/AllChecksTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/AllChecksTest.java
+@@ -80,7 +80,7 @@
+ 
+         for (Class<?> check : checkstyleChecks) {
+             if (Check.class.isAssignableFrom(check)) {
+-                final Check testedCheck = (Check) check.newInstance();
++                final Check testedCheck = (Check) check.getDeclaredConstructor().newInstance();
+                 final int[] defaultTokens = testedCheck.getDefaultTokens();
+                 final int[] acceptableTokens = testedCheck.getAcceptableTokens();
+ 
+@@ -100,7 +100,7 @@
+ 
+         for (Class<?> check : checkstyleChecks) {
+             if (Check.class.isAssignableFrom(check)) {
+-                final Check testedCheck = (Check) check.newInstance();
++                final Check testedCheck = (Check) check.getDeclaredConstructor().newInstance();
+                 final int[] requiredTokens = testedCheck.getRequiredTokens();
+                 final int[] acceptableTokens = testedCheck.getAcceptableTokens();
+ 
+@@ -120,7 +120,7 @@
+ 
+         for (Class<?> check : checkstyleChecks) {
+             if (Check.class.isAssignableFrom(check)) {
+-                final Check testedCheck = (Check) check.newInstance();
++                final Check testedCheck = (Check) check.getDeclaredConstructor().newInstance();
+                 final int[] defaultTokens = testedCheck.getDefaultTokens();
+                 final int[] requiredTokens = testedCheck.getRequiredTokens();
+ 

@@ -1,0 +1,122 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 275bf9f..7fa3d18 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -202,11 +202,11 @@
+     }
+ 
+     public String apiFileFolder() {
+-        return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
++        return outputFolder + "/" + apiPackage().replace('.', '/');
+     }
+ 
+     public String modelFileFolder() {
+-        return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
++        return outputFolder + "/" + modelPackage().replace('.', '/');
+     }
+ 
+     public Map<String, Object> additionalProperties() {
+@@ -1853,7 +1853,7 @@
+ 
+     public String apiFilename(String templateName, String tag) {
+         String suffix = apiTemplateFiles().get(templateName);
+-        return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
++        return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
+     }
+ 
+     public boolean shouldOverwrite(String filename) {
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JavaClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JavaClientCodegen.java
+index 8571207..34b4e0e 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JavaClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JavaClientCodegen.java
+@@ -194,7 +194,7 @@
+ 
+         this.sanitizeConfig();
+ 
+-        final String invokerFolder = (sourceFolder + File.separator + invokerPackage).replace(".", File.separator);
++        final String invokerFolder = (sourceFolder + '/' + invokerPackage).replace(".", "/");
+         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+         supportingFiles.add(new SupportingFile("build.gradle.mustache", "", "build.gradle"));
+         supportingFiles.add(new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
+@@ -202,7 +202,7 @@
+         supportingFiles.add(new SupportingFile("ApiClient.mustache", invokerFolder, "ApiClient.java"));
+         supportingFiles.add(new SupportingFile("StringUtil.mustache", invokerFolder, "StringUtil.java"));
+ 
+-        final String authFolder = (sourceFolder + File.separator + invokerPackage + ".auth").replace(".", File.separator);
++        final String authFolder = (sourceFolder + '/' + invokerPackage + ".auth").replace(".", "/");
+         supportingFiles.add(new SupportingFile("auth/HttpBasicAuth.mustache", authFolder, "HttpBasicAuth.java"));
+         supportingFiles.add(new SupportingFile("auth/ApiKeyAuth.mustache", authFolder, "ApiKeyAuth.java"));
+         supportingFiles.add(new SupportingFile("auth/OAuth.mustache", authFolder, "OAuth.java"));
+@@ -257,12 +257,12 @@
+ 
+     @Override
+     public String apiFileFolder() {
+-        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', File.separatorChar);
++        return outputFolder + "/" + sourceFolder + "/" + apiPackage().replace('.', '/');
+     }
+ 
+     @Override
+     public String modelFileFolder() {
+-        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', File.separatorChar);
++        return outputFolder + "/" + sourceFolder + "/" + modelPackage().replace('.', '/');
+     }
+ 
+     @Override
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JaxRSServerCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JaxRSServerCodegen.java
+index f896fc4..fd83e38 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JaxRSServerCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/JaxRSServerCodegen.java
+@@ -78,13 +78,13 @@
+         supportingFiles.add(new SupportingFile("pom.mustache", "", "pom.xml"));
+         supportingFiles.add(new SupportingFile("README.mustache", "", "README.md"));
+         supportingFiles.add(new SupportingFile("ApiException.mustache",
+-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiException.java"));
++                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiException.java"));
+         supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache",
+-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiOriginFilter.java"));
++                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiOriginFilter.java"));
+         supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache",
+-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "ApiResponseMessage.java"));
++                (sourceFolder + '/' + apiPackage).replace(".", "/"), "ApiResponseMessage.java"));
+         supportingFiles.add(new SupportingFile("NotFoundException.mustache",
+-                (sourceFolder + File.separator + apiPackage).replace(".", java.io.File.separator), "NotFoundException.java"));
++                (sourceFolder + '/' + apiPackage).replace(".", "/"), "NotFoundException.java"));
+         supportingFiles.add(new SupportingFile("web.mustache",
+                 ("src/main/webapp/WEB-INF"), "web.xml"));
+ 
+@@ -215,7 +215,7 @@
+     }
+ 
+     private String implFileFolder(String output) {
+-        return outputFolder + "/" + output + "/" + apiPackage().replace('.', File.separatorChar);
++        return outputFolder + "/" + output + "/" + apiPackage().replace('.', '/');
+     }
+ 
+     public boolean shouldOverwrite(String filename) {
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 275bf9f..7fa3d18 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -202,11 +202,11 @@
+     }
+ 
+     public String apiFileFolder() {
+-        return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
++        return outputFolder + "/" + apiPackage().replace('.', '/');
+     }
+ 
+     public String modelFileFolder() {
+-        return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
++        return outputFolder + "/" + modelPackage().replace('.', '/');
+     }
+ 
+     public Map<String, Object> additionalProperties() {
+@@ -1853,7 +1853,7 @@
+ 
+     public String apiFilename(String templateName, String tag) {
+         String suffix = apiTemplateFiles().get(templateName);
+-        return apiFileFolder() + File.separator + toApiFilename(tag) + suffix;
++        return apiFileFolder() + '/' + toApiFilename(tag) + suffix;
+     }
+ 
+     public boolean shouldOverwrite(String filename) {

@@ -1,0 +1,52 @@
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+index 11d4eb6..e74042f 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+@@ -1023,7 +1023,7 @@
+     public void fireChannelReadSuspended() {
+         final DefaultChannelHandlerContext next = findContextInbound();
+         EventExecutor executor = next.executor();
+-        if (prev != null && executor.inEventLoop()) {
++        if (executor.inEventLoop()) {
+             next.invokeChannelReadSuspended();
+         } else {
+             Runnable task = next.invokeChannelReadSuspendedTask;
+diff --git a/transport/src/main/java/io/netty/channel/nio/NioEventLoop.java b/transport/src/main/java/io/netty/channel/nio/NioEventLoop.java
+index c90252f..0c924a5 100644
+--- a/transport/src/main/java/io/netty/channel/nio/NioEventLoop.java
++++ b/transport/src/main/java/io/netty/channel/nio/NioEventLoop.java
+@@ -295,10 +295,10 @@
+ 
+                 cancelledKeys = 0;
+ 
+-                runAllTasks();
++                processSelectedKeys();
+                 selector = this.selector;
+ 
+-                processSelectedKeys();
++                runAllTasks();
+                 selector = this.selector;
+ 
+                 if (isShutdown()) {
+@@ -502,7 +502,7 @@
+ 
+     @Override
+     protected void wakeup(boolean inEventLoop) {
+-        if (wakenUp.compareAndSet(false, true)) {
++        if (!inEventLoop && wakenUp.compareAndSet(false, true)) {
+             selector.wakeup();
+         }
+     }
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+index 11d4eb6..e74042f 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+@@ -1023,7 +1023,7 @@
+     public void fireChannelReadSuspended() {
+         final DefaultChannelHandlerContext next = findContextInbound();
+         EventExecutor executor = next.executor();
+-        if (prev != null && executor.inEventLoop()) {
++        if (executor.inEventLoop()) {
+             next.invokeChannelReadSuspended();
+         } else {
+             Runnable task = next.invokeChannelReadSuspendedTask;

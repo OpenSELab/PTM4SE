@@ -1,0 +1,44 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/partition/impl/InternalPartitionServiceImpl.java b/hazelcast/src/main/java/com/hazelcast/partition/impl/InternalPartitionServiceImpl.java
+index 89678f3..1ff09dd 100644
+--- a/hazelcast/src/main/java/com/hazelcast/partition/impl/InternalPartitionServiceImpl.java
++++ b/hazelcast/src/main/java/com/hazelcast/partition/impl/InternalPartitionServiceImpl.java
+@@ -1385,7 +1385,7 @@
+                         result = (Boolean) nodeEngine.toObject(response);
+                     } catch (Throwable e) {
+                         final Level level = node.isActive() && migrationInfo.isValid() ? Level.WARNING : Level.FINEST;
+-                        logger.log(level, "Failed migrating from " + fromMember, e);
++                        logger.log(level, "Failed migration from " + fromMember, e);
+                     }
+                 }
+                 if (Boolean.TRUE.equals(result)) {
+@@ -1495,7 +1495,7 @@
+             if (hasNoTasks) {
+                 if (migrating) {
+                     migrating = false;
+-                    logger.info("All migration tasks has been completed, queues are empty.");
++                    logger.info("All migration tasks have been completed, queues are empty.");
+                 }
+                 evictCompletedMigrations();
+                 Thread.sleep(sleepTime);
+diff --git a/hazelcast/src/main/java/com/hazelcast/partition/impl/InternalPartitionServiceImpl.java b/hazelcast/src/main/java/com/hazelcast/partition/impl/InternalPartitionServiceImpl.java
+index 89678f3..1ff09dd 100644
+--- a/hazelcast/src/main/java/com/hazelcast/partition/impl/InternalPartitionServiceImpl.java
++++ b/hazelcast/src/main/java/com/hazelcast/partition/impl/InternalPartitionServiceImpl.java
+@@ -1385,7 +1385,7 @@
+                         result = (Boolean) nodeEngine.toObject(response);
+                     } catch (Throwable e) {
+                         final Level level = node.isActive() && migrationInfo.isValid() ? Level.WARNING : Level.FINEST;
+-                        logger.log(level, "Failed migrating from " + fromMember, e);
++                        logger.log(level, "Failed migration from " + fromMember, e);
+                     }
+                 }
+                 if (Boolean.TRUE.equals(result)) {
+@@ -1495,7 +1495,7 @@
+             if (hasNoTasks) {
+                 if (migrating) {
+                     migrating = false;
+-                    logger.info("All migration tasks has been completed, queues are empty.");
++                    logger.info("All migration tasks have been completed, queues are empty.");
+                 }
+                 evictCompletedMigrations();
+                 Thread.sleep(sleepTime);

@@ -1,0 +1,21 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/pageStore/DefaultPageStore.java b/wicket-core/src/main/java/org/apache/wicket/pageStore/DefaultPageStore.java
+index 17a812b..675f320 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/pageStore/DefaultPageStore.java
++++ b/wicket-core/src/main/java/org/apache/wicket/pageStore/DefaultPageStore.java
+@@ -22,7 +22,6 @@ import java.util.ArrayList;
+ import java.util.Iterator;
+ import java.util.List;
+ 
+-import org.apache.wicket.Page;
+ import org.apache.wicket.page.IManageablePage;
+ import org.apache.wicket.util.lang.Args;
+ import org.apache.wicket.util.lang.Objects;
+@@ -275,7 +274,7 @@ public class DefaultPageStore implements IPageStore
+ 		{
+ 			return null;
+ 		}
+-		else if (!storeAfterSessionReplication() || serializable instanceof Page)
++		else if (!storeAfterSessionReplication() || serializable instanceof IManageablePage)
+ 		{
+ 			return serializable;
+ 		}

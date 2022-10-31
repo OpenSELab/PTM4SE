@@ -1,0 +1,17 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthenticationFilter.java b/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthenticationFilter.java
+index eb79e04..1ba81c1 100644
+--- a/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthenticationFilter.java
++++ b/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthenticationFilter.java
+@@ -54,10 +54,10 @@
+ 
+             } catch (LockedAccountException e) {
+                 log.debug("Unable to authenticate user, account is locked.", e);
+-                throw new NotAuthorizedException(e, "Basic", "Graylog2 Server");
++                throw new NotAuthorizedException(e, "Basic realm=\"Graylog2 Server\"");
+             } catch (AuthenticationException e) {
+                 log.debug("Unable to authenticate user.", e);
+-                throw new NotAuthorizedException(e, "Basic", "Graylog2 Server");
++                throw new NotAuthorizedException(e, "Basic realm=\"Graylog2 Server\"");
+             }
+         }
+     }

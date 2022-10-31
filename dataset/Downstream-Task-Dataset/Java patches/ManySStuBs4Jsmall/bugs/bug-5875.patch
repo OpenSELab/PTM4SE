@@ -1,0 +1,32 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/converter/jaxp/XmlConverter.java b/camel-core/src/main/java/org/apache/camel/converter/jaxp/XmlConverter.java
+index 00c3bd2..ceb695f 100644
+--- a/camel-core/src/main/java/org/apache/camel/converter/jaxp/XmlConverter.java
++++ b/camel-core/src/main/java/org/apache/camel/converter/jaxp/XmlConverter.java
+@@ -571,9 +571,9 @@
+                 // else, create a new doc and copy the element inside it
+             } else {
+                 Document doc = createDocument();
+-                // import node must no occur concurrent on the same node
++                // import node must no occur concurrent on the same node (must be its owner)
+                 // so we need to synchronize on it
+-                synchronized (node) {
++                synchronized (node.getOwnerDocument()) {
+                     doc.appendChild(doc.importNode(node, true));
+                 }
+                 return doc;
+diff --git a/camel-core/src/main/java/org/apache/camel/converter/jaxp/XmlConverter.java b/camel-core/src/main/java/org/apache/camel/converter/jaxp/XmlConverter.java
+index 00c3bd2..ceb695f 100644
+--- a/camel-core/src/main/java/org/apache/camel/converter/jaxp/XmlConverter.java
++++ b/camel-core/src/main/java/org/apache/camel/converter/jaxp/XmlConverter.java
+@@ -571,9 +571,9 @@
+                 // else, create a new doc and copy the element inside it
+             } else {
+                 Document doc = createDocument();
+-                // import node must no occur concurrent on the same node
++                // import node must no occur concurrent on the same node (must be its owner)
+                 // so we need to synchronize on it
+-                synchronized (node) {
++                synchronized (node.getOwnerDocument()) {
+                     doc.appendChild(doc.importNode(node, true));
+                 }
+                 return doc;

@@ -1,0 +1,37 @@
+--- a/src/org/traccar/protocol/AquilaProtocolDecoder.java
++++ b/src/org/traccar/protocol/AquilaProtocolDecoder.java
+@@ -132,7 +132,7 @@ public class AquilaProtocolDecoder extends BaseProtocolDecoder {
+ 
+         position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
+ 
+-        position.set(Position.KEY_ODOMETER, parser.next());
++        position.set(Position.KEY_ODOMETER, parser.nextInt());
+ 
+         if (parser.hasNext(9)) {
+ 
+diff --git a/src/org/traccar/protocol/MeitrackProtocolDecoder.java b/src/org/traccar/protocol/MeitrackProtocolDecoder.java
+index 4862b49..f525356 100644
+--- a/src/org/traccar/protocol/MeitrackProtocolDecoder.java
++++ b/src/org/traccar/protocol/MeitrackProtocolDecoder.java
+@@ -124,7 +124,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
+ 
+         position.setAltitude(parser.nextDouble());
+ 
+-        position.set(Position.KEY_ODOMETER, parser.next());
++        position.set(Position.KEY_ODOMETER, parser.nextInt());
+         position.set("runtime", parser.next());
+ 
+         position.setNetwork(new Network(
+diff --git a/src/org/traccar/protocol/TotemProtocolDecoder.java b/src/org/traccar/protocol/TotemProtocolDecoder.java
+index 6a4b205..f36ef81 100644
+--- a/src/org/traccar/protocol/TotemProtocolDecoder.java
++++ b/src/org/traccar/protocol/TotemProtocolDecoder.java
+@@ -290,7 +290,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
+             position.setCourse(parser.nextDouble());
+             position.setSpeed(parser.nextDouble());
+             position.set("pdop", parser.next());
+-            position.set(Position.KEY_ODOMETER, parser.next());
++            position.set(Position.KEY_ODOMETER, parser.nextInt() * 1000);
+ 
+             position.setLatitude(parser.nextCoordinate());
+             position.setLongitude(parser.nextCoordinate());

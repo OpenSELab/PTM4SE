@@ -1,0 +1,26 @@
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/coprocessor/TestCoprocessorMetrics.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/coprocessor/TestCoprocessorMetrics.java
+index 16bb6d9..e7b71ec 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/coprocessor/TestCoprocessorMetrics.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/coprocessor/TestCoprocessorMetrics.java
+@@ -472,7 +472,7 @@
+       // close one of the regions
+       try (RegionLocator locator = connection.getRegionLocator(tableName)) {
+         HRegionLocation loc = locator.getRegionLocation(foo);
+-        admin.closeRegion(loc.getServerName(), loc.getRegionInfo());
++        admin.unassign(loc.getRegionInfo().getEncodedNameAsBytes(), true);
+ 
+         HRegionServer server = UTIL.getMiniHBaseCluster().getRegionServer(loc.getServerName());
+         UTIL.waitFor(30000,
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/coprocessor/TestCoprocessorMetrics.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/coprocessor/TestCoprocessorMetrics.java
+index 16bb6d9..e7b71ec 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/coprocessor/TestCoprocessorMetrics.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/coprocessor/TestCoprocessorMetrics.java
+@@ -472,7 +472,7 @@
+       // close one of the regions
+       try (RegionLocator locator = connection.getRegionLocator(tableName)) {
+         HRegionLocation loc = locator.getRegionLocation(foo);
+-        admin.closeRegion(loc.getServerName(), loc.getRegionInfo());
++        admin.unassign(loc.getRegionInfo().getEncodedNameAsBytes(), true);
+ 
+         HRegionServer server = UTIL.getMiniHBaseCluster().getRegionServer(loc.getServerName());
+         UTIL.waitFor(30000,

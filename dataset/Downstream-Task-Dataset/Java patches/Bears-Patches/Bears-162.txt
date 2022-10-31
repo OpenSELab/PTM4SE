@@ -1,0 +1,18 @@
+--- a/debezium-connector-mysql/src/main/java/io/debezium/connector/mysql/MySqlDdlParser.java
++++ b/debezium-connector-mysql/src/main/java/io/debezium/connector/mysql/MySqlDdlParser.java
+@@ -834,6 +834,15 @@ protected void parseColumnDefinition(Marker start, String columnName, TokenStrea
+             column.charsetName("utf8");
+         }
+ 
++        if (Types.DECIMAL == dataType.jdbcType()) {
++            if (dataType.length() == -1) {
++                column.length(10);
++            }
++            if (dataType.scale() == -1) {
++                column.scale(0);
++            }
++        }
++
+         if (tokens.canConsume("CHARSET") || tokens.canConsume("CHARACTER", "SET")) {
+             String charsetName = tokens.consume();
+             if (!"DEFAULT".equalsIgnoreCase(charsetName)) {

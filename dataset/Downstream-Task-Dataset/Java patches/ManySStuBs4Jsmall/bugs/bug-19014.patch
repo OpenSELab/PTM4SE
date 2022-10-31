@@ -1,0 +1,14 @@
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker08.java b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker08.java
+index f25d4ff..3d59e1f 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker08.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker08.java
+@@ -200,7 +200,8 @@
+         String subprotocol = response.getHeader(Names.SEC_WEBSOCKET_PROTOCOL);
+         setActualSubprotocol(subprotocol);
+ 
+-        channel.pipeline().replace(HttpResponseDecoder.class, "ws-decoder",
++        channel.pipeline().get(HttpResponseDecoder.class).replace(
++                "ws-decoder",
+                 new WebSocket08FrameDecoder(false, allowExtensions, getMaxFramePayloadLength()));
+ 
+         setHandshakeComplete();

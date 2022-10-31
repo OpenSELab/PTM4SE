@@ -1,0 +1,182 @@
+diff --git a/components/camel-websocket/src/main/java/org/apache/camel/component/websocket/WebsocketComponent.java b/components/camel-websocket/src/main/java/org/apache/camel/component/websocket/WebsocketComponent.java
+index b786319..90e0d8d 100644
+--- a/components/camel-websocket/src/main/java/org/apache/camel/component/websocket/WebsocketComponent.java
++++ b/components/camel-websocket/src/main/java/org/apache/camel/component/websocket/WebsocketComponent.java
+@@ -353,7 +353,7 @@
+                 qtp.setMaxThreads(maxThreads.intValue());
+             }
+             // let the thread names indicate they are from the server
+-            qtp.setName("CamelJettyWebSocketServer(" + "test" + ")");
++            qtp.setName("CamelJettyWebSocketServer");
+             try {
+                 qtp.start();
+             } catch (Exception e) {
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebscoketEndpointConfigurationTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebscoketEndpointConfigurationTest.java
+index 029529d..27e01ba 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebscoketEndpointConfigurationTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebscoketEndpointConfigurationTest.java
+@@ -44,7 +44,7 @@
+         WebsocketEndpoint websocketEndpoint = (WebsocketEndpoint)context.getEndpoint(uri);
+         WebsocketComponent component = websocketEndpoint.getComponent();
+         component.setMinThreads(1);
+-        component.setMaxThreads(11);
++        component.setMaxThreads(20);
+         Consumer consumer = websocketEndpoint.createConsumer(processor);
+         component.connect((WebsocketProducerConsumer) consumer);
+         
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketClientCamelRouteTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketClientCamelRouteTest.java
+index f226a27..c98f893 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketClientCamelRouteTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketClientCamelRouteTest.java
+@@ -97,7 +97,7 @@
+                 WebsocketComponent websocketComponent = getContext().getComponent("websocket", WebsocketComponent.class);
+                 websocketComponent.setPort(port);
+                 websocketComponent.setMinThreads(1);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+ 
+                 from("websocket://test")
+                         .log(">>> Message received from WebSocket Client : ${body}")
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketComponentRouteExampleTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketComponentRouteExampleTest.java
+index 76b14a0..211856f 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketComponentRouteExampleTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketComponentRouteExampleTest.java
+@@ -92,7 +92,7 @@
+                 WebsocketComponent websocketComponent = getContext().getComponent("websocket", WebsocketComponent.class);
+                 websocketComponent.setHost("localhost");
+                 websocketComponent.setPort(port);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+                 websocketComponent.setMinThreads(1);
+ 
+                 from("websocket://echo")
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketConsumerRouteTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketConsumerRouteTest.java
+index ea1874a..20b2f40 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketConsumerRouteTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketConsumerRouteTest.java
+@@ -109,7 +109,7 @@
+             public void configure() {
+                 WebsocketComponent websocketComponent = (WebsocketComponent) context.getComponent("websocket");
+                 websocketComponent.setPort(port);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+                 websocketComponent.setMinThreads(1);
+ 
+                 from("websocket://echo")
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketProducerRouteExampleTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketProducerRouteExampleTest.java
+index aea401a..513e71b 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketProducerRouteExampleTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketProducerRouteExampleTest.java
+@@ -146,7 +146,7 @@
+         return new RouteBuilder() {
+             public void configure() {
+                 WebsocketComponent websocketComponent = (WebsocketComponent) context.getComponent("websocket");
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+                 websocketComponent.setMinThreads(1);
+                 from("direct:shop")
+                     .log(">>> Message received from Shopping center : ${body}")
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketProducerRouteRestartTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketProducerRouteRestartTest.java
+index 3f9c4d2..e28ca29 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketProducerRouteRestartTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketProducerRouteRestartTest.java
+@@ -121,7 +121,7 @@
+         return new RouteBuilder() {
+             public void configure() {
+                 WebsocketComponent websocketComponent = (WebsocketComponent) context.getComponent("websocket");
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+                 websocketComponent.setMinThreads(1);
+                 from("direct:shop")
+                     .id(ROUTE_ID)
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketRouteExampleTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketRouteExampleTest.java
+index 3606a27..d4b655c 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketRouteExampleTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketRouteExampleTest.java
+@@ -89,7 +89,7 @@
+                 WebsocketComponent websocketComponent = (WebsocketComponent) context.getComponent("websocket");
+                 websocketComponent.setPort(port);
+                 websocketComponent.setMinThreads(1);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+ 
+                 // START SNIPPET: e1
+                 // expose a echo websocket client, that sends back an echo
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketSSLContextInUriRouteExampleTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketSSLContextInUriRouteExampleTest.java
+index 5f6e8d5..937fb76 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketSSLContextInUriRouteExampleTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketSSLContextInUriRouteExampleTest.java
+@@ -166,7 +166,7 @@
+             public void configure() {
+                 WebsocketComponent websocketComponent = (WebsocketComponent) context.getComponent("websocket");
+                 websocketComponent.setMinThreads(1);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+                 from(uri)
+                      .log(">>> Message received from WebSocket Client : ${body}")
+                      .to("mock:client")
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketSSLRouteExampleTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketSSLRouteExampleTest.java
+index 251cccc..f364b12 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketSSLRouteExampleTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketSSLRouteExampleTest.java
+@@ -162,7 +162,7 @@
+                 websocketComponent.setSslContextParameters(defineSSLContextParameters());
+                 websocketComponent.setPort(port);
+                 websocketComponent.setMinThreads(1);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+ 
+                 from("websocket://test")
+                         .log(">>> Message received from WebSocket Client : ${body}")
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesExampleTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesExampleTest.java
+index eb8d8f7..9a8c0cd 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesExampleTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesExampleTest.java
+@@ -131,7 +131,7 @@
+             public void configure() {
+                 WebsocketComponent websocketComponent = (WebsocketComponent) context.getComponent("websocket");
+                 websocketComponent.setMinThreads(1);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+                 
+                 from("websocket://localhost:" + port + "/bar")
+                     .log(">>> Message received from BAR WebSocket Client : ${body}")
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesToSIndividualAndBroadcastEndpointExampleTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesToSIndividualAndBroadcastEndpointExampleTest.java
+index d4aa92f..0b09f8a 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesToSIndividualAndBroadcastEndpointExampleTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesToSIndividualAndBroadcastEndpointExampleTest.java
+@@ -94,7 +94,7 @@
+             public void configure() {
+                 WebsocketComponent websocketComponent = (WebsocketComponent) context.getComponent("websocket");
+                 websocketComponent.setMinThreads(1);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+                 
+                 from("websocket://localhost:" + port + "/bar")
+                         .log(">>> Message received from BAR WebSocket Client : ${body}")
+diff --git a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesToSameEndpointExampleTest.java b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesToSameEndpointExampleTest.java
+index 7c0b145..677eb53 100644
+--- a/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesToSameEndpointExampleTest.java
++++ b/components/camel-websocket/src/test/java/org/apache/camel/component/websocket/WebsocketTwoRoutesToSameEndpointExampleTest.java
+@@ -94,7 +94,7 @@
+             public void configure() {
+                 WebsocketComponent websocketComponent = (WebsocketComponent) context.getComponent("websocket");
+                 websocketComponent.setMinThreads(1);
+-                websocketComponent.setMaxThreads(11);
++                websocketComponent.setMaxThreads(20);
+                 
+                 from("websocket://localhost:" + port + "/bar")
+                         .log(">>> Message received from BAR WebSocket Client : ${body}")
+diff --git a/components/camel-websocket/src/main/java/org/apache/camel/component/websocket/WebsocketComponent.java b/components/camel-websocket/src/main/java/org/apache/camel/component/websocket/WebsocketComponent.java
+index b786319..90e0d8d 100644
+--- a/components/camel-websocket/src/main/java/org/apache/camel/component/websocket/WebsocketComponent.java
++++ b/components/camel-websocket/src/main/java/org/apache/camel/component/websocket/WebsocketComponent.java
+@@ -353,7 +353,7 @@
+                 qtp.setMaxThreads(maxThreads.intValue());
+             }
+             // let the thread names indicate they are from the server
+-            qtp.setName("CamelJettyWebSocketServer(" + "test" + ")");
++            qtp.setName("CamelJettyWebSocketServer");
+             try {
+                 qtp.start();
+             } catch (Exception e) {

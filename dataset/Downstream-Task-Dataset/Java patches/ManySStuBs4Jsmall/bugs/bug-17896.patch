@@ -1,0 +1,193 @@
+diff --git a/src/main/java/org/apache/ibatis/binding/MapperMethod.java b/src/main/java/org/apache/ibatis/binding/MapperMethod.java
+index ce109c2..ab1efca 100644
+--- a/src/main/java/org/apache/ibatis/binding/MapperMethod.java
++++ b/src/main/java/org/apache/ibatis/binding/MapperMethod.java
+@@ -70,7 +70,7 @@
+         result = sqlSession.selectOne(commandName, param);
+       }
+     } else {
+-      throw new BindingException("Unkown execution method for: " + commandName);
++      throw new BindingException("Unknown execution method for: " + commandName);
+     }
+     return result;
+   }
+diff --git a/src/main/java/org/apache/ibatis/builder/MapperBuilderAssistant.java b/src/main/java/org/apache/ibatis/builder/MapperBuilderAssistant.java
+index 8f0e59a..5d3fb18 100644
+--- a/src/main/java/org/apache/ibatis/builder/MapperBuilderAssistant.java
++++ b/src/main/java/org/apache/ibatis/builder/MapperBuilderAssistant.java
+@@ -330,7 +330,7 @@
+         while (parser.hasMoreTokens()) {
+           String property = parser.nextToken();
+           String column = parser.nextToken();
+-          ResultMapping.Builder complexBuilder = new ResultMapping.Builder(configuration, property, column, configuration.getTypeHandlerRegistry().getUnkownTypeHandler());
++          ResultMapping.Builder complexBuilder = new ResultMapping.Builder(configuration, property, column, configuration.getTypeHandlerRegistry().getUnknownTypeHandler());
+           composites.add(complexBuilder.build());
+         }
+       }
+diff --git a/src/main/java/org/apache/ibatis/datasource/unpooled/UnpooledDataSourceFactory.java b/src/main/java/org/apache/ibatis/datasource/unpooled/UnpooledDataSourceFactory.java
+index 2e754aa..599daa2 100644
+--- a/src/main/java/org/apache/ibatis/datasource/unpooled/UnpooledDataSourceFactory.java
++++ b/src/main/java/org/apache/ibatis/datasource/unpooled/UnpooledDataSourceFactory.java
+@@ -31,7 +31,7 @@
+         Object convertedValue = convertValue(metaDataSource, propertyName, value);
+         metaDataSource.setValue(propertyName, convertedValue);
+       } else {
+-        throw new DataSourceException("Unkown DataSource property: " + propertyName);
++        throw new DataSourceException("Unknown DataSource property: " + propertyName);
+       }
+     }
+     if (driverProperties.size() > 0) {
+diff --git a/src/main/java/org/apache/ibatis/executor/resultset/FastResultSetHandler.java b/src/main/java/org/apache/ibatis/executor/resultset/FastResultSetHandler.java
+index a4859d9..9fd72f4 100644
+--- a/src/main/java/org/apache/ibatis/executor/resultset/FastResultSetHandler.java
++++ b/src/main/java/org/apache/ibatis/executor/resultset/FastResultSetHandler.java
+@@ -389,7 +389,7 @@
+     if (typeHandlerRegistry.hasTypeHandler(parameterType)) {
+       typeHandler = typeHandlerRegistry.getTypeHandler(parameterType);
+     } else {
+-      typeHandler = typeHandlerRegistry.getUnkownTypeHandler();
++      typeHandler = typeHandlerRegistry.getUnknownTypeHandler();
+     }
+     return typeHandler.getResult(rs, resultMapping.getColumn());
+   }
+diff --git a/src/main/java/org/apache/ibatis/migration/CommandLine.java b/src/main/java/org/apache/ibatis/migration/CommandLine.java
+index 71ef4af..c7f912f 100644
+--- a/src/main/java/org/apache/ibatis/migration/CommandLine.java
++++ b/src/main/java/org/apache/ibatis/migration/CommandLine.java
+@@ -122,7 +122,7 @@
+         command = match;
+         runCommand();
+       } else {
+-        throw new MigrationException("Attempt to execute unkown command: " + command);
++        throw new MigrationException("Attempt to execute unknown command: " + command);
+       }
+     }
+   }
+diff --git a/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java b/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
+index 9a61bbc..fc13201 100644
+--- a/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
++++ b/src/main/java/org/apache/ibatis/type/TypeHandlerRegistry.java
+@@ -135,7 +135,7 @@
+     return handler;
+   }
+ 
+-  public TypeHandler getUnkownTypeHandler() {
++  public TypeHandler getUnknownTypeHandler() {
+     return UNKNOWN_TYPE_HANDLER;
+   }
+ 
+diff --git a/src/test/java/com/ibatis/sqlmap/engine/builder/InlineParameterMapParser.java b/src/test/java/com/ibatis/sqlmap/engine/builder/InlineParameterMapParser.java
+index d1b6a95..58f822a 100644
+--- a/src/test/java/com/ibatis/sqlmap/engine/builder/InlineParameterMapParser.java
++++ b/src/test/java/com/ibatis/sqlmap/engine/builder/InlineParameterMapParser.java
+@@ -138,7 +138,7 @@
+ 
+     if (typeHandler == null) {
+       if (parameterClass == null) {
+-        typeHandler = typeHandlerRegistry.getUnkownTypeHandler();
++        typeHandler = typeHandlerRegistry.getUnknownTypeHandler();
+       } else {
+         String javaTypeString = javaType == null ? null : javaType.getName();
+         typeHandler = resolveTypeHandler(parameterClass, propertyName, javaTypeString, jdbcType);
+@@ -168,7 +168,7 @@
+         String type = paramParser.nextToken();
+         TypeHandler handler;
+         if (parameterClass == null) {
+-          handler = typeHandlerRegistry.getUnkownTypeHandler();
++          handler = typeHandlerRegistry.getUnknownTypeHandler();
+         } else {
+           handler = resolveTypeHandler(parameterClass, name, null, JdbcType.valueOf(type));
+         }
+@@ -183,7 +183,7 @@
+     } else {
+       TypeHandler handler;
+       if (parameterClass == null) {
+-        handler = typeHandlerRegistry.getUnkownTypeHandler();
++        handler = typeHandlerRegistry.getUnknownTypeHandler();
+       } else {
+         handler = resolveTypeHandler(parameterClass, token, null, null);
+       }
+@@ -196,11 +196,11 @@
+     TypeHandler handler;
+     if (clazz == null) {
+       // Unknown
+-      handler = typeHandlerRegistry.getUnkownTypeHandler();
++      handler = typeHandlerRegistry.getUnknownTypeHandler();
+     } else if (java.util.Map.class.isAssignableFrom(clazz)) {
+       // Map
+       if (javaType == null) {
+-        handler = typeHandlerRegistry.getUnkownTypeHandler(); //BUG 1012591 - typeHandlerRegistry.getTypeHandler(java.lang.Object.class, jdbcType);
++        handler = typeHandlerRegistry.getUnknownTypeHandler(); //BUG 1012591 - typeHandlerRegistry.getTypeHandler(java.lang.Object.class, jdbcType);
+       } else {
+         try {
+           Class javaClass = typeAliasRegistry.resolveAlias(javaType);
+diff --git a/src/test/java/com/ibatis/sqlmap/engine/builder/XmlSqlMapParser.java b/src/test/java/com/ibatis/sqlmap/engine/builder/XmlSqlMapParser.java
+index 0d6b140..c6fd1d0 100644
+--- a/src/test/java/com/ibatis/sqlmap/engine/builder/XmlSqlMapParser.java
++++ b/src/test/java/com/ibatis/sqlmap/engine/builder/XmlSqlMapParser.java
+@@ -328,7 +328,7 @@
+           typeHandler = config.getTypeHandlerRegistry().getTypeHandler(resultType);
+         }
+       } else {
+-        typeHandler = config.getTypeHandlerRegistry().getUnkownTypeHandler();
++        typeHandler = config.getTypeHandlerRegistry().getUnknownTypeHandler();
+       }
+     }
+ 
+@@ -360,7 +360,7 @@
+         while (parser.hasMoreTokens()) {
+           String property = parser.nextToken();
+           String column = parser.nextToken();
+-          ResultMapping.Builder complexBuilder = new ResultMapping.Builder(config, property, column, config.getTypeHandlerRegistry().getUnkownTypeHandler());
++          ResultMapping.Builder complexBuilder = new ResultMapping.Builder(config, property, column, config.getTypeHandlerRegistry().getUnknownTypeHandler());
+           composites.add(complexBuilder.build());
+         }
+       }
+@@ -438,7 +438,7 @@
+           typeHandler = config.getTypeHandlerRegistry().getTypeHandler(paramType);
+         }
+       } else {
+-        typeHandler = config.getTypeHandlerRegistry().getUnkownTypeHandler();
++        typeHandler = config.getTypeHandlerRegistry().getUnknownTypeHandler();
+       }
+     }
+ 
+diff --git a/src/test/java/com/ibatis/sqlmap/engine/builder/XmlSqlStatementParser.java b/src/test/java/com/ibatis/sqlmap/engine/builder/XmlSqlStatementParser.java
+index c3eb21e..2deb395 100644
+--- a/src/test/java/com/ibatis/sqlmap/engine/builder/XmlSqlStatementParser.java
++++ b/src/test/java/com/ibatis/sqlmap/engine/builder/XmlSqlStatementParser.java
+@@ -205,7 +205,7 @@
+ 
+     final boolean runStatementFirst = "post".equalsIgnoreCase(context.getStringAttribute("type", runStatementFirstParam ? "post" : "pre"));
+     final String keyStatementId = SqlMapSessionImpl.selectKeyIdFor(parentId);
+-    TypeHandler typeHandler = configuration.getTypeHandlerRegistry().getUnkownTypeHandler();
++    TypeHandler typeHandler = configuration.getTypeHandlerRegistry().getUnknownTypeHandler();
+     if (resultClassName != null) {
+       final Class resultClass = configuration.getTypeAliasRegistry().resolveAlias(resultClassName);
+       typeHandler = configuration.getTypeHandlerRegistry().getTypeHandler(resultClass);
+diff --git a/src/test/java/org/apache/ibatis/type/TypeHandlerRegistryTest.java b/src/test/java/org/apache/ibatis/type/TypeHandlerRegistryTest.java
+index 33a5021..3759e12 100644
+--- a/src/test/java/org/apache/ibatis/type/TypeHandlerRegistryTest.java
++++ b/src/test/java/org/apache/ibatis/type/TypeHandlerRegistryTest.java
+@@ -18,7 +18,7 @@
+     assertFalse(typeHandlerRegistry.hasTypeHandler(RichType.class));
+     assertTrue(typeHandlerRegistry.hasTypeHandler(String.class, JdbcType.LONGVARCHAR));
+     assertTrue(typeHandlerRegistry.hasTypeHandler(String.class, JdbcType.INTEGER));
+-    assertTrue(typeHandlerRegistry.getUnkownTypeHandler() instanceof UnknownTypeHandler);
++    assertTrue(typeHandlerRegistry.getUnknownTypeHandler() instanceof UnknownTypeHandler);
+   }
+ 
+ }
+diff --git a/src/main/java/org/apache/ibatis/binding/MapperMethod.java b/src/main/java/org/apache/ibatis/binding/MapperMethod.java
+index ce109c2..ab1efca 100644
+--- a/src/main/java/org/apache/ibatis/binding/MapperMethod.java
++++ b/src/main/java/org/apache/ibatis/binding/MapperMethod.java
+@@ -70,7 +70,7 @@
+         result = sqlSession.selectOne(commandName, param);
+       }
+     } else {
+-      throw new BindingException("Unkown execution method for: " + commandName);
++      throw new BindingException("Unknown execution method for: " + commandName);
+     }
+     return result;
+   }

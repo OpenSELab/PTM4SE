@@ -1,0 +1,52 @@
+diff --git a/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/InternalTickTest.java b/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/InternalTickTest.java
+index 23004bd..b81ca96 100644
+--- a/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/InternalTickTest.java
++++ b/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/InternalTickTest.java
+@@ -36,7 +36,7 @@
+ 			dynamicsWorld.clearForces();
+ 			int idx = 0;
+ 			for (int i = 0; i < objs.size(); i++) {
+-				btRigidBody body = btRigidBody.upcast(objs.at(i));
++				btRigidBody body = (btRigidBody)(objs.at(i));
+ 				if (body == null || body.isStaticOrKinematicObject())
+ 					continue;
+ 				body.applyGravity();
+diff --git a/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/RayCastTest.java b/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/RayCastTest.java
+index 83fccbf..7d67de2 100644
+--- a/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/RayCastTest.java
++++ b/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/RayCastTest.java
+@@ -88,7 +88,7 @@
+ 		if (rayTestCB.hasHit()) {
+ 			final btCollisionObject obj = rayTestCB.getM_collisionObject();
+ 			if (!obj.isStaticOrKinematicObject()) {
+-				final btRigidBody body = btRigidBody.upcast(obj);
++				final btRigidBody body = (btRigidBody)(obj);
+ 				body.activate();
+ 				body.applyCentralImpulse(Vector3.tmp2.set(ray.direction).scl(20f));
+ 			}
+diff --git a/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/RayPickRagdollTest.java b/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/RayPickRagdollTest.java
+index 66ce76b..5c25676 100644
+--- a/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/RayPickRagdollTest.java
++++ b/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/RayPickRagdollTest.java
+@@ -97,7 +97,7 @@
+ 			ClosestRayResultCallback cb = new ClosestRayResultCallback(ray.origin, Vector3.tmp);
+ 			world.collisionWorld.rayTest(ray.origin, Vector3.tmp, cb);
+ 			if (cb.hasHit()) {
+-				btRigidBody body = btRigidBody.upcast(cb.getM_collisionObject());
++				btRigidBody body = (btRigidBody)(cb.getM_collisionObject());
+ 				if (body != null && !body.isStaticObject() && !body.isKinematicObject()) {
+ 					pickedBody = body;
+ 					body.setActivationState(gdxBullet.DISABLE_DEACTIVATION);
+diff --git a/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/InternalTickTest.java b/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/InternalTickTest.java
+index 23004bd..b81ca96 100644
+--- a/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/InternalTickTest.java
++++ b/tests/gdx-tests/src/com/badlogic/gdx/tests/bullet/InternalTickTest.java
+@@ -36,7 +36,7 @@
+ 			dynamicsWorld.clearForces();
+ 			int idx = 0;
+ 			for (int i = 0; i < objs.size(); i++) {
+-				btRigidBody body = btRigidBody.upcast(objs.at(i));
++				btRigidBody body = (btRigidBody)(objs.at(i));
+ 				if (body == null || body.isStaticOrKinematicObject())
+ 					continue;
+ 				body.applyGravity();

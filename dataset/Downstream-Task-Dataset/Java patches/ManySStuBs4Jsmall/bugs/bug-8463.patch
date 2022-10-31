@@ -1,0 +1,39 @@
+diff --git a/mongodb/src/main/java/com/yahoo/ycsb/db/OptionsSupport.java b/mongodb/src/main/java/com/yahoo/ycsb/db/OptionsSupport.java
+index a2e926d..a1c0264 100644
+--- a/mongodb/src/main/java/com/yahoo/ycsb/db/OptionsSupport.java
++++ b/mongodb/src/main/java/com/yahoo/ycsb/db/OptionsSupport.java
+@@ -76,7 +76,7 @@
+                 result = addUrlOption(result, "w", "1");
+             }
+             else if ("journaled".equals(writeConcernType)) {
+-                result = addUrlOption(result, "journal", "true");
++                result = addUrlOption(result, "j", "true");
+             }
+             else if ("replica_acknowledged".equals(writeConcernType)) {
+                 result = addUrlOption(result, "w", "2");
+diff --git a/mongodb/src/test/java/com/yahoo/ycsb/db/OptionsSupportTest.java b/mongodb/src/test/java/com/yahoo/ycsb/db/OptionsSupportTest.java
+index 20829d5..adb9ec2 100644
+--- a/mongodb/src/test/java/com/yahoo/ycsb/db/OptionsSupportTest.java
++++ b/mongodb/src/test/java/com/yahoo/ycsb/db/OptionsSupportTest.java
+@@ -110,7 +110,7 @@
+         assertThat(
+                 updateUrl("mongodb://locahost:27017/?foo=bar",
+                         props("mongodb.writeConcern", "journaled")),
+-                is("mongodb://locahost:27017/?foo=bar&journal=true"));
++                is("mongodb://locahost:27017/?foo=bar&j=true"));
+         assertThat(
+                 updateUrl("mongodb://locahost:27017/?foo=bar",
+                         props("mongodb.writeConcern", "replica_acknowledged")),
+diff --git a/mongodb/src/main/java/com/yahoo/ycsb/db/OptionsSupport.java b/mongodb/src/main/java/com/yahoo/ycsb/db/OptionsSupport.java
+index a2e926d..a1c0264 100644
+--- a/mongodb/src/main/java/com/yahoo/ycsb/db/OptionsSupport.java
++++ b/mongodb/src/main/java/com/yahoo/ycsb/db/OptionsSupport.java
+@@ -76,7 +76,7 @@
+                 result = addUrlOption(result, "w", "1");
+             }
+             else if ("journaled".equals(writeConcernType)) {
+-                result = addUrlOption(result, "journal", "true");
++                result = addUrlOption(result, "j", "true");
+             }
+             else if ("replica_acknowledged".equals(writeConcernType)) {
+                 result = addUrlOption(result, "w", "2");

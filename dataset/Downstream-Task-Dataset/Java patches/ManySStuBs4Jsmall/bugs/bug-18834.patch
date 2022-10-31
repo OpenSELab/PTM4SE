@@ -1,0 +1,26 @@
+diff --git a/transport/src/test/java/io/netty/channel/ReentrantChannelTest.java b/transport/src/test/java/io/netty/channel/ReentrantChannelTest.java
+index ed31a70..eb35ef8 100644
+--- a/transport/src/test/java/io/netty/channel/ReentrantChannelTest.java
++++ b/transport/src/test/java/io/netty/channel/ReentrantChannelTest.java
+@@ -82,7 +82,7 @@
+ 
+         assertTrue(clientChannel.isWritable());
+         clientChannel.write(createTestBuf(2000)).sync();
+-        assertTrue(clientChannel.isWritable());
++        clientChannel.close().sync();
+ 
+         assertLog(
+             "WRITE\n" +
+diff --git a/transport/src/test/java/io/netty/channel/ReentrantChannelTest.java b/transport/src/test/java/io/netty/channel/ReentrantChannelTest.java
+index ed31a70..eb35ef8 100644
+--- a/transport/src/test/java/io/netty/channel/ReentrantChannelTest.java
++++ b/transport/src/test/java/io/netty/channel/ReentrantChannelTest.java
+@@ -82,7 +82,7 @@
+ 
+         assertTrue(clientChannel.isWritable());
+         clientChannel.write(createTestBuf(2000)).sync();
+-        assertTrue(clientChannel.isWritable());
++        clientChannel.close().sync();
+ 
+         assertLog(
+             "WRITE\n" +

@@ -1,0 +1,16 @@
+diff --git a/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java b/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
+index 4f68a71..154396d 100644
+--- a/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
++++ b/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
+@@ -137,9 +137,9 @@
+     Mockito.doReturn(counters).when(metricRegistry).getCounters();
+ 
+     // Mock gauges.
+-    Gauge blocksCachedGauge = PowerMockito.mock(Gauge.class);
++    Gauge<?> blocksCachedGauge = PowerMockito.mock(Gauge.class);
+     Mockito.doReturn(blocksCached).when(blocksCachedGauge).getValue();
+-    SortedMap<String, Gauge> gauges = Maps.newTreeMap();
++    SortedMap<String, Gauge<?>> gauges = Maps.newTreeMap();
+     gauges.put(blocksCachedProperty, blocksCachedGauge);
+     Mockito.doReturn(gauges).when(metricRegistry).getGauges();
+ 

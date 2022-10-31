@@ -1,0 +1,18 @@
+diff --git a/src/java/org/apache/hadoop/hbase/zookeeper/ZooKeeperWrapper.java b/src/java/org/apache/hadoop/hbase/zookeeper/ZooKeeperWrapper.java
+index 7fd959e..1504a19 100644
+--- a/src/java/org/apache/hadoop/hbase/zookeeper/ZooKeeperWrapper.java
++++ b/src/java/org/apache/hadoop/hbase/zookeeper/ZooKeeperWrapper.java
+@@ -348,9 +348,11 @@
+     } catch (KeeperException.NoNodeException e) {
+       return ensureParentExists(znode) && ensureExists(znode);
+     } catch (KeeperException e) {
+-      LOG.warn("Failed to create " + znode + ":", e);
++      LOG.warn("Failed to create " + znode +
++        " -- check quorum servers, currenty=" + this.quorumServers, e);
+     } catch (InterruptedException e) {
+-      LOG.warn("Failed to create " + znode + ":", e);
++      LOG.warn("Failed to create " + znode +
++        " -- check quorum servers, currenty=" + this.quorumServers, e);
+     }
+     return false;
+   }

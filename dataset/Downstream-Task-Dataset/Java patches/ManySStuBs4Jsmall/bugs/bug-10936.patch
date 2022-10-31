@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-ui/src/test/java/org/deeplearning4j/ui/flow/FlowIterationListenerTest.java b/deeplearning4j-ui/src/test/java/org/deeplearning4j/ui/flow/FlowIterationListenerTest.java
+index 04f0be0..a8debd0 100644
+--- a/deeplearning4j-ui/src/test/java/org/deeplearning4j/ui/flow/FlowIterationListenerTest.java
++++ b/deeplearning4j-ui/src/test/java/org/deeplearning4j/ui/flow/FlowIterationListenerTest.java
+@@ -55,7 +55,7 @@
+                     .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1)
+                     .graphBuilder()
+                     .addInputs("inEn", "inFr")
+-                    .setInputTypes(InputType.recurrent(), InputType.recurrent())
++                    .setInputTypes(InputType.recurrent(VOCAB_SIZE+1), InputType.recurrent(VOCAB_SIZE+1))
+                     .addLayer("embeddingEn", new EmbeddingLayer.Builder().nIn(VOCAB_SIZE+1).nOut(128).activation("identity").build(),"inEn")
+                     .addLayer("encoder", new GravesLSTM.Builder().nIn(128).nOut(256).activation("softsign").build(),"embeddingEn")
+                     .addVertex("lastTimeStep", new LastTimeStepVertex("inEn"),"encoder")
+diff --git a/deeplearning4j-ui/src/test/java/org/deeplearning4j/ui/flow/FlowIterationListenerTest.java b/deeplearning4j-ui/src/test/java/org/deeplearning4j/ui/flow/FlowIterationListenerTest.java
+index 04f0be0..a8debd0 100644
+--- a/deeplearning4j-ui/src/test/java/org/deeplearning4j/ui/flow/FlowIterationListenerTest.java
++++ b/deeplearning4j-ui/src/test/java/org/deeplearning4j/ui/flow/FlowIterationListenerTest.java
+@@ -55,7 +55,7 @@
+                     .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).iterations(1)
+                     .graphBuilder()
+                     .addInputs("inEn", "inFr")
+-                    .setInputTypes(InputType.recurrent(), InputType.recurrent())
++                    .setInputTypes(InputType.recurrent(VOCAB_SIZE+1), InputType.recurrent(VOCAB_SIZE+1))
+                     .addLayer("embeddingEn", new EmbeddingLayer.Builder().nIn(VOCAB_SIZE+1).nOut(128).activation("identity").build(),"inEn")
+                     .addLayer("encoder", new GravesLSTM.Builder().nIn(128).nOut(256).activation("softsign").build(),"embeddingEn")
+                     .addVertex("lastTimeStep", new LastTimeStepVertex("inEn"),"encoder")

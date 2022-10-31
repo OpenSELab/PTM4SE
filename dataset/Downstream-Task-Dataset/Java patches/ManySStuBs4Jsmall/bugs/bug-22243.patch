@@ -1,0 +1,48 @@
+diff --git a/src/edu/stanford/nlp/patterns/surface/GetPatternsFromDataMultiClass.java b/src/edu/stanford/nlp/patterns/surface/GetPatternsFromDataMultiClass.java
+index e3d824d..e5df99e 100644
+--- a/src/edu/stanford/nlp/patterns/surface/GetPatternsFromDataMultiClass.java
++++ b/src/edu/stanford/nlp/patterns/surface/GetPatternsFromDataMultiClass.java
+@@ -862,7 +862,7 @@
+ 
+       for (File f : Data.sentsFiles) {
+ 
+-        Redwood.log(Redwood.DBG, constVars.computeAllPatterns ? "Creating patterns and " : "" + "calculating sufficient statistics from " + f);
++        Redwood.log(Redwood.DBG, (constVars.computeAllPatterns ? "Creating patterns and " : "") + "calculating sufficient statistics from " + f);
+ 
+         Map<String, List<CoreLabel>> sents = IOUtils.readObjectFromFile(f);
+ 
+diff --git a/src/edu/stanford/nlp/patterns/surface/SurfacePattern.java b/src/edu/stanford/nlp/patterns/surface/SurfacePattern.java
+index 9d44a2f..9313069 100644
+--- a/src/edu/stanford/nlp/patterns/surface/SurfacePattern.java
++++ b/src/edu/stanford/nlp/patterns/surface/SurfacePattern.java
+@@ -266,7 +266,7 @@
+     this.originalNext = originalNext;
+   }
+ 
+-  public static boolean notSameGenre(SurfacePattern p1, SurfacePattern p2) {
++  public static boolean sameGenre(SurfacePattern p1, SurfacePattern p2) {
+     return p1.getGenre().equals(p2.getGenre());
+   }
+ 
+@@ -318,7 +318,7 @@
+    */
+   public static boolean subsumes(SurfacePattern p1, SurfacePattern p2){
+     
+-    if (notSameGenre(p1, p2)) {
++    if (!sameGenre(p1, p2)) {
+       return false;
+     }
+     
+diff --git a/src/edu/stanford/nlp/patterns/surface/GetPatternsFromDataMultiClass.java b/src/edu/stanford/nlp/patterns/surface/GetPatternsFromDataMultiClass.java
+index e3d824d..e5df99e 100644
+--- a/src/edu/stanford/nlp/patterns/surface/GetPatternsFromDataMultiClass.java
++++ b/src/edu/stanford/nlp/patterns/surface/GetPatternsFromDataMultiClass.java
+@@ -862,7 +862,7 @@
+ 
+       for (File f : Data.sentsFiles) {
+ 
+-        Redwood.log(Redwood.DBG, constVars.computeAllPatterns ? "Creating patterns and " : "" + "calculating sufficient statistics from " + f);
++        Redwood.log(Redwood.DBG, (constVars.computeAllPatterns ? "Creating patterns and " : "") + "calculating sufficient statistics from " + f);
+ 
+         Map<String, List<CoreLabel>> sents = IOUtils.readObjectFromFile(f);
+ 

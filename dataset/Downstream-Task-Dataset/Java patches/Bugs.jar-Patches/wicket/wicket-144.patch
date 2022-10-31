@@ -1,0 +1,32 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java b/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
+index f239c4d..50402f6 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/handler/PageProvider.java
+@@ -294,18 +294,22 @@ public class PageProvider implements IPageProvider
+ 	private IRequestablePage getStoredPage(final int pageId)
+ 	{
+ 		IRequestablePage storedPageInstance = getPageSource().getPageInstance(pageId);
+-		if (storedPageInstance != null &&
+-			(pageClass == null || pageClass.equals(storedPageInstance.getClass())))
++		if (storedPageInstance != null)
+ 		{
+-			pageInstance = storedPageInstance;
+-			pageInstanceIsFresh = false;
+-			if (pageInstance != null)
++			if (pageClass == null || pageClass.equals(storedPageInstance.getClass()))
+ 			{
++				pageInstance = storedPageInstance;
++				pageInstanceIsFresh = false;
+ 				if (renderCount != null && pageInstance.getRenderCount() != renderCount)
+ 				{
+ 					throw new StalePageException(pageInstance);
+ 				}
+ 			}
++			else
++			{
++				// the found page class doesn't match the requested one
++				storedPageInstance = null;
++			}
+ 		}
+ 		return storedPageInstance;
+ 	}

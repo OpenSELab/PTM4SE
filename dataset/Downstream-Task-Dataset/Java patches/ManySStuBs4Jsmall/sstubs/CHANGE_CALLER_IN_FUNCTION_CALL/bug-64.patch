@@ -1,0 +1,39 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/ConjugateGradient.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/ConjugateGradient.java
+index 9119c9f..978d21d 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/ConjugateGradient.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/ConjugateGradient.java
+@@ -88,7 +88,7 @@
+         // = ((grad(current)-grad(last)) \dot (grad(current))) / (grad(last) \dot grad(last))
+         double dgg = Nd4j.getBlasWrapper().dot(gradient.sub(gLast),gradient);
+         double gg = Nd4j.getBlasWrapper().dot(gLast, gLast);
+-        double gamma = Double.max(dgg / gg, 0.0);
++        double gamma = Math.max(dgg / gg, 0.0);
+         
+         //Standard Polak-Ribiere does not guarantee that the search direction is a descent direction
+         //But using max(gamma_Polak-Ribiere,0) does guarantee a descent direction. Hence the max above.
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/LBFGS.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/LBFGS.java
+index 0f13765..0e6cd36 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/LBFGS.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/LBFGS.java
+@@ -118,7 +118,7 @@
+ 
+     	//In general: have m elements in s,y,rho.
+         //But for first few iterations, have less.
+-        int numVectors = Integer.min(m,s.size());
++        int numVectors = Math.min(m,s.size());
+         
+         double[] alpha = new double[numVectors];
+         
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/ConjugateGradient.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/ConjugateGradient.java
+index 9119c9f..978d21d 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/ConjugateGradient.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/ConjugateGradient.java
+@@ -88,7 +88,7 @@
+         // = ((grad(current)-grad(last)) \dot (grad(current))) / (grad(last) \dot grad(last))
+         double dgg = Nd4j.getBlasWrapper().dot(gradient.sub(gLast),gradient);
+         double gg = Nd4j.getBlasWrapper().dot(gLast, gLast);
+-        double gamma = Double.max(dgg / gg, 0.0);
++        double gamma = Math.max(dgg / gg, 0.0);
+         
+         //Standard Polak-Ribiere does not guarantee that the search direction is a descent direction
+         //But using max(gamma_Polak-Ribiere,0) does guarantee a descent direction. Hence the max above.

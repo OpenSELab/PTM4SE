@@ -1,0 +1,22 @@
+diff --git a/components/camel-irc/src/main/java/org/apache/camel/component/irc/IrcConfiguration.java b/components/camel-irc/src/main/java/org/apache/camel/component/irc/IrcConfiguration.java
+index beebf81..abaeb65 100644
+--- a/components/camel-irc/src/main/java/org/apache/camel/component/irc/IrcConfiguration.java
++++ b/components/camel-irc/src/main/java/org/apache/camel/component/irc/IrcConfiguration.java
+@@ -48,7 +48,7 @@
+ 
+     @UriPath @Metadata(required = "true")
+     private String hostname;
+-    @UriPath(defaultValue = "6667,6668,6669")
++    @UriPath
+     private int port;
+     private int[] ports = {6667, 6668, 6669};
+     @UriParam(label = "security", secret = true)
+@@ -295,7 +295,7 @@
+     }
+ 
+     /**
+-     * Port number for the IRC chat server
++     * Port number for the IRC chat server. If no port is configured then a default port of either 6667, 6668 or 6669 is used.
+      */
+     public void setPort(int port) {
+         this.port = port;

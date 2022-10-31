@@ -1,0 +1,13 @@
+diff --git a/hikaricp/src/main/java/com/zaxxer/hikari/util/ConcurrentBag.java b/hikaricp/src/main/java/com/zaxxer/hikari/util/ConcurrentBag.java
+index 7fa4bf3..006f258 100644
+--- a/hikaricp/src/main/java/com/zaxxer/hikari/util/ConcurrentBag.java
++++ b/hikaricp/src/main/java/com/zaxxer/hikari/util/ConcurrentBag.java
+@@ -178,7 +178,7 @@
+    public void add(final T bagEntry)
+    {
+       if (closed) {
+-         LOGGER.warn("ConcurrentBag has been closed, ignoring add()");
++         throw new IllegalStateException("ConcurrentBag has been closed, ignoring add()");
+       }
+       else {
+          sharedList.add(bagEntry);

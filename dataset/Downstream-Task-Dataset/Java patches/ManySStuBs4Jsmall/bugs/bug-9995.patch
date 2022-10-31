@@ -1,0 +1,26 @@
+diff --git a/src/jvm/clojure/lang/PersistentVector.java b/src/jvm/clojure/lang/PersistentVector.java
+index b842fc4..460a406 100644
+--- a/src/jvm/clojure/lang/PersistentVector.java
++++ b/src/jvm/clojure/lang/PersistentVector.java
+@@ -625,7 +625,7 @@
+ 			}
+ 		if(shift > 5 && newroot.array[1] == null)
+ 			{
+-			newroot = (Node) newroot.array[0];
++			newroot = ensureEditable((Node) newroot.array[0]);
+ 			newshift -= 5;
+ 			}
+ 		root = newroot;
+diff --git a/src/jvm/clojure/lang/PersistentVector.java b/src/jvm/clojure/lang/PersistentVector.java
+index b842fc4..460a406 100644
+--- a/src/jvm/clojure/lang/PersistentVector.java
++++ b/src/jvm/clojure/lang/PersistentVector.java
+@@ -625,7 +625,7 @@
+ 			}
+ 		if(shift > 5 && newroot.array[1] == null)
+ 			{
+-			newroot = (Node) newroot.array[0];
++			newroot = ensureEditable((Node) newroot.array[0]);
+ 			newshift -= 5;
+ 			}
+ 		root = newroot;

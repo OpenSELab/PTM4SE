@@ -1,0 +1,23 @@
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/TableDataManagerImpl.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/TableDataManagerImpl.java
+index eafb390..2f02b11 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/TableDataManagerImpl.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/TableDataManagerImpl.java
+@@ -181,7 +181,8 @@
+         if ("oracle".equals(getDbSqlSession().getDbSqlSessionFactory().getDatabaseType())) {
+           tableNameFilter = databaseTablePrefix + "ACT" + databaseMetaData.getSearchStringEscape() + "_%";
+         }
+-        tables = databaseMetaData.getTables(null, null, tableNameFilter, DbSqlSession.JDBC_METADATA_TABLE_TYPES);
++        tables = databaseMetaData.getTables(getProcessEngineConfiguration().getDatabaseCatalog(), getProcessEngineConfiguration().getDatabaseSchema(), 
++            tableNameFilter, DbSqlSession.JDBC_METADATA_TABLE_TYPES);
+         while (tables.next()) {
+           String tableName = tables.getString("TABLE_NAME");
+           tableName = tableName.toUpperCase();
+@@ -250,7 +251,7 @@
+       
+       String schema = getProcessEngineConfiguration().getDatabaseSchema();
+ 
+-      ResultSet resultSet = metaData.getColumns(null, null, tableName, null);
++      ResultSet resultSet = metaData.getColumns(getProcessEngineConfiguration().getDatabaseCatalog(), schema, tableName, null);
+       while(resultSet.next()) {
+         boolean wrongSchema = false;
+         if (schema != null && schema.length() > 0) {

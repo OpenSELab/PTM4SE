@@ -1,0 +1,26 @@
+diff --git a/jpa/src/main/java/org/jboss/as/jpa/processor/JPAAnnotationParseProcessor.java b/jpa/src/main/java/org/jboss/as/jpa/processor/JPAAnnotationParseProcessor.java
+index 61a32ef..6e63201 100644
+--- a/jpa/src/main/java/org/jboss/as/jpa/processor/JPAAnnotationParseProcessor.java
++++ b/jpa/src/main/java/org/jboss/as/jpa/processor/JPAAnnotationParseProcessor.java
+@@ -155,7 +155,7 @@
+         final String declaredName = declaredNameValue != null ? declaredNameValue.asString() : null;
+         final String localContextName;
+         if (declaredName == null || declaredName.isEmpty()) {
+-            localContextName = fieldName;
++            localContextName = fieldInfo.declaringClass().name().toString() + "/" + fieldName;
+         } else {
+             localContextName = declaredName;
+         }
+diff --git a/jpa/src/main/java/org/jboss/as/jpa/processor/JPAAnnotationParseProcessor.java b/jpa/src/main/java/org/jboss/as/jpa/processor/JPAAnnotationParseProcessor.java
+index 61a32ef..6e63201 100644
+--- a/jpa/src/main/java/org/jboss/as/jpa/processor/JPAAnnotationParseProcessor.java
++++ b/jpa/src/main/java/org/jboss/as/jpa/processor/JPAAnnotationParseProcessor.java
+@@ -155,7 +155,7 @@
+         final String declaredName = declaredNameValue != null ? declaredNameValue.asString() : null;
+         final String localContextName;
+         if (declaredName == null || declaredName.isEmpty()) {
+-            localContextName = fieldName;
++            localContextName = fieldInfo.declaringClass().name().toString() + "/" + fieldName;
+         } else {
+             localContextName = declaredName;
+         }

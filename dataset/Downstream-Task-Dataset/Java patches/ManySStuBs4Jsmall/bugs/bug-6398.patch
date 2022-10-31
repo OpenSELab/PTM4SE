@@ -1,0 +1,48 @@
+diff --git a/flink-connectors/flink-connector-kafka-0.11/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaProducer011.java b/flink-connectors/flink-connector-kafka-0.11/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaProducer011.java
+index d0f5039..3fe4bc6 100644
+--- a/flink-connectors/flink-connector-kafka-0.11/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaProducer011.java
++++ b/flink-connectors/flink-connector-kafka-0.11/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaProducer011.java
+@@ -512,7 +512,7 @@
+ 			long timeout = DEFAULT_KAFKA_TRANSACTION_TIMEOUT.toMilliseconds();
+ 			checkState(timeout < Integer.MAX_VALUE && timeout > 0, "timeout does not fit into 32 bit integer");
+ 			this.producerConfig.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, (int) timeout);
+-			LOG.warn("Property [%s] not specified. Setting it to %s", ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, DEFAULT_KAFKA_TRANSACTION_TIMEOUT);
++			LOG.warn("Property [{}] not specified. Setting it to {}", ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, DEFAULT_KAFKA_TRANSACTION_TIMEOUT);
+ 		}
+ 
+ 		// Enable transactionTimeoutWarnings to avoid silent data loss
+diff --git a/flink-connectors/flink-jdbc/src/main/java/org/apache/flink/api/java/io/jdbc/JDBCOutputFormat.java b/flink-connectors/flink-jdbc/src/main/java/org/apache/flink/api/java/io/jdbc/JDBCOutputFormat.java
+index 2497712..67c7a0e 100644
+--- a/flink-connectors/flink-jdbc/src/main/java/org/apache/flink/api/java/io/jdbc/JDBCOutputFormat.java
++++ b/flink-connectors/flink-jdbc/src/main/java/org/apache/flink/api/java/io/jdbc/JDBCOutputFormat.java
+@@ -116,7 +116,7 @@
+ 			if (typesArray == null) {
+ 				// no types provided
+ 				for (int index = 0; index < row.getArity(); index++) {
+-					LOG.warn("Unknown column type for column %s. Best effort approach to set its value: %s.", index + 1, row.getField(index));
++					LOG.warn("Unknown column type for column {}. Best effort approach to set its value: {}.", index + 1, row.getField(index));
+ 					upload.setObject(index + 1, row.getField(index));
+ 				}
+ 			} else {
+@@ -181,7 +181,7 @@
+ 								break;
+ 							default:
+ 								upload.setObject(index + 1, row.getField(index));
+-								LOG.warn("Unmanaged sql type (%s) for column %s. Best effort approach to set its value: %s.",
++								LOG.warn("Unmanaged sql type ({}) for column {}. Best effort approach to set its value: {}.",
+ 									typesArray[index], index + 1, row.getField(index));
+ 								// case java.sql.Types.SQLXML
+ 								// case java.sql.Types.ARRAY:
+diff --git a/flink-connectors/flink-connector-kafka-0.11/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaProducer011.java b/flink-connectors/flink-connector-kafka-0.11/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaProducer011.java
+index d0f5039..3fe4bc6 100644
+--- a/flink-connectors/flink-connector-kafka-0.11/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaProducer011.java
++++ b/flink-connectors/flink-connector-kafka-0.11/src/main/java/org/apache/flink/streaming/connectors/kafka/FlinkKafkaProducer011.java
+@@ -512,7 +512,7 @@
+ 			long timeout = DEFAULT_KAFKA_TRANSACTION_TIMEOUT.toMilliseconds();
+ 			checkState(timeout < Integer.MAX_VALUE && timeout > 0, "timeout does not fit into 32 bit integer");
+ 			this.producerConfig.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, (int) timeout);
+-			LOG.warn("Property [%s] not specified. Setting it to %s", ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, DEFAULT_KAFKA_TRANSACTION_TIMEOUT);
++			LOG.warn("Property [{}] not specified. Setting it to {}", ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, DEFAULT_KAFKA_TRANSACTION_TIMEOUT);
+ 		}
+ 
+ 		// Enable transactionTimeoutWarnings to avoid silent data loss

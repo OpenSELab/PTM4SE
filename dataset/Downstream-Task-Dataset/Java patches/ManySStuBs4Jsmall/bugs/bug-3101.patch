@@ -1,0 +1,28 @@
+diff --git a/meta/src/main/java/com/alibaba/otter/canal/meta/MemoryMetaManager.java b/meta/src/main/java/com/alibaba/otter/canal/meta/MemoryMetaManager.java
+index 4d6072d..d5e040a 100644
+--- a/meta/src/main/java/com/alibaba/otter/canal/meta/MemoryMetaManager.java
++++ b/meta/src/main/java/com/alibaba/otter/canal/meta/MemoryMetaManager.java
+@@ -83,7 +83,8 @@
+     }
+ 
+     public synchronized List<ClientIdentity> listAllSubscribeInfo(String destination) throws CanalMetaManagerException {
+-        return destinations.get(destination);
++        // fixed issue #657, fixed ConcurrentModificationException
++        return Lists.newArrayList(destinations.get(destination));
+     }
+ 
+     public Position getCursor(ClientIdentity clientIdentity) throws CanalMetaManagerException {
+diff --git a/meta/src/main/java/com/alibaba/otter/canal/meta/MemoryMetaManager.java b/meta/src/main/java/com/alibaba/otter/canal/meta/MemoryMetaManager.java
+index 4d6072d..d5e040a 100644
+--- a/meta/src/main/java/com/alibaba/otter/canal/meta/MemoryMetaManager.java
++++ b/meta/src/main/java/com/alibaba/otter/canal/meta/MemoryMetaManager.java
+@@ -83,7 +83,8 @@
+     }
+ 
+     public synchronized List<ClientIdentity> listAllSubscribeInfo(String destination) throws CanalMetaManagerException {
+-        return destinations.get(destination);
++        // fixed issue #657, fixed ConcurrentModificationException
++        return Lists.newArrayList(destinations.get(destination));
+     }
+ 
+     public Position getCursor(ClientIdentity clientIdentity) throws CanalMetaManagerException {

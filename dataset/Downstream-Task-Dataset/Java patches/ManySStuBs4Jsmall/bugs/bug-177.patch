@@ -1,0 +1,26 @@
+diff --git a/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/export/SignalAndMessageDefinitionExport.java b/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/export/SignalAndMessageDefinitionExport.java
+index 2f4df9b..f145fe6 100644
+--- a/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/export/SignalAndMessageDefinitionExport.java
++++ b/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/export/SignalAndMessageDefinitionExport.java
+@@ -54,7 +54,7 @@
+       xtw.writeStartElement(ELEMENT_MESSAGE);
+       String messageId = message.getId();
+       // remove the namespace from the message id if set
+-      if (messageId.startsWith(model.getTargetNamespace())) {
++      if (model.getTargetNamespace() != null && messageId.startsWith(model.getTargetNamespace())) {
+         messageId = messageId.replace(model.getTargetNamespace(), "");
+         messageId = messageId.replaceFirst(":", "");
+       } else {
+diff --git a/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/export/SignalAndMessageDefinitionExport.java b/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/export/SignalAndMessageDefinitionExport.java
+index 2f4df9b..f145fe6 100644
+--- a/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/export/SignalAndMessageDefinitionExport.java
++++ b/modules/activiti-bpmn-converter/src/main/java/org/activiti/bpmn/converter/export/SignalAndMessageDefinitionExport.java
+@@ -54,7 +54,7 @@
+       xtw.writeStartElement(ELEMENT_MESSAGE);
+       String messageId = message.getId();
+       // remove the namespace from the message id if set
+-      if (messageId.startsWith(model.getTargetNamespace())) {
++      if (model.getTargetNamespace() != null && messageId.startsWith(model.getTargetNamespace())) {
+         messageId = messageId.replace(model.getTargetNamespace(), "");
+         messageId = messageId.replaceFirst(":", "");
+       } else {

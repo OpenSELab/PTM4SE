@@ -1,0 +1,110 @@
+diff --git a/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java b/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
+index c31429d..6d34361 100644
+--- a/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
++++ b/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
+@@ -111,9 +111,9 @@
+     // Proportions we allocate to each slab of the total size.
+     String[] porportions = conf.getStrings(
+         "hbase.offheapcache.slab.proportions", "0.80", "0.20");
+-    String[] sizes = conf.getStrings("hbase.offheapcache.slab.sizes", new Long(
+-        avgBlockSize * 11 / 10).toString(), new Long(avgBlockSize * 21 / 10)
+-        .toString());
++    String[] sizes = conf.getStrings("hbase.offheapcache.slab.sizes",
++        Long.valueOf(avgBlockSize * 11 / 10).toString(),
++        Long.valueOf(avgBlockSize * 21 / 10).toString());
+ 
+     if (porportions.length != sizes.length) {
+       throw new IllegalArgumentException(
+diff --git a/src/main/java/org/apache/hadoop/hbase/mapreduce/ImportTsv.java b/src/main/java/org/apache/hadoop/hbase/mapreduce/ImportTsv.java
+index bfe18e7..aed7846 100644
+--- a/src/main/java/org/apache/hadoop/hbase/mapreduce/ImportTsv.java
++++ b/src/main/java/org/apache/hadoop/hbase/mapreduce/ImportTsv.java
+@@ -198,8 +198,8 @@
+     // by re-encoding the passed separator as a Base64 string.
+     String actualSeparator = conf.get(SEPARATOR_CONF_KEY);
+     if (actualSeparator != null) {
+-      conf.set(SEPARATOR_CONF_KEY, new String(
+-      Base64.encodeBytes(actualSeparator.getBytes())));
++      conf.set(SEPARATOR_CONF_KEY,
++               Base64.encodeBytes(actualSeparator.getBytes()));
+     }
+ 
+     // See if a non-default Mapper was set
+diff --git a/src/main/java/org/apache/hadoop/hbase/master/DefaultLoadBalancer.java b/src/main/java/org/apache/hadoop/hbase/master/DefaultLoadBalancer.java
+index d64e147..702f622 100644
+--- a/src/main/java/org/apache/hadoop/hbase/master/DefaultLoadBalancer.java
++++ b/src/main/java/org/apache/hadoop/hbase/master/DefaultLoadBalancer.java
+@@ -106,7 +106,7 @@
+   * regions which were assigned to the server after some other region server
+   * crashed.
+   */
+-   private class RegionInfoComparator implements Comparator<HRegionInfo> {
++   private static class RegionInfoComparator implements Comparator<HRegionInfo> {
+        @Override
+        public int compare(HRegionInfo l, HRegionInfo r) {
+           long diff = r.getRegionId() - l.getRegionId();
+diff --git a/src/main/java/org/apache/hadoop/hbase/master/SplitLogManager.java b/src/main/java/org/apache/hadoop/hbase/master/SplitLogManager.java
+index 5489402..79862c5 100644
+--- a/src/main/java/org/apache/hadoop/hbase/master/SplitLogManager.java
++++ b/src/main/java/org/apache/hadoop/hbase/master/SplitLogManager.java
+@@ -608,7 +608,7 @@
+       create(ZKSplitLog.getRescanNode(watcher),
+         TaskState.TASK_DONE.get(serverName), Ids.OPEN_ACL_UNSAFE,
+         CreateMode.EPHEMERAL_SEQUENTIAL,
+-        new CreateRescanAsyncCallback(), new Long(retries));
++        new CreateRescanAsyncCallback(), Long.valueOf(retries));
+   }
+ 
+   private void createRescanSuccess(String path) {
+diff --git a/src/main/java/org/apache/hadoop/hbase/regionserver/wal/SequenceFileLogWriter.java b/src/main/java/org/apache/hadoop/hbase/regionserver/wal/SequenceFileLogWriter.java
+index cbef70f..bd31ead 100644
+--- a/src/main/java/org/apache/hadoop/hbase/regionserver/wal/SequenceFileLogWriter.java
++++ b/src/main/java/org/apache/hadoop/hbase/regionserver/wal/SequenceFileLogWriter.java
+@@ -91,13 +91,13 @@
+             CompressionType.class, CompressionCodec.class, Metadata.class})
+         .invoke(null, new Object[] {fs, conf, path, HLog.getKeyClass(conf),
+             WALEdit.class,
+-            new Integer(fs.getConf().getInt("io.file.buffer.size", 4096)),
+-            new Short((short)
++            Integer.valueOf(fs.getConf().getInt("io.file.buffer.size", 4096)),
++            Short.valueOf((short)
+               conf.getInt("hbase.regionserver.hlog.replication",
+               fs.getDefaultReplication())),
+-            new Long(conf.getLong("hbase.regionserver.hlog.blocksize",
++            Long.valueOf(conf.getLong("hbase.regionserver.hlog.blocksize",
+                 fs.getDefaultBlockSize())),
+-            new Boolean(false) /*createParent*/,
++            Boolean.valueOf(false) /*createParent*/,
+             SequenceFile.CompressionType.NONE, new DefaultCodec(),
+             new Metadata()
+             });
+diff --git a/src/main/java/org/apache/hadoop/hbase/zookeeper/MasterSchemaChangeTracker.java b/src/main/java/org/apache/hadoop/hbase/zookeeper/MasterSchemaChangeTracker.java
+index 7d0ae63..39c940e 100644
+--- a/src/main/java/org/apache/hadoop/hbase/zookeeper/MasterSchemaChangeTracker.java
++++ b/src/main/java/org/apache/hadoop/hbase/zookeeper/MasterSchemaChangeTracker.java
+@@ -743,7 +743,7 @@
+       LOG.debug("Removing RS " + schemaAlterStatus.getHostName()
+           + " from schema change process.");
+       hostsToProcess =
+-          new String(hostsToProcess).replaceAll(schemaAlterStatus.getHostName(), "");
++          hostsToProcess.replaceAll(schemaAlterStatus.getHostName(), "");
+       int ignoreRegionsCount = schemaAlterStatus.getNumberOfOnlineRegions();
+       LOG.debug("Current number of regions processed = "
+           + this.numberOfRegionsProcessed + " deducting ignored = "
+diff --git a/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java b/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
+index c31429d..6d34361 100644
+--- a/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
++++ b/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
+@@ -111,9 +111,9 @@
+     // Proportions we allocate to each slab of the total size.
+     String[] porportions = conf.getStrings(
+         "hbase.offheapcache.slab.proportions", "0.80", "0.20");
+-    String[] sizes = conf.getStrings("hbase.offheapcache.slab.sizes", new Long(
+-        avgBlockSize * 11 / 10).toString(), new Long(avgBlockSize * 21 / 10)
+-        .toString());
++    String[] sizes = conf.getStrings("hbase.offheapcache.slab.sizes",
++        Long.valueOf(avgBlockSize * 11 / 10).toString(),
++        Long.valueOf(avgBlockSize * 21 / 10).toString());
+ 
+     if (porportions.length != sizes.length) {
+       throw new IllegalArgumentException(

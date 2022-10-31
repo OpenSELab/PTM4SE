@@ -1,0 +1,13 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/Invocation.java b/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/Invocation.java
+index b38c77a..33b99105 100644
+--- a/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/Invocation.java
++++ b/hazelcast/src/main/java/com/hazelcast/spi/impl/operationservice/impl/Invocation.java
+@@ -180,7 +180,7 @@
+     public void sendResponse(Operation op, Object response) {
+         if (!RESPONSE_RECEIVED.compareAndSet(this, FALSE, TRUE)) {
+             throw new ResponseAlreadySentException("NormalResponse already responseReceived for callback: " + this
+-                    + ", current-response: : " + response);
++                    + ", current-response: " + response);
+         }
+ 
+         if (response instanceof CallTimeoutResponse) {

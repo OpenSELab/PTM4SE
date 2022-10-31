@@ -1,0 +1,13 @@
+diff --git a/dubbo-metadata-report/dubbo-metadata-report-api/src/main/java/org/apache/dubbo/metadata/support/AbstractMetadataReport.java b/dubbo-metadata-report/dubbo-metadata-report-api/src/main/java/org/apache/dubbo/metadata/support/AbstractMetadataReport.java
+index bedb085..f1bff8a 100644
+--- a/dubbo-metadata-report/dubbo-metadata-report-api/src/main/java/org/apache/dubbo/metadata/support/AbstractMetadataReport.java
++++ b/dubbo-metadata-report/dubbo-metadata-report-api/src/main/java/org/apache/dubbo/metadata/support/AbstractMetadataReport.java
+@@ -357,7 +357,7 @@
+         protected final Logger logger = LoggerFactory.getLogger(getClass());
+ 
+         final ScheduledExecutorService retryExecutor = Executors.newScheduledThreadPool(0, new NamedThreadFactory("DubboRegistryFailedRetryTimer", true));
+-        ScheduledFuture retryScheduledFuture;
++        volatile ScheduledFuture retryScheduledFuture;
+         AtomicInteger retryCounter = new AtomicInteger(0);
+         // retry task schedule period
+         long retryPeriod;

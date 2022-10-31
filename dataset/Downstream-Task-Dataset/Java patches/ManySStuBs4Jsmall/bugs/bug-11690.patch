@@ -1,0 +1,26 @@
+diff --git a/server/src/main/java/io/druid/metadata/SQLMetadataConnector.java b/server/src/main/java/io/druid/metadata/SQLMetadataConnector.java
+index 1cabf4d..57c6fc0 100644
+--- a/server/src/main/java/io/druid/metadata/SQLMetadataConnector.java
++++ b/server/src/main/java/io/druid/metadata/SQLMetadataConnector.java
+@@ -397,7 +397,7 @@
+                 tableName, getSerialType(), getPayloadType()
+             ),
+             String.format("CREATE INDEX idx_%1$s_key_time ON %1$s(audit_key, created_date)", tableName),
+-            String.format("CREATE INDEX idx_%1$s_type_time ON %1$s(audit_key, created_date)", tableName),
++            String.format("CREATE INDEX idx_%1$s_type_time ON %1$s(type, created_date)", tableName),
+             String.format("CREATE INDEX idx_%1$s_audit_time ON %1$s(created_date)", tableName)
+         )
+     );
+diff --git a/server/src/main/java/io/druid/metadata/SQLMetadataConnector.java b/server/src/main/java/io/druid/metadata/SQLMetadataConnector.java
+index 1cabf4d..57c6fc0 100644
+--- a/server/src/main/java/io/druid/metadata/SQLMetadataConnector.java
++++ b/server/src/main/java/io/druid/metadata/SQLMetadataConnector.java
+@@ -397,7 +397,7 @@
+                 tableName, getSerialType(), getPayloadType()
+             ),
+             String.format("CREATE INDEX idx_%1$s_key_time ON %1$s(audit_key, created_date)", tableName),
+-            String.format("CREATE INDEX idx_%1$s_type_time ON %1$s(audit_key, created_date)", tableName),
++            String.format("CREATE INDEX idx_%1$s_type_time ON %1$s(type, created_date)", tableName),
+             String.format("CREATE INDEX idx_%1$s_audit_time ON %1$s(created_date)", tableName)
+         )
+     );

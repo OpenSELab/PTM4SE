@@ -1,0 +1,131 @@
+diff --git a/src/main/java/tachyon/InodeFile.java b/src/main/java/tachyon/InodeFile.java
+index f0d5ba6..ca579c6 100644
+--- a/src/main/java/tachyon/InodeFile.java
++++ b/src/main/java/tachyon/InodeFile.java
+@@ -13,7 +13,7 @@
+   private long mLength;
+   private boolean mPin = false;
+   private boolean mCache = false;
+-  private String mCheckpointPath = null;
++  private String mCheckpointPath = "";
+ 
+   private Map<Long, NetAddress> mLocations = new HashMap<Long, NetAddress>();
+ 
+@@ -83,6 +83,6 @@
+   }
+ 
+   public synchronized boolean hasCheckpointed() {
+-    return mCheckpointPath != null;
++    return !mCheckpointPath.equals("");
+   }
+ }
+\ No newline at end of file
+diff --git a/src/main/java/tachyon/MasterClient.java b/src/main/java/tachyon/MasterClient.java
+index ff8469d..7f153eb 100644
+--- a/src/main/java/tachyon/MasterClient.java
++++ b/src/main/java/tachyon/MasterClient.java
+@@ -106,12 +106,12 @@
+     CLIENT.user_deleteById(fileId);
+   }
+ 
+-  public ClientFileInfo user_getClientFileInfoByPath(String path)
++  public synchronized ClientFileInfo user_getClientFileInfoByPath(String path)
+       throws FileDoesNotExistException, InvalidPathException, TException {
+     return CLIENT.user_getClientFileInfoByPath(path);
+   }
+ 
+-  public ClientFileInfo user_getClientFileInfoById(int id)
++  public synchronized ClientFileInfo user_getClientFileInfoById(int id)
+       throws FileDoesNotExistException, TException {
+     return CLIENT.user_getClientFileInfoById(id);
+   }
+@@ -149,7 +149,7 @@
+     return CLIENT.user_getNumberOfFiles(folderPath);
+   }
+ 
+-  public int user_mkdir(String path) 
++  public synchronized int user_mkdir(String path) 
+       throws FileAlreadyExistException, InvalidPathException, TException {
+     return CLIENT.user_mkdir(path);
+   }
+@@ -167,13 +167,13 @@
+     CLIENT.user_unpinFile(id);
+   }
+ 
+-  public void worker_addCheckpoint(long workerId, int fileId, long fileSizeBytes, 
++  public synchronized void worker_addCheckpoint(long workerId, int fileId, long fileSizeBytes, 
+       String checkpointPath) 
+           throws FileDoesNotExistException, SuspectedFileSizeException, TException {
+     CLIENT.worker_addCheckpoint(workerId, fileId, fileSizeBytes, checkpointPath);
+   }
+ 
+-  public void worker_cachedFile(long workerId, long workerUsedBytes, int fileId, 
++  public synchronized void worker_cachedFile(long workerId, long workerUsedBytes, int fileId, 
+       long fileSizeBytes) throws FileDoesNotExistException, SuspectedFileSizeException, TException {
+     CLIENT.worker_cacheFile(workerId, workerUsedBytes, fileId, fileSizeBytes);
+   }
+diff --git a/src/main/java/tachyon/WorkerClient.java b/src/main/java/tachyon/WorkerClient.java
+index 9102085..23c3ef2 100644
+--- a/src/main/java/tachyon/WorkerClient.java
++++ b/src/main/java/tachyon/WorkerClient.java
+@@ -44,13 +44,13 @@
+     CLIENT.accessFile(fileId);
+   }
+ 
+-  public void addCheckpoint(long userId, int fileId) 
++  public synchronized void addCheckpoint(long userId, int fileId) 
+       throws FileDoesNotExistException, SuspectedFileSizeException,
+       FailedToCheckpointException, TException {
+     CLIENT.addCheckpoint(userId, fileId);
+   }
+ 
+-  public void cacheFile(long userId, int fileId)
++  public synchronized void cacheFile(long userId, int fileId)
+       throws FileDoesNotExistException, SuspectedFileSizeException, TException {
+     CLIENT.cacheFile(userId, fileId);
+   }
+diff --git a/src/main/java/tachyon/client/TachyonClient.java b/src/main/java/tachyon/client/TachyonClient.java
+index e6f87b8..c22b10f 100644
+--- a/src/main/java/tachyon/client/TachyonClient.java
++++ b/src/main/java/tachyon/client/TachyonClient.java
+@@ -79,7 +79,7 @@
+     LOG.error("TachyonClient accessLocalFile(" + fileId + ") failed");
+   }
+ 
+-  public void addCheckpoint(int fileId) 
++  public synchronized void addCheckpoint(int fileId) 
+       throws FileDoesNotExistException, SuspectedFileSizeException, FailedToCheckpointException {
+     connectAndGetLocalWorker();
+     if (!mConnected) {
+@@ -95,7 +95,8 @@
+     }
+   }
+ 
+-  public void cacheFile(int fileId) throws FileDoesNotExistException, SuspectedFileSizeException {
++  public synchronized void cacheFile(int fileId) 
++      throws FileDoesNotExistException, SuspectedFileSizeException {
+     connectAndGetLocalWorker();
+     if (!mConnected) {
+       return;
+diff --git a/src/main/java/tachyon/InodeFile.java b/src/main/java/tachyon/InodeFile.java
+index f0d5ba6..ca579c6 100644
+--- a/src/main/java/tachyon/InodeFile.java
++++ b/src/main/java/tachyon/InodeFile.java
+@@ -13,7 +13,7 @@
+   private long mLength;
+   private boolean mPin = false;
+   private boolean mCache = false;
+-  private String mCheckpointPath = null;
++  private String mCheckpointPath = "";
+ 
+   private Map<Long, NetAddress> mLocations = new HashMap<Long, NetAddress>();
+ 
+@@ -83,6 +83,6 @@
+   }
+ 
+   public synchronized boolean hasCheckpointed() {
+-    return mCheckpointPath != null;
++    return !mCheckpointPath.equals("");
+   }
+ }
+\ No newline at end of file

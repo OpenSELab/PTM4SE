@@ -1,0 +1,26 @@
+diff --git a/StatisticsPlugin/src/org/gephi/statistics/plugin/GraphDistance.java b/StatisticsPlugin/src/org/gephi/statistics/plugin/GraphDistance.java
+index 539ab46..e1136f0 100644
+--- a/StatisticsPlugin/src/org/gephi/statistics/plugin/GraphDistance.java
++++ b/StatisticsPlugin/src/org/gephi/statistics/plugin/GraphDistance.java
+@@ -239,7 +239,7 @@
+             }
+             if (this.mRelativeValues) {
+                 mCloseness[s_index] = (mCloseness[s_index] == 0) ? 0 : 1.0 / mCloseness[s_index];
+-                mBetweenness[s_index] /= ((mN - 1) * (mN - 2)) / 2;
++                mBetweenness[s_index] /= mDirected ? (mN - 1) * (mN - 2) : (mN - 1) * (mN - 2) / 2;
+             }
+             row.setValue(eccentricityCol, mEccentricity[s_index]);
+             row.setValue(closenessCol, mCloseness[s_index]);
+diff --git a/StatisticsPlugin/src/org/gephi/statistics/plugin/GraphDistance.java b/StatisticsPlugin/src/org/gephi/statistics/plugin/GraphDistance.java
+index 539ab46..e1136f0 100644
+--- a/StatisticsPlugin/src/org/gephi/statistics/plugin/GraphDistance.java
++++ b/StatisticsPlugin/src/org/gephi/statistics/plugin/GraphDistance.java
+@@ -239,7 +239,7 @@
+             }
+             if (this.mRelativeValues) {
+                 mCloseness[s_index] = (mCloseness[s_index] == 0) ? 0 : 1.0 / mCloseness[s_index];
+-                mBetweenness[s_index] /= ((mN - 1) * (mN - 2)) / 2;
++                mBetweenness[s_index] /= mDirected ? (mN - 1) * (mN - 2) : (mN - 1) * (mN - 2) / 2;
+             }
+             row.setValue(eccentricityCol, mEccentricity[s_index]);
+             row.setValue(closenessCol, mCloseness[s_index]);

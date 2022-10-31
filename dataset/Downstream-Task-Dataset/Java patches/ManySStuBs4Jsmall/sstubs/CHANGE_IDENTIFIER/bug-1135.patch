@@ -1,0 +1,151 @@
+diff --git a/src/it/java/com/google/checkstyle/test/base/BaseCheckTestSupport.java b/src/it/java/com/google/checkstyle/test/base/BaseCheckTestSupport.java
+index bb6aab9..f35f19e 100644
+--- a/src/it/java/com/google/checkstyle/test/base/BaseCheckTestSupport.java
++++ b/src/it/java/com/google/checkstyle/test/base/BaseCheckTestSupport.java
+@@ -126,10 +126,10 @@
+         final int errs = aC.process(theFiles);
+ 
+         // process each of the lines
+-        final ByteArrayInputStream bais =
++        final ByteArrayInputStream localStream =
+             new ByteArrayInputStream(stream.toByteArray());
+         final LineNumberReader lnr =
+-            new LineNumberReader(new InputStreamReader(bais, StandardCharsets.UTF_8));
++            new LineNumberReader(new InputStreamReader(localStream, StandardCharsets.UTF_8));
+ 
+         for (int i = 0; i < aExpected.length; i++) {
+             final String expected = aMessageFileName + ":" + aExpected[i];
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/Main.java b/src/main/java/com/puppycrawl/tools/checkstyle/Main.java
+index ad1f24c..d7c3047 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/Main.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/Main.java
+@@ -50,7 +50,7 @@
+  *
+  **/
+ public final class Main {
+-    /** Exit code returned when excecution finishes with {@link CheckstyleException}*/
++    /** Exit code returned when execution finishes with {@link CheckstyleException}*/
+     private static final int EXIT_WITH_CHECKSTYLE_EXCEPTION_CODE = -2;
+ 
+     /** Name for the option 'v'. */
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/ModuleFactory.java b/src/main/java/com/puppycrawl/tools/checkstyle/ModuleFactory.java
+index 68e0bcc..565c5ef 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/ModuleFactory.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/ModuleFactory.java
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
+index 33e2aa1..f3f878f 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocStyleCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocStyleCheck.java
+index d8e81da..e1bea9f 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocStyleCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocStyleCheck.java
+@@ -70,7 +70,7 @@
+ 
+     /** HTML tags that are allowed in java docs.
+      * From http://www.w3schools.com/tags/default.asp
+-     * The froms and structure tags are not allowed
++     * The forms and structure tags are not allowed
+      */
+     private static final Set<String> ALLOWED_TAGS = ImmutableSortedSet.of(
+             "a", "abbr", "acronym", "address", "area", "b", "bdo", "big",
+@@ -183,7 +183,7 @@
+     }
+ 
+     /**
+-     * Performs the various checks agains the Javadoc comment.
++     * Performs the various checks against the Javadoc comment.
+      *
+      * @param ast the AST of the element being documented
+      * @param comment the source lines that make up the Javadoc comment.
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/TagParser.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/TagParser.java
+index 0f52a65..6923e40 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/TagParser.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/TagParser.java
+@@ -145,7 +145,7 @@
+         final int column = pos.getColumnNo() + 1;
+         final String text = javadocText[pos.getLineNo()];
+ 
+-        //Character.isJavidentifier... may not be a valid HTML
++        //Character.isJavaIdentifier... may not be a valid HTML
+         //identifier but is valid for generics
+         return column < text.length()
+                 && (Character.isJavaIdentifierStart(text.charAt(column))
+@@ -173,7 +173,7 @@
+         text = text.substring(column).trim();
+         int position = 0;
+ 
+-        //Character.isJavidentifier... may not be a valid HTML
++        //Character.isJavaIdentifier... may not be a valid HTML
+         //identifier but is valid for generics
+         while (position < text.length()
+             && (Character.isJavaIdentifierStart(text.charAt(position))
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/design/FinalClassCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/design/FinalClassCheckTest.java
+index ed230eb..6d981f2 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/design/FinalClassCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/design/FinalClassCheckTest.java
+@@ -39,7 +39,7 @@
+     }
+ 
+     @Test
+-    public void testFianlClass() throws Exception {
++    public void testFinalClass() throws Exception {
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(FinalClassCheck.class);
+         final String[] expected = {
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/design/HideUtilityClassConstructorCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/design/HideUtilityClassConstructorCheckTest.java
+index 1d9c205..d5a9dab 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/design/HideUtilityClassConstructorCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/design/HideUtilityClassConstructorCheckTest.java
+@@ -70,7 +70,7 @@
+         verify(checkConfig, getPath("design" + File.separator + "UtilityClassConstructorPrivate.java"), expected);
+     }
+ 
+-    /** Nonstatic methods - always OK */
++    /** Non-static methods - always OK */
+     @Test
+     public void testNonUtilClass() throws Exception {
+         final DefaultConfiguration checkConfig =
+@@ -88,7 +88,7 @@
+     }
+ 
+     @Test
+-    public void testOnlyNonstaticFieldNonUtilClass() throws Exception {
++    public void testOnlyNonStaticFieldNonUtilClass() throws Exception {
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(HideUtilityClassConstructorCheck.class);
+         final String[] expected = ArrayUtils.EMPTY_STRING_ARRAY;
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/WriteTagCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/WriteTagCheckTest.java
+index 54a6109..ae0ec1b 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/WriteTagCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/WriteTagCheckTest.java
+@@ -202,10 +202,10 @@
+         final int errs = checker.process(theFiles);
+ 
+         // process each of the lines
+-        final ByteArrayInputStream bais =
++        final ByteArrayInputStream localStream =
+             new ByteArrayInputStream(stream.toByteArray());
+         try (final LineNumberReader lnr = new LineNumberReader(
+-                new InputStreamReader(bais, StandardCharsets.UTF_8))) {
++                new InputStreamReader(localStream, StandardCharsets.UTF_8))) {
+ 
+             for (int i = 0; i < expected.length; i++) {
+                 final String expectedResult = messageFileName + ":" + expected[i];
+diff --git a/src/it/java/com/google/checkstyle/test/base/BaseCheckTestSupport.java b/src/it/java/com/google/checkstyle/test/base/BaseCheckTestSupport.java
+index bb6aab9..f35f19e 100644
+--- a/src/it/java/com/google/checkstyle/test/base/BaseCheckTestSupport.java
++++ b/src/it/java/com/google/checkstyle/test/base/BaseCheckTestSupport.java
+@@ -126,10 +126,10 @@
+         final int errs = aC.process(theFiles);
+ 
+         // process each of the lines
+-        final ByteArrayInputStream bais =
++        final ByteArrayInputStream localStream =
+             new ByteArrayInputStream(stream.toByteArray());
+         final LineNumberReader lnr =
+-            new LineNumberReader(new InputStreamReader(bais, StandardCharsets.UTF_8));
++            new LineNumberReader(new InputStreamReader(localStream, StandardCharsets.UTF_8));
+ 
+         for (int i = 0; i < aExpected.length; i++) {
+             final String expected = aMessageFileName + ":" + aExpected[i];

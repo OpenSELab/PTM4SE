@@ -1,0 +1,44 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/Jetty9AsyncSupportWithWebSocket.java b/modules/cpr/src/main/java/org/atmosphere/container/Jetty9AsyncSupportWithWebSocket.java
+index 522bab5..ea65135 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/Jetty9AsyncSupportWithWebSocket.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/Jetty9AsyncSupportWithWebSocket.java
+@@ -81,7 +81,7 @@
+                 if (isJetty91) {
+                     m = policy.getClass().getMethod("setMaxTextMessageSize", new Class[]{int.class});
+                 } else {
+-                    m = policy.getClass().getMethod("setMaxMessageSize", new Class[]{int.class});
++                    m = policy.getClass().getMethod("setMaxMessageSize", new Class[]{long.class});
+                 }
+                 m.invoke(policy, Integer.parseInt(max));
+             }
+@@ -93,7 +93,7 @@
+                 if (isJetty91) {
+                     m = policy.getClass().getMethod("setMaxBinaryMessageSize", new Class[]{int.class});
+                 } else {
+-                    m = policy.getClass().getMethod("setMaxMessageSize", new Class[]{int.class});
++                    m = policy.getClass().getMethod("setMaxMessageSize", new Class[]{long.class});
+                 }
+                 m.invoke(policy, Integer.parseInt(max));
+             }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/Jetty9AsyncSupportWithWebSocket.java b/modules/cpr/src/main/java/org/atmosphere/container/Jetty9AsyncSupportWithWebSocket.java
+index 522bab5..ea65135 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/Jetty9AsyncSupportWithWebSocket.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/Jetty9AsyncSupportWithWebSocket.java
+@@ -81,7 +81,7 @@
+                 if (isJetty91) {
+                     m = policy.getClass().getMethod("setMaxTextMessageSize", new Class[]{int.class});
+                 } else {
+-                    m = policy.getClass().getMethod("setMaxMessageSize", new Class[]{int.class});
++                    m = policy.getClass().getMethod("setMaxMessageSize", new Class[]{long.class});
+                 }
+                 m.invoke(policy, Integer.parseInt(max));
+             }
+@@ -93,7 +93,7 @@
+                 if (isJetty91) {
+                     m = policy.getClass().getMethod("setMaxBinaryMessageSize", new Class[]{int.class});
+                 } else {
+-                    m = policy.getClass().getMethod("setMaxMessageSize", new Class[]{int.class});
++                    m = policy.getClass().getMethod("setMaxMessageSize", new Class[]{long.class});
+                 }
+                 m.invoke(policy, Integer.parseInt(max));
+             }

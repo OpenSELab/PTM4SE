@@ -1,0 +1,56 @@
+diff --git a/flink-yarn-tests/src/main/java/org/apache/flink/yarn/YARNSessionFIFOITCase.java b/flink-yarn-tests/src/main/java/org/apache/flink/yarn/YARNSessionFIFOITCase.java
+index f4febed..ccde5d8 100644
+--- a/flink-yarn-tests/src/main/java/org/apache/flink/yarn/YARNSessionFIFOITCase.java
++++ b/flink-yarn-tests/src/main/java/org/apache/flink/yarn/YARNSessionFIFOITCase.java
+@@ -71,7 +71,7 @@
+ 
+ 
+ /**
+- * This test starts a MiniYARNCluster with a FIFO scheudler.
++ * This test starts a MiniYARNCluster with a FIFO scheduler.
+  * There are no queues for that scheduler.
+  */
+ public class YARNSessionFIFOITCase extends YarnTestBase {
+@@ -206,12 +206,12 @@
+ 			String hostname = null;
+ 			String port = null;
+ 			while(matches.find()) {
+-				hostname = matches.group(1);
++				hostname = matches.group(1).toLowerCase();
+ 				port = matches.group(2);
+ 			}
+ 			LOG.info("Extracted hostname:port: {} {}", hostname, port);
+ 
+-			Assert.assertEquals("unable to find hostname in " + parsed, hostname, parsed.getString(ConfigConstants.JOB_MANAGER_IPC_ADDRESS_KEY));
++			Assert.assertEquals("unable to find hostname in " + parsed, hostname, parsed.getString(ConfigConstants.JOB_MANAGER_IPC_ADDRESS_KEY).toLowerCase());
+ 			Assert.assertEquals("unable to find port in " + parsed, port, parsed.getString(ConfigConstants.JOB_MANAGER_IPC_PORT_KEY));
+ 
+ 			// test logfile access
+diff --git a/flink-yarn-tests/src/main/java/org/apache/flink/yarn/YARNSessionFIFOITCase.java b/flink-yarn-tests/src/main/java/org/apache/flink/yarn/YARNSessionFIFOITCase.java
+index f4febed..ccde5d8 100644
+--- a/flink-yarn-tests/src/main/java/org/apache/flink/yarn/YARNSessionFIFOITCase.java
++++ b/flink-yarn-tests/src/main/java/org/apache/flink/yarn/YARNSessionFIFOITCase.java
+@@ -71,7 +71,7 @@
+ 
+ 
+ /**
+- * This test starts a MiniYARNCluster with a FIFO scheudler.
++ * This test starts a MiniYARNCluster with a FIFO scheduler.
+  * There are no queues for that scheduler.
+  */
+ public class YARNSessionFIFOITCase extends YarnTestBase {
+@@ -206,12 +206,12 @@
+ 			String hostname = null;
+ 			String port = null;
+ 			while(matches.find()) {
+-				hostname = matches.group(1);
++				hostname = matches.group(1).toLowerCase();
+ 				port = matches.group(2);
+ 			}
+ 			LOG.info("Extracted hostname:port: {} {}", hostname, port);
+ 
+-			Assert.assertEquals("unable to find hostname in " + parsed, hostname, parsed.getString(ConfigConstants.JOB_MANAGER_IPC_ADDRESS_KEY));
++			Assert.assertEquals("unable to find hostname in " + parsed, hostname, parsed.getString(ConfigConstants.JOB_MANAGER_IPC_ADDRESS_KEY).toLowerCase());
+ 			Assert.assertEquals("unable to find port in " + parsed, port, parsed.getString(ConfigConstants.JOB_MANAGER_IPC_PORT_KEY));
+ 
+ 			// test logfile access

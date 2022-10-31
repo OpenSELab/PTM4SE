@@ -1,0 +1,104 @@
+diff --git a/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java b/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
+index 682ab02..de2c50d 100644
+--- a/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
++++ b/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
+@@ -75,18 +75,18 @@
+ public final class Maps {
+   private Maps() {}
+ 
+-  private enum EntryFunction implements Function<Entry, Object> {
++  private enum EntryFunction implements Function<Entry<?, ?>, Object> {
+     KEY {
+       @Override
+       @Nullable
+-      public Object apply(Entry entry) {
++      public Object apply(Entry<?, ?> entry) {
+         return entry.getKey();
+       }
+     },
+     VALUE {
+       @Override
+       @Nullable
+-      public Object apply(Entry entry) {
++      public Object apply(Entry<?, ?> entry) {
+         return entry.getValue();
+       }
+     };
+diff --git a/guava-testlib/src/com/google/common/collect/testing/DerivedCollectionGenerators.java b/guava-testlib/src/com/google/common/collect/testing/DerivedCollectionGenerators.java
+index 8207f3f..b2bd792 100644
+--- a/guava-testlib/src/com/google/common/collect/testing/DerivedCollectionGenerators.java
++++ b/guava-testlib/src/com/google/common/collect/testing/DerivedCollectionGenerators.java
+@@ -511,7 +511,7 @@
+       allEntries.addAll(normalValues);
+       SortedMap<K, V> map = (SortedMap<K, V>)
+           delegate.create((Object[])
+-              allEntries.toArray(new Entry[allEntries.size()]));
++              allEntries.toArray(new Entry<?, ?>[allEntries.size()]));
+ 
+       return createSubMap(map, firstExclusive, lastExclusive);
+     }
+diff --git a/guava-testlib/src/com/google/common/collect/testing/google/DerivedGoogleCollectionGenerators.java b/guava-testlib/src/com/google/common/collect/testing/google/DerivedGoogleCollectionGenerators.java
+index e3178b45..e385bf9 100644
+--- a/guava-testlib/src/com/google/common/collect/testing/google/DerivedGoogleCollectionGenerators.java
++++ b/guava-testlib/src/com/google/common/collect/testing/google/DerivedGoogleCollectionGenerators.java
+@@ -111,7 +111,7 @@
+     @SuppressWarnings("unchecked")
+     @Override
+     public BiMap<V, K> create(Object... elements) {
+-      Entry[] entries = new Entry[elements.length];
++      Entry<?, ?>[] entries = new Entry<?, ?>[elements.length];
+       for (int i = 0; i < elements.length; i++) {
+         entries[i] = reverse((Entry<K, V>) elements[i]);
+       }
+diff --git a/guava/src/com/google/common/collect/Maps.java b/guava/src/com/google/common/collect/Maps.java
+index e7e2ba9..f155a0a 100644
+--- a/guava/src/com/google/common/collect/Maps.java
++++ b/guava/src/com/google/common/collect/Maps.java
+@@ -80,18 +80,18 @@
+ public final class Maps {
+   private Maps() {}
+ 
+-  private enum EntryFunction implements Function<Entry, Object> {
++  private enum EntryFunction implements Function<Entry<?, ?>, Object> {
+     KEY {
+       @Override
+       @Nullable
+-      public Object apply(Entry entry) {
++      public Object apply(Entry<?, ?> entry) {
+         return entry.getKey();
+       }
+     },
+     VALUE {
+       @Override
+       @Nullable
+-      public Object apply(Entry entry) {
++      public Object apply(Entry<?, ?> entry) {
+         return entry.getValue();
+       }
+     };
+diff --git a/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java b/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
+index 682ab02..de2c50d 100644
+--- a/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
++++ b/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
+@@ -75,18 +75,18 @@
+ public final class Maps {
+   private Maps() {}
+ 
+-  private enum EntryFunction implements Function<Entry, Object> {
++  private enum EntryFunction implements Function<Entry<?, ?>, Object> {
+     KEY {
+       @Override
+       @Nullable
+-      public Object apply(Entry entry) {
++      public Object apply(Entry<?, ?> entry) {
+         return entry.getKey();
+       }
+     },
+     VALUE {
+       @Override
+       @Nullable
+-      public Object apply(Entry entry) {
++      public Object apply(Entry<?, ?> entry) {
+         return entry.getValue();
+       }
+     };

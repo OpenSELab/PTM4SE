@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/alibaba/druid/pool/DruidConnectionHolder.java b/src/main/java/com/alibaba/druid/pool/DruidConnectionHolder.java
+index d90d0c3..d635f21 100644
+--- a/src/main/java/com/alibaba/druid/pool/DruidConnectionHolder.java
++++ b/src/main/java/com/alibaba/druid/pool/DruidConnectionHolder.java
+@@ -50,7 +50,7 @@
+     private final List<ConnectionEventListener> connectionEventListeners = new CopyOnWriteArrayList<ConnectionEventListener>();
+     private final List<StatementEventListener>  statementEventListeners  = new CopyOnWriteArrayList<StatementEventListener>();
+     protected final long                        connectTimeMillis;
+-    protected transient long                    lastActiveTimeMillis;
++    protected volatile long                     lastActiveTimeMillis;
+     private long                                useCount                 = 0;
+     private long                                keepAliveCheckCount      = 0;
+ 
+diff --git a/src/main/java/com/alibaba/druid/pool/DruidConnectionHolder.java b/src/main/java/com/alibaba/druid/pool/DruidConnectionHolder.java
+index d90d0c3..d635f21 100644
+--- a/src/main/java/com/alibaba/druid/pool/DruidConnectionHolder.java
++++ b/src/main/java/com/alibaba/druid/pool/DruidConnectionHolder.java
+@@ -50,7 +50,7 @@
+     private final List<ConnectionEventListener> connectionEventListeners = new CopyOnWriteArrayList<ConnectionEventListener>();
+     private final List<StatementEventListener>  statementEventListeners  = new CopyOnWriteArrayList<StatementEventListener>();
+     protected final long                        connectTimeMillis;
+-    protected transient long                    lastActiveTimeMillis;
++    protected volatile long                     lastActiveTimeMillis;
+     private long                                useCount                 = 0;
+     private long                                keepAliveCheckCount      = 0;
+ 

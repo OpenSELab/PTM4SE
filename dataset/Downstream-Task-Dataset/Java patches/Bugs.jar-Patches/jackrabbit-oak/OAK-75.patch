@@ -1,0 +1,47 @@
+diff --git a/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/JackrabbitNodeState.java b/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/JackrabbitNodeState.java
+index 3752b91..fded86c 100644
+--- a/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/JackrabbitNodeState.java
++++ b/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/JackrabbitNodeState.java
+@@ -332,10 +332,12 @@ class JackrabbitNodeState extends AbstractNodeState {
+             }
+ 
+             if (!isReferenceable.apply(frozenPrimary, frozenMixins)) {
+-                frozenUuid = PropertyStates.createProperty(
+-                        JCR_FROZENUUID,
+-                        parent.getString(JCR_FROZENUUID) + "/" + name);
+-                properties.put(JCR_FROZENUUID, frozenUuid);
++                String parentFrozenUuid = parent.getString(JCR_FROZENUUID);
++                if (parentFrozenUuid != null) {
++                    frozenUuid = PropertyStates.createProperty(
++                            JCR_FROZENUUID, parentFrozenUuid + "/" + name);
++                    properties.put(JCR_FROZENUUID, frozenUuid);
++                }
+             }
+         }
+     }
+diff --git a/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/RepositoryUpgrade.java b/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/RepositoryUpgrade.java
+index 5dff050..ce8b019 100644
+--- a/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/RepositoryUpgrade.java
++++ b/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/RepositoryUpgrade.java
+@@ -238,7 +238,8 @@ public class RepositoryUpgrade {
+         logger.info(
+                 "Copying repository content from {} to Oak", config.getHomeDir());
+         try {
+-            NodeBuilder builder = target.getRoot().builder();
++            NodeState base = target.getRoot();
++            NodeBuilder builder = base.builder();
+ 
+             String workspace =
+                     source.getRepositoryConfig().getDefaultWorkspaceName();
+@@ -260,6 +261,11 @@ public class RepositoryUpgrade {
+             copyNodeTypes(builder, uriToPrefix.inverse());
+             copyPrivileges(builder);
+ 
++            // Triggers compilation of type information, which we need for
++            // the type predicates used by the bulk  copy operations below.
++            new TypeEditorProvider(false).getRootEditor(
++                    base, builder.getNodeState(), builder, null);
++
+             NodeState root = builder.getNodeState();
+             copyVersionStore(builder, root, uriToPrefix, idxToPrefix);
+             copyWorkspace(builder, root, workspace, uriToPrefix, idxToPrefix);

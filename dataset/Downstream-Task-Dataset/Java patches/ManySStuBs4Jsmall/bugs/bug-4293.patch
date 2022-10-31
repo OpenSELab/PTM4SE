@@ -1,0 +1,72 @@
+diff --git a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringBootExecutionListener.java b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringBootExecutionListener.java
+index 195f57d..fb4836f 100644
+--- a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringBootExecutionListener.java
++++ b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringBootExecutionListener.java
+@@ -67,7 +67,7 @@
+         System.clearProperty("skipStartingCamelContext");
+ 
+         // route coverage need to know the test method
+-        CamelAnnotationsHandler.handleRouteCoverage(context, testClass, (String) -> testName);
++        CamelAnnotationsHandler.handleRouteCoverage(context, testClass, s -> testName);
+ 
+         LOG.info("Initialized CamelSpringBootRunner now ready to start CamelContext");
+         CamelAnnotationsHandler.handleCamelContextStartup(context, testClass);
+diff --git a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringDelegatingTestContextLoader.java b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringDelegatingTestContextLoader.java
+index aa76c15..b01c2d2 100644
+--- a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringDelegatingTestContextLoader.java
++++ b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringDelegatingTestContextLoader.java
+@@ -79,7 +79,7 @@
+         AnnotationConfigUtils.registerAnnotationConfigProcessors((BeanDefinitionRegistry) context);
+ 
+         // Post CamelContext(s) instantiation but pre CamelContext(s) start setup
+-        CamelAnnotationsHandler.handleRouteCoverage(context, testClass, (String) -> getTestMethod().getName());
++        CamelAnnotationsHandler.handleRouteCoverage(context, testClass, s -> getTestMethod().getName());
+         CamelAnnotationsHandler.handleProvidesBreakpoint(context, testClass);
+         CamelAnnotationsHandler.handleShutdownTimeout(context, testClass);
+         CamelAnnotationsHandler.handleMockEndpoints(context, testClass);
+diff --git a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringTestContextLoader.java b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringTestContextLoader.java
+index 049bc7c..583ebca 100644
+--- a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringTestContextLoader.java
++++ b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringTestContextLoader.java
+@@ -291,7 +291,7 @@
+                 @Override
+                 public void execute(String contextName, SpringCamelContext camelContext) throws Exception {
+                     LOG.info("Enabling RouteCoverage");
+-                    EventNotifier notifier = new RouteCoverageEventNotifier(testClass.getName(), (String) -> getTestMethod().getName());
++                    EventNotifier notifier = new RouteCoverageEventNotifier(testClass.getName(), s -> getTestMethod().getName());
+                     camelContext.addService(notifier, true);
+                     camelContext.getManagementStrategy().addEventNotifier(notifier);
+                 }
+diff --git a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/RouteCoverageEventNotifier.java b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/RouteCoverageEventNotifier.java
+index 17b7064..88b9de0 100644
+--- a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/RouteCoverageEventNotifier.java
++++ b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/RouteCoverageEventNotifier.java
+@@ -5,9 +5,9 @@
+  * The ASF licenses this file to You under the Apache License, Version 2.0
+  * (the "License"); you may not use this file except in compliance with
+  * the License.  You may obtain a copy of the License at
+- * <p>
++ *
+  * http://www.apache.org/licenses/LICENSE-2.0
+- * <p>
++ *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+diff --git a/components/camel-test-spring/src/test/java/org/apache/camel/test/spring/CamelSpringRouteProcessorDumpRouteCoverageTest.java b/components/camel-test-spring/src/test/java/org/apache/camel/test/spring/CamelSpringRouteProcessorDumpRouteCoverageTest.java
+index 9374d2f..307bb01 100644
+--- a/components/camel-test-spring/src/test/java/org/apache/camel/test/spring/CamelSpringRouteProcessorDumpRouteCoverageTest.java
++++ b/components/camel-test-spring/src/test/java/org/apache/camel/test/spring/CamelSpringRouteProcessorDumpRouteCoverageTest.java
+diff --git a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringBootExecutionListener.java b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringBootExecutionListener.java
+index 195f57d..fb4836f 100644
+--- a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringBootExecutionListener.java
++++ b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringBootExecutionListener.java
+@@ -67,7 +67,7 @@
+         System.clearProperty("skipStartingCamelContext");
+ 
+         // route coverage need to know the test method
+-        CamelAnnotationsHandler.handleRouteCoverage(context, testClass, (String) -> testName);
++        CamelAnnotationsHandler.handleRouteCoverage(context, testClass, s -> testName);
+ 
+         LOG.info("Initialized CamelSpringBootRunner now ready to start CamelContext");
+         CamelAnnotationsHandler.handleCamelContextStartup(context, testClass);

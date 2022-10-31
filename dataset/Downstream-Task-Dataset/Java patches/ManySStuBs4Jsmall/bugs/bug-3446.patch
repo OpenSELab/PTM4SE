@@ -1,0 +1,26 @@
+diff --git a/dubbo-rpc/dubbo-rpc-default/src/test/java/com/alibaba/dubbo/rpc/protocol/dubbo/ImplicitCallBackTest.java b/dubbo-rpc/dubbo-rpc-default/src/test/java/com/alibaba/dubbo/rpc/protocol/dubbo/ImplicitCallBackTest.java
+index b4c0f6b..75e8c35 100644
+--- a/dubbo-rpc/dubbo-rpc-default/src/test/java/com/alibaba/dubbo/rpc/protocol/dubbo/ImplicitCallBackTest.java
++++ b/dubbo-rpc/dubbo-rpc-default/src/test/java/com/alibaba/dubbo/rpc/protocol/dubbo/ImplicitCallBackTest.java
+@@ -283,7 +283,7 @@
+             Person ret = demoProxy.get(requestId);
+             Assert.assertEquals(null, ret);
+             Future<Person> pFuture = RpcContext.getContext().getFuture();
+-            ret = pFuture.get(1000, TimeUnit.MICROSECONDS);
++            ret = pFuture.get(1000 * 1000, TimeUnit.MICROSECONDS);
+             Assert.assertEquals(requestId, ret.getId());
+         } finally {
+             destroyService();
+diff --git a/dubbo-rpc/dubbo-rpc-default/src/test/java/com/alibaba/dubbo/rpc/protocol/dubbo/ImplicitCallBackTest.java b/dubbo-rpc/dubbo-rpc-default/src/test/java/com/alibaba/dubbo/rpc/protocol/dubbo/ImplicitCallBackTest.java
+index b4c0f6b..75e8c35 100644
+--- a/dubbo-rpc/dubbo-rpc-default/src/test/java/com/alibaba/dubbo/rpc/protocol/dubbo/ImplicitCallBackTest.java
++++ b/dubbo-rpc/dubbo-rpc-default/src/test/java/com/alibaba/dubbo/rpc/protocol/dubbo/ImplicitCallBackTest.java
+@@ -283,7 +283,7 @@
+             Person ret = demoProxy.get(requestId);
+             Assert.assertEquals(null, ret);
+             Future<Person> pFuture = RpcContext.getContext().getFuture();
+-            ret = pFuture.get(1000, TimeUnit.MICROSECONDS);
++            ret = pFuture.get(1000 * 1000, TimeUnit.MICROSECONDS);
+             Assert.assertEquals(requestId, ret.getId());
+         } finally {
+             destroyService();

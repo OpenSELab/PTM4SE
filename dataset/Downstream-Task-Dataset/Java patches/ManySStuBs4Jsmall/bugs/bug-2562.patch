@@ -1,0 +1,133 @@
+diff --git a/graylog2-server/src/main/java/org/graylog/plugins/sidecar/migrations/V20180212165000_AddDefaultCollectors.java b/graylog2-server/src/main/java/org/graylog/plugins/sidecar/migrations/V20180212165000_AddDefaultCollectors.java
+index 87c2bf8..5eb6f67 100644
+--- a/graylog2-server/src/main/java/org/graylog/plugins/sidecar/migrations/V20180212165000_AddDefaultCollectors.java
++++ b/graylog2-server/src/main/java/org/graylog/plugins/sidecar/migrations/V20180212165000_AddDefaultCollectors.java
+@@ -47,8 +47,8 @@
+                 "filebeat",
+                 "exec",
+                 "linux",
+-                "/usr/bin/filebeat",
+-                "/etc/graylog/collector-sidecar/generated/filebeat.yml",
++                "/usr/lib/graylog-sidecar/filebeat",
++                "/var/lib/graylog-sidecar/generated/filebeat.yml",
+                 "-c  %s",
+                 "test config -c %s",
+                 ""
+@@ -57,8 +57,8 @@
+                 "winlogbeat",
+                 "svc",
+                 "windows",
+-                "C:\\Program Files\\graylog\\collector-sidecar\\winlogbeat.exe",
+-                "C:\\Program Files\\graylog\\collector-sidecar\\generated\\winlogbeat.yml",
++                "C:\\Program Files\\Graylog\\sidecar\\winlogbeat.exe",
++                "C:\\Program Files\\Graylog\\sidecar\\generated\\winlogbeat.yml",
+                 "-c %s",
+                 "test config -c %s",
+                 ""
+@@ -67,8 +67,8 @@
+                 "nxlog",
+                 "exec",
+                 "linux",
+-                "/usr/bin/nxlog",
+-                "/etc/graylog/collector-sidecar/generated/nxlog.conf",
++                "/usr/lib/graylog-sidecar/nxlog",
++                "/var/lib/graylog-sidecar/generated/nxlog.conf",
+                 "-f -c %s",
+                 "-v -c %s",
+                 ""
+diff --git a/graylog2-server/src/test/java/org/graylog2/contentpacks/facades/SidecarCollectorFacadeTest.java b/graylog2-server/src/test/java/org/graylog2/contentpacks/facades/SidecarCollectorFacadeTest.java
+index 7420252..8279aef 100644
+--- a/graylog2-server/src/test/java/org/graylog2/contentpacks/facades/SidecarCollectorFacadeTest.java
++++ b/graylog2-server/src/test/java/org/graylog2/contentpacks/facades/SidecarCollectorFacadeTest.java
+@@ -81,8 +81,8 @@
+                         ValueReference.of("filebeat"),
+                         ValueReference.of("exec"),
+                         ValueReference.of("linux"),
+-                        ValueReference.of("/usr/bin/filebeat"),
+-                        ValueReference.of("/etc/graylog/collector-sidecar/generated/filebeat.yml"),
++                        ValueReference.of("/usr/lib/graylog-sidecar/filebeat"),
++                        ValueReference.of("/var/lib/graylog-sidecar/generated/filebeat.yml"),
+                         ValueReference.of("-c %s"),
+                         ValueReference.of("test config -c %s"),
+                         ValueReference.of("")), JsonNode.class))
+@@ -104,8 +104,8 @@
+                         ValueReference.of("filebeat"),
+                         ValueReference.of("exec"),
+                         ValueReference.of("linux"),
+-                        ValueReference.of("/usr/bin/filebeat"),
+-                        ValueReference.of("/etc/graylog/collector-sidecar/generated/filebeat.yml"),
++                        ValueReference.of("/usr/lib/graylog-sidecar/filebeat"),
++                        ValueReference.of("/var/lib/graylog-sidecar/generated/filebeat.yml"),
+                         ValueReference.of("-c %s"),
+                         ValueReference.of("test config -c %s"),
+                         ValueReference.of("")), JsonNode.class))
+@@ -123,8 +123,8 @@
+                         ValueReference.of("filebeat"),
+                         ValueReference.of("exec"),
+                         ValueReference.of("linux"),
+-                        ValueReference.of("/usr/bin/filebeat"),
+-                        ValueReference.of("/etc/graylog/collector-sidecar/generated/filebeat.yml"),
++                        ValueReference.of("/usr/lib/graylog-sidecar/filebeat"),
++                        ValueReference.of("/var/lib/graylog-sidecar/generated/filebeat.yml"),
+                         ValueReference.of("-c %s"),
+                         ValueReference.of("test config -c %s"),
+                         ValueReference.of("")), JsonNode.class))
+@@ -153,8 +153,8 @@
+                         ValueReference.of("filebeat"),
+                         ValueReference.of("exec"),
+                         ValueReference.of("linux"),
+-                        ValueReference.of("/usr/bin/filebeat"),
+-                        ValueReference.of("/etc/graylog/collector-sidecar/generated/filebeat.yml"),
++                        ValueReference.of("/usr/lib/graylog-sidecar/filebeat"),
++                        ValueReference.of("/var/lib/graylog-sidecar/generated/filebeat.yml"),
+                         ValueReference.of("-c %s"),
+                         ValueReference.of("test config -c %s"),
+                         ValueReference.of("")), JsonNode.class))
+@@ -233,8 +233,8 @@
+                         ValueReference.of("filebeat"),
+                         ValueReference.of("exec"),
+                         ValueReference.of("linux"),
+-                        ValueReference.of("/usr/bin/filebeat"),
+-                        ValueReference.of("/etc/graylog/collector-sidecar/generated/filebeat.yml"),
++                        ValueReference.of("/usr/lib/graylog-sidecar/filebeat"),
++                        ValueReference.of("/var/lib/graylog-sidecar/generated/filebeat.yml"),
+                         ValueReference.of("-c %s"),
+                         ValueReference.of("test config -c %s"),
+                         ValueReference.of("")), JsonNode.class))
+diff --git a/graylog2-server/src/main/java/org/graylog/plugins/sidecar/migrations/V20180212165000_AddDefaultCollectors.java b/graylog2-server/src/main/java/org/graylog/plugins/sidecar/migrations/V20180212165000_AddDefaultCollectors.java
+index 87c2bf8..5eb6f67 100644
+--- a/graylog2-server/src/main/java/org/graylog/plugins/sidecar/migrations/V20180212165000_AddDefaultCollectors.java
++++ b/graylog2-server/src/main/java/org/graylog/plugins/sidecar/migrations/V20180212165000_AddDefaultCollectors.java
+@@ -47,8 +47,8 @@
+                 "filebeat",
+                 "exec",
+                 "linux",
+-                "/usr/bin/filebeat",
+-                "/etc/graylog/collector-sidecar/generated/filebeat.yml",
++                "/usr/lib/graylog-sidecar/filebeat",
++                "/var/lib/graylog-sidecar/generated/filebeat.yml",
+                 "-c  %s",
+                 "test config -c %s",
+                 ""
+@@ -57,8 +57,8 @@
+                 "winlogbeat",
+                 "svc",
+                 "windows",
+-                "C:\\Program Files\\graylog\\collector-sidecar\\winlogbeat.exe",
+-                "C:\\Program Files\\graylog\\collector-sidecar\\generated\\winlogbeat.yml",
++                "C:\\Program Files\\Graylog\\sidecar\\winlogbeat.exe",
++                "C:\\Program Files\\Graylog\\sidecar\\generated\\winlogbeat.yml",
+                 "-c %s",
+                 "test config -c %s",
+                 ""
+@@ -67,8 +67,8 @@
+                 "nxlog",
+                 "exec",
+                 "linux",
+-                "/usr/bin/nxlog",
+-                "/etc/graylog/collector-sidecar/generated/nxlog.conf",
++                "/usr/lib/graylog-sidecar/nxlog",
++                "/var/lib/graylog-sidecar/generated/nxlog.conf",
+                 "-f -c %s",
+                 "-v -c %s",
+                 ""

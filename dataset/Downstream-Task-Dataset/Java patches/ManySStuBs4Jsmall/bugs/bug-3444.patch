@@ -1,0 +1,140 @@
+diff --git a/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java b/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
+index 6d77a18..67b9ff2 100644
+--- a/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
++++ b/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
+@@ -54,7 +54,7 @@
+                     true));
+     private final Server server;
+     // heartbeat timer
+-    private ScheduledFuture<?> heatbeatTimer;
++    private ScheduledFuture<?> heartbeatTimer;
+     // heartbeat timeout (ms), default value is 0 , won't execute a heartbeat.
+     private int heartbeat;
+     private int heartbeatTimeout;
+@@ -70,7 +70,7 @@
+         if (heartbeatTimeout < heartbeat * 2) {
+             throw new IllegalStateException("heartbeatTimeout < heartbeatInterval * 2");
+         }
+-        startHeatbeatTimer();
++        startHeartbeatTimer();
+     }
+ 
+     public Server getServer() {
+@@ -134,7 +134,7 @@
+                 if (channel.isConnected())
+                     channel.send(request, getUrl().getParameter(Constants.CHANNEL_READONLYEVENT_SENT_KEY, true));
+             } catch (RemotingException e) {
+-                logger.warn("send connot write messge error.", e);
++                logger.warn("send cannot write message error.", e);
+             }
+         }
+     }
+@@ -205,7 +205,7 @@
+                 if (h != heartbeat || t != heartbeatTimeout) {
+                     heartbeat = h;
+                     heartbeatTimeout = t;
+-                    startHeatbeatTimer();
++                    startHeartbeatTimer();
+                 }
+             }
+         } catch (Throwable t) {
+@@ -232,10 +232,10 @@
+         server.send(message, sent);
+     }
+ 
+-    private void startHeatbeatTimer() {
++    private void startHeartbeatTimer() {
+         stopHeartbeatTimer();
+         if (heartbeat > 0) {
+-            heatbeatTimer = scheduled.scheduleWithFixedDelay(
++            heartbeatTimer = scheduled.scheduleWithFixedDelay(
+                     new HeartBeatTask(new HeartBeatTask.ChannelProvider() {
+                         public Collection<Channel> getChannels() {
+                             return Collections.unmodifiableCollection(
+@@ -248,14 +248,14 @@
+ 
+     private void stopHeartbeatTimer() {
+         try {
+-            ScheduledFuture<?> timer = heatbeatTimer;
++            ScheduledFuture<?> timer = heartbeatTimer;
+             if (timer != null && !timer.isCancelled()) {
+                 timer.cancel(true);
+             }
+         } catch (Throwable t) {
+             logger.warn(t.getMessage(), t);
+         } finally {
+-            heatbeatTimer = null;
++            heartbeatTimer = null;
+         }
+     }
+ 
+diff --git a/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java b/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
+index 6d77a18..67b9ff2 100644
+--- a/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
++++ b/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
+@@ -54,7 +54,7 @@
+                     true));
+     private final Server server;
+     // heartbeat timer
+-    private ScheduledFuture<?> heatbeatTimer;
++    private ScheduledFuture<?> heartbeatTimer;
+     // heartbeat timeout (ms), default value is 0 , won't execute a heartbeat.
+     private int heartbeat;
+     private int heartbeatTimeout;
+@@ -70,7 +70,7 @@
+         if (heartbeatTimeout < heartbeat * 2) {
+             throw new IllegalStateException("heartbeatTimeout < heartbeatInterval * 2");
+         }
+-        startHeatbeatTimer();
++        startHeartbeatTimer();
+     }
+ 
+     public Server getServer() {
+@@ -134,7 +134,7 @@
+                 if (channel.isConnected())
+                     channel.send(request, getUrl().getParameter(Constants.CHANNEL_READONLYEVENT_SENT_KEY, true));
+             } catch (RemotingException e) {
+-                logger.warn("send connot write messge error.", e);
++                logger.warn("send cannot write message error.", e);
+             }
+         }
+     }
+@@ -205,7 +205,7 @@
+                 if (h != heartbeat || t != heartbeatTimeout) {
+                     heartbeat = h;
+                     heartbeatTimeout = t;
+-                    startHeatbeatTimer();
++                    startHeartbeatTimer();
+                 }
+             }
+         } catch (Throwable t) {
+@@ -232,10 +232,10 @@
+         server.send(message, sent);
+     }
+ 
+-    private void startHeatbeatTimer() {
++    private void startHeartbeatTimer() {
+         stopHeartbeatTimer();
+         if (heartbeat > 0) {
+-            heatbeatTimer = scheduled.scheduleWithFixedDelay(
++            heartbeatTimer = scheduled.scheduleWithFixedDelay(
+                     new HeartBeatTask(new HeartBeatTask.ChannelProvider() {
+                         public Collection<Channel> getChannels() {
+                             return Collections.unmodifiableCollection(
+@@ -248,14 +248,14 @@
+ 
+     private void stopHeartbeatTimer() {
+         try {
+-            ScheduledFuture<?> timer = heatbeatTimer;
++            ScheduledFuture<?> timer = heartbeatTimer;
+             if (timer != null && !timer.isCancelled()) {
+                 timer.cancel(true);
+             }
+         } catch (Throwable t) {
+             logger.warn(t.getMessage(), t);
+         } finally {
+-            heatbeatTimer = null;
++            heartbeatTimer = null;
+         }
+     }
+ 

@@ -1,0 +1,26 @@
+diff --git a/server/src/main/java/com/alibaba/otter/canal/kafka/CanalKafkaProducer.java b/server/src/main/java/com/alibaba/otter/canal/kafka/CanalKafkaProducer.java
+index 8576835..a4c9eaa 100644
+--- a/server/src/main/java/com/alibaba/otter/canal/kafka/CanalKafkaProducer.java
++++ b/server/src/main/java/com/alibaba/otter/canal/kafka/CanalKafkaProducer.java
+@@ -105,7 +105,7 @@
+                                 canalDestination.getPartition(),
+                                 null,
+                                 JSON.toJSONString(flatMessage));
+-                            producer2.send(record);
++                            producer2.send(record).get();
+                         } catch (Exception e) {
+                             logger.error(e.getMessage(), e);
+                             // producer.abortTransaction();
+diff --git a/server/src/main/java/com/alibaba/otter/canal/kafka/CanalKafkaProducer.java b/server/src/main/java/com/alibaba/otter/canal/kafka/CanalKafkaProducer.java
+index 8576835..a4c9eaa 100644
+--- a/server/src/main/java/com/alibaba/otter/canal/kafka/CanalKafkaProducer.java
++++ b/server/src/main/java/com/alibaba/otter/canal/kafka/CanalKafkaProducer.java
+@@ -105,7 +105,7 @@
+                                 canalDestination.getPartition(),
+                                 null,
+                                 JSON.toJSONString(flatMessage));
+-                            producer2.send(record);
++                            producer2.send(record).get();
+                         } catch (Exception e) {
+                             logger.error(e.getMessage(), e);
+                             // producer.abortTransaction();

@@ -1,0 +1,13 @@
+diff --git a/core/server/src/main/java/alluxio/web/WebInterfaceAbstractMetricsServlet.java b/core/server/src/main/java/alluxio/web/WebInterfaceAbstractMetricsServlet.java
+index c668d16..f61b1dc 100644
+--- a/core/server/src/main/java/alluxio/web/WebInterfaceAbstractMetricsServlet.java
++++ b/core/server/src/main/java/alluxio/web/WebInterfaceAbstractMetricsServlet.java
+@@ -49,7 +49,7 @@
+ 
+     for (Map.Entry<String, Metric> entry : operations.entrySet()) {
+       if (entry.getValue() instanceof Gauge) {
+-        request.setAttribute(entry.getKey(), ((Gauge) entry.getValue()).getValue());
++        request.setAttribute(entry.getKey(), ((Gauge<?>) entry.getValue()).getValue());
+       } else if (entry.getValue() instanceof Counter) {
+         request.setAttribute(entry.getKey(), ((Counter) entry.getValue()).getCount());
+       }

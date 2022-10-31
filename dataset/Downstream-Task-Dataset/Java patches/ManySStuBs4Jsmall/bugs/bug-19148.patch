@@ -1,0 +1,44 @@
+diff --git a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
+index ad12124..9acc6eb 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
++++ b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
+@@ -178,7 +178,7 @@
+     }
+ 
+     public int indexOf(int fromIndex, int toIndex, byte value) {
+-        int endIndex = buffer.indexOf(buffer.readerIndex(), buffer.writerIndex(), value);
++        int endIndex = buffer.indexOf(fromIndex, toIndex, value);
+         if (endIndex < 0) {
+             throw REPLAY;
+         }
+@@ -187,7 +187,7 @@
+ 
+     public int indexOf(int fromIndex, int toIndex,
+             ChannelBufferIndexFinder indexFinder) {
+-        int endIndex = buffer.indexOf(buffer.readerIndex(), buffer.writerIndex(), indexFinder);
++        int endIndex = buffer.indexOf(fromIndex, toIndex, indexFinder);
+         if (endIndex < 0) {
+             throw REPLAY;
+         }
+diff --git a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
+index ad12124..9acc6eb 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
++++ b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
+@@ -178,7 +178,7 @@
+     }
+ 
+     public int indexOf(int fromIndex, int toIndex, byte value) {
+-        int endIndex = buffer.indexOf(buffer.readerIndex(), buffer.writerIndex(), value);
++        int endIndex = buffer.indexOf(fromIndex, toIndex, value);
+         if (endIndex < 0) {
+             throw REPLAY;
+         }
+@@ -187,7 +187,7 @@
+ 
+     public int indexOf(int fromIndex, int toIndex,
+             ChannelBufferIndexFinder indexFinder) {
+-        int endIndex = buffer.indexOf(buffer.readerIndex(), buffer.writerIndex(), indexFinder);
++        int endIndex = buffer.indexOf(fromIndex, toIndex, indexFinder);
+         if (endIndex < 0) {
+             throw REPLAY;
+         }

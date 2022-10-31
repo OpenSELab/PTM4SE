@@ -1,0 +1,15 @@
+diff --git a/maven-core/src/main/java/org/apache/maven/plugin/internal/DefaultMavenPluginManager.java b/maven-core/src/main/java/org/apache/maven/plugin/internal/DefaultMavenPluginManager.java
+index 0c541b1..603e670 100644
+--- a/maven-core/src/main/java/org/apache/maven/plugin/internal/DefaultMavenPluginManager.java
++++ b/maven-core/src/main/java/org/apache/maven/plugin/internal/DefaultMavenPluginManager.java
+@@ -311,6 +311,10 @@ public class DefaultMavenPluginManager
+         {
+             pluginDescriptor.setClassRealm( cacheRecord.realm );
+             pluginDescriptor.setArtifacts( new ArrayList<Artifact>( cacheRecord.artifacts ) );
++            for ( ComponentDescriptor<?> componentDescriptor : pluginDescriptor.getComponents() )
++            {
++                componentDescriptor.setRealm( cacheRecord.realm );
++            }
+         }
+         else
+         {

@@ -1,0 +1,28 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/LayerVertex.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/LayerVertex.java
+index ec26a76..77740eb 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/LayerVertex.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/LayerVertex.java
+@@ -95,7 +95,8 @@
+     @Override
+     public Pair<Gradient, INDArray[]> doBackward(boolean tbptt) {
+         if (!canDoBackward()) {
+-            throw new IllegalStateException("Cannot do backward pass: all epsilons not set");
++            throw new IllegalStateException("Cannot do backward pass: all epsilons not set. Layer "+vertexName+" (idx "+vertexIndex+") numInputs "+
++                getNumInputArrays()+"; numOutputs "+getNumOutputConnections());
+         }
+ 
+         Pair<Gradient, INDArray> pair;
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/LayerVertex.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/LayerVertex.java
+index ec26a76..77740eb 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/LayerVertex.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/LayerVertex.java
+@@ -95,7 +95,8 @@
+     @Override
+     public Pair<Gradient, INDArray[]> doBackward(boolean tbptt) {
+         if (!canDoBackward()) {
+-            throw new IllegalStateException("Cannot do backward pass: all epsilons not set");
++            throw new IllegalStateException("Cannot do backward pass: all epsilons not set. Layer "+vertexName+" (idx "+vertexIndex+") numInputs "+
++                getNumInputArrays()+"; numOutputs "+getNumOutputConnections());
+         }
+ 
+         Pair<Gradient, INDArray> pair;

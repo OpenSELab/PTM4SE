@@ -1,0 +1,26 @@
+diff --git a/providers/netty/src/main/java/org/asynchttpclient/providers/netty/channel/pool/DefaultChannelPool.java b/providers/netty/src/main/java/org/asynchttpclient/providers/netty/channel/pool/DefaultChannelPool.java
+index 3e465a0..028db35 100755
+--- a/providers/netty/src/main/java/org/asynchttpclient/providers/netty/channel/pool/DefaultChannelPool.java
++++ b/providers/netty/src/main/java/org/asynchttpclient/providers/netty/channel/pool/DefaultChannelPool.java
+@@ -121,7 +121,7 @@
+             return false;
+ 
+         ChannelCreation creation = channel2Creation.get(channel);
+-        return creation == null || now - creation.creationTime >= maxConnectionTTL;
++        return creation != null && now - creation.creationTime >= maxConnectionTTL;
+     }
+ 
+     private boolean isRemotelyClosed(Channel channel) {
+diff --git a/providers/netty/src/main/java/org/asynchttpclient/providers/netty/channel/pool/DefaultChannelPool.java b/providers/netty/src/main/java/org/asynchttpclient/providers/netty/channel/pool/DefaultChannelPool.java
+index 3e465a0..028db35 100755
+--- a/providers/netty/src/main/java/org/asynchttpclient/providers/netty/channel/pool/DefaultChannelPool.java
++++ b/providers/netty/src/main/java/org/asynchttpclient/providers/netty/channel/pool/DefaultChannelPool.java
+@@ -121,7 +121,7 @@
+             return false;
+ 
+         ChannelCreation creation = channel2Creation.get(channel);
+-        return creation == null || now - creation.creationTime >= maxConnectionTTL;
++        return creation != null && now - creation.creationTime >= maxConnectionTTL;
+     }
+ 
+     private boolean isRemotelyClosed(Channel channel) {

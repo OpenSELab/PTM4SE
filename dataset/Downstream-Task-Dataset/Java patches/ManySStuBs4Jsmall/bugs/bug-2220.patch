@@ -1,0 +1,35 @@
+diff --git a/modules/annotations/src/main/java/org/atmosphere/annotation/Suspend.java b/modules/annotations/src/main/java/org/atmosphere/annotation/Suspend.java
+index f088c8e..fcf2a66 100755
+--- a/modules/annotations/src/main/java/org/atmosphere/annotation/Suspend.java
++++ b/modules/annotations/src/main/java/org/atmosphere/annotation/Suspend.java
+@@ -134,5 +134,5 @@
+      * If the @Produces annotation is missing, this value will be used instead.
+      * @return the default content-type used if the @Produces annotation is missing.
+      */
+-    public String contentType() default "text/plain";
++    public String contentType() default "";
+ }
+diff --git a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+index 7a90c4c..cb768a0 100755
+--- a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
++++ b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+@@ -223,7 +223,7 @@
+             this.filters = filters;
+             this.topic = topic;
+             this.writeEntity = writeEntity;
+-            this.defaultContentType = contentType;
++            this.defaultContentType = contentType.equals("") ? null : contentType;
+         }
+ 
+         public ContainerRequestFilter getRequestFilter() {
+diff --git a/modules/annotations/src/main/java/org/atmosphere/annotation/Suspend.java b/modules/annotations/src/main/java/org/atmosphere/annotation/Suspend.java
+index f088c8e..fcf2a66 100755
+--- a/modules/annotations/src/main/java/org/atmosphere/annotation/Suspend.java
++++ b/modules/annotations/src/main/java/org/atmosphere/annotation/Suspend.java
+@@ -134,5 +134,5 @@
+      * If the @Produces annotation is missing, this value will be used instead.
+      * @return the default content-type used if the @Produces annotation is missing.
+      */
+-    public String contentType() default "text/plain";
++    public String contentType() default "";
+ }

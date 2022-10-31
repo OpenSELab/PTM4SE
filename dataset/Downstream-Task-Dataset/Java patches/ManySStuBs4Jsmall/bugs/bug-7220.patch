@@ -1,0 +1,34 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+index 0fffe88..6170888 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+@@ -3166,8 +3166,10 @@
+         try {
+           // if atomic then get exclusive lock, else shared lock
+           rowLock = region.getRowLockInternal(mutation.getRow(), !isAtomic(), prevRowLock);
+-        } catch (TimeoutIOException e) {
+-          // We will retry when other exceptions, but we should stop if we timeout .
++        } catch (TimeoutIOException|InterruptedIOException e) {
++          // NOTE: We will retry when other exceptions, but we should stop if we receive
++          // TimeoutIOException or InterruptedIOException as operation has timed out or
++          // interrupted respectively.
+           throw e;
+         } catch (IOException ioe) {
+           LOG.warn("Failed getting lock, row=" + Bytes.toStringBinary(mutation.getRow()), ioe);
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+index 0fffe88..6170888 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+@@ -3166,8 +3166,10 @@
+         try {
+           // if atomic then get exclusive lock, else shared lock
+           rowLock = region.getRowLockInternal(mutation.getRow(), !isAtomic(), prevRowLock);
+-        } catch (TimeoutIOException e) {
+-          // We will retry when other exceptions, but we should stop if we timeout .
++        } catch (TimeoutIOException|InterruptedIOException e) {
++          // NOTE: We will retry when other exceptions, but we should stop if we receive
++          // TimeoutIOException or InterruptedIOException as operation has timed out or
++          // interrupted respectively.
+           throw e;
+         } catch (IOException ioe) {
+           LOG.warn("Failed getting lock, row=" + Bytes.toStringBinary(mutation.getRow()), ioe);

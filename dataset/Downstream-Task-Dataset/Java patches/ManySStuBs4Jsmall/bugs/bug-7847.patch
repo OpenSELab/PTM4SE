@@ -1,0 +1,28 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/convert/HiveSchemaConverter.java b/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/convert/HiveSchemaConverter.java
+index 4c4688c..43c772f 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/convert/HiveSchemaConverter.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/convert/HiveSchemaConverter.java
+@@ -98,7 +98,8 @@
+         return Types.optional(PrimitiveTypeName.FIXED_LEN_BYTE_ARRAY).length(bytes).as(OriginalType.DECIMAL).
+             scale(scale).precision(prec).named(name);
+       } else if (typeInfo.equals(TypeInfoFactory.dateTypeInfo)) {
+-        return new PrimitiveType(repetition, PrimitiveTypeName.INT32, name, OriginalType.DATE);
++        return Types.primitive(PrimitiveTypeName.INT32, repetition).as(OriginalType.DATE).named
++            (name);
+       } else if (typeInfo.equals(TypeInfoFactory.unknownTypeInfo)) {
+         throw new UnsupportedOperationException("Unknown type not implemented");
+       } else {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/convert/HiveSchemaConverter.java b/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/convert/HiveSchemaConverter.java
+index 4c4688c..43c772f 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/convert/HiveSchemaConverter.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/io/parquet/convert/HiveSchemaConverter.java
+@@ -98,7 +98,8 @@
+         return Types.optional(PrimitiveTypeName.FIXED_LEN_BYTE_ARRAY).length(bytes).as(OriginalType.DECIMAL).
+             scale(scale).precision(prec).named(name);
+       } else if (typeInfo.equals(TypeInfoFactory.dateTypeInfo)) {
+-        return new PrimitiveType(repetition, PrimitiveTypeName.INT32, name, OriginalType.DATE);
++        return Types.primitive(PrimitiveTypeName.INT32, repetition).as(OriginalType.DATE).named
++            (name);
+       } else if (typeInfo.equals(TypeInfoFactory.unknownTypeInfo)) {
+         throw new UnsupportedOperationException("Unknown type not implemented");
+       } else {

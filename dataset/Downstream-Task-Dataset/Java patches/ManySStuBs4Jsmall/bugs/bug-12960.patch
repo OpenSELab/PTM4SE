@@ -1,0 +1,26 @@
+diff --git a/presto-parser/src/test/java/com/facebook/presto/sql/parser/TestStatementBuilder.java b/presto-parser/src/test/java/com/facebook/presto/sql/parser/TestStatementBuilder.java
+index cf3872a..607afbb 100644
+--- a/presto-parser/src/test/java/com/facebook/presto/sql/parser/TestStatementBuilder.java
++++ b/presto-parser/src/test/java/com/facebook/presto/sql/parser/TestStatementBuilder.java
+@@ -74,7 +74,7 @@
+         printStatement("select count(*) x from src group by rollup (k, v)");
+         printStatement("select count(*) x from src group by grouping sets ((k, v))");
+         printStatement("select count(*) x from src group by grouping sets ((k, v), (v))");
+-        printStatement("select count(*) x from src group by grouping sets ()");
++        printStatement("select count(*) x from src group by grouping sets (k, v, k)");
+ 
+         printStatement("" +
+                 "select depname, empno, salary\n" +
+diff --git a/presto-parser/src/test/java/com/facebook/presto/sql/parser/TestStatementBuilder.java b/presto-parser/src/test/java/com/facebook/presto/sql/parser/TestStatementBuilder.java
+index cf3872a..607afbb 100644
+--- a/presto-parser/src/test/java/com/facebook/presto/sql/parser/TestStatementBuilder.java
++++ b/presto-parser/src/test/java/com/facebook/presto/sql/parser/TestStatementBuilder.java
+@@ -74,7 +74,7 @@
+         printStatement("select count(*) x from src group by rollup (k, v)");
+         printStatement("select count(*) x from src group by grouping sets ((k, v))");
+         printStatement("select count(*) x from src group by grouping sets ((k, v), (v))");
+-        printStatement("select count(*) x from src group by grouping sets ()");
++        printStatement("select count(*) x from src group by grouping sets (k, v, k)");
+ 
+         printStatement("" +
+                 "select depname, empno, salary\n" +

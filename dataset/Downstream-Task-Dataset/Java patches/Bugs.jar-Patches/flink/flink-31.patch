@@ -1,0 +1,28 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartition.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartition.java
+index 91f2042..4a18691 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartition.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartition.java
+@@ -59,7 +59,7 @@ class SpillableSubpartition extends ResultSubpartition {
+ 	private boolean isFinished;
+ 
+ 	/** Flag indicating whether the subpartition has been released. */
+-	private boolean isReleased;
++	boolean isReleased;
+ 
+ 	/** The read view to consume this subpartition. */
+ 	private ResultSubpartitionView readView;
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
+index d37f042..972e34b 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/SpillableSubpartitionView.java
+@@ -73,6 +73,10 @@ class SpillableSubpartitionView implements ResultSubpartitionView {
+ 
+ 		// 1) In-memory
+ 		synchronized (parent.buffers) {
++			if (parent.isReleased) {
++				return null;
++			}
++
+ 			if (parent.spillWriter == null) {
+ 				if (currentQueuePosition < numberOfBuffers) {
+ 					Buffer buffer = parent.buffers.get(currentQueuePosition);

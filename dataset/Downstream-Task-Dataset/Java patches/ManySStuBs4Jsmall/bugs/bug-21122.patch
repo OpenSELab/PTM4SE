@@ -1,0 +1,26 @@
+diff --git a/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/data/RandomAccessDataFileTests.java b/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/data/RandomAccessDataFileTests.java
+index b95498e..2caf95c 100644
+--- a/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/data/RandomAccessDataFileTests.java
++++ b/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/data/RandomAccessDataFileTests.java
+@@ -333,7 +333,7 @@
+ 			public RandomAccessFile answer(InvocationOnMock invocation) throws Throwable {
+ 				RandomAccessFile originalFile = (RandomAccessFile) invocation
+ 						.callRealMethod();
+-				if (Mockito.isSpy(originalFile)) {
++				if (Mockito.mockingDetails(originalFile).isSpy()) {
+ 					return originalFile;
+ 				}
+ 				RandomAccessFile spiedFile = spy(originalFile);
+diff --git a/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/data/RandomAccessDataFileTests.java b/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/data/RandomAccessDataFileTests.java
+index b95498e..2caf95c 100644
+--- a/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/data/RandomAccessDataFileTests.java
++++ b/spring-boot-tools/spring-boot-loader/src/test/java/org/springframework/boot/loader/data/RandomAccessDataFileTests.java
+@@ -333,7 +333,7 @@
+ 			public RandomAccessFile answer(InvocationOnMock invocation) throws Throwable {
+ 				RandomAccessFile originalFile = (RandomAccessFile) invocation
+ 						.callRealMethod();
+-				if (Mockito.isSpy(originalFile)) {
++				if (Mockito.mockingDetails(originalFile).isSpy()) {
+ 					return originalFile;
+ 				}
+ 				RandomAccessFile spiedFile = spy(originalFile);

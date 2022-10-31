@@ -1,0 +1,13 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
+index 4dfe6e3..667d081 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
+@@ -134,7 +134,7 @@
+         final int underscoreIdx = filePath.indexOf(basenameSeparator,
+             baseNameStart);
+         final int dotIdx = filePath.indexOf('.', baseNameStart);
+-        final int cutoffIdx = underscoreIdx != -1 ? underscoreIdx : dotIdx;
++        final int cutoffIdx = underscoreIdx == -1 ? dotIdx : underscoreIdx;
+         return filePath.substring(0, cutoffIdx);
+     }
+ 

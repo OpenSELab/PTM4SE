@@ -1,0 +1,189 @@
+diff --git a/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java b/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
+index e2b68fd..3d7c4b5 100644
+--- a/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
++++ b/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
+@@ -37,7 +37,7 @@
+ 		listFiles(files, ROOT, "java");
+ 	}
+ 
+-	private Configuration getConfigurationFromXML(String aConfigName,
++	private static Configuration getConfigurationFromXML(String aConfigName,
+ 			Properties aProps) throws CheckstyleException {
+ 		try {
+ 			return ConfigurationLoader.loadConfiguration(aConfigName,
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/ConfigurationLoaderTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/ConfigurationLoaderTest.java
+index 3795521..90d10ef 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/ConfigurationLoaderTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/ConfigurationLoaderTest.java
+@@ -51,12 +51,12 @@
+ @PrepareForTest({ ConfigurationLoader.class, ConfigurationLoaderTest.class })
+ public class ConfigurationLoaderTest {
+ 
+-    private Configuration loadConfiguration(String name)
++    private static Configuration loadConfiguration(String name)
+         throws CheckstyleException {
+         return loadConfiguration(name, new Properties());
+     }
+ 
+-    private Configuration loadConfiguration(
++    private static Configuration loadConfiguration(
+         String name, Properties props) throws CheckstyleException {
+         final String fName =
+             "src/test/resources/com/puppycrawl/tools/checkstyle/configs/" + name;
+@@ -213,7 +213,7 @@
+             .containsKey("name.invalidPattern"));
+     }
+ 
+-    private void verifyConfigNode(
++    private static void verifyConfigNode(
+         DefaultConfiguration config, String name, int childrenLength,
+         Properties atts) throws Exception {
+         assertEquals("name.", name, config.getName());
+@@ -298,7 +298,7 @@
+         }
+     }
+ 
+-    private Properties initProperties() {
++    private static Properties initProperties() {
+         final Properties props = new Properties();
+         props.put("a", "A");
+         props.put("b", "B");
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/PackageNamesLoaderTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/PackageNamesLoaderTest.java
+index fd20277..3afa734 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/PackageNamesLoaderTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/PackageNamesLoaderTest.java
+@@ -61,7 +61,7 @@
+         validatePackageNames(packageNames);
+     }
+ 
+-    private void validatePackageNames(Set<String> pkgNames) {
++    private static void validatePackageNames(Set<String> pkgNames) {
+         final String[] checkstylePackages = {
+             "com.puppycrawl.tools.checkstyle.",
+             "com.puppycrawl.tools.checkstyle.checks.",
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/api/DetailASTTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/api/DetailASTTest.java
+index 9192678..fd4c23e 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/api/DetailASTTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/api/DetailASTTest.java
+@@ -129,7 +129,7 @@
+         }
+     }
+ 
+-    private void checkFile(String filename) throws Exception {
++    private static void checkFile(String filename) throws Exception {
+         final FileText text = new FileText(new File(filename),
+                            System.getProperty("file.encoding", "UTF-8"));
+         final FileContents contents = new FileContents(text);
+@@ -139,7 +139,7 @@
+         }
+     }
+ 
+-    private void checkTree(final DetailAST node,
++    private static void checkTree(final DetailAST node,
+                            final DetailAST parent,
+                            final DetailAST prev,
+                            final String filename,
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/api/FullIdentTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/api/FullIdentTest.java
+index df00707..e700bb2 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/api/FullIdentTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/api/FullIdentTest.java
+@@ -24,7 +24,7 @@
+ 
+ public class FullIdentTest {
+ 
+-    public void testToString() {
++    public static void testToString() {
+         DetailAST ast = new DetailAST();
+         ast.setType(TokenTypes.LITERAL_NEW);
+         ast.setColumnNo(14);
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/UniquePropertiesCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/UniquePropertiesCheckTest.java
+index 18daf6f..c5ba375 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/UniquePropertiesCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/UniquePropertiesCheckTest.java
+@@ -114,7 +114,7 @@
+      * @param file to be opened
+      * @return detail message of {@link FileNotFoundException}
+      */
+-    private String getFileNotFoundDetail(File file) throws Exception {
++    private static String getFileNotFoundDetail(File file) throws Exception {
+         // Create exception to know detail message we should wait in
+         // LocalisedMessage
+         try {
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/whitespace/FileTabCharacterCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/whitespace/FileTabCharacterCheckTest.java
+index f3b00a9..b8e607b 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/whitespace/FileTabCharacterCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/whitespace/FileTabCharacterCheckTest.java
+@@ -96,7 +96,7 @@
+      * Creates a configuration that is functionally close to that in the docs.
+      * @param verbose verbose mode
+      */
+-    private DefaultConfiguration createConfig(boolean verbose) {
++    private static DefaultConfiguration createConfig(boolean verbose) {
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(FileTabCharacterCheck.class);
+         checkConfig.addAttribute("eachLine", Boolean.toString(verbose));
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/comments/CompareTreesWithComments.java b/src/test/java/com/puppycrawl/tools/checkstyle/comments/CompareTreesWithComments.java
+index 7d72aef..30345e8 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/comments/CompareTreesWithComments.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/comments/CompareTreesWithComments.java
+@@ -23,7 +23,7 @@
+         Assert.assertTrue(isAstEquals(expectedTree, aRootAST));
+     }
+ 
+-    private boolean isAstEquals(DetailAST expected, DetailAST actual) {
++    private static boolean isAstEquals(DetailAST expected, DetailAST actual) {
+         boolean result = false;
+         if (expected == actual) {
+             result = true;
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressWarningsFilterTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressWarningsFilterTest.java
+index 64a1bda..0fcd681 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressWarningsFilterTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressWarningsFilterTest.java
+@@ -116,7 +116,7 @@
+         return checker;
+     }
+ 
+-    private String[] removeSuppressed(String[] from, String[] remove) {
++    private static String[] removeSuppressed(String[] from, String[] remove) {
+         final Collection<String> coll =
+             Lists.newArrayList(Arrays.asList(from));
+         coll.removeAll(Arrays.asList(remove));
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilterTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilterTest.java
+index b3ba9a6..59436f2 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilterTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressWithNearbyCommentFilterTest.java
+@@ -227,7 +227,7 @@
+         return checker;
+     }
+ 
+-    private String[] removeSuppressed(String[] from, String[] remove) {
++    private static String[] removeSuppressed(String[] from, String[] remove) {
+         final Collection<String> coll =
+             Lists.newArrayList(Arrays.asList(from));
+         coll.removeAll(Arrays.asList(remove));
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressionCommentFilterTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressionCommentFilterTest.java
+index 030343e..f504635 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressionCommentFilterTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/filters/SuppressionCommentFilterTest.java
+@@ -227,7 +227,7 @@
+         return checker;
+     }
+ 
+-    private String[] removeSuppressed(String[] from, String[] remove) {
++    private static String[] removeSuppressed(String[] from, String[] remove) {
+         final Collection<String> coll =
+             Lists.newArrayList(Arrays.asList(from));
+         coll.removeAll(Arrays.asList(remove));
+diff --git a/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java b/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
+index e2b68fd..3d7c4b5 100644
+--- a/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
++++ b/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
+@@ -37,7 +37,7 @@
+ 		listFiles(files, ROOT, "java");
+ 	}
+ 
+-	private Configuration getConfigurationFromXML(String aConfigName,
++	private static Configuration getConfigurationFromXML(String aConfigName,
+ 			Properties aProps) throws CheckstyleException {
+ 		try {
+ 			return ConfigurationLoader.loadConfiguration(aConfigName,

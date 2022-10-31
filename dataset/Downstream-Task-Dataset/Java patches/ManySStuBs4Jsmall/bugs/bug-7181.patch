@@ -1,0 +1,23 @@
+diff --git a/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-hs/src/test/java/org/apache/hadoop/mapreduce/v2/hs/TestJobHistoryParsing.java b/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-hs/src/test/java/org/apache/hadoop/mapreduce/v2/hs/TestJobHistoryParsing.java
+index b4036cb..7520efb 100644
+--- a/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-hs/src/test/java/org/apache/hadoop/mapreduce/v2/hs/TestJobHistoryParsing.java
++++ b/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-hs/src/test/java/org/apache/hadoop/mapreduce/v2/hs/TestJobHistoryParsing.java
+@@ -95,7 +95,8 @@
+     JobHistoryParser parser = new JobHistoryParser(in);
+     JobInfo jobInfo = parser.parse();
+ 
+-    Assert.assertEquals("Incorrect username ", "mapred", jobInfo.getUsername());
++    Assert.assertEquals("Incorrect username ", System.getProperty("user.name"),
++        jobInfo.getUsername());
+     Assert.assertEquals("Incorrect jobName ", "test", jobInfo.getJobname());
+     Assert.assertEquals("Incorrect queuename ", "default",
+         jobInfo.getJobQueueName());
+@@ -182,7 +183,7 @@
+         Integer.parseInt(jobSummaryElements.get("numMaps")));
+     Assert.assertEquals("Mismatch in num reduce slots", 1,
+         Integer.parseInt(jobSummaryElements.get("numReduces")));
+-    Assert.assertEquals("User does not match", "mapred",
++    Assert.assertEquals("User does not match", System.getProperty("user.name"),
+         jobSummaryElements.get("user"));
+     Assert.assertEquals("Queue does not match", "default",
+         jobSummaryElements.get("queue"));

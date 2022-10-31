@@ -1,0 +1,26 @@
+diff --git a/src/test/java/com/zaxxer/hikari/pool/TestConnections.java b/src/test/java/com/zaxxer/hikari/pool/TestConnections.java
+index 33de911..88cfc45 100644
+--- a/src/test/java/com/zaxxer/hikari/pool/TestConnections.java
++++ b/src/test/java/com/zaxxer/hikari/pool/TestConnections.java
+@@ -366,7 +366,7 @@
+ 
+          pool.logPoolState("before check ");
+          Assert.assertNull((ref.get() != null ? ref.get().toString() : ""), ref.get());
+-         Assert.assertSame("StubConnection count not as expected", 4, StubConnection.count.get());
++         Assert.assertSame("StubConnection count not as expected", 4+1, StubConnection.count.get()); // 1 connection is created in init 
+       }
+    }
+ 
+diff --git a/src/test/java/com/zaxxer/hikari/pool/TestConnections.java b/src/test/java/com/zaxxer/hikari/pool/TestConnections.java
+index 33de911..88cfc45 100644
+--- a/src/test/java/com/zaxxer/hikari/pool/TestConnections.java
++++ b/src/test/java/com/zaxxer/hikari/pool/TestConnections.java
+@@ -366,7 +366,7 @@
+ 
+          pool.logPoolState("before check ");
+          Assert.assertNull((ref.get() != null ? ref.get().toString() : ""), ref.get());
+-         Assert.assertSame("StubConnection count not as expected", 4, StubConnection.count.get());
++         Assert.assertSame("StubConnection count not as expected", 4+1, StubConnection.count.get()); // 1 connection is created in init 
+       }
+    }
+ 

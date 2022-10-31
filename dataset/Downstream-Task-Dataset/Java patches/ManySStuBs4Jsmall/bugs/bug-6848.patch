@@ -1,0 +1,26 @@
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+index 26a7fa3..0cb0763 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+@@ -223,7 +223,7 @@
+ 			return (T) this.fields[fieldNum];
+ 		}
+ 		
+-		final int limit = fieldNum < this.numFields - 1 ? this.offsets[fieldNum + 1] : this.binaryLen;
++		final int limit = offset + this.lengths[fieldNum];
+ 		
+ 		// get an instance, either from the instance cache or create a new one
+ 		final Value oldField = this.fields[fieldNum]; 
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+index 26a7fa3..0cb0763 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+@@ -223,7 +223,7 @@
+ 			return (T) this.fields[fieldNum];
+ 		}
+ 		
+-		final int limit = fieldNum < this.numFields - 1 ? this.offsets[fieldNum + 1] : this.binaryLen;
++		final int limit = offset + this.lengths[fieldNum];
+ 		
+ 		// get an instance, either from the instance cache or create a new one
+ 		final Value oldField = this.fields[fieldNum]; 

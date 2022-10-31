@@ -1,0 +1,26 @@
+diff --git a/src/main/java/io/vertx/core/http/impl/ConnectionManager.java b/src/main/java/io/vertx/core/http/impl/ConnectionManager.java
+index d0b0818..fb112b8 100644
+--- a/src/main/java/io/vertx/core/http/impl/ConnectionManager.java
++++ b/src/main/java/io/vertx/core/http/impl/ConnectionManager.java
+@@ -160,7 +160,7 @@
+   }
+ 
+   public void getConnectionForWebsocket(int port, String host, Waiter waiter) {
+-    ConnectionKey address = new ConnectionKey(false, port, host);
++    ConnectionKey address = new ConnectionKey(options.isSsl(), port, host);
+     ConnQueue connQueue = wsQM.getConnQueue(address, HttpVersion.HTTP_1_1);
+     connQueue.getConnection(waiter);
+   }
+diff --git a/src/main/java/io/vertx/core/http/impl/ConnectionManager.java b/src/main/java/io/vertx/core/http/impl/ConnectionManager.java
+index d0b0818..fb112b8 100644
+--- a/src/main/java/io/vertx/core/http/impl/ConnectionManager.java
++++ b/src/main/java/io/vertx/core/http/impl/ConnectionManager.java
+@@ -160,7 +160,7 @@
+   }
+ 
+   public void getConnectionForWebsocket(int port, String host, Waiter waiter) {
+-    ConnectionKey address = new ConnectionKey(false, port, host);
++    ConnectionKey address = new ConnectionKey(options.isSsl(), port, host);
+     ConnQueue connQueue = wsQM.getConnQueue(address, HttpVersion.HTTP_1_1);
+     connQueue.getConnection(waiter);
+   }

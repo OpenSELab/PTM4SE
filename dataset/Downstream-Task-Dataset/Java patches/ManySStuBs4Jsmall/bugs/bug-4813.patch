@@ -1,0 +1,182 @@
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/springboot/CxfRsComponentAutoConfiguration.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/springboot/CxfRsComponentAutoConfiguration.java
+index e0ae938..52ada16 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/springboot/CxfRsComponentAutoConfiguration.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/springboot/CxfRsComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(CxfRsComponentConfiguration.class)
+ public class CxfRsComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "cxfrs-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(CxfRsComponent.class)
+     public CxfRsComponent configureCxfRsComponent(CamelContext camelContext,
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/springboot/CxfComponentAutoConfiguration.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/springboot/CxfComponentAutoConfiguration.java
+index 7c24123..21f5c1e 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/springboot/CxfComponentAutoConfiguration.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/springboot/CxfComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(CxfComponentConfiguration.class)
+ public class CxfComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "cxf-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(CxfComponent.class)
+     public CxfComponent configureCxfComponent(CamelContext camelContext,
+diff --git a/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/springboot/DisruptorComponentAutoConfiguration.java b/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/springboot/DisruptorComponentAutoConfiguration.java
+index dd065ce..03c9496 100644
+--- a/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/springboot/DisruptorComponentAutoConfiguration.java
++++ b/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/springboot/DisruptorComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(DisruptorComponentConfiguration.class)
+ public class DisruptorComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "disruptor-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(DisruptorComponent.class)
+     public DisruptorComponent configureDisruptorComponent(
+diff --git a/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/vm/springboot/DisruptorVmComponentAutoConfiguration.java b/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/vm/springboot/DisruptorVmComponentAutoConfiguration.java
+index 300b9dc..44a630e 100644
+--- a/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/vm/springboot/DisruptorVmComponentAutoConfiguration.java
++++ b/components/camel-disruptor/src/main/java/org/apache/camel/component/disruptor/vm/springboot/DisruptorVmComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(DisruptorVmComponentConfiguration.class)
+ public class DisruptorVmComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "disruptor-vm-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(DisruptorVmComponent.class)
+     public DisruptorVmComponent configureDisruptorVmComponent(
+diff --git a/components/camel-jetty9/src/main/java/org/apache/camel/component/jetty9/springboot/JettyHttpComponentAutoConfiguration9.java b/components/camel-jetty9/src/main/java/org/apache/camel/component/jetty9/springboot/JettyHttpComponentAutoConfiguration9.java
+index 9718b63..d1f37a8 100644
+--- a/components/camel-jetty9/src/main/java/org/apache/camel/component/jetty9/springboot/JettyHttpComponentAutoConfiguration9.java
++++ b/components/camel-jetty9/src/main/java/org/apache/camel/component/jetty9/springboot/JettyHttpComponentAutoConfiguration9.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(JettyHttpComponentConfiguration9.class)
+ public class JettyHttpComponentAutoConfiguration9 {
+ 
+-    @Bean
++    @Bean(name = "jetty-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(JettyHttpComponent9.class)
+     public JettyHttpComponent9 configureJettyHttpComponent9(
+diff --git a/components/camel-jsch/src/main/java/org/apache/camel/component/scp/springboot/ScpComponentAutoConfiguration.java b/components/camel-jsch/src/main/java/org/apache/camel/component/scp/springboot/ScpComponentAutoConfiguration.java
+index 20fe2b2..e5c0037 100644
+--- a/components/camel-jsch/src/main/java/org/apache/camel/component/scp/springboot/ScpComponentAutoConfiguration.java
++++ b/components/camel-jsch/src/main/java/org/apache/camel/component/scp/springboot/ScpComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(ScpComponentConfiguration.class)
+ public class ScpComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "scp-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(ScpComponent.class)
+     public ScpComponent configureScpComponent(CamelContext camelContext,
+diff --git a/components/camel-saxon/src/main/java/org/apache/camel/component/xquery/springboot/XQueryComponentAutoConfiguration.java b/components/camel-saxon/src/main/java/org/apache/camel/component/xquery/springboot/XQueryComponentAutoConfiguration.java
+index 0acab53..c52467f 100644
+--- a/components/camel-saxon/src/main/java/org/apache/camel/component/xquery/springboot/XQueryComponentAutoConfiguration.java
++++ b/components/camel-saxon/src/main/java/org/apache/camel/component/xquery/springboot/XQueryComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(XQueryComponentConfiguration.class)
+ public class XQueryComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "xquery-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(XQueryComponent.class)
+     public XQueryComponent configureXQueryComponent(CamelContext camelContext,
+diff --git a/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/batch/springboot/SjmsBatchComponentAutoConfiguration.java b/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/batch/springboot/SjmsBatchComponentAutoConfiguration.java
+index 88d6d4c..e236e8e 100644
+--- a/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/batch/springboot/SjmsBatchComponentAutoConfiguration.java
++++ b/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/batch/springboot/SjmsBatchComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(SjmsBatchComponentConfiguration.class)
+ public class SjmsBatchComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "sjms-batch-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(SjmsBatchComponent.class)
+     public SjmsBatchComponent configureSjmsBatchComponent(
+diff --git a/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/springboot/SjmsComponentAutoConfiguration.java b/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/springboot/SjmsComponentAutoConfiguration.java
+index 0b3a9ea..5683591 100644
+--- a/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/springboot/SjmsComponentAutoConfiguration.java
++++ b/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/springboot/SjmsComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(SjmsComponentConfiguration.class)
+ public class SjmsComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "sjms-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(SjmsComponent.class)
+     public SjmsComponent configureSjmsComponent(CamelContext camelContext,
+diff --git a/components/camel-spring/src/main/java/org/apache/camel/component/event/springboot/EventComponentAutoConfiguration.java b/components/camel-spring/src/main/java/org/apache/camel/component/event/springboot/EventComponentAutoConfiguration.java
+index b0561e1..38e9000 100644
+--- a/components/camel-spring/src/main/java/org/apache/camel/component/event/springboot/EventComponentAutoConfiguration.java
++++ b/components/camel-spring/src/main/java/org/apache/camel/component/event/springboot/EventComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(EventComponentConfiguration.class)
+ public class EventComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "spring-event-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(EventComponent.class)
+     public EventComponent configureEventComponent(CamelContext camelContext,
+diff --git a/components/camel-sql/src/main/java/org/apache/camel/component/sql/springboot/SqlComponentAutoConfiguration.java b/components/camel-sql/src/main/java/org/apache/camel/component/sql/springboot/SqlComponentAutoConfiguration.java
+index 44802fd..85c8dba 100644
+--- a/components/camel-sql/src/main/java/org/apache/camel/component/sql/springboot/SqlComponentAutoConfiguration.java
++++ b/components/camel-sql/src/main/java/org/apache/camel/component/sql/springboot/SqlComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(SqlComponentConfiguration.class)
+ public class SqlComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "sql-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(SqlComponent.class)
+     public SqlComponent configureSqlComponent(CamelContext camelContext,
+diff --git a/components/camel-sql/src/main/java/org/apache/camel/component/sql/stored/springboot/SqlStoredComponentAutoConfiguration.java b/components/camel-sql/src/main/java/org/apache/camel/component/sql/stored/springboot/SqlStoredComponentAutoConfiguration.java
+index 05cc45d..2ed59e1 100644
+--- a/components/camel-sql/src/main/java/org/apache/camel/component/sql/stored/springboot/SqlStoredComponentAutoConfiguration.java
++++ b/components/camel-sql/src/main/java/org/apache/camel/component/sql/stored/springboot/SqlStoredComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(SqlStoredComponentConfiguration.class)
+ public class SqlStoredComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "sql-stored-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(SqlStoredComponent.class)
+     public SqlStoredComponent configureSqlStoredComponent(
+diff --git a/tooling/maven/camel-package-maven-plugin/src/main/java/org/apache/camel/maven/packaging/SpringBootAutoConfigurationMojo.java b/tooling/maven/camel-package-maven-plugin/src/main/java/org/apache/camel/maven/packaging/SpringBootAutoConfigurationMojo.java
+index aedcf49..06ccde5 100644
+--- a/tooling/maven/camel-package-maven-plugin/src/main/java/org/apache/camel/maven/packaging/SpringBootAutoConfigurationMojo.java
++++ b/tooling/maven/camel-package-maven-plugin/src/main/java/org/apache/camel/maven/packaging/SpringBootAutoConfigurationMojo.java
+@@ -158,7 +158,7 @@
+                     String pkg = model.getJavaType().substring(0, pos) + ".springboot";
+ 
+                     String overrideComponentName = null;
+-                    if(aliases.size()>0) {
++                    if(aliases.size()>1) {
+                         // determine component name when there are multiple ones
+                         overrideComponentName = model.getArtifactId().replace("camel-", "");
+                     }
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/springboot/CxfRsComponentAutoConfiguration.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/springboot/CxfRsComponentAutoConfiguration.java
+index e0ae938..52ada16 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/springboot/CxfRsComponentAutoConfiguration.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/jaxrs/springboot/CxfRsComponentAutoConfiguration.java
+@@ -34,7 +34,7 @@
+ @EnableConfigurationProperties(CxfRsComponentConfiguration.class)
+ public class CxfRsComponentAutoConfiguration {
+ 
+-    @Bean
++    @Bean(name = "cxfrs-component")
+     @ConditionalOnClass(CamelContext.class)
+     @ConditionalOnMissingBean(CxfRsComponent.class)
+     public CxfRsComponent configureCxfRsComponent(CamelContext camelContext,

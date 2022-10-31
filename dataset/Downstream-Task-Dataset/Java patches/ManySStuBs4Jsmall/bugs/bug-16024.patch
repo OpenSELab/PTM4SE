@@ -1,0 +1,39 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/ListKeyValueSource.java b/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/ListKeyValueSource.java
+index 302ee0b..0f3328b 100644
+--- a/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/ListKeyValueSource.java
++++ b/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/ListKeyValueSource.java
+@@ -68,7 +68,7 @@
+         PartitionService ps = nei.getPartitionService();
+         Data data = ss.toData(listName, StringAndPartitionAwarePartitioningStrategy.INSTANCE);
+         int partitionId = ps.getPartitionId(data);
+-        if (!ps.getPartitionOwner(partitionId).equals(thisAddress)) {
++        if (!thisAddress.equals(ps.getPartitionOwner(partitionId))) {
+             return;
+         }
+ 
+diff --git a/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/SetKeyValueSource.java b/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/SetKeyValueSource.java
+index 3aaecc4..b0fa84c 100644
+--- a/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/SetKeyValueSource.java
++++ b/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/SetKeyValueSource.java
+@@ -68,7 +68,7 @@
+         PartitionService ps = nei.getPartitionService();
+         Data data = ss.toData(setName, StringAndPartitionAwarePartitioningStrategy.INSTANCE);
+         int partitionId = ps.getPartitionId(data);
+-        if (!ps.getPartitionOwner(partitionId).equals(thisAddress)) {
++        if (!thisAddress.equals(ps.getPartitionOwner(partitionId))) {
+             return;
+         }
+ 
+diff --git a/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/ListKeyValueSource.java b/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/ListKeyValueSource.java
+index 302ee0b..0f3328b 100644
+--- a/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/ListKeyValueSource.java
++++ b/hazelcast/src/main/java/com/hazelcast/mapreduce/impl/ListKeyValueSource.java
+@@ -68,7 +68,7 @@
+         PartitionService ps = nei.getPartitionService();
+         Data data = ss.toData(listName, StringAndPartitionAwarePartitioningStrategy.INSTANCE);
+         int partitionId = ps.getPartitionId(data);
+-        if (!ps.getPartitionOwner(partitionId).equals(thisAddress)) {
++        if (!thisAddress.equals(ps.getPartitionOwner(partitionId))) {
+             return;
+         }
+ 

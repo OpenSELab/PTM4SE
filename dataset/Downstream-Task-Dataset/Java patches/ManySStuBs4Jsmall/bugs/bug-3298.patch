@@ -1,0 +1,67 @@
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/cobar/DMLSelectParserTest.java b/src/test/java/com/alibaba/druid/bvt/sql/cobar/DMLSelectParserTest.java
+index 9162b50..c80c968 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/cobar/DMLSelectParserTest.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/cobar/DMLSelectParserTest.java
+@@ -245,12 +245,12 @@
+     }
+     
+     public void test_select_18() throws Exception {
+-        String sql = "SELect t1.id , t2.* from t1, test.t2 where test.t1.id='�?'‘文' and t1.id=test.t2.id";
++        String sql = "SELect t1.id , t2.* from t1, test.t2 where test.t1.id='中''‘文' and t1.id=test.t2.id";
+         MySqlStatementParser parser = new MySqlStatementParser(sql);
+         SQLStatement stmt = parser.parseStatementList().get(0);
+         parser.match(Token.EOF);
+         String output = SQLUtils.toMySqlString(stmt);
+-        Assert.assertEquals("SELECT t1.id, t2.*\nFROM t1, test.t2\nWHERE test.t1.id = '�?'‘文'\n\tAND t1.id = test.t2.id", output);
++        Assert.assertEquals("SELECT t1.id, t2.*\nFROM t1, test.t2\nWHERE test.t1.id = '中''‘文'\n\tAND t1.id = test.t2.id", output);
+     }
+     
+     public void test_select_19() throws Exception {
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/oracle/OracleInsertTest8.java b/src/test/java/com/alibaba/druid/bvt/sql/oracle/OracleInsertTest8.java
+index beb01d4..3eb3e96 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/oracle/OracleInsertTest8.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/oracle/OracleInsertTest8.java
+@@ -34,7 +34,7 @@
+                      + " MEMBER_DEPT_CN, LINK_EMAIL, STATUS, AV_PROVIDER, AV_ORIGIN)"
+                      + " values (1000236058, sysdate, sysdate, 1300904670, '��������5''TW'"
+                      + ", 'Yunnan', 'sadf', '4r7V', 'fdgtg', 'M', '�����info_name4', 'Fnameinfo_name4'"
+-                     + ", '33', '4444', '6666', '���fgsgsdfg', 'fggtgth', '�������������?, null, 'zeus'" + ")";
++                     + ", '33', '4444', '6666', '���fgsgsdfg', 'fggtgth', '�������������', null, 'zeus'" + ")";
+ 
+         OracleStatementParser parser = new OracleStatementParser(sql);
+         List<SQLStatement> statementList = parser.parseStatementList();
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerSelectTest3.java b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerSelectTest3.java
+index 1509660..e069e9b 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerSelectTest3.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerSelectTest3.java
+@@ -25,9 +25,9 @@
+ public class SQLServerSelectTest3 extends TestCase {
+ 
+     public void test_isEmpty() throws Exception {
+-        String sql = "SELECT name + �?�?+ master.sys.fn_varbintohexstr(password_hash) from master.sys.sql_logins";
++        String sql = "SELECT name + ‘-’ + master.sys.fn_varbintohexstr(password_hash) from master.sys.sql_logins";
+ 
+-        String expect = "SELECT name + �?- �?+ master.sys.fn_varbintohexstr(password_hash)\n" + //
++        String expect = "SELECT name + ‘ - ’ + master.sys.fn_varbintohexstr(password_hash)\n" + //
+                         "FROM master.sys.sql_logins";
+ 
+         SQLServerStatementParser parser = new SQLServerStatementParser(sql);
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/cobar/DMLSelectParserTest.java b/src/test/java/com/alibaba/druid/bvt/sql/cobar/DMLSelectParserTest.java
+index 9162b50..c80c968 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/cobar/DMLSelectParserTest.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/cobar/DMLSelectParserTest.java
+@@ -245,12 +245,12 @@
+     }
+     
+     public void test_select_18() throws Exception {
+-        String sql = "SELect t1.id , t2.* from t1, test.t2 where test.t1.id='�?'‘文' and t1.id=test.t2.id";
++        String sql = "SELect t1.id , t2.* from t1, test.t2 where test.t1.id='中''‘文' and t1.id=test.t2.id";
+         MySqlStatementParser parser = new MySqlStatementParser(sql);
+         SQLStatement stmt = parser.parseStatementList().get(0);
+         parser.match(Token.EOF);
+         String output = SQLUtils.toMySqlString(stmt);
+-        Assert.assertEquals("SELECT t1.id, t2.*\nFROM t1, test.t2\nWHERE test.t1.id = '�?'‘文'\n\tAND t1.id = test.t2.id", output);
++        Assert.assertEquals("SELECT t1.id, t2.*\nFROM t1, test.t2\nWHERE test.t1.id = '中''‘文'\n\tAND t1.id = test.t2.id", output);
+     }
+     
+     public void test_select_19() throws Exception {

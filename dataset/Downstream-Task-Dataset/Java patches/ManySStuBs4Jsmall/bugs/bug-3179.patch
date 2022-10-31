@@ -1,0 +1,30 @@
+diff --git a/src/main/java/com/alibaba/druid/filter/logging/LogFilter.java b/src/main/java/com/alibaba/druid/filter/logging/LogFilter.java
+index 067890f..cb82cc2 100644
+--- a/src/main/java/com/alibaba/druid/filter/logging/LogFilter.java
++++ b/src/main/java/com/alibaba/druid/filter/logging/LogFilter.java
+@@ -539,7 +539,9 @@
+         List<Object> parameters = new ArrayList<Object>(parametersSize);
+         for (int i = 0; i < parametersSize; ++i) {
+             JdbcParameter jdbcParam = statement.getParameter(i);
+-            parameters.add(jdbcParam.getValue());
++            parameters.add(jdbcParam != null
++                    ? jdbcParam.getValue()
++                    : null);
+         }
+ 
+         String dbType = statement.getConnectionProxy().getDirectDataSource().getDbType();
+diff --git a/src/main/java/com/alibaba/druid/filter/logging/LogFilter.java b/src/main/java/com/alibaba/druid/filter/logging/LogFilter.java
+index 067890f..cb82cc2 100644
+--- a/src/main/java/com/alibaba/druid/filter/logging/LogFilter.java
++++ b/src/main/java/com/alibaba/druid/filter/logging/LogFilter.java
+@@ -539,7 +539,9 @@
+         List<Object> parameters = new ArrayList<Object>(parametersSize);
+         for (int i = 0; i < parametersSize; ++i) {
+             JdbcParameter jdbcParam = statement.getParameter(i);
+-            parameters.add(jdbcParam.getValue());
++            parameters.add(jdbcParam != null
++                    ? jdbcParam.getValue()
++                    : null);
+         }
+ 
+         String dbType = statement.getConnectionProxy().getDirectDataSource().getDbType();

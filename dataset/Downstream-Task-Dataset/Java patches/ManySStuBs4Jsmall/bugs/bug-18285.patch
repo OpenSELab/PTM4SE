@@ -1,0 +1,26 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/api/index/PreexistingIndexEntryConflictException.java b/community/kernel/src/main/java/org/neo4j/kernel/api/index/PreexistingIndexEntryConflictException.java
+index ae817a6..d82375e 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/api/index/PreexistingIndexEntryConflictException.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/api/index/PreexistingIndexEntryConflictException.java
+@@ -35,8 +35,8 @@
+     public PreexistingIndexEntryConflictException( Object propertyValue, long existingNodeId, long addedNodeId )
+     {
+         super( format( "Multiple nodes have property value %s:%n" +
+-                "  existing node(%d)%n" +
+-                "  new node(%d)",
++                "  node(%d)%n" +
++                "  node(%d)",
+                 quote( propertyValue ), existingNodeId, addedNodeId ) );
+         this.addedNodeId = addedNodeId;
+         this.propertyValue = propertyValue;
+@@ -54,8 +54,8 @@
+     {
+         return format(
+                 "Multiple nodes with label `%s` have property `%s` = %s:%n" +
+-                        "  existing node(%d)%n" +
+-                        "  new node(%d)",
++                        "  node(%d)%n" +
++                        "  node(%d)",
+                 labelName, propertyKey, quote( propertyValue ), existingNodeId, addedNodeId );
+     }
+ 

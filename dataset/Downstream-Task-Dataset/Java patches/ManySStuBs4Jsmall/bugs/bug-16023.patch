@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/MapStoreWriteProcessor.java b/hazelcast/src/main/java/com/hazelcast/map/MapStoreWriteProcessor.java
+index ed1d676..a321e82 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/MapStoreWriteProcessor.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/MapStoreWriteProcessor.java
+@@ -74,7 +74,7 @@
+ 
+             // we will traverse duplicate keys to filter first duplicates from storeAll's map
+             for (ScheduledEntry duplicateKey : duplicateKeys) {
+-                Object key = duplicateKey.getKey();
++                Object key = mapService.toObject(duplicateKey.getKey());
+                 Object removed = map.remove(key);
+                 if(removed != null) {
+                     final Exception ex = tryStore(scheduler, new AbstractMap.SimpleEntry(key, removed));
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/MapStoreWriteProcessor.java b/hazelcast/src/main/java/com/hazelcast/map/MapStoreWriteProcessor.java
+index ed1d676..a321e82 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/MapStoreWriteProcessor.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/MapStoreWriteProcessor.java
+@@ -74,7 +74,7 @@
+ 
+             // we will traverse duplicate keys to filter first duplicates from storeAll's map
+             for (ScheduledEntry duplicateKey : duplicateKeys) {
+-                Object key = duplicateKey.getKey();
++                Object key = mapService.toObject(duplicateKey.getKey());
+                 Object removed = map.remove(key);
+                 if(removed != null) {
+                     final Exception ex = tryStore(scheduler, new AbstractMap.SimpleEntry(key, removed));

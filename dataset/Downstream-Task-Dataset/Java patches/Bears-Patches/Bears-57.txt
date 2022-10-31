@@ -1,0 +1,82 @@
+--- a/src/main/java/spoon/reflect/visitor/ImportScannerImpl.java
++++ b/src/main/java/spoon/reflect/visitor/ImportScannerImpl.java
+@@ -80,7 +79,6 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 	@Override
+ 	public <T> void visitCtFieldRead(CtFieldRead<T> fieldRead) {
+ 		enter(fieldRead);
+-		scan(fieldRead.getVariable());
+ 		scan(fieldRead.getAnnotations());
+ 		scan(fieldRead.getTypeCasts());
+ 		scan(fieldRead.getVariable());
+@@ -89,17 +87,6 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 	}
+ 
+ 	@Override
+-	public <T> void visitCtFieldWrite(CtFieldWrite<T> fieldWrite) {
+-		enter(fieldWrite);
+-		scan(fieldWrite.getVariable());
+-		scan(fieldWrite.getAnnotations());
+-		scan(fieldWrite.getTypeCasts());
+-		scan(fieldWrite.getVariable());
+-		scan(fieldWrite.getTarget());
+-		exit(fieldWrite);
+-	}
+-
+-	@Override
+ 	public <T> void visitCtFieldReference(CtFieldReference<T> reference) {
+ 		enter(reference);
+ 		scan(reference.getDeclaringType());
+@@ -125,17 +112,6 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 	}
+ 
+ 	@Override
+-	public <T> void visitCtInvocation(CtInvocation<T> invocation) {
+-		enter(invocation);
+-		scan(invocation.getAnnotations());
+-		scan(invocation.getTypeCasts());
+-		scan(invocation.getTarget());
+-		scan(invocation.getExecutable());
+-		scan(invocation.getArguments());
+-		exit(invocation);
+-	}
+-
+-	@Override
+ 	public <T> void visitCtTypeReference(CtTypeReference<T> reference) {
+ 		if (!(reference instanceof CtArrayTypeReference)) {
+ 			CtTypeReference typeReference;
+@@ -207,9 +183,6 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 
+ 	@Override
+ 	public Collection<CtReference> computeAllImports(CtType<?> simpleType) {
+-		classImports.clear();
+-		fieldImports.clear();
+-		methodImports.clear();
+ 		//look for top declaring type of that simpleType
+ 		targetType = simpleType.getReference().getTopLevelType();
+ 		addClassImport(simpleType.getReference());
+@@ -224,11 +197,7 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 
+ 	@Override
+ 	public Collection<CtTypeReference<?>> computeImports(CtElement element) {
+-		classImports.clear();
+-		fieldImports.clear();
+-		methodImports.clear();
+ 		//look for top declaring type of that simpleType
+-
+ 		if (element instanceof CtType) {
+ 			CtType simpleType = (CtType) element;
+ 			targetType = simpleType.getReference().getTopLevelType();
+@@ -404,11 +373,11 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 	 */
+ 	private boolean declaringTypeIsLocalOrImported(CtTypeReference declaringType) {
+ 		if (declaringType != null) {
+-			if (isImportedInClassImports(declaringType) || classNamePresentInJavaLang(declaringType)) {
++			if (!isTypeInCollision(declaringType, false) && addClassImport(declaringType)) {
+ 				return true;
+ 			}
+ 
+-			if (!isTypeInCollision(declaringType, false) && addClassImport(declaringType)) {
++			if (isImportedInClassImports(declaringType) || classNamePresentInJavaLang(declaringType)) {
+ 				return true;
+ 			}
+ 

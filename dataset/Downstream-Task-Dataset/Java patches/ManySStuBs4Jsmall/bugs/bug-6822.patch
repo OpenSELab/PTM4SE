@@ -1,0 +1,26 @@
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/task/AbstractPactTask.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/task/AbstractPactTask.java
+index 70b54f5..2b891d6 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/task/AbstractPactTask.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/task/AbstractPactTask.java
+@@ -294,7 +294,7 @@
+ 			}
+ 			
+ 			final int groupSize = this.config.getGroupSize(i+1);
+-			if(groupSize == 1) {
++			if(groupSize < 2) {
+ 				inputs[i] = new NepheleReaderIterator(new MutableRecordReader<PactRecord>(this, dp));
+ 			} else {
+ 				@SuppressWarnings("unchecked")
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/task/AbstractPactTask.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/task/AbstractPactTask.java
+index 70b54f5..2b891d6 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/task/AbstractPactTask.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/task/AbstractPactTask.java
+@@ -294,7 +294,7 @@
+ 			}
+ 			
+ 			final int groupSize = this.config.getGroupSize(i+1);
+-			if(groupSize == 1) {
++			if(groupSize < 2) {
+ 				inputs[i] = new NepheleReaderIterator(new MutableRecordReader<PactRecord>(this, dp));
+ 			} else {
+ 				@SuppressWarnings("unchecked")

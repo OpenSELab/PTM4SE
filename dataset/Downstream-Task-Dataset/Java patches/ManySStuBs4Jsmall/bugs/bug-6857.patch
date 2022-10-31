@@ -1,0 +1,32 @@
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/scheduler/AbstractScheduler.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/scheduler/AbstractScheduler.java
+index bad61b9..d7c3813 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/scheduler/AbstractScheduler.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/scheduler/AbstractScheduler.java
+@@ -424,9 +424,8 @@
+ 				final ExecutionVertex vertex = it.next();
+ 				final ExecutionState state = vertex.getExecutionState();
+ 
+-				if (state == ExecutionState.SCHEDULED || state == ExecutionState.READY
+-					|| state == ExecutionState.RUNNING || state == ExecutionState.FINISHING
+-					|| state == ExecutionState.CANCELING) {
++				if (state != ExecutionState.CREATED && state != ExecutionState.FINISHED
++					&& state != ExecutionState.FAILED) {
+ 					instanceCanBeReleased = false;
+ 					break;
+ 				}
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/scheduler/AbstractScheduler.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/scheduler/AbstractScheduler.java
+index bad61b9..d7c3813 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/scheduler/AbstractScheduler.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/scheduler/AbstractScheduler.java
+@@ -424,9 +424,8 @@
+ 				final ExecutionVertex vertex = it.next();
+ 				final ExecutionState state = vertex.getExecutionState();
+ 
+-				if (state == ExecutionState.SCHEDULED || state == ExecutionState.READY
+-					|| state == ExecutionState.RUNNING || state == ExecutionState.FINISHING
+-					|| state == ExecutionState.CANCELING) {
++				if (state != ExecutionState.CREATED && state != ExecutionState.FINISHED
++					&& state != ExecutionState.FAILED) {
+ 					instanceCanBeReleased = false;
+ 					break;
+ 				}

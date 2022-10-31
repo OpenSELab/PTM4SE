@@ -1,0 +1,27 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/mapper/AbstractBookmarkableMapper.java b/wicket-core/src/main/java/org/apache/wicket/request/mapper/AbstractBookmarkableMapper.java
+index 2f6bfc6..caa61ca 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/mapper/AbstractBookmarkableMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/mapper/AbstractBookmarkableMapper.java
+@@ -88,13 +88,16 @@ public abstract class AbstractBookmarkableMapper extends AbstractComponentMapper
+ 		 */
+ 		private PageParameters cleanPageParameters(final PageParameters originalParameters)
+ 		{
+-			PageParameters cleanParameters = new PageParameters(originalParameters);
+-
+-			// WICKET-4038: Ajax related parameters are set by wicket-ajax.js when needed.
+-			// They shouldn't be propagated to the next requests
+-			cleanParameters.remove(WebRequest.PARAM_AJAX);
+-			cleanParameters.remove(WebRequest.PARAM_AJAX_BASE_URL);
++			PageParameters cleanParameters = null;
++			if (originalParameters != null)
++			{
++				cleanParameters = new PageParameters(originalParameters);
+ 
++				// WICKET-4038: Ajax related parameters are set by wicket-ajax.js when needed.
++				// They shouldn't be propagated to the next requests
++				cleanParameters.remove(WebRequest.PARAM_AJAX);
++				cleanParameters.remove(WebRequest.PARAM_AJAX_BASE_URL);
++			}
+ 			return cleanParameters;
+ 		}
+ 

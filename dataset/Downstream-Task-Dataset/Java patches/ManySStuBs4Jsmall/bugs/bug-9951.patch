@@ -1,0 +1,44 @@
+diff --git a/library/src/com/handmark/pulltorefresh/library/PullToRefreshListView.java b/library/src/com/handmark/pulltorefresh/library/PullToRefreshListView.java
+index ff47ba2..48e25f9 100644
+--- a/library/src/com/handmark/pulltorefresh/library/PullToRefreshListView.java
++++ b/library/src/com/handmark/pulltorefresh/library/PullToRefreshListView.java
+@@ -177,7 +177,7 @@
+ 				listViewLoadingLayout = mFooterLoadingView;
+ 				selection = mRefreshableView.getCount() - 1;
+ 				scrollToHeight = getFooterHeight();
+-				scroll = mRefreshableView.getLastVisiblePosition() == selection;
++				scroll = Math.abs(mRefreshableView.getLastVisiblePosition() - selection) <= 1;
+ 				break;
+ 			case PULL_DOWN_TO_REFRESH:
+ 			default:
+@@ -185,7 +185,7 @@
+ 				listViewLoadingLayout = mHeaderLoadingView;
+ 				scrollToHeight = -getHeaderHeight();
+ 				selection = 0;
+-				scroll = mRefreshableView.getFirstVisiblePosition() == selection;
++				scroll = Math.abs(mRefreshableView.getFirstVisiblePosition() - selection) <= 1;
+ 				break;
+ 		}
+ 
+diff --git a/library/src/com/handmark/pulltorefresh/library/PullToRefreshListView.java b/library/src/com/handmark/pulltorefresh/library/PullToRefreshListView.java
+index ff47ba2..48e25f9 100644
+--- a/library/src/com/handmark/pulltorefresh/library/PullToRefreshListView.java
++++ b/library/src/com/handmark/pulltorefresh/library/PullToRefreshListView.java
+@@ -177,7 +177,7 @@
+ 				listViewLoadingLayout = mFooterLoadingView;
+ 				selection = mRefreshableView.getCount() - 1;
+ 				scrollToHeight = getFooterHeight();
+-				scroll = mRefreshableView.getLastVisiblePosition() == selection;
++				scroll = Math.abs(mRefreshableView.getLastVisiblePosition() - selection) <= 1;
+ 				break;
+ 			case PULL_DOWN_TO_REFRESH:
+ 			default:
+@@ -185,7 +185,7 @@
+ 				listViewLoadingLayout = mHeaderLoadingView;
+ 				scrollToHeight = -getHeaderHeight();
+ 				selection = 0;
+-				scroll = mRefreshableView.getFirstVisiblePosition() == selection;
++				scroll = Math.abs(mRefreshableView.getFirstVisiblePosition() - selection) <= 1;
+ 				break;
+ 		}
+ 

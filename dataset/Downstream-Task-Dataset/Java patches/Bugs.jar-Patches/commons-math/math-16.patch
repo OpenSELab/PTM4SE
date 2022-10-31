@@ -1,0 +1,62 @@
+diff --git a/src/main/java/org/apache/commons/math3/fitting/leastsquares/GaussNewtonOptimizer.java b/src/main/java/org/apache/commons/math3/fitting/leastsquares/GaussNewtonOptimizer.java
+index 9240856..c17c870 100644
+--- a/src/main/java/org/apache/commons/math3/fitting/leastsquares/GaussNewtonOptimizer.java
++++ b/src/main/java/org/apache/commons/math3/fitting/leastsquares/GaussNewtonOptimizer.java
+@@ -197,9 +197,7 @@ public class GaussNewtonOptimizer implements LeastSquaresOptimizer {
+             throw new NullArgumentException();
+         }
+ 
+-        final int nC = lsp.getParameterSize();
+-
+-        final RealVector currentPoint = lsp.getStart();
++        RealVector currentPoint = lsp.getStart();
+ 
+         // iterate until convergence is reached
+         Evaluation current = null;
+@@ -227,9 +225,7 @@ public class GaussNewtonOptimizer implements LeastSquaresOptimizer {
+             // solve the linearized least squares problem
+             final RealVector dX = this.decomposition.solve(weightedJacobian, currentResiduals);
+             // update the estimated parameters
+-            for (int i = 0; i < nC; ++i) {
+-                currentPoint.setEntry(i, currentPoint.getEntry(i) + dX.getEntry(i));
+-            }
++            currentPoint = currentPoint.add(dX);
+         }
+     }
+ 
+diff --git a/src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresFactory.java b/src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresFactory.java
+index 0853d03..16ac659 100644
+--- a/src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresFactory.java
++++ b/src/main/java/org/apache/commons/math3/fitting/leastsquares/LeastSquaresFactory.java
+@@ -332,7 +332,8 @@ public class LeastSquaresFactory {
+                     value.getFirst(),
+                     value.getSecond(),
+                     this.target,
+-                    point);
++                    // copy so optimizer can change point without changing our instance
++                    point.copy());
+         }
+ 
+         /**
+diff --git a/src/main/java/org/apache/commons/math3/fitting/leastsquares/LevenbergMarquardtOptimizer.java b/src/main/java/org/apache/commons/math3/fitting/leastsquares/LevenbergMarquardtOptimizer.java
+index 1cd4e51..5f0527c 100644
+--- a/src/main/java/org/apache/commons/math3/fitting/leastsquares/LevenbergMarquardtOptimizer.java
++++ b/src/main/java/org/apache/commons/math3/fitting/leastsquares/LevenbergMarquardtOptimizer.java
+@@ -328,7 +328,7 @@ public class LevenbergMarquardtOptimizer implements LeastSquaresOptimizer {
+         // Evaluate the function at the starting point and calculate its norm.
+         evaluationCounter.incrementCount();
+         //value will be reassigned in the loop
+-        Evaluation current = problem.evaluate(new ArrayRealVector(currentPoint, false));
++        Evaluation current = problem.evaluate(new ArrayRealVector(currentPoint));
+         double[] currentResiduals = current.getResiduals().toArray();
+         double currentCost = current.getCost();
+ 
+@@ -445,7 +445,7 @@ public class LevenbergMarquardtOptimizer implements LeastSquaresOptimizer {
+ 
+                 // Evaluate the function at x + p and calculate its norm.
+                 evaluationCounter.incrementCount();
+-                current = problem.evaluate(new ArrayRealVector(currentPoint,false));
++                current = problem.evaluate(new ArrayRealVector(currentPoint));
+                 currentResiduals = current.getResiduals().toArray();
+                 currentCost = current.getCost();
+ 

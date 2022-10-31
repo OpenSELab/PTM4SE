@@ -1,0 +1,75 @@
+diff --git a/metrics-core/src/main/java/com/yammer/metrics/reporting/JmxReporter.java b/metrics-core/src/main/java/com/yammer/metrics/reporting/JmxReporter.java
+index 2cbdbfa..6a3edda 100644
+--- a/metrics-core/src/main/java/com/yammer/metrics/reporting/JmxReporter.java
++++ b/metrics-core/src/main/java/com/yammer/metrics/reporting/JmxReporter.java
+@@ -396,7 +396,7 @@
+             try {
+                 dispatcher.dispatch(metric, name, this, new Context(name, createObjectName(name)));
+             } catch (Exception e) {
+-                LOGGER.warn("Error processing {}", name, e);
++                LOGGER.warn("Error processing " + name, e);
+             }
+         }
+     }
+@@ -490,9 +490,9 @@
+             // This is often thrown when the process is shutting down. An application with lots of
+             // metrics will often begin unregistering metrics *after* JMX itself has cleared,
+             // resulting in a huge dump of exceptions as the process is exiting.
+-            LOGGER.trace("Error unregistering {}", name, e);
++            LOGGER.trace("Error unregistering " + name, e);
+         } catch (MBeanRegistrationException e) {
+-            LOGGER.debug("Error unregistering {}", name, e);
++            LOGGER.debug("Error unregistering " + name, e);
+         }
+     }
+ }
+diff --git a/metrics-core/src/main/java/com/yammer/metrics/util/DeathRattleExceptionHandler.java b/metrics-core/src/main/java/com/yammer/metrics/util/DeathRattleExceptionHandler.java
+index 6a77542..7dd9ea6 100644
+--- a/metrics-core/src/main/java/com/yammer/metrics/util/DeathRattleExceptionHandler.java
++++ b/metrics-core/src/main/java/com/yammer/metrics/util/DeathRattleExceptionHandler.java
+@@ -50,6 +50,6 @@
+     @Override
+     public void uncaughtException(Thread t, Throwable e) {
+         counter.inc();
+-        LOGGER.error("Uncaught exception on thread {}", t, e);
++        LOGGER.error("Uncaught exception on thread " + t, e);
+     }
+ }
+diff --git a/metrics-servlet/src/main/java/com/yammer/metrics/servlet/MetricsServlet.java b/metrics-servlet/src/main/java/com/yammer/metrics/servlet/MetricsServlet.java
+index 9e692f5..56b4e9f 100644
+--- a/metrics-servlet/src/main/java/com/yammer/metrics/servlet/MetricsServlet.java
++++ b/metrics-servlet/src/main/java/com/yammer/metrics/servlet/MetricsServlet.java
+@@ -296,7 +296,7 @@
+                         try {
+                             dispatcher.dispatch(subEntry.getValue(), subEntry.getKey(), this, new Context(json, showFullSamples));
+                         } catch (Exception e) {
+-                            LOGGER.warn("Error writing out {}", subEntry.getKey(), e);
++                            LOGGER.warn("Error writing out " + subEntry.getKey(), e);
+                         }
+                     }
+                 }
+diff --git a/metrics-core/src/main/java/com/yammer/metrics/reporting/JmxReporter.java b/metrics-core/src/main/java/com/yammer/metrics/reporting/JmxReporter.java
+index 2cbdbfa..6a3edda 100644
+--- a/metrics-core/src/main/java/com/yammer/metrics/reporting/JmxReporter.java
++++ b/metrics-core/src/main/java/com/yammer/metrics/reporting/JmxReporter.java
+@@ -396,7 +396,7 @@
+             try {
+                 dispatcher.dispatch(metric, name, this, new Context(name, createObjectName(name)));
+             } catch (Exception e) {
+-                LOGGER.warn("Error processing {}", name, e);
++                LOGGER.warn("Error processing " + name, e);
+             }
+         }
+     }
+@@ -490,9 +490,9 @@
+             // This is often thrown when the process is shutting down. An application with lots of
+             // metrics will often begin unregistering metrics *after* JMX itself has cleared,
+             // resulting in a huge dump of exceptions as the process is exiting.
+-            LOGGER.trace("Error unregistering {}", name, e);
++            LOGGER.trace("Error unregistering " + name, e);
+         } catch (MBeanRegistrationException e) {
+-            LOGGER.debug("Error unregistering {}", name, e);
++            LOGGER.debug("Error unregistering " + name, e);
+         }
+     }
+ }

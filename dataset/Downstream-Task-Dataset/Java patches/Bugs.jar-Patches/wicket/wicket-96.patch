@@ -1,0 +1,16 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/renderStrategy/ChildFirstHeaderRenderStrategy.java b/wicket-core/src/main/java/org/apache/wicket/markup/renderStrategy/ChildFirstHeaderRenderStrategy.java
+index cf4d8da..8938182 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/renderStrategy/ChildFirstHeaderRenderStrategy.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/renderStrategy/ChildFirstHeaderRenderStrategy.java
+@@ -80,7 +80,10 @@ public class ChildFirstHeaderRenderStrategy extends AbstractHeaderRenderStrategy
+ 				@Override
+ 				public void component(final Component component, final IVisit<Void> visit)
+ 				{
+-					component.renderHead(headerContainer);
++					if (component != rootComponent)
++					{
++						component.renderHead(headerContainer);
++					}
+ 				}
+ 
+ 				@Override

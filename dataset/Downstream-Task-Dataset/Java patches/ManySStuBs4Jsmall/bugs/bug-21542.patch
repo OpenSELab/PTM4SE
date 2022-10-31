@@ -1,0 +1,28 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration.java
+index 9a10a1e..49be49d 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration.java
+@@ -238,7 +238,8 @@
+ 					catch (IOException ex) {
+ 						// Ignore
+ 					}
+-					registry.addViewController("/").setViewName("/index.html");
++					// Use forward: prefix so that no view resolution is done
++					registry.addViewController("/").setViewName("forward:/index.html");
+ 					return;
+ 				}
+ 			}
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration.java
+index 9a10a1e..49be49d 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration.java
+@@ -238,7 +238,8 @@
+ 					catch (IOException ex) {
+ 						// Ignore
+ 					}
+-					registry.addViewController("/").setViewName("/index.html");
++					// Use forward: prefix so that no view resolution is done
++					registry.addViewController("/").setViewName("forward:/index.html");
+ 					return;
+ 				}
+ 			}

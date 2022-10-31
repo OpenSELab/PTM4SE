@@ -1,0 +1,53 @@
+diff --git a/common/src/main/java/io/netty/monitor/MonitorRegistries.java b/common/src/main/java/io/netty/monitor/MonitorRegistries.java
+index 4cc72b7..c172b44 100644
+--- a/common/src/main/java/io/netty/monitor/MonitorRegistries.java
++++ b/common/src/main/java/io/netty/monitor/MonitorRegistries.java
+@@ -90,13 +90,13 @@
+      * @return <em>The</em> uniquely determined {@link MonitorRegistry}
+      *         implementation
+      * @throws IllegalStateException If either none or more that one
+-     *             {@link MonitorRegistryFactor} provider was found on the
++     *             {@link MonitorRegistries} provider was found on the
+      *             classpath
+      */
+     public MonitorRegistry unique() {
+         final Iterator<MonitorRegistry> registries = iterator();
+         if (!registries.hasNext()) {
+-            throw new IllegalStateException("Could not find any MonitorRegistryFactories on the classpath - "
++            throw new IllegalStateException("Could not find any MonitorRegistries the classpath - "
+                     + "implementations need to be registered in META-INF/services/"
+                     + MonitorRegistryFactory.class.getName());
+         }
+diff --git a/metrics-yammer/src/main/java/io/netty/monitor/yammer/YammerMonitorRegistry.java b/metrics-yammer/src/main/java/io/netty/monitor/yammer/YammerMonitorRegistry.java
+index fd58c50..b257d82 100644
+--- a/metrics-yammer/src/main/java/io/netty/monitor/yammer/YammerMonitorRegistry.java
++++ b/metrics-yammer/src/main/java/io/netty/monitor/yammer/YammerMonitorRegistry.java
+@@ -63,7 +63,7 @@
+ 
+     /**
+      * Create a new {@link ValueDistributionMonitor} that is backed by a
+-     * {@code Yammer} {@link Histrogram}.
++     * {@code Yammer} {@link Histogram}.
+      * @see io.netty.monitor.MonitorRegistry#newValueDistributionMonitor(io.netty.monitor.MonitorName)
+      */
+     @Override
+diff --git a/common/src/main/java/io/netty/monitor/MonitorRegistries.java b/common/src/main/java/io/netty/monitor/MonitorRegistries.java
+index 4cc72b7..c172b44 100644
+--- a/common/src/main/java/io/netty/monitor/MonitorRegistries.java
++++ b/common/src/main/java/io/netty/monitor/MonitorRegistries.java
+@@ -90,13 +90,13 @@
+      * @return <em>The</em> uniquely determined {@link MonitorRegistry}
+      *         implementation
+      * @throws IllegalStateException If either none or more that one
+-     *             {@link MonitorRegistryFactor} provider was found on the
++     *             {@link MonitorRegistries} provider was found on the
+      *             classpath
+      */
+     public MonitorRegistry unique() {
+         final Iterator<MonitorRegistry> registries = iterator();
+         if (!registries.hasNext()) {
+-            throw new IllegalStateException("Could not find any MonitorRegistryFactories on the classpath - "
++            throw new IllegalStateException("Could not find any MonitorRegistries the classpath - "
+                     + "implementations need to be registered in META-INF/services/"
+                     + MonitorRegistryFactory.class.getName());
+         }

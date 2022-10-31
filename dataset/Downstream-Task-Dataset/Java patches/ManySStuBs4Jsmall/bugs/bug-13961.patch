@@ -1,0 +1,28 @@
+diff --git a/src/com/google/javascript/jscomp/gwt/linker/MinimalLinker.java b/src/com/google/javascript/jscomp/gwt/linker/MinimalLinker.java
+index 6594ed2..0e9619e 100644
+--- a/src/com/google/javascript/jscomp/gwt/linker/MinimalLinker.java
++++ b/src/com/google/javascript/jscomp/gwt/linker/MinimalLinker.java
+@@ -79,7 +79,8 @@
+ 
+     // Reset $wnd, and call gwtOnLoad if defined. This invokes the onModuleLoad methods of all
+     // loaded modules.
+-    output.append("$wnd=this;typeof gwtOnLoad==='function'&&gwtOnLoad()})();");
++    output.append(
++        "this['$gwtExport']=$wnd;$wnd=this;typeof gwtOnLoad==='function'&&gwtOnLoad()})();");
+ 
+     return output.toString();
+   }
+diff --git a/src/com/google/javascript/jscomp/gwt/linker/MinimalLinker.java b/src/com/google/javascript/jscomp/gwt/linker/MinimalLinker.java
+index 6594ed2..0e9619e 100644
+--- a/src/com/google/javascript/jscomp/gwt/linker/MinimalLinker.java
++++ b/src/com/google/javascript/jscomp/gwt/linker/MinimalLinker.java
+@@ -79,7 +79,8 @@
+ 
+     // Reset $wnd, and call gwtOnLoad if defined. This invokes the onModuleLoad methods of all
+     // loaded modules.
+-    output.append("$wnd=this;typeof gwtOnLoad==='function'&&gwtOnLoad()})();");
++    output.append(
++        "this['$gwtExport']=$wnd;$wnd=this;typeof gwtOnLoad==='function'&&gwtOnLoad()})();");
+ 
+     return output.toString();
+   }

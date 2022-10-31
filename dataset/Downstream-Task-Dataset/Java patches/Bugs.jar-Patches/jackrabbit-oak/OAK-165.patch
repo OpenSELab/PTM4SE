@@ -1,0 +1,117 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/Commit.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/Commit.java
+index a764669..7f09df6 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/Commit.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/Commit.java
+@@ -383,7 +383,7 @@ public class Commit {
+                     // to set isNew to false. If we get here the
+                     // commitRoot document already exists and
+                     // only needs an update
+-                    UpdateOp commit = commitRoot.shallowCopy(commitRoot.getId());
++                    UpdateOp commit = commitRoot.copy();
+                     commit.setNew(false);
+                     // only set revision on commit root when there is
+                     // no collision for this commit revision
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+index 3455f4b..65f79f3 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/DocumentNodeStore.java
+@@ -1170,13 +1170,11 @@ public final class DocumentNodeStore
+     @CheckForNull
+     NodeDocument updateCommitRoot(UpdateOp commit) throws DocumentStoreException {
+         // use batch commit when there are only revision and modified updates
+-        // and collision checks
+         boolean batch = true;
+         for (Map.Entry<Key, Operation> op : commit.getChanges().entrySet()) {
+             String name = op.getKey().getName();
+             if (NodeDocument.isRevisionsEntry(name)
+-                    || NodeDocument.MODIFIED_IN_SECS.equals(name)
+-                    || NodeDocument.COLLISIONS.equals(name)) {
++                    || NodeDocument.MODIFIED_IN_SECS.equals(name)) {
+                 continue;
+             }
+             batch = false;
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateOp.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateOp.java
+index f72a7ae..0196878 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateOp.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/UpdateOp.java
+@@ -50,23 +50,32 @@ public final class UpdateOp {
+      * @param isNew whether this is a new document
+      */
+     UpdateOp(String id, boolean isNew) {
+-        this(id, isNew, false, new HashMap<Key, Operation>());
++        this(id, isNew, false, new HashMap<Key, Operation>(), null);
+     }
+ 
+-    private UpdateOp(String id, boolean isNew, boolean isDelete,
+-                     Map<Key, Operation> changes) {
+-        this.id = id;
++    private UpdateOp(@Nonnull String id, boolean isNew, boolean isDelete,
++                     @Nonnull Map<Key, Operation> changes,
++                     @Nullable Map<Key, Condition> conditions) {
++        this.id = checkNotNull(id);
+         this.isNew = isNew;
+         this.isDelete = isDelete;
+-        this.changes = changes;
++        this.changes = checkNotNull(changes);
++        this.conditions = conditions;
+     }
+ 
+     static UpdateOp combine(String id, Iterable<UpdateOp> ops) {
+         Map<Key, Operation> changes = Maps.newHashMap();
++        Map<Key, Condition> conditions = Maps.newHashMap();
+         for (UpdateOp op : ops) {
+             changes.putAll(op.getChanges());
++            if (op.conditions != null) {
++                conditions.putAll(op.conditions);
++            }
++        }
++        if (conditions.isEmpty()) {
++            conditions = null;
+         }
+-        return new UpdateOp(id, false, false, changes);
++        return new UpdateOp(id, false, false, changes, conditions);
+     }
+ 
+     /**
+@@ -76,7 +85,7 @@ public final class UpdateOp {
+      * @param id the primary key.
+      */
+     public UpdateOp shallowCopy(String id) {
+-        return new UpdateOp(id, isNew, isDelete, changes);
++        return new UpdateOp(id, isNew, isDelete, changes, conditions);
+     }
+ 
+     /**
+@@ -86,8 +95,12 @@ public final class UpdateOp {
+      * @return a copy of this operation.
+      */
+     public UpdateOp copy() {
++        Map<Key, Condition> conditionMap = null;
++        if (conditions != null) {
++            conditionMap = new HashMap<Key, Condition>(conditions);
++        }
+         return new UpdateOp(id, isNew, isDelete,
+-                new HashMap<Key, Operation>(changes));
++                new HashMap<Key, Operation>(changes), conditionMap);
+     }
+ 
+     public String getId() {
+@@ -254,7 +267,11 @@ public final class UpdateOp {
+ 
+     @Override
+     public String toString() {
+-        return "key: " + id + " " + (isNew ? "new" : "update") + " " + changes;
++        String s = "key: " + id + " " + (isNew ? "new" : "update") + " " + changes;
++        if (conditions != null) {
++            s += " conditions " + conditions;
++        }
++        return s;
+     }
+ 
+     private Map<Key, Condition> getOrCreateConditions() {
+@@ -462,5 +479,4 @@ public final class UpdateOp {
+             return false;
+         }
+     }
+-
+ }

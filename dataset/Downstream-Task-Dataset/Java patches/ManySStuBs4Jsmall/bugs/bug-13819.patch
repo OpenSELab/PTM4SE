@@ -1,0 +1,33 @@
+diff --git a/test/com/google/javascript/jscomp/ConvertToTypedInterfaceTest.java b/test/com/google/javascript/jscomp/ConvertToTypedInterfaceTest.java
+index a010ad9..410ab4e 100644
+--- a/test/com/google/javascript/jscomp/ConvertToTypedInterfaceTest.java
++++ b/test/com/google/javascript/jscomp/ConvertToTypedInterfaceTest.java
+@@ -498,12 +498,12 @@
+           LINE_JOINER.join(
+               "goog.module('a.b.c');",
+               "/** @constructor */ function Foo() {}",
+-              "Foo.prototoype.display = function() {};",
++              "Foo.prototype.display = function() {};",
+               "exports = Foo;"),
+           LINE_JOINER.join(
+               "goog.module('x.y.z');",
+               "/** @constructor */ function Foo() {}",
+-              "Foo.prototoype.display = function() {};",
++              "Foo.prototype.display = function() {};",
+               "exports = Foo;"),
+         });
+ 
+@@ -511,11 +511,11 @@
+         new String[] {
+           LINE_JOINER.join(
+               "/** @constructor */ function Foo() {}",
+-              "Foo.prototoype.display = function() {};"),
++              "Foo.prototype.display = function() {};"),
+           LINE_JOINER.join(
+               "goog.module('x.y.z');",
+               "/** @constructor */ function Foo() {}",
+-              "Foo.prototoype.display = function() {};",
++              "Foo.prototype.display = function() {};",
+               "exports = Foo;"),
+         });
+ 

@@ -1,0 +1,55 @@
+diff --git a/bundles/core/org.openhab.core/src/main/java/org/openhab/core/internal/items/ItemRegistryImpl.java b/bundles/core/org.openhab.core/src/main/java/org/openhab/core/internal/items/ItemRegistryImpl.java
+index ff0bf09..d1f8242 100644
+--- a/bundles/core/org.openhab.core/src/main/java/org/openhab/core/internal/items/ItemRegistryImpl.java
++++ b/bundles/core/org.openhab.core/src/main/java/org/openhab/core/internal/items/ItemRegistryImpl.java
+@@ -194,7 +194,7 @@
+ 			}
+ 		}
+ 
+-		Collection<Item> items = Collections.synchronizedCollection(new HashSet<Item>());
++		Collection<Item> items = Collections.synchronizedCollection(new ArrayList<Item>());
+ 		itemMap.put(provider, items);
+ 
+ 		for(Item item : provider.getItems()) {
+diff --git a/bundles/model/org.openhab.model.item/src/org/openhab/model/item/internal/GenericItemProvider.java b/bundles/model/org.openhab.model.item/src/org/openhab/model/item/internal/GenericItemProvider.java
+index ad25760..217444e 100644
+--- a/bundles/model/org.openhab.model.item/src/org/openhab/model/item/internal/GenericItemProvider.java
++++ b/bundles/model/org.openhab.model.item/src/org/openhab/model/item/internal/GenericItemProvider.java
+@@ -94,7 +94,7 @@
+ 	
+ 
+ 	public Collection<Item> getItems() {
+-		Map<String, Item> items = new HashMap<String, Item>();
++		List<Item> items = new ArrayList<Item>();
+ 		if (modelRepository != null) {
+ 			for (String modelName : modelRepository.getAllModelNamesOfType("items")) {
+ 				ItemModel model = (ItemModel) modelRepository.getModel(modelName);
+@@ -133,13 +133,13 @@
+ 						for (String groupName : modelItem.getGroups()) {
+ 							item.getGroupNames().add(groupName);
+ 						}
+-						items.put(modelItem.getName(), item);
++						items.add(item);
+ 						dispatchBindings(modelName, item, modelItem.getBindings());
+ 					}
+ 				}
+ 			}
+ 		}
+-		return items.values();
++		return items;
+ 	}
+ 	
+ 	private GroupItem applyGroupFunction(GenericItem baseItem, ModelGroupItem modelGroupItem, ModelGroupFunction function) {
+diff --git a/bundles/core/org.openhab.core/src/main/java/org/openhab/core/internal/items/ItemRegistryImpl.java b/bundles/core/org.openhab.core/src/main/java/org/openhab/core/internal/items/ItemRegistryImpl.java
+index ff0bf09..d1f8242 100644
+--- a/bundles/core/org.openhab.core/src/main/java/org/openhab/core/internal/items/ItemRegistryImpl.java
++++ b/bundles/core/org.openhab.core/src/main/java/org/openhab/core/internal/items/ItemRegistryImpl.java
+@@ -194,7 +194,7 @@
+ 			}
+ 		}
+ 
+-		Collection<Item> items = Collections.synchronizedCollection(new HashSet<Item>());
++		Collection<Item> items = Collections.synchronizedCollection(new ArrayList<Item>());
+ 		itemMap.put(provider, items);
+ 
+ 		for(Item item : provider.getItems()) {

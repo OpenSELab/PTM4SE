@@ -1,0 +1,98 @@
+diff --git a/EssentialsAntiBuild/src/com/earth2me/essentials/antibuild/EssentialsAntiBuildListener.java b/EssentialsAntiBuild/src/com/earth2me/essentials/antibuild/EssentialsAntiBuildListener.java
+index a14036c..7e5c604 100644
+--- a/EssentialsAntiBuild/src/com/earth2me/essentials/antibuild/EssentialsAntiBuildListener.java
++++ b/EssentialsAntiBuild/src/com/earth2me/essentials/antibuild/EssentialsAntiBuildListener.java
+@@ -51,7 +51,7 @@
+ 		return user.isAuthorized(blockPerm);
+ 	}
+ 
+-	private boolean metaPermCheck(final User user, final String action, final int blockId, final byte data)
++	private boolean metaPermCheck(final User user, final String action, final int blockId, final short data)
+ 	{
+ 		final String blockPerm = "essentials.build." + action + "." + blockId;
+ 		final String dataPerm = blockPerm + ":" + data;
+@@ -219,7 +219,7 @@
+ 
+ 		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+ 		{
+-			if (event.hasItem() && !metaPermCheck(user, "interact", item.getTypeId(), item.getData().getData()))
++			if (event.hasItem() && !metaPermCheck(user, "interact", item.getTypeId(), item.getDurability()))
+ 			{
+ 				event.setCancelled(true);
+ 				if (ess.getSettings().warnOnBuildDisallow())
+@@ -251,7 +251,7 @@
+ 
+ 			if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+ 			{
+-				if (!metaPermCheck(user, "craft", item.getTypeId(), item.getData().getData()))
++				if (!metaPermCheck(user, "craft", item.getTypeId(), item.getDurability()))
+ 				{
+ 					event.setCancelled(true);
+ 					if (ess.getSettings().warnOnBuildDisallow())
+@@ -272,7 +272,7 @@
+ 
+ 		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+ 		{
+-			if (!metaPermCheck(user, "pickup", item.getTypeId(), item.getData().getData()))
++			if (!metaPermCheck(user, "pickup", item.getTypeId(), item.getDurability()))
+ 			{
+ 				event.setCancelled(true);
+ 				event.getItem().setPickupDelay(50);
+@@ -289,7 +289,7 @@
+ 
+ 		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+ 		{
+-			if (!metaPermCheck(user, "drop", item.getTypeId(), item.getData().getData()))
++			if (!metaPermCheck(user, "drop", item.getTypeId(), item.getDurability()))
+ 			{
+ 				event.setCancelled(true);
+ 				user.updateInventory();
+diff --git a/EssentialsAntiBuild/src/com/earth2me/essentials/antibuild/EssentialsAntiBuildListener.java b/EssentialsAntiBuild/src/com/earth2me/essentials/antibuild/EssentialsAntiBuildListener.java
+index a14036c..7e5c604 100644
+--- a/EssentialsAntiBuild/src/com/earth2me/essentials/antibuild/EssentialsAntiBuildListener.java
++++ b/EssentialsAntiBuild/src/com/earth2me/essentials/antibuild/EssentialsAntiBuildListener.java
+@@ -51,7 +51,7 @@
+ 		return user.isAuthorized(blockPerm);
+ 	}
+ 
+-	private boolean metaPermCheck(final User user, final String action, final int blockId, final byte data)
++	private boolean metaPermCheck(final User user, final String action, final int blockId, final short data)
+ 	{
+ 		final String blockPerm = "essentials.build." + action + "." + blockId;
+ 		final String dataPerm = blockPerm + ":" + data;
+@@ -219,7 +219,7 @@
+ 
+ 		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+ 		{
+-			if (event.hasItem() && !metaPermCheck(user, "interact", item.getTypeId(), item.getData().getData()))
++			if (event.hasItem() && !metaPermCheck(user, "interact", item.getTypeId(), item.getDurability()))
+ 			{
+ 				event.setCancelled(true);
+ 				if (ess.getSettings().warnOnBuildDisallow())
+@@ -251,7 +251,7 @@
+ 
+ 			if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+ 			{
+-				if (!metaPermCheck(user, "craft", item.getTypeId(), item.getData().getData()))
++				if (!metaPermCheck(user, "craft", item.getTypeId(), item.getDurability()))
+ 				{
+ 					event.setCancelled(true);
+ 					if (ess.getSettings().warnOnBuildDisallow())
+@@ -272,7 +272,7 @@
+ 
+ 		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+ 		{
+-			if (!metaPermCheck(user, "pickup", item.getTypeId(), item.getData().getData()))
++			if (!metaPermCheck(user, "pickup", item.getTypeId(), item.getDurability()))
+ 			{
+ 				event.setCancelled(true);
+ 				event.getItem().setPickupDelay(50);
+@@ -289,7 +289,7 @@
+ 
+ 		if (prot.getSettingBool(AntiBuildConfig.disable_use) && !user.canBuild() && !user.isAuthorized("essentials.build"))
+ 		{
+-			if (!metaPermCheck(user, "drop", item.getTypeId(), item.getData().getData()))
++			if (!metaPermCheck(user, "drop", item.getTypeId(), item.getDurability()))
+ 			{
+ 				event.setCancelled(true);
+ 				user.updateInventory();

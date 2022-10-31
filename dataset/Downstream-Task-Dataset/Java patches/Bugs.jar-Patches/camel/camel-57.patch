@@ -1,0 +1,14 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/aggregate/AggregateProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/aggregate/AggregateProcessor.java
+index a5c592b..00cb744 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/aggregate/AggregateProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/aggregate/AggregateProcessor.java
+@@ -313,6 +313,9 @@ public class AggregateProcessor extends ServiceSupport implements Processor, Nav
+                 int size = exchange.getProperty(Exchange.AGGREGATED_SIZE, 1, Integer.class);
+                 if (size >= value) {
+                     return "size";
++                } else {
++                    // not completed yet
++                    return null;
+                 }
+             }
+         }

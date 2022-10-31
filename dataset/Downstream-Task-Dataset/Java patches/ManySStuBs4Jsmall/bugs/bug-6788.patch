@@ -1,0 +1,26 @@
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+index 197d214..98d2b00 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+@@ -1074,7 +1074,7 @@
+ 				int shift = 7;
+ 				int curr;
+ 				numFields = numFields & 0x7f;
+-				while ((curr = data[pos--]) >= MAX_BIT) {
++				while ((curr = data[pos--] & 0xff) >= MAX_BIT) {
+ 					numFields |= (curr & 0x7f) << shift;
+ 					shift += 7;
+ 				}
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+index 197d214..98d2b00 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/common/type/PactRecord.java
+@@ -1074,7 +1074,7 @@
+ 				int shift = 7;
+ 				int curr;
+ 				numFields = numFields & 0x7f;
+-				while ((curr = data[pos--]) >= MAX_BIT) {
++				while ((curr = data[pos--] & 0xff) >= MAX_BIT) {
+ 					numFields |= (curr & 0x7f) << shift;
+ 					shift += 7;
+ 				}

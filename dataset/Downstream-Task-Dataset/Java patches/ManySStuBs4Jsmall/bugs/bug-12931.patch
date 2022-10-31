@@ -1,0 +1,52 @@
+diff --git a/presto-main/src/test/java/com/facebook/presto/type/TestRowOperators.java b/presto-main/src/test/java/com/facebook/presto/type/TestRowOperators.java
+index 5161d6c..cd3caaf 100644
+--- a/presto-main/src/test/java/com/facebook/presto/type/TestRowOperators.java
++++ b/presto-main/src/test/java/com/facebook/presto/type/TestRowOperators.java
+@@ -183,7 +183,7 @@
+             fail("hyperloglog is not comparable");
+         }
+         catch (SemanticException e) {
+-            if (!e.getMessage().matches("\\Qline 1:81: '=' cannot be applied to row(COL0 HyperLogLog), row(COL0 HyperLogLog)\\E")) {
++            if (!e.getMessage().matches("\\Qline 1:81: '=' cannot be applied to row(col0 HyperLogLog), row(col0 HyperLogLog)\\E")) {
+                 throw e;
+             }
+             //Expected
+diff --git a/presto-parser/src/main/java/com/facebook/presto/sql/tree/Cast.java b/presto-parser/src/main/java/com/facebook/presto/sql/tree/Cast.java
+index 4a2a21e..b3fcac2 100644
+--- a/presto-parser/src/main/java/com/facebook/presto/sql/tree/Cast.java
++++ b/presto-parser/src/main/java/com/facebook/presto/sql/tree/Cast.java
+@@ -64,7 +64,7 @@
+         requireNonNull(type, "type is null");
+ 
+         this.expression = expression;
+-        this.type = type.toUpperCase(ENGLISH);
++        this.type = type.toLowerCase(ENGLISH);
+         this.safe = safe;
+         this.typeOnly = typeOnly;
+     }
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+index c82c8f9..a876e59 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+@@ -6772,7 +6772,7 @@
+     @Test
+     public void testInvalidType()
+     {
+-        assertQueryFails("SELECT CAST(null AS array(foo))", "\\Qline 1:8: Unknown type: ARRAY(FOO)\\E");
++        assertQueryFails("SELECT CAST(null AS array(foo))", "\\Qline 1:8: Unknown type: array(foo)\\E");
+     }
+ 
+     @Test
+diff --git a/presto-main/src/test/java/com/facebook/presto/type/TestRowOperators.java b/presto-main/src/test/java/com/facebook/presto/type/TestRowOperators.java
+index 5161d6c..cd3caaf 100644
+--- a/presto-main/src/test/java/com/facebook/presto/type/TestRowOperators.java
++++ b/presto-main/src/test/java/com/facebook/presto/type/TestRowOperators.java
+@@ -183,7 +183,7 @@
+             fail("hyperloglog is not comparable");
+         }
+         catch (SemanticException e) {
+-            if (!e.getMessage().matches("\\Qline 1:81: '=' cannot be applied to row(COL0 HyperLogLog), row(COL0 HyperLogLog)\\E")) {
++            if (!e.getMessage().matches("\\Qline 1:81: '=' cannot be applied to row(col0 HyperLogLog), row(col0 HyperLogLog)\\E")) {
+                 throw e;
+             }
+             //Expected

@@ -1,0 +1,109 @@
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestHashAggregationOperator.java b/presto-main/src/test/java/com/facebook/presto/operator/TestHashAggregationOperator.java
+index 82248b5..d03ae1a 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestHashAggregationOperator.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestHashAggregationOperator.java
+@@ -302,7 +302,7 @@
+         assertEquals(operator.getOperatorContext().getOperatorStats().getUserMemoryReservation().toBytes(), 0);
+     }
+ 
+-    @Test(dataProvider = "hashEnabled", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of 10B")
++    @Test(dataProvider = "hashEnabled", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of 10B")
+     public void testMemoryLimit(boolean hashEnabled)
+     {
+         MetadataManager metadata = MetadataManager.createTestMetadataManager();
+@@ -416,7 +416,7 @@
+         assertEquals(count, 6_000 * 600);
+     }
+ 
+-    @Test(dataProvider = "hashEnabled", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of 3MB")
++    @Test(dataProvider = "hashEnabled", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of 3MB")
+     public void testHashBuilderResizeLimit(boolean hashEnabled)
+     {
+         BlockBuilder builder = VARCHAR.createBlockBuilder(null, 1, MAX_BLOCK_SIZE_IN_BYTES);
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestHashJoinOperator.java b/presto-main/src/test/java/com/facebook/presto/operator/TestHashJoinOperator.java
+index d542d9f..935d66d 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestHashJoinOperator.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestHashJoinOperator.java
+@@ -947,7 +947,7 @@
+         assertOperatorEquals(joinOperatorFactory, taskContext.addPipelineContext(0, true, true).addDriverContext(), probeInput, expected, true, getHashChannels(probePages, buildPages));
+     }
+ 
+-    @Test(expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of.*", dataProvider = "testMemoryLimitProvider")
++    @Test(expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of.*", dataProvider = "testMemoryLimitProvider")
+     public void testMemoryLimit(boolean parallelBuild, boolean buildHashEnabled)
+     {
+         TaskContext taskContext = TestingTaskContext.createTaskContext(executor, scheduledExecutor, TEST_SESSION, new DataSize(100, BYTE));
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestHashSemiJoinOperator.java b/presto-main/src/test/java/com/facebook/presto/operator/TestHashSemiJoinOperator.java
+index 5f4360a..28f8e44 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestHashSemiJoinOperator.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestHashSemiJoinOperator.java
+@@ -349,7 +349,7 @@
+         OperatorAssertion.assertOperatorEquals(joinOperatorFactory, driverContext, probeInput, expected, hashEnabled, ImmutableList.of(probeTypes.size()));
+     }
+ 
+-    @Test(dataProvider = "hashEnabledValues", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of.*")
++    @Test(dataProvider = "hashEnabledValues", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of.*")
+     public void testMemoryLimit(boolean hashEnabled)
+     {
+         DriverContext driverContext = createTaskContext(executor, scheduledExecutor, TEST_SESSION, new DataSize(100, BYTE))
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestOrderByOperator.java b/presto-main/src/test/java/com/facebook/presto/operator/TestOrderByOperator.java
+index bb02973..6a92a78 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestOrderByOperator.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestOrderByOperator.java
+@@ -161,7 +161,7 @@
+         assertOperatorEquals(operatorFactory, driverContext, input, expected);
+     }
+ 
+-    @Test(expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of 10B")
++    @Test(expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of 10B")
+     public void testMemoryLimit()
+     {
+         List<Page> input = rowPagesBuilder(BIGINT, DOUBLE)
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestWindowOperator.java b/presto-main/src/test/java/com/facebook/presto/operator/TestWindowOperator.java
+index 6e185c4..5917582 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestWindowOperator.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestWindowOperator.java
+@@ -204,7 +204,7 @@
+         assertOperatorEquals(operatorFactory, driverContext, input, expected);
+     }
+ 
+-    @Test(expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of 10B")
++    @Test(expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of 10B")
+     public void testMemoryLimit()
+     {
+         List<Page> input = rowPagesBuilder(BIGINT, DOUBLE)
+diff --git a/presto-tests/src/test/java/com/facebook/presto/memory/TestMemoryManager.java b/presto-tests/src/test/java/com/facebook/presto/memory/TestMemoryManager.java
+index fc17f7b..935a26b 100644
+--- a/presto-tests/src/test/java/com/facebook/presto/memory/TestMemoryManager.java
++++ b/presto-tests/src/test/java/com/facebook/presto/memory/TestMemoryManager.java
+@@ -334,7 +334,7 @@
+         }
+     }
+ 
+-    @Test(timeOut = 60_000, expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = ".*Query exceeded local user memory limit of 1kB.*")
++    @Test(timeOut = 60_000, expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = ".*Query exceeded per-node user memory limit of 1kB.*")
+     public void testQueryMemoryPerNodeLimit()
+             throws Exception
+     {
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestHashAggregationOperator.java b/presto-main/src/test/java/com/facebook/presto/operator/TestHashAggregationOperator.java
+index 82248b5..d03ae1a 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestHashAggregationOperator.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestHashAggregationOperator.java
+@@ -302,7 +302,7 @@
+         assertEquals(operator.getOperatorContext().getOperatorStats().getUserMemoryReservation().toBytes(), 0);
+     }
+ 
+-    @Test(dataProvider = "hashEnabled", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of 10B")
++    @Test(dataProvider = "hashEnabled", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of 10B")
+     public void testMemoryLimit(boolean hashEnabled)
+     {
+         MetadataManager metadata = MetadataManager.createTestMetadataManager();
+@@ -416,7 +416,7 @@
+         assertEquals(count, 6_000 * 600);
+     }
+ 
+-    @Test(dataProvider = "hashEnabled", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of 3MB")
++    @Test(dataProvider = "hashEnabled", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of 3MB")
+     public void testHashBuilderResizeLimit(boolean hashEnabled)
+     {
+         BlockBuilder builder = VARCHAR.createBlockBuilder(null, 1, MAX_BLOCK_SIZE_IN_BYTES);

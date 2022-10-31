@@ -1,0 +1,26 @@
+diff --git a/guava/src/com/google/common/math/DoubleMath.java b/guava/src/com/google/common/math/DoubleMath.java
+index ded38b2..100b2d2 100644
+--- a/guava/src/com/google/common/math/DoubleMath.java
++++ b/guava/src/com/google/common/math/DoubleMath.java
+@@ -342,7 +342,7 @@
+           Math.copySign(a - b, 1.0) <= tolerance
+            // copySign(x, 1.0) is a branch-free version of abs(x), but with different NaN semantics
+           || (a == b) // needed to ensure that infinities equal themselves
+-          || ((a != a) && (b != b)); // x != x is equivalent to Double.isNaN(x), but faster
++          || (Double.isNaN(a) && Double.isNaN(b));
+   }
+ 
+   /**
+diff --git a/guava/src/com/google/common/math/DoubleMath.java b/guava/src/com/google/common/math/DoubleMath.java
+index ded38b2..100b2d2 100644
+--- a/guava/src/com/google/common/math/DoubleMath.java
++++ b/guava/src/com/google/common/math/DoubleMath.java
+@@ -342,7 +342,7 @@
+           Math.copySign(a - b, 1.0) <= tolerance
+            // copySign(x, 1.0) is a branch-free version of abs(x), but with different NaN semantics
+           || (a == b) // needed to ensure that infinities equal themselves
+-          || ((a != a) && (b != b)); // x != x is equivalent to Double.isNaN(x), but faster
++          || (Double.isNaN(a) && Double.isNaN(b));
+   }
+ 
+   /**

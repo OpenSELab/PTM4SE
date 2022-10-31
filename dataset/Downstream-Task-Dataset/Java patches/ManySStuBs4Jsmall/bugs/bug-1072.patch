@@ -1,0 +1,111 @@
+diff --git a/core/server/src/main/java/alluxio/master/AlluxioMasterRestServiceHandler.java b/core/server/src/main/java/alluxio/master/AlluxioMasterRestServiceHandler.java
+index d5697ac..d526980 100644
+--- a/core/server/src/main/java/alluxio/master/AlluxioMasterRestServiceHandler.java
++++ b/core/server/src/main/java/alluxio/master/AlluxioMasterRestServiceHandler.java
+@@ -121,14 +121,15 @@
+     // spaces, those statistics can be gotten via other REST apis.
+     String filesPinnedProperty = CommonUtils.argsToString(".",
+         MasterContext.getMasterSource().getName(), MasterSource.FILES_PINNED);
+-    Gauge filesPinned = metricRegistry.getGauges().get(filesPinnedProperty);
++    @SuppressWarnings("unchecked")
++    Gauge<Integer> filesPinned = (Gauge<Integer>) metricRegistry.getGauges().get(filesPinnedProperty);
+ 
+     // Get values of the counters and gauges and put them into a metrics map.
+     SortedMap<String, Long> metrics = new TreeMap<>();
+     for (Map.Entry<String, Counter> counter : counters.entrySet()) {
+       metrics.put(counter.getKey(), counter.getValue().getCount());
+     }
+-    metrics.put(filesPinnedProperty, ((Integer) filesPinned.getValue()).longValue());
++    metrics.put(filesPinnedProperty, filesPinned.getValue().longValue());
+ 
+     return Response.ok(metrics).build();
+   }
+diff --git a/core/server/src/main/java/alluxio/web/WebInterfaceAbstractMetricsServlet.java b/core/server/src/main/java/alluxio/web/WebInterfaceAbstractMetricsServlet.java
+index c668d16..f61b1dc 100644
+--- a/core/server/src/main/java/alluxio/web/WebInterfaceAbstractMetricsServlet.java
++++ b/core/server/src/main/java/alluxio/web/WebInterfaceAbstractMetricsServlet.java
+@@ -49,7 +49,7 @@
+ 
+     for (Map.Entry<String, Metric> entry : operations.entrySet()) {
+       if (entry.getValue() instanceof Gauge) {
+-        request.setAttribute(entry.getKey(), ((Gauge) entry.getValue()).getValue());
++        request.setAttribute(entry.getKey(), ((Gauge<?>) entry.getValue()).getValue());
+       } else if (entry.getValue() instanceof Counter) {
+         request.setAttribute(entry.getKey(), ((Counter) entry.getValue()).getCount());
+       }
+diff --git a/core/server/src/main/java/alluxio/worker/AlluxioWorkerRestServiceHandler.java b/core/server/src/main/java/alluxio/worker/AlluxioWorkerRestServiceHandler.java
+index 1b6857b..cb80438 100644
+--- a/core/server/src/main/java/alluxio/worker/AlluxioWorkerRestServiceHandler.java
++++ b/core/server/src/main/java/alluxio/worker/AlluxioWorkerRestServiceHandler.java
+@@ -204,14 +204,15 @@
+     // spaces, those statistics can be gotten via other REST apis.
+     String blocksCachedProperty = CommonUtils.argsToString(".",
+         WorkerContext.getWorkerSource().getName(), WorkerSource.BLOCKS_CACHED);
+-    Gauge blocksCached = metricRegistry.getGauges().get(blocksCachedProperty);
++    @SuppressWarnings("unchecked")
++    Gauge<Integer> blocksCached = (Gauge<Integer>) metricRegistry.getGauges().get(blocksCachedProperty);
+ 
+     // Get values of the counters and gauges and put them into a metrics map.
+     SortedMap<String, Long> metrics = new TreeMap<>();
+     for (Map.Entry<String, Counter> counter : counters.entrySet()) {
+       metrics.put(counter.getKey(), counter.getValue().getCount());
+     }
+-    metrics.put(blocksCachedProperty, ((Integer) blocksCached.getValue()).longValue());
++    metrics.put(blocksCachedProperty, blocksCached.getValue().longValue());
+ 
+     return Response.ok(metrics).build();
+   }
+diff --git a/tests/src/test/java/alluxio/master/AlluxioMasterRestApiTest.java b/tests/src/test/java/alluxio/master/AlluxioMasterRestApiTest.java
+index a0cf40e..9ee21bc 100644
+--- a/tests/src/test/java/alluxio/master/AlluxioMasterRestApiTest.java
++++ b/tests/src/test/java/alluxio/master/AlluxioMasterRestApiTest.java
+@@ -218,9 +218,9 @@
+     Mockito.doReturn(counters).when(metricRegistry).getCounters();
+ 
+     // Mock gauges.
+-    Gauge filesPinnedGauge = PowerMockito.mock(Gauge.class);
++    Gauge<?> filesPinnedGauge = PowerMockito.mock(Gauge.class);
+     Mockito.doReturn(filesPinned).when(filesPinnedGauge).getValue();
+-    SortedMap<String, Gauge> gauges = Maps.newTreeMap();
++    SortedMap<String, Gauge<?>> gauges = Maps.newTreeMap();
+     gauges.put(filesPinnedProperty, filesPinnedGauge);
+     Mockito.doReturn(gauges).when(metricRegistry).getGauges();
+ 
+diff --git a/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java b/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
+index 4f68a71..154396d 100644
+--- a/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
++++ b/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
+@@ -137,9 +137,9 @@
+     Mockito.doReturn(counters).when(metricRegistry).getCounters();
+ 
+     // Mock gauges.
+-    Gauge blocksCachedGauge = PowerMockito.mock(Gauge.class);
++    Gauge<?> blocksCachedGauge = PowerMockito.mock(Gauge.class);
+     Mockito.doReturn(blocksCached).when(blocksCachedGauge).getValue();
+-    SortedMap<String, Gauge> gauges = Maps.newTreeMap();
++    SortedMap<String, Gauge<?>> gauges = Maps.newTreeMap();
+     gauges.put(blocksCachedProperty, blocksCachedGauge);
+     Mockito.doReturn(gauges).when(metricRegistry).getGauges();
+ 
+diff --git a/core/server/src/main/java/alluxio/master/AlluxioMasterRestServiceHandler.java b/core/server/src/main/java/alluxio/master/AlluxioMasterRestServiceHandler.java
+index d5697ac..d526980 100644
+--- a/core/server/src/main/java/alluxio/master/AlluxioMasterRestServiceHandler.java
++++ b/core/server/src/main/java/alluxio/master/AlluxioMasterRestServiceHandler.java
+@@ -121,14 +121,15 @@
+     // spaces, those statistics can be gotten via other REST apis.
+     String filesPinnedProperty = CommonUtils.argsToString(".",
+         MasterContext.getMasterSource().getName(), MasterSource.FILES_PINNED);
+-    Gauge filesPinned = metricRegistry.getGauges().get(filesPinnedProperty);
++    @SuppressWarnings("unchecked")
++    Gauge<Integer> filesPinned = (Gauge<Integer>) metricRegistry.getGauges().get(filesPinnedProperty);
+ 
+     // Get values of the counters and gauges and put them into a metrics map.
+     SortedMap<String, Long> metrics = new TreeMap<>();
+     for (Map.Entry<String, Counter> counter : counters.entrySet()) {
+       metrics.put(counter.getKey(), counter.getValue().getCount());
+     }
+-    metrics.put(filesPinnedProperty, ((Integer) filesPinned.getValue()).longValue());
++    metrics.put(filesPinnedProperty, filesPinned.getValue().longValue());
+ 
+     return Response.ok(metrics).build();
+   }

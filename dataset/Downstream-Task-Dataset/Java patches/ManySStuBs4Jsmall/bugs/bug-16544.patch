@@ -1,0 +1,65 @@
+diff --git a/src/main/java/org/junit/internal/matchers/ThrowableCauseMatcher.java b/src/main/java/org/junit/internal/matchers/ThrowableCauseMatcher.java
+index 6b99004..a8d9cef 100644
+--- a/src/main/java/org/junit/internal/matchers/ThrowableCauseMatcher.java
++++ b/src/main/java/org/junit/internal/matchers/ThrowableCauseMatcher.java
+@@ -16,9 +16,9 @@
+ public class ThrowableCauseMatcher<T extends Throwable> extends
+         TypeSafeMatcher<T> {
+ 
+-    private final Matcher<? extends Throwable> causeMatcher;
++    private final Matcher<?> causeMatcher;
+ 
+-    public ThrowableCauseMatcher(Matcher<? extends Throwable> causeMatcher) {
++    public ThrowableCauseMatcher(Matcher<?> causeMatcher) {
+         this.causeMatcher = causeMatcher;
+     }
+ 
+@@ -46,7 +46,7 @@
+      * @param <T> type of the outer exception
+      */
+     @Factory
+-    public static <T extends Throwable> Matcher<T> hasCause(final Matcher<? extends Throwable> matcher) {
++    public static <T extends Throwable> Matcher<T> hasCause(final Matcher<?> matcher) {
+         return new ThrowableCauseMatcher<T>(matcher);
+     }
+ }
+\ No newline at end of file
+diff --git a/src/main/java/org/junit/rules/ExpectedException.java b/src/main/java/org/junit/rules/ExpectedException.java
+index dd482cf..0f1cb82 100644
+--- a/src/main/java/org/junit/rules/ExpectedException.java
++++ b/src/main/java/org/junit/rules/ExpectedException.java
+@@ -240,7 +240,7 @@
+      * @deprecated use {@code org.hamcrest.junit.ExpectedException.expectCause()}
+      */
+     @Deprecated
+-    public ExpectedException expectCause(Matcher<? extends Throwable> expectedCause) {
++    public ExpectedException expectCause(Matcher<?> expectedCause) {
+         expect(hasCause(expectedCause));
+         return this;
+     }
+diff --git a/src/main/java/org/junit/internal/matchers/ThrowableCauseMatcher.java b/src/main/java/org/junit/internal/matchers/ThrowableCauseMatcher.java
+index 6b99004..a8d9cef 100644
+--- a/src/main/java/org/junit/internal/matchers/ThrowableCauseMatcher.java
++++ b/src/main/java/org/junit/internal/matchers/ThrowableCauseMatcher.java
+@@ -16,9 +16,9 @@
+ public class ThrowableCauseMatcher<T extends Throwable> extends
+         TypeSafeMatcher<T> {
+ 
+-    private final Matcher<? extends Throwable> causeMatcher;
++    private final Matcher<?> causeMatcher;
+ 
+-    public ThrowableCauseMatcher(Matcher<? extends Throwable> causeMatcher) {
++    public ThrowableCauseMatcher(Matcher<?> causeMatcher) {
+         this.causeMatcher = causeMatcher;
+     }
+ 
+@@ -46,7 +46,7 @@
+      * @param <T> type of the outer exception
+      */
+     @Factory
+-    public static <T extends Throwable> Matcher<T> hasCause(final Matcher<? extends Throwable> matcher) {
++    public static <T extends Throwable> Matcher<T> hasCause(final Matcher<?> matcher) {
+         return new ThrowableCauseMatcher<T>(matcher);
+     }
+ }
+\ No newline at end of file

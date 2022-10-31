@@ -1,0 +1,44 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/spi/CamelContextTracker.java b/camel-core/src/main/java/org/apache/camel/spi/CamelContextTracker.java
+index 0ca540c..87e3dd7 100644
+--- a/camel-core/src/main/java/org/apache/camel/spi/CamelContextTracker.java
++++ b/camel-core/src/main/java/org/apache/camel/spi/CamelContextTracker.java
+@@ -37,7 +37,7 @@
+     public CamelContextTracker() {
+         filter = new Filter() {
+             public boolean accept(CamelContext camelContext) {
+-                return camelContext.getClass().getName().contains("Proxy") == false;
++                return !camelContext.getClass().getName().contains("Proxy");
+             }
+         };
+     }
+@@ -50,7 +50,7 @@
+      * Called to determine whether this tracker should accept the given context.
+      */
+     public boolean accept(CamelContext camelContext) {
+-        return filter != null ? filter.accept(camelContext) : true;
++        return filter == null || filter.accept(camelContext);
+     }
+ 
+     /**
+diff --git a/camel-core/src/main/java/org/apache/camel/spi/CamelContextTracker.java b/camel-core/src/main/java/org/apache/camel/spi/CamelContextTracker.java
+index 0ca540c..87e3dd7 100644
+--- a/camel-core/src/main/java/org/apache/camel/spi/CamelContextTracker.java
++++ b/camel-core/src/main/java/org/apache/camel/spi/CamelContextTracker.java
+@@ -37,7 +37,7 @@
+     public CamelContextTracker() {
+         filter = new Filter() {
+             public boolean accept(CamelContext camelContext) {
+-                return camelContext.getClass().getName().contains("Proxy") == false;
++                return !camelContext.getClass().getName().contains("Proxy");
+             }
+         };
+     }
+@@ -50,7 +50,7 @@
+      * Called to determine whether this tracker should accept the given context.
+      */
+     public boolean accept(CamelContext camelContext) {
+-        return filter != null ? filter.accept(camelContext) : true;
++        return filter == null || filter.accept(camelContext);
+     }
+ 
+     /**

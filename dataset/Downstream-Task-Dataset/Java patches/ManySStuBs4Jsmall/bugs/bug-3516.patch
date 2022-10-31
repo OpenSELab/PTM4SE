@@ -1,0 +1,26 @@
+diff --git a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/filter/GenericFilter.java b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/filter/GenericFilter.java
+index 0ee986a..efd3241 100644
+--- a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/filter/GenericFilter.java
++++ b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/filter/GenericFilter.java
+@@ -52,7 +52,7 @@
+         if (inv.getMethodName().equals(Constants.$INVOKE) 
+                 && inv.getArguments() != null
+                 && inv.getArguments().length == 3
+-                && ! invoker.getUrl().getParameter(Constants.GENERIC_KEY, false)) {
++                && ! ProtocolUtils.isGeneric(invoker.getUrl().getParameter(Constants.GENERIC_KEY))) {
+             String name = ((String) inv.getArguments()[0]).trim();
+             String[] types = (String[]) inv.getArguments()[1];
+             Object[] args = (Object[]) inv.getArguments()[2];
+diff --git a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/filter/GenericFilter.java b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/filter/GenericFilter.java
+index 0ee986a..efd3241 100644
+--- a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/filter/GenericFilter.java
++++ b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/filter/GenericFilter.java
+@@ -52,7 +52,7 @@
+         if (inv.getMethodName().equals(Constants.$INVOKE) 
+                 && inv.getArguments() != null
+                 && inv.getArguments().length == 3
+-                && ! invoker.getUrl().getParameter(Constants.GENERIC_KEY, false)) {
++                && ! ProtocolUtils.isGeneric(invoker.getUrl().getParameter(Constants.GENERIC_KEY))) {
+             String name = ((String) inv.getArguments()[0]).trim();
+             String[] types = (String[]) inv.getArguments()[1];
+             Object[] args = (Object[]) inv.getArguments()[2];

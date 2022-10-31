@@ -1,0 +1,26 @@
+diff --git a/hbase-client/src/main/java/org/apache/hadoop/hbase/client/HBaseAdmin.java b/hbase-client/src/main/java/org/apache/hadoop/hbase/client/HBaseAdmin.java
+index 56fb736..30bb222 100644
+--- a/hbase-client/src/main/java/org/apache/hadoop/hbase/client/HBaseAdmin.java
++++ b/hbase-client/src/main/java/org/apache/hadoop/hbase/client/HBaseAdmin.java
+@@ -2880,7 +2880,7 @@
+   public void cloneSnapshot(final String snapshotName, final TableName tableName)
+       throws IOException, TableExistsException, RestoreSnapshotException, InterruptedException {
+     if (tableExists(tableName)) {
+-      throw new TableExistsException("Table '" + tableName + " already exists");
++      throw new TableExistsException(tableName);
+     }
+     internalRestoreSnapshot(snapshotName, tableName);
+     waitUntilTableIsEnabled(tableName);
+diff --git a/hbase-client/src/main/java/org/apache/hadoop/hbase/client/HBaseAdmin.java b/hbase-client/src/main/java/org/apache/hadoop/hbase/client/HBaseAdmin.java
+index 56fb736..30bb222 100644
+--- a/hbase-client/src/main/java/org/apache/hadoop/hbase/client/HBaseAdmin.java
++++ b/hbase-client/src/main/java/org/apache/hadoop/hbase/client/HBaseAdmin.java
+@@ -2880,7 +2880,7 @@
+   public void cloneSnapshot(final String snapshotName, final TableName tableName)
+       throws IOException, TableExistsException, RestoreSnapshotException, InterruptedException {
+     if (tableExists(tableName)) {
+-      throw new TableExistsException("Table '" + tableName + " already exists");
++      throw new TableExistsException(tableName);
+     }
+     internalRestoreSnapshot(snapshotName, tableName);
+     waitUntilTableIsEnabled(tableName);

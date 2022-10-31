@@ -1,0 +1,39 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
+index 88eb625..035ddf7 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
+@@ -121,7 +121,7 @@
+             throws ClassNotFoundException {
+         Class<?> clazz = null;
+         if (!currentClass.isEmpty()) {
+-            final String innerClass = (!pkg.isEmpty() ? pkg + "." : "")
++            final String innerClass = (pkg.isEmpty() ? "" : pkg + ".")
+                 + currentClass + "$" + name;
+             if (isLoadable(innerClass)) {
+                 clazz = safeLoad(innerClass);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
+index 4dfe6e3..667d081 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
+@@ -134,7 +134,7 @@
+         final int underscoreIdx = filePath.indexOf(basenameSeparator,
+             baseNameStart);
+         final int dotIdx = filePath.indexOf('.', baseNameStart);
+-        final int cutoffIdx = underscoreIdx != -1 ? underscoreIdx : dotIdx;
++        final int cutoffIdx = underscoreIdx == -1 ? dotIdx : underscoreIdx;
+         return filePath.substring(0, cutoffIdx);
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
+index 88eb625..035ddf7 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/ClassResolver.java
+@@ -121,7 +121,7 @@
+             throws ClassNotFoundException {
+         Class<?> clazz = null;
+         if (!currentClass.isEmpty()) {
+-            final String innerClass = (!pkg.isEmpty() ? pkg + "." : "")
++            final String innerClass = (pkg.isEmpty() ? "" : pkg + ".")
+                 + currentClass + "$" + name;
+             if (isLoadable(innerClass)) {
+                 clazz = safeLoad(innerClass);

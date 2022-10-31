@@ -1,0 +1,38 @@
+diff --git a/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/grape/AetherGrapeEngine.java b/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/grape/AetherGrapeEngine.java
+index 263910b..96441a2 100644
+--- a/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/grape/AetherGrapeEngine.java
++++ b/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/grape/AetherGrapeEngine.java
+@@ -268,7 +268,7 @@
+ 			builder.setProxy(this.proxySelector.getProxy(repository));
+ 			repository = builder.build();
+ 		}
+-		this.repositories.add(repository);
++		this.repositories.add(0, repository);
+ 	}
+ 
+ 	@Override
+diff --git a/spring-boot-cli/src/test/java/org/springframework/boot/cli/GrabCommandIntegrationTests.java b/spring-boot-cli/src/test/java/org/springframework/boot/cli/GrabCommandIntegrationTests.java
+index 680fc5c..408f719 100644
+--- a/spring-boot-cli/src/test/java/org/springframework/boot/cli/GrabCommandIntegrationTests.java
++++ b/spring-boot-cli/src/test/java/org/springframework/boot/cli/GrabCommandIntegrationTests.java
+@@ -56,6 +56,7 @@
+ 		String output = this.cli.grab("grab.groovy", "--autoconfigure=false");
+ 		assertTrue(new File("target/repository/net/sf/jopt-simple/jopt-simple")
+ 				.isDirectory());
++		// Should be resolved from local repository cache
+ 		assertTrue(output.contains("Downloading: file:"));
+ 	}
+ }
+diff --git a/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/grape/AetherGrapeEngine.java b/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/grape/AetherGrapeEngine.java
+index 263910b..96441a2 100644
+--- a/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/grape/AetherGrapeEngine.java
++++ b/spring-boot-cli/src/main/java/org/springframework/boot/cli/compiler/grape/AetherGrapeEngine.java
+@@ -268,7 +268,7 @@
+ 			builder.setProxy(this.proxySelector.getProxy(repository));
+ 			repository = builder.build();
+ 		}
+-		this.repositories.add(repository);
++		this.repositories.add(0, repository);
+ 	}
+ 
+ 	@Override

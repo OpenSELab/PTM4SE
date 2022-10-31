@@ -1,0 +1,26 @@
+diff --git a/hazelcast-monitor/src/main/java/com/hazelcast/monitor/server/InstanceChartGenerator.java b/hazelcast-monitor/src/main/java/com/hazelcast/monitor/server/InstanceChartGenerator.java
+index 8f5e089..925c23e 100644
+--- a/hazelcast-monitor/src/main/java/com/hazelcast/monitor/server/InstanceChartGenerator.java
++++ b/hazelcast-monitor/src/main/java/com/hazelcast/monitor/server/InstanceChartGenerator.java
+@@ -91,7 +91,7 @@
+         TimeSeries ts = new TimeSeries("operations per second");
+         for (int i = 0; i < list.size(); i++) {
+             InstanceStatistics instanceStatistics = (InstanceStatistics) list.get(i);
+-            ts.addOrUpdate(new Second(instanceStatistics.getCreatedDate()), instanceStatistics.getTotalOPS() / 1000);
++            ts.addOrUpdate(new Second(instanceStatistics.getCreatedDate()), (double)instanceStatistics.getTotalOPS() / 1000);
+         }
+         TimeSeriesCollection timeDataset = new TimeSeriesCollection();
+         timeDataset.addSeries(ts);
+diff --git a/hazelcast-monitor/src/main/java/com/hazelcast/monitor/server/InstanceChartGenerator.java b/hazelcast-monitor/src/main/java/com/hazelcast/monitor/server/InstanceChartGenerator.java
+index 8f5e089..925c23e 100644
+--- a/hazelcast-monitor/src/main/java/com/hazelcast/monitor/server/InstanceChartGenerator.java
++++ b/hazelcast-monitor/src/main/java/com/hazelcast/monitor/server/InstanceChartGenerator.java
+@@ -91,7 +91,7 @@
+         TimeSeries ts = new TimeSeries("operations per second");
+         for (int i = 0; i < list.size(); i++) {
+             InstanceStatistics instanceStatistics = (InstanceStatistics) list.get(i);
+-            ts.addOrUpdate(new Second(instanceStatistics.getCreatedDate()), instanceStatistics.getTotalOPS() / 1000);
++            ts.addOrUpdate(new Second(instanceStatistics.getCreatedDate()), (double)instanceStatistics.getTotalOPS() / 1000);
+         }
+         TimeSeriesCollection timeDataset = new TimeSeriesCollection();
+         timeDataset.addSeries(ts);

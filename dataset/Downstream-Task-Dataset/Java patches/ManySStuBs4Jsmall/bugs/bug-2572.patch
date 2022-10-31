@@ -1,0 +1,66 @@
+diff --git a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/Lookup.java b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/Lookup.java
+index 47fb01b..1064483 100644
+--- a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/Lookup.java
++++ b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/Lookup.java
+@@ -35,7 +35,7 @@
+                 .description("The key to lookup in the table")
+                 .build();
+         defaultParam = object("default")
+-                .description("The default that should be used if there is no lookup result")
++                .description("The default multi value that should be used if there is no lookup result")
+                 .optional()
+                 .build();
+     }
+@@ -62,7 +62,7 @@
+         //noinspection unchecked
+         return FunctionDescriptor.<Map<Object, Object>>builder()
+                 .name(NAME)
+-                .description("Looks a value up in the named lookup table.")
++                .description("Looks up a multi value in the named lookup table.")
+                 .params(lookupTableParam, keyParam, defaultParam)
+                 .returnType((Class<? extends Map<Object, Object>>) new TypeLiteral<Map<Object, Object>>() {}.getRawType())
+                 .build();
+diff --git a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/LookupValue.java b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/LookupValue.java
+index 659cadd..32ec9ee 100644
+--- a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/LookupValue.java
++++ b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/LookupValue.java
+@@ -30,7 +30,7 @@
+                 .description("The key to lookup in the table")
+                 .build();
+         defaultParam = object("default")
+-                .description("The default that should be used if there is no lookup result")
++                .description("The default single value that should be used if there is no lookup result")
+                 .optional()
+                 .build();
+     }
+@@ -57,7 +57,7 @@
+         //noinspection unchecked
+         return FunctionDescriptor.builder()
+                 .name(NAME)
+-                .description("Looks a value up in the named lookup table.")
++                .description("Looks up a single value in the named lookup table.")
+                 .params(lookupTableParam, keyParam, defaultParam)
+                 .returnType(Object.class)
+                 .build();
+diff --git a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/Lookup.java b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/Lookup.java
+index 47fb01b..1064483 100644
+--- a/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/Lookup.java
++++ b/plugin/src/main/java/org/graylog/plugins/pipelineprocessor/functions/lookup/Lookup.java
+@@ -35,7 +35,7 @@
+                 .description("The key to lookup in the table")
+                 .build();
+         defaultParam = object("default")
+-                .description("The default that should be used if there is no lookup result")
++                .description("The default multi value that should be used if there is no lookup result")
+                 .optional()
+                 .build();
+     }
+@@ -62,7 +62,7 @@
+         //noinspection unchecked
+         return FunctionDescriptor.<Map<Object, Object>>builder()
+                 .name(NAME)
+-                .description("Looks a value up in the named lookup table.")
++                .description("Looks up a multi value in the named lookup table.")
+                 .params(lookupTableParam, keyParam, defaultParam)
+                 .returnType((Class<? extends Map<Object, Object>>) new TypeLiteral<Map<Object, Object>>() {}.getRawType())
+                 .build();

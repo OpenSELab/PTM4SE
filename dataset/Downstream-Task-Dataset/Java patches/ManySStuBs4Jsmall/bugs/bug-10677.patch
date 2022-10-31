@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
+index 20f4ee3..342eebc 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
+@@ -199,7 +199,7 @@
+ 
+         INDArray centers = params.get(CenterLossParamInitializer.CENTER_KEY);
+         INDArray centersForExamples = labels.mmul(centers);
+-        INDArray diff = centersForExamples.sub(input).muli(1-alpha);
++        INDArray diff = centersForExamples.sub(input).muli(alpha);
+         INDArray numerator = labels.transpose().mmul(diff);
+         INDArray denominator = labels.sum(0).addi(1.0).transpose();
+         INDArray deltaC = numerator.diviColumnVector(denominator);
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
+index 20f4ee3..342eebc 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
+@@ -199,7 +199,7 @@
+ 
+         INDArray centers = params.get(CenterLossParamInitializer.CENTER_KEY);
+         INDArray centersForExamples = labels.mmul(centers);
+-        INDArray diff = centersForExamples.sub(input).muli(1-alpha);
++        INDArray diff = centersForExamples.sub(input).muli(alpha);
+         INDArray numerator = labels.transpose().mmul(diff);
+         INDArray denominator = labels.sum(0).addi(1.0).transpose();
+         INDArray deltaC = numerator.diviColumnVector(denominator);

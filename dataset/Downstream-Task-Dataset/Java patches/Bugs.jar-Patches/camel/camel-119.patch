@@ -1,0 +1,15 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/idempotent/IdempotentConsumer.java b/camel-core/src/main/java/org/apache/camel/processor/idempotent/IdempotentConsumer.java
+index 100a660..d3afe7a 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/idempotent/IdempotentConsumer.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/idempotent/IdempotentConsumer.java
+@@ -80,7 +80,9 @@ public class IdempotentConsumer extends ServiceSupport implements AsyncProcessor
+     public boolean process(Exchange exchange, AsyncCallback callback) {
+         final String messageId = messageIdExpression.evaluate(exchange, String.class);
+         if (messageId == null) {
+-            throw new NoMessageIdException(exchange, messageIdExpression);
++            exchange.setException(new NoMessageIdException(exchange, messageIdExpression));
++            callback.done(true);
++            return true;
+         }
+ 
+         boolean newKey;

@@ -1,0 +1,80 @@
+diff --git a/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestServiceHandler.java b/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestServiceHandler.java
+index 1ba8b78..6ffc60c 100644
+--- a/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestServiceHandler.java
++++ b/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestServiceHandler.java
+@@ -90,7 +90,7 @@
+    */
+   @PUT
+   @Path(BUCKET_PARAM)
+-  @ReturnType("javax.ws.rs.core.Response.Status")
++  @ReturnType("Void")
+   public Response createBucket(@PathParam("bucket") final String bucket) {
+     return S3RestUtils.call(bucket, new S3RestUtils.RestCallable<Response.Status>() {
+       @Override
+@@ -117,7 +117,7 @@
+    */
+   @DELETE
+   @Path(BUCKET_PARAM)
+-  @ReturnType("javax.ws.rs.core.Response.Status")
++  @ReturnType("Void")
+   public Response deleteBucket(@PathParam("bucket") final String bucket) {
+     return S3RestUtils.call(bucket, new S3RestUtils.RestCallable<Response.Status>() {
+       @Override
+@@ -150,7 +150,7 @@
+    */
+   @PUT
+   @Path(OBJECT_PARAM)
+-  @ReturnType("javax.ws.rs.core.Response")
++  @ReturnType("Void")
+   @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+   public Response createObject(@HeaderParam("Content-MD5") final String contentMD5,
+                                @PathParam("bucket") final String bucket,
+@@ -205,7 +205,7 @@
+    */
+   @DELETE
+   @Path(OBJECT_PARAM)
+-  @ReturnType("javax.ws.rs.core.Response.Status")
++  @ReturnType("Void")
+   public Response deleteObject(@PathParam("bucket") final String bucket,
+                                @PathParam("object") final String object) {
+     return S3RestUtils.call(bucket, new S3RestUtils.RestCallable<Response.Status>() {
+diff --git a/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestServiceHandler.java b/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestServiceHandler.java
+index 1ba8b78..6ffc60c 100644
+--- a/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestServiceHandler.java
++++ b/core/server/proxy/src/main/java/alluxio/proxy/s3/S3RestServiceHandler.java
+@@ -90,7 +90,7 @@
+    */
+   @PUT
+   @Path(BUCKET_PARAM)
+-  @ReturnType("javax.ws.rs.core.Response.Status")
++  @ReturnType("Void")
+   public Response createBucket(@PathParam("bucket") final String bucket) {
+     return S3RestUtils.call(bucket, new S3RestUtils.RestCallable<Response.Status>() {
+       @Override
+@@ -117,7 +117,7 @@
+    */
+   @DELETE
+   @Path(BUCKET_PARAM)
+-  @ReturnType("javax.ws.rs.core.Response.Status")
++  @ReturnType("Void")
+   public Response deleteBucket(@PathParam("bucket") final String bucket) {
+     return S3RestUtils.call(bucket, new S3RestUtils.RestCallable<Response.Status>() {
+       @Override
+@@ -150,7 +150,7 @@
+    */
+   @PUT
+   @Path(OBJECT_PARAM)
+-  @ReturnType("javax.ws.rs.core.Response")
++  @ReturnType("Void")
+   @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+   public Response createObject(@HeaderParam("Content-MD5") final String contentMD5,
+                                @PathParam("bucket") final String bucket,
+@@ -205,7 +205,7 @@
+    */
+   @DELETE
+   @Path(OBJECT_PARAM)
+-  @ReturnType("javax.ws.rs.core.Response.Status")
++  @ReturnType("Void")
+   public Response deleteObject(@PathParam("bucket") final String bucket,
+                                @PathParam("object") final String object) {
+     return S3RestUtils.call(bucket, new S3RestUtils.RestCallable<Response.Status>() {

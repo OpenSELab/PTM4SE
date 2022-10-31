@@ -1,0 +1,30 @@
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
+index b76eb8c..1faca84 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
+@@ -107,7 +107,9 @@
+ 				if (isModal && stage != null && stage.getRoot().getChildren().size > 0
+ 					&& stage.getRoot().getChildren().peek() == Dialog.this) { // Dialog is top most actor.
+ 					Actor newFocusedActor = event.getRelatedActor();
+-					if (newFocusedActor != null && !newFocusedActor.isDescendantOf(Dialog.this)) event.cancel();
++					if (newFocusedActor != null && !newFocusedActor.isDescendantOf(Dialog.this) &&
++						!(newFocusedActor.equals(previousKeyboardFocus) || newFocusedActor.equals(previousScrollFocus)) )
++						event.cancel();
+ 				}
+ 			}
+ 		};
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
+index b76eb8c..1faca84 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
+@@ -107,7 +107,9 @@
+ 				if (isModal && stage != null && stage.getRoot().getChildren().size > 0
+ 					&& stage.getRoot().getChildren().peek() == Dialog.this) { // Dialog is top most actor.
+ 					Actor newFocusedActor = event.getRelatedActor();
+-					if (newFocusedActor != null && !newFocusedActor.isDescendantOf(Dialog.this)) event.cancel();
++					if (newFocusedActor != null && !newFocusedActor.isDescendantOf(Dialog.this) &&
++						!(newFocusedActor.equals(previousKeyboardFocus) || newFocusedActor.equals(previousScrollFocus)) )
++						event.cancel();
+ 				}
+ 			}
+ 		};

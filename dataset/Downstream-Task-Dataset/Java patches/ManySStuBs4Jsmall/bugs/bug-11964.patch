@@ -1,0 +1,113 @@
+diff --git a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/RemoteTaskRunner.java b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/RemoteTaskRunner.java
+index 68f8f9b..d13435d 100644
+--- a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/RemoteTaskRunner.java
++++ b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/RemoteTaskRunner.java
+@@ -685,7 +685,7 @@
+               ZkWorker zkWorker, ZkWorker zkWorker2
+           )
+           {
+-            return -Ints.compare(zkWorker.getCurrCapacity(), zkWorker2.getCurrCapacity());
++            return -Ints.compare(zkWorker.getCurrCapacityUsed(), zkWorker2.getCurrCapacityUsed());
+           }
+         }
+     );
+diff --git a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/ZkWorker.java b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/ZkWorker.java
+index a20e324..3c65cc9 100644
+--- a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/ZkWorker.java
++++ b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/ZkWorker.java
+@@ -85,7 +85,7 @@
+     return worker;
+   }
+ 
+-  @JsonProperty
++  @JsonProperty("runningTasks")
+   public Map<String, TaskStatus> getRunningTasks()
+   {
+     Map<String, TaskStatus> retVal = Maps.newHashMap();
+@@ -99,8 +99,8 @@
+     return retVal;
+   }
+ 
+-  @JsonProperty("currCapacity")
+-  public int getCurrCapacity()
++  @JsonProperty("currCapacityUsed")
++  public int getCurrCapacityUsed()
+   {
+     int currCapacity = 0;
+     for (TaskStatus taskStatus : getRunningTasks().values()) {
+@@ -132,12 +132,12 @@
+ 
+   public boolean isAtCapacity()
+   {
+-    return getCurrCapacity() >= worker.getCapacity();
++    return getCurrCapacityUsed() >= worker.getCapacity();
+   }
+ 
+   public boolean canRunTask(Task task)
+   {
+-    return (worker.getCapacity() - getCurrCapacity() >= task.getTaskResource().getRequiredCapacity()
++    return (worker.getCapacity() - getCurrCapacityUsed() >= task.getTaskResource().getRequiredCapacity()
+             && !getAvailabilityGroups().contains(task.getTaskResource().getAvailabilityGroup()));
+   }
+ 
+diff --git a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/config/RemoteTaskRunnerConfig.java b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/config/RemoteTaskRunnerConfig.java
+index 7018e37..2acadd3 100644
+--- a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/config/RemoteTaskRunnerConfig.java
++++ b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/config/RemoteTaskRunnerConfig.java
+@@ -33,7 +33,7 @@
+   @Default("PT5M")
+   public abstract Duration getTaskAssignmentTimeoutDuration();
+ 
+-  @Config("druid.curator.compression.enable")
++  @Config("druid.curator.compress")
+   @Default("false")
+   public abstract boolean enableCompression();
+ 
+diff --git a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/scaling/EC2AutoScalingStrategy.java b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/scaling/EC2AutoScalingStrategy.java
+index 5422a21..45b5573 100644
+--- a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/scaling/EC2AutoScalingStrategy.java
++++ b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/scaling/EC2AutoScalingStrategy.java
+@@ -218,7 +218,7 @@
+         }
+     );
+ 
+-    log.info("Performing lookup: %s --> %s", ips, retVal);
++    log.debug("Performing lookup: %s --> %s", ips, retVal);
+ 
+     return retVal;
+   }
+@@ -250,7 +250,7 @@
+         }
+     );
+ 
+-    log.info("Performing lookup: %s --> %s", nodeIds, retVal);
++    log.debug("Performing lookup: %s --> %s", nodeIds, retVal);
+ 
+     return retVal;
+   }
+diff --git a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/scaling/SimpleResourceManagementStrategy.java b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/scaling/SimpleResourceManagementStrategy.java
+index 4451d68..2546d7e 100644
+--- a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/scaling/SimpleResourceManagementStrategy.java
++++ b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/scaling/SimpleResourceManagementStrategy.java
+@@ -72,7 +72,7 @@
+   public boolean doProvision(Collection<RemoteTaskRunnerWorkItem> pendingTasks, Collection<ZkWorker> zkWorkers)
+   {
+     if (zkWorkers.size() >= workerSetupdDataRef.get().getMaxNumWorkers()) {
+-      log.info(
++      log.debug(
+           "Cannot scale anymore. Num workers = %d, Max num workers = %d",
+           zkWorkers.size(),
+           workerSetupdDataRef.get().getMaxNumWorkers()
+diff --git a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/RemoteTaskRunner.java b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/RemoteTaskRunner.java
+index 68f8f9b..d13435d 100644
+--- a/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/RemoteTaskRunner.java
++++ b/indexing-service/src/main/java/com/metamx/druid/indexing/coordinator/RemoteTaskRunner.java
+@@ -685,7 +685,7 @@
+               ZkWorker zkWorker, ZkWorker zkWorker2
+           )
+           {
+-            return -Ints.compare(zkWorker.getCurrCapacity(), zkWorker2.getCurrCapacity());
++            return -Ints.compare(zkWorker.getCurrCapacityUsed(), zkWorker2.getCurrCapacityUsed());
+           }
+         }
+     );

@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+index 65c5d33..5515fb3 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+@@ -570,7 +570,7 @@
+         if (webSocket) {
+             nettyRequest.addHeader(HttpHeaders.Names.UPGRADE, HttpHeaders.Values.WEBSOCKET);
+             nettyRequest.addHeader(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.UPGRADE);
+-            nettyRequest.addHeader("Sec-WebSocket-Origin", "http://" + uri.getHost());
++            nettyRequest.addHeader("Origin", "http://" + uri.getHost() + ":" + uri.getPort());
+             nettyRequest.addHeader(WEBSOCKET_KEY, WebSocketUtil.getKey());
+             nettyRequest.addHeader("Sec-WebSocket-Version", "13");
+         }
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+index 65c5d33..5515fb3 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+@@ -570,7 +570,7 @@
+         if (webSocket) {
+             nettyRequest.addHeader(HttpHeaders.Names.UPGRADE, HttpHeaders.Values.WEBSOCKET);
+             nettyRequest.addHeader(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.UPGRADE);
+-            nettyRequest.addHeader("Sec-WebSocket-Origin", "http://" + uri.getHost());
++            nettyRequest.addHeader("Origin", "http://" + uri.getHost() + ":" + uri.getPort());
+             nettyRequest.addHeader(WEBSOCKET_KEY, WebSocketUtil.getKey());
+             nettyRequest.addHeader("Sec-WebSocket-Version", "13");
+         }

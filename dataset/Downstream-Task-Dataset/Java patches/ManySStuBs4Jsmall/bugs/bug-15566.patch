@@ -1,0 +1,28 @@
+diff --git a/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java b/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
+index 2855b12..69bf652 100644
+--- a/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
++++ b/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
+@@ -471,8 +471,7 @@
+                 String hazelcastSessionId = originalSessions.get(originalSession.getId());
+                 if (hazelcastSessionId != null) {
+                     hazelcastSession = sessions.get(hazelcastSessionId);
+-
+-                    if (!hazelcastSession.isStickySession()) {
++                    if (hazelcastSession != null && !hazelcastSession.isStickySession()) {
+                         hazelcastSession.updateReloadFlag();
+                     }
+                     return hazelcastSession;
+diff --git a/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java b/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
+index 2855b12..69bf652 100644
+--- a/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
++++ b/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
+@@ -471,8 +471,7 @@
+                 String hazelcastSessionId = originalSessions.get(originalSession.getId());
+                 if (hazelcastSessionId != null) {
+                     hazelcastSession = sessions.get(hazelcastSessionId);
+-
+-                    if (!hazelcastSession.isStickySession()) {
++                    if (hazelcastSession != null && !hazelcastSession.isStickySession()) {
+                         hazelcastSession.updateReloadFlag();
+                     }
+                     return hazelcastSession;

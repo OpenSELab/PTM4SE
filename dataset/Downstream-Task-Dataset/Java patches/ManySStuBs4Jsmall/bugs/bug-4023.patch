@@ -1,0 +1,209 @@
+diff --git a/tool/test/org/antlr/v4/test/TestActionTranslation.java b/tool/test/org/antlr/v4/test/TestActionTranslation.java
+index 1bba580..150fc72 100644
+--- a/tool/test/org/antlr/v4/test/TestActionTranslation.java
++++ b/tool/test/org/antlr/v4/test/TestActionTranslation.java
+@@ -118,22 +118,22 @@
+ 
+     @Test public void testRuleRefs() throws Exception {
+         String action = "$lab.start; $c.text;";
+-		String expected = "(((AContext)_localctx).lab!=null?(((AContext)_localctx).lab.start):null); (((AContext)_localctx).c!=null?_input.toString(((AContext)_localctx).c.start,((AContext)_localctx).c.stop):null);";
++		String expected = "(((AContext)_localctx).lab!=null?(((AContext)_localctx).lab.start):null); (((AContext)_localctx).c!=null?_input.getText(((AContext)_localctx).c.start,((AContext)_localctx).c.stop):null);";
+ 		testActions(attributeTemplate, "inline", action, expected);
+     }
+ 
+ 	@Test public void testRefToTextAttributeForCurrentRule() throws Exception {
+         String action = "$a.text; $text";
+ 		String expected =
+-			"(_localctx.a!=null?_input.toString(_localctx.a.start,_localctx.a.stop):" +
+-			"null); _input.toString(_localctx.start, _input.LT(-1))";
++			"(_localctx.a!=null?_input.getText(_localctx.a.start,_localctx.a.stop):" +
++			"null); _input.getText(_localctx.start, _input.LT(-1))";
+ 		testActions(attributeTemplate, "init", action, expected);
+ 		expected =
+-			"_input.toString(_localctx.start, _input.LT(-1)); _input.toString(_localctx.start, _input.LT(-1))";
++			"_input.getText(_localctx.start, _input.LT(-1)); _input.getText(_localctx.start, _input.LT(-1))";
+ 		testActions(attributeTemplate, "inline", action, expected);
+ 		expected =
+-			"(_localctx.a!=null?_input.toString(_localctx.a.start,_localctx.a.stop):null);" +
+-			" _input.toString(_localctx.start, _input.LT(-1))";
++			"(_localctx.a!=null?_input.getText(_localctx.a.start,_localctx.a.stop):null);" +
++			" _input.getText(_localctx.start, _input.LT(-1))";
+ 		testActions(attributeTemplate, "finally", action, expected);
+     }
+ 
+diff --git a/tool/test/org/antlr/v4/test/TestNonGreedyLoops.java b/tool/test/org/antlr/v4/test/TestNonGreedyLoops.java
+index 23b6ab3..861aaa6 100644
+--- a/tool/test/org/antlr/v4/test/TestNonGreedyLoops.java
++++ b/tool/test/org/antlr/v4/test/TestNonGreedyLoops.java
+@@ -35,7 +35,7 @@
+ 	@Test public void testNongreedyLoopOnEndIsNop() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"s @after {dumpDFA();} : any ID EOF {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"s @after {dumpDFA();} : any ID EOF {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"any : .* ;\n"+
+ 			"INT : '0'..'9'+ ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+@@ -58,7 +58,7 @@
+ 	@Test public void testNongreedyPlusLoopOnEndIsNop() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"s @after {dumpDFA();} : any ID EOF {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"s @after {dumpDFA();} : any ID EOF {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"any : .+ ;\n"+ // .+ on end of rule always gives no viable alt. can't bypass but can't match
+ 			"INT : '0'..'9'+ ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+@@ -196,7 +196,7 @@
+ 	@Test public void testNongreedyLoopCantSeeEOF() throws Exception {
+ 		String grammar =
+ 		"grammar T;\n" +
+-		"s @after {dumpDFA();} : block EOF {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++		"s @after {dumpDFA();} : block EOF {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 		"block : '{' .* '}' ;\n"+
+ 		"EQ : '=' ;\n" +
+ 		"INT : '0'..'9'+ ;\n" +
+@@ -228,7 +228,7 @@
+ 	@Test public void testNongreedyLoop() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"s @after {dumpDFA();} : ifstat ';' EOF {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"s @after {dumpDFA();} : ifstat ';' EOF {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ifstat : 'if' '(' .* ')' block ;\n" +
+ 			"block : '{' '}' ;\n"+
+ 			"EQ : '=' ;\n" +
+@@ -267,7 +267,7 @@
+ 	@Test public void testNongreedyLoopPassingThroughAnotherNongreedy() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"s @after {dumpDFA();} : ifstat ';' EOF {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"s @after {dumpDFA();} : ifstat ';' EOF {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ifstat : 'if' '(' .* ')' block ;\n" +
+ 			"block : '{' (block|.)* '}' ;\n"+
+ 			"EQ : '=' ;\n" +
+@@ -330,7 +330,7 @@
+ 		// EOF on end means LL(*) can identify when to stop the loop.
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"s @after {dumpDFA();} : stat* ID '=' ID ';' EOF {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"s @after {dumpDFA();} : stat* ID '=' ID ';' EOF {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"stat : 'if' '(' INT ')' stat\n" +
+ 			"     | 'return' INT ';'\n" +
+ 			"     | ID '=' (INT|ID) ';'\n" +
+@@ -392,7 +392,7 @@
+ 			"grammar T;\n" +
+ 			"random : s ;" + // call s so s isn't followed by EOF directly
+ 			"s @after {dumpDFA();} : (options {greedy=false;} : stat)* ID '=' ID ';'\n" +
+-			"    {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"    {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"stat : 'if' '(' INT ')' stat\n" +
+ 			"     | 'return' INT ';'\n" +
+ 			"     | ID '=' (INT|ID) ';'\n" +
+@@ -450,7 +450,7 @@
+ 	@Test public void testHTMLTags() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"s @after {dumpDFA();} : (item)+ {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"s @after {dumpDFA();} : (item)+ {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"item : tag | . ;\n" +
+ 			"tag : '<' '/'? .* '>'  ;\n" +
+ 			"EQ : '=' ;\n" +
+diff --git a/tool/test/org/antlr/v4/test/TestParserExec.java b/tool/test/org/antlr/v4/test/TestParserExec.java
+index 0df311b..45c2742 100644
+--- a/tool/test/org/antlr/v4/test/TestParserExec.java
++++ b/tool/test/org/antlr/v4/test/TestParserExec.java
+@@ -52,7 +52,7 @@
+ 	@Test public void testBasic() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"a : ID INT {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"a : ID INT {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+ 			"INT : '0'..'9'+;\n" +
+ 			"WS : (' '|'\\n') {skip();} ;\n";
+@@ -80,7 +80,7 @@
+ 	@Test public void testAPlus() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"a : ID+ {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"a : ID+ {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+ 			"WS : (' '|'\\n') {skip();} ;\n";
+ 
+@@ -93,7 +93,7 @@
+ 	@Test public void testAorAPlus() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"a : (ID|ID)+ {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"a : (ID|ID)+ {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+ 			"WS : (' '|'\\n') {skip();} ;\n";
+ 
+@@ -105,7 +105,7 @@
+ 	@Test public void testAStar() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"a : ID* {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"a : ID* {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+ 			"WS : (' '|'\\n') {skip();} ;\n";
+ 
+@@ -121,7 +121,7 @@
+ 	@Test public void testAorAStar() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"a : (ID|ID)* {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"a : (ID|ID)* {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+ 			"WS : (' '|'\\n') {skip();} ;\n";
+ 
+@@ -136,7 +136,7 @@
+ 	@Test public void testAorBPlus() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"a : (ID|INT{;})+ {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"a : (ID|INT{;})+ {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+ 			"INT : '0'..'9'+;\n" +
+ 			"WS : (' '|'\\n') {skip();} ;\n";
+@@ -149,7 +149,7 @@
+ 	@Test public void testAorBStar() throws Exception {
+ 		String grammar =
+ 			"grammar T;\n" +
+-			"a : (ID|INT{;})* {System.out.println(_input.toString(0,_input.index()-1));} ;\n" +
++			"a : (ID|INT{;})* {System.out.println(_input.getText(Interval.of(0,_input.index()-1)));} ;\n" +
+ 			"ID : 'a'..'z'+ ;\n" +
+ 			"INT : '0'..'9'+;\n" +
+ 			"WS : (' '|'\\n') {skip();} ;\n";
+diff --git a/tool/test/org/antlr/v4/test/TestActionTranslation.java b/tool/test/org/antlr/v4/test/TestActionTranslation.java
+index 1bba580..150fc72 100644
+--- a/tool/test/org/antlr/v4/test/TestActionTranslation.java
++++ b/tool/test/org/antlr/v4/test/TestActionTranslation.java
+@@ -118,22 +118,22 @@
+ 
+     @Test public void testRuleRefs() throws Exception {
+         String action = "$lab.start; $c.text;";
+-		String expected = "(((AContext)_localctx).lab!=null?(((AContext)_localctx).lab.start):null); (((AContext)_localctx).c!=null?_input.toString(((AContext)_localctx).c.start,((AContext)_localctx).c.stop):null);";
++		String expected = "(((AContext)_localctx).lab!=null?(((AContext)_localctx).lab.start):null); (((AContext)_localctx).c!=null?_input.getText(((AContext)_localctx).c.start,((AContext)_localctx).c.stop):null);";
+ 		testActions(attributeTemplate, "inline", action, expected);
+     }
+ 
+ 	@Test public void testRefToTextAttributeForCurrentRule() throws Exception {
+         String action = "$a.text; $text";
+ 		String expected =
+-			"(_localctx.a!=null?_input.toString(_localctx.a.start,_localctx.a.stop):" +
+-			"null); _input.toString(_localctx.start, _input.LT(-1))";
++			"(_localctx.a!=null?_input.getText(_localctx.a.start,_localctx.a.stop):" +
++			"null); _input.getText(_localctx.start, _input.LT(-1))";
+ 		testActions(attributeTemplate, "init", action, expected);
+ 		expected =
+-			"_input.toString(_localctx.start, _input.LT(-1)); _input.toString(_localctx.start, _input.LT(-1))";
++			"_input.getText(_localctx.start, _input.LT(-1)); _input.getText(_localctx.start, _input.LT(-1))";
+ 		testActions(attributeTemplate, "inline", action, expected);
+ 		expected =
+-			"(_localctx.a!=null?_input.toString(_localctx.a.start,_localctx.a.stop):null);" +
+-			" _input.toString(_localctx.start, _input.LT(-1))";
++			"(_localctx.a!=null?_input.getText(_localctx.a.start,_localctx.a.stop):null);" +
++			" _input.getText(_localctx.start, _input.LT(-1))";
+ 		testActions(attributeTemplate, "finally", action, expected);
+     }
+ 

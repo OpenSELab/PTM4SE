@@ -1,0 +1,28 @@
+diff --git a/components/camel-script/src/test/java/org/apache/camel/builder/script/JRubyScriptThreadSafeTest.java b/components/camel-script/src/test/java/org/apache/camel/builder/script/JRubyScriptThreadSafeTest.java
+index 5dd68ff..795f3d4 100644
+--- a/components/camel-script/src/test/java/org/apache/camel/builder/script/JRubyScriptThreadSafeTest.java
++++ b/components/camel-script/src/test/java/org/apache/camel/builder/script/JRubyScriptThreadSafeTest.java
+@@ -58,7 +58,8 @@
+             @Override
+             public void configure() throws Exception {
+                 context.getProperties().put(Exchange.REUSE_SCRIPT_ENGINE, "true");
+-                context.getProperties().put(Exchange.COMPILE_SCRIPT, "true");
++                // Now the default the value is not use the compiled script, as it could introduce some concurrent issue
++                context.getProperties().put(Exchange.COMPILE_SCRIPT, "false");
+ 
+ 
+                 from("seda:parallel?concurrentConsumers=5")
+diff --git a/components/camel-script/src/test/java/org/apache/camel/builder/script/JRubyScriptThreadSafeTest.java b/components/camel-script/src/test/java/org/apache/camel/builder/script/JRubyScriptThreadSafeTest.java
+index 5dd68ff..795f3d4 100644
+--- a/components/camel-script/src/test/java/org/apache/camel/builder/script/JRubyScriptThreadSafeTest.java
++++ b/components/camel-script/src/test/java/org/apache/camel/builder/script/JRubyScriptThreadSafeTest.java
+@@ -58,7 +58,8 @@
+             @Override
+             public void configure() throws Exception {
+                 context.getProperties().put(Exchange.REUSE_SCRIPT_ENGINE, "true");
+-                context.getProperties().put(Exchange.COMPILE_SCRIPT, "true");
++                // Now the default the value is not use the compiled script, as it could introduce some concurrent issue
++                context.getProperties().put(Exchange.COMPILE_SCRIPT, "false");
+ 
+ 
+                 from("seda:parallel?concurrentConsumers=5")

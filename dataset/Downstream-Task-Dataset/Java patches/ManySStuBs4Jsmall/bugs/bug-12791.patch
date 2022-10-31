@@ -1,0 +1,15 @@
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlock.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlock.java
+index ad92074..f2d1fda 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlock.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/MapBlock.java
+@@ -139,8 +139,8 @@
+         int entryCount = entriesEnd - entriesStart;
+         sizeInBytes = keyBlock.getRegionSizeInBytes(entriesStart, entryCount) +
+                 valueBlock.getRegionSizeInBytes(entriesStart, entryCount) +
+-                (Integer.BYTES + Byte.BYTES) * this.positionCount +
+-                Integer.BYTES * HASH_MULTIPLIER * entryCount;
++                (Integer.BYTES + Byte.BYTES) * (long) this.positionCount +
++                Integer.BYTES * HASH_MULTIPLIER * (long) entryCount;
+     }
+ 
+     @Override

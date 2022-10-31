@@ -1,0 +1,26 @@
+diff --git a/titan-cassandra/src/main/java/com/thinkaurelius/titan/diskstorage/cassandra/embedded/CassandraEmbeddedKeyColumnValueStore.java b/titan-cassandra/src/main/java/com/thinkaurelius/titan/diskstorage/cassandra/embedded/CassandraEmbeddedKeyColumnValueStore.java
+index 44a75d3..643fa54 100644
+--- a/titan-cassandra/src/main/java/com/thinkaurelius/titan/diskstorage/cassandra/embedded/CassandraEmbeddedKeyColumnValueStore.java
++++ b/titan-cassandra/src/main/java/com/thinkaurelius/titan/diskstorage/cassandra/embedded/CassandraEmbeddedKeyColumnValueStore.java
+@@ -204,7 +204,7 @@
+         return Iterators.filter(rows.iterator(), new Predicate<Row>() {
+             @Override
+             public boolean apply(@Nullable Row row) {
+-                return (row == null) ? false : !(row.cf == null || row.cf.isMarkedForDelete() || row.cf.getColumnCount() == 0);
++                return !(row == null || row.cf == null || row.cf.isMarkedForDelete() || row.cf.hasOnlyTombstones());
+             }
+         });
+     }
+diff --git a/titan-cassandra/src/main/java/com/thinkaurelius/titan/diskstorage/cassandra/embedded/CassandraEmbeddedKeyColumnValueStore.java b/titan-cassandra/src/main/java/com/thinkaurelius/titan/diskstorage/cassandra/embedded/CassandraEmbeddedKeyColumnValueStore.java
+index 44a75d3..643fa54 100644
+--- a/titan-cassandra/src/main/java/com/thinkaurelius/titan/diskstorage/cassandra/embedded/CassandraEmbeddedKeyColumnValueStore.java
++++ b/titan-cassandra/src/main/java/com/thinkaurelius/titan/diskstorage/cassandra/embedded/CassandraEmbeddedKeyColumnValueStore.java
+@@ -204,7 +204,7 @@
+         return Iterators.filter(rows.iterator(), new Predicate<Row>() {
+             @Override
+             public boolean apply(@Nullable Row row) {
+-                return (row == null) ? false : !(row.cf == null || row.cf.isMarkedForDelete() || row.cf.getColumnCount() == 0);
++                return !(row == null || row.cf == null || row.cf.isMarkedForDelete() || row.cf.hasOnlyTombstones());
+             }
+         });
+     }

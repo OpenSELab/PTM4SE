@@ -1,0 +1,26 @@
+diff --git a/core/server/src/test/java/alluxio/worker/file/UnderFileSystemManagerTest.java b/core/server/src/test/java/alluxio/worker/file/UnderFileSystemManagerTest.java
+index f875bc2..da4a8b1 100644
+--- a/core/server/src/test/java/alluxio/worker/file/UnderFileSystemManagerTest.java
++++ b/core/server/src/test/java/alluxio/worker/file/UnderFileSystemManagerTest.java
+@@ -84,7 +84,7 @@
+     Mockito.when(mMockUfs.getFileSize(Mockito.anyString())).thenReturn(FILE_LENGTH);
+     PowerMockito.mockStatic(UnderFileSystem.class);
+     Mockito.when(UnderFileSystem.get(Mockito.anyString())).thenReturn(mMockUfs);
+-    Mockito.when(mMockInputStream.skip(Mockito.anyInt())).thenAnswer(new Answer() {
++    Mockito.when(mMockInputStream.skip(Mockito.anyInt())).thenAnswer(new Answer<Object>() {
+       public Object answer(InvocationOnMock invocation) {
+         Object[] args = invocation.getArguments();
+         return args[0];
+diff --git a/core/server/src/test/java/alluxio/worker/file/UnderFileSystemManagerTest.java b/core/server/src/test/java/alluxio/worker/file/UnderFileSystemManagerTest.java
+index f875bc2..da4a8b1 100644
+--- a/core/server/src/test/java/alluxio/worker/file/UnderFileSystemManagerTest.java
++++ b/core/server/src/test/java/alluxio/worker/file/UnderFileSystemManagerTest.java
+@@ -84,7 +84,7 @@
+     Mockito.when(mMockUfs.getFileSize(Mockito.anyString())).thenReturn(FILE_LENGTH);
+     PowerMockito.mockStatic(UnderFileSystem.class);
+     Mockito.when(UnderFileSystem.get(Mockito.anyString())).thenReturn(mMockUfs);
+-    Mockito.when(mMockInputStream.skip(Mockito.anyInt())).thenAnswer(new Answer() {
++    Mockito.when(mMockInputStream.skip(Mockito.anyInt())).thenAnswer(new Answer<Object>() {
+       public Object answer(InvocationOnMock invocation) {
+         Object[] args = invocation.getArguments();
+         return args[0];

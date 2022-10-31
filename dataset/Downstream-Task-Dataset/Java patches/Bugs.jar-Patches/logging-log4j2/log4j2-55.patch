@@ -1,0 +1,121 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/LoggerContext.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/LoggerContext.java
+index 0759bc4..a8af6ae 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/LoggerContext.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/LoggerContext.java
+@@ -334,10 +334,9 @@ public class LoggerContext implements org.apache.logging.log4j.spi.LoggerContext
+         }
+         final Configuration prev = this.config;
+         config.addListener(this);
+-        final Map<String, String> map = new HashMap<String, String>();
+-        map.put("hostName", NetUtils.getLocalHostname());
+-        map.put("contextName", name);
+-        config.addComponent(Configuration.CONTEXT_PROPERTIES, map);
++        final ConcurrentMap<String, String> map = config.getComponent(Configuration.CONTEXT_PROPERTIES);
++        map.putIfAbsent("hostName", NetUtils.getLocalHostname());
++        map.putIfAbsent("contextName", name);
+         config.start();
+         this.config = config;
+         updateLoggers();
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/config/BaseConfiguration.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/config/BaseConfiguration.java
+index 2b5c41f..986d2b9 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/config/BaseConfiguration.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/config/BaseConfiguration.java
+@@ -104,7 +104,9 @@ public class BaseConfiguration extends AbstractFilterable implements Configurati
+ 
+     private ConcurrentMap<String, LoggerConfig> loggers = new ConcurrentHashMap<String, LoggerConfig>();
+ 
+-    private final StrLookup tempLookup = new Interpolator();
++    private ConcurrentMap<String, String> properties = new ConcurrentHashMap<String, String>();
++
++    private final StrLookup tempLookup = new Interpolator(properties);
+ 
+     private final StrSubstitutor subst = new StrSubstitutor(tempLookup);
+ 
+@@ -120,6 +122,7 @@ public class BaseConfiguration extends AbstractFilterable implements Configurati
+      * Constructor.
+      */
+     protected BaseConfiguration() {
++        componentMap.put(Configuration.CONTEXT_PROPERTIES, properties);
+         pluginManager = new PluginManager("Core");
+         rootNode = new Node();
+     }
+@@ -127,7 +130,7 @@ public class BaseConfiguration extends AbstractFilterable implements Configurati
+     @Override
+     @SuppressWarnings("unchecked")
+     public Map<String, String> getProperties() {
+-        return (Map<String, String>) componentMap.get(CONTEXT_PROPERTIES);
++        return properties;
+     }
+ 
+     /**
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/config/plugins/PropertiesPlugin.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/config/plugins/PropertiesPlugin.java
+index b804d45..6c5c3f3 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/config/plugins/PropertiesPlugin.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/config/plugins/PropertiesPlugin.java
+@@ -44,7 +44,7 @@ public final class PropertiesPlugin {
+     public static StrLookup configureSubstitutor(@PluginElement("Properties") final Property[] properties,
+                                                  @PluginConfiguration final Configuration config) {
+         if (properties == null) {
+-            return new Interpolator(null);
++            return new Interpolator(config.getProperties());
+         }
+         final Map<String, String> map = new HashMap<String, String>(config.getProperties());
+ 
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/Interpolator.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/Interpolator.java
+index bf463de..a768f4e 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/Interpolator.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/lookup/Interpolator.java
+@@ -60,7 +60,14 @@ public class Interpolator implements StrLookup {
+      * Create the default Interpolator using only Lookups that work without an event.
+      */
+     public Interpolator() {
+-        this.defaultLookup = new MapLookup(new HashMap<String, String>());
++        this((Map<String, String>) null);
++    }
++
++    /**
++     * Create the dInterpolator using only Lookups that work without an event and initial properties.
++     */
++    public Interpolator(Map<String, String> properties) {
++        this.defaultLookup = new MapLookup(properties == null ? new HashMap<String, String>() : properties);
+         lookups.put("sys", new SystemPropertiesLookup());
+         lookups.put("env", new EnvironmentLookup());
+         lookups.put("jndi", new JndiLookup());
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/web/Log4jWebInitializerImpl.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/web/Log4jWebInitializerImpl.java
+index 7d14a14..78708dc 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/web/Log4jWebInitializerImpl.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/web/Log4jWebInitializerImpl.java
+@@ -17,12 +17,15 @@
+ package org.apache.logging.log4j.core.web;
+ 
+ import java.net.URI;
++import java.util.Map;
++import java.util.concurrent.ConcurrentHashMap;
+ import javax.servlet.ServletContext;
+ import javax.servlet.UnavailableException;
+ 
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.core.LoggerContext;
+ import org.apache.logging.log4j.core.config.Configurator;
++import org.apache.logging.log4j.core.helpers.NetUtils;
+ import org.apache.logging.log4j.core.impl.ContextAnchor;
+ import org.apache.logging.log4j.core.impl.Log4jContextFactory;
+ import org.apache.logging.log4j.core.lookup.Interpolator;
+@@ -48,7 +51,8 @@ final class Log4jWebInitializerImpl implements Log4jWebInitializer {
+         }
+     }
+ 
+-    private final StrSubstitutor substitutor = new StrSubstitutor(new Interpolator());
++    private final Map<String, String> map = new ConcurrentHashMap<String, String>();
++    private final StrSubstitutor substitutor = new StrSubstitutor(new Interpolator(map));
+     private final ServletContext servletContext;
+ 
+     private String name;
+@@ -60,6 +64,7 @@ final class Log4jWebInitializerImpl implements Log4jWebInitializer {
+ 
+     private Log4jWebInitializerImpl(final ServletContext servletContext) {
+         this.servletContext = servletContext;
++        map.put("hostName", NetUtils.getLocalHostname());
+     }
+ 
+     @Override

@@ -1,0 +1,28 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PhpClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PhpClientCodegen.java
+index 3a43e91..538a5c4 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PhpClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PhpClientCodegen.java
+@@ -330,7 +330,8 @@
+ 
+     @Override
+     public String toModelName(String name) {
+-        name = sanitizeName(name);
++        // Note: backslash ("\\") is allowed for e.g. "\\DateTime"
++        name = name.replaceAll("[^\\w\\\\]+", "_");
+ 
+         // model name cannot use reserved keyword
+         if (reservedWords.contains(name)) {
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PhpClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PhpClientCodegen.java
+index 3a43e91..538a5c4 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PhpClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PhpClientCodegen.java
+@@ -330,7 +330,8 @@
+ 
+     @Override
+     public String toModelName(String name) {
+-        name = sanitizeName(name);
++        // Note: backslash ("\\") is allowed for e.g. "\\DateTime"
++        name = name.replaceAll("[^\\w\\\\]+", "_");
+ 
+         // model name cannot use reserved keyword
+         if (reservedWords.contains(name)) {

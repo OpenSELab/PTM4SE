@@ -1,0 +1,61 @@
+diff --git a/stratosphere-java/src/main/java/eu/stratosphere/api/java/tuple/Tuple.java b/stratosphere-java/src/main/java/eu/stratosphere/api/java/tuple/Tuple.java
+index fc8a07d..e0ecb40 100644
+--- a/stratosphere-java/src/main/java/eu/stratosphere/api/java/tuple/Tuple.java
++++ b/stratosphere-java/src/main/java/eu/stratosphere/api/java/tuple/Tuple.java
+@@ -15,8 +15,8 @@
+ /**
+  * The base class of all tuples. Tuples have a fix length and contain a set of fields,
+  * which may all be of different types. Because Tuples are strongly typed, each distinct
+- * tuple length is represented by its own class. Tuples exists with up to 22 fields and
+- * are described in the classes {@link Tuple1} to {@link Tuple22}.
++ * tuple length is represented by its own class. Tuples exists with up to 25 fields and
++ * are described in the classes {@link Tuple1} to {@link Tuple25}.
+  * <p>
+  * The fields in the tuples may be accessed directly a public fields, or via position (zero indexed)
+  * {@link #getField(int)}.
+@@ -28,7 +28,7 @@
+ 	
+ 	private static final long serialVersionUID = 1L;
+ 	
+-	public static final int MAX_ARITY = 22;
++	public static final int MAX_ARITY = 25;
+ 	
+ 	
+ 	/**
+diff --git a/stratosphere-java/src/main/java/eu/stratosphere/api/java/typeutils/TupleTypeInfo.java b/stratosphere-java/src/main/java/eu/stratosphere/api/java/typeutils/TupleTypeInfo.java
+index 6630386..ea26376 100644
+--- a/stratosphere-java/src/main/java/eu/stratosphere/api/java/typeutils/TupleTypeInfo.java
++++ b/stratosphere-java/src/main/java/eu/stratosphere/api/java/typeutils/TupleTypeInfo.java
+@@ -32,7 +32,7 @@
+ 	private final Class<T> tupleType;
+ 	
+ 	public TupleTypeInfo(Class<T> tupleType, TypeInformation<?>... types) {
+-		if (types == null || types.length == 0 || types.length >= Tuple.MAX_ARITY) {
++		if (types == null || types.length == 0 || types.length > Tuple.MAX_ARITY) {
+ 			throw new IllegalArgumentException();
+ 		}
+ 		
+diff --git a/stratosphere-java/src/main/java/eu/stratosphere/api/java/tuple/Tuple.java b/stratosphere-java/src/main/java/eu/stratosphere/api/java/tuple/Tuple.java
+index fc8a07d..e0ecb40 100644
+--- a/stratosphere-java/src/main/java/eu/stratosphere/api/java/tuple/Tuple.java
++++ b/stratosphere-java/src/main/java/eu/stratosphere/api/java/tuple/Tuple.java
+@@ -15,8 +15,8 @@
+ /**
+  * The base class of all tuples. Tuples have a fix length and contain a set of fields,
+  * which may all be of different types. Because Tuples are strongly typed, each distinct
+- * tuple length is represented by its own class. Tuples exists with up to 22 fields and
+- * are described in the classes {@link Tuple1} to {@link Tuple22}.
++ * tuple length is represented by its own class. Tuples exists with up to 25 fields and
++ * are described in the classes {@link Tuple1} to {@link Tuple25}.
+  * <p>
+  * The fields in the tuples may be accessed directly a public fields, or via position (zero indexed)
+  * {@link #getField(int)}.
+@@ -28,7 +28,7 @@
+ 	
+ 	private static final long serialVersionUID = 1L;
+ 	
+-	public static final int MAX_ARITY = 22;
++	public static final int MAX_ARITY = 25;
+ 	
+ 	
+ 	/**

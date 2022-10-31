@@ -1,0 +1,58 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java b/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
+index 001832a..4fddafa 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
+@@ -200,7 +200,7 @@
+             for (Data value : values) {
+                 Record record = rec.copy();
+                 record.setValue(value);
+-                record.setVersion(version++);
++                record.setVersion(++version);
+                 MBackupOp backupOp = new MBackupOp();
+                 backupOp.backup(record);
+             }
+@@ -565,7 +565,7 @@
+                     if (oldObject != null) {
+                         if (oldObject instanceof CMap.Values) {
+                             CMap.Values values =  (CMap.Values) oldObject;
+-                            removedValueCount = (values == null) ? 0 : values.size();
++                            removedValueCount = values.size();
+                         } else {
+                             removedValueCount = 1;
+                         }
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/Record.java b/hazelcast/src/main/java/com/hazelcast/impl/Record.java
+index 1735912..3e3c488 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/Record.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/Record.java
+@@ -357,7 +357,8 @@
+     }
+ 
+     public String toString() {
+-        return "Record key=" + getKey() + ", removable=" + isRemovable();
++        return "Record key=" + getKey() + ", active=" + isActive()
++                + ", version=" + getVersion() + ", removable=" + isRemovable();
+     }
+ 
+     public long getVersion() {
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java b/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
+index 001832a..4fddafa 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
+@@ -200,7 +200,7 @@
+             for (Data value : values) {
+                 Record record = rec.copy();
+                 record.setValue(value);
+-                record.setVersion(version++);
++                record.setVersion(++version);
+                 MBackupOp backupOp = new MBackupOp();
+                 backupOp.backup(record);
+             }
+@@ -565,7 +565,7 @@
+                     if (oldObject != null) {
+                         if (oldObject instanceof CMap.Values) {
+                             CMap.Values values =  (CMap.Values) oldObject;
+-                            removedValueCount = (values == null) ? 0 : values.size();
++                            removedValueCount = values.size();
+                         } else {
+                             removedValueCount = 1;
+                         }

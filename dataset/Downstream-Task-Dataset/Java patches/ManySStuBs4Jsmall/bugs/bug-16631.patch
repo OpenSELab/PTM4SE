@@ -1,0 +1,62 @@
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/utils/NinePatchDrawable.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/utils/NinePatchDrawable.java
+index 14d31ae..911e752 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/utils/NinePatchDrawable.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/utils/NinePatchDrawable.java
+@@ -42,7 +42,7 @@
+ 
+ 	public NinePatchDrawable (NinePatchDrawable drawable) {
+ 		super(drawable);
+-		setPatch(drawable.patch);
++		this.patch = drawable.patch;
+ 	}
+ 
+ 	public void draw (Batch batch, float x, float y, float width, float height) {
+@@ -54,6 +54,8 @@
+ 		patch.draw(batch, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+ 	}
+ 
++	/** Sets this drawable's ninepatch and set the min width, min height, top height, right width, bottom height, and left width to
++	 * the patch's padding. */
+ 	public void setPatch (NinePatch patch) {
+ 		this.patch = patch;
+ 		setMinWidth(patch.getTotalWidth());
+@@ -71,7 +73,7 @@
+ 	/** Creates a new drawable that renders the same as this drawable tinted the specified color. */
+ 	public NinePatchDrawable tint (Color tint) {
+ 		NinePatchDrawable drawable = new NinePatchDrawable(this);
+-		drawable.setPatch(new NinePatch(drawable.getPatch(), tint));
++		drawable.patch = new NinePatch(drawable.getPatch(), tint);
+ 		return drawable;
+ 	}
+ }
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/utils/NinePatchDrawable.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/utils/NinePatchDrawable.java
+index 14d31ae..911e752 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/utils/NinePatchDrawable.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/utils/NinePatchDrawable.java
+@@ -42,7 +42,7 @@
+ 
+ 	public NinePatchDrawable (NinePatchDrawable drawable) {
+ 		super(drawable);
+-		setPatch(drawable.patch);
++		this.patch = drawable.patch;
+ 	}
+ 
+ 	public void draw (Batch batch, float x, float y, float width, float height) {
+@@ -54,6 +54,8 @@
+ 		patch.draw(batch, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+ 	}
+ 
++	/** Sets this drawable's ninepatch and set the min width, min height, top height, right width, bottom height, and left width to
++	 * the patch's padding. */
+ 	public void setPatch (NinePatch patch) {
+ 		this.patch = patch;
+ 		setMinWidth(patch.getTotalWidth());
+@@ -71,7 +73,7 @@
+ 	/** Creates a new drawable that renders the same as this drawable tinted the specified color. */
+ 	public NinePatchDrawable tint (Color tint) {
+ 		NinePatchDrawable drawable = new NinePatchDrawable(this);
+-		drawable.setPatch(new NinePatch(drawable.getPatch(), tint));
++		drawable.patch = new NinePatch(drawable.getPatch(), tint);
+ 		return drawable;
+ 	}
+ }

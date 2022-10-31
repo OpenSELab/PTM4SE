@@ -1,0 +1,40 @@
+diff --git a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSInput.java b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSInput.java
+index c9fc9b9..54eef47 100755
+--- a/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSInput.java
++++ b/backends/gdx-backend-moe/src/com/badlogic/gdx/backends/iosmoe/IOSInput.java
+@@ -88,7 +88,7 @@
+ 	}
+ 
+ 	void setupPeripherals () {
+-		motionManager = CMMotionManager.alloc();
++		motionManager = CMMotionManager.alloc().init();
+ 		setupAccelerometer();
+ 		setupCompass();
+ 		UIDevice device = UIDevice.currentDevice();
+@@ -109,7 +109,7 @@
+ 					updateAccelerometer(cmAccelerometerData);
+ 				}
+ 			};
+-			motionManager.startAccelerometerUpdatesToQueueWithHandler(NSOperationQueue.alloc(), handler);
++			motionManager.startAccelerometerUpdatesToQueueWithHandler(NSOperationQueue.alloc().init(), handler);
+ 		}
+ 	}
+ 	
+@@ -126,7 +126,7 @@
+ 			}
+ 		};
+ 
+-		motionManager.startMagnetometerUpdatesToQueueWithHandler(NSOperationQueue.alloc(), handler);
++		motionManager.startMagnetometerUpdatesToQueueWithHandler(NSOperationQueue.alloc().init(), handler);
+ 	}
+ 	
+ 	private void updateAccelerometer (CMAccelerometerData data) {
+@@ -428,7 +428,7 @@
+ 		};
+ 
+ 		// build the view
+-		final UIAlertView uiAlertView = UIAlertView.alloc();
++		final UIAlertView uiAlertView = UIAlertView.alloc().init();
+ 		uiAlertView.setTitle(title);
+ 		uiAlertView.addButtonWithTitle("Cancel");
+ 		uiAlertView.addButtonWithTitle("Ok");

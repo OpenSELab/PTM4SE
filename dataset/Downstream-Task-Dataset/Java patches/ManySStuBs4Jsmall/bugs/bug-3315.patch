@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/alibaba/druid/proxy/jdbc/PreparedStatementProxyImpl.java b/src/main/java/com/alibaba/druid/proxy/jdbc/PreparedStatementProxyImpl.java
+index ded1173..33a04b0 100644
+--- a/src/main/java/com/alibaba/druid/proxy/jdbc/PreparedStatementProxyImpl.java
++++ b/src/main/java/com/alibaba/druid/proxy/jdbc/PreparedStatementProxyImpl.java
+@@ -468,7 +468,7 @@
+     }
+     
+     public JdbcSqlStat getSqlStat() {
+-        if (sqlStat.isRemoved()) {
++        if (sqlStat != null && sqlStat.isRemoved()) {
+             JdbcSqlStat sqlStat = this.getConnectionProxy().getDirectDataSource().getDataSourceStat().getSqlStat(sql);
+             sqlStat.setDbType(this.sqlStat.getDbType());
+             this.sqlStat = sqlStat;
+diff --git a/src/main/java/com/alibaba/druid/proxy/jdbc/PreparedStatementProxyImpl.java b/src/main/java/com/alibaba/druid/proxy/jdbc/PreparedStatementProxyImpl.java
+index ded1173..33a04b0 100644
+--- a/src/main/java/com/alibaba/druid/proxy/jdbc/PreparedStatementProxyImpl.java
++++ b/src/main/java/com/alibaba/druid/proxy/jdbc/PreparedStatementProxyImpl.java
+@@ -468,7 +468,7 @@
+     }
+     
+     public JdbcSqlStat getSqlStat() {
+-        if (sqlStat.isRemoved()) {
++        if (sqlStat != null && sqlStat.isRemoved()) {
+             JdbcSqlStat sqlStat = this.getConnectionProxy().getDirectDataSource().getDataSourceStat().getSqlStat(sql);
+             sqlStat.setDbType(this.sqlStat.getDbType());
+             this.sqlStat = sqlStat;

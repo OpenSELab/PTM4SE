@@ -1,0 +1,13 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index 78442fe..734c279 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -1526,7 +1526,7 @@
+ 
+         if (loadInMemory) {
+             String s = (String) request.getAttribute(FrameworkConfig.THROW_EXCEPTION_ON_CLONED_REQUEST);
+-            boolean throwException = s == null ? false : Boolean.parseBoolean(s);
++            boolean throwException = s != null && Boolean.parseBoolean(s);
+             r = new NoOpsRequest(throwException);
+             if (isWrapped) {
+                 load(b.request, b);

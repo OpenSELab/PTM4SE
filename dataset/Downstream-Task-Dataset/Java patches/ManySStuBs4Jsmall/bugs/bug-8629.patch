@@ -1,0 +1,22 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsHashCodeCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsHashCodeCheck.java
+index c5f0820..843ba13 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsHashCodeCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsHashCodeCheck.java
+@@ -120,7 +120,7 @@
+         return CheckUtils.isEqualsMethod(ast)
+                 && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
+                 && isObjectParam(parameters.getFirstChild())
+-                && (ast.branchContains(TokenTypes.SLIST)
++                && (ast.findFirstToken(TokenTypes.SLIST) != null
+                         || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
+     }
+ 
+@@ -141,7 +141,7 @@
+                 && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
+                 && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null
+                 && parameters.getFirstChild() == null
+-                && (ast.branchContains(TokenTypes.SLIST)
++                && (ast.findFirstToken(TokenTypes.SLIST) != null
+                         || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
+     }
+ 

@@ -1,0 +1,26 @@
+diff --git a/src/web/org/openmrs/web/controller/user/UserFormController.java b/src/web/org/openmrs/web/controller/user/UserFormController.java
+index 3da286b..8f8ab63 100644
+--- a/src/web/org/openmrs/web/controller/user/UserFormController.java
++++ b/src/web/org/openmrs/web/controller/user/UserFormController.java
+@@ -120,7 +120,7 @@
+ 			//check password strength
+ 			if (password.length() > 0) {
+ 				try {
+-					OpenmrsUtil.validatePassword(user.getUsername(), password, String.valueOf(user.getUserId()));
++					OpenmrsUtil.validatePassword(user.getUsername(), password, user.getSystemId());
+ 				}
+ 				catch (PasswordException e) {
+ 					errors.reject(e.getMessage());
+diff --git a/src/web/org/openmrs/web/controller/user/UserFormController.java b/src/web/org/openmrs/web/controller/user/UserFormController.java
+index 3da286b..8f8ab63 100644
+--- a/src/web/org/openmrs/web/controller/user/UserFormController.java
++++ b/src/web/org/openmrs/web/controller/user/UserFormController.java
+@@ -120,7 +120,7 @@
+ 			//check password strength
+ 			if (password.length() > 0) {
+ 				try {
+-					OpenmrsUtil.validatePassword(user.getUsername(), password, String.valueOf(user.getUserId()));
++					OpenmrsUtil.validatePassword(user.getUsername(), password, user.getSystemId());
+ 				}
+ 				catch (PasswordException e) {
+ 					errors.reject(e.getMessage());

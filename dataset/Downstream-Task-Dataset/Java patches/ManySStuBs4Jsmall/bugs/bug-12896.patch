@@ -1,0 +1,64 @@
+diff --git a/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/BaseJdbcClient.java b/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/BaseJdbcClient.java
+index f8005a5..de285d4 100644
+--- a/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/BaseJdbcClient.java
++++ b/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/BaseJdbcClient.java
+@@ -258,12 +258,12 @@
+     }
+ 
+     @Override
+-    public PreparedStatement buildSql(JdbcSplit split, List<JdbcColumnHandle> columnHandles)
++    public PreparedStatement buildSql(Connection connection, JdbcSplit split, List<JdbcColumnHandle> columnHandles)
+             throws SQLException
+     {
+         return new QueryBuilder(identifierQuote).buildSql(
+                 this,
+-                getConnection(split),
++                connection,
+                 split.getCatalogName(),
+                 split.getSchemaName(),
+                 split.getTableName(),
+diff --git a/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/JdbcClient.java b/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/JdbcClient.java
+index 635e138..d6b233c 100644
+--- a/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/JdbcClient.java
++++ b/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/JdbcClient.java
+@@ -41,7 +41,7 @@
+     Connection getConnection(JdbcSplit split)
+             throws SQLException;
+ 
+-    PreparedStatement buildSql(JdbcSplit split, List<JdbcColumnHandle> columnHandles)
++    PreparedStatement buildSql(Connection connection, JdbcSplit split, List<JdbcColumnHandle> columnHandles)
+             throws SQLException;
+ 
+     JdbcOutputTableHandle beginCreateTable(ConnectorTableMetadata tableMetadata);
+diff --git a/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/JdbcRecordCursor.java b/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/JdbcRecordCursor.java
+index bbb6c0d..038e1c9 100644
+--- a/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/JdbcRecordCursor.java
++++ b/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/JdbcRecordCursor.java
+@@ -73,7 +73,7 @@
+ 
+         try {
+             connection = jdbcClient.getConnection(split);
+-            statement = jdbcClient.buildSql(split, columnHandles);
++            statement = jdbcClient.buildSql(connection, split, columnHandles);
+             log.debug("Executing: %s", statement.toString());
+             resultSet = statement.executeQuery();
+         }
+diff --git a/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/BaseJdbcClient.java b/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/BaseJdbcClient.java
+index f8005a5..de285d4 100644
+--- a/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/BaseJdbcClient.java
++++ b/presto-base-jdbc/src/main/java/com/facebook/presto/plugin/jdbc/BaseJdbcClient.java
+@@ -258,12 +258,12 @@
+     }
+ 
+     @Override
+-    public PreparedStatement buildSql(JdbcSplit split, List<JdbcColumnHandle> columnHandles)
++    public PreparedStatement buildSql(Connection connection, JdbcSplit split, List<JdbcColumnHandle> columnHandles)
+             throws SQLException
+     {
+         return new QueryBuilder(identifierQuote).buildSql(
+                 this,
+-                getConnection(split),
++                connection,
+                 split.getCatalogName(),
+                 split.getSchemaName(),
+                 split.getTableName(),

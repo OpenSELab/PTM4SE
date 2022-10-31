@@ -1,0 +1,15 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/util/reflections/DL4JSubTypesScanner.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/util/reflections/DL4JSubTypesScanner.java
+index e22f697..d15eb9c 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/util/reflections/DL4JSubTypesScanner.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/util/reflections/DL4JSubTypesScanner.java
+@@ -41,7 +41,9 @@
+         String className = configuration.getMetadataAdapter().getClassName(cls);
+         String superclass = configuration.getMetadataAdapter().getSuperclassName(cls);
+ 
+-        if(classNames.contains(className)){
++        //Unfortunately: can't simply check if superclass is one of the classes we want
++        // as this doesn't take into account the class heirarchy properly
++        if(!"java.lang.Object".equals(superclass) ){
+             getStore().put(superclass, className);
+         }
+ 

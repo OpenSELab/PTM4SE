@@ -1,0 +1,13 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/util/IterableUtils.java b/presto-main/src/main/java/com/facebook/presto/util/IterableUtils.java
+index 6ee9064..1ecce46 100644
+--- a/presto-main/src/main/java/com/facebook/presto/util/IterableUtils.java
++++ b/presto-main/src/main/java/com/facebook/presto/util/IterableUtils.java
+@@ -33,7 +33,7 @@
+     }
+ 
+     // TODO: replace with Maps.toMap when Guava 14 comes out (http://code.google.com/p/guava-libraries/issues/detail?id=56)
+-    public static <K, V> Map<K, V> toMap(Iterable<K> keys, Function<K, V> valueFunction)
++    public static <K, V> Map<K, V> toMap(Iterable<K> keys, Function<? super K, V> valueFunction)
+     {
+         ImmutableMap.Builder<K, V> builder = ImmutableMap.builder();
+         for (K key : ImmutableSet.copyOf(keys)) {

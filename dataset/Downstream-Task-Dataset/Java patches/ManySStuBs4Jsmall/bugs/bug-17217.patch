@@ -1,0 +1,48 @@
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
+index e6d8765..63d0d38 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
+@@ -195,7 +195,8 @@
+ 		}
+ 		String paths = assetPathProperty.getValues().get(0);
+ 		if(paths == null) {
+-			return null;
++			throw new RuntimeException(
++				"No gdx.assetpath defined. Add <set-configuration-property name=\"gdx.assetpath\" value=\"relative/path/to/assets/\"/> to your GWT projects gwt.xml file");
+ 		} else {
+ 			ArrayList<String> existingPaths = new ArrayList<String>();
+ 			String[] tokens = paths.split(",");
+@@ -205,7 +206,8 @@
+ 					return token;
+ 				}
+ 			}
+-			return null;
++			throw new RuntimeException(
++				"No valid gdx.assetpath defined. Fix <set-configuration-property name=\"gdx.assetpath\" value=\"relative/path/to/assets/\"/> in your GWT projects gwt.xml file");
+ 		}
+ 	}
+ 	
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
+index e6d8765..63d0d38 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/preloader/PreloaderBundleGenerator.java
+@@ -195,7 +195,8 @@
+ 		}
+ 		String paths = assetPathProperty.getValues().get(0);
+ 		if(paths == null) {
+-			return null;
++			throw new RuntimeException(
++				"No gdx.assetpath defined. Add <set-configuration-property name=\"gdx.assetpath\" value=\"relative/path/to/assets/\"/> to your GWT projects gwt.xml file");
+ 		} else {
+ 			ArrayList<String> existingPaths = new ArrayList<String>();
+ 			String[] tokens = paths.split(",");
+@@ -205,7 +206,8 @@
+ 					return token;
+ 				}
+ 			}
+-			return null;
++			throw new RuntimeException(
++				"No valid gdx.assetpath defined. Fix <set-configuration-property name=\"gdx.assetpath\" value=\"relative/path/to/assets/\"/> in your GWT projects gwt.xml file");
+ 		}
+ 	}
+ 	

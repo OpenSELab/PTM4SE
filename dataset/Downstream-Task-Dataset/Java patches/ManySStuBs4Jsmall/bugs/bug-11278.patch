@@ -1,0 +1,26 @@
+diff --git a/dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java b/dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java
+index db48199..a3b4502 100644
+--- a/dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java
++++ b/dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java
+@@ -198,7 +198,7 @@
+      * @return a fully-configured {@link Client}
+      */
+     public Client build(String name) {
+-        if ((environment == null) && (executorService == null) && (objectMapper == null)) {
++        if ((environment == null) && ((executorService == null) || (objectMapper == null))) {
+             throw new IllegalStateException("Must have either an environment or both " +
+                                                     "an executor service and an object mapper");
+         }
+diff --git a/dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java b/dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java
+index db48199..a3b4502 100644
+--- a/dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java
++++ b/dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java
+@@ -198,7 +198,7 @@
+      * @return a fully-configured {@link Client}
+      */
+     public Client build(String name) {
+-        if ((environment == null) && (executorService == null) && (objectMapper == null)) {
++        if ((environment == null) && ((executorService == null) || (objectMapper == null))) {
+             throw new IllegalStateException("Must have either an environment or both " +
+                                                     "an executor service and an object mapper");
+         }

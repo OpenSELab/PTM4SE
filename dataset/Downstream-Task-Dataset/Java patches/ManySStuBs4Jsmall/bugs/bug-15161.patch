@@ -1,0 +1,59 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/ScheduledExecutorContainer.java b/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/ScheduledExecutorContainer.java
+index 90fcb21..7666db7 100644
+--- a/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/ScheduledExecutorContainer.java
++++ b/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/ScheduledExecutorContainer.java
+@@ -311,7 +311,8 @@
+ 
+     void checkNotAtCapacity() {
+         if (capacity != 0 && tasks.size() >= capacity) {
+-            throw new RejectedExecutionException("Maximum capacity of tasks reached.");
++            throw new RejectedExecutionException("Maximum capacity (" + capacity + ") of tasks reached, "
++                    + "for scheduled executor (" + name + ")");
+         }
+     }
+ 
+diff --git a/hazelcast/src/test/java/com/hazelcast/scheduledexecutor/ScheduledExecutorServiceBasicTest.java b/hazelcast/src/test/java/com/hazelcast/scheduledexecutor/ScheduledExecutorServiceBasicTest.java
+index d01a70f..1e36655 100644
+--- a/hazelcast/src/test/java/com/hazelcast/scheduledexecutor/ScheduledExecutorServiceBasicTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/scheduledexecutor/ScheduledExecutorServiceBasicTest.java
+@@ -138,7 +138,7 @@
+             fail("Should have been rejected.");
+         } catch (RejectedExecutionException ex) {
+             assertTrue("Got wrong RejectedExecutionException",
+-                    ex.getMessage().equals("Maximum capacity of tasks reached."));
++                    ex.getMessage().equals("Maximum capacity (100) of tasks reached, for scheduled executor (foobar)"));
+         }
+     }
+ 
+@@ -169,7 +169,7 @@
+             fail("Should have been rejected.");
+         } catch (RejectedExecutionException ex) {
+             assertTrue("Got wrong RejectedExecutionException",
+-                    ex.getMessage().equals("Maximum capacity of tasks reached."));
++                    ex.getMessage().equals("Maximum capacity (10) of tasks reached, for scheduled executor (foobar)"));
+         }
+     }
+ 
+@@ -200,7 +200,7 @@
+             fail("Should have been rejected.");
+         } catch (RejectedExecutionException ex) {
+             assertTrue("Got wrong RejectedExecutionException",
+-                    ex.getMessage().equals("Maximum capacity of tasks reached."));
++                    ex.getMessage().equals("Maximum capacity (10) of tasks reached, for scheduled executor (foobar)"));
+         }
+     }
+ 
+diff --git a/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/ScheduledExecutorContainer.java b/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/ScheduledExecutorContainer.java
+index 90fcb21..7666db7 100644
+--- a/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/ScheduledExecutorContainer.java
++++ b/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/ScheduledExecutorContainer.java
+@@ -311,7 +311,8 @@
+ 
+     void checkNotAtCapacity() {
+         if (capacity != 0 && tasks.size() >= capacity) {
+-            throw new RejectedExecutionException("Maximum capacity of tasks reached.");
++            throw new RejectedExecutionException("Maximum capacity (" + capacity + ") of tasks reached, "
++                    + "for scheduled executor (" + name + ")");
+         }
+     }
+ 

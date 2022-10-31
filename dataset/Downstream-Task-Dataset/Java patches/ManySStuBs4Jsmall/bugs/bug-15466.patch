@@ -1,0 +1,48 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/cluster/impl/BasicClusterStateTest.java b/hazelcast/src/test/java/com/hazelcast/cluster/impl/BasicClusterStateTest.java
+index 77b3bcf..374a8a0 100644
+--- a/hazelcast/src/test/java/com/hazelcast/cluster/impl/BasicClusterStateTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/cluster/impl/BasicClusterStateTest.java
+@@ -247,7 +247,8 @@
+         assertClusterSizeEventually(2, hz2);
+         assertClusterSizeEventually(2, hz3);
+ 
+-        hz3.getCluster().changeClusterState(ClusterState.ACTIVE);
++        // try until member is removed and partition-service takes care of removal
++        changeClusterStateEventually(hz3, ClusterState.ACTIVE);
+ 
+         assertClusterState(ClusterState.ACTIVE, hz2, hz3);
+     }
+@@ -270,7 +271,8 @@
+         assertClusterSizeEventually(2, hz2);
+         assertClusterSizeEventually(2, hz3);
+ 
+-        hz3.getCluster().changeClusterState(ClusterState.PASSIVE);
++        // try until member is removed and partition-service takes care of removal
++        changeClusterStateEventually(hz3, ClusterState.PASSIVE);
+ 
+         assertClusterState(ClusterState.PASSIVE, hz2, hz3);
+     }
+diff --git a/hazelcast/src/test/java/com/hazelcast/cluster/impl/BasicClusterStateTest.java b/hazelcast/src/test/java/com/hazelcast/cluster/impl/BasicClusterStateTest.java
+index 77b3bcf..374a8a0 100644
+--- a/hazelcast/src/test/java/com/hazelcast/cluster/impl/BasicClusterStateTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/cluster/impl/BasicClusterStateTest.java
+@@ -247,7 +247,8 @@
+         assertClusterSizeEventually(2, hz2);
+         assertClusterSizeEventually(2, hz3);
+ 
+-        hz3.getCluster().changeClusterState(ClusterState.ACTIVE);
++        // try until member is removed and partition-service takes care of removal
++        changeClusterStateEventually(hz3, ClusterState.ACTIVE);
+ 
+         assertClusterState(ClusterState.ACTIVE, hz2, hz3);
+     }
+@@ -270,7 +271,8 @@
+         assertClusterSizeEventually(2, hz2);
+         assertClusterSizeEventually(2, hz3);
+ 
+-        hz3.getCluster().changeClusterState(ClusterState.PASSIVE);
++        // try until member is removed and partition-service takes care of removal
++        changeClusterStateEventually(hz3, ClusterState.PASSIVE);
+ 
+         assertClusterState(ClusterState.PASSIVE, hz2, hz3);
+     }

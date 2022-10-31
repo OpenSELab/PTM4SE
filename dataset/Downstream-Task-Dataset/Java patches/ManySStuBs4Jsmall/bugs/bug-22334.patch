@@ -1,0 +1,28 @@
+diff --git a/src/edu/stanford/nlp/ling/tokensregex/CoreMapNodePattern.java b/src/edu/stanford/nlp/ling/tokensregex/CoreMapNodePattern.java
+index 21f47b8..eee685f 100644
+--- a/src/edu/stanford/nlp/ling/tokensregex/CoreMapNodePattern.java
++++ b/src/edu/stanford/nlp/ling/tokensregex/CoreMapNodePattern.java
+@@ -34,7 +34,8 @@
+     return Collections.unmodifiableList(annotationPatterns);
+   }
+ 
+-  private static final Pattern LITERAL_PATTERN = Pattern.compile("[A-Za-z0-9]+");
++  // TODO: make this a pattern of non special characters: [,],?,.,\,^,$,(,),*,+ ... what else?
++  private static final Pattern LITERAL_PATTERN = Pattern.compile("[A-Za-z0-9_\\-]*");
+   public static NodePattern<String> newStringRegexPattern(String regex, int flags) {
+     boolean isLiteral = ((flags & Pattern.LITERAL) != 0) || LITERAL_PATTERN.matcher(regex).matches();
+     if (isLiteral) {
+diff --git a/src/edu/stanford/nlp/ling/tokensregex/CoreMapNodePattern.java b/src/edu/stanford/nlp/ling/tokensregex/CoreMapNodePattern.java
+index 21f47b8..eee685f 100644
+--- a/src/edu/stanford/nlp/ling/tokensregex/CoreMapNodePattern.java
++++ b/src/edu/stanford/nlp/ling/tokensregex/CoreMapNodePattern.java
+@@ -34,7 +34,8 @@
+     return Collections.unmodifiableList(annotationPatterns);
+   }
+ 
+-  private static final Pattern LITERAL_PATTERN = Pattern.compile("[A-Za-z0-9]+");
++  // TODO: make this a pattern of non special characters: [,],?,.,\,^,$,(,),*,+ ... what else?
++  private static final Pattern LITERAL_PATTERN = Pattern.compile("[A-Za-z0-9_\\-]*");
+   public static NodePattern<String> newStringRegexPattern(String regex, int flags) {
+     boolean isLiteral = ((flags & Pattern.LITERAL) != 0) || LITERAL_PATTERN.matcher(regex).matches();
+     if (isLiteral) {

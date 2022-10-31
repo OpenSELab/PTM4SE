@@ -1,0 +1,811 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/builder/BuilderSupport.java b/camel-core/src/main/java/org/apache/camel/builder/BuilderSupport.java
+index da28e51..cc8e777 100644
+--- a/camel-core/src/main/java/org/apache/camel/builder/BuilderSupport.java
++++ b/camel-core/src/main/java/org/apache/camel/builder/BuilderSupport.java
+@@ -184,7 +184,7 @@
+         if (beanOrBeanRef instanceof String) {
+             expression = new MethodCallExpression((String) beanOrBeanRef, method);
+         } else {
+-            expression = new MethodCallExpression((Object) beanOrBeanRef, method);
++            expression = new MethodCallExpression(beanOrBeanRef, method);
+         }
+         return new ValueBuilder(expression);
+     }
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index c660196..2acfbd9 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -1651,7 +1651,7 @@
+         // allow us to do custom work before delegating to service helper
+         try {
+             if (service instanceof Service) {
+-                ServiceHelper.stopAndShutdownService((Service)service);
++                ServiceHelper.stopAndShutdownService(service);
+             } else if (service instanceof Collection) {
+                 ServiceHelper.stopAndShutdownServices((Collection<?>)service);
+             }
+diff --git a/camel-core/src/main/java/org/apache/camel/main/MainSupport.java b/camel-core/src/main/java/org/apache/camel/main/MainSupport.java
+index ed38abe..ca66c1a 100644
+--- a/camel-core/src/main/java/org/apache/camel/main/MainSupport.java
++++ b/camel-core/src/main/java/org/apache/camel/main/MainSupport.java
+@@ -406,7 +406,7 @@
+             }
+             RouteDotGenerator generator = new RouteDotGenerator(outputDir);
+             LOG.info("Generating DOT file for routes: " + outputDir + " for: " + camelContext + " with name: " + name);
+-            generator.drawRoutes((ModelCamelContext)camelContext);
++            generator.drawRoutes(camelContext);
+         }
+     }
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/management/DefaultManagementAgent.java b/camel-core/src/main/java/org/apache/camel/management/DefaultManagementAgent.java
+index a8e22ab..5d60d7c 100644
+--- a/camel-core/src/main/java/org/apache/camel/management/DefaultManagementAgent.java
++++ b/camel-core/src/main/java/org/apache/camel/management/DefaultManagementAgent.java
+@@ -372,7 +372,7 @@
+         }
+ 
+         // look for the first mbean server that has match default domain name
+-        List<MBeanServer> servers = (List<MBeanServer>)MBeanServerFactory.findMBeanServer(null);
++        List<MBeanServer> servers = MBeanServerFactory.findMBeanServer(null);
+ 
+         for (MBeanServer server : servers) {
+             LOG.debug("Found MBeanServer with default domain {}", server.getDefaultDomain());
+diff --git a/camel-core/src/main/java/org/apache/camel/util/jndi/JndiContext.java b/camel-core/src/main/java/org/apache/camel/util/jndi/JndiContext.java
+index 69f2636..f43ae6e 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/jndi/JndiContext.java
++++ b/camel-core/src/main/java/org/apache/camel/util/jndi/JndiContext.java
+@@ -413,7 +413,7 @@
+ 
+         public Object nextElement() {
+             Map.Entry<String, Object> entry = getNext();
+-            return new NameClassPair((String)entry.getKey(), entry.getValue().getClass().getName());
++            return new NameClassPair(entry.getKey(), entry.getValue().getClass().getName());
+         }
+     }
+ 
+@@ -427,7 +427,7 @@
+ 
+         public Object nextElement() {
+             Map.Entry<String, Object> entry = getNext();
+-            return new Binding((String)entry.getKey(), entry.getValue());
++            return new Binding(entry.getKey(), entry.getValue());
+         }
+     }
+ 
+diff --git a/camel-core/src/test/java/org/apache/camel/impl/ZipDataFormatTest.java b/camel-core/src/test/java/org/apache/camel/impl/ZipDataFormatTest.java
+index 999021c..5ff2e74 100644
+--- a/camel-core/src/test/java/org/apache/camel/impl/ZipDataFormatTest.java
++++ b/camel-core/src/test/java/org/apache/camel/impl/ZipDataFormatTest.java
+@@ -113,7 +113,7 @@
+     private static class ZippedMessageProcessor implements Processor {
+ 
+         public void process(Exchange exchange) throws Exception {
+-            byte[] body = (byte[]) exchange.getIn().getBody(byte[].class);
++            byte[] body = exchange.getIn().getBody(byte[].class);
+             
+             Inflater inflater = new Inflater();
+             inflater.setInput(body);
+diff --git a/camel-core/src/test/java/org/apache/camel/issues/SplitterParallelIssueTest.java b/camel-core/src/test/java/org/apache/camel/issues/SplitterParallelIssueTest.java
+index 23c38a3..d1f95cb 100644
+--- a/camel-core/src/test/java/org/apache/camel/issues/SplitterParallelIssueTest.java
++++ b/camel-core/src/test/java/org/apache/camel/issues/SplitterParallelIssueTest.java
+@@ -61,7 +61,7 @@
+                             @Override
+                             public void process(Exchange exchange) throws Exception {
+                                 int num = exchange.getIn().getBody(int.class);
+-                                final long sleep = (long) (num * delay);
++                                final long sleep = num * delay;
+                                 log.info("Sleep for " + sleep + "ms");
+                                 Thread.sleep(sleep);
+                             }
+diff --git a/camel-core/src/test/java/org/apache/camel/management/JmxInstrumentationUsingDefaultsTest.java b/camel-core/src/test/java/org/apache/camel/management/JmxInstrumentationUsingDefaultsTest.java
+index ba4c758..70f3715 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/JmxInstrumentationUsingDefaultsTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/JmxInstrumentationUsingDefaultsTest.java
+@@ -190,7 +190,7 @@
+     }
+ 
+     protected void releaseMBeanServers() {
+-        for (MBeanServer server : (List<MBeanServer>)MBeanServerFactory.findMBeanServer(null)) {
++        for (MBeanServer server : MBeanServerFactory.findMBeanServer(null)) {
+             MBeanServerFactory.releaseMBeanServer(server);
+         }
+     }
+diff --git a/camel-core/src/test/java/org/apache/camel/management/JmxInstrumentationUsingPlatformMBSTest.java b/camel-core/src/test/java/org/apache/camel/management/JmxInstrumentationUsingPlatformMBSTest.java
+index bd6c2c8..dbb3c45 100644
+--- a/camel-core/src/test/java/org/apache/camel/management/JmxInstrumentationUsingPlatformMBSTest.java
++++ b/camel-core/src/test/java/org/apache/camel/management/JmxInstrumentationUsingPlatformMBSTest.java
+@@ -55,7 +55,7 @@
+     @Override
+     protected MBeanServerConnection getMBeanConnection() throws Exception {
+         if (mbsc == null) {
+-            List<MBeanServer> servers = (List<MBeanServer>)MBeanServerFactory.findMBeanServer(null);
++            List<MBeanServer> servers = MBeanServerFactory.findMBeanServer(null);
+ 
+             for (MBeanServer server : servers) {
+                 if (domainName.equals(server.getDefaultDomain())) {
+diff --git a/components/camel-bam/src/main/java/org/apache/camel/bam/processor/JpaBamProcessorSupport.java b/components/camel-bam/src/main/java/org/apache/camel/bam/processor/JpaBamProcessorSupport.java
+index ec4ba2c..f5d6005 100644
+--- a/components/camel-bam/src/main/java/org/apache/camel/bam/processor/JpaBamProcessorSupport.java
++++ b/components/camel-bam/src/main/java/org/apache/camel/bam/processor/JpaBamProcessorSupport.java
+@@ -178,7 +178,7 @@
+      * Create a new instance of the entity for the given key
+      */
+     protected T createEntity(Exchange exchange, Object key) {
+-        return (T)exchange.getContext().getInjector().newInstance(getEntityType());
++        return exchange.getContext().getInjector().newInstance(getEntityType());
+     }
+ 
+     protected void processEntity(Exchange exchange, T entity) throws Exception {
+diff --git a/components/camel-bindy/src/main/java/org/apache/camel/dataformat/bindy/BindyCsvFactory.java b/components/camel-bindy/src/main/java/org/apache/camel/dataformat/bindy/BindyCsvFactory.java
+index c358c8e..88bf862 100755
+--- a/components/camel-bindy/src/main/java/org/apache/camel/dataformat/bindy/BindyCsvFactory.java
++++ b/components/camel-bindy/src/main/java/org/apache/camel/dataformat/bindy/BindyCsvFactory.java
+@@ -263,7 +263,7 @@
+ 
+             for (Entry<Integer, List> entry : sortValues.entrySet()) {
+                 // Get list of values
+-                List<String> val = (List<String>)entry.getValue();
++                List<String> val = entry.getValue();
+ 
+                 // For one to one relation
+                 // There is only one item in the list
+diff --git a/components/camel-bindy/src/main/java/org/apache/camel/dataformat/bindy/BindyKeyValuePairFactory.java b/components/camel-bindy/src/main/java/org/apache/camel/dataformat/bindy/BindyKeyValuePairFactory.java
+index 19fe79d..7a7f1b2 100644
+--- a/components/camel-bindy/src/main/java/org/apache/camel/dataformat/bindy/BindyKeyValuePairFactory.java
++++ b/components/camel-bindy/src/main/java/org/apache/camel/dataformat/bindy/BindyKeyValuePairFactory.java
+@@ -272,7 +272,7 @@
+                         if (obj != null) {
+ 
+                             // Relation OneToOne
+-                            value = (String)values.get(0);
++                            value = values.get(0);
+                             Object result = null;
+ 
+                             if (value != null) {
+@@ -315,7 +315,7 @@
+                                         obj = clazz.newInstance();
+                                     }
+ 
+-                                    value = (String)values.get(i);
++                                    value = values.get(i);
+ 
+                                     // Get pattern defined for the field
+                                     String pattern = keyValuePairField.pattern();
+diff --git a/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/CamelErrorHandlerFactoryBean.java b/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/CamelErrorHandlerFactoryBean.java
+index e94faed..d6de785 100644
+--- a/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/CamelErrorHandlerFactoryBean.java
++++ b/components/camel-blueprint/src/main/java/org/apache/camel/blueprint/CamelErrorHandlerFactoryBean.java
+@@ -106,7 +106,7 @@
+     @Override
+     @SuppressWarnings("unchecked")
+     public Class<? extends ErrorHandlerBuilder> getObjectType() {
+-        return (Class<ErrorHandlerBuilder>) type.getTypeAsClass();
++        return type.getTypeAsClass();
+     }
+ 
+     public void setBlueprintContainer(BlueprintContainer blueprintContainer) {
+diff --git a/components/camel-cometd/src/main/java/org/apache/camel/component/cometd/CometdComponent.java b/components/camel-cometd/src/main/java/org/apache/camel/component/cometd/CometdComponent.java
+index 9c3443c..d4ea455 100644
+--- a/components/camel-cometd/src/main/java/org/apache/camel/component/cometd/CometdComponent.java
++++ b/components/camel-cometd/src/main/java/org/apache/camel/component/cometd/CometdComponent.java
+@@ -97,7 +97,7 @@
+      */
+     public void connect(CometdProducerConsumer prodcon) throws Exception {
+         // Make sure that there is a connector for the requested endpoint.
+-        CometdEndpoint endpoint = (CometdEndpoint) prodcon.getEndpoint();
++        CometdEndpoint endpoint = prodcon.getEndpoint();
+         String connectorKey = endpoint.getProtocol() + ":" + endpoint.getUri().getHost() + ":" + endpoint.getPort();
+ 
+         synchronized (connectors) {
+diff --git a/components/camel-crypto/src/main/java/org/apache/camel/converter/crypto/PGPDataFormatUtil.java b/components/camel-crypto/src/main/java/org/apache/camel/converter/crypto/PGPDataFormatUtil.java
+index 468dd3a..cdc1f47 100644
+--- a/components/camel-crypto/src/main/java/org/apache/camel/converter/crypto/PGPDataFormatUtil.java
++++ b/components/camel-crypto/src/main/java/org/apache/camel/converter/crypto/PGPDataFormatUtil.java
+@@ -63,15 +63,15 @@
+             NoSuchProviderException {
+         PGPPublicKeyRingCollection pgpSec = new PGPPublicKeyRingCollection(PGPUtil.getDecoderStream(input));
+ 
+-        Iterator<PGPPublicKeyRing> keyRingIter = (Iterator<PGPPublicKeyRing>) pgpSec.getKeyRings();
++        Iterator<PGPPublicKeyRing> keyRingIter = pgpSec.getKeyRings();
+         while (keyRingIter.hasNext()) {
+             PGPPublicKeyRing keyRing = keyRingIter.next();
+ 
+-            Iterator<PGPPublicKey> keyIter = (Iterator<PGPPublicKey>) keyRing.getPublicKeys();
++            Iterator<PGPPublicKey> keyIter = keyRing.getPublicKeys();
+             String keyUserId = null;
+             while (keyIter.hasNext()) {
+                 PGPPublicKey key = keyIter.next();
+-                for (Iterator<String> iterator = (Iterator<String>) key.getUserIDs(); iterator.hasNext();) {
++                for (Iterator<String> iterator = key.getUserIDs(); iterator.hasNext();) {
+                     keyUserId = iterator.next();
+                 }
+                 if (key.isEncryptionKey() && keyUserId != null && keyUserId.contains(userid)) {
+@@ -102,14 +102,14 @@
+             PGPException, NoSuchProviderException {
+         PGPSecretKeyRingCollection pgpSec = new PGPSecretKeyRingCollection(PGPUtil.getDecoderStream(input));
+ 
+-        Iterator<PGPSecretKeyRing> keyRingIter = (Iterator<PGPSecretKeyRing>) pgpSec.getKeyRings();
++        Iterator<PGPSecretKeyRing> keyRingIter = pgpSec.getKeyRings();
+         while (keyRingIter.hasNext()) {
+             PGPSecretKeyRing keyRing = keyRingIter.next();
+ 
+-            Iterator<PGPSecretKey> keyIter = (Iterator<PGPSecretKey>) keyRing.getSecretKeys();
++            Iterator<PGPSecretKey> keyIter = keyRing.getSecretKeys();
+             while (keyIter.hasNext()) {
+                 PGPSecretKey key = keyIter.next();
+-                for (Iterator<String> iterator = (Iterator<String>) key.getUserIDs(); iterator.hasNext();) {
++                for (Iterator<String> iterator = key.getUserIDs(); iterator.hasNext();) {
+                     String userId = iterator.next();
+                     if (key.isSigningKey() && userId.contains(userid)) {
+                         return key.extractPrivateKey(passphrase.toCharArray(), "BC");
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/CxfSpringEndpoint.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/CxfSpringEndpoint.java
+index fe7f52b..bfd29e4 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/CxfSpringEndpoint.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/CxfSpringEndpoint.java
+@@ -143,7 +143,7 @@
+             
+             checkName(factoryBean.getEndpointName(), "endpoint/port name");
+             checkName(factoryBean.getServiceName(), "service name");
+-            return (Client)factoryBean.create();
++            return factoryBean.create();
+         }
+     }
+ 
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/DefaultCxfBinding.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/DefaultCxfBinding.java
+index 8a63da2..d6031b7 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/DefaultCxfBinding.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/DefaultCxfBinding.java
+@@ -186,7 +186,7 @@
+         BindingOperationInfo boi = camelExchange.getProperty(BindingOperationInfo.class.getName(), 
+                                                              BindingOperationInfo.class);
+         if (boi != null) {
+-            Service service = (Service)cxfExchange.get(Service.class); 
++            Service service = cxfExchange.get(Service.class); 
+             if (service != null) {
+                 MethodDispatcher md = (MethodDispatcher)service
+                     .get(MethodDispatcher.class.getName());
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/interceptors/SetSoapVersionInterceptor.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/interceptors/SetSoapVersionInterceptor.java
+index dfba44b..54a16c2 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/interceptors/SetSoapVersionInterceptor.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/interceptors/SetSoapVersionInterceptor.java
+@@ -31,7 +31,7 @@
+     public void handleMessage(SoapMessage message) throws Fault {
+         if (message.getExchange() != null) { 
+             if (message.getExchange().getInMessage() instanceof SoapMessage) {
+-                ((SoapMessage)message).setVersion(((SoapMessage)message.getExchange().getInMessage()).getVersion());
++                message.setVersion(((SoapMessage)message.getExchange().getInMessage()).getVersion());
+             } 
+         }
+     }
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/spring/CxfEndpointBeanDefinitionParser.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/spring/CxfEndpointBeanDefinitionParser.java
+index ae1434e..123df79 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/spring/CxfEndpointBeanDefinitionParser.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/spring/CxfEndpointBeanDefinitionParser.java
+@@ -85,7 +85,7 @@
+             || "outInterceptors".equals(name) || "outFaultInterceptors".equals(name)
+             || "features".equals(name) || "schemaLocations".equals(name)
+             || "handlers".equals(name)) {
+-            List<?> list = (List<?>)ctx.getDelegate().parseListElement(el, bean.getBeanDefinition());
++            List<?> list = ctx.getDelegate().parseListElement(el, bean.getBeanDefinition());
+             bean.addPropertyValue(name, list);
+         } else {
+             setFirstChildAsProperty(el, ctx, bean, name);
+diff --git a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerResponseTest.java b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerResponseTest.java
+index b2ebe9a..1d00e1c 100644
+--- a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerResponseTest.java
++++ b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerResponseTest.java
+@@ -89,7 +89,7 @@
+                         // Get the parameter list
+                         List<?> parameter = in.getBody(List.class);
+                         // Put the result back
+-                        exchange.getOut().setBody((Boolean)parameter.get(0));
++                        exchange.getOut().setBody(parameter.get(0));
+                     }
+                 })
+                 .when(header(CxfConstants.OPERATION_NAME).isEqualTo(PING_OPERATION)).process(new Processor() {
+diff --git a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerTest.java b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerTest.java
+index a7efe6b..264197d 100644
+--- a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerTest.java
++++ b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerTest.java
+@@ -89,7 +89,7 @@
+                         // Get the parameter list
+                         List<?> parameter = in.getBody(List.class);
+                         // Put the result back
+-                        exchange.getOut().setBody((Boolean)parameter.get(0));
++                        exchange.getOut().setBody(parameter.get(0));
+                     }
+                 });
+ 
+diff --git a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/jaxrs/CxfRsConsumerTest.java b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/jaxrs/CxfRsConsumerTest.java
+index 530b975..51c10a0 100644
+--- a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/jaxrs/CxfRsConsumerTest.java
++++ b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/jaxrs/CxfRsConsumerTest.java
+@@ -65,7 +65,7 @@
+                             assertEquals("Get a wrong http method", "GET", httpMethod);
+                             String path = inMessage.getHeader(Exchange.HTTP_PATH, String.class);
+                             // The parameter of the invocation is stored in the body of in message
+-                            String id = (String) inMessage.getBody(String.class);
++                            String id = inMessage.getBody(String.class);
+                             if ("/customerservice/customers/126".equals(path)) {                            
+                                 Customer customer = new Customer();
+                                 customer.setId(Long.parseLong(id));
+diff --git a/components/camel-exec/src/test/java/org/apache/camel/component/exec/ExecScriptTest.java b/components/camel-exec/src/test/java/org/apache/camel/component/exec/ExecScriptTest.java
+index fb2f594..e92adfa 100644
+--- a/components/camel-exec/src/test/java/org/apache/camel/component/exec/ExecScriptTest.java
++++ b/components/camel-exec/src/test/java/org/apache/camel/component/exec/ExecScriptTest.java
+@@ -66,7 +66,7 @@
+             String classpathArg = getClasspathArg();
+             Exchange exchange = executeScript(scriptFile, NO_TIMEOUT, classpathArg, PRINT_IN_STDOUT);
+             if (exchange != null) {
+-                String out = (String)exchange.getIn().getBody(String.class);
++                String out = exchange.getIn().getBody(String.class);
+                 String err = (String)exchange.getIn().getHeader(EXEC_STDERR);
+ 
+                 assertNotNull(out);
+diff --git a/components/camel-hdfs/src/test/java/org/apache/camel/component/hdfs/HdfsProducerTest.java b/components/camel-hdfs/src/test/java/org/apache/camel/component/hdfs/HdfsProducerTest.java
+index a188789..299e25d 100644
+--- a/components/camel-hdfs/src/test/java/org/apache/camel/component/hdfs/HdfsProducerTest.java
++++ b/components/camel-hdfs/src/test/java/org/apache/camel/component/hdfs/HdfsProducerTest.java
+@@ -206,7 +206,7 @@
+         Writable key = (Writable) ReflectionUtils.newInstance(reader.getKeyClass(), conf);
+         Text value = (Text) ReflectionUtils.newInstance(reader.getValueClass(), conf);
+         reader.next(key, value);
+-        String rTxt = ((Text) value).toString();
++        String rTxt = value.toString();
+         Assert.assertEquals(rTxt, txt);
+     }
+ 
+diff --git a/components/camel-http4/src/main/java/org/apache/camel/component/http4/CamelServlet.java b/components/camel-http4/src/main/java/org/apache/camel/component/http4/CamelServlet.java
+index 4ba1f8be..a236f8e 100644
+--- a/components/camel-http4/src/main/java/org/apache/camel/component/http4/CamelServlet.java
++++ b/components/camel-http4/src/main/java/org/apache/camel/component/http4/CamelServlet.java
+@@ -51,7 +51,7 @@
+ 
+             // Have the camel process the HTTP exchange.
+             DefaultExchange exchange = new DefaultExchange(consumer.getEndpoint(), ExchangePattern.InOut);
+-            if (((HttpEndpoint)consumer.getEndpoint()).isBridgeEndpoint()) {
++            if (consumer.getEndpoint().isBridgeEndpoint()) {
+                 exchange.setProperty(Exchange.SKIP_GZIP_ENCODING, Boolean.TRUE);
+             }
+             if (consumer.getEndpoint().isDisableStreamCache()) {
+diff --git a/components/camel-jetty/src/main/java/org/apache/camel/component/jetty/JettyHttpComponent.java b/components/camel-jetty/src/main/java/org/apache/camel/component/jetty/JettyHttpComponent.java
+index 8789176..3f59b9b 100644
+--- a/components/camel-jetty/src/main/java/org/apache/camel/component/jetty/JettyHttpComponent.java
++++ b/components/camel-jetty/src/main/java/org/apache/camel/component/jetty/JettyHttpComponent.java
+@@ -345,7 +345,7 @@
+     }
+ 
+     private void enableSessionSupport(Server server, String connectorKey) throws Exception {
+-        ServletContextHandler context = (ServletContextHandler)server.getChildHandlerByClass(ServletContextHandler.class);
++        ServletContextHandler context = server.getChildHandlerByClass(ServletContextHandler.class);
+         if (context.getSessionHandler() == null) {
+             SessionHandler sessionHandler = new SessionHandler();
+             if (context.isStarted()) {
+@@ -357,8 +357,7 @@
+     }
+     
+     private void setFilters(JettyHttpEndpoint endpoint, Server server, String connectorKey) {
+-        ServletContextHandler context = (ServletContextHandler) server
+-            .getChildHandlerByClass(ServletContextHandler.class);
++        ServletContextHandler context = server.getChildHandlerByClass(ServletContextHandler.class);
+         List<Filter> filters = endpoint.getFilters();
+         for (Filter filter : filters) {
+             FilterHolder filterHolder = new FilterHolder();
+@@ -376,8 +375,7 @@
+     }
+     
+     private void enableMultipartFilter(HttpEndpoint endpoint, Server server, String connectorKey) throws Exception {
+-        ServletContextHandler context = (ServletContextHandler) server
+-                .getChildHandlerByClass(ServletContextHandler.class);
++        ServletContextHandler context = server.getChildHandlerByClass(ServletContextHandler.class);
+         CamelContext camelContext = this.getCamelContext();
+         FilterHolder filterHolder = new FilterHolder();
+         filterHolder.setInitParameter("deleteFiles", "true");
+diff --git a/components/camel-jmx/src/test/java/org/apache/camel/component/jmx/SimpleBeanFixture.java b/components/camel-jmx/src/test/java/org/apache/camel/component/jmx/SimpleBeanFixture.java
+index e88cb0b..aae37b2 100644
+--- a/components/camel-jmx/src/test/java/org/apache/camel/component/jmx/SimpleBeanFixture.java
++++ b/components/camel-jmx/src/test/java/org/apache/camel/component/jmx/SimpleBeanFixture.java
+@@ -112,7 +112,7 @@
+      * Gets the mxbean for our remote object using the specified name
+      */
+     protected ISimpleMXBean getMXBean(ObjectName aObjectName) {
+-        return (ISimpleMXBean) MBeanServerInvocationHandler.newProxyInstance(
++        return MBeanServerInvocationHandler.newProxyInstance(
+                 server,
+                 aObjectName,
+                 ISimpleMXBean.class,
+diff --git a/components/camel-josql/src/test/java/org/apache/camel/builder/sql/SqlTest.java b/components/camel-josql/src/test/java/org/apache/camel/builder/sql/SqlTest.java
+index b0111c7..1473d88 100644
+--- a/components/camel-josql/src/test/java/org/apache/camel/builder/sql/SqlTest.java
++++ b/components/camel-josql/src/test/java/org/apache/camel/builder/sql/SqlTest.java
+@@ -41,7 +41,7 @@
+         Expression expression = sql("SELECT * FROM org.apache.camel.builder.sql.Person where city = 'London'");
+         List value = expression.evaluate(exchange, List.class);
+ 
+-        List list = (List)value;
++        List list = value;
+         assertEquals("List size", 2, list.size());
+ 
+         for (Object person : list) {
+@@ -55,7 +55,7 @@
+         Expression expression = sql("SELECT * FROM org.apache.camel.builder.sql.Person where name = :fooHeader");
+         List value = expression.evaluate(exchange, List.class);
+ 
+-        List<Person> list = (List<Person>)value;
++        List<Person> list = value;
+         assertEquals("List size", 1, list.size());
+ 
+         for (Person person : list) {
+diff --git a/components/camel-josql/src/test/java/org/apache/camel/lanaguage/sql/SqlLanguageTest.java b/components/camel-josql/src/test/java/org/apache/camel/lanaguage/sql/SqlLanguageTest.java
+index 251388e..8edb554 100644
+--- a/components/camel-josql/src/test/java/org/apache/camel/lanaguage/sql/SqlLanguageTest.java
++++ b/components/camel-josql/src/test/java/org/apache/camel/lanaguage/sql/SqlLanguageTest.java
+@@ -36,7 +36,7 @@
+         Expression expression = language.createExpression("SELECT * FROM org.apache.camel.builder.sql.Person where city = 'London'");        
+         List value = expression.evaluate(exchange, List.class);
+ 
+-        List list = (List)value;
++        List list = value;
+         assertEquals("List size", 2, list.size());
+ 
+         for (Object person : list) {
+@@ -52,7 +52,7 @@
+         Expression expression = language.createExpression("SELECT * FROM org.apache.camel.builder.sql.Person where name = :fooHeader");
+         List value = expression.evaluate(exchange, List.class);
+ 
+-        List<Person> list = (List<Person>)value;
++        List<Person> list = value;
+         assertEquals("List size", 1, list.size());
+ 
+         for (Person person : list) {
+diff --git a/components/camel-krati/src/main/java/org/apache/camel/component/krati/KratiProducer.java b/components/camel-krati/src/main/java/org/apache/camel/component/krati/KratiProducer.java
+index 792525f..5f033b0 100644
+--- a/components/camel-krati/src/main/java/org/apache/camel/component/krati/KratiProducer.java
++++ b/components/camel-krati/src/main/java/org/apache/camel/component/krati/KratiProducer.java
+@@ -113,7 +113,7 @@
+         Object value = ((KratiEndpoint) getEndpoint()).getValue();
+ 
+         if (exchange.getIn().getHeader(KratiConstants.VALUE) != null) {
+-            value = (String) exchange.getIn().getHeader(KratiConstants.VALUE);
++            value = exchange.getIn().getHeader(KratiConstants.VALUE);
+         }
+ 
+         if (exchange.getIn().getBody() != null) {
+diff --git a/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java b/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
+index ffc48e7..276d7c5 100644
+--- a/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
++++ b/components/camel-quickfix/src/main/java/org/apache/camel/component/quickfixj/QuickfixjEngine.java
+@@ -265,7 +265,7 @@
+         }
+         MessageStoreFactory messageStoreFactory;
+         if (impliedMessageStoreFactories.size() == 1) {
+-            messageStoreFactory = (MessageStoreFactory) impliedMessageStoreFactories.iterator().next();
++            messageStoreFactory = impliedMessageStoreFactories.iterator().next();
+         } else {
+             messageStoreFactory = new MemoryStoreFactory();
+         }
+@@ -302,7 +302,7 @@
+         }
+         LogFactory sessionLogFactory;
+         if (impliedLogFactories.size() == 1) {
+-            sessionLogFactory = (LogFactory) impliedLogFactories.iterator().next();
++            sessionLogFactory = impliedLogFactories.iterator().next();
+         } else {
+             // Default
+             sessionLogFactory = new ScreenLogFactory(settings);
+@@ -345,7 +345,7 @@
+         Iterator<SessionID> sessionIdItr = settings.sectionIterator();
+         while (sessionIdItr.hasNext()) {
+             try {
+-                if (connectorRole.equals(settings.getString((SessionID) sessionIdItr.next(),
++                if (connectorRole.equals(settings.getString(sessionIdItr.next(),
+                         SessionFactory.SETTING_CONNECTION_TYPE))) {
+                     hasRole = true;
+                     break;
+diff --git a/components/camel-restlet/src/main/java/org/apache/camel/component/restlet/RestletComponent.java b/components/camel-restlet/src/main/java/org/apache/camel/component/restlet/RestletComponent.java
+index d158072..7be811c 100644
+--- a/components/camel-restlet/src/main/java/org/apache/camel/component/restlet/RestletComponent.java
++++ b/components/camel-restlet/src/main/java/org/apache/camel/component/restlet/RestletComponent.java
+@@ -114,7 +114,7 @@
+     }
+ 
+     public void connect(RestletConsumer consumer) throws Exception {
+-        RestletEndpoint endpoint = (RestletEndpoint)consumer.getEndpoint();
++        RestletEndpoint endpoint = consumer.getEndpoint();
+         addServerIfNecessary(endpoint);
+ 
+         if (endpoint.getUriPattern() != null && endpoint.getUriPattern().length() > 0) {
+@@ -129,7 +129,7 @@
+     }
+ 
+     public void disconnect(RestletConsumer consumer) throws Exception {
+-        RestletEndpoint endpoint = (RestletEndpoint)consumer.getEndpoint();
++        RestletEndpoint endpoint = consumer.getEndpoint();
+ 
+         List<MethodBasedRouter> routers = new ArrayList<MethodBasedRouter>();
+ 
+diff --git a/components/camel-routebox/src/main/java/org/apache/camel/component/routebox/RouteboxConfiguration.java b/components/camel-routebox/src/main/java/org/apache/camel/component/routebox/RouteboxConfiguration.java
+index 7043b0e..e9937ee 100644
+--- a/components/camel-routebox/src/main/java/org/apache/camel/component/routebox/RouteboxConfiguration.java
++++ b/components/camel-routebox/src/main/java/org/apache/camel/component/routebox/RouteboxConfiguration.java
+@@ -111,7 +111,7 @@
+         }
+         
+         if (parameters.containsKey("routeBuilders")) {
+-            routeBuilders = (List<RouteBuilder>) component.resolveAndRemoveReferenceParameter(parameters, "routeBuilders", List.class);
++            routeBuilders = component.resolveAndRemoveReferenceParameter(parameters, "routeBuilders", List.class);
+         }
+         
+         if (parameters.containsKey("innerRegistry")) {
+@@ -134,7 +134,7 @@
+         producerUri = component.resolveAndRemoveReferenceParameter(parameters, "producerUri", URI.class, new URI("routebox:" + getEndpointName()));        
+         
+         dispatchStrategy = component.resolveAndRemoveReferenceParameter(parameters, "dispatchStrategy", RouteboxDispatchStrategy.class, null);
+-        dispatchMap = (HashMap<String, String>) component.resolveAndRemoveReferenceParameter(parameters, "dispatchMap", HashMap.class, new HashMap<String, String>());
++        dispatchMap = component.resolveAndRemoveReferenceParameter(parameters, "dispatchMap", HashMap.class, new HashMap<String, String>());
+         if (dispatchStrategy == null && dispatchMap == null) {
+             LOG.warn("No Routebox Dispatch Map or Strategy has been set. Routebox may not have more than one inner route.");
+         }        
+diff --git a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDefaultContextAndRouteBuilderTest.java b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDefaultContextAndRouteBuilderTest.java
+index ffdd8ab..dc17ffb 100644
+--- a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDefaultContextAndRouteBuilderTest.java
++++ b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDefaultContextAndRouteBuilderTest.java
+@@ -84,7 +84,7 @@
+         String response = sendAddToCatalogRequest(template, routeboxUri, "addToCatalog", book);
+         assertEquals("Book with Author " + book.getAuthor() + " and title " + book.getTitle() + " added to Catalog", response);
+         
+-        book = (Book) sendFindBookRequest(template, routeboxUri, "findBook", "Sir Arthur Conan Doyle");
++        book = sendFindBookRequest(template, routeboxUri, "findBook", "Sir Arthur Conan Doyle");
+         LOG.debug("Received book with author {} and title {}", book.getAuthor(), book.getTitle());        
+         assertEquals("The Adventures of Sherlock Holmes", book.getTitle());
+         
+diff --git a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDirectProducerOnlyTest.java b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDirectProducerOnlyTest.java
+index 7b7ef27..8735902 100644
+--- a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDirectProducerOnlyTest.java
++++ b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDirectProducerOnlyTest.java
+@@ -86,7 +86,7 @@
+ 
+         //Thread.sleep(2000);
+         
+-        book = (Book) sendFindBookRequest(template, "direct:start", "findBook", "Sir Arthur Conan Doyle");
++        book = sendFindBookRequest(template, "direct:start", "findBook", "Sir Arthur Conan Doyle");
+         LOG.debug("Received book with author {} and title {}", book.getAuthor(), book.getTitle());        
+         assertEquals("The Adventures of Sherlock Holmes", book.getTitle());
+         
+diff --git a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDirectTest.java b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDirectTest.java
+index ec10405..ce2bffd 100644
+--- a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDirectTest.java
++++ b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDirectTest.java
+@@ -88,7 +88,7 @@
+         // to allow the earlier request to take effect
+         //Thread.sleep(2000);
+         
+-        book = (Book) sendFindBookRequest(template, routeboxUri, "findBook", "Sir Arthur Conan Doyle");
++        book = sendFindBookRequest(template, routeboxUri, "findBook", "Sir Arthur Conan Doyle");
+         LOG.debug("Received book with author {} and title {}", book.getAuthor(), book.getTitle());        
+         assertEquals("The Adventures of Sherlock Holmes", book.getTitle());
+         
+diff --git a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDispatchMapTest.java b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDispatchMapTest.java
+index 7cdc016..f4fec9d 100644
+--- a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDispatchMapTest.java
++++ b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxDispatchMapTest.java
+@@ -90,7 +90,7 @@
+         String response = sendAddToCatalogRequest(template, routeboxUri, "addToCatalog", book);
+         assertEquals("Book with Author " + book.getAuthor() + " and title " + book.getTitle() + " added to Catalog", response);
+         
+-        book = (Book) sendFindBookRequest(template, routeboxUri, "findBook", "Sir Arthur Conan Doyle");
++        book = sendFindBookRequest(template, routeboxUri, "findBook", "Sir Arthur Conan Doyle");
+         LOG.debug("Received book with author {} and title {}", book.getAuthor(), book.getTitle());       
+         assertEquals("The Adventures of Sherlock Holmes", book.getTitle());
+         
+diff --git a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxSedaTest.java b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxSedaTest.java
+index 5491127..4d2f9dc 100644
+--- a/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxSedaTest.java
++++ b/components/camel-routebox/src/test/java/org/apache/camel/component/routebox/RouteboxSedaTest.java
+@@ -88,7 +88,7 @@
+         // to allow the earlier request to take effect
+         //Thread.sleep(2000);
+         
+-        book = (Book) sendFindBookRequest(template, routeboxUri, "findBook", "Sir Arthur Conan Doyle");
++        book = sendFindBookRequest(template, routeboxUri, "findBook", "Sir Arthur Conan Doyle");
+         LOG.debug("Received book with author {} and title {}", book.getAuthor(), book.getTitle());       
+         assertEquals("The Adventures of Sherlock Holmes", book.getTitle());
+         
+diff --git a/components/camel-servlet/src/main/java/org/apache/camel/component/servlet/DefaultHttpRegistry.java b/components/camel-servlet/src/main/java/org/apache/camel/component/servlet/DefaultHttpRegistry.java
+index 172820a..191d574 100644
+--- a/components/camel-servlet/src/main/java/org/apache/camel/component/servlet/DefaultHttpRegistry.java
++++ b/components/camel-servlet/src/main/java/org/apache/camel/component/servlet/DefaultHttpRegistry.java
+@@ -73,13 +73,13 @@
+     @SuppressWarnings("rawtypes")
+     public void register(CamelServlet provider, Map properties) {
+         LOG.debug("Registering provider through OSGi service listener {}", properties);
+-        CamelServlet camelServlet = (CamelServlet)provider;
++        CamelServlet camelServlet = provider;
+         camelServlet.setServletName((String) properties.get("servlet-name"));
+         register(camelServlet);
+     }
+ 
+     public void unregister(CamelServlet provider, Map<String, Object> properties) {
+-        unregister((CamelServlet)provider);
++        unregister(provider);
+     }
+     
+     @Override
+diff --git a/components/camel-shiro/src/main/java/org/apache/camel/component/shiro/security/ShiroSecurityPolicy.java b/components/camel-shiro/src/main/java/org/apache/camel/component/shiro/security/ShiroSecurityPolicy.java
+index 760f6ab..f3ef34a 100644
+--- a/components/camel-shiro/src/main/java/org/apache/camel/component/shiro/security/ShiroSecurityPolicy.java
++++ b/components/camel-shiro/src/main/java/org/apache/camel/component/shiro/security/ShiroSecurityPolicy.java
+@@ -73,14 +73,14 @@
+     public ShiroSecurityPolicy(String iniResourcePath) {
+         this();
+         Factory<SecurityManager> factory = new IniSecurityManagerFactory(iniResourcePath);
+-        securityManager = (SecurityManager) factory.getInstance();
++        securityManager = factory.getInstance();
+         SecurityUtils.setSecurityManager(securityManager);
+     }
+     
+     public ShiroSecurityPolicy(Ini ini) {
+         this();
+         Factory<SecurityManager> factory = new IniSecurityManagerFactory(ini);
+-        securityManager = (SecurityManager) factory.getInstance();
++        securityManager = factory.getInstance();
+         SecurityUtils.setSecurityManager(securityManager);
+     }
+     
+diff --git a/components/camel-spring/src/test/java/org/apache/camel/spring/remoting/EchoPojoDirect.java b/components/camel-spring/src/test/java/org/apache/camel/spring/remoting/EchoPojoDirect.java
+index 6a2d9db..186dc40 100644
+--- a/components/camel-spring/src/test/java/org/apache/camel/spring/remoting/EchoPojoDirect.java
++++ b/components/camel-spring/src/test/java/org/apache/camel/spring/remoting/EchoPojoDirect.java
+@@ -29,7 +29,7 @@
+ 
+     @Consume(uri = "direct:start")
+     public String onEcho(String name) {
+-        return (String) service.echo(name);
++        return service.echo(name);
+     }
+     
+ }
+diff --git a/components/camel-sql/src/test/java/org/apache/camel/component/sql/SqlRouteTest.java b/components/camel-sql/src/test/java/org/apache/camel/component/sql/SqlRouteTest.java
+index d764041..10a4aa9 100755
+--- a/components/camel-sql/src/test/java/org/apache/camel/component/sql/SqlRouteTest.java
++++ b/components/camel-sql/src/test/java/org/apache/camel/component/sql/SqlRouteTest.java
+@@ -160,7 +160,7 @@
+         template.sendBody("direct:insert", new Object[] {10, "test", "test"});
+         mock.assertIsSatisfied();
+         try {
+-            String projectName = (String)jdbcTemplate.queryForObject("select project from projects where id = 10", String.class);
++            String projectName = jdbcTemplate.queryForObject("select project from projects where id = 10", String.class);
+             assertEquals("test", projectName);
+         } catch (EmptyResultDataAccessException e) {
+             fail("no row inserted");
+diff --git a/components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/MarshalDomainObjectTest.java b/components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/MarshalDomainObjectTest.java
+index ef11426..2992a12 100644
+--- a/components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/MarshalDomainObjectTest.java
++++ b/components/camel-xstream/src/test/java/org/apache/camel/dataformat/xstream/MarshalDomainObjectTest.java
+@@ -74,7 +74,7 @@
+         mock.message(0).body().equals(order);
+ 
+         // we get it back as byte array so type convert it to string
+-        Object result = (Object)template.requestBody("direct:marshal", order);
++        Object result = template.requestBody("direct:marshal", order);
+         String body = context.getTypeConverter().convertTo(String.class, result);        
+         template.sendBody("direct:reverse", body);
+ 
+diff --git a/examples/camel-example-cxf/src/main/java/org/apache/camel/example/cxf/jaxrs/JAXRSClient.java b/examples/camel-example-cxf/src/main/java/org/apache/camel/example/cxf/jaxrs/JAXRSClient.java
+index 5066705..8e38bfe 100644
+--- a/examples/camel-example-cxf/src/main/java/org/apache/camel/example/cxf/jaxrs/JAXRSClient.java
++++ b/examples/camel-example-cxf/src/main/java/org/apache/camel/example/cxf/jaxrs/JAXRSClient.java
+@@ -30,7 +30,7 @@
+     private BookStore bookStore;
+     
+     public JAXRSClient() {       
+-        bookStore = (BookStore) JAXRSClientFactory.create(
++        bookStore = JAXRSClientFactory.create(
+             "http://localhost:9002/rest",
+             BookStore.class,
+             Collections.singletonList(new TestResponseExceptionMapper()));        
+diff --git a/examples/camel-example-cxf/src/main/java/org/apache/camel/example/cxf/provider/Client.java b/examples/camel-example-cxf/src/main/java/org/apache/camel/example/cxf/provider/Client.java
+index 25a501b..f87aaa8 100644
+--- a/examples/camel-example-cxf/src/main/java/org/apache/camel/example/cxf/provider/Client.java
++++ b/examples/camel-example-cxf/src/main/java/org/apache/camel/example/cxf/provider/Client.java
+@@ -58,7 +58,7 @@
+                                                                 Service.Mode.MESSAGE);
+ 
+         // Use Dispatch as BindingProvider
+-        BindingProvider bp = (BindingProvider)dispatch;
++        BindingProvider bp = dispatch;
+ 
+         MessageFactory factory = ((SOAPBinding)bp.getBinding()).getMessageFactory();
+ 
+diff --git a/tests/camel-itest-osgi/src/test/java/org/apache/camel/itest/osgi/sql/SqlBlueprintRoute.java b/tests/camel-itest-osgi/src/test/java/org/apache/camel/itest/osgi/sql/SqlBlueprintRoute.java
+index 515dd7e..27a6c62 100644
+--- a/tests/camel-itest-osgi/src/test/java/org/apache/camel/itest/osgi/sql/SqlBlueprintRoute.java
++++ b/tests/camel-itest-osgi/src/test/java/org/apache/camel/itest/osgi/sql/SqlBlueprintRoute.java
+@@ -110,7 +110,7 @@
+         template.sendBody("direct:insert", new Object[]{10, "test", "test"});
+         mock.assertIsSatisfied();
+         try {
+-            String projectName = (String) jdbcTemplate.queryForObject("select project from projects where id = 10", String.class);
++            String projectName = jdbcTemplate.queryForObject("select project from projects where id = 10", String.class);
+             assertEquals("test", projectName);
+         } catch (EmptyResultDataAccessException e) {
+             fail("no row inserted");
+diff --git a/tests/camel-itest-osgi/src/test/java/org/apache/camel/itest/osgi/sql/SqlRouteTest.java b/tests/camel-itest-osgi/src/test/java/org/apache/camel/itest/osgi/sql/SqlRouteTest.java
+index a022cde..2747ab3 100644
+--- a/tests/camel-itest-osgi/src/test/java/org/apache/camel/itest/osgi/sql/SqlRouteTest.java
++++ b/tests/camel-itest-osgi/src/test/java/org/apache/camel/itest/osgi/sql/SqlRouteTest.java
+@@ -114,7 +114,7 @@
+         template.sendBody("direct:insert", new Object[]{10, "test", "test"});
+         mock.assertIsSatisfied();
+         try {
+-            String projectName = (String) jdbcTemplate.queryForObject("select project from projects where id = 10", String.class);
++            String projectName = jdbcTemplate.queryForObject("select project from projects where id = 10", String.class);
+             assertEquals("test", projectName);
+         } catch (EmptyResultDataAccessException e) {
+             fail("no row inserted");
+diff --git a/tests/camel-itest/src/test/java/org/apache/camel/itest/async/HttpAsyncTest.java b/tests/camel-itest/src/test/java/org/apache/camel/itest/async/HttpAsyncTest.java
+index b3f9321..6c5dbc2 100644
+--- a/tests/camel-itest/src/test/java/org/apache/camel/itest/async/HttpAsyncTest.java
++++ b/tests/camel-itest/src/test/java/org/apache/camel/itest/async/HttpAsyncTest.java
+@@ -53,7 +53,7 @@
+         // This allows us to do this in a single code line instead of using the
+         // JDK Future API to get hold of it, but you can also use that if you want
+         // Adding the (String) To make the CS happy
+-        String response = (String) template.extractFutureBody(future, String.class);
++        String response = template.extractFutureBody(future, String.class);
+         assertEquals("Bye World", response);
+ 
+         assertMockEndpointsSatisfied();
+diff --git a/tooling/maven/camel-maven-plugin/src/main/java/org/apache/camel/maven/EmbeddedMojo.java b/tooling/maven/camel-maven-plugin/src/main/java/org/apache/camel/maven/EmbeddedMojo.java
+index bdd9fea..a062058 100644
+--- a/tooling/maven/camel-maven-plugin/src/main/java/org/apache/camel/maven/EmbeddedMojo.java
++++ b/tooling/maven/camel-maven-plugin/src/main/java/org/apache/camel/maven/EmbeddedMojo.java
+@@ -251,7 +251,7 @@
+         args.add("-duration");
+         args.add(getDuration());
+ 
+-        return (String[]) args.toArray(new String[0]);
++        return args.toArray(new String[0]);
+     }
+ 
+     public ClassLoader createClassLoader(ClassLoader parent) throws MalformedURLException {
+diff --git a/tooling/maven/camel-maven-plugin/src/main/java/org/apache/camel/maven/RunMojo.java b/tooling/maven/camel-maven-plugin/src/main/java/org/apache/camel/maven/RunMojo.java
+index 94ddf92..dca28e3 100644
+--- a/tooling/maven/camel-maven-plugin/src/main/java/org/apache/camel/maven/RunMojo.java
++++ b/tooling/maven/camel-maven-plugin/src/main/java/org/apache/camel/maven/RunMojo.java
+@@ -620,7 +620,7 @@
+         this.addRelevantProjectDependenciesToClasspath(classpathURLs);
+ 
+         getLog().info("Classpath = " + classpathURLs);
+-        return new URLClassLoader((URL[])classpathURLs.toArray(new URL[classpathURLs.size()]));
++        return new URLClassLoader(classpathURLs.toArray(new URL[classpathURLs.size()]));
+     }
+ 
+     /**
+diff --git a/tooling/maven/guice-maven-plugin/src/main/java/org/apache/camel/guice/maven/RunMojo.java b/tooling/maven/guice-maven-plugin/src/main/java/org/apache/camel/guice/maven/RunMojo.java
+index 2e3bbb4..a14019e 100644
+--- a/tooling/maven/guice-maven-plugin/src/main/java/org/apache/camel/guice/maven/RunMojo.java
++++ b/tooling/maven/guice-maven-plugin/src/main/java/org/apache/camel/guice/maven/RunMojo.java
+@@ -574,7 +574,7 @@
+         this.addRelevantProjectDependenciesToClasspath(classpathURLs);
+ 
+         getLog().info("Classpath = " + classpathURLs);
+-        return new URLClassLoader((URL[])classpathURLs.toArray(new URL[classpathURLs.size()]));
++        return new URLClassLoader(classpathURLs.toArray(new URL[classpathURLs.size()]));
+     }
+ 
+     /**
+diff --git a/camel-core/src/main/java/org/apache/camel/builder/BuilderSupport.java b/camel-core/src/main/java/org/apache/camel/builder/BuilderSupport.java
+index da28e51..cc8e777 100644
+--- a/camel-core/src/main/java/org/apache/camel/builder/BuilderSupport.java
++++ b/camel-core/src/main/java/org/apache/camel/builder/BuilderSupport.java
+@@ -184,7 +184,7 @@
+         if (beanOrBeanRef instanceof String) {
+             expression = new MethodCallExpression((String) beanOrBeanRef, method);
+         } else {
+-            expression = new MethodCallExpression((Object) beanOrBeanRef, method);
++            expression = new MethodCallExpression(beanOrBeanRef, method);
+         }
+         return new ValueBuilder(expression);
+     }

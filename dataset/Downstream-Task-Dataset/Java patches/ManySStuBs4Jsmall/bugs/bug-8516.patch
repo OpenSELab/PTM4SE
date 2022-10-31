@@ -1,0 +1,52 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
+index d4488d9..68d7484 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
+@@ -68,7 +68,7 @@
+     private String message = "";
+ 
+     /** The format string of the regexp. */
+-    private String formatString = "$^";
++    private String formatString = "^$";
+ 
+     /** The regexp to match against. */
+     private Pattern format = Pattern.compile(formatString);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/RegexpCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/RegexpCheck.java
+index 0e4cc9a..20e9a3d 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/RegexpCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/RegexpCheck.java
+@@ -110,7 +110,7 @@
+     private int errorCount;
+ 
+     /** The regexp to match against. */
+-    private Pattern format = Pattern.compile("$^", Pattern.MULTILINE);
++    private Pattern format = Pattern.compile("^$", Pattern.MULTILINE);
+ 
+     /** The matcher. */
+     private Matcher matcher;
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsPagesTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsPagesTest.java
+index 336dd0e..9ba477a 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsPagesTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsPagesTest.java
+@@ -985,7 +985,7 @@
+                     result = '"' + value.toString().replace("\n", "\\n").replace("\t", "\\t")
+                             .replace("\r", "\\r").replace("\f", "\\f") + '"';
+ 
+-                    if ("\"$^\"".equals(result)) {
++                    if ("\"^$\"".equals(result)) {
+                         result += " (empty)";
+                     }
+                 }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
+index d4488d9..68d7484 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/IllegalTokenTextCheck.java
+@@ -68,7 +68,7 @@
+     private String message = "";
+ 
+     /** The format string of the regexp. */
+-    private String formatString = "$^";
++    private String formatString = "^$";
+ 
+     /** The regexp to match against. */
+     private Pattern format = Pattern.compile(formatString);

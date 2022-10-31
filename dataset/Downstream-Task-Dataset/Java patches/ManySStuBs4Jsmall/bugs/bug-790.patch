@@ -1,0 +1,65 @@
+diff --git a/core/client/src/main/java/alluxio/client/file/options/CompleteUfsFileOptions.java b/core/client/src/main/java/alluxio/client/file/options/CompleteUfsFileOptions.java
+index ecdf118..5a625f8 100644
+--- a/core/client/src/main/java/alluxio/client/file/options/CompleteUfsFileOptions.java
++++ b/core/client/src/main/java/alluxio/client/file/options/CompleteUfsFileOptions.java
+@@ -98,10 +98,10 @@
+    */
+   public CompleteUfsFileTOptions toThrift() {
+     CompleteUfsFileTOptions options = new CompleteUfsFileTOptions();
+-    if (!mPermission.getOwner().isEmpty()) {
++    if (mPermission.getOwner() != null && !mPermission.getOwner().isEmpty()) {
+       options.setOwner(mPermission.getOwner());
+     }
+-    if (!mPermission.getGroup().isEmpty()) {
++    if (mPermission.getGroup() != null && !mPermission.getGroup().isEmpty()) {
+       options.setGroup(mPermission.getGroup());
+     }
+     short mode = mPermission.getMode().toShort();
+diff --git a/core/client/src/main/java/alluxio/client/file/options/CreateUfsFileOptions.java b/core/client/src/main/java/alluxio/client/file/options/CreateUfsFileOptions.java
+index 2f9aab9..1283e70 100644
+--- a/core/client/src/main/java/alluxio/client/file/options/CreateUfsFileOptions.java
++++ b/core/client/src/main/java/alluxio/client/file/options/CreateUfsFileOptions.java
+@@ -98,10 +98,10 @@
+    */
+   public CreateUfsFileTOptions toThrift() {
+     CreateUfsFileTOptions options = new CreateUfsFileTOptions();
+-    if (!mPermission.getOwner().isEmpty()) {
++    if (mPermission.getOwner() != null && !mPermission.getOwner().isEmpty()) {
+       options.setOwner(mPermission.getOwner());
+     }
+-    if (!mPermission.getGroup().isEmpty()) {
++    if (mPermission.getGroup() != null && !mPermission.getGroup().isEmpty()) {
+       options.setGroup(mPermission.getGroup());
+     }
+     short mode = mPermission.getMode().toShort();
+diff --git a/core/server/src/main/java/alluxio/worker/file/UnderFileSystemManager.java b/core/server/src/main/java/alluxio/worker/file/UnderFileSystemManager.java
+index de0cdaa..7036800 100644
+--- a/core/server/src/main/java/alluxio/worker/file/UnderFileSystemManager.java
++++ b/core/server/src/main/java/alluxio/worker/file/UnderFileSystemManager.java
+@@ -308,7 +308,8 @@
+       mStream.close();
+       UnderFileSystem ufs = UnderFileSystem.get(mUri, mConfiguration);
+       if (ufs.rename(mTemporaryUri, mUri)) {
+-        if (!perm.getOwner().isEmpty() || !perm.getGroup().isEmpty()) {
++        if ((perm.getOwner() != null && !perm.getOwner().isEmpty())
++            || (perm.getGroup() != null && !perm.getGroup().isEmpty())) {
+           try {
+             ufs.setOwner(mUri, perm.getOwner(), perm.getGroup());
+           } catch (Exception e) {
+diff --git a/core/client/src/main/java/alluxio/client/file/options/CompleteUfsFileOptions.java b/core/client/src/main/java/alluxio/client/file/options/CompleteUfsFileOptions.java
+index ecdf118..5a625f8 100644
+--- a/core/client/src/main/java/alluxio/client/file/options/CompleteUfsFileOptions.java
++++ b/core/client/src/main/java/alluxio/client/file/options/CompleteUfsFileOptions.java
+@@ -98,10 +98,10 @@
+    */
+   public CompleteUfsFileTOptions toThrift() {
+     CompleteUfsFileTOptions options = new CompleteUfsFileTOptions();
+-    if (!mPermission.getOwner().isEmpty()) {
++    if (mPermission.getOwner() != null && !mPermission.getOwner().isEmpty()) {
+       options.setOwner(mPermission.getOwner());
+     }
+-    if (!mPermission.getGroup().isEmpty()) {
++    if (mPermission.getGroup() != null && !mPermission.getGroup().isEmpty()) {
+       options.setGroup(mPermission.getGroup());
+     }
+     short mode = mPermission.getMode().toShort();

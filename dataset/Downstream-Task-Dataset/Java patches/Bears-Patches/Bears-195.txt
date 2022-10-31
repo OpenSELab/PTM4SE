@@ -1,0 +1,11 @@
+--- a/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/support/MockInvoker.java
++++ b/dubbo-rpc/dubbo-rpc-api/src/main/java/com/alibaba/dubbo/rpc/support/MockInvoker.java
+@@ -170,7 +170,7 @@ final public class MockInvoker<T> implements Invoker<T> {
+ 
+         Class<?> mockClass = ReflectUtils.forName(mockService);
+         if (!serviceType.isAssignableFrom(mockClass)) {
+-            throw new IllegalArgumentException("The mock class " + mockClass.getName() +
++            throw new IllegalStateException("The mock class " + mockClass.getName() +
+                     " not implement interface " + serviceType.getName());
+         }
+ 

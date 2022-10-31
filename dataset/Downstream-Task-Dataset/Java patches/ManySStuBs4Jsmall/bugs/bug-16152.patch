@@ -1,0 +1,28 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/instance/DefaultAddressPicker.java b/hazelcast/src/main/java/com/hazelcast/instance/DefaultAddressPicker.java
+index c74297a..5a32c73 100644
+--- a/hazelcast/src/main/java/com/hazelcast/instance/DefaultAddressPicker.java
++++ b/hazelcast/src/main/java/com/hazelcast/instance/DefaultAddressPicker.java
+@@ -99,7 +99,8 @@
+                 }
+             }
+             if (!serverSocket.isBound()) {
+-                throw new HazelcastException("ServerSocket bind has failed. Hazelcast cannot start!", error);
++                throw new HazelcastException("ServerSocket bind has failed. Hazelcast cannot start! " +
++                        "config-port: " + networkConfig.getPort() + ", latest-port: " + port, error);
+             }
+             serverSocketChannel.configureBlocking(false);
+             bindAddress = createAddress(bindAddressDef, port);
+diff --git a/hazelcast/src/main/java/com/hazelcast/instance/DefaultAddressPicker.java b/hazelcast/src/main/java/com/hazelcast/instance/DefaultAddressPicker.java
+index c74297a..5a32c73 100644
+--- a/hazelcast/src/main/java/com/hazelcast/instance/DefaultAddressPicker.java
++++ b/hazelcast/src/main/java/com/hazelcast/instance/DefaultAddressPicker.java
+@@ -99,7 +99,8 @@
+                 }
+             }
+             if (!serverSocket.isBound()) {
+-                throw new HazelcastException("ServerSocket bind has failed. Hazelcast cannot start!", error);
++                throw new HazelcastException("ServerSocket bind has failed. Hazelcast cannot start! " +
++                        "config-port: " + networkConfig.getPort() + ", latest-port: " + port, error);
+             }
+             serverSocketChannel.configureBlocking(false);
+             bindAddress = createAddress(bindAddressDef, port);

@@ -1,0 +1,32 @@
+diff --git a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializerTests.java b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializerTests.java
+index ed808f0..44b31de 100644
+--- a/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializerTests.java
++++ b/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/AutoConfigurationReportLoggingInitializerTests.java
+@@ -115,7 +115,7 @@
+ 	}
+ 
+ 	@Test
+-	public void logsInfoOnError() {
++	public void logsInfoAndDebugOnError() {
+ 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+ 		this.initializer.initialize(context);
+ 		context.register(ErrorConfig.class);
+@@ -128,7 +128,7 @@
+ 					new SpringApplication(), context, new String[] {}, ex));
+ 		}
+ 
+-		assertThat(this.debugLog.size(), equalTo(0));
++		assertThat(this.debugLog.size(), not(equalTo(0)));
+ 		assertThat(this.infoLog.size(), not(equalTo(0)));
+ 	}
+ 
+@@ -171,7 +171,8 @@
+ 		this.initializer.onApplicationEvent(new SpringApplicationErrorEvent(
+ 				new SpringApplication(), null, new String[0], new RuntimeException(
+ 						"Planned")));
+-		assertThat(this.infoLog.get(0), containsString("Nothing to report"));
++		assertThat(this.infoLog.get(0),
++				containsString("Unable to provide auto-configuration report"));
+ 	}
+ 
+ 	public static class MockLogFactory extends LogFactoryImpl {

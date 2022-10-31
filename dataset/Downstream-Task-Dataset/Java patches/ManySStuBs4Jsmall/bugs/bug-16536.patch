@@ -1,0 +1,49 @@
+diff --git a/jsonschema2pojo-cli/src/main/java/com/googlecode/jsonschema2pojo/cli/Jsonschema2Pojo.java b/jsonschema2pojo-cli/src/main/java/com/googlecode/jsonschema2pojo/cli/Jsonschema2Pojo.java
+index 87f9b14..a5a775b 100644
+--- a/jsonschema2pojo-cli/src/main/java/com/googlecode/jsonschema2pojo/cli/Jsonschema2Pojo.java
++++ b/jsonschema2pojo-cli/src/main/java/com/googlecode/jsonschema2pojo/cli/Jsonschema2Pojo.java
+@@ -81,11 +81,11 @@
+         if (source.isDirectory()) {
+             for (File child : source.listFiles()) {
+                 if (child.isFile()) {
+-                    mapper.generate(codeModel, getNodeName(child), packageName, child.toURI().toURL());
++                    mapper.generate(codeModel, getNodeName(child), defaultString(packageName), child.toURI().toURL());
+                 }
+             }
+         } else {
+-            mapper.generate(codeModel, getNodeName(source), packageName, source.toURI().toURL());
++            mapper.generate(codeModel, getNodeName(source), defaultString(packageName), source.toURI().toURL());
+         }
+         
+         if (targetDir.exists() || targetDir.mkdirs()) {
+diff --git a/jsonschema2pojo-maven-plugin/src/main/java/com/googlecode/jsonschema2pojo/maven/Jsonschema2PojoMojo.java b/jsonschema2pojo-maven-plugin/src/main/java/com/googlecode/jsonschema2pojo/maven/Jsonschema2PojoMojo.java
+index f61d673..1a7acf1 100644
+--- a/jsonschema2pojo-maven-plugin/src/main/java/com/googlecode/jsonschema2pojo/maven/Jsonschema2PojoMojo.java
++++ b/jsonschema2pojo-maven-plugin/src/main/java/com/googlecode/jsonschema2pojo/maven/Jsonschema2PojoMojo.java
+@@ -73,7 +73,7 @@
+      * @parameter expression="${jsonschema2pojo.targetPackage}"
+      * @since 0.1.0
+      */
+-    private String targetPackage;
++    private String targetPackage = "";
+ 
+     /**
+      * Whether to generate builder-style methods of the form
+diff --git a/jsonschema2pojo-cli/src/main/java/com/googlecode/jsonschema2pojo/cli/Jsonschema2Pojo.java b/jsonschema2pojo-cli/src/main/java/com/googlecode/jsonschema2pojo/cli/Jsonschema2Pojo.java
+index 87f9b14..a5a775b 100644
+--- a/jsonschema2pojo-cli/src/main/java/com/googlecode/jsonschema2pojo/cli/Jsonschema2Pojo.java
++++ b/jsonschema2pojo-cli/src/main/java/com/googlecode/jsonschema2pojo/cli/Jsonschema2Pojo.java
+@@ -81,11 +81,11 @@
+         if (source.isDirectory()) {
+             for (File child : source.listFiles()) {
+                 if (child.isFile()) {
+-                    mapper.generate(codeModel, getNodeName(child), packageName, child.toURI().toURL());
++                    mapper.generate(codeModel, getNodeName(child), defaultString(packageName), child.toURI().toURL());
+                 }
+             }
+         } else {
+-            mapper.generate(codeModel, getNodeName(source), packageName, source.toURI().toURL());
++            mapper.generate(codeModel, getNodeName(source), defaultString(packageName), source.toURI().toURL());
+         }
+         
+         if (targetDir.exists() || targetDir.mkdirs()) {

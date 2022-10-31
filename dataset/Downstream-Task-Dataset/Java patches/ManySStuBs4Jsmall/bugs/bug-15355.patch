@@ -1,0 +1,42 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/instance/Node.java b/hazelcast/src/main/java/com/hazelcast/instance/Node.java
+index f2d5b05..17411b5 100644
+--- a/hazelcast/src/main/java/com/hazelcast/instance/Node.java
++++ b/hazelcast/src/main/java/com/hazelcast/instance/Node.java
+@@ -442,6 +442,7 @@
+ 
+     /**
+      * Indicates that node is not shutting down or it has not already shut down
++     *
+      * @return true if node is not shutting down or it has not already shut down
+      */
+     public boolean isRunning() {
+@@ -560,7 +561,7 @@
+ 
+         return new JoinRequest(Packet.VERSION, buildInfo.getBuildNumber(), address,
+                 localMember.getUuid(), localMember.isLiteMember(), createConfigCheck(), credentials,
+-                config.getMemberAttributeConfig().getAttributes());
++                localMember.getAttributes());
+     }
+ 
+     public ConfigCheck createConfigCheck() {
+diff --git a/hazelcast/src/main/java/com/hazelcast/instance/Node.java b/hazelcast/src/main/java/com/hazelcast/instance/Node.java
+index f2d5b05..17411b5 100644
+--- a/hazelcast/src/main/java/com/hazelcast/instance/Node.java
++++ b/hazelcast/src/main/java/com/hazelcast/instance/Node.java
+@@ -442,6 +442,7 @@
+ 
+     /**
+      * Indicates that node is not shutting down or it has not already shut down
++     *
+      * @return true if node is not shutting down or it has not already shut down
+      */
+     public boolean isRunning() {
+@@ -560,7 +561,7 @@
+ 
+         return new JoinRequest(Packet.VERSION, buildInfo.getBuildNumber(), address,
+                 localMember.getUuid(), localMember.isLiteMember(), createConfigCheck(), credentials,
+-                config.getMemberAttributeConfig().getAttributes());
++                localMember.getAttributes());
+     }
+ 
+     public ConfigCheck createConfigCheck() {

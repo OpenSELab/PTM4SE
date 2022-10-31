@@ -1,0 +1,48 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/client/HConnectionManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+index 9c7bd84..2a1297a 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/client/HConnectionManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+@@ -762,7 +762,8 @@
+           if (exceptionCaught != null)
+             // It failed. If it's not the last try, we're going to wait a little
+           if (tries < numRetries) {
+-            long pauseTime = ConnectionUtils.getPauseTime(this.pause, tries);
++            // tries at this point is 1 or more; decrement to start from 0.
++            long pauseTime = ConnectionUtils.getPauseTime(this.pause, tries - 1);
+             LOG.info("getMaster attempt " + tries + " of " + numRetries +
+               " failed; retrying after sleep of " +pauseTime, exceptionCaught);
+ 
+@@ -1966,7 +1967,8 @@
+       * @throws IOException
+       */
+       private void doRetry() throws IOException{
+-          final long sleepTime = ConnectionUtils.getPauseTime(hci.pause, this.curNumRetries);
++        // curNumRetries at this point is 1 or more; decrement to start from 0.
++        final long sleepTime = ConnectionUtils.getPauseTime(hci.pause, this.curNumRetries - 1);
+           submit(this.toReplay, sleepTime);
+           this.toReplay.clear();
+       }
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/client/HConnectionManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+index 9c7bd84..2a1297a 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/client/HConnectionManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/client/HConnectionManager.java
+@@ -762,7 +762,8 @@
+           if (exceptionCaught != null)
+             // It failed. If it's not the last try, we're going to wait a little
+           if (tries < numRetries) {
+-            long pauseTime = ConnectionUtils.getPauseTime(this.pause, tries);
++            // tries at this point is 1 or more; decrement to start from 0.
++            long pauseTime = ConnectionUtils.getPauseTime(this.pause, tries - 1);
+             LOG.info("getMaster attempt " + tries + " of " + numRetries +
+               " failed; retrying after sleep of " +pauseTime, exceptionCaught);
+ 
+@@ -1966,7 +1967,8 @@
+       * @throws IOException
+       */
+       private void doRetry() throws IOException{
+-          final long sleepTime = ConnectionUtils.getPauseTime(hci.pause, this.curNumRetries);
++        // curNumRetries at this point is 1 or more; decrement to start from 0.
++        final long sleepTime = ConnectionUtils.getPauseTime(hci.pause, this.curNumRetries - 1);
+           submit(this.toReplay, sleepTime);
+           this.toReplay.clear();
+       }

@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/impl/multilayer/SparkDl4jMultiLayer.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/impl/multilayer/SparkDl4jMultiLayer.java
+index 96e1d68..cd23180 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/impl/multilayer/SparkDl4jMultiLayer.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/impl/multilayer/SparkDl4jMultiLayer.java
+@@ -48,7 +48,7 @@
+     public SparkDl4jMultiLayer(SparkContext sparkContext, MultiLayerNetwork network) {
+         this.sparkContext = sparkContext;
+         this.averageEachIteration = sparkContext.conf().getBoolean(AVERAGE_EACH_ITERATION,false);
+-        this.conf = conf.clone();
++        this.conf = this.network.getLayerWiseConfigurations().clone();
+         sc = new JavaSparkContext(this.sparkContext);
+         this.network = network;
+     }
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/impl/multilayer/SparkDl4jMultiLayer.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/impl/multilayer/SparkDl4jMultiLayer.java
+index 96e1d68..cd23180 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/impl/multilayer/SparkDl4jMultiLayer.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/main/java/org/deeplearning4j/spark/impl/multilayer/SparkDl4jMultiLayer.java
+@@ -48,7 +48,7 @@
+     public SparkDl4jMultiLayer(SparkContext sparkContext, MultiLayerNetwork network) {
+         this.sparkContext = sparkContext;
+         this.averageEachIteration = sparkContext.conf().getBoolean(AVERAGE_EACH_ITERATION,false);
+-        this.conf = conf.clone();
++        this.conf = this.network.getLayerWiseConfigurations().clone();
+         sc = new JavaSparkContext(this.sparkContext);
+         this.network = network;
+     }

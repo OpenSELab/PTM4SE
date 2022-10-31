@@ -1,0 +1,44 @@
+diff --git a/hbase-client/src/main/java/org/apache/hadoop/hbase/replication/ReplicationFactory.java b/hbase-client/src/main/java/org/apache/hadoop/hbase/replication/ReplicationFactory.java
+index 38f9f30..b84641c 100644
+--- a/hbase-client/src/main/java/org/apache/hadoop/hbase/replication/ReplicationFactory.java
++++ b/hbase-client/src/main/java/org/apache/hadoop/hbase/replication/ReplicationFactory.java
+@@ -34,7 +34,7 @@
+   public static ReplicationQueues getReplicationQueues(ReplicationQueuesArguments args)
+       throws Exception {
+     Class<?> classToBuild = args.getConf().getClass("hbase.region.replica." +
+-        "replication.ReplicationQueuesType", ReplicationQueuesZKImpl.class);
++        "replication.replicationQueues.class", ReplicationQueuesZKImpl.class);
+     return (ReplicationQueues) ConstructorUtils.invokeConstructor(classToBuild, args);
+   }
+ 
+@@ -42,7 +42,7 @@
+       ReplicationQueuesClientArguments args)
+     throws Exception {
+     Class<?> classToBuild = args.getConf().getClass("hbase.region.replica." +
+-      "replication.ReplicationQueuesClientType", ReplicationQueuesClientZKImpl.class);
++      "replication.replicationQueuesClient.class", ReplicationQueuesClientZKImpl.class);
+     return (ReplicationQueuesClient) ConstructorUtils.invokeConstructor(classToBuild, args);
+   }
+ 
+diff --git a/hbase-client/src/main/java/org/apache/hadoop/hbase/replication/ReplicationFactory.java b/hbase-client/src/main/java/org/apache/hadoop/hbase/replication/ReplicationFactory.java
+index 38f9f30..b84641c 100644
+--- a/hbase-client/src/main/java/org/apache/hadoop/hbase/replication/ReplicationFactory.java
++++ b/hbase-client/src/main/java/org/apache/hadoop/hbase/replication/ReplicationFactory.java
+@@ -34,7 +34,7 @@
+   public static ReplicationQueues getReplicationQueues(ReplicationQueuesArguments args)
+       throws Exception {
+     Class<?> classToBuild = args.getConf().getClass("hbase.region.replica." +
+-        "replication.ReplicationQueuesType", ReplicationQueuesZKImpl.class);
++        "replication.replicationQueues.class", ReplicationQueuesZKImpl.class);
+     return (ReplicationQueues) ConstructorUtils.invokeConstructor(classToBuild, args);
+   }
+ 
+@@ -42,7 +42,7 @@
+       ReplicationQueuesClientArguments args)
+     throws Exception {
+     Class<?> classToBuild = args.getConf().getClass("hbase.region.replica." +
+-      "replication.ReplicationQueuesClientType", ReplicationQueuesClientZKImpl.class);
++      "replication.replicationQueuesClient.class", ReplicationQueuesClientZKImpl.class);
+     return (ReplicationQueuesClient) ConstructorUtils.invokeConstructor(classToBuild, args);
+   }
+ 

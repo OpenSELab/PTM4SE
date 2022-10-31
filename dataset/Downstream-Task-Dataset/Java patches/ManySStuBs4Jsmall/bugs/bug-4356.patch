@@ -1,0 +1,26 @@
+diff --git a/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpConsumerFileSplitTest.java b/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpConsumerFileSplitTest.java
+index 350c519..5064671 100644
+--- a/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpConsumerFileSplitTest.java
++++ b/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpConsumerFileSplitTest.java
+@@ -47,7 +47,7 @@
+             public void configure() throws Exception {
+                 from(getFtpUrl())
+                     .to("log:file")
+-                    .split(body().tokenize("\n"))
++                    .split(body().tokenize(System.getProperty("line.separator")))
+                         .to("log:line")
+                         .to("mock:result");
+             }
+diff --git a/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpConsumerFileSplitTest.java b/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpConsumerFileSplitTest.java
+index 350c519..5064671 100644
+--- a/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpConsumerFileSplitTest.java
++++ b/components/camel-ftp/src/test/java/org/apache/camel/component/file/remote/FtpConsumerFileSplitTest.java
+@@ -47,7 +47,7 @@
+             public void configure() throws Exception {
+                 from(getFtpUrl())
+                     .to("log:file")
+-                    .split(body().tokenize("\n"))
++                    .split(body().tokenize(System.getProperty("line.separator")))
+                         .to("log:line")
+                         .to("mock:result");
+             }

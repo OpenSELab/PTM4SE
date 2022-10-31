@@ -1,0 +1,46 @@
+diff --git a/clients/unshaded/src/main/java/tachyon/client/file/AbstractTachyonFileSystem.java b/clients/unshaded/src/main/java/tachyon/client/file/AbstractTachyonFileSystem.java
+index dd0eebc..6de4753 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/file/AbstractTachyonFileSystem.java
++++ b/clients/unshaded/src/main/java/tachyon/client/file/AbstractTachyonFileSystem.java
+@@ -163,8 +163,7 @@
+       IOException, FileAlreadyExistException {
+     FileSystemMasterClient masterClient = mContext.acquireMasterClient();
+     try {
+-      // TODO: Change this RPC's arguments
+-      boolean result = masterClient.createDirectory(path.getPath(), true);
++      boolean result = masterClient.createDirectory(path.getPath(), recursive);
+       if (result) {
+         LOG.info("Created directory " + path.getPath());
+       }
+diff --git a/clients/unshaded/src/main/java/tachyon/client/file/TachyonFileSystem.java b/clients/unshaded/src/main/java/tachyon/client/file/TachyonFileSystem.java
+index d5743aa..82bb2ec 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/file/TachyonFileSystem.java
++++ b/clients/unshaded/src/main/java/tachyon/client/file/TachyonFileSystem.java
+@@ -32,9 +32,10 @@
+ 
+ /**
+  * A TachyonFileSystem implementation including convenience methods as well as a streaming API to
+- * read and write files. Creating files is not supported by this TachyonFileSystem because the
+- * files should only be written once, thus getOutStream is sufficient for creating and writing to
+- * a file.
++ * read and write files. This class does not access the master client directly but goes through the
++ * implementations provided in {@link AbstractTachyonFileSystem}. The create api for creating files
++ * is not supported by this TachyonFileSystem because the files should only be written once, thus
++ * getOutStream is sufficient for creating and writing to a file.
+  */
+ @PublicApi
+ public class TachyonFileSystem extends AbstractTachyonFileSystem {
+diff --git a/clients/unshaded/src/main/java/tachyon/client/file/AbstractTachyonFileSystem.java b/clients/unshaded/src/main/java/tachyon/client/file/AbstractTachyonFileSystem.java
+index dd0eebc..6de4753 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/file/AbstractTachyonFileSystem.java
++++ b/clients/unshaded/src/main/java/tachyon/client/file/AbstractTachyonFileSystem.java
+@@ -163,8 +163,7 @@
+       IOException, FileAlreadyExistException {
+     FileSystemMasterClient masterClient = mContext.acquireMasterClient();
+     try {
+-      // TODO: Change this RPC's arguments
+-      boolean result = masterClient.createDirectory(path.getPath(), true);
++      boolean result = masterClient.createDirectory(path.getPath(), recursive);
+       if (result) {
+         LOG.info("Created directory " + path.getPath());
+       }

@@ -1,0 +1,97 @@
+diff --git a/clients/unshaded/src/main/java/tachyon/client/AbstractTachyonFS.java b/clients/unshaded/src/main/java/tachyon/client/AbstractTachyonFS.java
+index d795076..7db70e5 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/AbstractTachyonFS.java
++++ b/clients/unshaded/src/main/java/tachyon/client/AbstractTachyonFS.java
+@@ -44,7 +44,7 @@
+    * @return The unique file id. It returns -1 if the creation failed.
+    * @throws IOException if the operation fails
+    */
+-  public synchronized int createFile(TachyonURI path) throws IOException {
++  public synchronized long createFile(TachyonURI path) throws IOException {
+     long defaultBlockSize = mTachyonConf.getBytes(Constants.USER_DEFAULT_BLOCK_SIZE_BYTE);
+     return createFile(path, defaultBlockSize);
+   }
+@@ -59,7 +59,7 @@
+    * @return The unique file id. It returns -1 if the creation failed.
+    * @throws IOException if the operation fails
+    */
+-  public synchronized int createFile(TachyonURI path, long blockSizeByte) throws IOException {
++  public synchronized long createFile(TachyonURI path, long blockSizeByte) throws IOException {
+     if (blockSizeByte > (long) Constants.GB * 2) {
+       throw new IOException("Block size must be less than 2GB: " + blockSizeByte);
+     }
+@@ -78,7 +78,7 @@
+    * @return The unique file id. It returns -1 if the creation failed.
+    * @throws IOException if the operation fails
+    */
+-  public synchronized int createFile(TachyonURI path, TachyonURI ufsPath) throws IOException {
++  public synchronized long createFile(TachyonURI path, TachyonURI ufsPath) throws IOException {
+     return createFile(path, ufsPath, -1, true);
+   }
+ 
+diff --git a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+index 6ebb260..24a66e1 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
++++ b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+@@ -327,14 +327,13 @@
+    * @throws IOException if the underlying master RPC fails
+    */
+   @Override
+-  public synchronized int createFile(TachyonURI path, TachyonURI ufsPath, long blockSizeByte,
++  public synchronized long createFile(TachyonURI path, TachyonURI ufsPath, long blockSizeByte,
+       boolean recursive) throws IOException {
+     validateUri(path);
+-    // TODO(calvin): This is not safe.
+     if (blockSizeByte > 0) {
+-      return (int) mFSMasterClient.createFile(path.getPath(), blockSizeByte, recursive);
++      return mFSMasterClient.createFile(path.getPath(), blockSizeByte, recursive);
+     } else {
+-      return (int) mFSMasterClient.loadFileInfoFromUfs(path.getPath(), ufsPath.toString(),
++      return mFSMasterClient.loadFileInfoFromUfs(path.getPath(), ufsPath.toString(),
+           blockSizeByte, recursive);
+     }
+   }
+diff --git a/clients/unshaded/src/main/java/tachyon/client/TachyonFSCore.java b/clients/unshaded/src/main/java/tachyon/client/TachyonFSCore.java
+index 2c39ff6..ee99106 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/TachyonFSCore.java
++++ b/clients/unshaded/src/main/java/tachyon/client/TachyonFSCore.java
+@@ -40,7 +40,7 @@
+    * @return The file id, which is globally unique.
+    * @throws IOException if the operation fails
+    */
+-  int createFile(TachyonURI path, TachyonURI ufsPath, long blockSizeByte, boolean recursive)
++  long createFile(TachyonURI path, TachyonURI ufsPath, long blockSizeByte, boolean recursive)
+       throws IOException;
+ 
+   /**
+diff --git a/clients/unshaded/src/main/java/tachyon/client/AbstractTachyonFS.java b/clients/unshaded/src/main/java/tachyon/client/AbstractTachyonFS.java
+index d795076..7db70e5 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/AbstractTachyonFS.java
++++ b/clients/unshaded/src/main/java/tachyon/client/AbstractTachyonFS.java
+@@ -44,7 +44,7 @@
+    * @return The unique file id. It returns -1 if the creation failed.
+    * @throws IOException if the operation fails
+    */
+-  public synchronized int createFile(TachyonURI path) throws IOException {
++  public synchronized long createFile(TachyonURI path) throws IOException {
+     long defaultBlockSize = mTachyonConf.getBytes(Constants.USER_DEFAULT_BLOCK_SIZE_BYTE);
+     return createFile(path, defaultBlockSize);
+   }
+@@ -59,7 +59,7 @@
+    * @return The unique file id. It returns -1 if the creation failed.
+    * @throws IOException if the operation fails
+    */
+-  public synchronized int createFile(TachyonURI path, long blockSizeByte) throws IOException {
++  public synchronized long createFile(TachyonURI path, long blockSizeByte) throws IOException {
+     if (blockSizeByte > (long) Constants.GB * 2) {
+       throw new IOException("Block size must be less than 2GB: " + blockSizeByte);
+     }
+@@ -78,7 +78,7 @@
+    * @return The unique file id. It returns -1 if the creation failed.
+    * @throws IOException if the operation fails
+    */
+-  public synchronized int createFile(TachyonURI path, TachyonURI ufsPath) throws IOException {
++  public synchronized long createFile(TachyonURI path, TachyonURI ufsPath) throws IOException {
+     return createFile(path, ufsPath, -1, true);
+   }
+ 

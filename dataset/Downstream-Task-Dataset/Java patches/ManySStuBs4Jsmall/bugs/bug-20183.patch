@@ -1,0 +1,22 @@
+diff --git a/web/src/main/java/org/openmrs/web/controller/concept/ConceptClassListController.java b/web/src/main/java/org/openmrs/web/controller/concept/ConceptClassListController.java
+index 9b353b2..4176a0c 100644
+--- a/web/src/main/java/org/openmrs/web/controller/concept/ConceptClassListController.java
++++ b/web/src/main/java/org/openmrs/web/controller/concept/ConceptClassListController.java
+@@ -79,7 +79,7 @@
+ 				for (String cc : conceptClassList) {
+ 					try {
+ 						cs.purgeConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
+-						if (!"".equals(success)) {
++						if (!"".equals(success.toString())) {
+ 							success.append("<br/>");
+ 						}
+ 						success.append(cc).append(" ").append(deleted);
+@@ -96,7 +96,7 @@
+ 			}
+ 			
+ 			view = getSuccessView();
+-			if (!"".equals(success)) {
++			if (!"".equals(success.toString())) {
+ 				httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR, success.toString());
+ 			}
+ 			if (!"".equals(error)) {

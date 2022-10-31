@@ -1,0 +1,39 @@
+diff --git a/src/main/java/com/zaxxer/hikari/HikariDataSource.java b/src/main/java/com/zaxxer/hikari/HikariDataSource.java
+index 5b5c8f4..b53a652 100644
+--- a/src/main/java/com/zaxxer/hikari/HikariDataSource.java
++++ b/src/main/java/com/zaxxer/hikari/HikariDataSource.java
+@@ -79,7 +79,7 @@
+    public Connection getConnection() throws SQLException
+    {
+       if (isShutdown) {
+-         throw new SQLException("Pool {} has been shutdown", pool.getConfiguration().getPoolName());
++         throw new SQLException(String.format("Pool %s has been shutdown", pool.getConfiguration().getPoolName()));
+       }
+ 
+       if (fastPathPool != null) {
+diff --git a/src/test/java/com/zaxxer/hikari/ShutdownTest.java b/src/test/java/com/zaxxer/hikari/ShutdownTest.java
+index cb43199..b322cd3 100644
+--- a/src/test/java/com/zaxxer/hikari/ShutdownTest.java
++++ b/src/test/java/com/zaxxer/hikari/ShutdownTest.java
+@@ -222,7 +222,7 @@
+            ds.getConnection();
+        }
+        catch (SQLException e) {
+-          Assert.assertTrue(e.getMessage().contains("Pool has been shutdown"));
++          Assert.assertTrue(e.getMessage().contains("has been shutdown"));
+        }
+    }
+ 
+diff --git a/src/main/java/com/zaxxer/hikari/HikariDataSource.java b/src/main/java/com/zaxxer/hikari/HikariDataSource.java
+index 5b5c8f4..b53a652 100644
+--- a/src/main/java/com/zaxxer/hikari/HikariDataSource.java
++++ b/src/main/java/com/zaxxer/hikari/HikariDataSource.java
+@@ -79,7 +79,7 @@
+    public Connection getConnection() throws SQLException
+    {
+       if (isShutdown) {
+-         throw new SQLException("Pool {} has been shutdown", pool.getConfiguration().getPoolName());
++         throw new SQLException(String.format("Pool %s has been shutdown", pool.getConfiguration().getPoolName()));
+       }
+ 
+       if (fastPathPool != null) {

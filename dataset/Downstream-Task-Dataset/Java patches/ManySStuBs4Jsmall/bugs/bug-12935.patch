@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/AssignUniqueIdOperator.java b/presto-main/src/main/java/com/facebook/presto/operator/AssignUniqueIdOperator.java
+index 683122b..050efee 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/AssignUniqueIdOperator.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/AssignUniqueIdOperator.java
+@@ -106,7 +106,7 @@
+         this.rowIdPool = requireNonNull(rowIdPool, "rowIdPool is null");
+ 
+         TaskId fullTaskId = operatorContext.getDriverContext().getTaskId();
+-        uniqueValueMask = (fullTaskId.getStageId().getId() << 54L) | ((long) fullTaskId.getId() << 40L);
++        uniqueValueMask = (((long) fullTaskId.getStageId().getId()) << 54) | (((long) fullTaskId.getId()) << 40);
+         inputPageChannelCount = types.size() - 1;
+ 
+         requestValues();
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/AssignUniqueIdOperator.java b/presto-main/src/main/java/com/facebook/presto/operator/AssignUniqueIdOperator.java
+index 683122b..050efee 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/AssignUniqueIdOperator.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/AssignUniqueIdOperator.java
+@@ -106,7 +106,7 @@
+         this.rowIdPool = requireNonNull(rowIdPool, "rowIdPool is null");
+ 
+         TaskId fullTaskId = operatorContext.getDriverContext().getTaskId();
+-        uniqueValueMask = (fullTaskId.getStageId().getId() << 54L) | ((long) fullTaskId.getId() << 40L);
++        uniqueValueMask = (((long) fullTaskId.getStageId().getId()) << 54) | (((long) fullTaskId.getId()) << 40);
+         inputPageChannelCount = types.size() - 1;
+ 
+         requestValues();

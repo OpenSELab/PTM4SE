@@ -1,0 +1,131 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java b/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
+index ebbe98f..17f43d7 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
+@@ -1811,15 +1811,12 @@ public abstract class MarkupContainer extends Component implements Iterable<Comp
+ 	protected void onAfterRenderChildren()
+ 	{
+ 		// Loop through child components
+-		final Iterator<? extends Component> iter = iterator();
+-		while (iter.hasNext())
++		for (Component child : this)
+ 		{
+-			// Get next child
+-			final Component child = iter.next();
+-
+ 			// Call end request on the child
+ 			child.afterRender();
+ 		}
++
+ 		super.onAfterRenderChildren();
+ 	}
+ 
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/MarkupResourceStream.java b/wicket-core/src/main/java/org/apache/wicket/markup/MarkupResourceStream.java
+index 95cd456..9e26187 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/MarkupResourceStream.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/MarkupResourceStream.java
+@@ -45,6 +45,9 @@ public class MarkupResourceStream implements IResourceStream, IFixedLocationReso
+ 
+ 	private static final Logger log = LoggerFactory.getLogger(MarkupResourceStream.class);
+ 
++	/** */
++	public static final String WICKET_XHTML_DTD = "http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd";
++
+ 	private static final Pattern DOCTYPE_REGEX = Pattern.compile("!DOCTYPE\\s+(.*)\\s*");
+ 
+ 	/** The associated markup resource stream */
+@@ -68,10 +71,7 @@ public class MarkupResourceStream implements IResourceStream, IFixedLocationReso
+ 	/** The encoding as found in <?xml ... encoding="" ?>. Null, else */
+ 	private String encoding;
+ 
+-	/**
+-	 * Wicket namespace: <html
+-	 * xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd>
+-	 */
++	/** Wicket namespace: see WICKET_XHTML_DTD */
+ 	private String wicketNamespace;
+ 
+ 	/** == wicket namespace name + ":id" */
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/transformer/AbstractTransformerBehavior.java b/wicket-core/src/main/java/org/apache/wicket/markup/transformer/AbstractTransformerBehavior.java
+index 0e82dc3..be0490b 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/transformer/AbstractTransformerBehavior.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/transformer/AbstractTransformerBehavior.java
+@@ -19,7 +19,6 @@ package org.apache.wicket.markup.transformer;
+ import org.apache.wicket.Component;
+ import org.apache.wicket.WicketRuntimeException;
+ import org.apache.wicket.behavior.Behavior;
+-import org.apache.wicket.markup.ComponentTag;
+ import org.apache.wicket.protocol.http.BufferedWebResponse;
+ import org.apache.wicket.request.cycle.RequestCycle;
+ import org.apache.wicket.request.http.WebResponse;
+@@ -59,12 +58,6 @@ public abstract class AbstractTransformerBehavior extends Behavior implements IT
+ 	}
+ 
+ 	@Override
+-	public void onComponentTag(final Component component, final ComponentTag tag)
+-	{
+-		tag.put("xmlns:wicket", "http://wicket.apache.org");
+-	}
+-
+-	@Override
+ 	public void beforeRender(Component component)
+ 	{
+ 		super.beforeRender(component);
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/transformer/XsltOutputTransformerContainer.java b/wicket-core/src/main/java/org/apache/wicket/markup/transformer/XsltOutputTransformerContainer.java
+index 873c476..d09c100 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/transformer/XsltOutputTransformerContainer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/transformer/XsltOutputTransformerContainer.java
+@@ -18,6 +18,7 @@ package org.apache.wicket.markup.transformer;
+ 
+ import org.apache.wicket.AttributeModifier;
+ import org.apache.wicket.Component;
++import org.apache.wicket.markup.MarkupResourceStream;
+ import org.apache.wicket.markup.MarkupType;
+ import org.apache.wicket.model.IModel;
+ import org.apache.wicket.model.Model;
+@@ -74,7 +75,7 @@ public class XsltOutputTransformerContainer extends AbstractOutputTransformerCon
+ 		// Make the XSLT processor happy and allow him to handle the wicket
+ 		// tags and attributes which are in the wicket namespace
+ 		add(AttributeModifier.replace("xmlns:wicket",
+-			Model.of("http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd")));
++			Model.of(MarkupResourceStream.WICKET_XHTML_DTD)));
+ 	}
+ 
+ 	/**
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/transformer/XsltTransformerBehavior.java b/wicket-core/src/main/java/org/apache/wicket/markup/transformer/XsltTransformerBehavior.java
+index 97a1680..d1c3efa 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/transformer/XsltTransformerBehavior.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/transformer/XsltTransformerBehavior.java
+@@ -20,6 +20,7 @@ import org.apache.wicket.Component;
+ import org.apache.wicket.Page;
+ import org.apache.wicket.WicketRuntimeException;
+ import org.apache.wicket.markup.ComponentTag;
++import org.apache.wicket.markup.MarkupResourceStream;
+ 
+ /**
+  * An IBehavior which can be added to any component except ListView. It allows to post-process
+@@ -69,10 +70,10 @@ public class XsltTransformerBehavior extends AbstractTransformerBehavior
+ 	@Override
+ 	public void onComponentTag(final Component component, final ComponentTag tag)
+ 	{
+-		tag.put("xmlns:wicket", "http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd");
+-
+ 		// Make the XSLT processor happy and allow it to handle the wicket tags
+ 		// and attributes that are in the wicket namespace
++		tag.put("xmlns:wicket", MarkupResourceStream.WICKET_XHTML_DTD);
++
+ 		super.onComponentTag(component, tag);
+ 	}
+ 
+diff --git a/wicket-core/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java b/wicket-core/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
+index 6ab2ef8..1fa461c 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
++++ b/wicket-core/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
+@@ -132,7 +132,6 @@ public class BufferedWebResponse extends WebResponse implements IMetaDataBufferi
+ 		@Override
+ 		protected void invoke(WebResponse response)
+ 		{
+-
+ 			AppendingStringBuffer responseBuffer = new AppendingStringBuffer(builder);
+ 
+ 			List<IResponseFilter> responseFilters = Application.get()

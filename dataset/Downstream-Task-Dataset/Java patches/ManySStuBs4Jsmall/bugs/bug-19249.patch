@@ -1,0 +1,13 @@
+diff --git a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComHumidityMessage.java b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComHumidityMessage.java
+index 6be29c6..c84f1f0 100644
+--- a/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComHumidityMessage.java
++++ b/bundles/binding/org.openhab.binding.rfxcom/src/main/java/org/openhab/binding/rfxcom/internal/messages/RFXComHumidityMessage.java
+@@ -136,7 +136,7 @@
+     public byte[] decodeMessage() {
+         byte[] data = new byte[9];
+ 
+-        data[0] = 0x0A;
++        data[0] = (byte)(data.length-1);
+         data[1] = RFXComBaseMessage.PacketType.HUMIDITY.toByte();
+         data[2] = subType.toByte();
+         data[3] = seqNbr;

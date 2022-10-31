@@ -1,0 +1,59 @@
+diff --git a/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/RootDocProcessor.java b/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/RootDocProcessor.java
+index 97d9343..6cc7551 100644
+--- a/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/RootDocProcessor.java
++++ b/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/RootDocProcessor.java
+@@ -79,8 +79,7 @@
+     return obj;
+   }
+ 
+-  private static Map<Object, Object> proxies =
+-    new WeakHashMap<Object, Object>();
++  private static Map<Object, Object> proxies = new WeakHashMap<>();
+ 
+   private static Object getProxy(Object obj) {
+     Object proxy = proxies.get(obj);
+@@ -207,7 +206,7 @@
+       if (array == null || array.length == 0) {
+         return array;
+       }
+-      List<Object> list = new ArrayList<Object>(array.length);
++      List<Object> list = new ArrayList<>(array.length);
+       for (Doc entry : array) {
+         if (!exclude(entry)) {
+           list.add(process(entry, componentType));
+diff --git a/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/StabilityOptions.java b/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/StabilityOptions.java
+index 6cb03a5..7454436 100644
+--- a/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/StabilityOptions.java
++++ b/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/StabilityOptions.java
+@@ -53,7 +53,7 @@
+   }
+ 
+   public static String[][] filterOptions(String[][] options) {
+-    List<String[]> optionsList = new ArrayList<String[]>(options.length);
++    List<String[]> optionsList = new ArrayList<>();
+     for (int i = 0; i < options.length; i++) {
+       if (!options[i][0].equalsIgnoreCase(UNSTABLE_OPTION)
+           && !options[i][0].equalsIgnoreCase(EVOLVING_OPTION)
+diff --git a/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/RootDocProcessor.java b/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/RootDocProcessor.java
+index 97d9343..6cc7551 100644
+--- a/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/RootDocProcessor.java
++++ b/hbase-annotations/src/main/java/org/apache/hadoop/hbase/classification/tools/RootDocProcessor.java
+@@ -79,8 +79,7 @@
+     return obj;
+   }
+ 
+-  private static Map<Object, Object> proxies =
+-    new WeakHashMap<Object, Object>();
++  private static Map<Object, Object> proxies = new WeakHashMap<>();
+ 
+   private static Object getProxy(Object obj) {
+     Object proxy = proxies.get(obj);
+@@ -207,7 +206,7 @@
+       if (array == null || array.length == 0) {
+         return array;
+       }
+-      List<Object> list = new ArrayList<Object>(array.length);
++      List<Object> list = new ArrayList<>(array.length);
+       for (Doc entry : array) {
+         if (!exclude(entry)) {
+           list.add(process(entry, componentType));

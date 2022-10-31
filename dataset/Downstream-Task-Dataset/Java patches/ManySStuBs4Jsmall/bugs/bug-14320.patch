@@ -1,0 +1,26 @@
+diff --git a/src/com/google/javascript/jscomp/AmbiguateProperties.java b/src/com/google/javascript/jscomp/AmbiguateProperties.java
+index 6b0aa96..21b7d23 100644
+--- a/src/com/google/javascript/jscomp/AmbiguateProperties.java
++++ b/src/com/google/javascript/jscomp/AmbiguateProperties.java
+@@ -183,7 +183,7 @@
+   /** Returns an integer that uniquely identifies a JSType. */
+   private int getIntForType(JSType type) {
+     // Templatized types don't exist at runtime, so collapse to raw type
+-    if (type.isTemplatizedType()) {
++    if (type != null && type.isTemplatizedType()) {
+       type = type.toMaybeTemplatizedType().getReferencedType();
+     }
+     if (intForType.containsKey(type)) {
+diff --git a/src/com/google/javascript/jscomp/AmbiguateProperties.java b/src/com/google/javascript/jscomp/AmbiguateProperties.java
+index 6b0aa96..21b7d23 100644
+--- a/src/com/google/javascript/jscomp/AmbiguateProperties.java
++++ b/src/com/google/javascript/jscomp/AmbiguateProperties.java
+@@ -183,7 +183,7 @@
+   /** Returns an integer that uniquely identifies a JSType. */
+   private int getIntForType(JSType type) {
+     // Templatized types don't exist at runtime, so collapse to raw type
+-    if (type.isTemplatizedType()) {
++    if (type != null && type.isTemplatizedType()) {
+       type = type.toMaybeTemplatizedType().getReferencedType();
+     }
+     if (intForType.containsKey(type)) {

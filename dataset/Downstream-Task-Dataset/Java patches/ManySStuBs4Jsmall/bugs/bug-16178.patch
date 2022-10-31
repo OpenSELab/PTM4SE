@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/CMap.java b/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
+index 4026a0e..6d53568 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
+@@ -1308,7 +1308,7 @@
+         @Override
+         public int getMaxSize() {
+             final int maxSize = maxSizeConfig.getSize();
+-            final int clusterMemberSize = node.getClusterImpl().getMembers().size();
++            final int clusterMemberSize = concurrentMapManager.dataMemberCount.get();
+             final int memberCount = (clusterMemberSize == 0) ? 1 : clusterMemberSize;
+             return maxSize / memberCount;
+         }
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/CMap.java b/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
+index 4026a0e..6d53568 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/CMap.java
+@@ -1308,7 +1308,7 @@
+         @Override
+         public int getMaxSize() {
+             final int maxSize = maxSizeConfig.getSize();
+-            final int clusterMemberSize = node.getClusterImpl().getMembers().size();
++            final int clusterMemberSize = concurrentMapManager.dataMemberCount.get();
+             final int memberCount = (clusterMemberSize == 0) ? 1 : clusterMemberSize;
+             return maxSize / memberCount;
+         }

@@ -1,0 +1,28 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/batch/JobLauncherCommandLineRunner.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/batch/JobLauncherCommandLineRunner.java
+index 06818f5..25b2129 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/batch/JobLauncherCommandLineRunner.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/batch/JobLauncherCommandLineRunner.java
+@@ -153,7 +153,8 @@
+ 					|| previousExecution.getStatus() == BatchStatus.FAILED) {
+ 				// Retry a failed or stopped execution
+ 				jobParameters = previousExecution.getJobParameters();
+-				for (Entry<String, JobParameter> parameter : additionals.entrySet()) {
++				for (Entry<String, JobParameter> parameter : new HashMap<String, JobParameter>(
++						additionals).entrySet()) {
+ 					// Non-identifying additional parameters can be added to a retry
+ 					if (!parameter.getValue().isIdentifying()) {
+ 						additionals.remove(parameter.getKey());
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/batch/JobLauncherCommandLineRunner.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/batch/JobLauncherCommandLineRunner.java
+index 06818f5..25b2129 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/batch/JobLauncherCommandLineRunner.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/batch/JobLauncherCommandLineRunner.java
+@@ -153,7 +153,8 @@
+ 					|| previousExecution.getStatus() == BatchStatus.FAILED) {
+ 				// Retry a failed or stopped execution
+ 				jobParameters = previousExecution.getJobParameters();
+-				for (Entry<String, JobParameter> parameter : additionals.entrySet()) {
++				for (Entry<String, JobParameter> parameter : new HashMap<String, JobParameter>(
++						additionals).entrySet()) {
+ 					// Non-identifying additional parameters can be added to a retry
+ 					if (!parameter.getValue().isIdentifying()) {
+ 						additionals.remove(parameter.getKey());

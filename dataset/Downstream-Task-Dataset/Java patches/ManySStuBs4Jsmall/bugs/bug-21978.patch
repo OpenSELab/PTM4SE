@@ -1,0 +1,39 @@
+diff --git a/src/edu/stanford/nlp/pipeline/EPEOutputter.java b/src/edu/stanford/nlp/pipeline/EPEOutputter.java
+index 6a80809..aeb0f5a 100644
+--- a/src/edu/stanford/nlp/pipeline/EPEOutputter.java
++++ b/src/edu/stanford/nlp/pipeline/EPEOutputter.java
+@@ -50,7 +50,7 @@
+               node.set("end", token.get(CoreAnnotations.CharacterOffsetEndAnnotation.class));
+             } else {
+               node.set("id", getNodeIndex(token, maxIndex));
+-              node.set("source", "" + token.index());
++              node.set("source", token.index());
+             }
+           node.set("form", token.word());
+ 
+diff --git a/src/edu/stanford/nlp/pipeline/StanfordCoreNLP.java b/src/edu/stanford/nlp/pipeline/StanfordCoreNLP.java
+index 5bad7e2..22e9954 100644
+--- a/src/edu/stanford/nlp/pipeline/StanfordCoreNLP.java
++++ b/src/edu/stanford/nlp/pipeline/StanfordCoreNLP.java
+@@ -994,7 +994,7 @@
+             break;
+           case CUSTOM:
+             AnnotationOutputter outputter = ReflectionLoading.loadByReflection(properties.getProperty("customOutputter"));
+-            outputter.print(annotation, System.out, outputOptions);
++            outputter.print(annotation, fos, outputOptions);
+             break;
+           default:
+             throw new IllegalArgumentException("Unknown output format " + outputFormat);
+diff --git a/src/edu/stanford/nlp/pipeline/EPEOutputter.java b/src/edu/stanford/nlp/pipeline/EPEOutputter.java
+index 6a80809..aeb0f5a 100644
+--- a/src/edu/stanford/nlp/pipeline/EPEOutputter.java
++++ b/src/edu/stanford/nlp/pipeline/EPEOutputter.java
+@@ -50,7 +50,7 @@
+               node.set("end", token.get(CoreAnnotations.CharacterOffsetEndAnnotation.class));
+             } else {
+               node.set("id", getNodeIndex(token, maxIndex));
+-              node.set("source", "" + token.index());
++              node.set("source", token.index());
+             }
+           node.set("form", token.word());
+ 

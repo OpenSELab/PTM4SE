@@ -1,0 +1,13 @@
+diff --git a/src/main/java/io/mycat/backend/PhysicalDBPool.java b/src/main/java/io/mycat/backend/PhysicalDBPool.java
+index b3dd5ba..91626f6 100644
+--- a/src/main/java/io/mycat/backend/PhysicalDBPool.java
++++ b/src/main/java/io/mycat/backend/PhysicalDBPool.java
+@@ -524,7 +524,7 @@
+             PhysicalDatasource theSource = writeSources[i];
+             if (isAlive(theSource)) {// write node is active
+                 if (includeWriteNode) {
+-	            	if (i == curActive && includeCurWriteNode == false) {
++	            	if (i == curActive && !includeCurWriteNode) {
+ 	                    // not include cur active source
+ 	                } else if (filterWithSlaveThreshold) {
+ 	                    if (canSelectAsReadNode(theSource)) {

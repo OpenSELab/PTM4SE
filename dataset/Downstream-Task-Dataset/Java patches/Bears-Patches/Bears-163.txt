@@ -1,0 +1,13 @@
+--- a/debezium-connector-mysql/src/main/java/io/debezium/connector/mysql/MySqlDdlParser.java
++++ b/debezium-connector-mysql/src/main/java/io/debezium/connector/mysql/MySqlDdlParser.java
+@@ -622,7 +622,9 @@ protected void parseCreateDefinition(Marker start, TableEditor table, boolean is
+                     tokens.rewind(defnStart);
+                 }
+             }
+-            if (tokens.canConsume("CONSTRAINT", TokenStream.ANY_VALUE, "UNIQUE") || tokens.canConsume("UNIQUE")) {
++            if (tokens.canConsume("CONSTRAINT", TokenStream.ANY_VALUE, "UNIQUE")
++                    || tokens.canConsume("CONSTRAINT", "UNIQUE")
++                    || tokens.canConsume("UNIQUE")) {
+                 tokens.canConsumeAnyOf("KEY", "INDEX");
+                 try {
+                     if (!tokens.matches('(')) {

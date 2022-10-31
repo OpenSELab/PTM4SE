@@ -1,0 +1,44 @@
+diff --git a/transactions/src/main/java/org/jboss/as/txn/TransactionJndiBindingProcessor.java b/transactions/src/main/java/org/jboss/as/txn/TransactionJndiBindingProcessor.java
+index ff2d512..b77f7f5 100644
+--- a/transactions/src/main/java/org/jboss/as/txn/TransactionJndiBindingProcessor.java
++++ b/transactions/src/main/java/org/jboss/as/txn/TransactionJndiBindingProcessor.java
+@@ -84,7 +84,7 @@
+      */
+     private void bindServices(DeploymentUnit deploymentUnit, ServiceTarget serviceTarget, EEModuleDescription description,String componentName,ServiceName contextServiceName) {
+ 
+-        final ServiceName userTransactionServiceName = ContextNames.serviceNameOfContext(description.getApplicationName(),description.getModuleName(),componentName,"java:comp/UserTransaction");
++        final ServiceName userTransactionServiceName = contextServiceName.append("UserTransaction");
+         BinderService userTransactionBindingService = new BinderService("UserTransaction");
+         serviceTarget.addService(userTransactionServiceName, userTransactionBindingService)
+             .addDependency(UserTransactionService.SERVICE_NAME, UserTransaction.class,
+@@ -92,7 +92,7 @@
+             .addDependency(contextServiceName, NamingStore.class, userTransactionBindingService.getNamingStoreInjector())
+             .install();
+ 
+-        final ServiceName transactionSynchronizationRegistryName = ContextNames.serviceNameOfContext(description.getApplicationName(),description.getModuleName(),componentName,"java:comp/TransactionSynchronizationRegistry");
++        final ServiceName transactionSynchronizationRegistryName = contextServiceName.append("TransactionSynchronizationRegistry");
+         BinderService transactionSyncBinderService = new BinderService("TransactionSynchronizationRegistry");
+         serviceTarget.addService(transactionSynchronizationRegistryName, transactionSyncBinderService)
+             .addDependency(TransactionSynchronizationRegistryService.SERVICE_NAME, TransactionSynchronizationRegistry.class,
+diff --git a/transactions/src/main/java/org/jboss/as/txn/TransactionJndiBindingProcessor.java b/transactions/src/main/java/org/jboss/as/txn/TransactionJndiBindingProcessor.java
+index ff2d512..b77f7f5 100644
+--- a/transactions/src/main/java/org/jboss/as/txn/TransactionJndiBindingProcessor.java
++++ b/transactions/src/main/java/org/jboss/as/txn/TransactionJndiBindingProcessor.java
+@@ -84,7 +84,7 @@
+      */
+     private void bindServices(DeploymentUnit deploymentUnit, ServiceTarget serviceTarget, EEModuleDescription description,String componentName,ServiceName contextServiceName) {
+ 
+-        final ServiceName userTransactionServiceName = ContextNames.serviceNameOfContext(description.getApplicationName(),description.getModuleName(),componentName,"java:comp/UserTransaction");
++        final ServiceName userTransactionServiceName = contextServiceName.append("UserTransaction");
+         BinderService userTransactionBindingService = new BinderService("UserTransaction");
+         serviceTarget.addService(userTransactionServiceName, userTransactionBindingService)
+             .addDependency(UserTransactionService.SERVICE_NAME, UserTransaction.class,
+@@ -92,7 +92,7 @@
+             .addDependency(contextServiceName, NamingStore.class, userTransactionBindingService.getNamingStoreInjector())
+             .install();
+ 
+-        final ServiceName transactionSynchronizationRegistryName = ContextNames.serviceNameOfContext(description.getApplicationName(),description.getModuleName(),componentName,"java:comp/TransactionSynchronizationRegistry");
++        final ServiceName transactionSynchronizationRegistryName = contextServiceName.append("TransactionSynchronizationRegistry");
+         BinderService transactionSyncBinderService = new BinderService("TransactionSynchronizationRegistry");
+         serviceTarget.addService(transactionSynchronizationRegistryName, transactionSyncBinderService)
+             .addDependency(TransactionSynchronizationRegistryService.SERVICE_NAME, TransactionSynchronizationRegistry.class,

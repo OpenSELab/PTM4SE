@@ -1,0 +1,26 @@
+diff --git a/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/sync/qlearning/discrete/QLearningDiscrete.java b/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/sync/qlearning/discrete/QLearningDiscrete.java
+index 6651f60..e1f76c7 100644
+--- a/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/sync/qlearning/discrete/QLearningDiscrete.java
++++ b/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/sync/qlearning/discrete/QLearningDiscrete.java
+@@ -128,7 +128,7 @@
+ 
+             INDArray[] nhistory = isHistoryProcessor ? getHistoryProcessor().getHistory() : new INDArray[]{ninput};
+ 
+-            Transition<Integer> trans = new Transition(history, action, accuReward, stepReply.isDone(), ninput);
++            Transition<Integer> trans = new Transition(history, action, accuReward, stepReply.isDone(), nhistory[0]);
+             getExpReplay().store(trans);
+ 
+             if (getStepCounter() > updateStart) {
+diff --git a/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/sync/qlearning/discrete/QLearningDiscrete.java b/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/sync/qlearning/discrete/QLearningDiscrete.java
+index 6651f60..e1f76c7 100644
+--- a/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/sync/qlearning/discrete/QLearningDiscrete.java
++++ b/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/sync/qlearning/discrete/QLearningDiscrete.java
+@@ -128,7 +128,7 @@
+ 
+             INDArray[] nhistory = isHistoryProcessor ? getHistoryProcessor().getHistory() : new INDArray[]{ninput};
+ 
+-            Transition<Integer> trans = new Transition(history, action, accuReward, stepReply.isDone(), ninput);
++            Transition<Integer> trans = new Transition(history, action, accuReward, stepReply.isDone(), nhistory[0]);
+             getExpReplay().store(trans);
+ 
+             if (getStepCounter() > updateStart) {

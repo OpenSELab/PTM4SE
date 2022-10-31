@@ -1,0 +1,79 @@
+diff --git a/controller-client/src/main/java/org/jboss/as/controller/client/impl/AbstractModelControllerClient.java b/controller-client/src/main/java/org/jboss/as/controller/client/impl/AbstractModelControllerClient.java
+index 3e76cc0..92db8fa 100644
+--- a/controller-client/src/main/java/org/jboss/as/controller/client/impl/AbstractModelControllerClient.java
++++ b/controller-client/src/main/java/org/jboss/as/controller/client/impl/AbstractModelControllerClient.java
+@@ -264,7 +264,7 @@
+         @Override
+         protected void readRequest(final DataInput input) throws IOException {
+             int batchId = getContext().getHeader().getBatchId();
+-            log.tracef("Client got inputstream request %d" +  batchId);
++            log.tracef("Client got inputstream request %d",  batchId);
+             ProtocolUtils.expectHeader(input, ModelControllerProtocol.PARAM_INPUTSTREAM_INDEX);
+             int index = input.readInt();
+ 
+@@ -291,7 +291,7 @@
+             output.writeInt(bytes.length);
+             output.write(ModelControllerProtocol.PARAM_INPUTSTREAM_CONTENTS);
+             output.write(bytes);
+-            log.tracef("Client handled inputstream request %d" +  getContext().getHeader().getBatchId());
++            log.tracef("Client handled inputstream request %d",  getContext().getHeader().getBatchId());
+         }
+     }
+ 
+diff --git a/protocol/src/main/java/org/jboss/as/protocol/mgmt/ManagementChannel.java b/protocol/src/main/java/org/jboss/as/protocol/mgmt/ManagementChannel.java
+index 3e07786..f34daa0 100644
+--- a/protocol/src/main/java/org/jboss/as/protocol/mgmt/ManagementChannel.java
++++ b/protocol/src/main/java/org/jboss/as/protocol/mgmt/ManagementChannel.java
+@@ -113,7 +113,7 @@
+         private volatile ManagementOperationHandler operationHandler;
+ 
+         private void handleRequest(final ManagementRequestHeader header, final DataInput input) throws IOException {
+-            log.tracef("%s handling request %d(%d)", ManagementChannel.this, header.getBatchId());
++            log.tracef("%s handling request %d", ManagementChannel.this, header.getBatchId());
+             final FlushableDataOutputImpl output = FlushableDataOutputImpl.create(writeMessage());
+ 
+             Exception error = null;
+@@ -139,7 +139,7 @@
+             } catch (Exception e) {
+                 throwFormattedException(e);
+             } finally {
+-                log.tracef("%s finished request %d", ManagementChannel.this);
++                log.tracef("%s finished request %d", ManagementChannel.this, header.getBatchId());
+                 IoUtils.safeClose(output);
+             }
+         }
+diff --git a/protocol/src/main/java/org/jboss/as/protocol/mgmt/ManagementRequest.java b/protocol/src/main/java/org/jboss/as/protocol/mgmt/ManagementRequest.java
+index bd352ef..d509e50 100644
+--- a/protocol/src/main/java/org/jboss/as/protocol/mgmt/ManagementRequest.java
++++ b/protocol/src/main/java/org/jboss/as/protocol/mgmt/ManagementRequest.java
+@@ -92,7 +92,7 @@
+      * @return A future to retrieve the result when the request is complete
+      */
+     public AsyncFuture<T> execute(final ExecutorService executor, final ManagementClientChannelStrategy channelStrategy) {
+-        log.tracef("Scheduling request %s with future %s - %d (%d)", this, this);
++        log.tracef("Scheduling request %s with future %s", this, this);
+         executor.execute(new Runnable() {
+             @Override
+             public void run() {
+diff --git a/controller-client/src/main/java/org/jboss/as/controller/client/impl/AbstractModelControllerClient.java b/controller-client/src/main/java/org/jboss/as/controller/client/impl/AbstractModelControllerClient.java
+index 3e76cc0..92db8fa 100644
+--- a/controller-client/src/main/java/org/jboss/as/controller/client/impl/AbstractModelControllerClient.java
++++ b/controller-client/src/main/java/org/jboss/as/controller/client/impl/AbstractModelControllerClient.java
+@@ -264,7 +264,7 @@
+         @Override
+         protected void readRequest(final DataInput input) throws IOException {
+             int batchId = getContext().getHeader().getBatchId();
+-            log.tracef("Client got inputstream request %d" +  batchId);
++            log.tracef("Client got inputstream request %d",  batchId);
+             ProtocolUtils.expectHeader(input, ModelControllerProtocol.PARAM_INPUTSTREAM_INDEX);
+             int index = input.readInt();
+ 
+@@ -291,7 +291,7 @@
+             output.writeInt(bytes.length);
+             output.write(ModelControllerProtocol.PARAM_INPUTSTREAM_CONTENTS);
+             output.write(bytes);
+-            log.tracef("Client handled inputstream request %d" +  getContext().getHeader().getBatchId());
++            log.tracef("Client handled inputstream request %d",  getContext().getHeader().getBatchId());
+         }
+     }
+ 

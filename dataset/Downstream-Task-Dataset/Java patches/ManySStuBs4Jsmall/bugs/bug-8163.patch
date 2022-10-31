@@ -1,0 +1,28 @@
+diff --git a/external/storm-kafka/src/jvm/storm/kafka/KafkaUtils.java b/external/storm-kafka/src/jvm/storm/kafka/KafkaUtils.java
+index 25d3709..9e61789 100644
+--- a/external/storm-kafka/src/jvm/storm/kafka/KafkaUtils.java
++++ b/external/storm-kafka/src/jvm/storm/kafka/KafkaUtils.java
+@@ -115,7 +115,8 @@
+                         }
+                         long latestTimeOffset = getOffset(consumer, _topic, partition.partition, kafka.api.OffsetRequest.LatestTime());
+                         long earliestTimeOffset = getOffset(consumer, _topic, partition.partition, kafka.api.OffsetRequest.EarliestTime());
+-                        if (latestTimeOffset == 0 || earliestTimeOffset == 0) {
++                        //if (latestTimeOffset == 0 || earliestTimeOffset == 0) {
++                        if (latestTimeOffset == 0) {
+                             LOG.warn("No data found in Kafka Partition " + partition.getId());
+                             return null;
+                         }
+diff --git a/external/storm-kafka/src/jvm/storm/kafka/KafkaUtils.java b/external/storm-kafka/src/jvm/storm/kafka/KafkaUtils.java
+index 25d3709..9e61789 100644
+--- a/external/storm-kafka/src/jvm/storm/kafka/KafkaUtils.java
++++ b/external/storm-kafka/src/jvm/storm/kafka/KafkaUtils.java
+@@ -115,7 +115,8 @@
+                         }
+                         long latestTimeOffset = getOffset(consumer, _topic, partition.partition, kafka.api.OffsetRequest.LatestTime());
+                         long earliestTimeOffset = getOffset(consumer, _topic, partition.partition, kafka.api.OffsetRequest.EarliestTime());
+-                        if (latestTimeOffset == 0 || earliestTimeOffset == 0) {
++                        //if (latestTimeOffset == 0 || earliestTimeOffset == 0) {
++                        if (latestTimeOffset == 0) {
+                             LOG.warn("No data found in Kafka Partition " + partition.getId());
+                             return null;
+                         }

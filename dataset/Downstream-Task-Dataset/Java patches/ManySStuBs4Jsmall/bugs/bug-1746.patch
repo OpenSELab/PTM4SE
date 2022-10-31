@@ -1,0 +1,26 @@
+diff --git a/src/test/java/com/ning/http/client/async/FilePartLargeFileTest.java b/src/test/java/com/ning/http/client/async/FilePartLargeFileTest.java
+index 1a30299..b4dce76 100644
+--- a/src/test/java/com/ning/http/client/async/FilePartLargeFileTest.java
++++ b/src/test/java/com/ning/http/client/async/FilePartLargeFileTest.java
+@@ -67,7 +67,7 @@
+         AsyncHttpClient client = getAsyncHttpClient(config);
+         BoundRequestBuilder rb = client.preparePut(getTargetUrl());
+ 
+-        rb.setBody(largeFile);
++        rb.addBodyPart(new FilePart("test", largeFile, "application/octet-stream" , "UTF-8"));
+ 
+         Response response = rb.execute().get();
+         Assert.assertEquals(200, response.getStatusCode());
+diff --git a/src/test/java/com/ning/http/client/async/FilePartLargeFileTest.java b/src/test/java/com/ning/http/client/async/FilePartLargeFileTest.java
+index 1a30299..b4dce76 100644
+--- a/src/test/java/com/ning/http/client/async/FilePartLargeFileTest.java
++++ b/src/test/java/com/ning/http/client/async/FilePartLargeFileTest.java
+@@ -67,7 +67,7 @@
+         AsyncHttpClient client = getAsyncHttpClient(config);
+         BoundRequestBuilder rb = client.preparePut(getTargetUrl());
+ 
+-        rb.setBody(largeFile);
++        rb.addBodyPart(new FilePart("test", largeFile, "application/octet-stream" , "UTF-8"));
+ 
+         Response response = rb.execute().get();
+         Assert.assertEquals(200, response.getStatusCode());

@@ -1,0 +1,68 @@
+diff --git a/src/main/java/com/ning/http/client/providers/jdk/JDKAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/jdk/JDKAsyncHttpProvider.java
+index 8dfc0c2..7b978e3 100644
+--- a/src/main/java/com/ning/http/client/providers/jdk/JDKAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/jdk/JDKAsyncHttpProvider.java
+@@ -161,7 +161,7 @@
+             try {
+                 proxy = configureProxyAndAuth(proxyServer, request.getRealm());
+             } catch (AuthenticationException e) {
+-                throw new IOException(e);
++                throw new IOException(e.getMessage());
+             }
+         }
+ 
+@@ -180,7 +180,7 @@
+             try {
+                 proxy = configureProxyAndAuth(proxyServer, request.getRealm());
+             } catch (AuthenticationException e) {
+-                throw new IOException(e);
++                throw new IOException(e.getMessage());
+             }
+         }
+ 
+@@ -198,9 +198,9 @@
+                 try {
+                     sslContext = SslUtils.getSSLContext();
+                 } catch (NoSuchAlgorithmException e) {
+-                    throw new IOException(e);
++                    throw new IOException(e.getMessage());
+                 } catch (GeneralSecurityException e) {
+-                    throw new IOException(e);
++                    throw new IOException(e.getMessage());
+                 }
+             }
+             secure.setSSLSocketFactory(sslContext.getSocketFactory());
+diff --git a/src/main/java/com/ning/http/client/providers/jdk/JDKAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/jdk/JDKAsyncHttpProvider.java
+index 8dfc0c2..7b978e3 100644
+--- a/src/main/java/com/ning/http/client/providers/jdk/JDKAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/jdk/JDKAsyncHttpProvider.java
+@@ -161,7 +161,7 @@
+             try {
+                 proxy = configureProxyAndAuth(proxyServer, request.getRealm());
+             } catch (AuthenticationException e) {
+-                throw new IOException(e);
++                throw new IOException(e.getMessage());
+             }
+         }
+ 
+@@ -180,7 +180,7 @@
+             try {
+                 proxy = configureProxyAndAuth(proxyServer, request.getRealm());
+             } catch (AuthenticationException e) {
+-                throw new IOException(e);
++                throw new IOException(e.getMessage());
+             }
+         }
+ 
+@@ -198,9 +198,9 @@
+                 try {
+                     sslContext = SslUtils.getSSLContext();
+                 } catch (NoSuchAlgorithmException e) {
+-                    throw new IOException(e);
++                    throw new IOException(e.getMessage());
+                 } catch (GeneralSecurityException e) {
+-                    throw new IOException(e);
++                    throw new IOException(e.getMessage());
+                 }
+             }
+             secure.setSSLSocketFactory(sslContext.getSocketFactory());

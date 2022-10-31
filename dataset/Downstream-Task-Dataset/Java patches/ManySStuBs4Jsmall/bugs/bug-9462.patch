@@ -1,0 +1,28 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
+index 78315b5..5bff52c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
+@@ -173,7 +173,8 @@
+             case TokenTypes.NUM_INT:
+             case TokenTypes.NUM_LONG:
+                 final String text = expr.getText();
+-                return CheckUtils.parseDouble(text, type) == 0.0;
++                return Double.compare(
++                    CheckUtils.parseDouble(text, type), 0.0) == 0;
+             default:
+                 return false;
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
+index 78315b5..5bff52c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/ExplicitInitializationCheck.java
+@@ -173,7 +173,8 @@
+             case TokenTypes.NUM_INT:
+             case TokenTypes.NUM_LONG:
+                 final String text = expr.getText();
+-                return CheckUtils.parseDouble(text, type) == 0.0;
++                return Double.compare(
++                    CheckUtils.parseDouble(text, type), 0.0) == 0;
+             default:
+                 return false;
+         }

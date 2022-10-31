@@ -1,0 +1,55 @@
+diff --git a/src/com/google/javascript/jscomp/deps/ClosureBundler.java b/src/com/google/javascript/jscomp/deps/ClosureBundler.java
+index b5276b0..2749419 100644
+--- a/src/com/google/javascript/jscomp/deps/ClosureBundler.java
++++ b/src/com/google/javascript/jscomp/deps/ClosureBundler.java
+@@ -82,10 +82,10 @@
+   private void appendTraditional(Appendable out, CharSource contents)
+       throws IOException {
+     if (useEval) {
+-      out.append("(0,eval(\"");
++      out.append("(0,eval)(\"");
+       append(out, Mode.ESCAPED, contents);
+       appendSourceUrl(out, Mode.ESCAPED);
+-      out.append("\"));");
++      out.append("\");");
+     } else {
+       out.append(contents.read());
+       appendSourceUrl(out, Mode.NORMAL);
+diff --git a/test/com/google/javascript/jscomp/deps/ClosureBundlerTest.java b/test/com/google/javascript/jscomp/deps/ClosureBundlerTest.java
+index 28f3e70..6eac0ac 100644
+--- a/test/com/google/javascript/jscomp/deps/ClosureBundlerTest.java
++++ b/test/com/google/javascript/jscomp/deps/ClosureBundlerTest.java
+@@ -90,7 +90,7 @@
+     new ClosureBundler()
+         .useEval(true)
+         .appendTo(sb, TRADITIONAL, "\"a string\"");
+-    assertThat(sb.toString()).isEqualTo("(0,eval(\"\\x22a string\\x22\"));");
++    assertThat(sb.toString()).isEqualTo("(0,eval)(\"\\x22a string\\x22\");");
+   }
+ 
+   public void testTraditionalWithEvalWithSourceUrl() throws IOException {
+@@ -100,6 +100,6 @@
+         .withSourceUrl("URL")
+         .appendTo(sb, TRADITIONAL, "\"a string\"");
+     assertThat(sb.toString())
+-        .isEqualTo("(0,eval(\"\\x22a string\\x22\\n//# sourceURL\\x3dURL\\n\"));");
++        .isEqualTo("(0,eval)(\"\\x22a string\\x22\\n//# sourceURL\\x3dURL\\n\");");
+   }
+ }
+diff --git a/src/com/google/javascript/jscomp/deps/ClosureBundler.java b/src/com/google/javascript/jscomp/deps/ClosureBundler.java
+index b5276b0..2749419 100644
+--- a/src/com/google/javascript/jscomp/deps/ClosureBundler.java
++++ b/src/com/google/javascript/jscomp/deps/ClosureBundler.java
+@@ -82,10 +82,10 @@
+   private void appendTraditional(Appendable out, CharSource contents)
+       throws IOException {
+     if (useEval) {
+-      out.append("(0,eval(\"");
++      out.append("(0,eval)(\"");
+       append(out, Mode.ESCAPED, contents);
+       appendSourceUrl(out, Mode.ESCAPED);
+-      out.append("\"));");
++      out.append("\");");
+     } else {
+       out.append(contents.read());
+       appendSourceUrl(out, Mode.NORMAL);

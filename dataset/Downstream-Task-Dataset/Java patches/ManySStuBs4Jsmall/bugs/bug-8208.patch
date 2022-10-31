@@ -1,0 +1,26 @@
+diff --git a/src/jvm/backtype/storm/transactional/TransactionalSpoutCoordinator.java b/src/jvm/backtype/storm/transactional/TransactionalSpoutCoordinator.java
+index 18239b1..1905fe2 100644
+--- a/src/jvm/backtype/storm/transactional/TransactionalSpoutCoordinator.java
++++ b/src/jvm/backtype/storm/transactional/TransactionalSpoutCoordinator.java
+@@ -80,7 +80,7 @@
+     public void ack(Object msgId) {
+         TransactionAttempt tx = (TransactionAttempt) msgId;
+         TransactionStatus status = _activeTx.get(tx.getTransactionId());
+-        if(tx.equals(status.attempt)) {
++        if(status!=null && tx.equals(status.attempt)) {
+             if(status.status==AttemptStatus.PROCESSING) {
+                 status.status = AttemptStatus.PROCESSED;
+             } else if(status.status==AttemptStatus.COMMITTING) {
+diff --git a/src/jvm/backtype/storm/transactional/TransactionalSpoutCoordinator.java b/src/jvm/backtype/storm/transactional/TransactionalSpoutCoordinator.java
+index 18239b1..1905fe2 100644
+--- a/src/jvm/backtype/storm/transactional/TransactionalSpoutCoordinator.java
++++ b/src/jvm/backtype/storm/transactional/TransactionalSpoutCoordinator.java
+@@ -80,7 +80,7 @@
+     public void ack(Object msgId) {
+         TransactionAttempt tx = (TransactionAttempt) msgId;
+         TransactionStatus status = _activeTx.get(tx.getTransactionId());
+-        if(tx.equals(status.attempt)) {
++        if(status!=null && tx.equals(status.attempt)) {
+             if(status.status==AttemptStatus.PROCESSING) {
+                 status.status = AttemptStatus.PROCESSED;
+             } else if(status.status==AttemptStatus.COMMITTING) {

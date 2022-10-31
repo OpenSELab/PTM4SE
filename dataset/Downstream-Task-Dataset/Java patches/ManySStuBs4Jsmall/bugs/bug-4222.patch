@@ -1,0 +1,74 @@
+diff --git a/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/MicrometerMessageHistoryTest.java b/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/MicrometerMessageHistoryTest.java
+index 621a227..094fd66 100644
+--- a/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/MicrometerMessageHistoryTest.java
++++ b/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/MicrometerMessageHistoryTest.java
+@@ -52,9 +52,9 @@
+ 
+         for (int i = 0; i < count; i++) {
+             if (i % 2 == 0) {
+-                template.sendBody("seda:foo", "Hello " + i);
++                template.sendBody("direct:foo", "Hello " + i);
+             } else {
+-                template.sendBody("seda:bar", "Hello " + i);
++                template.sendBody("direct:bar", "Hello " + i);
+             }
+         }
+ 
+@@ -87,10 +87,10 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() {
+-                from("seda:foo")
++                from("direct:foo")
+                     .to("mock:foo").id("foo");
+ 
+-                from("seda:bar")
++                from("direct:bar")
+                     .to("mock:bar").id("bar")
+                     .to("mock:baz").id("baz");
+             }
+diff --git a/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/SpringMicrometerMessageHistoryTest.java b/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/SpringMicrometerMessageHistoryTest.java
+index 935e3bb..70c5fc8 100644
+--- a/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/SpringMicrometerMessageHistoryTest.java
++++ b/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/SpringMicrometerMessageHistoryTest.java
+@@ -42,9 +42,9 @@
+ 
+         for (int i = 0; i < count; i++) {
+             if (i % 2 == 0) {
+-                template.sendBody("seda:foo", "Hello " + i);
++                template.sendBody("direct:foo", "Hello " + i);
+             } else {
+-                template.sendBody("seda:bar", "Hello " + i);
++                template.sendBody("direct:bar", "Hello " + i);
+             }
+         }
+ 
+diff --git a/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/MicrometerMessageHistoryTest.java b/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/MicrometerMessageHistoryTest.java
+index 621a227..094fd66 100644
+--- a/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/MicrometerMessageHistoryTest.java
++++ b/components/camel-micrometer/src/test/java/org/apache/camel/component/micrometer/messagehistory/MicrometerMessageHistoryTest.java
+@@ -52,9 +52,9 @@
+ 
+         for (int i = 0; i < count; i++) {
+             if (i % 2 == 0) {
+-                template.sendBody("seda:foo", "Hello " + i);
++                template.sendBody("direct:foo", "Hello " + i);
+             } else {
+-                template.sendBody("seda:bar", "Hello " + i);
++                template.sendBody("direct:bar", "Hello " + i);
+             }
+         }
+ 
+@@ -87,10 +87,10 @@
+         return new RouteBuilder() {
+             @Override
+             public void configure() {
+-                from("seda:foo")
++                from("direct:foo")
+                     .to("mock:foo").id("foo");
+ 
+-                from("seda:bar")
++                from("direct:bar")
+                     .to("mock:bar").id("bar")
+                     .to("mock:baz").id("baz");
+             }

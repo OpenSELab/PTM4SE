@@ -1,0 +1,46 @@
+diff --git a/client/src/main/java/com/metamx/druid/query/timeseries/TimeseriesQueryQueryToolChest.java b/client/src/main/java/com/metamx/druid/query/timeseries/TimeseriesQueryQueryToolChest.java
+index 99bf679..0e5d96b 100644
+--- a/client/src/main/java/com/metamx/druid/query/timeseries/TimeseriesQueryQueryToolChest.java
++++ b/client/src/main/java/com/metamx/druid/query/timeseries/TimeseriesQueryQueryToolChest.java
+@@ -191,7 +191,8 @@
+             TimeseriesResultValue results = input.getValue();
+             final List<Object> retVal = Lists.newArrayListWithCapacity(1 + aggs.size());
+ 
+-            retVal.add(input.getTimestamp().getMillis());
++            // make sure to preserve timezone information when caching results
++            retVal.add(input.getTimestamp());
+             for (AggregatorFactory agg : aggs) {
+               retVal.add(results.getMetric(agg.getName()));
+             }
+@@ -215,7 +216,7 @@
+             Iterator<AggregatorFactory> aggsIter = aggs.iterator();
+             Iterator<Object> resultIter = results.iterator();
+ 
+-            DateTime timestamp = new DateTime(resultIter.next());
++            DateTime timestamp = (DateTime)resultIter.next();
+             while (aggsIter.hasNext() && resultIter.hasNext()) {
+               final AggregatorFactory factory = aggsIter.next();
+               retVal.put(factory.getName(), factory.deserialize(resultIter.next()));
+diff --git a/client/src/main/java/com/metamx/druid/query/timeseries/TimeseriesQueryQueryToolChest.java b/client/src/main/java/com/metamx/druid/query/timeseries/TimeseriesQueryQueryToolChest.java
+index 99bf679..0e5d96b 100644
+--- a/client/src/main/java/com/metamx/druid/query/timeseries/TimeseriesQueryQueryToolChest.java
++++ b/client/src/main/java/com/metamx/druid/query/timeseries/TimeseriesQueryQueryToolChest.java
+@@ -191,7 +191,8 @@
+             TimeseriesResultValue results = input.getValue();
+             final List<Object> retVal = Lists.newArrayListWithCapacity(1 + aggs.size());
+ 
+-            retVal.add(input.getTimestamp().getMillis());
++            // make sure to preserve timezone information when caching results
++            retVal.add(input.getTimestamp());
+             for (AggregatorFactory agg : aggs) {
+               retVal.add(results.getMetric(agg.getName()));
+             }
+@@ -215,7 +216,7 @@
+             Iterator<AggregatorFactory> aggsIter = aggs.iterator();
+             Iterator<Object> resultIter = results.iterator();
+ 
+-            DateTime timestamp = new DateTime(resultIter.next());
++            DateTime timestamp = (DateTime)resultIter.next();
+             while (aggsIter.hasNext() && resultIter.hasNext()) {
+               final AggregatorFactory factory = aggsIter.next();
+               retVal.put(factory.getName(), factory.deserialize(resultIter.next()));

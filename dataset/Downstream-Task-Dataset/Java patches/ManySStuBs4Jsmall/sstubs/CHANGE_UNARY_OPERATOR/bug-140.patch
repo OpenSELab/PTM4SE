@@ -1,0 +1,40 @@
+diff --git a/enterprise/ha/src/main/java/org/neo4j/kernel/HighlyAvailableGraphDatabase.java b/enterprise/ha/src/main/java/org/neo4j/kernel/HighlyAvailableGraphDatabase.java
+index 85253d3..5d5fbea 100644
+--- a/enterprise/ha/src/main/java/org/neo4j/kernel/HighlyAvailableGraphDatabase.java
++++ b/enterprise/ha/src/main/java/org/neo4j/kernel/HighlyAvailableGraphDatabase.java
+@@ -214,7 +214,7 @@
+                     
+                     // Exclude any previous branched-??? directories, otherwise this
+                     // becomes like a linked list of old directories.
+-                    (file.isDirectory() && file.getName().startsWith( "branched-" ) ) )
++                    (file.isDirectory() && !file.getName().startsWith( "branched-" ) ) )
+             {
+                 File dest = new File( oldDir, file.getName() );
+                 if ( !file.renameTo( dest ) )
+diff --git a/enterprise/ha/src/main/java/org/neo4j/kernel/ha/zookeeper/AbstractZooKeeperManager.java b/enterprise/ha/src/main/java/org/neo4j/kernel/ha/zookeeper/AbstractZooKeeperManager.java
+index 612c49d..dd07435 100644
+--- a/enterprise/ha/src/main/java/org/neo4j/kernel/ha/zookeeper/AbstractZooKeeperManager.java
++++ b/enterprise/ha/src/main/java/org/neo4j/kernel/ha/zookeeper/AbstractZooKeeperManager.java
+@@ -210,8 +210,7 @@
+                 {
+                     if ( inner.code() != KeeperException.Code.NONODE )
+                     {
+-                        throw new ZooKeeperException( "Unabe to get master.",
+-                            inner );
++                        throw new ZooKeeperException( "Unable to get master.", inner );
+                     }
+                 }
+             }
+diff --git a/enterprise/ha/src/main/java/org/neo4j/kernel/HighlyAvailableGraphDatabase.java b/enterprise/ha/src/main/java/org/neo4j/kernel/HighlyAvailableGraphDatabase.java
+index 85253d3..5d5fbea 100644
+--- a/enterprise/ha/src/main/java/org/neo4j/kernel/HighlyAvailableGraphDatabase.java
++++ b/enterprise/ha/src/main/java/org/neo4j/kernel/HighlyAvailableGraphDatabase.java
+@@ -214,7 +214,7 @@
+                     
+                     // Exclude any previous branched-??? directories, otherwise this
+                     // becomes like a linked list of old directories.
+-                    (file.isDirectory() && file.getName().startsWith( "branched-" ) ) )
++                    (file.isDirectory() && !file.getName().startsWith( "branched-" ) ) )
+             {
+                 File dest = new File( oldDir, file.getName() );
+                 if ( !file.renameTo( dest ) )

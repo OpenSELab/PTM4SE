@@ -1,0 +1,146 @@
+diff --git a/core/src/main/java/fi/iki/elonen/NanoHTTPD.java b/core/src/main/java/fi/iki/elonen/NanoHTTPD.java
+index 906d435..8b9923f 100644
+--- a/core/src/main/java/fi/iki/elonen/NanoHTTPD.java
++++ b/core/src/main/java/fi/iki/elonen/NanoHTTPD.java
+@@ -674,9 +674,9 @@
+                             matcher = CONTENT_DISPOSITION_ATTRIBUTE_PATTERN.matcher(attributeString);
+                             while (matcher.find()) {
+                                 String key = matcher.group(1);
+-                                if (key.equalsIgnoreCase("name")) {
++                                if ("name".equalsIgnoreCase(key)) {
+                                     part_name = matcher.group(2);
+-                                } else if (key.equalsIgnoreCase("filename")) {
++                                } else if ("filename".equalsIgnoreCase(key)) {
+                                     file_name = matcher.group(2);
+                                 }
+                             }
+@@ -830,7 +830,7 @@
+                 this.cookies = new CookieHandler(this.headers);
+ 
+                 String connection = this.headers.get("connection");
+-                boolean keepAlive = protocolVersion.equals("HTTP/1.1") && (connection == null || !connection.matches("(?i).*close.*"));
++                boolean keepAlive = "HTTP/1.1".equals(protocolVersion) && (connection == null || !connection.matches("(?i).*close.*"));
+ 
+                 // Ok, now do the serve()
+ 
+@@ -1486,7 +1486,7 @@
+ 
+         protected static long sendContentLengthHeaderIfNotAlreadyPresent(PrintWriter pw, Map<String, String> header, long size) {
+             for (String headerName : header.keySet()) {
+-                if (headerName.equalsIgnoreCase("content-length")) {
++            	if ("content-length".equalsIgnoreCase(headerName)) {
+                     try {
+                         return Long.parseLong(header.get(headerName));
+                     } catch (NumberFormatException ex) {
+diff --git a/nanolets/src/test/java/fi/iki/elonen/router/AppNanolets.java b/nanolets/src/test/java/fi/iki/elonen/router/AppNanolets.java
+index 2d96eb8..a05d24a 100644
+--- a/nanolets/src/test/java/fi/iki/elonen/router/AppNanolets.java
++++ b/nanolets/src/test/java/fi/iki/elonen/router/AppNanolets.java
+@@ -124,7 +124,7 @@
+ 
+         @Override
+         protected BufferedInputStream fileToInputStream(File fileOrdirectory) throws IOException {
+-            if (fileOrdirectory.getName().equals("exception.html")) {
++        	if ("exception.html".equals(fileOrdirectory.getName())) {
+                 throw new IOException("trigger something wrong");
+             }
+             return super.fileToInputStream(fileOrdirectory);
+diff --git a/webserver/src/main/java/fi/iki/elonen/SimpleWebServer.java b/webserver/src/main/java/fi/iki/elonen/SimpleWebServer.java
+index 3f176fe..0cf2b13 100644
+--- a/webserver/src/main/java/fi/iki/elonen/SimpleWebServer.java
++++ b/webserver/src/main/java/fi/iki/elonen/SimpleWebServer.java
+@@ -107,13 +107,13 @@
+ 
+         // Parse command-line, with short and long versions of the options.
+         for (int i = 0; i < args.length; ++i) {
+-            if (args[i].equalsIgnoreCase("-h") || args[i].equalsIgnoreCase("--host")) {
++        	if ("-h".equalsIgnoreCase(args[i]) || "--host".equalsIgnoreCase(args[i])) {
+                 host = args[i + 1];
+-            } else if (args[i].equalsIgnoreCase("-p") || args[i].equalsIgnoreCase("--port")) {
++        	} else if ("-p".equalsIgnoreCase(args[i]) || "--port".equalsIgnoreCase(args[i])) {
+                 port = Integer.parseInt(args[i + 1]);
+-            } else if (args[i].equalsIgnoreCase("-q") || args[i].equalsIgnoreCase("--quiet")) {
++        	} else if ("-q".equalsIgnoreCase(args[i]) || "--quiet".equalsIgnoreCase(args[i])) {
+                 quiet = true;
+-            } else if (args[i].equalsIgnoreCase("-d") || args[i].equalsIgnoreCase("--dir")) {
++        	} else if ("-d".equalsIgnoreCase(args[i]) || "--dir".equalsIgnoreCase(args[i])) {
+                 rootDirs.add(new File(args[i + 1]).getAbsoluteFile());
+             } else if (args[i].startsWith("--cors")) {
+                 cors = "*";
+@@ -121,7 +121,7 @@
+                 if (equalIdx > 0) {
+                     cors = args[i].substring(equalIdx + 1);
+                 }
+-            } else if (args[i].equalsIgnoreCase("--licence")) {
++            } else if ("--licence".equalsIgnoreCase(args[i])) {
+                 System.out.println(SimpleWebServer.LICENCE + "\n");
+             } else if (args[i].startsWith("-X:")) {
+                 int dot = args[i].indexOf('=');
+@@ -239,9 +239,9 @@
+         StringTokenizer st = new StringTokenizer(uri, "/ ", true);
+         while (st.hasMoreTokens()) {
+             String tok = st.nextToken();
+-            if (tok.equals("/")) {
++            if ("/".equals(tok)) {
+                 newUri += "/";
+-            } else if (tok.equals(" ")) {
++            } else if (" ".equals(tok)) {
+                 newUri += "%20";
+             } else {
+                 try {
+@@ -498,7 +498,7 @@
+             boolean headerIfRangeMissingOrMatching = (ifRange == null || etag.equals(ifRange));
+ 
+             String ifNoneMatch = header.get("if-none-match");
+-            boolean headerIfNoneMatchPresentAndMatching = ifNoneMatch != null && (ifNoneMatch.equals("*") || ifNoneMatch.equals(etag));
++            boolean headerIfNoneMatchPresentAndMatching = ifNoneMatch != null && ("*".equals(ifNoneMatch) || ifNoneMatch.equals(etag));
+ 
+             // Change return code and add Content-Range header when skipping is
+             // requested
+diff --git a/websocket/src/main/java/fi/iki/elonen/samples/echo/EchoSocketSample.java b/websocket/src/main/java/fi/iki/elonen/samples/echo/EchoSocketSample.java
+index e7d7e3b..bbf7f5c 100644
+--- a/websocket/src/main/java/fi/iki/elonen/samples/echo/EchoSocketSample.java
++++ b/websocket/src/main/java/fi/iki/elonen/samples/echo/EchoSocketSample.java
+@@ -40,7 +40,7 @@
+ public class EchoSocketSample {
+ 
+     public static void main(String[] args) throws IOException {
+-        final boolean debugMode = args.length >= 2 && args[1].toLowerCase().equals("-d");
++    	final boolean debugMode = args.length >= 2 && "-d".equals(args[1].toLowerCase());
+         NanoWSD ws = new DebugWebSocketServer(args.length > 0 ? Integer.parseInt(args[0]) : 9090, debugMode);
+         ws.start();
+         System.out.println("Server started, hit Enter to stop.\n");
+diff --git a/core/src/main/java/fi/iki/elonen/NanoHTTPD.java b/core/src/main/java/fi/iki/elonen/NanoHTTPD.java
+index 906d435..8b9923f 100644
+--- a/core/src/main/java/fi/iki/elonen/NanoHTTPD.java
++++ b/core/src/main/java/fi/iki/elonen/NanoHTTPD.java
+@@ -674,9 +674,9 @@
+                             matcher = CONTENT_DISPOSITION_ATTRIBUTE_PATTERN.matcher(attributeString);
+                             while (matcher.find()) {
+                                 String key = matcher.group(1);
+-                                if (key.equalsIgnoreCase("name")) {
++                                if ("name".equalsIgnoreCase(key)) {
+                                     part_name = matcher.group(2);
+-                                } else if (key.equalsIgnoreCase("filename")) {
++                                } else if ("filename".equalsIgnoreCase(key)) {
+                                     file_name = matcher.group(2);
+                                 }
+                             }
+@@ -830,7 +830,7 @@
+                 this.cookies = new CookieHandler(this.headers);
+ 
+                 String connection = this.headers.get("connection");
+-                boolean keepAlive = protocolVersion.equals("HTTP/1.1") && (connection == null || !connection.matches("(?i).*close.*"));
++                boolean keepAlive = "HTTP/1.1".equals(protocolVersion) && (connection == null || !connection.matches("(?i).*close.*"));
+ 
+                 // Ok, now do the serve()
+ 
+@@ -1486,7 +1486,7 @@
+ 
+         protected static long sendContentLengthHeaderIfNotAlreadyPresent(PrintWriter pw, Map<String, String> header, long size) {
+             for (String headerName : header.keySet()) {
+-                if (headerName.equalsIgnoreCase("content-length")) {
++            	if ("content-length".equalsIgnoreCase(headerName)) {
+                     try {
+                         return Long.parseLong(header.get(headerName));
+                     } catch (NumberFormatException ex) {

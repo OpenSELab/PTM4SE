@@ -1,0 +1,43 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/AddressPicker.java b/hazelcast/src/main/java/com/hazelcast/impl/AddressPicker.java
+index e0a8ca3..09a3e55 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/AddressPicker.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/AddressPicker.java
+@@ -114,7 +114,9 @@
+     }
+ 
+     private Address createAddress(final AddressDefinition addressDef, final int port) throws UnknownHostException {
+-        return new Address(addressDef.host != null ? addressDef.host : addressDef.address, port);
++//        return new Address(addressDef.host != null ? addressDef.host : addressDef.address, port);
++        return addressDef.host != null ? new Address(addressDef.host, port)
++                : new Address(addressDef.inetAddress, port);
+     }
+ 
+     private AddressDefinition pickAddress(final NetworkConfig networkConfig) throws UnknownHostException, SocketException {
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/TcpIpJoiner.java b/hazelcast/src/main/java/com/hazelcast/impl/TcpIpJoiner.java
+index 1993c7e..5f0f3bf 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/TcpIpJoiner.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/TcpIpJoiner.java
+@@ -333,7 +333,7 @@
+                         matchedAddresses = Collections.singleton(addressHolder.address);
+                     }
+                     for (String matchedAddress : matchedAddresses) {
+-                        addPossibleAddresses(possibleAddresses, matchedAddress, null, port, count);
++                        addPossibleAddresses(possibleAddresses, null, InetAddress.getByName(matchedAddress), port, count);
+                     }
+                 } else {
+                     final String host = addressHolder.address;
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/AddressPicker.java b/hazelcast/src/main/java/com/hazelcast/impl/AddressPicker.java
+index e0a8ca3..09a3e55 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/AddressPicker.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/AddressPicker.java
+@@ -114,7 +114,9 @@
+     }
+ 
+     private Address createAddress(final AddressDefinition addressDef, final int port) throws UnknownHostException {
+-        return new Address(addressDef.host != null ? addressDef.host : addressDef.address, port);
++//        return new Address(addressDef.host != null ? addressDef.host : addressDef.address, port);
++        return addressDef.host != null ? new Address(addressDef.host, port)
++                : new Address(addressDef.inetAddress, port);
+     }
+ 
+     private AddressDefinition pickAddress(final NetworkConfig networkConfig) throws UnknownHostException, SocketException {

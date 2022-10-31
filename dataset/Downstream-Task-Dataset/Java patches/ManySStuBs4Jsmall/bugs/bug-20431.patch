@@ -1,0 +1,26 @@
+diff --git a/api/src/main/java/org/openmrs/module/ModuleUtil.java b/api/src/main/java/org/openmrs/module/ModuleUtil.java
+index aa09251..e042a97 100644
+--- a/api/src/main/java/org/openmrs/module/ModuleUtil.java
++++ b/api/src/main/java/org/openmrs/module/ModuleUtil.java
+@@ -590,7 +590,7 @@
+ 			if (c instanceof HttpURLConnection) {
+ 				HttpURLConnection http = (HttpURLConnection) c;
+ 				int stat = http.getResponseCode();
+-				if (stat >= 300 && stat <= 307 && stat != 306 && stat != HttpURLConnection.HTTP_NOT_MODIFIED) {
++				if (stat == 300 || stat == 301 || stat == 302 || stat == 303 || stat == 305 || stat == 307) {
+ 					URL base = http.getURL();
+ 					String loc = http.getHeaderField("Location");
+ 					URL target = null;
+diff --git a/api/src/main/java/org/openmrs/module/ModuleUtil.java b/api/src/main/java/org/openmrs/module/ModuleUtil.java
+index aa09251..e042a97 100644
+--- a/api/src/main/java/org/openmrs/module/ModuleUtil.java
++++ b/api/src/main/java/org/openmrs/module/ModuleUtil.java
+@@ -590,7 +590,7 @@
+ 			if (c instanceof HttpURLConnection) {
+ 				HttpURLConnection http = (HttpURLConnection) c;
+ 				int stat = http.getResponseCode();
+-				if (stat >= 300 && stat <= 307 && stat != 306 && stat != HttpURLConnection.HTTP_NOT_MODIFIED) {
++				if (stat == 300 || stat == 301 || stat == 302 || stat == 303 || stat == 305 || stat == 307) {
+ 					URL base = http.getURL();
+ 					String loc = http.getHeaderField("Location");
+ 					URL target = null;

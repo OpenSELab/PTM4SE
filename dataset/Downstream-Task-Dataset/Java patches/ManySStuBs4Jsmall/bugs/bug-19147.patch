@@ -1,0 +1,28 @@
+diff --git a/src/main/java/org/jboss/netty/channel/local/LocalChannel.java b/src/main/java/org/jboss/netty/channel/local/LocalChannel.java
+index c8ab710..9285e33 100644
+--- a/src/main/java/org/jboss/netty/channel/local/LocalChannel.java
++++ b/src/main/java/org/jboss/netty/channel/local/LocalChannel.java
+@@ -71,7 +71,8 @@
+     }
+ 
+     public boolean isConnected() {
+-        return pairedChannel != null;
++        return localAddress != null &&
++               pairedChannel != null && pairedChannel.localAddress != null;
+     }
+ 
+     public LocalAddress getLocalAddress() {
+diff --git a/src/main/java/org/jboss/netty/channel/local/LocalChannel.java b/src/main/java/org/jboss/netty/channel/local/LocalChannel.java
+index c8ab710..9285e33 100644
+--- a/src/main/java/org/jboss/netty/channel/local/LocalChannel.java
++++ b/src/main/java/org/jboss/netty/channel/local/LocalChannel.java
+@@ -71,7 +71,8 @@
+     }
+ 
+     public boolean isConnected() {
+-        return pairedChannel != null;
++        return localAddress != null &&
++               pairedChannel != null && pairedChannel.localAddress != null;
+     }
+ 
+     public LocalAddress getLocalAddress() {

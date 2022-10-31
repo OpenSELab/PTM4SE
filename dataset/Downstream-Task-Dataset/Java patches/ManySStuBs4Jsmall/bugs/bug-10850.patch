@@ -1,0 +1,113 @@
+diff --git a/deeplearning4j-cli/deeplearning4j-cli-api/src/main/java/org/deeplearning4j/cli/api/flags/Input.java b/deeplearning4j-cli/deeplearning4j-cli-api/src/main/java/org/deeplearning4j/cli/api/flags/Input.java
+index fcc9557..a07e18a 100644
+--- a/deeplearning4j-cli/deeplearning4j-cli-api/src/main/java/org/deeplearning4j/cli/api/flags/Input.java
++++ b/deeplearning4j-cli/deeplearning4j-cli-api/src/main/java/org/deeplearning4j/cli/api/flags/Input.java
+@@ -33,7 +33,7 @@
+     public <E> E value(String value) throws Exception {
+         URI uri = URI.create(value);
+         String path = uri.getPath();
+-        String extension = path.substring(path.lastIndexOf(".") + 1);
++        String extension = path.substring(path.lastIndexOf('.') + 1);
+ 
+         return (E) createReader(uri);
+     }
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/StringUtils.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/StringUtils.java
+index 550a55a..1138fa0 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/StringUtils.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/berkeley/StringUtils.java
+@@ -683,7 +683,7 @@
+ 		String[] props = str.trim().split(",\\s*");
+ 		for (int i = 0; i < props.length; i++) {
+ 			String term = props[i];
+-			int divLoc = term.indexOf("=");
++			int divLoc = term.indexOf('=');
+ 			String key;
+ 			String value;
+ 			if (divLoc >= 0) {
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+index 7529a03..bac8235 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+@@ -272,7 +272,7 @@
+     public INDArray getParam(String param) {
+         //Get params for MultiLayerNetwork sub layers.
+         //Parameter keys here: same as MultiLayerNetwork.backprop().
+-        int idx = param.indexOf("_");
++        int idx = param.indexOf('_');
+         if( idx == -1 ) throw new IllegalStateException("Invalid param key: not have layer separator: \""+param+"\"");
+         int layerIdx = Integer.parseInt(param.substring(0, idx));
+         String newKey = param.substring(idx+1);
+@@ -309,7 +309,7 @@
+     public void setParam(String key, INDArray val) {
+         //Set params for MultiLayerNetwork sub layers.
+         //Parameter keys here: same as MultiLayerNetwork.backprop().
+-        int idx = key.indexOf("_");
++        int idx = key.indexOf('_');
+         if( idx == -1 ) throw new IllegalStateException("Invalid param key: not have layer separator: \""+key+"\"");
+         int layerIdx = Integer.parseInt(key.substring(0, idx));
+         String newKey = key.substring(idx+1);
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/MultiLayerUpdater.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/MultiLayerUpdater.java
+index 1f15210..577a29f 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/MultiLayerUpdater.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/MultiLayerUpdater.java
+@@ -50,7 +50,7 @@
+ 		
+ 		for(Map.Entry<String,INDArray> gradientPair : gradient.gradientForVariable().entrySet()) {
+ 			String key = gradientPair.getKey();
+-			int idx = key.indexOf("_");
++			int idx = key.indexOf('_');
+ 			if( idx == -1 ) throw new IllegalStateException("Invalid key: MuliLayerNetwork Gradient key does not have layer separator: \""+key+"\"");
+ 			int layerIdx = Integer.parseInt(key.substring(0, idx));
+ 			
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/graph/ComputationGraphUpdater.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/graph/ComputationGraphUpdater.java
+index 433b71b..545e76e 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/graph/ComputationGraphUpdater.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/graph/ComputationGraphUpdater.java
+@@ -59,7 +59,7 @@
+ 
+         for(Map.Entry<String,INDArray> gradientPair : gradient.gradientForVariable().entrySet()) {
+             String key = gradientPair.getKey();
+-            int idx = key.lastIndexOf("_");
++            int idx = key.lastIndexOf('_');
+             if( idx == -1 ) throw new IllegalStateException("Invalid key: ComputationGraph Gradient key does not have layer separator: \""+key+"\"");
+ 
+             String layerName = key.substring(0,idx);
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/util/StringGrid.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/util/StringGrid.java
+index a7f136e..a661e77 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/util/StringGrid.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/util/StringGrid.java
+@@ -116,7 +116,7 @@
+         for(int i = 0;i< list.size(); i++) {
+             String line = list.get(i).trim();
+             //text delimiter
+-            if(line.indexOf("\"") > 0) {
++            if(line.indexOf('\"') > 0) {
+                 Counter<Character> counter = new Counter<>();
+                 for(int j = 0; j <  line.length(); j++) {
+                     counter.incrementCount(line.charAt(j),1.0);
+diff --git a/deeplearning4j-ui-parent/deeplearning4j-ui/src/main/java/org/deeplearning4j/ui/weights/HistogramIterationListener.java b/deeplearning4j-ui-parent/deeplearning4j-ui/src/main/java/org/deeplearning4j/ui/weights/HistogramIterationListener.java
+index 48e1c32..afc80fd 100644
+--- a/deeplearning4j-ui-parent/deeplearning4j-ui/src/main/java/org/deeplearning4j/ui/weights/HistogramIterationListener.java
++++ b/deeplearning4j-ui-parent/deeplearning4j-ui/src/main/java/org/deeplearning4j/ui/weights/HistogramIterationListener.java
+@@ -216,7 +216,7 @@
+     }
+ 
+     private int indexFromString(String str) {
+-        int underscore = str.indexOf("_");
++        int underscore = str.indexOf('_');
+         if (underscore == -1) {
+             if (!layerNameIndexes.containsKey(str)) {
+                 layerNames.add(str);
+diff --git a/deeplearning4j-cli/deeplearning4j-cli-api/src/main/java/org/deeplearning4j/cli/api/flags/Input.java b/deeplearning4j-cli/deeplearning4j-cli-api/src/main/java/org/deeplearning4j/cli/api/flags/Input.java
+index fcc9557..a07e18a 100644
+--- a/deeplearning4j-cli/deeplearning4j-cli-api/src/main/java/org/deeplearning4j/cli/api/flags/Input.java
++++ b/deeplearning4j-cli/deeplearning4j-cli-api/src/main/java/org/deeplearning4j/cli/api/flags/Input.java
+@@ -33,7 +33,7 @@
+     public <E> E value(String value) throws Exception {
+         URI uri = URI.create(value);
+         String path = uri.getPath();
+-        String extension = path.substring(path.lastIndexOf(".") + 1);
++        String extension = path.substring(path.lastIndexOf('.') + 1);
+ 
+         return (E) createReader(uri);
+     }

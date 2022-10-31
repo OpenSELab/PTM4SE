@@ -1,0 +1,20 @@
+diff --git a/components/camel-servlet/src/main/java/org/apache/camel/component/servlet/DefaultHttpRegistry.java b/components/camel-servlet/src/main/java/org/apache/camel/component/servlet/DefaultHttpRegistry.java
+index 172820a..191d574 100644
+--- a/components/camel-servlet/src/main/java/org/apache/camel/component/servlet/DefaultHttpRegistry.java
++++ b/components/camel-servlet/src/main/java/org/apache/camel/component/servlet/DefaultHttpRegistry.java
+@@ -73,13 +73,13 @@
+     @SuppressWarnings("rawtypes")
+     public void register(CamelServlet provider, Map properties) {
+         LOG.debug("Registering provider through OSGi service listener {}", properties);
+-        CamelServlet camelServlet = (CamelServlet)provider;
++        CamelServlet camelServlet = provider;
+         camelServlet.setServletName((String) properties.get("servlet-name"));
+         register(camelServlet);
+     }
+ 
+     public void unregister(CamelServlet provider, Map<String, Object> properties) {
+-        unregister((CamelServlet)provider);
++        unregister(provider);
+     }
+     
+     @Override

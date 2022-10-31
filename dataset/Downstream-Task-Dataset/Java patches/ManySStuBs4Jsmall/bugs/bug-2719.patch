@@ -1,0 +1,39 @@
+diff --git a/graylog2-server/src/test/java/org/graylog2/bindings/providers/EsNodeProviderTest.java b/graylog2-server/src/test/java/org/graylog2/bindings/providers/EsNodeProviderTest.java
+index 1120b41..972876a 100644
+--- a/graylog2-server/src/test/java/org/graylog2/bindings/providers/EsNodeProviderTest.java
++++ b/graylog2-server/src/test/java/org/graylog2/bindings/providers/EsNodeProviderTest.java
+@@ -85,7 +85,7 @@
+         addEsConfig(esPropNames, settings, "node.name", "elasticsearch_node_name", "garylord");
+         addEsConfig(esPropNames, settings, "node.master", "elasticsearch_node_master", "true");
+         addEsConfig(esPropNames, settings, "node.data", "elasticsearch_node_data", "true");
+-        addEsConfig(esPropNames, settings, "path.data", "elasticsearch_path_data", "elasticsearch-data");
++        addEsConfig(esPropNames, settings, "path.data", "elasticsearch_path_data", "data/elasticsearch");
+         addEsConfig(esPropNames, settings, "transport.tcp.port", "elasticsearch_transport_tcp_port", "9999");
+         addEsConfig(esPropNames, settings, "http.enabled", "elasticsearch_http_enabled", "true");
+         addEsConfig(esPropNames,
+diff --git a/graylog2-server/src/test/java/org/graylog2/configuration/ElasticsearchConfigurationTest.java b/graylog2-server/src/test/java/org/graylog2/configuration/ElasticsearchConfigurationTest.java
+index 1a3c3bb..69d4140 100644
+--- a/graylog2-server/src/test/java/org/graylog2/configuration/ElasticsearchConfigurationTest.java
++++ b/graylog2-server/src/test/java/org/graylog2/configuration/ElasticsearchConfigurationTest.java
+@@ -43,7 +43,7 @@
+         final ElasticsearchConfiguration configuration = new ElasticsearchConfiguration();
+         new JadConfig(new InMemoryRepository(), configuration).process();
+ 
+-        assertEquals(configuration.getPathData(), "elasticsearch-data");
++        assertEquals(configuration.getPathData(), "data/elasticsearch");
+     }
+ 
+     @Test
+diff --git a/graylog2-server/src/test/java/org/graylog2/bindings/providers/EsNodeProviderTest.java b/graylog2-server/src/test/java/org/graylog2/bindings/providers/EsNodeProviderTest.java
+index 1120b41..972876a 100644
+--- a/graylog2-server/src/test/java/org/graylog2/bindings/providers/EsNodeProviderTest.java
++++ b/graylog2-server/src/test/java/org/graylog2/bindings/providers/EsNodeProviderTest.java
+@@ -85,7 +85,7 @@
+         addEsConfig(esPropNames, settings, "node.name", "elasticsearch_node_name", "garylord");
+         addEsConfig(esPropNames, settings, "node.master", "elasticsearch_node_master", "true");
+         addEsConfig(esPropNames, settings, "node.data", "elasticsearch_node_data", "true");
+-        addEsConfig(esPropNames, settings, "path.data", "elasticsearch_path_data", "elasticsearch-data");
++        addEsConfig(esPropNames, settings, "path.data", "elasticsearch_path_data", "data/elasticsearch");
+         addEsConfig(esPropNames, settings, "transport.tcp.port", "elasticsearch_transport_tcp_port", "9999");
+         addEsConfig(esPropNames, settings, "http.enabled", "elasticsearch_http_enabled", "true");
+         addEsConfig(esPropNames,

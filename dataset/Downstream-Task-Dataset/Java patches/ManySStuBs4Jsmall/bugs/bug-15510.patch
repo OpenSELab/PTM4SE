@@ -1,0 +1,80 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/impl/recordstore/DefaultRecordStore.java b/hazelcast/src/main/java/com/hazelcast/map/impl/recordstore/DefaultRecordStore.java
+index 38f02cb..a5f4399 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/impl/recordstore/DefaultRecordStore.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/impl/recordstore/DefaultRecordStore.java
+@@ -437,7 +437,7 @@
+         return keys;
+     }
+ 
+-    private int removeRecords(Collection<Record> recordsToRemove) {
++    protected int removeRecords(Collection<Record> recordsToRemove) {
+         if (CollectionUtil.isEmpty(recordsToRemove)) {
+             return 0;
+         }
+@@ -451,7 +451,7 @@
+         return removalSize;
+     }
+ 
+-    private Collection<Record> getNotLockedRecords() {
++    protected Collection<Record> getNotLockedRecords() {
+         Set<Data> lockedKeySet = lockStore == null ? null : lockStore.getLockedKeys();
+         if (CollectionUtil.isEmpty(lockedKeySet)) {
+             return storage.values();
+@@ -719,7 +719,7 @@
+         return putInternal(key, value, ttl, true);
+     }
+ 
+-    private Object putInternal(Data key, Object value, long ttl, boolean loadFromStore) {
++    protected Object putInternal(Data key, Object value, long ttl, boolean loadFromStore) {
+         checkIfLoaded();
+ 
+         long now = getNow();
+@@ -961,7 +961,7 @@
+         return getOrNullIfExpired(record, now, backup);
+     }
+ 
+-    private void onStore(Record record) {
++    protected void onStore(Record record) {
+         if (record == null || mapDataStore == EMPTY_MAP_DATA_STORE) {
+             return;
+         }
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/impl/recordstore/DefaultRecordStore.java b/hazelcast/src/main/java/com/hazelcast/map/impl/recordstore/DefaultRecordStore.java
+index 38f02cb..a5f4399 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/impl/recordstore/DefaultRecordStore.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/impl/recordstore/DefaultRecordStore.java
+@@ -437,7 +437,7 @@
+         return keys;
+     }
+ 
+-    private int removeRecords(Collection<Record> recordsToRemove) {
++    protected int removeRecords(Collection<Record> recordsToRemove) {
+         if (CollectionUtil.isEmpty(recordsToRemove)) {
+             return 0;
+         }
+@@ -451,7 +451,7 @@
+         return removalSize;
+     }
+ 
+-    private Collection<Record> getNotLockedRecords() {
++    protected Collection<Record> getNotLockedRecords() {
+         Set<Data> lockedKeySet = lockStore == null ? null : lockStore.getLockedKeys();
+         if (CollectionUtil.isEmpty(lockedKeySet)) {
+             return storage.values();
+@@ -719,7 +719,7 @@
+         return putInternal(key, value, ttl, true);
+     }
+ 
+-    private Object putInternal(Data key, Object value, long ttl, boolean loadFromStore) {
++    protected Object putInternal(Data key, Object value, long ttl, boolean loadFromStore) {
+         checkIfLoaded();
+ 
+         long now = getNow();
+@@ -961,7 +961,7 @@
+         return getOrNullIfExpired(record, now, backup);
+     }
+ 
+-    private void onStore(Record record) {
++    protected void onStore(Record record) {
+         if (record == null || mapDataStore == EMPTY_MAP_DATA_STORE) {
+             return;
+         }

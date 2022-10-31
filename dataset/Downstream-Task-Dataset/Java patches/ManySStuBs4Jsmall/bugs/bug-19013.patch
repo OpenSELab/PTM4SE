@@ -1,0 +1,78 @@
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker00.java b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker00.java
+index d89567a..8b402ec 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker00.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker00.java
+@@ -152,7 +152,7 @@
+         request.addHeader(Names.ORIGIN, originValue);
+         request.addHeader(Names.SEC_WEBSOCKET_KEY1, key1);
+         request.addHeader(Names.SEC_WEBSOCKET_KEY2, key2);
+-        String expectedSubprotocol = this.getExpectedSubprotocol(); 
++        String expectedSubprotocol = getExpectedSubprotocol();
+         if (expectedSubprotocol != null && !expectedSubprotocol.equals("")) {
+             request.addHeader(Names.SEC_WEBSOCKET_PROTOCOL, expectedSubprotocol);
+         }
+@@ -223,9 +223,8 @@
+         String subprotocol = response.getHeader(Names.SEC_WEBSOCKET_PROTOCOL);
+         setActualSubprotocol(subprotocol);
+ 
+-        channel.pipeline().replace(
+-                HttpResponseDecoder.class, "ws-decoder",
+-                new WebSocket00FrameDecoder(getMaxFramePayloadLength()));
++        channel.pipeline().get(HttpResponseDecoder.class).replace(
++                "ws-decoder", new WebSocket00FrameDecoder(getMaxFramePayloadLength()));
+ 
+         setHandshakeComplete();
+     }
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker08.java b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker08.java
+index f25d4ff..3d59e1f 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker08.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker08.java
+@@ -200,7 +200,8 @@
+         String subprotocol = response.getHeader(Names.SEC_WEBSOCKET_PROTOCOL);
+         setActualSubprotocol(subprotocol);
+ 
+-        channel.pipeline().replace(HttpResponseDecoder.class, "ws-decoder",
++        channel.pipeline().get(HttpResponseDecoder.class).replace(
++                "ws-decoder",
+                 new WebSocket08FrameDecoder(false, allowExtensions, getMaxFramePayloadLength()));
+ 
+         setHandshakeComplete();
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker13.java b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker13.java
+index 62dc79d..a9739f6 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker13.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker13.java
+@@ -200,7 +200,8 @@
+         String subprotocol = response.getHeader(Names.SEC_WEBSOCKET_PROTOCOL);
+         setActualSubprotocol(subprotocol);
+ 
+-        channel.pipeline().replace(HttpResponseDecoder.class, "ws-decoder",
++        channel.pipeline().get(HttpResponseDecoder.class).replace(
++                "ws-decoder",
+                 new WebSocket13FrameDecoder(false, allowExtensions, getMaxFramePayloadLength()));
+ 
+         setHandshakeComplete();
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker00.java b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker00.java
+index d89567a..8b402ec 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker00.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/websocketx/WebSocketClientHandshaker00.java
+@@ -152,7 +152,7 @@
+         request.addHeader(Names.ORIGIN, originValue);
+         request.addHeader(Names.SEC_WEBSOCKET_KEY1, key1);
+         request.addHeader(Names.SEC_WEBSOCKET_KEY2, key2);
+-        String expectedSubprotocol = this.getExpectedSubprotocol(); 
++        String expectedSubprotocol = getExpectedSubprotocol();
+         if (expectedSubprotocol != null && !expectedSubprotocol.equals("")) {
+             request.addHeader(Names.SEC_WEBSOCKET_PROTOCOL, expectedSubprotocol);
+         }
+@@ -223,9 +223,8 @@
+         String subprotocol = response.getHeader(Names.SEC_WEBSOCKET_PROTOCOL);
+         setActualSubprotocol(subprotocol);
+ 
+-        channel.pipeline().replace(
+-                HttpResponseDecoder.class, "ws-decoder",
+-                new WebSocket00FrameDecoder(getMaxFramePayloadLength()));
++        channel.pipeline().get(HttpResponseDecoder.class).replace(
++                "ws-decoder", new WebSocket00FrameDecoder(getMaxFramePayloadLength()));
+ 
+         setHandshakeComplete();
+     }

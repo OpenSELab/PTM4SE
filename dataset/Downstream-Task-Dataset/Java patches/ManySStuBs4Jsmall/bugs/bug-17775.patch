@@ -1,0 +1,56 @@
+diff --git a/src/test/java/org/apache/ibatis/jdbc/ScriptRunnerTest.java b/src/test/java/org/apache/ibatis/jdbc/ScriptRunnerTest.java
+index 3e13863..2b50282 100644
+--- a/src/test/java/org/apache/ibatis/jdbc/ScriptRunnerTest.java
++++ b/src/test/java/org/apache/ibatis/jdbc/ScriptRunnerTest.java
+@@ -183,7 +183,10 @@
+     Reader reader = new StringReader("select userid from account where userid = 'j2ee';");
+     runner.runScript(reader);
+ 
+-    assertEquals("select userid from account where userid = 'j2ee'\n\nUSERID\t\nj2ee\t\n", sw.toString());
++    assertEquals(
++            "select userid from account where userid = 'j2ee'" + System.getProperty("line.separator")
++                    + System.getProperty("line.separator") + "USERID\t" + System.getProperty("line.separator")
++                    + "j2ee\t" + System.getProperty("line.separator"), sw.toString());
+   }
+ 
+   @Test
+@@ -202,7 +205,10 @@
+     Reader reader = new StringReader("select userid from account where userid = 'j2ee';");
+     runner.runScript(reader);
+ 
+-    assertEquals("select userid from account where userid = 'j2ee';\n\nUSERID\t\nj2ee\t\n", sw.toString());
++    assertEquals(
++            "select userid from account where userid = 'j2ee';" + System.getProperty("line.separator")
++                    + System.getProperty("line.separator") + "USERID\t" + System.getProperty("line.separator")
++                    + "j2ee\t" + System.getProperty("line.separator"), sw.toString());
+   }
+ 
+   private void runJPetStoreScripts(ScriptRunner runner) throws IOException, SQLException {
+diff --git a/src/test/java/org/apache/ibatis/jdbc/ScriptRunnerTest.java b/src/test/java/org/apache/ibatis/jdbc/ScriptRunnerTest.java
+index 3e13863..2b50282 100644
+--- a/src/test/java/org/apache/ibatis/jdbc/ScriptRunnerTest.java
++++ b/src/test/java/org/apache/ibatis/jdbc/ScriptRunnerTest.java
+@@ -183,7 +183,10 @@
+     Reader reader = new StringReader("select userid from account where userid = 'j2ee';");
+     runner.runScript(reader);
+ 
+-    assertEquals("select userid from account where userid = 'j2ee'\n\nUSERID\t\nj2ee\t\n", sw.toString());
++    assertEquals(
++            "select userid from account where userid = 'j2ee'" + System.getProperty("line.separator")
++                    + System.getProperty("line.separator") + "USERID\t" + System.getProperty("line.separator")
++                    + "j2ee\t" + System.getProperty("line.separator"), sw.toString());
+   }
+ 
+   @Test
+@@ -202,7 +205,10 @@
+     Reader reader = new StringReader("select userid from account where userid = 'j2ee';");
+     runner.runScript(reader);
+ 
+-    assertEquals("select userid from account where userid = 'j2ee';\n\nUSERID\t\nj2ee\t\n", sw.toString());
++    assertEquals(
++            "select userid from account where userid = 'j2ee';" + System.getProperty("line.separator")
++                    + System.getProperty("line.separator") + "USERID\t" + System.getProperty("line.separator")
++                    + "j2ee\t" + System.getProperty("line.separator"), sw.toString());
+   }
+ 
+   private void runJPetStoreScripts(ScriptRunner runner) throws IOException, SQLException {

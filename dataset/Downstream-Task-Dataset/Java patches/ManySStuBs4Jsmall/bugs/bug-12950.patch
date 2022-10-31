@@ -1,0 +1,65 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/NoApplyNodeLeftChecker.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/NoApplyNodeLeftChecker.java
+index 5d605b9..56e4a23 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/NoApplyNodeLeftChecker.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/NoApplyNodeLeftChecker.java
+@@ -36,10 +36,10 @@
+             public Object visitApply(ApplyNode node, Object context)
+             {
+                 if (node.getCorrelation().isEmpty()) {
+-                    throw new IllegalArgumentException("Not supported subquery");
++                    throw new IllegalArgumentException("Unsupported subquery type");
+                 }
+                 else {
+-                    throw new IllegalArgumentException("Correlated subquery is not yet supported");
++                    throw new IllegalArgumentException("Unsupported correlated subquery type");
+                 }
+             }
+         }, null);
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+index d139a01..0470823 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+@@ -5992,7 +5992,7 @@
+     @Test
+     public void testCorrelatedScalarSubqueries()
+     {
+-        String errorMsg = "Correlated subquery is not yet supported";
++        String errorMsg = "Unsupported correlated subquery type";
+ 
+         assertQueryFails("SELECT (SELECT l.orderkey) FROM lineitem l", errorMsg);
+         assertQueryFails("SELECT (SELECT 2 * l.orderkey) FROM lineitem l", errorMsg);
+@@ -6018,7 +6018,7 @@
+     @Test
+     public void testCorrelatedInPredicateSubqueries()
+     {
+-        String errorMsg = "Correlated subquery is not yet supported";
++        String errorMsg = "Unsupported correlated subquery type";
+ 
+         assertQueryFails("SELECT 1 IN (SELECT l.orderkey) FROM lineitem l", errorMsg);
+         assertQueryFails("SELECT 1 IN (SELECT 2 * l.orderkey) FROM lineitem l", errorMsg);
+@@ -6071,7 +6071,7 @@
+     @Test
+     public void testCorrelatedExistsSubqueries()
+     {
+-        String errorMsg = "Correlated subquery is not yet supported";
++        String errorMsg = "Unsupported correlated subquery type";
+ 
+         assertQueryFails("SELECT EXISTS(SELECT 1 WHERE l.orderkey > 0) FROM lineitem l", errorMsg);
+         assertQueryFails("SELECT count(*) FROM lineitem l WHERE EXISTS(SELECT 1 WHERE l.orderkey > 0)", errorMsg);
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/NoApplyNodeLeftChecker.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/NoApplyNodeLeftChecker.java
+index 5d605b9..56e4a23 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/NoApplyNodeLeftChecker.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/sanity/NoApplyNodeLeftChecker.java
+@@ -36,10 +36,10 @@
+             public Object visitApply(ApplyNode node, Object context)
+             {
+                 if (node.getCorrelation().isEmpty()) {
+-                    throw new IllegalArgumentException("Not supported subquery");
++                    throw new IllegalArgumentException("Unsupported subquery type");
+                 }
+                 else {
+-                    throw new IllegalArgumentException("Correlated subquery is not yet supported");
++                    throw new IllegalArgumentException("Unsupported correlated subquery type");
+                 }
+             }
+         }, null);

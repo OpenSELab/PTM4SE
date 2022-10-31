@@ -1,0 +1,44 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/mapjoin/VectorMapJoinGenerateResultOperator.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/mapjoin/VectorMapJoinGenerateResultOperator.java
+index 22eb07e..22b2a17 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/mapjoin/VectorMapJoinGenerateResultOperator.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/mapjoin/VectorMapJoinGenerateResultOperator.java
+@@ -292,7 +292,7 @@
+     }
+ 
+     ByteSegmentRef byteSegmentRef = hashMapResult.first();
+-    while (true) {
++    while (byteSegmentRef != null) {
+ 
+       // Fill up as much of the overflow batch as possible with small table values.
+       while (byteSegmentRef != null) {
+@@ -304,7 +304,7 @@
+           int length = byteSegmentRef.getLength();
+           smallTableVectorDeserializeRow.setBytes(bytes, offset, length);
+ 
+-          smallTableVectorDeserializeRow.deserialize(overflowBatch, overflowBatch.DEFAULT_SIZE);
++          smallTableVectorDeserializeRow.deserialize(overflowBatch, overflowBatch.size);
+         }
+ 
+         overflowBatch.size++;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/mapjoin/VectorMapJoinGenerateResultOperator.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/mapjoin/VectorMapJoinGenerateResultOperator.java
+index 22eb07e..22b2a17 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/mapjoin/VectorMapJoinGenerateResultOperator.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/mapjoin/VectorMapJoinGenerateResultOperator.java
+@@ -292,7 +292,7 @@
+     }
+ 
+     ByteSegmentRef byteSegmentRef = hashMapResult.first();
+-    while (true) {
++    while (byteSegmentRef != null) {
+ 
+       // Fill up as much of the overflow batch as possible with small table values.
+       while (byteSegmentRef != null) {
+@@ -304,7 +304,7 @@
+           int length = byteSegmentRef.getLength();
+           smallTableVectorDeserializeRow.setBytes(bytes, offset, length);
+ 
+-          smallTableVectorDeserializeRow.deserialize(overflowBatch, overflowBatch.DEFAULT_SIZE);
++          smallTableVectorDeserializeRow.deserialize(overflowBatch, overflowBatch.size);
+         }
+ 
+         overflowBatch.size++;

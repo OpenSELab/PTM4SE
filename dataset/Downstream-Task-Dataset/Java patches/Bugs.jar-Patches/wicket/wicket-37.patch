@@ -1,0 +1,21 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/request/mapper/BookmarkableMapper.java b/wicket/src/main/java/org/apache/wicket/request/mapper/BookmarkableMapper.java
+index 1b82594..1b0edf9 100644
+--- a/wicket/src/main/java/org/apache/wicket/request/mapper/BookmarkableMapper.java
++++ b/wicket/src/main/java/org/apache/wicket/request/mapper/BookmarkableMapper.java
+@@ -16,7 +16,6 @@
+  */
+ package org.apache.wicket.request.mapper;
+ 
+-import org.apache.wicket.Page;
+ import org.apache.wicket.request.Request;
+ import org.apache.wicket.request.Url;
+ import org.apache.wicket.request.component.IRequestablePage;
+@@ -103,7 +102,7 @@ public class BookmarkableMapper extends AbstractBookmarkableMapper
+ 			String className = url.getSegments().get(2);
+ 			Class<? extends IRequestablePage> pageClass = getPageClass(className);
+ 
+-			if (Page.class.isAssignableFrom(pageClass))
++			if (pageClass != null && IRequestablePage.class.isAssignableFrom(pageClass))
+ 			{
+ 
+ 				// extract the PageParameters from URL if there are any

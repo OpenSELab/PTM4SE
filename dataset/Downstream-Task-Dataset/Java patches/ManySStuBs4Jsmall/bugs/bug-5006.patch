@@ -1,0 +1,68 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/dataset/DataSetEndpoint.java b/camel-core/src/main/java/org/apache/camel/component/dataset/DataSetEndpoint.java
+index 1847836..129196c 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/dataset/DataSetEndpoint.java
++++ b/camel-core/src/main/java/org/apache/camel/component/dataset/DataSetEndpoint.java
+@@ -48,13 +48,13 @@
+     private final AtomicInteger receivedCounter = new AtomicInteger();
+     @UriPath(name = "name", description = "Name of DataSet to lookup in the registry") @Metadata(required = "true")
+     private volatile DataSet dataSet;
+-    @UriParam(label = "consuner", defaultValue = "0")
++    @UriParam(label = "consumer", defaultValue = "0")
+     private int minRate;
+-    @UriParam(label = "consuner", defaultValue = "3")
++    @UriParam(label = "consumer", defaultValue = "3")
+     private long produceDelay = 3;
+     @UriParam(label = "producer", defaultValue = "0")
+     private long consumeDelay;
+-    @UriParam(label = "consuner", defaultValue = "0")
++    @UriParam(label = "consumer", defaultValue = "0")
+     private long preloadSize;
+     @UriParam(label = "consumer", defaultValue = "1000")
+     private long initialDelay = 1000;
+diff --git a/camel-core/src/main/java/org/apache/camel/component/test/TestEndpoint.java b/camel-core/src/main/java/org/apache/camel/component/test/TestEndpoint.java
+index 6ad340b..a61efd1 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/test/TestEndpoint.java
++++ b/camel-core/src/main/java/org/apache/camel/component/test/TestEndpoint.java
+@@ -45,7 +45,7 @@
+     private final Endpoint expectedMessageEndpoint;
+     @UriPath(description = "Name of endpoint to lookup in the registry to use for polling messages used for testing") @Metadata(required = "true")
+     private String name;
+-    @UriParam(defaultValue = "2000")
++    @UriParam(label = "producer", defaultValue = "2000")
+     private long timeout = 2000L;
+ 
+     public TestEndpoint(String endpointUri, Component component, Endpoint expectedMessageEndpoint) {
+diff --git a/camel-core/src/test/java/org/apache/camel/component/dataset/DataSetComponentConfigurationAndDocumentationTest.java b/camel-core/src/test/java/org/apache/camel/component/dataset/DataSetComponentConfigurationAndDocumentationTest.java
+index 9a893d8..f0e0ecf 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/dataset/DataSetComponentConfigurationAndDocumentationTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/dataset/DataSetComponentConfigurationAndDocumentationTest.java
+@@ -42,7 +42,7 @@
+         assertNotNull(json);
+ 
+         assertTrue(json.contains("\"name\": { \"kind\": \"path\", \"group\": \"common\", \"required\": \"true\", \"type\""));
+-        assertTrue(json.contains("\"kind\": \"parameter\", \"group\": \"consuner\", \"label\": \"consuner\", \"type\": \"integer\""));
++        assertTrue(json.contains("\"kind\": \"parameter\", \"group\": \"consumer\", \"label\": \"consumer\", \"type\": \"integer\""));
+         assertTrue(json.contains("\"retainFirst\": { \"kind\": \"parameter\", \"group\": \"producer\", \"label\": \"producer\", \"type\": \"integer"));
+     }
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/component/dataset/DataSetEndpoint.java b/camel-core/src/main/java/org/apache/camel/component/dataset/DataSetEndpoint.java
+index 1847836..129196c 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/dataset/DataSetEndpoint.java
++++ b/camel-core/src/main/java/org/apache/camel/component/dataset/DataSetEndpoint.java
+@@ -48,13 +48,13 @@
+     private final AtomicInteger receivedCounter = new AtomicInteger();
+     @UriPath(name = "name", description = "Name of DataSet to lookup in the registry") @Metadata(required = "true")
+     private volatile DataSet dataSet;
+-    @UriParam(label = "consuner", defaultValue = "0")
++    @UriParam(label = "consumer", defaultValue = "0")
+     private int minRate;
+-    @UriParam(label = "consuner", defaultValue = "3")
++    @UriParam(label = "consumer", defaultValue = "3")
+     private long produceDelay = 3;
+     @UriParam(label = "producer", defaultValue = "0")
+     private long consumeDelay;
+-    @UriParam(label = "consuner", defaultValue = "0")
++    @UriParam(label = "consumer", defaultValue = "0")
+     private long preloadSize;
+     @UriParam(label = "consumer", defaultValue = "1000")
+     private long initialDelay = 1000;

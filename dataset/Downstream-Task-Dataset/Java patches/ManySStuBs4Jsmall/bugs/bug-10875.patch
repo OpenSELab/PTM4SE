@@ -1,0 +1,13 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/BaseOptimizer.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/BaseOptimizer.java
+index 74dfec0..fed611e 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/BaseOptimizer.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/optimize/solvers/BaseOptimizer.java
+@@ -296,7 +296,7 @@
+     @Override
+     public  void setupSearchState(Pair<Gradient, Double> pair) {
+         INDArray gradient = pair.getFirst().gradient(conf.variables());
+-        INDArray params = model.params();
++        INDArray params = model.params().dup(); //Need dup here: params returns an array that isn't a copy (hence changes to this are problematic for line search methods)
+         searchState.put(GRADIENT_KEY,gradient);
+         searchState.put(SCORE_KEY,pair.getSecond());
+         searchState.put(PARAMS_KEY,params);

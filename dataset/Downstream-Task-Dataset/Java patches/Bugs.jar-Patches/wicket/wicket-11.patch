@@ -1,0 +1,38 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/ajax/AjaxEventBehavior.java b/wicket/src/main/java/org/apache/wicket/ajax/AjaxEventBehavior.java
+index ca42719..7f6afe7 100644
+--- a/wicket/src/main/java/org/apache/wicket/ajax/AjaxEventBehavior.java
++++ b/wicket/src/main/java/org/apache/wicket/ajax/AjaxEventBehavior.java
+@@ -108,9 +108,20 @@ public abstract class AjaxEventBehavior extends AbstractDefaultAjaxBehavior
+ 		Component myComponent = getComponent();
+ 		if (myComponent.isEnabledInHierarchy())
+ 		{
+-			tag.put(event, getEventHandler());
++			tag.put(event, escapeAttribute(getEventHandler()));
+ 		}
+ 	}
++	
++	private CharSequence escapeAttribute(final CharSequence attr)
++	{
++		if(null == attr)
++		{
++			return null;
++		}
++		CharSequence escaped = Strings.escapeMarkup(attr.toString());
++		// No need to escape the apostrophe; it just clutters the markup
++		return Strings.replaceAll(escaped, "&#039;", "'");
++	}
+ 
+ 	/**
+ 	 * 
+diff --git a/wicket/src/main/java/org/apache/wicket/ajax/form/AjaxFormSubmitBehavior.java b/wicket/src/main/java/org/apache/wicket/ajax/form/AjaxFormSubmitBehavior.java
+index 5ae018a..5a226c0 100644
+--- a/wicket/src/main/java/org/apache/wicket/ajax/form/AjaxFormSubmitBehavior.java
++++ b/wicket/src/main/java/org/apache/wicket/ajax/form/AjaxFormSubmitBehavior.java
+@@ -176,6 +176,6 @@ public abstract class AjaxFormSubmitBehavior extends AjaxEventBehavior
+ 	@Override
+ 	protected CharSequence getPreconditionScript()
+ 	{
+-		return "return Wicket.$$(this)&amp;&amp;Wicket.$$('" + getForm().getMarkupId() + "')";
++		return "return Wicket.$$(this)&&Wicket.$$('" + getForm().getMarkupId() + "')";
+ 	}
+ }

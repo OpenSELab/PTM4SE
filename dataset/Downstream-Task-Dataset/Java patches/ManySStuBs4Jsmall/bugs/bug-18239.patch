@@ -1,0 +1,77 @@
+diff --git a/enterprise/cluster/src/main/java/org/neo4j/cluster/MultiPaxosServerFactory.java b/enterprise/cluster/src/main/java/org/neo4j/cluster/MultiPaxosServerFactory.java
+index 5cb4db0..7dc4905 100644
+--- a/enterprise/cluster/src/main/java/org/neo4j/cluster/MultiPaxosServerFactory.java
++++ b/enterprise/cluster/src/main/java/org/neo4j/cluster/MultiPaxosServerFactory.java
+@@ -100,7 +100,7 @@
+ 
+         final MultiPaxosContext context = new MultiPaxosContext( me,
+                 Iterables.<ElectionRole,ElectionRole>iterable( new ElectionRole(ClusterConfiguration.COORDINATOR )),
+-                new ClusterConfiguration( initialConfig.getName(), logging.getMessagesLog( ClusterConfiguration.class ), initialConfig.getMemberURIs() ),executor, logging,
++                new ClusterConfiguration( initialConfig.getName(), initialConfig.getMemberURIs() ),executor, logging,
+                 objectInputStreamFactory, objectOutputStreamFactory, acceptorInstanceStore, timeouts);
+ 
+         SnapshotContext snapshotContext = new SnapshotContext( context.getClusterContext(), context.getLearnerContext() );
+diff --git a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/atomicbroadcast/multipaxos/MultiPaxosContext.java b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/atomicbroadcast/multipaxos/MultiPaxosContext.java
+index 3bca13b..2b21a20 100644
+--- a/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/atomicbroadcast/multipaxos/MultiPaxosContext.java
++++ b/enterprise/cluster/src/main/java/org/neo4j/cluster/protocol/atomicbroadcast/multipaxos/MultiPaxosContext.java
+@@ -441,8 +441,7 @@
+         // Implementation
+         public void created( String name )
+         {
+-            configuration = new ClusterConfiguration( name, logging.getMessagesLog( ClusterConfiguration.class ),
+-                    Collections.singleton( boundAt ) );
++            configuration = new ClusterConfiguration( name, Collections.singleton( boundAt ) );
+             joined();
+         }
+ 
+diff --git a/enterprise/cluster/src/test/java/org/neo4j/cluster/protocol/heartbeat/HeartbeatContextTest.java b/enterprise/cluster/src/test/java/org/neo4j/cluster/protocol/heartbeat/HeartbeatContextTest.java
+index f7d0727..fb5e1f3 100644
+--- a/enterprise/cluster/src/test/java/org/neo4j/cluster/protocol/heartbeat/HeartbeatContextTest.java
++++ b/enterprise/cluster/src/test/java/org/neo4j/cluster/protocol/heartbeat/HeartbeatContextTest.java
+@@ -80,7 +80,7 @@
+         {
+             members.put( instanceIds[i], URI.create( initialHosts[i] ) );
+         }
+-        ClusterConfiguration config = new ClusterConfiguration( "clusterName", StringLogger.DEV_NULL, initialHosts );
++        ClusterConfiguration config = new ClusterConfiguration( "clusterName", initialHosts );
+         config.setMembers( members );
+ 
+         context = mock( ClusterContext.class );
+diff --git a/enterprise/cluster/src/test/java/org/neo4j/cluster/protocol/heartbeat/HeartbeatStateTest.java b/enterprise/cluster/src/test/java/org/neo4j/cluster/protocol/heartbeat/HeartbeatStateTest.java
+index f41bc41..0209f82 100644
+--- a/enterprise/cluster/src/test/java/org/neo4j/cluster/protocol/heartbeat/HeartbeatStateTest.java
++++ b/enterprise/cluster/src/test/java/org/neo4j/cluster/protocol/heartbeat/HeartbeatStateTest.java
+@@ -55,8 +55,7 @@
+         // Given
+         InstanceId instanceId = new InstanceId( 1 );
+         HeartbeatState heartbeat= HeartbeatState.heartbeat;
+-        ClusterConfiguration configuration = new ClusterConfiguration("whatever", StringLogger.DEV_NULL,
+-                                                                       "cluster://1", "cluster://2" );
++        ClusterConfiguration configuration = new ClusterConfiguration("whatever", "cluster://1", "cluster://2" );
+         configuration.joined( instanceId, URI.create("cluster://1" ) );
+         configuration.joined( new InstanceId( 2 ), URI.create("cluster://2" ));
+ 
+@@ -88,8 +87,7 @@
+         InstanceId myId = new InstanceId( 1 );
+         InstanceId foreignId = new InstanceId( 3 );
+         HeartbeatState heartbeat= HeartbeatState.heartbeat;
+-        ClusterConfiguration configuration = new ClusterConfiguration("whatever", StringLogger.DEV_NULL,
+-                                                                      "cluster://1", "cluster://2" );
++        ClusterConfiguration configuration = new ClusterConfiguration("whatever", "cluster://1", "cluster://2" );
+         configuration.joined( myId, URI.create("cluster://1" ) );
+         configuration.joined( new InstanceId( 2 ), URI.create("cluster://2" ));
+ 
+diff --git a/enterprise/cluster/src/main/java/org/neo4j/cluster/MultiPaxosServerFactory.java b/enterprise/cluster/src/main/java/org/neo4j/cluster/MultiPaxosServerFactory.java
+index 5cb4db0..7dc4905 100644
+--- a/enterprise/cluster/src/main/java/org/neo4j/cluster/MultiPaxosServerFactory.java
++++ b/enterprise/cluster/src/main/java/org/neo4j/cluster/MultiPaxosServerFactory.java
+@@ -100,7 +100,7 @@
+ 
+         final MultiPaxosContext context = new MultiPaxosContext( me,
+                 Iterables.<ElectionRole,ElectionRole>iterable( new ElectionRole(ClusterConfiguration.COORDINATOR )),
+-                new ClusterConfiguration( initialConfig.getName(), logging.getMessagesLog( ClusterConfiguration.class ), initialConfig.getMemberURIs() ),executor, logging,
++                new ClusterConfiguration( initialConfig.getName(), initialConfig.getMemberURIs() ),executor, logging,
+                 objectInputStreamFactory, objectOutputStreamFactory, acceptorInstanceStore, timeouts);
+ 
+         SnapshotContext snapshotContext = new SnapshotContext( context.getClusterContext(), context.getLearnerContext() );

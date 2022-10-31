@@ -1,0 +1,343 @@
+diff --git a/src/main/java/org/apache/ibatis/binding/MapperMethod.java b/src/main/java/org/apache/ibatis/binding/MapperMethod.java
+index 43cc98d..b5d2b7a 100644
+--- a/src/main/java/org/apache/ibatis/binding/MapperMethod.java
++++ b/src/main/java/org/apache/ibatis/binding/MapperMethod.java
+@@ -284,10 +284,10 @@
+         this.returnType = method.getReturnType();
+       }
+       this.returnsVoid = void.class.equals(this.returnType);
+-      this.returnsMany = (configuration.getObjectFactory().isCollection(this.returnType) || this.returnType.isArray());
++      this.returnsMany = configuration.getObjectFactory().isCollection(this.returnType) || this.returnType.isArray();
+       this.returnsCursor = Cursor.class.equals(this.returnType);
+       this.mapKey = getMapKey(method);
+-      this.returnsMap = (this.mapKey != null);
++      this.returnsMap = this.mapKey != null;
+       this.rowBoundsIndex = getUniqueParamIndex(method, RowBounds.class);
+       this.resultHandlerIndex = getUniqueParamIndex(method, ResultHandler.class);
+       this.paramNameResolver = new ParamNameResolver(configuration, method);
+diff --git a/src/main/java/org/apache/ibatis/binding/MapperProxy.java b/src/main/java/org/apache/ibatis/binding/MapperProxy.java
+index f34acb3..04f86e8 100644
+--- a/src/main/java/org/apache/ibatis/binding/MapperProxy.java
++++ b/src/main/java/org/apache/ibatis/binding/MapperProxy.java
+@@ -88,8 +88,8 @@
+    * Backport of java.lang.reflect.Method#isDefault()
+    */
+   private boolean isDefaultMethod(Method method) {
+-    return ((method.getModifiers()
+-        & (Modifier.ABSTRACT | Modifier.PUBLIC | Modifier.STATIC)) == Modifier.PUBLIC)
++    return (method.getModifiers()
++        & (Modifier.ABSTRACT | Modifier.PUBLIC | Modifier.STATIC)) == Modifier.PUBLIC
+         && method.getDeclaringClass().isInterface();
+   }
+ }
+diff --git a/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java b/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
+index 353ef7e..3434126 100644
+--- a/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
++++ b/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
+@@ -566,9 +566,9 @@
+   private boolean isLazy(Result result) {
+     boolean isLazy = configuration.isLazyLoadingEnabled();
+     if (result.one().select().length() > 0 && FetchType.DEFAULT != result.one().fetchType()) {
+-      isLazy = (result.one().fetchType() == FetchType.LAZY);
++      isLazy = result.one().fetchType() == FetchType.LAZY;
+     } else if (result.many().select().length() > 0 && FetchType.DEFAULT != result.many().fetchType()) {
+-      isLazy = (result.many().fetchType() == FetchType.LAZY);
++      isLazy = result.many().fetchType() == FetchType.LAZY;
+     }
+     return isLazy;
+   }
+diff --git a/src/main/java/org/apache/ibatis/cursor/defaults/DefaultCursor.java b/src/main/java/org/apache/ibatis/cursor/defaults/DefaultCursor.java
+index ba6bf7d..53fc520 100644
+--- a/src/main/java/org/apache/ibatis/cursor/defaults/DefaultCursor.java
++++ b/src/main/java/org/apache/ibatis/cursor/defaults/DefaultCursor.java
+@@ -1,5 +1,5 @@
+ /**
+- *    Copyright 2009-2016 the original author or authors.
++ *    Copyright 2009-2017 the original author or authors.
+  *
+  *    Licensed under the Apache License, Version 2.0 (the "License");
+  *    you may not use this file except in compliance with the License.
+@@ -148,7 +148,7 @@
+             indexWithRowBound++;
+         }
+         // No more object or limit reached
+-        if (next == null || (getReadItemsCount() == rowBounds.getOffset() + rowBounds.getLimit())) {
++        if (next == null || getReadItemsCount() == rowBounds.getOffset() + rowBounds.getLimit()) {
+             close();
+             status = CursorStatus.CONSUMED;
+         }
+diff --git a/src/main/java/org/apache/ibatis/datasource/pooled/PooledConnection.java b/src/main/java/org/apache/ibatis/datasource/pooled/PooledConnection.java
+index 631d427..96872ac 100644
+--- a/src/main/java/org/apache/ibatis/datasource/pooled/PooledConnection.java
++++ b/src/main/java/org/apache/ibatis/datasource/pooled/PooledConnection.java
+@@ -213,7 +213,7 @@
+   @Override
+   public boolean equals(Object obj) {
+     if (obj instanceof PooledConnection) {
+-      return realConnection.hashCode() == (((PooledConnection) obj).realConnection.hashCode());
++      return realConnection.hashCode() == ((PooledConnection) obj).realConnection.hashCode();
+     } else if (obj instanceof Connection) {
+       return hashCode == obj.hashCode();
+     } else {
+diff --git a/src/main/java/org/apache/ibatis/executor/CachingExecutor.java b/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
+index e7e476d..9c9bd3a 100644
+--- a/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
++++ b/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
+@@ -96,7 +96,7 @@
+     if (cache != null) {
+       flushCacheIfRequired(ms);
+       if (ms.isUseCache() && resultHandler == null) {
+-        ensureNoOutParams(ms, parameterObject, boundSql);
++        ensureNoOutParams(ms, boundSql);
+         @SuppressWarnings("unchecked")
+         List<E> list = (List<E>) tcm.getObject(cache, key);
+         if (list == null) {
+@@ -131,7 +131,7 @@
+     }
+   }
+ 
+-  private void ensureNoOutParams(MappedStatement ms, Object parameter, BoundSql boundSql) {
++  private void ensureNoOutParams(MappedStatement ms, BoundSql boundSql) {
+     if (ms.getStatementType() == StatementType.CALLABLE) {
+       for (ParameterMapping parameterMapping : boundSql.getParameterMappings()) {
+         if (parameterMapping.getMode() != ParameterMode.IN) {
+diff --git a/src/main/java/org/apache/ibatis/executor/loader/cglib/CglibProxyFactory.java b/src/main/java/org/apache/ibatis/executor/loader/cglib/CglibProxyFactory.java
+index 962544d..7548c6b 100644
+--- a/src/main/java/org/apache/ibatis/executor/loader/cglib/CglibProxyFactory.java
++++ b/src/main/java/org/apache/ibatis/executor/loader/cglib/CglibProxyFactory.java
+@@ -185,7 +185,7 @@
+     @Override
+     public Object intercept(Object enhanced, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+       final Object o = super.invoke(enhanced, method, args);
+-      return (o instanceof AbstractSerialStateHolder) ? o : methodProxy.invokeSuper(o, args);
++      return o instanceof AbstractSerialStateHolder ? o : methodProxy.invokeSuper(o, args);
+     }
+ 
+     @Override
+diff --git a/src/main/java/org/apache/ibatis/executor/loader/javassist/JavassistProxyFactory.java b/src/main/java/org/apache/ibatis/executor/loader/javassist/JavassistProxyFactory.java
+index da81929..1097bcf 100644
+--- a/src/main/java/org/apache/ibatis/executor/loader/javassist/JavassistProxyFactory.java
++++ b/src/main/java/org/apache/ibatis/executor/loader/javassist/JavassistProxyFactory.java
+@@ -187,7 +187,7 @@
+     @Override
+     public Object invoke(Object enhanced, Method method, Method methodProxy, Object[] args) throws Throwable {
+       final Object o = super.invoke(enhanced, method, args);
+-      return (o instanceof AbstractSerialStateHolder) ? o : methodProxy.invoke(o, args);
++      return o instanceof AbstractSerialStateHolder ? o : methodProxy.invoke(o, args);
+     }
+ 
+     @Override
+diff --git a/src/main/java/org/apache/ibatis/executor/resultset/DefaultResultSetHandler.java b/src/main/java/org/apache/ibatis/executor/resultset/DefaultResultSetHandler.java
+index 7a6fed7..06124cc 100644
+--- a/src/main/java/org/apache/ibatis/executor/resultset/DefaultResultSetHandler.java
++++ b/src/main/java/org/apache/ibatis/executor/resultset/DefaultResultSetHandler.java
+@@ -253,7 +253,7 @@
+     try {
+       if (stmt.getConnection().getMetaData().supportsMultipleResultSets()) {
+         // Crazy Standard JDBC way of determining if there are more results
+-        if (!((!stmt.getMoreResults()) && (stmt.getUpdateCount() == -1))) {
++        if (!(!stmt.getMoreResults() && stmt.getUpdateCount() == -1)) {
+           ResultSet rs = stmt.getResultSet();
+           if (rs == null) {
+             return getNextResultSet(stmt);
+@@ -398,7 +398,7 @@
+       }
+       foundValues = applyPropertyMappings(rsw, resultMap, metaObject, lazyLoader, null) || foundValues;
+       foundValues = lazyLoader.size() > 0 || foundValues;
+-      rowValue = (foundValues || configuration.isReturnInstanceForEmptyRow()) ? rowValue : null;
++      rowValue = foundValues || configuration.isReturnInstanceForEmptyRow() ? rowValue : null;
+     }
+     return rowValue;
+   }
+@@ -598,7 +598,7 @@
+         }
+       }
+     }
+-    this.useConstructorMappings = (resultObject != null && !constructorArgTypes.isEmpty()); // set current mapping result
++    this.useConstructorMappings = resultObject != null && !constructorArgTypes.isEmpty(); // set current mapping result
+     return resultObject;
+   }
+ 
+@@ -897,7 +897,7 @@
+     Object rowValue = partialObject;
+     if (rowValue != null) {
+       final MetaObject metaObject = configuration.newMetaObject(rowValue);
+-      putAncestor(rowValue, resultMapId, columnPrefix);
++      putAncestor(rowValue, resultMapId);
+       applyNestedResultMappings(rsw, resultMap, metaObject, columnPrefix, combinedKey, false);
+       ancestorObjects.remove(resultMapId);
+     } else {
+@@ -910,11 +910,11 @@
+           foundValues = applyAutomaticMappings(rsw, resultMap, metaObject, columnPrefix) || foundValues;
+         }
+         foundValues = applyPropertyMappings(rsw, resultMap, metaObject, lazyLoader, columnPrefix) || foundValues;
+-        putAncestor(rowValue, resultMapId, columnPrefix);
++        putAncestor(rowValue, resultMapId);
+         foundValues = applyNestedResultMappings(rsw, resultMap, metaObject, columnPrefix, combinedKey, true) || foundValues;
+         ancestorObjects.remove(resultMapId);
+         foundValues = lazyLoader.size() > 0 || foundValues;
+-        rowValue = (foundValues || configuration.isReturnInstanceForEmptyRow()) ? rowValue : null;
++        rowValue = foundValues || configuration.isReturnInstanceForEmptyRow() ? rowValue : null;
+       }
+       if (combinedKey != CacheKey.NULL_CACHE_KEY) {
+         nestedResultObjects.put(combinedKey, rowValue);
+@@ -923,7 +923,7 @@
+     return rowValue;
+   }
+ 
+-  private void putAncestor(Object resultObject, String resultMapId, String columnPrefix) {
++  private void putAncestor(Object resultObject, String resultMapId) {
+     ancestorObjects.put(resultMapId, resultObject);
+   }
+ 
+@@ -953,7 +953,7 @@
+           final CacheKey rowKey = createRowKey(nestedResultMap, rsw, columnPrefix);
+           final CacheKey combinedKey = combineKeys(rowKey, parentRowKey);
+           Object rowValue = nestedResultObjects.get(combinedKey);
+-          boolean knownValue = (rowValue != null);
++          boolean knownValue = rowValue != null;
+           instantiateCollectionPropertyIfAppropriate(resultMapping, metaObject); // mandatory
+           if (anyNotNullColumnHasValue(resultMapping, columnPrefix, rsw)) {
+             rowValue = getRowValue(rsw, nestedResultMap, combinedKey, columnPrefix, rowValue);
+diff --git a/src/main/java/org/apache/ibatis/io/ResolverUtil.java b/src/main/java/org/apache/ibatis/io/ResolverUtil.java
+index c264919..2847606 100644
+--- a/src/main/java/org/apache/ibatis/io/ResolverUtil.java
++++ b/src/main/java/org/apache/ibatis/io/ResolverUtil.java
+@@ -1,5 +1,5 @@
+ /**
+- *    Copyright 2009-2016 the original author or authors.
++ *    Copyright 2009-2017 the original author or authors.
+  *
+  *    Licensed under the Apache License, Version 2.0 (the "License");
+  *    you may not use this file except in compliance with the License.
+@@ -66,7 +66,7 @@
+    * A simple interface that specifies how to test classes to determine if they
+    * are to be included in the results produced by the ResolverUtil.
+    */
+-  public static interface Test {
++  public interface Test {
+     /**
+      * Will be called repeatedly with candidate classes. Must return True if a class
+      * is to be included in the results, false otherwise.
+diff --git a/src/main/java/org/apache/ibatis/type/DateOnlyTypeHandler.java b/src/main/java/org/apache/ibatis/type/DateOnlyTypeHandler.java
+index e90f4fa..21e5423 100644
+--- a/src/main/java/org/apache/ibatis/type/DateOnlyTypeHandler.java
++++ b/src/main/java/org/apache/ibatis/type/DateOnlyTypeHandler.java
+@@ -1,5 +1,5 @@
+ /**
+- *    Copyright 2009-2015 the original author or authors.
++ *    Copyright 2009-2017 the original author or authors.
+  *
+  *    Licensed under the Apache License, Version 2.0 (the "License");
+  *    you may not use this file except in compliance with the License.
+@@ -29,7 +29,7 @@
+   @Override
+   public void setNonNullParameter(PreparedStatement ps, int i, Date parameter, JdbcType jdbcType)
+       throws SQLException {
+-    ps.setDate(i, new java.sql.Date((parameter.getTime())));
++    ps.setDate(i, new java.sql.Date(parameter.getTime()));
+   }
+ 
+   @Override
+@@ -37,7 +37,7 @@
+       throws SQLException {
+     java.sql.Date sqlDate = rs.getDate(columnName);
+     if (sqlDate != null) {
+-      return new java.util.Date(sqlDate.getTime());
++      return new Date(sqlDate.getTime());
+     }
+     return null;
+   }
+@@ -47,7 +47,7 @@
+       throws SQLException {
+     java.sql.Date sqlDate = rs.getDate(columnIndex);
+     if (sqlDate != null) {
+-      return new java.util.Date(sqlDate.getTime());
++      return new Date(sqlDate.getTime());
+     }
+     return null;
+   }
+@@ -57,7 +57,7 @@
+       throws SQLException {
+     java.sql.Date sqlDate = cs.getDate(columnIndex);
+     if (sqlDate != null) {
+-      return new java.util.Date(sqlDate.getTime());
++      return new Date(sqlDate.getTime());
+     }
+     return null;
+   }
+diff --git a/src/main/java/org/apache/ibatis/type/DateTypeHandler.java b/src/main/java/org/apache/ibatis/type/DateTypeHandler.java
+index 2eb6b3d..92b74fd 100644
+--- a/src/main/java/org/apache/ibatis/type/DateTypeHandler.java
++++ b/src/main/java/org/apache/ibatis/type/DateTypeHandler.java
+@@ -1,5 +1,5 @@
+ /**
+- *    Copyright 2009-2015 the original author or authors.
++ *    Copyright 2009-2017 the original author or authors.
+  *
+  *    Licensed under the Apache License, Version 2.0 (the "License");
+  *    you may not use this file except in compliance with the License.
+@@ -30,7 +30,7 @@
+   @Override
+   public void setNonNullParameter(PreparedStatement ps, int i, Date parameter, JdbcType jdbcType)
+       throws SQLException {
+-    ps.setTimestamp(i, new Timestamp((parameter).getTime()));
++    ps.setTimestamp(i, new Timestamp(parameter.getTime()));
+   }
+ 
+   @Override
+diff --git a/src/main/java/org/apache/ibatis/type/TimeOnlyTypeHandler.java b/src/main/java/org/apache/ibatis/type/TimeOnlyTypeHandler.java
+index 9780cd9..cea9a78 100644
+--- a/src/main/java/org/apache/ibatis/type/TimeOnlyTypeHandler.java
++++ b/src/main/java/org/apache/ibatis/type/TimeOnlyTypeHandler.java
+@@ -1,5 +1,5 @@
+ /**
+- *    Copyright 2009-2015 the original author or authors.
++ *    Copyright 2009-2017 the original author or authors.
+  *
+  *    Licensed under the Apache License, Version 2.0 (the "License");
+  *    you may not use this file except in compliance with the License.
+@@ -36,7 +36,7 @@
+   @Override
+   public Date getNullableResult(ResultSet rs, String columnName)
+       throws SQLException {
+-    java.sql.Time sqlTime = rs.getTime(columnName);
++    Time sqlTime = rs.getTime(columnName);
+     if (sqlTime != null) {
+       return new Date(sqlTime.getTime());
+     }
+@@ -46,7 +46,7 @@
+   @Override
+   public Date getNullableResult(ResultSet rs, int columnIndex)
+       throws SQLException {
+-    java.sql.Time sqlTime = rs.getTime(columnIndex);
++    Time sqlTime = rs.getTime(columnIndex);
+     if (sqlTime != null) {
+       return new Date(sqlTime.getTime());
+     }
+@@ -56,7 +56,7 @@
+   @Override
+   public Date getNullableResult(CallableStatement cs, int columnIndex)
+       throws SQLException {
+-    java.sql.Time sqlTime = cs.getTime(columnIndex);
++    Time sqlTime = cs.getTime(columnIndex);
+     if (sqlTime != null) {
+       return new Date(sqlTime.getTime());
+     }
+diff --git a/src/main/java/org/apache/ibatis/binding/MapperMethod.java b/src/main/java/org/apache/ibatis/binding/MapperMethod.java
+index 43cc98d..b5d2b7a 100644
+--- a/src/main/java/org/apache/ibatis/binding/MapperMethod.java
++++ b/src/main/java/org/apache/ibatis/binding/MapperMethod.java
+@@ -284,10 +284,10 @@
+         this.returnType = method.getReturnType();
+       }
+       this.returnsVoid = void.class.equals(this.returnType);
+-      this.returnsMany = (configuration.getObjectFactory().isCollection(this.returnType) || this.returnType.isArray());
++      this.returnsMany = configuration.getObjectFactory().isCollection(this.returnType) || this.returnType.isArray();
+       this.returnsCursor = Cursor.class.equals(this.returnType);
+       this.mapKey = getMapKey(method);
+-      this.returnsMap = (this.mapKey != null);
++      this.returnsMap = this.mapKey != null;
+       this.rowBoundsIndex = getUniqueParamIndex(method, RowBounds.class);
+       this.resultHandlerIndex = getUniqueParamIndex(method, ResultHandler.class);
+       this.paramNameResolver = new ParamNameResolver(configuration, method);

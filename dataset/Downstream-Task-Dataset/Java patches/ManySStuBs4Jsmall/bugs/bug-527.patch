@@ -1,0 +1,147 @@
+diff --git a/core/client/src/main/java/alluxio/client/file/FileInStream.java b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+index fdd7cf7..5bdf217 100644
+--- a/core/client/src/main/java/alluxio/client/file/FileInStream.java
++++ b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+@@ -172,7 +172,7 @@
+       closeOrCancelCacheStream();
+       mClosed = true;
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -181,7 +181,7 @@
+     try {
+       return readInternal();
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -190,7 +190,7 @@
+     try {
+       return read(b, 0, b.length);
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -199,7 +199,7 @@
+     try {
+       return readInternal(b, off, len);
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -284,7 +284,7 @@
+     try {
+       return positionedReadInternal(pos, b, off, len);
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -345,7 +345,7 @@
+         seekInternalWithCachingPartiallyReadBlock(pos);
+       }
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -360,7 +360,7 @@
+       seek(mPos + toSkip);
+       return toSkip;
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+diff --git a/core/client/src/test/java/alluxio/client/file/FileInStreamTest.java b/core/client/src/test/java/alluxio/client/file/FileInStreamTest.java
+index edb2e77..2c2e727 100644
+--- a/core/client/src/test/java/alluxio/client/file/FileInStreamTest.java
++++ b/core/client/src/test/java/alluxio/client/file/FileInStreamTest.java
+@@ -439,7 +439,7 @@
+     try {
+       mTestStream.seek(BLOCK_LENGTH);
+       Assert.fail("block store should throw exception");
+-    } catch (UnavailableException e) {
++    } catch (IOException e) {
+       Assert.assertEquals("test IOException", e.getMessage());
+     }
+   }
+diff --git a/core/client/src/main/java/alluxio/client/file/FileInStream.java b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+index fdd7cf7..5bdf217 100644
+--- a/core/client/src/main/java/alluxio/client/file/FileInStream.java
++++ b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+@@ -172,7 +172,7 @@
+       closeOrCancelCacheStream();
+       mClosed = true;
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -181,7 +181,7 @@
+     try {
+       return readInternal();
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -190,7 +190,7 @@
+     try {
+       return read(b, 0, b.length);
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -199,7 +199,7 @@
+     try {
+       return readInternal(b, off, len);
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -284,7 +284,7 @@
+     try {
+       return positionedReadInternal(pos, b, off, len);
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -345,7 +345,7 @@
+         seekInternalWithCachingPartiallyReadBlock(pos);
+       }
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 
+@@ -360,7 +360,7 @@
+       seek(mPos + toSkip);
+       return toSkip;
+     } catch (AlluxioStatusException e) {
+-      throw new IOException(e);
++      throw e.toIOException();
+     }
+   }
+ 

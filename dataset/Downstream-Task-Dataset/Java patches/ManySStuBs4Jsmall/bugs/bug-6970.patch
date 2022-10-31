@@ -1,0 +1,16 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsVolumeImpl.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsVolumeImpl.java
+index 217e932..e2efb2f 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsVolumeImpl.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsVolumeImpl.java
+@@ -381,8 +381,9 @@
+           !FileUtil.fullyDelete(finalizedDir)) {
+         throw new IOException("Failed to delete " + finalizedDir);
+       }
+-      if (!DatanodeUtil.dirNoFilesRecursive(lazypersistDir) ||
+-          !FileUtil.fullyDelete(lazypersistDir)) {
++      if (lazypersistDir.exists() &&
++        ((!DatanodeUtil.dirNoFilesRecursive(lazypersistDir) ||
++          !FileUtil.fullyDelete(lazypersistDir)))) {
+         throw new IOException("Failed to delete " + lazypersistDir);
+       }
+       FileUtil.fullyDelete(tmpDir);

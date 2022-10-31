@@ -1,0 +1,17 @@
+diff --git a/components/camel-jdbc/src/main/java/org/apache/camel/component/jdbc/ResultSetIterator.java b/components/camel-jdbc/src/main/java/org/apache/camel/component/jdbc/ResultSetIterator.java
+index caf3ea8..8055550 100644
+--- a/components/camel-jdbc/src/main/java/org/apache/camel/component/jdbc/ResultSetIterator.java
++++ b/components/camel-jdbc/src/main/java/org/apache/camel/component/jdbc/ResultSetIterator.java
+@@ -43,10 +43,10 @@
+     private final Column[] columns;
+     private final AtomicBoolean closed = new AtomicBoolean();
+ 
+-    public ResultSetIterator(ResultSet resultSet, boolean isJDBC4) throws SQLException {
++    public ResultSetIterator(Connection conn, ResultSet resultSet, boolean isJDBC4) throws SQLException {
+         this.resultSet = resultSet;
+         this.statement = this.resultSet.getStatement();
+-        this.connection = this.statement.getConnection();
++        this.connection = conn;
+ 
+         ResultSetMetaData metaData = resultSet.getMetaData();
+         columns = new Column[metaData.getColumnCount()];

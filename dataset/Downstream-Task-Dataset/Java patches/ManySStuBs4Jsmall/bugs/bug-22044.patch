@@ -1,0 +1,28 @@
+diff --git a/src/edu/stanford/nlp/simple/Document.java b/src/edu/stanford/nlp/simple/Document.java
+index 73d5018..683e373 100644
+--- a/src/edu/stanford/nlp/simple/Document.java
++++ b/src/edu/stanford/nlp/simple/Document.java
+@@ -476,7 +476,8 @@
+       List<CoreMap> sentences = ann.get(CoreAnnotations.SentencesAnnotation.class);
+       this.sentences = new ArrayList<>(sentences.size());
+       for (CoreMap sentence : sentences) {
+-        Sentence sent = new Sentence(this, sentence);
++        //Sentence sent = new Sentence(this, sentence);
++        Sentence sent = new Sentence(this, this.serializer.toProtoBuilder(sentence), sentence.get(CoreAnnotations.TextAnnotation.class));
+         this.sentences.add(sent);
+         this.impl.addSentence(sent.serialize());
+       }
+diff --git a/src/edu/stanford/nlp/simple/Document.java b/src/edu/stanford/nlp/simple/Document.java
+index 73d5018..683e373 100644
+--- a/src/edu/stanford/nlp/simple/Document.java
++++ b/src/edu/stanford/nlp/simple/Document.java
+@@ -476,7 +476,8 @@
+       List<CoreMap> sentences = ann.get(CoreAnnotations.SentencesAnnotation.class);
+       this.sentences = new ArrayList<>(sentences.size());
+       for (CoreMap sentence : sentences) {
+-        Sentence sent = new Sentence(this, sentence);
++        //Sentence sent = new Sentence(this, sentence);
++        Sentence sent = new Sentence(this, this.serializer.toProtoBuilder(sentence), sentence.get(CoreAnnotations.TextAnnotation.class));
+         this.sentences.add(sent);
+         this.impl.addSentence(sent.serialize());
+       }

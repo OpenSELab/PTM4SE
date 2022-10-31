@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+index eefc001..4da8851 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+@@ -977,7 +977,7 @@
+         Object newMsg = filter(msg);
+         if (newMsg == null) return (new BroadcasterFuture<Object>(msg, broadcasterListeners, this)).done();
+ 
+-        BroadcasterFuture<Object> f = new BroadcasterFuture<Object>(newMsg, resources.size(), broadcasterListeners, this);
++        BroadcasterFuture<Object> f = new BroadcasterFuture<Object>(newMsg, 1, broadcasterListeners, this);
+         messages.offer(new Entry(newMsg, r, f, msg));
+         return f;
+     }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+index eefc001..4da8851 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+@@ -977,7 +977,7 @@
+         Object newMsg = filter(msg);
+         if (newMsg == null) return (new BroadcasterFuture<Object>(msg, broadcasterListeners, this)).done();
+ 
+-        BroadcasterFuture<Object> f = new BroadcasterFuture<Object>(newMsg, resources.size(), broadcasterListeners, this);
++        BroadcasterFuture<Object> f = new BroadcasterFuture<Object>(newMsg, 1, broadcasterListeners, this);
+         messages.offer(new Entry(newMsg, r, f, msg));
+         return f;
+     }

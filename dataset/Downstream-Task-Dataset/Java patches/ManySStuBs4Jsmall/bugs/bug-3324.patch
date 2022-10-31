@@ -1,0 +1,52 @@
+diff --git a/src/main/java/com/alibaba/druid/stat/JdbcDataSourceStat.java b/src/main/java/com/alibaba/druid/stat/JdbcDataSourceStat.java
+index bc83ed2..d87e8ac 100644
+--- a/src/main/java/com/alibaba/druid/stat/JdbcDataSourceStat.java
++++ b/src/main/java/com/alibaba/druid/stat/JdbcDataSourceStat.java
+@@ -47,7 +47,7 @@
+     private final LinkedHashMap<String, JdbcSqlStat>            sqlStatMap     = new LinkedHashMap<String, JdbcSqlStat>(
+                                                                                                                         maxSize,
+                                                                                                                         0.75f,
+-                                                                                                                        true);
++                                                                                                                        false);
+ 
+     // private final ConcurrentMap<String, JdbcSqlStat> sqlStatMap = new ConcurrentHashMap<String, JdbcSqlStat>();
+ 
+diff --git a/src/main/java/com/alibaba/druid/wall/WallProvider.java b/src/main/java/com/alibaba/druid/wall/WallProvider.java
+index b99f34a..31e5c53 100644
+--- a/src/main/java/com/alibaba/druid/wall/WallProvider.java
++++ b/src/main/java/com/alibaba/druid/wall/WallProvider.java
+@@ -40,7 +40,7 @@
+         lock.writeLock().lock();
+         try {
+             if (whiteList == null) {
+-                whiteList = new LinkedHashMap<String, Object>(whileListMaxSize, 0.75f, true);
++                whiteList = new LinkedHashMap<String, Object>(whileListMaxSize, 0.75f, false);
+             }
+ 
+             whiteList.put(sql, PRESENT);
+diff --git a/src/test/java/com/alibaba/druid/pool/TestMockPerf.java b/src/test/java/com/alibaba/druid/pool/TestMockPerf.java
+index 0846bc0..f2fb094 100644
+--- a/src/test/java/com/alibaba/druid/pool/TestMockPerf.java
++++ b/src/test/java/com/alibaba/druid/pool/TestMockPerf.java
+@@ -16,7 +16,7 @@
+         dataSource.setMinIdle(3);
+         dataSource.setMaxActive(20);
+         dataSource.setDbType("mysql");
+-        dataSource.setFilters("stat");
++        dataSource.setFilters("wall");
+         dataSource.init();
+     }
+ 
+diff --git a/src/main/java/com/alibaba/druid/stat/JdbcDataSourceStat.java b/src/main/java/com/alibaba/druid/stat/JdbcDataSourceStat.java
+index bc83ed2..d87e8ac 100644
+--- a/src/main/java/com/alibaba/druid/stat/JdbcDataSourceStat.java
++++ b/src/main/java/com/alibaba/druid/stat/JdbcDataSourceStat.java
+@@ -47,7 +47,7 @@
+     private final LinkedHashMap<String, JdbcSqlStat>            sqlStatMap     = new LinkedHashMap<String, JdbcSqlStat>(
+                                                                                                                         maxSize,
+                                                                                                                         0.75f,
+-                                                                                                                        true);
++                                                                                                                        false);
+ 
+     // private final ConcurrentMap<String, JdbcSqlStat> sqlStatMap = new ConcurrentHashMap<String, JdbcSqlStat>();
+ 

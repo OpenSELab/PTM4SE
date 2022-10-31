@@ -1,0 +1,26 @@
+diff --git a/controller/src/main/java/org/jboss/as/controller/parsing/StandaloneXml.java b/controller/src/main/java/org/jboss/as/controller/parsing/StandaloneXml.java
+index cd5ab76..5d2c94f 100644
+--- a/controller/src/main/java/org/jboss/as/controller/parsing/StandaloneXml.java
++++ b/controller/src/main/java/org/jboss/as/controller/parsing/StandaloneXml.java
+@@ -398,7 +398,7 @@
+             boolean deploymentWritten = false;
+             for (String uniqueName : deploymentNames) {
+                 final ModelNode deployment = modelNode.get(uniqueName);
+-                if(!deployment.get(PERSISTENT).asBoolean()) {
++                if(deployment.hasDefined(PERSISTENT) && !deployment.get(PERSISTENT).asBoolean()) {
+                     continue;
+                 }
+                 if(!deploymentWritten) {
+diff --git a/controller/src/main/java/org/jboss/as/controller/parsing/StandaloneXml.java b/controller/src/main/java/org/jboss/as/controller/parsing/StandaloneXml.java
+index cd5ab76..5d2c94f 100644
+--- a/controller/src/main/java/org/jboss/as/controller/parsing/StandaloneXml.java
++++ b/controller/src/main/java/org/jboss/as/controller/parsing/StandaloneXml.java
+@@ -398,7 +398,7 @@
+             boolean deploymentWritten = false;
+             for (String uniqueName : deploymentNames) {
+                 final ModelNode deployment = modelNode.get(uniqueName);
+-                if(!deployment.get(PERSISTENT).asBoolean()) {
++                if(deployment.hasDefined(PERSISTENT) && !deployment.get(PERSISTENT).asBoolean()) {
+                     continue;
+                 }
+                 if(!deploymentWritten) {

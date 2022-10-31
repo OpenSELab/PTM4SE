@@ -1,0 +1,42 @@
+diff --git a/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/inject/Graylog2Module.java b/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/inject/Graylog2Module.java
+index 5f6f503..9564ce8 100644
+--- a/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/inject/Graylog2Module.java
++++ b/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/inject/Graylog2Module.java
+@@ -260,14 +260,14 @@
+         return MapBinder.newMapBinder(binder(), TypeLiteral.get(String.class), new TypeLiteral<WidgetStrategy.Factory<? extends WidgetStrategy>>(){});
+     }
+ 
+-    protected <T extends WidgetStrategy.Factory> void installWidgetStrategy(MapBinder<String, WidgetStrategy.Factory<? extends WidgetStrategy>> widgetStrategyBinder,
++    protected void installWidgetStrategy(MapBinder<String, WidgetStrategy.Factory<? extends WidgetStrategy>> widgetStrategyBinder,
+                                                                             Class<? extends WidgetStrategy> target,
+                                                                             Class<? extends WidgetStrategy.Factory<? extends WidgetStrategy>> targetFactory) {
+         install(new FactoryModuleBuilder().implement(WidgetStrategy.class, target).build(targetFactory));
+         widgetStrategyBinder.addBinding(target.getCanonicalName()).to(Key.get(targetFactory));
+     }
+ 
+-    protected <T extends WidgetStrategy.Factory> void installWidgetStrategyWithAlias(MapBinder<String, WidgetStrategy.Factory<? extends WidgetStrategy>> widgetStrategyBinder,
++    protected void installWidgetStrategyWithAlias(MapBinder<String, WidgetStrategy.Factory<? extends WidgetStrategy>> widgetStrategyBinder,
+                                                                             String key,
+                                                                             Class<? extends WidgetStrategy> target,
+                                                                             Class<? extends WidgetStrategy.Factory<? extends WidgetStrategy>> targetFactory) {
+diff --git a/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/inject/Graylog2Module.java b/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/inject/Graylog2Module.java
+index 5f6f503..9564ce8 100644
+--- a/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/inject/Graylog2Module.java
++++ b/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/inject/Graylog2Module.java
+@@ -260,14 +260,14 @@
+         return MapBinder.newMapBinder(binder(), TypeLiteral.get(String.class), new TypeLiteral<WidgetStrategy.Factory<? extends WidgetStrategy>>(){});
+     }
+ 
+-    protected <T extends WidgetStrategy.Factory> void installWidgetStrategy(MapBinder<String, WidgetStrategy.Factory<? extends WidgetStrategy>> widgetStrategyBinder,
++    protected void installWidgetStrategy(MapBinder<String, WidgetStrategy.Factory<? extends WidgetStrategy>> widgetStrategyBinder,
+                                                                             Class<? extends WidgetStrategy> target,
+                                                                             Class<? extends WidgetStrategy.Factory<? extends WidgetStrategy>> targetFactory) {
+         install(new FactoryModuleBuilder().implement(WidgetStrategy.class, target).build(targetFactory));
+         widgetStrategyBinder.addBinding(target.getCanonicalName()).to(Key.get(targetFactory));
+     }
+ 
+-    protected <T extends WidgetStrategy.Factory> void installWidgetStrategyWithAlias(MapBinder<String, WidgetStrategy.Factory<? extends WidgetStrategy>> widgetStrategyBinder,
++    protected void installWidgetStrategyWithAlias(MapBinder<String, WidgetStrategy.Factory<? extends WidgetStrategy>> widgetStrategyBinder,
+                                                                             String key,
+                                                                             Class<? extends WidgetStrategy> target,
+                                                                             Class<? extends WidgetStrategy.Factory<? extends WidgetStrategy>> targetFactory) {

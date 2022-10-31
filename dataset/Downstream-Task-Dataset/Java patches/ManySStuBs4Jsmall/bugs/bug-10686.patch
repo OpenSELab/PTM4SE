@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/ScaleVertex.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/ScaleVertex.java
+index 6f31cb7..667b3d0 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/ScaleVertex.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/ScaleVertex.java
+@@ -77,7 +77,7 @@
+     public Pair<Gradient, INDArray[]> doBackward(boolean tbptt) {
+         if(!canDoBackward()) throw new IllegalStateException("Cannot do backward pass: errors not set (ScaleVertex "+vertexName+" idx "+vertexIndex+")");
+ 
+-        return new Pair<>(null,new INDArray[]{epsilon.muli(1/scaleFactor)});
++        return new Pair<>(null,new INDArray[]{epsilon.muli(scaleFactor)});
+     }
+ 
+     @Override
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/ScaleVertex.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/ScaleVertex.java
+index 6f31cb7..667b3d0 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/ScaleVertex.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/graph/vertex/impl/ScaleVertex.java
+@@ -77,7 +77,7 @@
+     public Pair<Gradient, INDArray[]> doBackward(boolean tbptt) {
+         if(!canDoBackward()) throw new IllegalStateException("Cannot do backward pass: errors not set (ScaleVertex "+vertexName+" idx "+vertexIndex+")");
+ 
+-        return new Pair<>(null,new INDArray[]{epsilon.muli(1/scaleFactor)});
++        return new Pair<>(null,new INDArray[]{epsilon.muli(scaleFactor)});
+     }
+ 
+     @Override

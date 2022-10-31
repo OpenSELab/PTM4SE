@@ -1,0 +1,56 @@
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+index 1883956..9d49865 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+@@ -377,7 +377,7 @@
+                     .append(getPort(uri)).toString());
+             nettyRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_0, m, uri.toString());
+         } else if (config.getProxyServer() != null || request.getProxyServer() != null) {
+-            nettyRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, m, uri.getPath());
++            nettyRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, m, uri.toString());
+         } else {
+             StringBuilder path = new StringBuilder(uri.getRawPath());
+             if (uri.getQuery() != null) {
+diff --git a/src/test/java/com/ning/http/client/async/ProxyTest.java b/src/test/java/com/ning/http/client/async/ProxyTest.java
+index 1156c88..00a778c 100644
+--- a/src/test/java/com/ning/http/client/async/ProxyTest.java
++++ b/src/test/java/com/ning/http/client/async/ProxyTest.java
+@@ -72,7 +72,7 @@
+         Response resp = f.get(3, TimeUnit.SECONDS);
+         assertNotNull(resp);
+         assertEquals(resp.getStatusCode(), HttpServletResponse.SC_OK);
+-        assertEquals(resp.getHeader("target"), "/");
++        assertEquals(resp.getHeader("target"), target);
+     }
+ 
+     @Test(groups = "standalone")
+@@ -87,7 +87,7 @@
+         Response resp = f.get(3, TimeUnit.SECONDS);
+         assertNotNull(resp);
+         assertEquals(resp.getStatusCode(), HttpServletResponse.SC_OK);
+-        assertEquals(resp.getHeader("target"), "/");
++        assertEquals(resp.getHeader("target"), target);
+     }
+ 
+     @Test(groups = "standalone")
+@@ -103,6 +103,6 @@
+         Response resp = f.get(3, TimeUnit.SECONDS);
+         assertNotNull(resp);
+         assertEquals(resp.getStatusCode(), HttpServletResponse.SC_OK);
+-        assertEquals(resp.getHeader("target"), "/");
++        assertEquals(resp.getHeader("target"), target);
+     }
+ }
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+index 1883956..9d49865 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyAsyncHttpProvider.java
+@@ -377,7 +377,7 @@
+                     .append(getPort(uri)).toString());
+             nettyRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_0, m, uri.toString());
+         } else if (config.getProxyServer() != null || request.getProxyServer() != null) {
+-            nettyRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, m, uri.getPath());
++            nettyRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, m, uri.toString());
+         } else {
+             StringBuilder path = new StringBuilder(uri.getRawPath());
+             if (uri.getQuery() != null) {

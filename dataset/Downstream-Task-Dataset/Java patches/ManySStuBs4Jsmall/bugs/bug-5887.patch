@@ -1,0 +1,25 @@
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+index 00b465f..aabb25d 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+@@ -35,9 +35,9 @@
+  */
+ public class MinaCustomCodecTest extends ContextTestSupport {
+ 
+-    protected String uri = "mina:tcp://localhost:11300?sync=true&codec=#myCodec";
++    protected String uri = "mina:tcp://localhost:5130?sync=true&codec=#myCodec";
+    
+-    protected String badUri = "mina:tcp://localhost:11300?sync=true&codec=#XXX";
++    protected String badUri = "mina:tcp://localhost:5130?sync=true&codec=#XXX";
+ 
+     public void testMyCodec() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+@@ -51,7 +51,7 @@
+     }
+     
+     public void testTCPEncodeUTF8InputIsString() throws Exception {
+-        final String myUri = "mina:tcp://localhost:9080?encoding=UTF-8&sync=false";
++        final String myUri = "mina:tcp://localhost:9085?encoding=UTF-8&sync=false";
+         this.context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(myUri).to("mock:result");

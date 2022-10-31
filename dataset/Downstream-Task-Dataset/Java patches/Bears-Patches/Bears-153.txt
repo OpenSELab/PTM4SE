@@ -1,0 +1,11 @@
+--- a/service-registry/src/main/java/org/apache/servicecomb/serviceregistry/api/registry/MicroserviceFactory.java
++++ b/service-registry/src/main/java/org/apache/servicecomb/serviceregistry/api/registry/MicroserviceFactory.java
+@@ -56,7 +56,7 @@ public class MicroserviceFactory {
+     microservice.setAppId(configuration.getString(CONFIG_APPLICATION_ID_KEY, DEFAULT_APPLICATION_ID));
+     microservice.setVersion(configuration.getString(CONFIG_QUALIFIED_MICROSERVICE_VERSION_KEY,
+         DEFAULT_MICROSERVICE_VERSION));
+-    microservice.setDescription(configuration.getString(CONFIG_QUALIFIED_MICROSERVICE_DESCRIPTION_KEY, ""));
++    setDescription(configuration, microservice);
+     microservice.setLevel(configuration.getString(CONFIG_QUALIFIED_MICROSERVICE_ROLE_KEY, "FRONT"));
+     microservice.setPaths(ConfigurePropertyUtils.getMicroservicePaths(configuration));
+     Map<String, String> propertiesMap = MicroservicePropertiesLoader.INSTANCE.loadProperties(configuration);

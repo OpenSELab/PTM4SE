@@ -1,0 +1,62 @@
+diff --git a/src/com/google/javascript/jscomp/RhinoErrorReporter.java b/src/com/google/javascript/jscomp/RhinoErrorReporter.java
+index 89a400c..0f0a1cb 100644
+--- a/src/com/google/javascript/jscomp/RhinoErrorReporter.java
++++ b/src/com/google/javascript/jscomp/RhinoErrorReporter.java
+@@ -88,8 +88,8 @@
+           "to enable ES6 typed features.");
+ 
+   static final DiagnosticType MISPLACED_TYPE_SYNTAX =
+-      DiagnosticType.error("MISPLACED_TYPE_SYNTAX", "Bad type syntax"
+-            + " - can only have JSDoc or inline type annotations, not both");
++      DiagnosticType.error("MISPLACED_TYPE_SYNTAX",
++          "Can only have JSDoc or inline type annotations, not both");
+ 
+   // A map of Rhino messages to their DiagnosticType.
+   private final Map<Pattern, DiagnosticType> typeMap;
+@@ -160,7 +160,7 @@
+         .put(Pattern.compile("^type syntax is only supported in ES6 typed mode.*"),
+             ES6_TYPED)
+ 
+-        .put(Pattern.compile("^can only have JSDoc or inline type.*"),
++        .put(Pattern.compile("^Can only have JSDoc or inline type.*"),
+             MISPLACED_TYPE_SYNTAX)
+ 
+         .build();
+diff --git a/src/com/google/javascript/jscomp/parsing/IRFactory.java b/src/com/google/javascript/jscomp/parsing/IRFactory.java
+index 3e50946..c71df88 100644
+--- a/src/com/google/javascript/jscomp/parsing/IRFactory.java
++++ b/src/com/google/javascript/jscomp/parsing/IRFactory.java
+@@ -482,8 +482,7 @@
+     if (info != null && info.hasTypeInformation()) {
+       hasJsDocTypeAnnotations = true;
+       if (hasTypeSyntax) {
+-        errorReporter.error("Bad type syntax"
+-            + " - can only have JSDoc or inline type annotations, not both",
++        errorReporter.error("Can only have JSDoc or inline type annotations, not both",
+             sourceName, lineno(location.start), charno(location.start));
+       }
+     }
+diff --git a/src/com/google/javascript/jscomp/RhinoErrorReporter.java b/src/com/google/javascript/jscomp/RhinoErrorReporter.java
+index 89a400c..0f0a1cb 100644
+--- a/src/com/google/javascript/jscomp/RhinoErrorReporter.java
++++ b/src/com/google/javascript/jscomp/RhinoErrorReporter.java
+@@ -88,8 +88,8 @@
+           "to enable ES6 typed features.");
+ 
+   static final DiagnosticType MISPLACED_TYPE_SYNTAX =
+-      DiagnosticType.error("MISPLACED_TYPE_SYNTAX", "Bad type syntax"
+-            + " - can only have JSDoc or inline type annotations, not both");
++      DiagnosticType.error("MISPLACED_TYPE_SYNTAX",
++          "Can only have JSDoc or inline type annotations, not both");
+ 
+   // A map of Rhino messages to their DiagnosticType.
+   private final Map<Pattern, DiagnosticType> typeMap;
+@@ -160,7 +160,7 @@
+         .put(Pattern.compile("^type syntax is only supported in ES6 typed mode.*"),
+             ES6_TYPED)
+ 
+-        .put(Pattern.compile("^can only have JSDoc or inline type.*"),
++        .put(Pattern.compile("^Can only have JSDoc or inline type.*"),
+             MISPLACED_TYPE_SYNTAX)
+ 
+         .build();

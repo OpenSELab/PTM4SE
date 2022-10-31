@@ -1,0 +1,38 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
+index 8b39f90..74553f0 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
+@@ -625,11 +625,12 @@
+             if (example == null) {
+                 example = "True";
+             }
+-        } else if ("NSURL".equalsIgnoreCase(type)) {
++        } else if ("NSURL*".equalsIgnoreCase(type)) {
+             if (example == null) {
+                 example = "/path/to/file";
+             }
+-            example = "@\"" + escapeText(example) + "\"";
++            //[NSURL fileURLWithPath:@"path/to/file"]
++            example = "[NSURL fileURLWithPath:@\"" + escapeText(example) + "\"]";
+         /*} else if ("NSDate".equalsIgnoreCase(type)) {
+             if (example == null) {
+                 example = "2013-10-20";
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
+index 8b39f90..74553f0 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/ObjcClientCodegen.java
+@@ -625,11 +625,12 @@
+             if (example == null) {
+                 example = "True";
+             }
+-        } else if ("NSURL".equalsIgnoreCase(type)) {
++        } else if ("NSURL*".equalsIgnoreCase(type)) {
+             if (example == null) {
+                 example = "/path/to/file";
+             }
+-            example = "@\"" + escapeText(example) + "\"";
++            //[NSURL fileURLWithPath:@"path/to/file"]
++            example = "[NSURL fileURLWithPath:@\"" + escapeText(example) + "\"]";
+         /*} else if ("NSDate".equalsIgnoreCase(type)) {
+             if (example == null) {
+                 example = "2013-10-20";

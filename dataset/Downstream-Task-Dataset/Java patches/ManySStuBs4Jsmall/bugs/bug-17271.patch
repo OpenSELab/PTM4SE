@@ -1,0 +1,13 @@
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g3d/utils/DefaultShaderProvider.java b/gdx/src/com/badlogic/gdx/graphics/g3d/utils/DefaultShaderProvider.java
+index 473cbf0..d7ed548 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g3d/utils/DefaultShaderProvider.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g3d/utils/DefaultShaderProvider.java
+@@ -13,7 +13,7 @@
+ 	protected Shader createShader(final Renderable renderable) {
+ 		Gdx.app.log("DefaultShaderProvider", "Creating new shader");
+ 		if (Gdx.graphics.isGL20Available())
+-			return new DefaultShader(renderable.material, renderable.mesh.getVertexAttributes(), renderable.lights != null, 2, 5, 3, renderable.bones == null ? 0 : 12);
++			return new DefaultShader(renderable.material, renderable.mesh.getVertexAttributes(), renderable.lights != null, renderable.lights.directionalLights.size, renderable.lights.pointLights.size, 0, renderable.bones == null ? 0 : 12);
+ 		return new GLES10Shader();
+ 	}
+ }

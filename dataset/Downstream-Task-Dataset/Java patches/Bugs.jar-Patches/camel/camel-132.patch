@@ -1,0 +1,88 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index c24674e..0ed913a 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -984,6 +984,9 @@ public class DefaultCamelContext extends ServiceSupport implements ModelCamelCon
+         RouteService routeService = routeServices.get(routeId);
+         if (routeService != null) {
+             resumeRouteService(routeService);
++            // must resume the route as well
++            Route route = getRoute(routeId);
++            ServiceHelper.resumeService(route);
+         }
+     }
+ 
+@@ -1125,12 +1128,15 @@ public class DefaultCamelContext extends ServiceSupport implements ModelCamelCon
+         RouteService routeService = routeServices.get(routeId);
+         if (routeService != null) {
+             List<RouteStartupOrder> routes = new ArrayList<RouteStartupOrder>(1);
+-            RouteStartupOrder order = new DefaultRouteStartupOrder(1, routeService.getRoutes().iterator().next(), routeService);
++            Route route = routeService.getRoutes().iterator().next();
++            RouteStartupOrder order = new DefaultRouteStartupOrder(1, route, routeService);
+             routes.add(order);
+ 
+             getShutdownStrategy().suspend(this, routes);
+             // must suspend route service as well
+             suspendRouteService(routeService);
++            // must suspend the route as well
++            ServiceHelper.suspendService(route);
+         }
+     }
+ 
+@@ -1143,12 +1149,15 @@ public class DefaultCamelContext extends ServiceSupport implements ModelCamelCon
+         RouteService routeService = routeServices.get(routeId);
+         if (routeService != null) {
+             List<RouteStartupOrder> routes = new ArrayList<RouteStartupOrder>(1);
+-            RouteStartupOrder order = new DefaultRouteStartupOrder(1, routeService.getRoutes().iterator().next(), routeService);
++            Route route = routeService.getRoutes().iterator().next();
++            RouteStartupOrder order = new DefaultRouteStartupOrder(1, route, routeService);
+             routes.add(order);
+ 
+             getShutdownStrategy().suspend(this, routes, timeout, timeUnit);
+             // must suspend route service as well
+             suspendRouteService(routeService);
++            // must suspend the route as well
++            ServiceHelper.suspendService(route);
+         }
+     }
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/util/ServiceHelper.java b/camel-core/src/main/java/org/apache/camel/util/ServiceHelper.java
+index 0a7df51..90b5ce9 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/ServiceHelper.java
++++ b/camel-core/src/main/java/org/apache/camel/util/ServiceHelper.java
+@@ -260,7 +260,7 @@ public final class ServiceHelper {
+      * If there's any exception being thrown while resuming the elements one after the
+      * other this method would rethrow the <b>first</b> such exception being thrown.
+      * 
+-     * @see #resumeService(Service)
++     * @see #resumeService(Object)
+      */
+     public static void resumeServices(Collection<?> services) throws Exception {
+         if (services == null) {
+@@ -308,7 +308,7 @@ public final class ServiceHelper {
+      * @throws Exception is thrown if error occurred
+      * @see #startService(Service)
+      */
+-    public static boolean resumeService(Service service) throws Exception {
++    public static boolean resumeService(Object service) throws Exception {
+         if (service instanceof SuspendableService) {
+             SuspendableService ss = (SuspendableService) service;
+             if (ss.isSuspended()) {
+@@ -331,7 +331,7 @@ public final class ServiceHelper {
+      * If there's any exception being thrown while suspending the elements one after the
+      * other this method would rethrow the <b>first</b> such exception being thrown.
+      * 
+-     * @see #suspendService(Service)
++     * @see #suspendService(Object)
+      */
+     public static void suspendServices(Collection<?> services) throws Exception {
+         if (services == null) {
+@@ -379,7 +379,7 @@ public final class ServiceHelper {
+      * @throws Exception is thrown if error occurred
+      * @see #stopService(Object)
+      */
+-    public static boolean suspendService(Service service) throws Exception {
++    public static boolean suspendService(Object service) throws Exception {
+         if (service instanceof SuspendableService) {
+             SuspendableService ss = (SuspendableService) service;
+             if (!ss.isSuspended()) {

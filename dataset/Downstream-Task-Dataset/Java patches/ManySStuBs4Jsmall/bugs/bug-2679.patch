@@ -1,0 +1,26 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/configuration/MongoDbConfiguration.java b/graylog2-server/src/main/java/org/graylog2/configuration/MongoDbConfiguration.java
+index b43ab35..e28e7c0 100644
+--- a/graylog2-server/src/main/java/org/graylog2/configuration/MongoDbConfiguration.java
++++ b/graylog2-server/src/main/java/org/graylog2/configuration/MongoDbConfiguration.java
+@@ -173,7 +173,7 @@
+ 
+     @ValidatorMethod
+     public void validate() throws ValidationException {
+-        if((isNullOrEmpty(getHost()) || isNullOrEmpty(getDatabase())) && isNullOrEmpty(getUri())) {
++        if ((isNullOrEmpty(getHost()) || isNullOrEmpty(getDatabase()) || getReplicaSet() == null) && isNullOrEmpty(getUri())) {
+             throw new ValidationException("Either mongodb_uri OR mongodb_host and mongodb_database must not be empty");
+         }
+ 
+diff --git a/graylog2-server/src/main/java/org/graylog2/configuration/MongoDbConfiguration.java b/graylog2-server/src/main/java/org/graylog2/configuration/MongoDbConfiguration.java
+index b43ab35..e28e7c0 100644
+--- a/graylog2-server/src/main/java/org/graylog2/configuration/MongoDbConfiguration.java
++++ b/graylog2-server/src/main/java/org/graylog2/configuration/MongoDbConfiguration.java
+@@ -173,7 +173,7 @@
+ 
+     @ValidatorMethod
+     public void validate() throws ValidationException {
+-        if((isNullOrEmpty(getHost()) || isNullOrEmpty(getDatabase())) && isNullOrEmpty(getUri())) {
++        if ((isNullOrEmpty(getHost()) || isNullOrEmpty(getDatabase()) || getReplicaSet() == null) && isNullOrEmpty(getUri())) {
+             throw new ValidationException("Either mongodb_uri OR mongodb_host and mongodb_database must not be empty");
+         }
+ 

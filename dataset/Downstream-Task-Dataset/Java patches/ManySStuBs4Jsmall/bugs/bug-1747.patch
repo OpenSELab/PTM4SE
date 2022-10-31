@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyConnectionsPool.java b/src/main/java/com/ning/http/client/providers/netty/NettyConnectionsPool.java
+index ae8ea1a..a9b3c12 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyConnectionsPool.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyConnectionsPool.java
+@@ -160,7 +160,7 @@
+             IdleChannel idleChannel = new IdleChannel(uri, channel);
+             added = idleConnectionForHost.add(idleChannel);
+             if (channel2IdleChannel.put(channel, idleChannel) != null) {
+-                log.error("Bas, this channel entry already exists in the connections pool!");
++                log.error("Channel {} already exists in the connections pool!", channel);
+             }
+         } else {
+             log.debug("Maximum number of requests per host reached {} for {}", maxConnectionPerHost, uri);
+diff --git a/src/main/java/com/ning/http/client/providers/netty/NettyConnectionsPool.java b/src/main/java/com/ning/http/client/providers/netty/NettyConnectionsPool.java
+index ae8ea1a..a9b3c12 100644
+--- a/src/main/java/com/ning/http/client/providers/netty/NettyConnectionsPool.java
++++ b/src/main/java/com/ning/http/client/providers/netty/NettyConnectionsPool.java
+@@ -160,7 +160,7 @@
+             IdleChannel idleChannel = new IdleChannel(uri, channel);
+             added = idleConnectionForHost.add(idleChannel);
+             if (channel2IdleChannel.put(channel, idleChannel) != null) {
+-                log.error("Bas, this channel entry already exists in the connections pool!");
++                log.error("Channel {} already exists in the connections pool!", channel);
+             }
+         } else {
+             log.debug("Maximum number of requests per host reached {} for {}", maxConnectionPerHost, uri);

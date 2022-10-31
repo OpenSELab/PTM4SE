@@ -1,0 +1,70 @@
+diff --git a/okhttp-tests/src/test/java/okhttp3/HeadersTest.java b/okhttp-tests/src/test/java/okhttp3/HeadersTest.java
+index 24dfe87..c09ed52 100644
+--- a/okhttp-tests/src/test/java/okhttp3/HeadersTest.java
++++ b/okhttp-tests/src/test/java/okhttp3/HeadersTest.java
+@@ -156,7 +156,7 @@
+     assertEquals("OkHttp", headers.value(0));
+   }
+ 
+-  @Test public void ofRejectsNulChar() {
++  @Test public void ofRejectsNullChar() {
+     try {
+       Headers.of("User-Agent", "Square\u0000OkHttp");
+       fail();
+@@ -212,17 +212,17 @@
+     assertEquals("OkHttp", headers.value(0));
+   }
+ 
+-  @Test public void ofMapRejectsNulCharInName() {
++  @Test public void ofMapRejectsNullCharInName() {
+     try {
+-      Headers.of(Collections.singletonMap("User-Agent", "Square\u0000OkHttp"));
++      Headers.of(Collections.singletonMap("User-\u0000Agent", "OkHttp"));
+       fail();
+     } catch (IllegalArgumentException expected) {
+     }
+   }
+ 
+-  @Test public void ofMapRejectsNulCharInValue() {
++  @Test public void ofMapRejectsNullCharInValue() {
+     try {
+-      Headers.of(Collections.singletonMap("User-\u0000Agent", "OkHttp"));
++      Headers.of(Collections.singletonMap("User-Agent", "Square\u0000OkHttp"));
+       fail();
+     } catch (IllegalArgumentException expected) {
+     }
+diff --git a/okhttp-tests/src/test/java/okhttp3/HeadersTest.java b/okhttp-tests/src/test/java/okhttp3/HeadersTest.java
+index 24dfe87..c09ed52 100644
+--- a/okhttp-tests/src/test/java/okhttp3/HeadersTest.java
++++ b/okhttp-tests/src/test/java/okhttp3/HeadersTest.java
+@@ -156,7 +156,7 @@
+     assertEquals("OkHttp", headers.value(0));
+   }
+ 
+-  @Test public void ofRejectsNulChar() {
++  @Test public void ofRejectsNullChar() {
+     try {
+       Headers.of("User-Agent", "Square\u0000OkHttp");
+       fail();
+@@ -212,17 +212,17 @@
+     assertEquals("OkHttp", headers.value(0));
+   }
+ 
+-  @Test public void ofMapRejectsNulCharInName() {
++  @Test public void ofMapRejectsNullCharInName() {
+     try {
+-      Headers.of(Collections.singletonMap("User-Agent", "Square\u0000OkHttp"));
++      Headers.of(Collections.singletonMap("User-\u0000Agent", "OkHttp"));
+       fail();
+     } catch (IllegalArgumentException expected) {
+     }
+   }
+ 
+-  @Test public void ofMapRejectsNulCharInValue() {
++  @Test public void ofMapRejectsNullCharInValue() {
+     try {
+-      Headers.of(Collections.singletonMap("User-\u0000Agent", "OkHttp"));
++      Headers.of(Collections.singletonMap("User-Agent", "Square\u0000OkHttp"));
+       fail();
+     } catch (IllegalArgumentException expected) {
+     }

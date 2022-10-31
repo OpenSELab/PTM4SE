@@ -1,0 +1,57 @@
+diff --git a/src/main/java/org/apache/ibatis/executor/keygen/SelectKeyGenerator.java b/src/main/java/org/apache/ibatis/executor/keygen/SelectKeyGenerator.java
+index 3169ec5..02019ac 100644
+--- a/src/main/java/org/apache/ibatis/executor/keygen/SelectKeyGenerator.java
++++ b/src/main/java/org/apache/ibatis/executor/keygen/SelectKeyGenerator.java
+@@ -62,7 +62,7 @@
+               // Do not close keyExecutor.
+               // The transaction will be closed by parent executor.
+               Executor keyExecutor = configuration.newExecutor(executor.getTransaction(), ExecutorType.SIMPLE);
+-              List values = keyExecutor.query(keyStatement, parameter, RowBounds.DEFAULT, Executor.NO_RESULT_HANDLER);
++              List<Object> values = keyExecutor.query(keyStatement, parameter, RowBounds.DEFAULT, Executor.NO_RESULT_HANDLER);
+               if (values.size() > 1) {
+                 throw new ExecutorException("Select statement for SelectKeyGenerator returned more than one value.");
+               }
+diff --git a/src/main/java/org/apache/ibatis/executor/resultset/ResultSetHandler.java b/src/main/java/org/apache/ibatis/executor/resultset/ResultSetHandler.java
+index bac5a43..d6ebdc6 100644
+--- a/src/main/java/org/apache/ibatis/executor/resultset/ResultSetHandler.java
++++ b/src/main/java/org/apache/ibatis/executor/resultset/ResultSetHandler.java
+@@ -22,7 +22,7 @@
+ 
+ public interface ResultSetHandler {
+ 
+-  List handleResultSets(Statement stmt) throws SQLException;
++  <E> List<E> handleResultSets(Statement stmt) throws SQLException;
+ 
+   void handleOutputParameters(CallableStatement cs) throws SQLException;
+ 
+diff --git a/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java b/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
+index fcbcd46..49959e2 100644
+--- a/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
++++ b/src/main/java/org/apache/ibatis/executor/statement/CallableStatementHandler.java
+@@ -51,11 +51,11 @@
+     cs.addBatch();
+   }
+ 
+-  public List query(Statement statement, ResultHandler resultHandler)
++  public <E> List<E> query(Statement statement, ResultHandler resultHandler)
+       throws SQLException {
+     CallableStatement cs = (CallableStatement) statement;
+     cs.execute();
+-    List resultList = resultSetHandler.handleResultSets(cs);
++    List<E> resultList = resultSetHandler.<E>handleResultSets(cs);
+     resultSetHandler.handleOutputParameters(cs);
+     return resultList;
+   }
+diff --git a/src/main/java/org/apache/ibatis/executor/keygen/SelectKeyGenerator.java b/src/main/java/org/apache/ibatis/executor/keygen/SelectKeyGenerator.java
+index 3169ec5..02019ac 100644
+--- a/src/main/java/org/apache/ibatis/executor/keygen/SelectKeyGenerator.java
++++ b/src/main/java/org/apache/ibatis/executor/keygen/SelectKeyGenerator.java
+@@ -62,7 +62,7 @@
+               // Do not close keyExecutor.
+               // The transaction will be closed by parent executor.
+               Executor keyExecutor = configuration.newExecutor(executor.getTransaction(), ExecutorType.SIMPLE);
+-              List values = keyExecutor.query(keyStatement, parameter, RowBounds.DEFAULT, Executor.NO_RESULT_HANDLER);
++              List<Object> values = keyExecutor.query(keyStatement, parameter, RowBounds.DEFAULT, Executor.NO_RESULT_HANDLER);
+               if (values.size() > 1) {
+                 throw new ExecutorException("Select statement for SelectKeyGenerator returned more than one value.");
+               }

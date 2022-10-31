@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/util/ResourceHelperTest.java b/camel-core/src/test/java/org/apache/camel/util/ResourceHelperTest.java
+index 6e37022..8765661 100644
+--- a/camel-core/src/test/java/org/apache/camel/util/ResourceHelperTest.java
++++ b/camel-core/src/test/java/org/apache/camel/util/ResourceHelperTest.java
+@@ -82,7 +82,7 @@
+             ResourceHelper.resolveMandatoryResourceAsInputStream(context.getClassResolver(), "file:src/test/resources/notfound.txt");
+             fail("Should not find file");
+         } catch (FileNotFoundException e) {
+-            assertEquals("src/test/resources/notfound.txt (No such file or directory)", e.getMessage());
++            assertTrue(e.getMessage().contains("notfound.txt"));
+         }
+ 
+         context.stop();
+diff --git a/camel-core/src/test/java/org/apache/camel/util/ResourceHelperTest.java b/camel-core/src/test/java/org/apache/camel/util/ResourceHelperTest.java
+index 6e37022..8765661 100644
+--- a/camel-core/src/test/java/org/apache/camel/util/ResourceHelperTest.java
++++ b/camel-core/src/test/java/org/apache/camel/util/ResourceHelperTest.java
+@@ -82,7 +82,7 @@
+             ResourceHelper.resolveMandatoryResourceAsInputStream(context.getClassResolver(), "file:src/test/resources/notfound.txt");
+             fail("Should not find file");
+         } catch (FileNotFoundException e) {
+-            assertEquals("src/test/resources/notfound.txt (No such file or directory)", e.getMessage());
++            assertTrue(e.getMessage().contains("notfound.txt"));
+         }
+ 
+         context.stop();

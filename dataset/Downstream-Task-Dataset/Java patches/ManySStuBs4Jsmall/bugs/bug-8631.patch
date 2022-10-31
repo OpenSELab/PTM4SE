@@ -1,0 +1,14 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java
+index abadbaf..e9d34f1 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java
+@@ -607,7 +607,8 @@
+             else {
+                 final DetailAST frameNameIdent = variableDeclarationFrame.getFrameNameIdent();
+                 final DetailAST definitionToken = frameNameIdent.getParent();
+-                staticContext = definitionToken.branchContains(TokenTypes.LITERAL_STATIC);
++                staticContext = definitionToken.findFirstToken(TokenTypes.MODIFIERS)
++                        .findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+             }
+         }
+         return !staticContext;

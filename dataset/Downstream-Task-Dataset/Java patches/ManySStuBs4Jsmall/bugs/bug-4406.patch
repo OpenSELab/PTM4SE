@@ -1,0 +1,64 @@
+diff --git a/components/camel-salesforce/camel-salesforce-component/src/test/java/org/apache/camel/component/salesforce/SalesforceComponentVerifierTest.java b/components/camel-salesforce/camel-salesforce-component/src/test/java/org/apache/camel/component/salesforce/SalesforceComponentVerifierTest.java
+index af8b6cd..dc02d55 100644
+--- a/components/camel-salesforce/camel-salesforce-component/src/test/java/org/apache/camel/component/salesforce/SalesforceComponentVerifierTest.java
++++ b/components/camel-salesforce/camel-salesforce-component/src/test/java/org/apache/camel/component/salesforce/SalesforceComponentVerifierTest.java
+@@ -154,7 +154,7 @@
+         Assert.assertEquals(400, result.getErrors().get(0).getDetails().get(VerificationError.HttpAttribute.HTTP_CODE));
+ 
+         // Salesforce Error
+-        Assert.assertEquals("authentication failure", result.getErrors().get(1).getDescription());
++        Assert.assertEquals("invalid_grant", result.getErrors().get(1).getDetail("salesforce_code"));
+     }
+ 
+     @Test
+@@ -177,6 +177,6 @@
+         Assert.assertEquals(400, result.getErrors().get(0).getDetails().get(ComponentVerifier.VerificationError.HttpAttribute.HTTP_CODE));
+ 
+         // Salesforce Error
+-        Assert.assertEquals("client identifier invalid", result.getErrors().get(1).getDescription());
++        Assert.assertEquals("invalid_client_id", result.getErrors().get(1).getDetail("salesforce_code"));
+     }
+ }
+diff --git a/components/camel-servicenow/src/test/java/org/apache/camel/component/servicenow/ServiceNowComponentVerifierTest.java b/components/camel-servicenow/src/test/java/org/apache/camel/component/servicenow/ServiceNowComponentVerifierTest.java
+index 80da7db..1fcd5bc 100644
+--- a/components/camel-servicenow/src/test/java/org/apache/camel/component/servicenow/ServiceNowComponentVerifierTest.java
++++ b/components/camel-servicenow/src/test/java/org/apache/camel/component/servicenow/ServiceNowComponentVerifierTest.java
+@@ -125,7 +125,7 @@
+         Assert.assertEquals(1, result.getErrors().size());
+         Assert.assertEquals(VerificationError.StandardCode.EXCEPTION, result.getErrors().get(0).getCode());
+         Assert.assertNotNull(result.getErrors().get(0).getDetails().get(VerificationError.ExceptionAttribute.EXCEPTION_INSTANCE));
+-        Assert.assertEquals(400, result.getErrors().get(0).getDetails().get(VerificationError.ExceptionAttribute.EXCEPTION_INSTANCE));
++        Assert.assertEquals(400, result.getErrors().get(0).getDetails().get(VerificationError.HttpAttribute.HTTP_CODE));
+         Assert.assertTrue(result.getErrors().get(0).getDetails().get(VerificationError.ExceptionAttribute.EXCEPTION_INSTANCE) instanceof ServiceNowException);
+     }
+ 
+@@ -140,7 +140,7 @@
+ 
+         Assert.assertEquals(ComponentVerifier.Result.Status.ERROR, result.getStatus());
+         Assert.assertEquals(1, result.getErrors().size());
+-        Assert.assertEquals(VerificationError.StandardCode.EXCEPTION, result.getErrors().get(0).getCode());
++        Assert.assertEquals(VerificationError.StandardCode.AUTHENTICATION, result.getErrors().get(0).getCode());
+         Assert.assertNotNull(result.getErrors().get(0).getDetails().get(VerificationError.ExceptionAttribute.EXCEPTION_INSTANCE));
+         Assert.assertEquals(401, result.getErrors().get(0).getDetails().get(VerificationError.HttpAttribute.HTTP_CODE));
+         Assert.assertTrue(result.getErrors().get(0).getDetails().get(VerificationError.ExceptionAttribute.EXCEPTION_INSTANCE) instanceof ServiceNowException);
+diff --git a/components/camel-salesforce/camel-salesforce-component/src/test/java/org/apache/camel/component/salesforce/SalesforceComponentVerifierTest.java b/components/camel-salesforce/camel-salesforce-component/src/test/java/org/apache/camel/component/salesforce/SalesforceComponentVerifierTest.java
+index af8b6cd..dc02d55 100644
+--- a/components/camel-salesforce/camel-salesforce-component/src/test/java/org/apache/camel/component/salesforce/SalesforceComponentVerifierTest.java
++++ b/components/camel-salesforce/camel-salesforce-component/src/test/java/org/apache/camel/component/salesforce/SalesforceComponentVerifierTest.java
+@@ -154,7 +154,7 @@
+         Assert.assertEquals(400, result.getErrors().get(0).getDetails().get(VerificationError.HttpAttribute.HTTP_CODE));
+ 
+         // Salesforce Error
+-        Assert.assertEquals("authentication failure", result.getErrors().get(1).getDescription());
++        Assert.assertEquals("invalid_grant", result.getErrors().get(1).getDetail("salesforce_code"));
+     }
+ 
+     @Test
+@@ -177,6 +177,6 @@
+         Assert.assertEquals(400, result.getErrors().get(0).getDetails().get(ComponentVerifier.VerificationError.HttpAttribute.HTTP_CODE));
+ 
+         // Salesforce Error
+-        Assert.assertEquals("client identifier invalid", result.getErrors().get(1).getDescription());
++        Assert.assertEquals("invalid_client_id", result.getErrors().get(1).getDetail("salesforce_code"));
+     }
+ }

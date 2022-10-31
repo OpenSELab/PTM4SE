@@ -1,0 +1,26 @@
+diff --git a/core/server/src/test/java/alluxio/master/file/meta/InodeTreeTest.java b/core/server/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
+index f7a586a..cc5f66b 100644
+--- a/core/server/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
++++ b/core/server/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
+@@ -394,7 +394,7 @@
+   @Test
+   public void getInodeByInvalidId() throws Exception {
+     mThrown.expect(FileDoesNotExistException.class);
+-    mThrown.expectMessage("Inode id 1 does not exist");
++    mThrown.expectMessage(ExceptionMessage.INODE_DOES_NOT_EXIST.getMessage(1));
+ 
+     Assert.assertFalse(mTree.inodeIdExists(1));
+     try (LockedInodePath inodePath = mTree.lockFullInodePath(1, InodeTree.LockMode.READ)) {
+diff --git a/core/server/src/test/java/alluxio/master/file/meta/InodeTreeTest.java b/core/server/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
+index f7a586a..cc5f66b 100644
+--- a/core/server/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
++++ b/core/server/src/test/java/alluxio/master/file/meta/InodeTreeTest.java
+@@ -394,7 +394,7 @@
+   @Test
+   public void getInodeByInvalidId() throws Exception {
+     mThrown.expect(FileDoesNotExistException.class);
+-    mThrown.expectMessage("Inode id 1 does not exist");
++    mThrown.expectMessage(ExceptionMessage.INODE_DOES_NOT_EXIST.getMessage(1));
+ 
+     Assert.assertFalse(mTree.inodeIdExists(1));
+     try (LockedInodePath inodePath = mTree.lockFullInodePath(1, InodeTree.LockMode.READ)) {

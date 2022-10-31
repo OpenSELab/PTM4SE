@@ -1,0 +1,41 @@
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark-nlp/src/test/java/org/deeplearning4j/spark/text/BaseSparkTest.java b/deeplearning4j-scaleout/spark/dl4j-spark-nlp/src/test/java/org/deeplearning4j/spark/text/BaseSparkTest.java
+index c99bc15..d131993 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark-nlp/src/test/java/org/deeplearning4j/spark/text/BaseSparkTest.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark-nlp/src/test/java/org/deeplearning4j/spark/text/BaseSparkTest.java
+@@ -51,7 +51,8 @@
+         if (sc != null)
+             return sc;
+         // set to test mode
+-        SparkConf sparkConf = new SparkConf().setMaster("local[4]").setAppName("sparktest")
++        SparkConf sparkConf = new SparkConf().setMaster("local[4]").set("spark.driver.host", "localhost")
++            .setAppName("sparktest")
+                         .set(Word2VecVariables.NUM_WORDS, String.valueOf(1));
+ 
+ 
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/test/java/org/deeplearning4j/spark/BaseSparkTest.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/test/java/org/deeplearning4j/spark/BaseSparkTest.java
+index e2e53b8..f583162 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/test/java/org/deeplearning4j/spark/BaseSparkTest.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/test/java/org/deeplearning4j/spark/BaseSparkTest.java
+@@ -86,7 +86,7 @@
+         if (sc != null)
+             return sc;
+         // set to test mode
+-        SparkConf sparkConf = new SparkConf().setMaster("local[" + numExecutors() + "]").setAppName("sparktest");
++        SparkConf sparkConf = new SparkConf().setMaster("local[" + numExecutors() + "]").set("spark.driver.host", "localhost").setAppName("sparktest");
+ 
+ 
+         sc = new JavaSparkContext(sparkConf);
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark-nlp/src/test/java/org/deeplearning4j/spark/text/BaseSparkTest.java b/deeplearning4j-scaleout/spark/dl4j-spark-nlp/src/test/java/org/deeplearning4j/spark/text/BaseSparkTest.java
+index c99bc15..d131993 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark-nlp/src/test/java/org/deeplearning4j/spark/text/BaseSparkTest.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark-nlp/src/test/java/org/deeplearning4j/spark/text/BaseSparkTest.java
+@@ -51,7 +51,8 @@
+         if (sc != null)
+             return sc;
+         // set to test mode
+-        SparkConf sparkConf = new SparkConf().setMaster("local[4]").setAppName("sparktest")
++        SparkConf sparkConf = new SparkConf().setMaster("local[4]").set("spark.driver.host", "localhost")
++            .setAppName("sparktest")
+                         .set(Word2VecVariables.NUM_WORDS, String.valueOf(1));
+ 
+ 

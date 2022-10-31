@@ -1,0 +1,20 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PackageMapper.java b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PackageMapper.java
+index ad15d6d..2037356 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PackageMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/core/request/mapper/PackageMapper.java
+@@ -225,7 +225,13 @@ public class PackageMapper extends AbstractBookmarkableMapper
+ 	@Override
+ 	public int getCompatibilityScore(Request request)
+ 	{
+-		// always return 0 here so that the mounts have higher priority
+-		return 0;
++		if (urlStartsWith(request.getUrl(), mountSegments))
++		{
++		    return mountSegments.length;
++		}
++		else
++		{
++		    return 0;
++		}
+ 	}
+ }

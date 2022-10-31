@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/util/IOUtils.java b/modules/cpr/src/main/java/org/atmosphere/util/IOUtils.java
+index e06f642..39a95ba 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/util/IOUtils.java
++++ b/modules/cpr/src/main/java/org/atmosphere/util/IOUtils.java
+@@ -245,7 +245,7 @@
+                 logger.error("", e);
+             }
+         } else if (body.hasBytes()) {
+-            return Arrays.copyOfRange(body.asBytes(), body.byteOffset(), body.byteLength());
++            return Arrays.copyOfRange(body.asBytes(), body.byteOffset(), body.byteOffset() + body.byteLength());
+         }
+         throw new IllegalStateException("No body " + r);
+     }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/util/IOUtils.java b/modules/cpr/src/main/java/org/atmosphere/util/IOUtils.java
+index e06f642..39a95ba 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/util/IOUtils.java
++++ b/modules/cpr/src/main/java/org/atmosphere/util/IOUtils.java
+@@ -245,7 +245,7 @@
+                 logger.error("", e);
+             }
+         } else if (body.hasBytes()) {
+-            return Arrays.copyOfRange(body.asBytes(), body.byteOffset(), body.byteLength());
++            return Arrays.copyOfRange(body.asBytes(), body.byteOffset(), body.byteOffset() + body.byteLength());
+         }
+         throw new IllegalStateException("No body " + r);
+     }

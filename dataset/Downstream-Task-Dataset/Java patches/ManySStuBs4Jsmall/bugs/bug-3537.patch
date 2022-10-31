@@ -1,0 +1,39 @@
+diff --git a/src/main/java/com/alibaba/fastjson/parser/JSONScanner.java b/src/main/java/com/alibaba/fastjson/parser/JSONScanner.java
+index 548c8f9..ea3afe75 100644
+--- a/src/main/java/com/alibaba/fastjson/parser/JSONScanner.java
++++ b/src/main/java/com/alibaba/fastjson/parser/JSONScanner.java
+@@ -687,7 +687,7 @@
+     }
+ 
+     static boolean checkDate(char y0, char y1, char y2, char y3, char M0, char M1, int d0, int d1) {
+-        if (y0 < '1' || y0 > '3') {
++        if (y0 < '1' || y0 > '9') {
+             return false;
+         }
+         if (y1 < '0' || y1 > '9') {
+diff --git a/src/main/java/com/alibaba/fastjson/serializer/MapSerializer.java b/src/main/java/com/alibaba/fastjson/serializer/MapSerializer.java
+index 174cce3..b620a56 100755
+--- a/src/main/java/com/alibaba/fastjson/serializer/MapSerializer.java
++++ b/src/main/java/com/alibaba/fastjson/serializer/MapSerializer.java
+@@ -208,7 +208,7 @@
+                 }
+ 
+                 if (value == null) {
+-                    if (!out.isEnabled(SerializerFeature.WRITE_MAP_NULL_FEATURES)) {
++                    if (!out.isEnabled(SerializerFeature.WriteMapNullValue)) {
+                         continue;
+                     }
+                 }
+diff --git a/src/main/java/com/alibaba/fastjson/parser/JSONScanner.java b/src/main/java/com/alibaba/fastjson/parser/JSONScanner.java
+index 548c8f9..ea3afe75 100644
+--- a/src/main/java/com/alibaba/fastjson/parser/JSONScanner.java
++++ b/src/main/java/com/alibaba/fastjson/parser/JSONScanner.java
+@@ -687,7 +687,7 @@
+     }
+ 
+     static boolean checkDate(char y0, char y1, char y2, char y3, char M0, char M1, int d0, int d1) {
+-        if (y0 < '1' || y0 > '3') {
++        if (y0 < '1' || y0 > '9') {
+             return false;
+         }
+         if (y1 < '0' || y1 > '9') {

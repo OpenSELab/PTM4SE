@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java b/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
+index 3049fb8..e4c222b 100644
+--- a/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
++++ b/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
+@@ -45,7 +45,7 @@
+     @Cacheable(value = "vets")
+     @SuppressWarnings("unchecked")
+     public Collection<Vet> findAll() {
+-        return this.em.createQuery("SELECT vet FROM Vet vet join fetch vet.specialties ORDER BY vet.lastName, vet.firstName").getResultList();
++        return this.em.createQuery("SELECT distinct vet FROM Vet vet left join fetch vet.specialties ORDER BY vet.lastName, vet.firstName").getResultList();
+     }
+ 
+ }
+diff --git a/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java b/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
+index 3049fb8..e4c222b 100644
+--- a/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
++++ b/src/main/java/org/springframework/samples/petclinic/repository/jpa/JpaVetRepositoryImpl.java
+@@ -45,7 +45,7 @@
+     @Cacheable(value = "vets")
+     @SuppressWarnings("unchecked")
+     public Collection<Vet> findAll() {
+-        return this.em.createQuery("SELECT vet FROM Vet vet join fetch vet.specialties ORDER BY vet.lastName, vet.firstName").getResultList();
++        return this.em.createQuery("SELECT distinct vet FROM Vet vet left join fetch vet.specialties ORDER BY vet.lastName, vet.firstName").getResultList();
+     }
+ 
+ }

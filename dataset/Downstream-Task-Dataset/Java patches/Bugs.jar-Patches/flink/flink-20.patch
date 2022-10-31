@@ -1,0 +1,36 @@
+diff --git a/flink-core/src/main/java/org/apache/flink/core/fs/Path.java b/flink-core/src/main/java/org/apache/flink/core/fs/Path.java
+index 75155eb..c47bc0d 100644
+--- a/flink-core/src/main/java/org/apache/flink/core/fs/Path.java
++++ b/flink-core/src/main/java/org/apache/flink/core/fs/Path.java
+@@ -260,7 +260,11 @@ public class Path implements IOReadableWritable, Serializable {
+ 		path = path.replaceAll("/+", "/");
+ 
+ 		// remove tailing separator
+-		if(!path.equals(SEPARATOR) && path.endsWith(SEPARATOR)) {
++		if(!path.equals(SEPARATOR) &&         		// UNIX root path
++				!path.matches("/\\p{Alpha}+:/") &&  // Windows root path
++				path.endsWith(SEPARATOR))
++		{
++			// remove tailing slash
+ 			path = path.substring(0, path.length() - SEPARATOR.length());
+ 		}
+ 
+diff --git a/flink-core/src/main/java/org/apache/flink/core/fs/local/LocalFileSystem.java b/flink-core/src/main/java/org/apache/flink/core/fs/local/LocalFileSystem.java
+index 2313a41..9dd9e30 100644
+--- a/flink-core/src/main/java/org/apache/flink/core/fs/local/LocalFileSystem.java
++++ b/flink-core/src/main/java/org/apache/flink/core/fs/local/LocalFileSystem.java
+@@ -228,8 +228,13 @@ public class LocalFileSystem extends FileSystem {
+ 	 */
+ 	public boolean mkdirs(final Path f) throws IOException {
+ 
+-		final Path parent = f.getParent();
+ 		final File p2f = pathToFile(f);
++
++		if(p2f.isDirectory()) {
++			return true;
++		}
++
++		final Path parent = f.getParent();
+ 		return (parent == null || mkdirs(parent)) && (p2f.mkdir() || p2f.isDirectory());
+ 	}
+ 

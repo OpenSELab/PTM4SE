@@ -1,0 +1,30 @@
+diff --git a/dropwizard-validation/src/test/java/io/dropwizard/validation/PortRangeValidatorTest.java b/dropwizard-validation/src/test/java/io/dropwizard/validation/PortRangeValidatorTest.java
+index d704c5c..104a782 100644
+--- a/dropwizard-validation/src/test/java/io/dropwizard/validation/PortRangeValidatorTest.java
++++ b/dropwizard-validation/src/test/java/io/dropwizard/validation/PortRangeValidatorTest.java
+@@ -51,7 +51,7 @@
+         example.port = -1;
+ 
+         assertThat(ConstraintViolations.format(validator.validate(example)))
+-                .containsOnly("port must be between 1 and 65535 (was -1)");
++                .containsOnly("port must be between 1 and 65535");
+     }
+ 
+     @Test
+@@ -59,7 +59,7 @@
+         example.otherPort = 8080;
+ 
+         assertThat(ConstraintViolations.format(validator.validate(example)))
+-                .containsOnly("otherPort must be between 10000 and 15000 (was 8080)");
++                .containsOnly("otherPort must be between 10000 and 15000");
+     }
+ 
+     @Test
+@@ -67,6 +67,6 @@
+         example.otherPort = 16000;
+ 
+         assertThat(ConstraintViolations.format(validator.validate(example)))
+-                .containsOnly("otherPort must be between 10000 and 15000 (was 16000)");
++                .containsOnly("otherPort must be between 10000 and 15000");
+     }
+ }

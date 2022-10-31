@@ -1,0 +1,30 @@
+diff --git a/shell/src/main/java/alluxio/shell/command/LeaderCommand.java b/shell/src/main/java/alluxio/shell/command/LeaderCommand.java
+index 131ef86..188dfef 100644
+--- a/shell/src/main/java/alluxio/shell/command/LeaderCommand.java
++++ b/shell/src/main/java/alluxio/shell/command/LeaderCommand.java
+@@ -21,7 +21,7 @@
+ import javax.annotation.concurrent.ThreadSafe;
+ 
+ /**
+- * Prints the current master leader host name.
++ * Prints the current leader master host name.
+  */
+ @ThreadSafe
+ public final class LeaderCommand extends AbstractShellCommand {
+@@ -51,7 +51,7 @@
+       if (hostName != null) {
+         System.out.println(hostName);
+       } else {
+-        System.out.println("Failed to get the master leader.");
++        System.out.println("Failed to get the leader master.");
+       }
+     } finally {
+       FileSystemContext.INSTANCE.releaseMasterClient(client);
+@@ -65,6 +65,6 @@
+ 
+   @Override
+   public String getDescription() {
+-    return "Prints the current master leader host name.";
++    return "Prints the current leader master host name.";
+   }
+ }

@@ -1,0 +1,35 @@
+diff --git a/maven-core/src/main/java/org/apache/maven/bridge/MavenRepositorySystem.java b/maven-core/src/main/java/org/apache/maven/bridge/MavenRepositorySystem.java
+index 839c089..e01ffc3 100644
+--- a/maven-core/src/main/java/org/apache/maven/bridge/MavenRepositorySystem.java
++++ b/maven-core/src/main/java/org/apache/maven/bridge/MavenRepositorySystem.java
+@@ -107,6 +107,11 @@ public Artifact createProjectArtifact( String groupId, String artifactId, String
+     // DefaultProjectBuilder
+     public Artifact createDependencyArtifact( Dependency d )
+     {
++        if ( d.getVersion() == null )
++        {
++            return null;
++        }
++
+         VersionRange versionRange;
+         try
+         {
+diff --git a/maven-core/src/main/java/org/apache/maven/project/DefaultProjectBuilder.java b/maven-core/src/main/java/org/apache/maven/project/DefaultProjectBuilder.java
+index e359bcf..5365756 100644
+--- a/maven-core/src/main/java/org/apache/maven/project/DefaultProjectBuilder.java
++++ b/maven-core/src/main/java/org/apache/maven/project/DefaultProjectBuilder.java
+@@ -807,12 +807,10 @@ private void initProject( MavenProject project, Map<String, MavenProject> projec
+                 {
+                     Artifact artifact = repositorySystem.createDependencyArtifact( d );
+ 
+-                    if ( artifact == null )
++                    if ( artifact != null )
+                     {
+-                        map = Collections.emptyMap();
++                        map.put( d.getManagementKey(), artifact );
+                     }
+-
+-                    map.put( d.getManagementKey(), artifact );
+                 }
+             }
+             else

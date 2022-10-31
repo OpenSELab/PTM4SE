@@ -1,0 +1,656 @@
+diff --git a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule21filename/OuterTypeFilenameTest.java b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule21filename/OuterTypeFilenameTest.java
+index acc3444..eac798d 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule21filename/OuterTypeFilenameTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule21filename/OuterTypeFilenameTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void outerTypeFilenameTest_1() throws IOException, Exception {
++    public void outerTypeFilenameTest_1() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -34,7 +34,7 @@
+     }
+ 
+     @Test
+-    public void outerTypeFilenameTest_2() throws IOException, Exception {
++    public void outerTypeFilenameTest_2() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -46,7 +46,7 @@
+     }
+ 
+     @Test
+-    public void outerTypeFilenameTest_3() throws IOException, Exception {
++    public void outerTypeFilenameTest_3() throws Exception {
+ 
+         final String[] expected = {
+             "3: " + getCheckMessage(OuterTypeFilenameCheck.class, "type.file.mismatch"),
+diff --git a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule231filetab/FileTabCharacterTest.java b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule231filetab/FileTabCharacterTest.java
+index 214ee8f..0310e5b 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule231filetab/FileTabCharacterTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule231filetab/FileTabCharacterTest.java
+@@ -32,7 +32,7 @@
+     }
+ 
+     @Test
+-    public void fileTabTest() throws IOException, Exception {
++    public void fileTabTest() throws Exception {
+ 
+         final DefaultConfiguration checkConfig = createConfig(true);
+         final String[] expected = {
+diff --git a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule232specialescape/IllegalTokenTextTest.java b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule232specialescape/IllegalTokenTextTest.java
+index 18bdc07..e7b1abd 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule232specialescape/IllegalTokenTextTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule232specialescape/IllegalTokenTextTest.java
+@@ -18,12 +18,12 @@
+     
+     @BeforeClass
+     public static void setConfigurationBuilder()
+-    		throws CheckstyleException, MalformedURLException, IOException {
++    		throws CheckstyleException, IOException {
+         builder = new ConfigurationBuilder(new File("src/it/"));
+     }
+ 
+     @Test
+-    public void illegalTokensTest() throws IOException, Exception {
++    public void illegalTokensTest() throws Exception {
+         
+         final String[] expected = {
+             "17:27: Avoid using corresponding octal or Unicode escape.",
+diff --git a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule233nonascii/AvoidEscapedUnicodeCharactersCheckTest.java b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule233nonascii/AvoidEscapedUnicodeCharactersCheckTest.java
+index 41e61f3..0b47ffa 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule233nonascii/AvoidEscapedUnicodeCharactersCheckTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule233nonascii/AvoidEscapedUnicodeCharactersCheckTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void unicodeEscapesTest() throws IOException, Exception {
++    public void unicodeEscapesTest() throws Exception {
+ 
+         String msg = getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, "forbid.escaped.unicode.char");
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule411bracesareused/NeedBracesTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule411bracesareused/NeedBracesTest.java
+index 4b1518f..4187700 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule411bracesareused/NeedBracesTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule411bracesareused/NeedBracesTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void needBracesTest() throws IOException, Exception {
++    public void needBracesTest() throws Exception {
+         
+         Class<NeedBracesCheck> clazz = NeedBracesCheck.class;
+         String messageKey = "needBraces";
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule413emptyblocks/EmptyBlockTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule413emptyblocks/EmptyBlockTest.java
+index d4fcfbb..598861b 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule413emptyblocks/EmptyBlockTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule413emptyblocks/EmptyBlockTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void emptyBlockTest() throws IOException, Exception {
++    public void emptyBlockTest() throws Exception {
+         
+         final String[] expected = {
+             "19:21: " + getCheckMessage(EmptyBlockCheck.class, "block.empty", "if"),
+@@ -68,7 +68,7 @@
+     }
+     
+     @Test
+-    public void emptyBlockTestCatch() throws IOException, Exception {
++    public void emptyBlockTestCatch() throws Exception {
+         
+         final String[] expected = {
+             "29:17: " + getCheckMessage(EmptyBlockCheck.class, "block.empty", "finally"),
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule413emptyblocks/EmptyCatchBlockTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule413emptyblocks/EmptyCatchBlockTest.java
+index 112776a..febd97c 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule413emptyblocks/EmptyCatchBlockTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule413emptyblocks/EmptyCatchBlockTest.java
+@@ -23,7 +23,7 @@
+     }
+ 
+     @Test
+-    public void emptyBlockTestCatch() throws IOException, Exception
++    public void emptyBlockTestCatch() throws Exception
+     {
+         
+         final String[] expected = {
+@@ -40,7 +40,7 @@
+     }
+ 
+     @Test
+-    public void testNoViolations() throws IOException, Exception
++    public void testNoViolations() throws Exception
+     {
+         
+         final String[] expected = {
+@@ -54,7 +54,7 @@
+     }
+ 
+     @Test
+-    public void testViolationsByComment() throws IOException, Exception
++    public void testViolationsByComment() throws Exception
+     {
+         
+         final String[] expected = {
+@@ -70,7 +70,7 @@
+     }
+ 
+     @Test
+-    public void testViolationsByVariableName() throws IOException, Exception
++    public void testViolationsByVariableName() throws Exception
+     {
+         final String[] expected = {
+             "19: " + getCheckMessage(EmptyCatchBlockCheck.class, "catch.block.empty"),
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule44cloumunlimit/LineLengthTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule44cloumunlimit/LineLengthTest.java
+index 103ee19..f4918dc 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule44cloumunlimit/LineLengthTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule44cloumunlimit/LineLengthTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void lineLengthTest() throws IOException, Exception {
++    public void lineLengthTest() throws Exception {
+         
+         final String[] expected = {
+              "5: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", 100, 112),
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/MethodParamPadTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/MethodParamPadTest.java
+index dfd4e3c..3886010 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/MethodParamPadTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/MethodParamPadTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void operatorWrapTest() throws IOException, Exception {
++    public void operatorWrapTest() throws Exception {
+         
+         Class<MethodParamPadCheck> clazz = MethodParamPadCheck.class;
+         String messageKey = "line.previous";
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/OperatorWrapTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/OperatorWrapTest.java
+index 88166ac..0e2d980 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/OperatorWrapTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/OperatorWrapTest.java
+@@ -24,7 +24,7 @@
+     }
+ 
+     @Test
+-    public void operatorWrapTest() throws IOException, Exception {
++    public void operatorWrapTest() throws Exception {
+         
+         Class<OperatorWrapCheck> clazz = OperatorWrapCheck.class;
+         String messageKey = "line.new";
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/SeparatorWrapTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/SeparatorWrapTest.java
+index 02c0f1c..888c26d 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/SeparatorWrapTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule451wheretobreack/SeparatorWrapTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void separatorWrapTest() throws IOException, Exception {
++    public void separatorWrapTest() throws Exception {
+ 
+         final String[] expected = {
+             "28:30: " + getCheckMessage(SeparatorWrapCheck.class, "line.new", "."),
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4822variabledistance/VariableDeclarationUsageDistanceTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4822variabledistance/VariableDeclarationUsageDistanceTest.java
+index c5b1f30..2db06e3 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4822variabledistance/VariableDeclarationUsageDistanceTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4822variabledistance/VariableDeclarationUsageDistanceTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void arrayTypeStyleTest() throws IOException, Exception {
++    public void arrayTypeStyleTest() throws Exception {
+ 
+         String msgExt = "variable.declaration.usage.distance.extend";
+         Class<VariableDeclarationUsageDistanceCheck> clazz = VariableDeclarationUsageDistanceCheck.class;
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4832nocstylearray/ArrayTypeStyleTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4832nocstylearray/ArrayTypeStyleTest.java
+index 88c110a..857abad 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4832nocstylearray/ArrayTypeStyleTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4832nocstylearray/ArrayTypeStyleTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void arrayTypeStyleTest() throws IOException, Exception {
++    public void arrayTypeStyleTest() throws Exception {
+         
+         String msg = getCheckMessage(ArrayTypeStyleCheck.class, "array.type.style");
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4841indentation/IndentationTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4841indentation/IndentationTest.java
+index dc95171..9527ed9 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4841indentation/IndentationTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4841indentation/IndentationTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void correctClassTest() throws IOException, Exception {
++    public void correctClassTest() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -34,7 +34,7 @@
+     }
+ 
+     @Test
+-    public void correctFieldTest() throws IOException, Exception {
++    public void correctFieldTest() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -46,7 +46,7 @@
+     }
+ 
+     @Test
+-    public void correctForTest() throws IOException, Exception {
++    public void correctForTest() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -58,7 +58,7 @@
+     }
+ 
+     @Test
+-    public void correctIfTest() throws IOException, Exception {
++    public void correctIfTest() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -70,7 +70,7 @@
+     }
+ 
+     @Test
+-    public void correctTest() throws IOException, Exception {
++    public void correctTest() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -82,7 +82,7 @@
+     }
+ 
+     @Test
+-    public void correctReturnTest() throws IOException, Exception {
++    public void correctReturnTest() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -94,7 +94,7 @@
+     }
+ 
+     @Test
+-    public void correctWhileTest() throws IOException, Exception {
++    public void correctWhileTest() throws Exception {
+ 
+         final String[] expected = {};
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4842fallthrow/FallThroughTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4842fallthrow/FallThroughTest.java
+index 11c3495..9960cce 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4842fallthrow/FallThroughTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule4842fallthrow/FallThroughTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void fallThroughTest() throws IOException, Exception {
++    public void fallThroughTest() throws Exception {
+ 
+         String msg = getCheckMessage(FallThroughCheck.class, "fall.through");
+                      
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule485annotations/AnnotationLocationTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule485annotations/AnnotationLocationTest.java
+index 4ea25bd..ab1ed93 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule485annotations/AnnotationLocationTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule485annotations/AnnotationLocationTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void annotationTest() throws IOException, Exception {
++    public void annotationTest() throws Exception {
+         
+         Class<AnnotationLocationCheck> clazz = AnnotationLocationCheck.class;
+         String msgLocation = "annotation.location";
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule487modifiers/ModifierOrderTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule487modifiers/ModifierOrderTest.java
+index f1da572..5dad78e 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule487modifiers/ModifierOrderTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule487modifiers/ModifierOrderTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void modifierOrderTest() throws IOException, Exception {
++    public void modifierOrderTest() throws Exception {
+         
+         Class<ModifierOrderCheck> clazz = ModifierOrderCheck.class;
+         String msgMod = "mod.order";
+diff --git a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule488numericliterals/UpperEllTest.java b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule488numericliterals/UpperEllTest.java
+index 5842b86..3350fad 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter4formatting/rule488numericliterals/UpperEllTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter4formatting/rule488numericliterals/UpperEllTest.java
+@@ -21,7 +21,7 @@
+     }
+ 
+     @Test
+-    public void upperEllTest() throws IOException, Exception {
++    public void upperEllTest() throws Exception {
+         
+         final String[] expected = {
+             "6:36: Should use uppercase 'L'.",
+diff --git a/src/it/java/com/google/checkstyle/test/chapter5naming/rule521packagenames/PackageNameTest.java b/src/it/java/com/google/checkstyle/test/chapter5naming/rule521packagenames/PackageNameTest.java
+index 2443663..8424940 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter5naming/rule521packagenames/PackageNameTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter5naming/rule521packagenames/PackageNameTest.java
+@@ -27,7 +27,7 @@
+     }
+ 
+     @Test
+-    public void goodPackageNameTest() throws IOException, Exception {
++    public void goodPackageNameTest() throws Exception {
+ 
+ 
+         final String[] expected = {};
+@@ -39,7 +39,7 @@
+     }
+ 
+     @Test
+-    public void badPackageNameTest() throws IOException, Exception {
++    public void badPackageNameTest() throws Exception {
+ 
+         String packagePath =
+                 "com.google.checkstyle.test.chapter5naming.rule521packageNamesCamelCase";
+@@ -56,7 +56,7 @@
+     }
+ 
+     @Test
+-    public void badPackageName2Test() throws IOException, Exception {
++    public void badPackageName2Test() throws Exception {
+ 
+ 
+         String packagePath = "com.google.checkstyle.test.chapter5naming.rule521_packagenames";
+@@ -73,7 +73,7 @@
+     }
+ 
+     @Test
+-    public void badPackageName3Test() throws IOException, Exception {
++    public void badPackageName3Test() throws Exception {
+ 
+ 
+         String packagePath = "com.google.checkstyle.test.chapter5naming.rule521$packagenames";
+diff --git a/src/it/java/com/google/checkstyle/test/chapter5naming/rule523methodnames/MethodNameTest.java b/src/it/java/com/google/checkstyle/test/chapter5naming/rule523methodnames/MethodNameTest.java
+index 577aaa0..04ac0b8 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter5naming/rule523methodnames/MethodNameTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter5naming/rule523methodnames/MethodNameTest.java
+@@ -21,7 +21,7 @@
+     }
+ 
+     @Test
+-    public void methodNameTest() throws IOException, Exception {
++    public void methodNameTest() throws Exception {
+         
+         Configuration checkConfig = builder.getCheckConfig("MethodName");
+         String msgKey = "name.invalidPattern";
+diff --git a/src/it/java/com/google/checkstyle/test/chapter5naming/rule525nonconstantfieldnames/MemberNameTest.java b/src/it/java/com/google/checkstyle/test/chapter5naming/rule525nonconstantfieldnames/MemberNameTest.java
+index 48e9f14..f4947eb 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter5naming/rule525nonconstantfieldnames/MemberNameTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter5naming/rule525nonconstantfieldnames/MemberNameTest.java
+@@ -26,7 +26,7 @@
+     }
+ 
+     @Test
+-    public void memberNameTest() throws IOException, Exception {
++    public void memberNameTest() throws Exception {
+ 
+         final String[] expected = {
+             "5:16: " + getCheckMessage(checkConfig.getMessages(), msgKey, "mPublic", format),
+@@ -51,7 +51,7 @@
+     }
+ 
+     @Test
+-    public void simpleTest() throws IOException, Exception {
++    public void simpleTest() throws Exception {
+ 
+         final String[] expected = {
+             "12:17: " + getCheckMessage(checkConfig.getMessages(), msgKey, "bad$Static", format),
+diff --git a/src/it/java/com/google/checkstyle/test/chapter5naming/rule526parameternames/ParameterNameTest.java b/src/it/java/com/google/checkstyle/test/chapter5naming/rule526parameternames/ParameterNameTest.java
+index ae38994..0b3e984 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter5naming/rule526parameternames/ParameterNameTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter5naming/rule526parameternames/ParameterNameTest.java
+@@ -26,7 +26,7 @@
+     }
+ 
+     @Test
+-    public void parameterNameTest() throws IOException, Exception {
++    public void parameterNameTest() throws Exception {
+ 
+         final String[] expected = {
+             "8:21: " + getCheckMessage(checkConfig.getMessages(), MSG_KEY, "$arg1", format),
+diff --git a/src/it/java/com/google/checkstyle/test/chapter5naming/rule527localvariablenames/LocalVariableNameTest.java b/src/it/java/com/google/checkstyle/test/chapter5naming/rule527localvariablenames/LocalVariableNameTest.java
+index fadb48c..32960a2 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter5naming/rule527localvariablenames/LocalVariableNameTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter5naming/rule527localvariablenames/LocalVariableNameTest.java
+@@ -26,7 +26,7 @@
+     }
+ 
+     @Test
+-    public void localVariableNameTest() throws IOException, Exception {
++    public void localVariableNameTest() throws Exception {
+ 
+         final String[] expected = {
+             "26:13: " + getCheckMessage(checkConfig.getMessages(), msgKey, "a", format),
+@@ -49,7 +49,7 @@
+     }
+ 
+     @Test
+-    public void oneCharTest() throws IOException, Exception {
++    public void oneCharTest() throws Exception {
+ 
+         final String[] expected = {
+             "15:13: " + getCheckMessage(checkConfig.getMessages(), msgKey, "i", format),
+diff --git a/src/it/java/com/google/checkstyle/test/chapter5naming/rule528typevariablenames/ClassMethodTypeParameterNameTest.java b/src/it/java/com/google/checkstyle/test/chapter5naming/rule528typevariablenames/ClassMethodTypeParameterNameTest.java
+index 3a0d539..9204a88 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter5naming/rule528typevariablenames/ClassMethodTypeParameterNameTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter5naming/rule528typevariablenames/ClassMethodTypeParameterNameTest.java
+@@ -26,7 +26,7 @@
+     }
+ 
+     @Test
+-    public void testClassDefault() throws IOException, Exception {
++    public void testClassDefault() throws Exception {
+ 
+         final String[] expected = {
+             "5:31: " + getCheckMessage(checkConfig.getMessages(), msgKey, "t", format),
+@@ -41,7 +41,7 @@
+     }
+ 
+     @Test
+-    public void testMethodDefault() throws IOException, Exception {
++    public void testMethodDefault() throws Exception {
+ 
+         Configuration checkConfig = builder.getCheckConfig("MethodTypeParameterName");
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule711generalform/SingleLineJavadocTest.java b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule711generalform/SingleLineJavadocTest.java
+index 7e1c87f..6c9b4d8 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule711generalform/SingleLineJavadocTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule711generalform/SingleLineJavadocTest.java
+@@ -23,7 +23,7 @@
+     }
+ 
+     @Test
+-    public void singleLineJavadocTest() throws IOException, Exception {
++    public void singleLineJavadocTest() throws Exception {
+         
+         String msg = getCheckMessage(SingleLineJavadocCheck.class, "singleline.javadoc");
+ 
+@@ -46,7 +46,7 @@
+     }
+ 
+     @Test(expected = Exception.class)
+-    public void customInlineTagTest() throws IOException, Exception{
++    public void customInlineTagTest() throws Exception{
+         String msg = getCheckMessage(SingleLineJavadocCheck.class, "singleline.javadoc");
+         
+         Configuration checkConfig = builder.getCheckConfig("SingleLineJavadocCheck");
+diff --git a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule712paragraphs/JavadocParagraphTest.java b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule712paragraphs/JavadocParagraphTest.java
+index b44daf1..e27f89b 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule712paragraphs/JavadocParagraphTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule712paragraphs/JavadocParagraphTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void javadocParagraphCorrectTest() throws IOException, Exception {
++    public void javadocParagraphCorrectTest() throws Exception {
+ 
+         final String[] expected = {
+         };
+@@ -35,7 +35,7 @@
+     }
+     
+     @Test
+-    public void javadocParagraphIncorrectTest() throws IOException, Exception {
++    public void javadocParagraphIncorrectTest() throws Exception {
+ 
+         String msgBefore = getCheckMessage(JavadocParagraphCheck.class, "javadoc.paragraph.line.before");
+         String msgRed = getCheckMessage(JavadocParagraphCheck.class, "javadoc.paragraph.redundant.paragraph");
+diff --git a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/AtclauseOrderTest.java b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/AtclauseOrderTest.java
+index 6c20234..90f85b2 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/AtclauseOrderTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/AtclauseOrderTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void noFinalizerBasicTest() throws IOException, Exception {
++    public void noFinalizerBasicTest() throws Exception {
+         
+         String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+ 
+@@ -38,7 +38,7 @@
+     }
+     
+     @Test
+-    public void noFinalizerExtendedTest() throws IOException, Exception {
++    public void noFinalizerExtendedTest() throws Exception {
+         
+         String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/JavadocTagContinuationIndentationTest.java b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/JavadocTagContinuationIndentationTest.java
+index bd9b317..325a4d8 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/JavadocTagContinuationIndentationTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/JavadocTagContinuationIndentationTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void noFinalizerBasicTest() throws IOException, Exception {
++    public void noFinalizerBasicTest() throws Exception {
+         
+         String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+ 
+@@ -38,7 +38,7 @@
+     }
+     
+     @Test
+-    public void noFinalizerExtendedTest() throws IOException, Exception {
++    public void noFinalizerExtendedTest() throws Exception {
+         
+         String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/NonEmptyAtclauseDescriptionTest.java b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/NonEmptyAtclauseDescriptionTest.java
+index b313251..58da716 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/NonEmptyAtclauseDescriptionTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule713atclauses/NonEmptyAtclauseDescriptionTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void noFinalizerBasicTest() throws IOException, Exception {
++    public void noFinalizerBasicTest() throws Exception {
+         
+         String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+ 
+@@ -38,7 +38,7 @@
+     }
+     
+     @Test
+-    public void noFinalizerExtendedTest() throws IOException, Exception {
++    public void noFinalizerExtendedTest() throws Exception {
+         
+         String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule72thesummaryfragment/SummaryJavadocTest.java b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule72thesummaryfragment/SummaryJavadocTest.java
+index 27e90a0..7d57cf1 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule72thesummaryfragment/SummaryJavadocTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule72thesummaryfragment/SummaryJavadocTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void noFinalizerBasicTest() throws IOException, Exception {
++    public void noFinalizerBasicTest() throws Exception {
+         
+         String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+ 
+@@ -38,7 +38,7 @@
+     }
+ 
+     @Test
+-    public void noFinalizerExtendedTest() throws IOException, Exception {
++    public void noFinalizerExtendedTest() throws Exception {
+         
+         String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule731selfexplanatory/JavadocMethodTest.java b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule731selfexplanatory/JavadocMethodTest.java
+index ea36e09..9dd60f9 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule731selfexplanatory/JavadocMethodTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter7javadoc/rule731selfexplanatory/JavadocMethodTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void javadocMethodTest() throws IOException, Exception {
++    public void javadocMethodTest() throws Exception {
+ 
+         String msg = getCheckMessage(JavadocMethodCheck.class, "javadoc.missing");
+ 
+diff --git a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule21filename/OuterTypeFilenameTest.java b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule21filename/OuterTypeFilenameTest.java
+index acc3444..eac798d 100644
+--- a/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule21filename/OuterTypeFilenameTest.java
++++ b/src/it/java/com/google/checkstyle/test/chapter2filebasic/rule21filename/OuterTypeFilenameTest.java
+@@ -22,7 +22,7 @@
+     }
+ 
+     @Test
+-    public void outerTypeFilenameTest_1() throws IOException, Exception {
++    public void outerTypeFilenameTest_1() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -34,7 +34,7 @@
+     }
+ 
+     @Test
+-    public void outerTypeFilenameTest_2() throws IOException, Exception {
++    public void outerTypeFilenameTest_2() throws Exception {
+ 
+         final String[] expected = {};
+ 
+@@ -46,7 +46,7 @@
+     }
+ 
+     @Test
+-    public void outerTypeFilenameTest_3() throws IOException, Exception {
++    public void outerTypeFilenameTest_3() throws Exception {
+ 
+         final String[] expected = {
+             "3: " + getCheckMessage(OuterTypeFilenameCheck.class, "type.file.mismatch"),

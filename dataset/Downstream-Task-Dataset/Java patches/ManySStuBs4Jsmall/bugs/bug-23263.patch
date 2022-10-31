@@ -1,0 +1,26 @@
+diff --git a/clustering/server/src/main/java/org/wildfly/clustering/server/dispatcher/ChannelCommandDispatcherFactory.java b/clustering/server/src/main/java/org/wildfly/clustering/server/dispatcher/ChannelCommandDispatcherFactory.java
+index 127977f..3a72cce 100644
+--- a/clustering/server/src/main/java/org/wildfly/clustering/server/dispatcher/ChannelCommandDispatcherFactory.java
++++ b/clustering/server/src/main/java/org/wildfly/clustering/server/dispatcher/ChannelCommandDispatcherFactory.java
+@@ -103,7 +103,7 @@
+         this.marshallingContext = config.getMarshallingContext();
+         this.timeout = config.getTimeout();
+         JChannel channel = config.getChannel();
+-        RequestCorrelator correlator = new RequestCorrelator(channel.getProtocolStack().getTransport(), this, channel.getAddress()).setMarshaller(new CommandResponseMarshaller(config));
++        RequestCorrelator correlator = new RequestCorrelator(channel.getProtocolStack(), this, channel.getAddress()).setMarshaller(new CommandResponseMarshaller(config));
+         this.dispatcher = new MessageDispatcher()
+                 .setChannel(channel)
+                 .setRequestHandler(this)
+diff --git a/clustering/server/src/main/java/org/wildfly/clustering/server/dispatcher/ChannelCommandDispatcherFactory.java b/clustering/server/src/main/java/org/wildfly/clustering/server/dispatcher/ChannelCommandDispatcherFactory.java
+index 127977f..3a72cce 100644
+--- a/clustering/server/src/main/java/org/wildfly/clustering/server/dispatcher/ChannelCommandDispatcherFactory.java
++++ b/clustering/server/src/main/java/org/wildfly/clustering/server/dispatcher/ChannelCommandDispatcherFactory.java
+@@ -103,7 +103,7 @@
+         this.marshallingContext = config.getMarshallingContext();
+         this.timeout = config.getTimeout();
+         JChannel channel = config.getChannel();
+-        RequestCorrelator correlator = new RequestCorrelator(channel.getProtocolStack().getTransport(), this, channel.getAddress()).setMarshaller(new CommandResponseMarshaller(config));
++        RequestCorrelator correlator = new RequestCorrelator(channel.getProtocolStack(), this, channel.getAddress()).setMarshaller(new CommandResponseMarshaller(config));
+         this.dispatcher = new MessageDispatcher()
+                 .setChannel(channel)
+                 .setRequestHandler(this)

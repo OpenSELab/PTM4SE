@@ -1,0 +1,57 @@
+diff --git a/src/main/java/org/apache/commons/math3/optimization/Weight.java b/src/main/java/org/apache/commons/math3/optimization/Weight.java
+index 8e7538f..28c1619 100644
+--- a/src/main/java/org/apache/commons/math3/optimization/Weight.java
++++ b/src/main/java/org/apache/commons/math3/optimization/Weight.java
+@@ -18,7 +18,7 @@
+ package org.apache.commons.math3.optimization;
+ 
+ import org.apache.commons.math3.linear.RealMatrix;
+-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
++import org.apache.commons.math3.linear.DiagonalMatrix;
+ import org.apache.commons.math3.linear.NonSquareMatrixException;
+ 
+ /**
+@@ -41,11 +41,7 @@ public class Weight implements OptimizationData {
+      * @param weight List of the values of the diagonal.
+      */
+     public Weight(double[] weight) {
+-        final int dim = weight.length;
+-        weightMatrix = new Array2DRowRealMatrix(dim, dim);
+-        for (int i = 0; i < dim; i++) {
+-            weightMatrix.setEntry(i, i, weight[i]);
+-        }
++        weightMatrix = new DiagonalMatrix(weight);
+     }
+ 
+     /**
+diff --git a/src/main/java/org/apache/commons/math3/optimization/general/AbstractLeastSquaresOptimizer.java b/src/main/java/org/apache/commons/math3/optimization/general/AbstractLeastSquaresOptimizer.java
+index b6c97e7..982e559 100644
+--- a/src/main/java/org/apache/commons/math3/optimization/general/AbstractLeastSquaresOptimizer.java
++++ b/src/main/java/org/apache/commons/math3/optimization/general/AbstractLeastSquaresOptimizer.java
+@@ -26,6 +26,7 @@ import org.apache.commons.math3.exception.NumberIsTooSmallException;
+ import org.apache.commons.math3.exception.util.LocalizedFormats;
+ import org.apache.commons.math3.linear.ArrayRealVector;
+ import org.apache.commons.math3.linear.RealMatrix;
++import org.apache.commons.math3.linear.DiagonalMatrix;
+ import org.apache.commons.math3.linear.DecompositionSolver;
+ import org.apache.commons.math3.linear.MatrixUtils;
+ import org.apache.commons.math3.linear.QRDecomposition;
+@@ -558,7 +559,16 @@ public abstract class AbstractLeastSquaresOptimizer
+      * @return the square-root of the weight matrix.
+      */
+     private RealMatrix squareRoot(RealMatrix m) {
+-        final EigenDecomposition dec = new EigenDecomposition(m);
+-        return dec.getSquareRoot();
++        if (m instanceof DiagonalMatrix) {
++            final int dim = m.getRowDimension();
++            final RealMatrix sqrtM = new DiagonalMatrix(dim);
++            for (int i = 0; i < dim; i++) {
++               sqrtM.setEntry(i, i, FastMath.sqrt(m.getEntry(i, i)));
++            }
++            return sqrtM;
++        } else {
++            final EigenDecomposition dec = new EigenDecomposition(m);
++            return dec.getSquareRoot();
++        }
+     }
+ }

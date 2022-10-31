@@ -1,0 +1,14 @@
+diff --git a/server/src/main/java/io/druid/segment/realtime/RealtimeManager.java b/server/src/main/java/io/druid/segment/realtime/RealtimeManager.java
+index d9428f4..73bf34f 100644
+--- a/server/src/main/java/io/druid/segment/realtime/RealtimeManager.java
++++ b/server/src/main/java/io/druid/segment/realtime/RealtimeManager.java
+@@ -362,7 +362,8 @@
+         }
+         catch (Exception e) {
+           log.makeAlert(e, "Unknown exception, Ignoring and continuing.")
+-             .addData("inputRow", inputRow);
++             .addData("inputRow", inputRow)
++             .emit();
+         }
+ 
+         try {

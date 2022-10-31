@@ -1,0 +1,34 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/mapreduce/RangeInputSplit.java b/core/src/main/java/org/apache/accumulo/core/client/mapreduce/RangeInputSplit.java
+index 73c9b59..05316a1 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/mapreduce/RangeInputSplit.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/mapreduce/RangeInputSplit.java
+@@ -205,6 +205,14 @@ public class RangeInputSplit extends InputSplit implements Writable {
+     }
+ 
+     if (in.readBoolean()) {
++      int numIterators = in.readInt();
++      iterators = new ArrayList<IteratorSetting>(numIterators);
++      for (int i = 0; i < numIterators; i++) {
++        iterators.add(new IteratorSetting(in));
++      }
++    }
++
++    if (in.readBoolean()) {
+       level = Level.toLevel(in.readInt());
+     }
+   }
+@@ -275,6 +283,14 @@ public class RangeInputSplit extends InputSplit implements Writable {
+       out.writeUTF(zooKeepers);
+     }
+ 
++    out.writeBoolean(null != iterators);
++    if (null != iterators) {
++      out.writeInt(iterators.size());
++      for (IteratorSetting iterator : iterators) {
++        iterator.write(out);
++      }
++    }
++
+     out.writeBoolean(null != level);
+     if (null != level) {
+       out.writeInt(level.toInt());

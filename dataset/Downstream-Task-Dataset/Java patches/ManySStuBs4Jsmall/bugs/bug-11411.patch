@@ -1,0 +1,13 @@
+diff --git a/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/AbstractInstrumentedFilter.java b/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/AbstractInstrumentedFilter.java
+index 8d2630d..24e56a6 100644
+--- a/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/AbstractInstrumentedFilter.java
++++ b/metrics-servlet/src/main/java/io/dropwizard/metrics/servlet/AbstractInstrumentedFilter.java
+@@ -63,7 +63,7 @@
+             metricName = getClass().getName();
+         }
+ 
+-        this.metersByStatusCode = new ConcurrentHashMap<Integer, Meter>(meterNamesByStatusCode
++        this.metersByStatusCode = new ConcurrentHashMap<>(meterNamesByStatusCode
+                 .size());
+         for (Entry<Integer, String> entry : meterNamesByStatusCode.entrySet()) {
+             metersByStatusCode.put(entry.getKey(),

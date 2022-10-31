@@ -1,0 +1,26 @@
+diff --git a/codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java b/codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java
+index 6a92b94..53176f5 100644
+--- a/codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java
++++ b/codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java
+@@ -32,7 +32,7 @@
+     private final ByteToMessageDecoder decoder;
+ 
+     protected ByteToMessageCodec(Class<?>... encodableMessageTypes) {
+-        this.encodableMessageTypes = encodableMessageTypes;
++        this.encodableMessageTypes = ChannelHandlerUtil.acceptedMessageTypes(encodableMessageTypes);
+         encoder = new MessageToByteEncoder<I>() {
+             @Override
+             public boolean isEncodable(Object msg) throws Exception {
+diff --git a/codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java b/codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java
+index 6a92b94..53176f5 100644
+--- a/codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java
++++ b/codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java
+@@ -32,7 +32,7 @@
+     private final ByteToMessageDecoder decoder;
+ 
+     protected ByteToMessageCodec(Class<?>... encodableMessageTypes) {
+-        this.encodableMessageTypes = encodableMessageTypes;
++        this.encodableMessageTypes = ChannelHandlerUtil.acceptedMessageTypes(encodableMessageTypes);
+         encoder = new MessageToByteEncoder<I>() {
+             @Override
+             public boolean isEncodable(Object msg) throws Exception {

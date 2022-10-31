@@ -1,0 +1,30 @@
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index e7829aa..d9028ed 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -1732,7 +1732,9 @@
+ 						try
+ 							{
+ 							Var.pushThreadBindings(dynamicBindings);
+-							LocalBinding lb = registerLocal(sym, null, null);
++							LocalBinding lb = registerLocal(sym,
++							                                (Symbol) (RT.second(f) instanceof Symbol ? RT.second(f)
++							                                          : null), null);
+ 							Expr handler = (new BodyExpr.Parser()).parse(context, RT.rest(RT.rest(RT.rest(f))));
+ 							catches = catches.cons(new CatchClause(c, lb, handler));
+ 							}
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index e7829aa..d9028ed 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -1732,7 +1732,9 @@
+ 						try
+ 							{
+ 							Var.pushThreadBindings(dynamicBindings);
+-							LocalBinding lb = registerLocal(sym, null, null);
++							LocalBinding lb = registerLocal(sym,
++							                                (Symbol) (RT.second(f) instanceof Symbol ? RT.second(f)
++							                                          : null), null);
+ 							Expr handler = (new BodyExpr.Parser()).parse(context, RT.rest(RT.rest(RT.rest(f))));
+ 							catches = catches.cons(new CatchClause(c, lb, handler));
+ 							}

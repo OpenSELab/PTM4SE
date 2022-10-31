@@ -1,0 +1,65 @@
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/HttpContentCompressor.java b/codec-http/src/main/java/io/netty/handler/codec/http/HttpContentCompressor.java
+index 70dbfe9..ac9e08f 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/HttpContentCompressor.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/HttpContentCompressor.java
+@@ -141,7 +141,7 @@
+             int equalsPos = encoding.indexOf('=');
+             if (equalsPos != -1) {
+                 try {
+-                    q = Float.valueOf(encoding.substring(equalsPos + 1));
++                    q = Float.parseFloat(encoding.substring(equalsPos + 1));
+                 } catch (NumberFormatException e) {
+                     // Ignore encoding
+                     q = 0.0f;
+diff --git a/codec/src/main/java/io/netty/handler/codec/CharSequenceValueConverter.java b/codec/src/main/java/io/netty/handler/codec/CharSequenceValueConverter.java
+index 0e243ce..dfdc856 100644
+--- a/codec/src/main/java/io/netty/handler/codec/CharSequenceValueConverter.java
++++ b/codec/src/main/java/io/netty/handler/codec/CharSequenceValueConverter.java
+@@ -82,7 +82,7 @@
+         if (value instanceof AsciiString) {
+             return ((AsciiString) value).byteAt(0);
+         }
+-        return Byte.valueOf(value.toString());
++        return Byte.parseByte(value.toString());
+     }
+ 
+     @Override
+@@ -100,7 +100,7 @@
+         if (value instanceof AsciiString) {
+             return ((AsciiString) value).parseShort();
+         }
+-        return Short.valueOf(value.toString());
++        return Short.parseShort(value.toString());
+     }
+ 
+     @Override
+@@ -139,7 +139,7 @@
+         if (value instanceof AsciiString) {
+             return ((AsciiString) value).parseFloat();
+         }
+-        return Float.valueOf(value.toString());
++        return Float.parseFloat(value.toString());
+     }
+ 
+     @Override
+@@ -147,6 +147,6 @@
+         if (value instanceof AsciiString) {
+             return ((AsciiString) value).parseDouble();
+         }
+-        return Double.valueOf(value.toString());
++        return Double.parseDouble(value.toString());
+     }
+ }
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/HttpContentCompressor.java b/codec-http/src/main/java/io/netty/handler/codec/http/HttpContentCompressor.java
+index 70dbfe9..ac9e08f 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/HttpContentCompressor.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/HttpContentCompressor.java
+@@ -141,7 +141,7 @@
+             int equalsPos = encoding.indexOf('=');
+             if (equalsPos != -1) {
+                 try {
+-                    q = Float.valueOf(encoding.substring(equalsPos + 1));
++                    q = Float.parseFloat(encoding.substring(equalsPos + 1));
+                 } catch (NumberFormatException e) {
+                     // Ignore encoding
+                     q = 0.0f;

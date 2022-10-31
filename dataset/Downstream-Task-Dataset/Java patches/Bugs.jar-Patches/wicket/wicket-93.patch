@@ -1,0 +1,84 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Component.java b/wicket-core/src/main/java/org/apache/wicket/Component.java
+index 13ab5e1..a762035 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Component.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Component.java
+@@ -3284,15 +3284,18 @@ public abstract class Component
+ 	public final CharSequence urlFor(final Behavior behaviour,
+ 		final RequestListenerInterface listener)
+ 	{
+-		PageAndComponentProvider provider = new PageAndComponentProvider(getPage(), this);
+ 		int id = getBehaviorId(behaviour);
++		Page page = getPage();
+ 		IRequestHandler handler;
+-		if (getPage().isPageStateless())
++		if (page.isPageStateless())
+ 		{
++			PageAndComponentProvider provider = new PageAndComponentProvider(page.getPageClass(),
++				page.getPageParameters(), getPageRelativePath());
+ 			handler = new BookmarkableListenerInterfaceRequestHandler(provider, listener, id);
+ 		}
+ 		else
+ 		{
++			PageAndComponentProvider provider = new PageAndComponentProvider(page, this);
+ 			handler = new ListenerInterfaceRequestHandler(provider, listener, id);
+ 		}
+ 		return getRequestCycle().urlFor(handler);
+@@ -3324,14 +3327,17 @@ public abstract class Component
+ 	 */
+ 	public final CharSequence urlFor(final RequestListenerInterface listener)
+ 	{
+-		PageAndComponentProvider provider = new PageAndComponentProvider(getPage(), this);
++		Page page = getPage();
+ 		IRequestHandler handler;
+-		if (getPage().isPageStateless())
++		if (page.isPageStateless())
+ 		{
++			PageAndComponentProvider provider = new PageAndComponentProvider(page.getPageClass(),
++				page.getPageParameters(), getPageRelativePath());
+ 			handler = new BookmarkableListenerInterfaceRequestHandler(provider, listener);
+ 		}
+ 		else
+ 		{
++			PageAndComponentProvider provider = new PageAndComponentProvider(page, this);
+ 			handler = new ListenerInterfaceRequestHandler(provider, listener);
+ 		}
+ 		return getRequestCycle().urlFor(handler);
+diff --git a/wicket-core/src/main/java/org/apache/wicket/mock/MockPageManager.java b/wicket-core/src/main/java/org/apache/wicket/mock/MockPageManager.java
+index 3cf9213..cf18216 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/mock/MockPageManager.java
++++ b/wicket-core/src/main/java/org/apache/wicket/mock/MockPageManager.java
+@@ -78,7 +78,10 @@ public class MockPageManager implements IPageManager
+ 
+ 	public void touchPage(IManageablePage page)
+ 	{
+-		pages.put(page.getPageId(), page);
++		if (page.isPageStateless() == false)
++		{
++			pages.put(page.getPageId(), page);
++		}
+ 	}
+ 
+ 	/**
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/handler/PageProvider.java b/wicket-core/src/main/java/org/apache/wicket/request/handler/PageProvider.java
+index 379b473..c9569a8 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/handler/PageProvider.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/handler/PageProvider.java
+@@ -17,6 +17,7 @@
+ package org.apache.wicket.request.handler;
+ 
+ import org.apache.wicket.Application;
++import org.apache.wicket.Page;
+ import org.apache.wicket.Session;
+ import org.apache.wicket.page.IPageManager;
+ import org.apache.wicket.protocol.http.PageExpiredException;
+@@ -148,6 +149,10 @@ public class PageProvider implements IPageProvider
+ 		Args.notNull(page, "page");
+ 
+ 		pageInstance = page;
++		if (pageInstance instanceof Page)
++		{
++			((Page)pageInstance).setStatelessHint(false);
++		}
+ 	}
+ 
+ 	/**

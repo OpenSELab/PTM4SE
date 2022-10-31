@@ -1,0 +1,26 @@
+diff --git a/src/com/google/javascript/jscomp/FieldCleanupPass.java b/src/com/google/javascript/jscomp/FieldCleanupPass.java
+index d4c90c2..ce0157b 100644
+--- a/src/com/google/javascript/jscomp/FieldCleanupPass.java
++++ b/src/com/google/javascript/jscomp/FieldCleanupPass.java
+@@ -97,7 +97,7 @@
+             typeRegistry.getEachReferenceTypeWithProperty(propName));
+         for (ObjectType type : types) {
+           Node pNode = type.getPropertyNode(propName);
+-          if (srcName.equals(pNode.getSourceFileName())) {
++          if (pNode != null && srcName.equals(pNode.getSourceFileName())) {
+             typeRegistry.unregisterPropertyOnType(propName, type);
+             type.removeProperty(propName);
+           }
+diff --git a/src/com/google/javascript/jscomp/FieldCleanupPass.java b/src/com/google/javascript/jscomp/FieldCleanupPass.java
+index d4c90c2..ce0157b 100644
+--- a/src/com/google/javascript/jscomp/FieldCleanupPass.java
++++ b/src/com/google/javascript/jscomp/FieldCleanupPass.java
+@@ -97,7 +97,7 @@
+             typeRegistry.getEachReferenceTypeWithProperty(propName));
+         for (ObjectType type : types) {
+           Node pNode = type.getPropertyNode(propName);
+-          if (srcName.equals(pNode.getSourceFileName())) {
++          if (pNode != null && srcName.equals(pNode.getSourceFileName())) {
+             typeRegistry.unregisterPropertyOnType(propName, type);
+             type.removeProperty(propName);
+           }

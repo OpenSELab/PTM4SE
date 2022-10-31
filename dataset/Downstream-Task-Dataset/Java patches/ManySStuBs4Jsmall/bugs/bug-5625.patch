@@ -1,0 +1,13 @@
+diff --git a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/spring/CxfEndpointBeanDefinitionParser.java b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/spring/CxfEndpointBeanDefinitionParser.java
+index ae1434e..123df79 100644
+--- a/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/spring/CxfEndpointBeanDefinitionParser.java
++++ b/components/camel-cxf/src/main/java/org/apache/camel/component/cxf/spring/CxfEndpointBeanDefinitionParser.java
+@@ -85,7 +85,7 @@
+             || "outInterceptors".equals(name) || "outFaultInterceptors".equals(name)
+             || "features".equals(name) || "schemaLocations".equals(name)
+             || "handlers".equals(name)) {
+-            List<?> list = (List<?>)ctx.getDelegate().parseListElement(el, bean.getBeanDefinition());
++            List<?> list = ctx.getDelegate().parseListElement(el, bean.getBeanDefinition());
+             bean.addPropertyValue(name, list);
+         } else {
+             setFirstChildAsProperty(el, ctx, bean, name);

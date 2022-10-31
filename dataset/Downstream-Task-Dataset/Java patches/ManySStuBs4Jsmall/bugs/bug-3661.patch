@@ -1,0 +1,26 @@
+diff --git a/jstorm-utility/jstorm-rocket-mq/src/main/java/com/alibaba/aloha/meta/MetaSpout.java b/jstorm-utility/jstorm-rocket-mq/src/main/java/com/alibaba/aloha/meta/MetaSpout.java
+index 345d344..e6c3a26 100644
+--- a/jstorm-utility/jstorm-rocket-mq/src/main/java/com/alibaba/aloha/meta/MetaSpout.java
++++ b/jstorm-utility/jstorm-rocket-mq/src/main/java/com/alibaba/aloha/meta/MetaSpout.java
+@@ -201,7 +201,7 @@
+ 
+ 	public void finishTuple(MetaTuple metaTuple) {
+ 		waithHistogram.update(metaTuple.getEmitMs() - metaTuple.getCreateMs());
+-		processHistogram.update(System.currentTimeMillis() - metaTuple.emitMs);
++		processHistogram.update(System.currentTimeMillis() - metaTuple.getEmitMs());
+ 		metaTuple.done();
+ 	}
+ 
+diff --git a/jstorm-utility/jstorm-rocket-mq/src/main/java/com/alibaba/aloha/meta/MetaSpout.java b/jstorm-utility/jstorm-rocket-mq/src/main/java/com/alibaba/aloha/meta/MetaSpout.java
+index 345d344..e6c3a26 100644
+--- a/jstorm-utility/jstorm-rocket-mq/src/main/java/com/alibaba/aloha/meta/MetaSpout.java
++++ b/jstorm-utility/jstorm-rocket-mq/src/main/java/com/alibaba/aloha/meta/MetaSpout.java
+@@ -201,7 +201,7 @@
+ 
+ 	public void finishTuple(MetaTuple metaTuple) {
+ 		waithHistogram.update(metaTuple.getEmitMs() - metaTuple.getCreateMs());
+-		processHistogram.update(System.currentTimeMillis() - metaTuple.emitMs);
++		processHistogram.update(System.currentTimeMillis() - metaTuple.getEmitMs());
+ 		metaTuple.done();
+ 	}
+ 

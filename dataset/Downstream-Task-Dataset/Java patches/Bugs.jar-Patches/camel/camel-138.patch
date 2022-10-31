@@ -1,0 +1,15 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/bean/BeanInfo.java b/camel-core/src/main/java/org/apache/camel/component/bean/BeanInfo.java
+index d3c7214..a2f6ce8 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/bean/BeanInfo.java
++++ b/camel-core/src/main/java/org/apache/camel/component/bean/BeanInfo.java
+@@ -987,7 +987,9 @@ public class BeanInfo {
+         Iterator<MethodInfo> it = methods.iterator();
+         while (it.hasNext()) {
+             MethodInfo info = it.next();
+-            if (Modifier.isAbstract(info.getMethod().getModifiers())) {
++            // if the class is an interface then keep the method
++            boolean isFromInterface = Modifier.isInterface(info.getMethod().getDeclaringClass().getModifiers());
++            if (!isFromInterface && Modifier.isAbstract(info.getMethod().getModifiers())) {
+                 // we cannot invoke an abstract method
+                 it.remove();
+             }

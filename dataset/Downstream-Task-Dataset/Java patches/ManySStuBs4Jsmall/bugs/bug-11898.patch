@@ -1,0 +1,38 @@
+diff --git a/server/src/main/java/io/druid/segment/realtime/plumber/Sink.java b/server/src/main/java/io/druid/segment/realtime/plumber/Sink.java
+index 91edc45..e275940 100644
+--- a/server/src/main/java/io/druid/segment/realtime/plumber/Sink.java
++++ b/server/src/main/java/io/druid/segment/realtime/plumber/Sink.java
+@@ -178,12 +178,12 @@
+     FireHydrant old;
+     if (currIndex == null) {  // Only happens on initialization, cannot synchronize on null
+       old = currIndex;
+-      currIndex = new FireHydrant(newIndex, hydrants.size(), version);
++      currIndex = new FireHydrant(newIndex, hydrants.size(), getSegment().getIdentifier());
+       hydrants.add(currIndex);
+     } else {
+       synchronized (currIndex) {
+         old = currIndex;
+-        currIndex = new FireHydrant(newIndex, hydrants.size(), version);
++        currIndex = new FireHydrant(newIndex, hydrants.size(), getSegment().getIdentifier());
+         hydrants.add(currIndex);
+       }
+     }
+diff --git a/server/src/main/java/io/druid/segment/realtime/plumber/Sink.java b/server/src/main/java/io/druid/segment/realtime/plumber/Sink.java
+index 91edc45..e275940 100644
+--- a/server/src/main/java/io/druid/segment/realtime/plumber/Sink.java
++++ b/server/src/main/java/io/druid/segment/realtime/plumber/Sink.java
+@@ -178,12 +178,12 @@
+     FireHydrant old;
+     if (currIndex == null) {  // Only happens on initialization, cannot synchronize on null
+       old = currIndex;
+-      currIndex = new FireHydrant(newIndex, hydrants.size(), version);
++      currIndex = new FireHydrant(newIndex, hydrants.size(), getSegment().getIdentifier());
+       hydrants.add(currIndex);
+     } else {
+       synchronized (currIndex) {
+         old = currIndex;
+-        currIndex = new FireHydrant(newIndex, hydrants.size(), version);
++        currIndex = new FireHydrant(newIndex, hydrants.size(), getSegment().getIdentifier());
+         hydrants.add(currIndex);
+       }
+     }

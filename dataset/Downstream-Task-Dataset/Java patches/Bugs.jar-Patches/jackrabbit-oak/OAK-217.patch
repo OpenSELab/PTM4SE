@@ -1,0 +1,159 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndex.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndex.java
+index 40eca04..3ec211f 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndex.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndex.java
+@@ -192,7 +192,7 @@ class PropertyIndex implements QueryIndex {
+             // not an appropriate index for native search
+             return Double.POSITIVE_INFINITY;
+         }
+-        if (filter.getPropertyRestrictions().isEmpty() && filter.getSelector().getSelectorConstraints().isEmpty()) {
++        if (filter.getPropertyRestrictions().isEmpty()) {
+             // not an appropriate index for no property restrictions & selector constraints
+             return Double.POSITIVE_INFINITY;
+         }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexPlan.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexPlan.java
+index b1123a0..d15c273 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexPlan.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexPlan.java
+@@ -35,14 +35,6 @@ import org.apache.jackrabbit.oak.plugins.index.property.strategy.ContentMirrorSt
+ import org.apache.jackrabbit.oak.plugins.index.property.strategy.IndexStoreStrategy;
+ import org.apache.jackrabbit.oak.plugins.index.property.strategy.UniqueEntryStoreStrategy;
+ import org.apache.jackrabbit.oak.query.QueryEngineSettings;
+-import org.apache.jackrabbit.oak.query.ast.ComparisonImpl;
+-import org.apache.jackrabbit.oak.query.ast.ConstraintImpl;
+-import org.apache.jackrabbit.oak.query.ast.DynamicOperandImpl;
+-import org.apache.jackrabbit.oak.query.ast.InImpl;
+-import org.apache.jackrabbit.oak.query.ast.Operator;
+-import org.apache.jackrabbit.oak.query.ast.OrImpl;
+-import org.apache.jackrabbit.oak.query.ast.PropertyValueImpl;
+-import org.apache.jackrabbit.oak.query.ast.StaticOperandImpl;
+ import org.apache.jackrabbit.oak.spi.query.Cursor;
+ import org.apache.jackrabbit.oak.spi.query.Cursors;
+ import org.apache.jackrabbit.oak.spi.query.Filter;
+@@ -72,8 +64,6 @@ public class PropertyIndexPlan {
+     private static final IndexStoreStrategy UNIQUE =
+             new UniqueEntryStoreStrategy();
+ 
+-    private final NodeState root;
+-
+     private final NodeState definition;
+ 
+     private final String name;
+@@ -98,7 +88,6 @@ public class PropertyIndexPlan {
+ 
+     PropertyIndexPlan(String name, NodeState root, NodeState definition, Filter filter) {
+         this.name = name;
+-        this.root = root;
+         this.definition = definition;
+         this.properties = newHashSet(definition.getNames(PROPERTY_NAMES));
+         pathFilter = PathFilter.from(definition.builder());
+@@ -162,24 +151,6 @@ public class PropertyIndexPlan {
+                     }
+                 }
+             }
+-
+-            // OAK-1965: let's see if we can find a (x='...' OR y='...')
+-            // constraint where both x and y are covered by this index
+-            // TODO: avoid repeated scans through the constraints
+-            for (ConstraintImpl constraint
+-                    : filter.getSelector().getSelectorConstraints()) {
+-                if (constraint instanceof OrImpl) {
+-                    Set<String> values = findMultiProperty((OrImpl) constraint);
+-                    if (values != null) {
+-                        double cost = strategy.count(filter, root, definition, values, MAX_COST);
+-                        if (cost < bestCost) {
+-                            bestDepth = 1;
+-                            bestValues = values;
+-                            bestCost = cost;
+-                        }
+-                    }
+-                }
+-            }
+         }
+ 
+         this.depth = bestDepth;
+@@ -187,46 +158,6 @@ public class PropertyIndexPlan {
+         this.cost = COST_OVERHEAD + bestCost;
+     }
+ 
+-    private Set<String> findMultiProperty(OrImpl or) {
+-        Set<String> values = newLinkedHashSet();
+-        for (ConstraintImpl constraint : or.getConstraints()) {
+-            if (constraint instanceof ComparisonImpl) {
+-                ComparisonImpl comparison = (ComparisonImpl) constraint;
+-                if (isIndexed(comparison.getOperand1())
+-                        && comparison.getOperator() == Operator.EQUAL) {
+-                    values.addAll(encode(comparison.getOperand2().currentValue()));
+-                } else {
+-                    return null;
+-                }
+-            } else if (constraint instanceof InImpl) {
+-                InImpl in = (InImpl) constraint;
+-                if (isIndexed(in.getOperand1())) {
+-                    for (StaticOperandImpl operand : in.getOperand2()) {
+-                        values.addAll(encode(operand.currentValue()));
+-                    }
+-                } else {
+-                    return null;
+-                }
+-            } else {
+-                return null;
+-            }
+-        }
+-        return values;
+-    }
+-
+-    /**
+-     * Checks whether the given dynamic operand is a property
+-     * covered by this index.
+-     */
+-    private boolean isIndexed(DynamicOperandImpl operand) {
+-        if (operand instanceof PropertyValueImpl) {
+-            PropertyValueImpl property = (PropertyValueImpl) operand;
+-            return properties.contains(property.getPropertyName());
+-        } else {
+-            return false;
+-        }
+-    }
+-
+     private static Set<String> getValues(PropertyRestriction restriction) {
+         if (restriction.firstIncluding
+                 && restriction.lastIncluding
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
+index 6908950..0f851b1 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/index/FilterImpl.java
+@@ -218,7 +218,6 @@ public class FilterImpl implements Filter {
+         return alwaysFalse;
+     }
+ 
+-    @Override
+     public SelectorImpl getSelector() {
+         return selector;
+     }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/Filter.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/Filter.java
+index f2e55fd..9aabf1a 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/Filter.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/Filter.java
+@@ -28,7 +28,6 @@ import javax.jcr.PropertyType;
+ 
+ import org.apache.jackrabbit.oak.api.PropertyValue;
+ import org.apache.jackrabbit.oak.query.QueryEngineSettings;
+-import org.apache.jackrabbit.oak.query.ast.SelectorImpl;
+ import org.apache.jackrabbit.oak.query.fulltext.FullTextExpression;
+ 
+ /**
+@@ -45,13 +44,6 @@ import org.apache.jackrabbit.oak.query.fulltext.FullTextExpression;
+ public interface Filter {
+ 
+     /**
+-     * Get the selector associated with this filter.
+-     *
+-     * @return selector
+-     */
+-    SelectorImpl getSelector();
+-
+-    /**
+      * Get the list of property restrictions, if any. Each property may contain
+      * multiple restrictions, for example x=1 and x=2. For this case, only
+      * multi-valued properties match that contain both 1 and 2.

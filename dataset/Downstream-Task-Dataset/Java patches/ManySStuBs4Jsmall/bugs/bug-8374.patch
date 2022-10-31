@@ -1,0 +1,44 @@
+diff --git a/hikaricp-common/src/main/java/com/zaxxer/hikari/HikariDataSource.java b/hikaricp-common/src/main/java/com/zaxxer/hikari/HikariDataSource.java
+index 5403928..cdf6c9f 100644
+--- a/hikaricp-common/src/main/java/com/zaxxer/hikari/HikariDataSource.java
++++ b/hikaricp-common/src/main/java/com/zaxxer/hikari/HikariDataSource.java
+@@ -178,7 +178,7 @@
+    @SuppressWarnings("unchecked")
+    public <T> T unwrap(Class<T> iface) throws SQLException
+    {
+-      if (iface == this.getClass()) {
++      if (iface.isInstance(this)) {
+          return (T) this;
+       }
+       else if (pool != null) {
+@@ -197,7 +197,7 @@
+    @Override
+    public boolean isWrapperFor(Class<?> iface) throws SQLException
+    {
+-      if (iface == this.getClass()) {
++      if (iface.isInstance(this)) {
+          return true;
+       }
+       else if (pool != null) {
+diff --git a/hikaricp-common/src/main/java/com/zaxxer/hikari/HikariDataSource.java b/hikaricp-common/src/main/java/com/zaxxer/hikari/HikariDataSource.java
+index 5403928..cdf6c9f 100644
+--- a/hikaricp-common/src/main/java/com/zaxxer/hikari/HikariDataSource.java
++++ b/hikaricp-common/src/main/java/com/zaxxer/hikari/HikariDataSource.java
+@@ -178,7 +178,7 @@
+    @SuppressWarnings("unchecked")
+    public <T> T unwrap(Class<T> iface) throws SQLException
+    {
+-      if (iface == this.getClass()) {
++      if (iface.isInstance(this)) {
+          return (T) this;
+       }
+       else if (pool != null) {
+@@ -197,7 +197,7 @@
+    @Override
+    public boolean isWrapperFor(Class<?> iface) throws SQLException
+    {
+-      if (iface == this.getClass()) {
++      if (iface.isInstance(this)) {
+          return true;
+       }
+       else if (pool != null) {

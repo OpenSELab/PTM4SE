@@ -1,0 +1,222 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java b/wicket/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
+index 84ff3f0..c1ff4a5 100644
+--- a/wicket/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
++++ b/wicket/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
+@@ -51,6 +51,8 @@ import org.apache.wicket.request.http.WebRequest;
+ import org.apache.wicket.request.http.WebResponse;
+ import org.apache.wicket.request.mapper.parameter.PageParameters;
+ import org.apache.wicket.request.resource.ResourceReference;
++import org.apache.wicket.response.StringResponse;
++import org.apache.wicket.response.filter.IResponseFilter;
+ import org.apache.wicket.util.lang.Args;
+ import org.apache.wicket.util.string.AppendingStringBuffer;
+ import org.apache.wicket.util.string.Strings;
+@@ -603,43 +605,18 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 			// Make sure it is not cached by a client
+ 			response.disableCaching();
+ 
+-			response.write("<?xml version=\"1.0\" encoding=\"");
+-			response.write(encoding);
+-			response.write("\"?>");
+-			response.write("<ajax-response>");
+-
+-			// invoke onbeforerespond event on listeners
+-			fireOnBeforeRespondListeners();
+-
+-			// normal behavior
+-			Iterator<CharSequence> it = prependJavaScripts.iterator();
+-			while (it.hasNext())
+-			{
+-				CharSequence js = it.next();
+-				respondInvocation(response, js);
+-			}
+-
+-			// process added components
+-			respondComponents(response);
+-
+-			fireOnAfterRespondListeners(response);
+-
+-			// execute the dom ready javascripts as first javascripts
+-			// after component replacement
+-			it = domReadyJavaScripts.iterator();
+-			while (it.hasNext())
++			try
+ 			{
+-				CharSequence js = it.next();
+-				respondInvocation(response, js);
++				final StringResponse bodyResponse = new StringResponse();
++				contructResponseBody(bodyResponse, encoding);
++				invokeResponseFilters(bodyResponse);
++				response.write(bodyResponse.getBuffer());
+ 			}
+-			it = appendJavaScripts.iterator();
+-			while (it.hasNext())
++			finally
+ 			{
+-				CharSequence js = it.next();
+-				respondInvocation(response, js);
++				// restore the original response
++				RequestCycle.get().setResponse(response);
+ 			}
+-
+-			response.write("</ajax-response>");
+ 		}
+ 		finally
+ 		{
+@@ -648,6 +625,80 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 	}
+ 
+ 	/**
++	 * Collects the response body (without the headers) so that it can be pre-processed before
++	 * written down to the original response.
++	 * 
++	 * @param bodyResponse
++	 *            the buffering response
++	 * @param encoding
++	 *            the encoding that should be used to encode the body
++	 */
++	private void contructResponseBody(final Response bodyResponse, final String encoding)
++	{
++		bodyResponse.write("<?xml version=\"1.0\" encoding=\"");
++		bodyResponse.write(encoding);
++		bodyResponse.write("\"?>");
++		bodyResponse.write("<ajax-response>");
++
++		// invoke onbeforerespond event on listeners
++		fireOnBeforeRespondListeners();
++
++		// normal behavior
++		Iterator<CharSequence> it = prependJavaScripts.iterator();
++		while (it.hasNext())
++		{
++			CharSequence js = it.next();
++			respondInvocation(bodyResponse, js);
++		}
++
++		// process added components
++		respondComponents(bodyResponse);
++
++		fireOnAfterRespondListeners(bodyResponse);
++
++		// execute the dom ready javascripts as first javascripts
++		// after component replacement
++		it = domReadyJavaScripts.iterator();
++		while (it.hasNext())
++		{
++			CharSequence js = it.next();
++			respondInvocation(bodyResponse, js);
++		}
++		it = appendJavaScripts.iterator();
++		while (it.hasNext())
++		{
++			CharSequence js = it.next();
++			respondInvocation(bodyResponse, js);
++		}
++
++		bodyResponse.write("</ajax-response>");
++	}
++
++	/**
++	 * Runs the configured {@link IResponseFilter}s over the constructed Ajax response
++	 * 
++	 * @param contentResponse
++	 *            the Ajax {@link Response} body
++	 */
++	private void invokeResponseFilters(final StringResponse contentResponse)
++	{
++		AppendingStringBuffer responseBuffer = new AppendingStringBuffer(
++			contentResponse.getBuffer());
++
++		List<IResponseFilter> responseFilters = Application.get()
++			.getRequestCycleSettings()
++			.getResponseFilters();
++
++		if (responseFilters != null)
++		{
++			for (IResponseFilter filter : responseFilters)
++			{
++				filter.filter(responseBuffer);
++			}
++		}
++	}
++
++	/**
+ 	 * 
+ 	 */
+ 	private void fireOnBeforeRespondListeners()
+@@ -667,7 +718,7 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 	 * 
+ 	 * @param response
+ 	 */
+-	private void fireOnAfterRespondListeners(final WebResponse response)
++	private void fireOnAfterRespondListeners(final Response response)
+ 	{
+ 		// invoke onafterresponse event on listeners
+ 		if (listeners != null)
+@@ -697,7 +748,7 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 	 * 
+ 	 * @param response
+ 	 */
+-	private void respondComponents(WebResponse response)
++	private void respondComponents(Response response)
+ 	{
+ 		// TODO: We might need to call prepareRender on all components upfront
+ 
+diff --git a/wicket/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java b/wicket/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
+index 113e442..1c9debe 100644
+--- a/wicket/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
++++ b/wicket/src/main/java/org/apache/wicket/protocol/http/BufferedWebResponse.java
+@@ -24,10 +24,13 @@ import java.util.List;
+ 
+ import javax.servlet.http.Cookie;
+ 
++import org.apache.wicket.Application;
+ import org.apache.wicket.WicketRuntimeException;
+ import org.apache.wicket.request.Response;
+ import org.apache.wicket.request.http.WebResponse;
++import org.apache.wicket.response.filter.IResponseFilter;
+ import org.apache.wicket.util.lang.Args;
++import org.apache.wicket.util.string.AppendingStringBuffer;
+ 
+ /**
+  * Subclass of {@link WebResponse} that buffers the actions and performs those on another response.
+@@ -117,6 +120,20 @@ public class BufferedWebResponse extends WebResponse implements IMetaDataBufferi
+ 		@Override
+ 		protected void invoke(WebResponse response)
+ 		{
++
++			AppendingStringBuffer responseBuffer = new AppendingStringBuffer(builder);
++
++			List<IResponseFilter> responseFilters = Application.get()
++				.getRequestCycleSettings()
++				.getResponseFilters();
++
++			if (responseFilters != null)
++			{
++				for (IResponseFilter filter : responseFilters)
++				{
++					filter.filter(responseBuffer);
++				}
++			}
+ 			response.write(builder);
+ 		}
+ 	};
+@@ -534,4 +551,5 @@ public class BufferedWebResponse extends WebResponse implements IMetaDataBufferi
+ 	{
+ 		return charSequenceAction.builder.toString();
+ 	}
++
+ }
+diff --git a/wicket/src/main/java/org/apache/wicket/response/filter/IResponseFilter.java b/wicket/src/main/java/org/apache/wicket/response/filter/IResponseFilter.java
+index e2f76cc..c106782 100644
+--- a/wicket/src/main/java/org/apache/wicket/response/filter/IResponseFilter.java
++++ b/wicket/src/main/java/org/apache/wicket/response/filter/IResponseFilter.java
+@@ -21,7 +21,7 @@ import org.apache.wicket.util.string.AppendingStringBuffer;
+ /**
+  * A response filter can be added to the
+  * {@link org.apache.wicket.settings.IRequestCycleSettings#addResponseFilter(IResponseFilter)}
+- * object The will be called from the Buffered Response objects right before they would send it to
++ * object. This will be called from the Buffered Response objects right before they would send it to
+  * the real responses. You have to use the
+  * {@link org.apache.wicket.settings.IRequestCycleSettings#setBufferResponse(boolean)}(to true which
+  * is the default) for this filtering to work.

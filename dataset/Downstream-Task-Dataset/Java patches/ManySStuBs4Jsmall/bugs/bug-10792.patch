@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+index 4c9c6c5..e56e2ab 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+@@ -378,7 +378,7 @@
+             int[] nParamsPerLayer = new int[nLayers];
+             for( int i=0; i<nLayers; i++ ){
+                 NeuralNetConfiguration conf = layerWiseConfigurations.getConf(i);
+-                nParamsPerLayer[i] = layers[i].conf().getLayer().initializer().numParams(conf,true);
++                nParamsPerLayer[i] = conf.getLayer().initializer().numParams(conf,true);
+                 backpropParamLength += nParamsPerLayer[i];
+             }
+ 
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+index 4c9c6c5..e56e2ab 100755
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/multilayer/MultiLayerNetwork.java
+@@ -378,7 +378,7 @@
+             int[] nParamsPerLayer = new int[nLayers];
+             for( int i=0; i<nLayers; i++ ){
+                 NeuralNetConfiguration conf = layerWiseConfigurations.getConf(i);
+-                nParamsPerLayer[i] = layers[i].conf().getLayer().initializer().numParams(conf,true);
++                nParamsPerLayer[i] = conf.getLayer().initializer().numParams(conf,true);
+                 backpropParamLength += nParamsPerLayer[i];
+             }
+ 

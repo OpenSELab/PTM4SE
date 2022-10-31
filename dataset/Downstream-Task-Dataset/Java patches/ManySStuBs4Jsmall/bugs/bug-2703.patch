@@ -1,0 +1,39 @@
+diff --git a/graylog2-bootstrap/src/main/java/org/graylog2/bootstrap/commands/Server.java b/graylog2-bootstrap/src/main/java/org/graylog2/bootstrap/commands/Server.java
+index bec7dbc..048244b 100644
+--- a/graylog2-bootstrap/src/main/java/org/graylog2/bootstrap/commands/Server.java
++++ b/graylog2-bootstrap/src/main/java/org/graylog2/bootstrap/commands/Server.java
+@@ -167,7 +167,7 @@
+     @Override
+     protected boolean validateConfiguration() {
+         if (configuration.getPasswordSecret().isEmpty()) {
+-            LOG.error("No password secret set. Please define password_secret in your graylog2.conf.");
++            LOG.error("No password secret set. Please define \"password_secret\" in your Graylog configuration.");
+             return false;
+         }
+ 
+diff --git a/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/BaseConfiguration.java b/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/BaseConfiguration.java
+index 290c544..7172d95 100644
+--- a/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/BaseConfiguration.java
++++ b/graylog2-plugin-interfaces/src/main/java/org/graylog2/plugin/BaseConfiguration.java
+@@ -151,7 +151,7 @@
+                     LOG.debug("Using loopback address {}", guessedAddress);
+                 }
+             } catch (Exception e) {
+-                LOG.error("Could not guess primary network address for rest_transport_uri. Please configure it in your graylog2.conf.", e);
++                LOG.error("Could not guess primary network address for \"rest_transport_uri\". Please configure it in your Graylog configuration.", e);
+                 throw new RuntimeException("No rest_transport_uri.", e);
+             }
+ 
+diff --git a/graylog2-bootstrap/src/main/java/org/graylog2/bootstrap/commands/Server.java b/graylog2-bootstrap/src/main/java/org/graylog2/bootstrap/commands/Server.java
+index bec7dbc..048244b 100644
+--- a/graylog2-bootstrap/src/main/java/org/graylog2/bootstrap/commands/Server.java
++++ b/graylog2-bootstrap/src/main/java/org/graylog2/bootstrap/commands/Server.java
+@@ -167,7 +167,7 @@
+     @Override
+     protected boolean validateConfiguration() {
+         if (configuration.getPasswordSecret().isEmpty()) {
+-            LOG.error("No password secret set. Please define password_secret in your graylog2.conf.");
++            LOG.error("No password secret set. Please define \"password_secret\" in your Graylog configuration.");
+             return false;
+         }
+ 

@@ -1,0 +1,110 @@
+diff --git a/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelHandler.java b/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelHandler.java
+index 8eb125a..4a0a10b 100644
+--- a/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelHandler.java
++++ b/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelHandler.java
+@@ -52,7 +52,7 @@
+     /**
+      * Invoked when a {@link Channel} has been idle for a while.
+      */
+-    public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) {
++    public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) throws Exception {
+         ctx.sendUpstream(e);
+     }
+ }
+diff --git a/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelUpstreamHandler.java b/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelUpstreamHandler.java
+index de65509..83ec60f 100644
+--- a/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelUpstreamHandler.java
++++ b/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelUpstreamHandler.java
+@@ -52,7 +52,7 @@
+     /**
+      * Invoked when a {@link Channel} has been idle for a while.
+      */
+-    public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) {
++    public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) throws Exception {
+         ctx.sendUpstream(e);
+     }
+ }
+diff --git a/src/main/java/org/jboss/netty/handler/timeout/IdleStateHandler.java b/src/main/java/org/jboss/netty/handler/timeout/IdleStateHandler.java
+index 4ddbcac..0c39c86 100644
+--- a/src/main/java/org/jboss/netty/handler/timeout/IdleStateHandler.java
++++ b/src/main/java/org/jboss/netty/handler/timeout/IdleStateHandler.java
+@@ -62,6 +62,24 @@
+  * </tr>
+  * </table>
+  *
++ * <pre>
++ * // An example that sends a ping message when there is no traffic
++ * // (either inbound or outbound) for 30 seconds.
++ * ChannelPipeline p = ...;
++ * Timer timer = new HashedWheelTimer();
++ * p.addLast("timeout", new IdleStateHandler(timer, 30, 30, 0));
++ * p.addLast("handler", new MyHandler());
++ *
++ * // Handler should handle the IdleStateEvent triggered by IdleStateHandler.
++ * public class MyHandler extends IdleStateAwareChannelHandler {
++ *     public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) {
++ *         ctx.getChannel().write(new PingMessage());
++ *     }
++ * }
++ *
++ * // To shut down, call {@link #releaseExternalResources()} or {@link Timer#stop()}.
++ * </pre>
++ *
+  * @author The Netty Project (netty-dev@lists.jboss.org)
+  * @author Trustin Lee (tlee@redhat.com)
+  * @version $Rev$, $Date$
+diff --git a/src/main/java/org/jboss/netty/handler/timeout/ReadTimeoutHandler.java b/src/main/java/org/jboss/netty/handler/timeout/ReadTimeoutHandler.java
+index c6dd49c..e6196a5 100644
+--- a/src/main/java/org/jboss/netty/handler/timeout/ReadTimeoutHandler.java
++++ b/src/main/java/org/jboss/netty/handler/timeout/ReadTimeoutHandler.java
+@@ -36,6 +36,16 @@
+  * Raises a {@link ReadTimeoutException} when no data was read within a certain
+  * period of time.
+  *
++ * <pre>
++ * // An example configuration that implements 30-second read timeout:
++ * ChannelPipeline p = ...;
++ * Timer timer = new HashedWheelTimer();
++ * p.addLast("timeout", new ReadTimeoutHandler(timer, 30));
++ * p.addLast("handler", new MyHandler());
++ *
++ * // To shut down, call {@link #releaseExternalResources()} or {@link Timer#stop()}.
++ * </pre>
++ *
+  * @author The Netty Project (netty-dev@lists.jboss.org)
+  * @author Trustin Lee (tlee@redhat.com)
+  * @version $Rev$, $Date$
+diff --git a/src/main/java/org/jboss/netty/handler/timeout/WriteTimeoutHandler.java b/src/main/java/org/jboss/netty/handler/timeout/WriteTimeoutHandler.java
+index 5efb90d..15f2804 100644
+--- a/src/main/java/org/jboss/netty/handler/timeout/WriteTimeoutHandler.java
++++ b/src/main/java/org/jboss/netty/handler/timeout/WriteTimeoutHandler.java
+@@ -36,6 +36,16 @@
+  * Raises a {@link WriteTimeoutException} when no data was written within a
+  * certain period of time.
+  *
++ * <pre>
++ * // An example configuration that implements 30-second write timeout:
++ * ChannelPipeline p = ...;
++ * Timer timer = new HashedWheelTimer();
++ * p.addLast("timeout", new WriteTimeoutHandler(timer, 30));
++ * p.addLast("handler", new MyHandler());
++ *
++ * // To shut down, call {@link #releaseExternalResources()} or {@link Timer#stop()}.
++ * </pre>
++ *
+  * @author The Netty Project (netty-dev@lists.jboss.org)
+  * @author Trustin Lee (tlee@redhat.com)
+  * @version $Rev$, $Date$
+diff --git a/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelHandler.java b/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelHandler.java
+index 8eb125a..4a0a10b 100644
+--- a/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelHandler.java
++++ b/src/main/java/org/jboss/netty/handler/timeout/IdleStateAwareChannelHandler.java
+@@ -52,7 +52,7 @@
+     /**
+      * Invoked when a {@link Channel} has been idle for a while.
+      */
+-    public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) {
++    public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) throws Exception {
+         ctx.sendUpstream(e);
+     }
+ }

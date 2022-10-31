@@ -1,0 +1,26 @@
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/management/cli/DataSourceTestCase.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/management/cli/DataSourceTestCase.java
+index 2ea5cc0..dc8bfed 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/management/cli/DataSourceTestCase.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/management/cli/DataSourceTestCase.java
+@@ -158,7 +158,7 @@
+     private void testAddXaDataSource() throws Exception {
+ 
+         // add data source
+-        cli.sendLine("xa-data-source add --name=TestXADS --jndi-name=java:jboss/datasources/TestXADS --driver-name=h2");
++        cli.sendLine("xa-data-source add --name=TestXADS --jndi-name=java:jboss/datasources/TestXADS --driver-name=h2 --xa-datasource-properties=ServerName=localhost,PortNumber=50011");
+ 
+         //check the data source is listed
+         cli.sendLine("cd /subsystem=datasources/xa-data-source");
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/management/cli/DataSourceTestCase.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/management/cli/DataSourceTestCase.java
+index 2ea5cc0..dc8bfed 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/management/cli/DataSourceTestCase.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/management/cli/DataSourceTestCase.java
+@@ -158,7 +158,7 @@
+     private void testAddXaDataSource() throws Exception {
+ 
+         // add data source
+-        cli.sendLine("xa-data-source add --name=TestXADS --jndi-name=java:jboss/datasources/TestXADS --driver-name=h2");
++        cli.sendLine("xa-data-source add --name=TestXADS --jndi-name=java:jboss/datasources/TestXADS --driver-name=h2 --xa-datasource-properties=ServerName=localhost,PortNumber=50011");
+ 
+         //check the data source is listed
+         cli.sendLine("cd /subsystem=datasources/xa-data-source");

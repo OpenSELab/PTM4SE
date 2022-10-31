@@ -1,0 +1,52 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/fs/s3/S3FileSystem.java b/flink-runtime/src/main/java/org/apache/flink/runtime/fs/s3/S3FileSystem.java
+index d3eb0e2..522d90e 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/fs/s3/S3FileSystem.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/fs/s3/S3FileSystem.java
+@@ -204,7 +204,9 @@
+ 			LOG.debug("Provided URI does not provide an access key to Amazon S3, using configuration...");
+ 			awsAccessKey = GlobalConfiguration.getString(S3_ACCESS_KEY_KEY, null);
+ 			if (awsAccessKey == null) {
+-				throw new IOException("Cannot determine access key to Amazon S3");
++				throw new IOException("Cannot determine access key to Amazon S3. Please make " +
++						"sure to configure it by setting the configuration key '"
++						+ S3_ACCESS_KEY_KEY + "'.");
+ 			}
+ 		}
+ 
+@@ -212,7 +214,9 @@
+ 			LOG.debug("Provided URI does not provide a secret key to Amazon S3, using configuration...");
+ 			awsSecretKey = GlobalConfiguration.getString(S3_SECRET_KEY_KEY, null);
+ 			if (awsSecretKey == null) {
+-				throw new IOException("Cannot determine secret key to Amazon S3");
++				throw new IOException("Cannot determine secret key to Amazon S3. Please make " +
++						"sure to configure it by setting the configuration key '"
++						+ S3_SECRET_KEY_KEY + "'.");
+ 			}
+ 		}
+ 
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/fs/s3/S3FileSystem.java b/flink-runtime/src/main/java/org/apache/flink/runtime/fs/s3/S3FileSystem.java
+index d3eb0e2..522d90e 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/fs/s3/S3FileSystem.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/fs/s3/S3FileSystem.java
+@@ -204,7 +204,9 @@
+ 			LOG.debug("Provided URI does not provide an access key to Amazon S3, using configuration...");
+ 			awsAccessKey = GlobalConfiguration.getString(S3_ACCESS_KEY_KEY, null);
+ 			if (awsAccessKey == null) {
+-				throw new IOException("Cannot determine access key to Amazon S3");
++				throw new IOException("Cannot determine access key to Amazon S3. Please make " +
++						"sure to configure it by setting the configuration key '"
++						+ S3_ACCESS_KEY_KEY + "'.");
+ 			}
+ 		}
+ 
+@@ -212,7 +214,9 @@
+ 			LOG.debug("Provided URI does not provide a secret key to Amazon S3, using configuration...");
+ 			awsSecretKey = GlobalConfiguration.getString(S3_SECRET_KEY_KEY, null);
+ 			if (awsSecretKey == null) {
+-				throw new IOException("Cannot determine secret key to Amazon S3");
++				throw new IOException("Cannot determine secret key to Amazon S3. Please make " +
++						"sure to configure it by setting the configuration key '"
++						+ S3_SECRET_KEY_KEY + "'.");
+ 			}
+ 		}
+ 

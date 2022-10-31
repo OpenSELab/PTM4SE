@@ -1,0 +1,13 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkCollector.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkCollector.java
+index f773c75..5076377 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkCollector.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/spark/SparkCollector.java
+@@ -35,7 +35,7 @@
+   
+   @Override
+   public void collect(BytesWritable key, BytesWritable value) throws IOException {
+-    result.add(new Tuple2<BytesWritable, BytesWritable>(key, value));
++    result.add(new Tuple2<BytesWritable, BytesWritable>(new BytesWritable(key.copyBytes()), new BytesWritable(value.copyBytes())));
+   }
+   
+   public void clear() {

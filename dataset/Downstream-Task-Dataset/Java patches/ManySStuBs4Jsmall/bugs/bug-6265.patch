@@ -1,0 +1,41 @@
+diff --git a/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/client/CamelClientEndpoint.java b/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/client/CamelClientEndpoint.java
+index 29579ce..18f7e49 100644
+--- a/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/client/CamelClientEndpoint.java
++++ b/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/client/CamelClientEndpoint.java
+@@ -52,7 +52,8 @@
+         // we use the in out pattern for a synchronized exchange where we expect a response
+         Exchange exchange = endpoint.createExchange(ExchangePattern.InOut);
+         // set the input on the in body
+-        exchange.getIn().setBody("11");
++        // must you correct type to match the expected type of an Integer object
++        exchange.getIn().setBody(11);
+ 
+         // to send the exchange we need an producer to do it for us
+         Producer producer = endpoint.createProducer();
+diff --git a/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/server/AuditTracker.java b/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/server/AuditTracker.java
+index 7caedb1..a072962 100644
+--- a/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/server/AuditTracker.java
++++ b/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/server/AuditTracker.java
+@@ -37,7 +37,7 @@
+         this.store = store;
+     }
+ 
+-    @Before("execution(* org.apache.camel.example.server.Multiplier.*(..)) && args(originalNumber)")
++    @Before("execution(int org.apache.camel.example.server.Multiplier.multiply(int)) && args(originalNumber)")
+     public void audit(int originalNumber) throws Exception {
+         String msg = "Someone called us with this number " + originalNumber;
+         System.out.println(msg);
+diff --git a/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/client/CamelClientEndpoint.java b/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/client/CamelClientEndpoint.java
+index 29579ce..18f7e49 100644
+--- a/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/client/CamelClientEndpoint.java
++++ b/examples/camel-example-spring-jms/src/main/java/org/apache/camel/example/client/CamelClientEndpoint.java
+@@ -52,7 +52,8 @@
+         // we use the in out pattern for a synchronized exchange where we expect a response
+         Exchange exchange = endpoint.createExchange(ExchangePattern.InOut);
+         // set the input on the in body
+-        exchange.getIn().setBody("11");
++        // must you correct type to match the expected type of an Integer object
++        exchange.getIn().setBody(11);
+ 
+         // to send the exchange we need an producer to do it for us
+         Producer producer = endpoint.createProducer();

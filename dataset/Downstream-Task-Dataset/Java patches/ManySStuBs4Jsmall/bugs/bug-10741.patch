@@ -1,0 +1,48 @@
+diff --git a/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/background/BackgroundDaemonStarter.java b/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/background/BackgroundDaemonStarter.java
+index 8487845..f0d30ba 100644
+--- a/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/background/BackgroundDaemonStarter.java
++++ b/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/background/BackgroundDaemonStarter.java
+@@ -35,8 +35,8 @@
+     public static int startSlave(int parameterLength,String masterUrl,String mediaDriverDirectory) throws Exception {
+         return exec(ParameterServerSubscriber.class,
+                 mediaDriverDirectory,
+-                "-l",
+-                String.valueOf(parameterLength),
++                "-s",
++                "1," + String.valueOf(parameterLength),
+                 "-p","40126",
+                 "-h","localhost",
+                 "-id","10",
+@@ -91,7 +91,7 @@
+         return exec(ParameterServerSubscriber.class,
+                 mediaDriverDirectory,
+                 "-m","true",
+-                "-l",String.valueOf(parameterLength),
++                "-s","1," + String.valueOf(parameterLength),
+                 "-p","40123",
+                 "-h","localhost",
+                 "-id","11",
+diff --git a/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/background/BackgroundDaemonStarter.java b/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/background/BackgroundDaemonStarter.java
+index 8487845..f0d30ba 100644
+--- a/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/background/BackgroundDaemonStarter.java
++++ b/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/background/BackgroundDaemonStarter.java
+@@ -35,8 +35,8 @@
+     public static int startSlave(int parameterLength,String masterUrl,String mediaDriverDirectory) throws Exception {
+         return exec(ParameterServerSubscriber.class,
+                 mediaDriverDirectory,
+-                "-l",
+-                String.valueOf(parameterLength),
++                "-s",
++                "1," + String.valueOf(parameterLength),
+                 "-p","40126",
+                 "-h","localhost",
+                 "-id","10",
+@@ -91,7 +91,7 @@
+         return exec(ParameterServerSubscriber.class,
+                 mediaDriverDirectory,
+                 "-m","true",
+-                "-l",String.valueOf(parameterLength),
++                "-s","1," + String.valueOf(parameterLength),
+                 "-p","40123",
+                 "-h","localhost",
+                 "-id","11",

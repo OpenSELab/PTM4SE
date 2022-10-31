@@ -1,0 +1,29 @@
+diff --git a/tests/camel-itest-performance/src/main/java/org/apache/camel/tests/component/PerformanceTestComponent.java b/tests/camel-itest-performance/src/main/java/org/apache/camel/tests/component/PerformanceTestComponent.java
+index ccb3d3a..11c672f 100644
+--- a/tests/camel-itest-performance/src/main/java/org/apache/camel/tests/component/PerformanceTestComponent.java
++++ b/tests/camel-itest-performance/src/main/java/org/apache/camel/tests/component/PerformanceTestComponent.java
+@@ -60,7 +60,7 @@
+     private static final class PerformanceTestEndpoint extends DefaultEndpoint {
+         private PerformanceTestConsumer consumer;
+ 
+-        public PerformanceTestEndpoint(String uri, Component component) {
++        protected PerformanceTestEndpoint(String uri, Component component) {
+             super(uri, component);
+         }
+         
+@@ -91,13 +91,13 @@
+     }
+     
+     private static final class PerformanceTestConsumer extends DefaultConsumer {
+-        public PerformanceTestConsumer(Endpoint endpoint, Processor processor) {
++        protected PerformanceTestConsumer(Endpoint endpoint, Processor processor) {
+             super(endpoint, processor);
+         }
+     }
+ 
+     private static final class PerformanceTestProducer extends DefaultProducer implements AsyncProcessor {
+-        public PerformanceTestProducer(Endpoint endpoint) {
++        protected PerformanceTestProducer(Endpoint endpoint) {
+             super(endpoint);
+         }
+ 

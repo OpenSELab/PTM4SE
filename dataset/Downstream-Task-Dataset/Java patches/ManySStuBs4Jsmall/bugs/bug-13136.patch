@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/AddExchanges.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/AddExchanges.java
+index f3bc096..8fc60db 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/AddExchanges.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/AddExchanges.java
+@@ -750,7 +750,7 @@
+ 
+             // index side is really a nested-loops plan, so don't add exchanges
+             PlanNode result = ChildReplacer.replaceChildren(node, ImmutableList.of(probeSource.getNode(), node.getIndexSource()));
+-            return new PlanWithProperties(result, deriveProperties(result, probeProperties));
++            return new PlanWithProperties(result, deriveProperties(result, probeSource.getProperties()));
+         }
+ 
+         @Override
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/AddExchanges.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/AddExchanges.java
+index f3bc096..8fc60db 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/AddExchanges.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/AddExchanges.java
+@@ -750,7 +750,7 @@
+ 
+             // index side is really a nested-loops plan, so don't add exchanges
+             PlanNode result = ChildReplacer.replaceChildren(node, ImmutableList.of(probeSource.getNode(), node.getIndexSource()));
+-            return new PlanWithProperties(result, deriveProperties(result, probeProperties));
++            return new PlanWithProperties(result, deriveProperties(result, probeSource.getProperties()));
+         }
+ 
+         @Override

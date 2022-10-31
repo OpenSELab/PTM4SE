@@ -1,0 +1,44 @@
+diff --git a/common/src/main/java/io/druid/timeline/VersionedIntervalTimeline.java b/common/src/main/java/io/druid/timeline/VersionedIntervalTimeline.java
+index 0491869..743492f 100644
+--- a/common/src/main/java/io/druid/timeline/VersionedIntervalTimeline.java
++++ b/common/src/main/java/io/druid/timeline/VersionedIntervalTimeline.java
+@@ -244,7 +244,7 @@
+               new TimelineObjectHolder<VersionType, ObjectType>(
+                   object.getTrueInterval(),
+                   object.getVersion(),
+-                  object.getPartitionHolder()
++                  new PartitionHolder<ObjectType>(object.getPartitionHolder())
+               )
+           );
+         }
+@@ -453,7 +453,7 @@
+             new TimelineObjectHolder<VersionType, ObjectType>(
+                 timelineInterval,
+                 val.getVersion(),
+-                val.getPartitionHolder()
++                new PartitionHolder<ObjectType>(val.getPartitionHolder())
+             )
+         );
+       }
+diff --git a/common/src/main/java/io/druid/timeline/VersionedIntervalTimeline.java b/common/src/main/java/io/druid/timeline/VersionedIntervalTimeline.java
+index 0491869..743492f 100644
+--- a/common/src/main/java/io/druid/timeline/VersionedIntervalTimeline.java
++++ b/common/src/main/java/io/druid/timeline/VersionedIntervalTimeline.java
+@@ -244,7 +244,7 @@
+               new TimelineObjectHolder<VersionType, ObjectType>(
+                   object.getTrueInterval(),
+                   object.getVersion(),
+-                  object.getPartitionHolder()
++                  new PartitionHolder<ObjectType>(object.getPartitionHolder())
+               )
+           );
+         }
+@@ -453,7 +453,7 @@
+             new TimelineObjectHolder<VersionType, ObjectType>(
+                 timelineInterval,
+                 val.getVersion(),
+-                val.getPartitionHolder()
++                new PartitionHolder<ObjectType>(val.getPartitionHolder())
+             )
+         );
+       }

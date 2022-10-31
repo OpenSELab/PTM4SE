@@ -1,0 +1,70 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/mock/MockAccumulo.java b/core/src/main/java/org/apache/accumulo/core/client/mock/MockAccumulo.java
+index 5977d1d..272d1af 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/mock/MockAccumulo.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/mock/MockAccumulo.java
+@@ -21,6 +21,7 @@ import java.util.EnumSet;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.SortedSet;
++import java.util.concurrent.atomic.AtomicInteger;
+ 
+ import org.apache.accumulo.core.Constants;
+ import org.apache.accumulo.core.client.BatchScanner;
+@@ -38,6 +39,7 @@ public class MockAccumulo {
+   final Map<String,String> systemProperties = new HashMap<String,String>();
+   Map<String,MockUser> users = new HashMap<String,MockUser>();
+   final FileSystem fs;
++  final AtomicInteger tableIdCounter = new AtomicInteger(0);
+   
+   MockAccumulo(FileSystem fs) {
+     this.fs = fs;
+@@ -76,7 +78,7 @@ public class MockAccumulo {
+   }
+   
+   public void createTable(String username, String tableName, boolean useVersions, TimeType timeType) {
+-    MockTable t = new MockTable(useVersions, timeType);
++    MockTable t = new MockTable(useVersions, timeType, Integer.toString(tableIdCounter.incrementAndGet()));
+     t.userPermissions.put(username, EnumSet.allOf(TablePermission.class));
+     tables.put(tableName, t);
+   }
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/mock/MockTable.java b/core/src/main/java/org/apache/accumulo/core/client/mock/MockTable.java
+index 3dcab11..2e13d84 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/mock/MockTable.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/mock/MockTable.java
+@@ -89,9 +89,11 @@ public class MockTable {
+   private TimeType timeType;
+   SortedSet<Text> splits = new ConcurrentSkipListSet<Text>();
+   Map<String,Set<Text>> localityGroups = new TreeMap<String, Set<Text>>();
++  private String tableId;
+   
+-  MockTable(boolean limitVersion, TimeType timeType) {
++  MockTable(boolean limitVersion, TimeType timeType, String tableId) {
+     this.timeType = timeType;
++    this.tableId = tableId;
+     settings = IteratorUtil.generateInitialTableProperties(limitVersion);
+     for (Entry<String,String> entry : AccumuloConfiguration.getDefaultConfiguration()) {
+       String key = entry.getKey();
+@@ -143,4 +145,8 @@ public class MockTable {
+     if (reAdd)
+       splits.add(start);
+   }
++
++  public String getTableId() {
++    return this.tableId;
++  }
+ }
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/mock/MockTableOperations.java b/core/src/main/java/org/apache/accumulo/core/client/mock/MockTableOperations.java
+index 64f8225..5b15351 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/mock/MockTableOperations.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/mock/MockTableOperations.java
+@@ -296,8 +296,8 @@ public class MockTableOperations extends TableOperationsHelper {
+   @Override
+   public Map<String,String> tableIdMap() {
+     Map<String,String> result = new HashMap<String,String>();
+-    for (String table : acu.tables.keySet()) {
+-      result.put(table, table);
++    for (Entry<String,MockTable> entry : acu.tables.entrySet()) {
++      result.put(entry.getKey(), entry.getValue().getTableId());
+     }
+     return result;
+   }

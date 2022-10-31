@@ -1,0 +1,229 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgDouble.java
+index 2187f55..c15388a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgDouble.java
+@@ -308,7 +308,7 @@
+         double[] vector = inputVector.vector;
+         
+         if (inputVector.isRepeating) {
+-          if (inputVector.noNulls || !inputVector.isNull[0]) {
++          if (inputVector.noNulls) {
+             if (myagg.isNull) {
+               myagg.isNull = false;
+               myagg.sum = 0;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgLong.java
+index f12fe98..dcd7ee0 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgLong.java
+@@ -308,7 +308,7 @@
+         long[] vector = inputVector.vector;
+         
+         if (inputVector.isRepeating) {
+-          if (inputVector.noNulls || !inputVector.isNull[0]) {
++          if (inputVector.noNulls) {
+             if (myagg.isNull) {
+               myagg.isNull = false;
+               myagg.sum = 0;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxDouble.java
+index 69fffbb..fa075d0 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxDouble.java
+@@ -297,8 +297,8 @@
+         double[] vector = inputVector.vector;
+         
+         if (inputVector.isRepeating) {
+-          if ((inputVector.noNulls || !inputVector.isNull[0]) &&
+-            myagg.isNull || vector[0] < myagg.value) {
++          if (inputVector.noNulls &&
++            (myagg.isNull || (vector[0] > myagg.value))) {
+             myagg.isNull = false;
+             myagg.value = vector[0];
+           }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxLong.java
+index 7dfa207..909b44a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMaxLong.java
+@@ -297,8 +297,8 @@
+         long[] vector = inputVector.vector;
+         
+         if (inputVector.isRepeating) {
+-          if ((inputVector.noNulls || !inputVector.isNull[0]) &&
+-            myagg.isNull || vector[0] < myagg.value) {
++          if (inputVector.noNulls &&
++            (myagg.isNull || (vector[0] > myagg.value))) {
+             myagg.isNull = false;
+             myagg.value = vector[0];
+           }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMinDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMinDouble.java
+index 3a721980..af62415 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMinDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMinDouble.java
+@@ -297,8 +297,8 @@
+         double[] vector = inputVector.vector;
+         
+         if (inputVector.isRepeating) {
+-          if ((inputVector.noNulls || !inputVector.isNull[0]) &&
+-            myagg.isNull || vector[0] < myagg.value) {
++          if (inputVector.noNulls &&
++            (myagg.isNull || (vector[0] < myagg.value))) {
+             myagg.isNull = false;
+             myagg.value = vector[0];
+           }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMinLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMinLong.java
+index 444ccc2..5d0a6e5 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMinLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFMinLong.java
+@@ -297,8 +297,8 @@
+         long[] vector = inputVector.vector;
+         
+         if (inputVector.isRepeating) {
+-          if ((inputVector.noNulls || !inputVector.isNull[0]) &&
+-            myagg.isNull || vector[0] < myagg.value) {
++          if (inputVector.noNulls &&
++            (myagg.isNull || (vector[0] < myagg.value))) {
+             myagg.isNull = false;
+             myagg.value = vector[0];
+           }
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdPopDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdPopDouble.java
+index 5e78b94..ce42ce0 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdPopDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdPopDouble.java
+@@ -310,7 +310,7 @@
+       double[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+           iterateRepeatingNoNulls(myagg, vector[0], batchSize);
+         }
+       } 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdPopLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdPopLong.java
+index 19e8d77..9295b1a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdPopLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdPopLong.java
+@@ -310,7 +310,7 @@
+       long[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+           iterateRepeatingNoNulls(myagg, vector[0], batchSize);
+         }
+       } 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdSampDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdSampDouble.java
+index c4c35a4..e5f590c 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdSampDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdSampDouble.java
+@@ -310,7 +310,7 @@
+       double[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+           iterateRepeatingNoNulls(myagg, vector[0], batchSize);
+         }
+       } 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdSampLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdSampLong.java
+index 24cb36b..faa4bd6 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdSampLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFStdSampLong.java
+@@ -310,7 +310,7 @@
+       long[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+           iterateRepeatingNoNulls(myagg, vector[0], batchSize);
+         }
+       } 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFSumDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFSumDouble.java
+index 311ce98..17dcc91 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFSumDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFSumDouble.java
+@@ -290,7 +290,7 @@
+       double[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+         if (myagg.isNull) {
+           myagg.isNull = false;
+           myagg.sum = 0;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFSumLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFSumLong.java
+index 882dd68..f3f4bbb 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFSumLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFSumLong.java
+@@ -290,7 +290,7 @@
+       long[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+         if (myagg.isNull) {
+           myagg.isNull = false;
+           myagg.sum = 0;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarPopDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarPopDouble.java
+index f6828dc..5ebcd28 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarPopDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarPopDouble.java
+@@ -310,7 +310,7 @@
+       double[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+           iterateRepeatingNoNulls(myagg, vector[0], batchSize);
+         }
+       } 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarPopLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarPopLong.java
+index e19ac93..558fcbc 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarPopLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarPopLong.java
+@@ -310,7 +310,7 @@
+       long[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+           iterateRepeatingNoNulls(myagg, vector[0], batchSize);
+         }
+       } 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarSampDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarSampDouble.java
+index 29ed2e7..11f7cae 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarSampDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarSampDouble.java
+@@ -310,7 +310,7 @@
+       double[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+           iterateRepeatingNoNulls(myagg, vector[0], batchSize);
+         }
+       } 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarSampLong.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarSampLong.java
+index 3acd402..3340589 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarSampLong.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFVarSampLong.java
+@@ -310,7 +310,7 @@
+       long[] vector = inputVector.vector;
+       
+       if (inputVector.isRepeating) {
+-        if (inputVector.noNulls || !inputVector.isNull[0]) {
++        if (inputVector.noNulls) {
+           iterateRepeatingNoNulls(myagg, vector[0], batchSize);
+         }
+       } 
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgDouble.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgDouble.java
+index 2187f55..c15388a 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgDouble.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/vector/expressions/aggregates/gen/VectorUDAFAvgDouble.java
+@@ -308,7 +308,7 @@
+         double[] vector = inputVector.vector;
+         
+         if (inputVector.isRepeating) {
+-          if (inputVector.noNulls || !inputVector.isNull[0]) {
++          if (inputVector.noNulls) {
+             if (myagg.isNull) {
+               myagg.isNull = false;
+               myagg.sum = 0;

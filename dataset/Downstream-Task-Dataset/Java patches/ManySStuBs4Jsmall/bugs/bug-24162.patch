@@ -1,0 +1,87 @@
+diff --git a/src/main/java/redis/clients/jedis/MultiKeyBinaryRedisPipeline.java b/src/main/java/redis/clients/jedis/MultiKeyBinaryRedisPipeline.java
+index 85d004b..d77ddd9 100644
+--- a/src/main/java/redis/clients/jedis/MultiKeyBinaryRedisPipeline.java
++++ b/src/main/java/redis/clients/jedis/MultiKeyBinaryRedisPipeline.java
+@@ -39,9 +39,9 @@
+ 
+     Response<Long> smove(byte[] srckey, byte[] dstkey, byte[] member);
+ 
+-    Response<List<byte[]>> sort(byte[] key, SortingParams sortingParameters, byte[] dstkey);
++    Response<Long> sort(byte[] key, SortingParams sortingParameters, byte[] dstkey);
+ 
+-    Response<List<byte[]>> sort(byte[] key, byte[] dstkey);
++    Response<Long> sort(byte[] key, byte[] dstkey);
+ 
+     Response<Set<byte[]>> sunion(byte[]... keys);
+ 
+diff --git a/src/main/java/redis/clients/jedis/MultiKeyCommandsPipeline.java b/src/main/java/redis/clients/jedis/MultiKeyCommandsPipeline.java
+index 1478e81..ee9af65 100644
+--- a/src/main/java/redis/clients/jedis/MultiKeyCommandsPipeline.java
++++ b/src/main/java/redis/clients/jedis/MultiKeyCommandsPipeline.java
+@@ -39,9 +39,9 @@
+ 
+     Response<Long> smove(String srckey, String dstkey, String member);
+ 
+-    Response<List<String>> sort(String key, SortingParams sortingParameters, String dstkey);
++    Response<Long> sort(String key, SortingParams sortingParameters, String dstkey);
+ 
+-    Response<List<String>> sort(String key, String dstkey);
++    Response<Long> sort(String key, String dstkey);
+ 
+     Response<Set<String>> sunion(String... keys);
+ 
+diff --git a/src/main/java/redis/clients/jedis/MultiKeyPipelineBase.java b/src/main/java/redis/clients/jedis/MultiKeyPipelineBase.java
+index 46fede3..be9d89a 100644
+--- a/src/main/java/redis/clients/jedis/MultiKeyPipelineBase.java
++++ b/src/main/java/redis/clients/jedis/MultiKeyPipelineBase.java
+@@ -191,26 +191,26 @@
+         return getResponse(BuilderFactory.LONG);
+     }
+ 
+-    public Response<List<String>> sort(String key,
++    public Response<Long> sort(String key,
+                                        SortingParams sortingParameters, String dstkey) {
+         client.sort(key, sortingParameters, dstkey);
+-        return getResponse(BuilderFactory.STRING_LIST);
++        return getResponse(BuilderFactory.LONG);
+     }
+ 
+-    public Response<List<byte[]>> sort(byte[] key,
++    public Response<Long> sort(byte[] key,
+                                        SortingParams sortingParameters, byte[] dstkey) {
+         client.sort(key, sortingParameters, dstkey);
+-        return getResponse(BuilderFactory.BYTE_ARRAY_LIST);
++        return getResponse(BuilderFactory.LONG);
+     }
+ 
+-    public Response<List<String>> sort(String key, String dstkey) {
++    public Response<Long> sort(String key, String dstkey) {
+         client.sort(key, dstkey);
+-        return getResponse(BuilderFactory.STRING_LIST);
++        return getResponse(BuilderFactory.LONG);
+     }
+ 
+-    public Response<List<byte[]>> sort(byte[] key, byte[] dstkey) {
++    public Response<Long> sort(byte[] key, byte[] dstkey) {
+         client.sort(key, dstkey);
+-        return getResponse(BuilderFactory.BYTE_ARRAY_LIST);
++        return getResponse(BuilderFactory.LONG);
+     }
+ 
+     public Response<Set<String>> sunion(String... keys) {
+diff --git a/src/main/java/redis/clients/jedis/MultiKeyBinaryRedisPipeline.java b/src/main/java/redis/clients/jedis/MultiKeyBinaryRedisPipeline.java
+index 85d004b..d77ddd9 100644
+--- a/src/main/java/redis/clients/jedis/MultiKeyBinaryRedisPipeline.java
++++ b/src/main/java/redis/clients/jedis/MultiKeyBinaryRedisPipeline.java
+@@ -39,9 +39,9 @@
+ 
+     Response<Long> smove(byte[] srckey, byte[] dstkey, byte[] member);
+ 
+-    Response<List<byte[]>> sort(byte[] key, SortingParams sortingParameters, byte[] dstkey);
++    Response<Long> sort(byte[] key, SortingParams sortingParameters, byte[] dstkey);
+ 
+-    Response<List<byte[]>> sort(byte[] key, byte[] dstkey);
++    Response<Long> sort(byte[] key, byte[] dstkey);
+ 
+     Response<Set<byte[]>> sunion(byte[]... keys);
+ 

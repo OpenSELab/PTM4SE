@@ -1,0 +1,85 @@
+diff --git a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/web/reactive/client/WebClientExchangeTags.java b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/web/reactive/client/WebClientExchangeTags.java
+index ca852e3..22394d4 100644
+--- a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/web/reactive/client/WebClientExchangeTags.java
++++ b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/web/reactive/client/WebClientExchangeTags.java
+@@ -67,7 +67,7 @@
+ 
+ 	private static String extractPath(String url) {
+ 		String path = url.replaceFirst("^https?://[^/]+/", "");
+-		return path.startsWith("/") ? path : "/" + path;
++		return (path.startsWith("/") ? path : "/" + path);
+ 	}
+ 
+ 	/**
+@@ -87,7 +87,7 @@
+ 	 * @return the status tag
+ 	 */
+ 	public static Tag status(Throwable throwable) {
+-		return throwable instanceof IOException ? IO_ERROR : CLIENT_ERROR;
++		return (throwable instanceof IOException ? IO_ERROR : CLIENT_ERROR);
+ 	}
+ 
+ 	/**
+diff --git a/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/HealthWebEndpointResponseMapperTests.java b/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/HealthWebEndpointResponseMapperTests.java
+index 3740db5..97884a9 100644
+--- a/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/HealthWebEndpointResponseMapperTests.java
++++ b/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/HealthWebEndpointResponseMapperTests.java
+@@ -113,7 +113,7 @@
+ 		SecurityContext securityContext = mock(SecurityContext.class);
+ 		given(securityContext.getPrincipal()).willReturn(mock(Principal.class));
+ 		given(securityContext.isUserInRole(anyString()))
+-				.will((Answer<Boolean>) invocation -> {
++				.will((Answer<Boolean>) (invocation) -> {
+ 					String expectedRole = invocation.getArgument(0);
+ 					return associatedRoles.contains(expectedRole);
+ 				});
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/ldap/LdapAutoConfigurationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/ldap/LdapAutoConfigurationTests.java
+index 9e54fd1..160d43b 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/ldap/LdapAutoConfigurationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/ldap/LdapAutoConfigurationTests.java
+@@ -108,7 +108,7 @@
+ 	@Test
+ 	public void templateExists() {
+ 		this.contextRunner.withPropertyValues("spring.ldap.urls:ldap://localhost:389")
+-				.run(context -> assertThat(context).hasSingleBean(LdapTemplate.class));
++				.run((context) -> assertThat(context).hasSingleBean(LdapTemplate.class));
+ 	}
+ 
+ 	@Test
+diff --git a/spring-boot-project/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RepackageMojo.java b/spring-boot-project/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RepackageMojo.java
+index 031888f..3d0a699 100644
+--- a/spring-boot-project/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RepackageMojo.java
++++ b/spring-boot-project/spring-boot-tools/spring-boot-maven-plugin/src/main/java/org/springframework/boot/maven/RepackageMojo.java
+@@ -345,8 +345,8 @@
+ 					this.classifier, target);
+ 		}
+ 		else {
+-			String artifactId = this.classifier != null
+-					? "artifact with classifier " + this.classifier : "main artifact";
++			String artifactId = (this.classifier != null
++					? "artifact with classifier " + this.classifier : "main artifact");
+ 			getLog().info(String.format("Replacing %s %s", artifactId, source.getFile()));
+ 			source.setFile(target);
+ 		}
+diff --git a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/web/reactive/client/WebClientExchangeTags.java b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/web/reactive/client/WebClientExchangeTags.java
+index ca852e3..22394d4 100644
+--- a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/web/reactive/client/WebClientExchangeTags.java
++++ b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/web/reactive/client/WebClientExchangeTags.java
+@@ -67,7 +67,7 @@
+ 
+ 	private static String extractPath(String url) {
+ 		String path = url.replaceFirst("^https?://[^/]+/", "");
+-		return path.startsWith("/") ? path : "/" + path;
++		return (path.startsWith("/") ? path : "/" + path);
+ 	}
+ 
+ 	/**
+@@ -87,7 +87,7 @@
+ 	 * @return the status tag
+ 	 */
+ 	public static Tag status(Throwable throwable) {
+-		return throwable instanceof IOException ? IO_ERROR : CLIENT_ERROR;
++		return (throwable instanceof IOException ? IO_ERROR : CLIENT_ERROR);
+ 	}
+ 
+ 	/**

@@ -1,0 +1,13 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/blockmanagement/BlockManager.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/blockmanagement/BlockManager.java
+index 3a23cd8..81832a7 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/blockmanagement/BlockManager.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/blockmanagement/BlockManager.java
+@@ -2936,7 +2936,7 @@
+                 
+         if (isNeededReplication(block, curExpectedReplicas, curReplicas)) {
+           if (curExpectedReplicas > curReplicas) {
+-            if (bc instanceof MutableBlockCollection) {
++            if (bc.isUnderConstruction()) {
+               if (block.equals(bc.getLastBlock()) && curReplicas > minReplication) {
+                 continue;
+               }

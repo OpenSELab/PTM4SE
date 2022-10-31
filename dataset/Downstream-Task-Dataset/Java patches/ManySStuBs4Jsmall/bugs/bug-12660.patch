@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/aggregation/AbstractTestApproximateCountDistinct.java b/presto-main/src/test/java/com/facebook/presto/operator/aggregation/AbstractTestApproximateCountDistinct.java
+index 16c9cb3..c513bb7 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/aggregation/AbstractTestApproximateCountDistinct.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/aggregation/AbstractTestApproximateCountDistinct.java
+@@ -108,7 +108,7 @@
+         }
+ 
+         assertLessThan(stats.getMean(), 1.0e-2);
+-        assertLessThan(Math.abs(stats.getStandardDeviation() - maxStandardError), 1.0e-2);
++        assertLessThan(stats.getStandardDeviation(), 1.0e-2 + maxStandardError);
+     }
+ 
+     @Test(dataProvider = "provideStandardErrors")
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/aggregation/AbstractTestApproximateCountDistinct.java b/presto-main/src/test/java/com/facebook/presto/operator/aggregation/AbstractTestApproximateCountDistinct.java
+index 16c9cb3..c513bb7 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/aggregation/AbstractTestApproximateCountDistinct.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/aggregation/AbstractTestApproximateCountDistinct.java
+@@ -108,7 +108,7 @@
+         }
+ 
+         assertLessThan(stats.getMean(), 1.0e-2);
+-        assertLessThan(Math.abs(stats.getStandardDeviation() - maxStandardError), 1.0e-2);
++        assertLessThan(stats.getStandardDeviation(), 1.0e-2 + maxStandardError);
+     }
+ 
+     @Test(dataProvider = "provideStandardErrors")

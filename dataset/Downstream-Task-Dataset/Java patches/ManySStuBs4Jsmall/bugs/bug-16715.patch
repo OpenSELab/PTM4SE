@@ -1,0 +1,54 @@
+diff --git a/gdx/src/com/badlogic/gdx/graphics/glutils/IndexBufferObjectSubData.java b/gdx/src/com/badlogic/gdx/graphics/glutils/IndexBufferObjectSubData.java
+index dc97164..ee1efd3 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/glutils/IndexBufferObjectSubData.java
++++ b/gdx/src/com/badlogic/gdx/graphics/glutils/IndexBufferObjectSubData.java
+@@ -25,12 +25,7 @@
+ import com.badlogic.gdx.utils.GdxRuntimeException;
+ 
+ /** <p>
+- * In IndexBufferObject wraps OpenGL's index buffer functionality to be used in conjunction with VBOs. This class can be
+- * seamlessly used with OpenGL ES 1.x and 2.0.
+- * </p>
+- * 
+- * <p>
+- * Uses indirect Buffers on Android 1.5/1.6 to fix GC invocation due to leaking PlatformAddress instances.
++ * IndexBufferObject wraps OpenGL's index buffer functionality to be used in conjunction with VBOs. 
+  * </p>
+  * 
+  * <p>
+@@ -171,7 +166,7 @@
+ 
+ 	/** Binds this IndexBufferObject for rendering with glDrawElements. */
+ 	public void bind () {
+-		if (bufferHandle == 0) throw new GdxRuntimeException("buuh");
++		if (bufferHandle == 0) throw new GdxRuntimeException("IndexBufferObject cannot be used after it has been disposed.");
+ 
+ 		Gdx.gl20.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, bufferHandle);
+ 		if (isDirty) {
+diff --git a/gdx/src/com/badlogic/gdx/graphics/glutils/IndexBufferObjectSubData.java b/gdx/src/com/badlogic/gdx/graphics/glutils/IndexBufferObjectSubData.java
+index dc97164..ee1efd3 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/glutils/IndexBufferObjectSubData.java
++++ b/gdx/src/com/badlogic/gdx/graphics/glutils/IndexBufferObjectSubData.java
+@@ -25,12 +25,7 @@
+ import com.badlogic.gdx.utils.GdxRuntimeException;
+ 
+ /** <p>
+- * In IndexBufferObject wraps OpenGL's index buffer functionality to be used in conjunction with VBOs. This class can be
+- * seamlessly used with OpenGL ES 1.x and 2.0.
+- * </p>
+- * 
+- * <p>
+- * Uses indirect Buffers on Android 1.5/1.6 to fix GC invocation due to leaking PlatformAddress instances.
++ * IndexBufferObject wraps OpenGL's index buffer functionality to be used in conjunction with VBOs. 
+  * </p>
+  * 
+  * <p>
+@@ -171,7 +166,7 @@
+ 
+ 	/** Binds this IndexBufferObject for rendering with glDrawElements. */
+ 	public void bind () {
+-		if (bufferHandle == 0) throw new GdxRuntimeException("buuh");
++		if (bufferHandle == 0) throw new GdxRuntimeException("IndexBufferObject cannot be used after it has been disposed.");
+ 
+ 		Gdx.gl20.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, bufferHandle);
+ 		if (isDirty) {

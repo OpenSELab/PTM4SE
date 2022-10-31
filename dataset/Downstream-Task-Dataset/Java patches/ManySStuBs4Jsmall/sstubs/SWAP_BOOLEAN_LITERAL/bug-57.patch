@@ -1,0 +1,41 @@
+diff --git a/flink-compiler/src/main/java/org/apache/flink/compiler/plantranslate/NepheleJobGraphGenerator.java b/flink-compiler/src/main/java/org/apache/flink/compiler/plantranslate/NepheleJobGraphGenerator.java
+index 1eabb83..fcf9f8d 100644
+--- a/flink-compiler/src/main/java/org/apache/flink/compiler/plantranslate/NepheleJobGraphGenerator.java
++++ b/flink-compiler/src/main/java/org/apache/flink/compiler/plantranslate/NepheleJobGraphGenerator.java
+@@ -101,7 +101,7 @@
+ 	
+ 	public static final String MERGE_ITERATION_AUX_TASKS_KEY = "compiler.merge-iteration-aux";
+ 	
+-	private static final boolean mergeIterationAuxTasks = GlobalConfiguration.getBoolean(MERGE_ITERATION_AUX_TASKS_KEY, true);
++	private static final boolean mergeIterationAuxTasks = GlobalConfiguration.getBoolean(MERGE_ITERATION_AUX_TASKS_KEY, false);
+ 	
+ //	private static final Log LOG = LogFactory.getLog(NepheleJobGraphGenerator.class);
+ 	
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/RegularPactTask.java b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/RegularPactTask.java
+index e8d7add..f884df1 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/operators/RegularPactTask.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/operators/RegularPactTask.java
+@@ -256,8 +256,8 @@
+ 			initInputReaders();
+ 			initBroadcastInputReaders();
+ 		} catch (Exception e) {
+-			throw new RuntimeException("Initializing the input streams failed" +
+-				e.getMessage() == null ? "." : ": " + e.getMessage(), e);
++			throw new RuntimeException("Initializing the input streams failed in Task " + getEnvironment().getTaskName() +
++					(e.getMessage() == null ? "." : ": " + e.getMessage()), e);
+ 		}
+ 
+ 		// initialize the writers. this is necessary for nephele to create the output gates.
+diff --git a/flink-compiler/src/main/java/org/apache/flink/compiler/plantranslate/NepheleJobGraphGenerator.java b/flink-compiler/src/main/java/org/apache/flink/compiler/plantranslate/NepheleJobGraphGenerator.java
+index 1eabb83..fcf9f8d 100644
+--- a/flink-compiler/src/main/java/org/apache/flink/compiler/plantranslate/NepheleJobGraphGenerator.java
++++ b/flink-compiler/src/main/java/org/apache/flink/compiler/plantranslate/NepheleJobGraphGenerator.java
+@@ -101,7 +101,7 @@
+ 	
+ 	public static final String MERGE_ITERATION_AUX_TASKS_KEY = "compiler.merge-iteration-aux";
+ 	
+-	private static final boolean mergeIterationAuxTasks = GlobalConfiguration.getBoolean(MERGE_ITERATION_AUX_TASKS_KEY, true);
++	private static final boolean mergeIterationAuxTasks = GlobalConfiguration.getBoolean(MERGE_ITERATION_AUX_TASKS_KEY, false);
+ 	
+ //	private static final Log LOG = LogFactory.getLog(NepheleJobGraphGenerator.class);
+ 	

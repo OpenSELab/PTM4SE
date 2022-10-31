@@ -1,0 +1,13 @@
+--- a/src/main/java/org/joo/libra/pointer/VariablePredicate.java
++++ b/src/main/java/org/joo/libra/pointer/VariablePredicate.java
+@@ -33,6 +35,10 @@ public class VariablePredicate implements CompositionPredicate {
+         	return ((Number) rawValue).doubleValue() != 0.0;
+         if (rawValue instanceof Boolean)
+         	return Boolean.TRUE.equals(rawValue);
++        if (rawValue instanceof Collection)
++        	return !((Collection<?>) rawValue).isEmpty();
++        if (rawValue instanceof Object[])
++        	return ((Object[]) rawValue).length != 0;
+         return true;
+     }
+     

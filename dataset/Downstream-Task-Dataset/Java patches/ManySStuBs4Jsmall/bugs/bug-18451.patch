@@ -1,0 +1,26 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
+index f7b2667..5c0d141 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
+@@ -1763,7 +1763,7 @@
+         {
+             if ( futureQueue.containsKey( nextExpectedTxId ) )
+             {
+-                List<LogEntry> list = futureQueue.remove( nextExpectedTxId );
++                List<LogEntry> list = futureQueue.remove( nextExpectedTxId++ );
+                 writeToBuffer( list, target );
+                 return commitEntryOf( list );
+             }
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
+index f7b2667..5c0d141 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
+@@ -1763,7 +1763,7 @@
+         {
+             if ( futureQueue.containsKey( nextExpectedTxId ) )
+             {
+-                List<LogEntry> list = futureQueue.remove( nextExpectedTxId );
++                List<LogEntry> list = futureQueue.remove( nextExpectedTxId++ );
+                 writeToBuffer( list, target );
+                 return commitEntryOf( list );
+             }

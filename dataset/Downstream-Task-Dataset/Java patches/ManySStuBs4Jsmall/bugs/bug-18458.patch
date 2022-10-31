@@ -1,0 +1,26 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
+index 6ee483d..1b06bcb 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
+@@ -1449,7 +1449,7 @@
+                 if ( entry instanceof LogEntry.Start )
+                 {
+                     LogEntry.Start startEntry = (LogEntry.Start) entry;
+-                    startEntry.setStartPosition( newLog.position() );
++                    startEntry.setStartPosition( newLogBuffer.getFileChannelPosition() ); // newLog.position() );
+                     // overwrite old start entry with new that has updated position
+                     xidIdentMap.put( startEntry.getIdentifier(), startEntry );
+                     // startEntriesWritten.add( entry.getIdentifier() );
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
+index 6ee483d..1b06bcb 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/XaLogicalLog.java
+@@ -1449,7 +1449,7 @@
+                 if ( entry instanceof LogEntry.Start )
+                 {
+                     LogEntry.Start startEntry = (LogEntry.Start) entry;
+-                    startEntry.setStartPosition( newLog.position() );
++                    startEntry.setStartPosition( newLogBuffer.getFileChannelPosition() ); // newLog.position() );
+                     // overwrite old start entry with new that has updated position
+                     xidIdentMap.put( startEntry.getIdentifier(), startEntry );
+                     // startEntriesWritten.add( entry.getIdentifier() );

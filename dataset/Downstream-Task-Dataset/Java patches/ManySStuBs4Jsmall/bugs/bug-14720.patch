@@ -1,0 +1,39 @@
+diff --git a/guava/src/com/google/common/collect/ImmutableSortedMap.java b/guava/src/com/google/common/collect/ImmutableSortedMap.java
+index 877351a..ca2193d 100644
+--- a/guava/src/com/google/common/collect/ImmutableSortedMap.java
++++ b/guava/src/com/google/common/collect/ImmutableSortedMap.java
+@@ -907,7 +907,7 @@
+     ImmutableSortedMap<K, V> result = descendingMap;
+     if (result == null) {
+       if (isEmpty()) {
+-        return result = emptyMap(Ordering.from(comparator()).<K>reverse());
++        return result = emptyMap(Ordering.from(comparator()).reverse());
+       } else {
+         return result =
+             new ImmutableSortedMap<K, V>(
+diff --git a/guava/src/com/google/common/collect/ImmutableSortedMultiset.java b/guava/src/com/google/common/collect/ImmutableSortedMultiset.java
+index 0981334..f22588f 100644
+--- a/guava/src/com/google/common/collect/ImmutableSortedMultiset.java
++++ b/guava/src/com/google/common/collect/ImmutableSortedMultiset.java
+@@ -343,7 +343,7 @@
+     if (result == null) {
+       return descendingMultiset =
+           this.isEmpty()
+-              ? emptyMultiset(Ordering.from(comparator()).<E>reverse())
++              ? emptyMultiset(Ordering.from(comparator()).reverse())
+               : new DescendingImmutableSortedMultiset<E>(this);
+     }
+     return result;
+diff --git a/guava/src/com/google/common/collect/ImmutableSortedMap.java b/guava/src/com/google/common/collect/ImmutableSortedMap.java
+index 877351a..ca2193d 100644
+--- a/guava/src/com/google/common/collect/ImmutableSortedMap.java
++++ b/guava/src/com/google/common/collect/ImmutableSortedMap.java
+@@ -907,7 +907,7 @@
+     ImmutableSortedMap<K, V> result = descendingMap;
+     if (result == null) {
+       if (isEmpty()) {
+-        return result = emptyMap(Ordering.from(comparator()).<K>reverse());
++        return result = emptyMap(Ordering.from(comparator()).reverse());
+       } else {
+         return result =
+             new ImmutableSortedMap<K, V>(

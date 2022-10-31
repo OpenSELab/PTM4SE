@@ -1,0 +1,20 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/client/mapreduce/InputTableConfig.java b/core/src/main/java/org/apache/accumulo/core/client/mapreduce/InputTableConfig.java
+index e59451e..fa3b7eb 100644
+--- a/core/src/main/java/org/apache/accumulo/core/client/mapreduce/InputTableConfig.java
++++ b/core/src/main/java/org/apache/accumulo/core/client/mapreduce/InputTableConfig.java
+@@ -281,6 +281,7 @@ public class InputTableConfig implements Writable {
+     dataOutput.writeBoolean(autoAdjustRanges);
+     dataOutput.writeBoolean(useLocalIterators);
+     dataOutput.writeBoolean(useIsolatedScanners);
++    dataOutput.writeBoolean(offlineScan);
+   }
+ 
+   /**
+@@ -325,6 +326,7 @@ public class InputTableConfig implements Writable {
+     autoAdjustRanges = dataInput.readBoolean();
+     useLocalIterators = dataInput.readBoolean();
+     useIsolatedScanners = dataInput.readBoolean();
++    offlineScan = dataInput.readBoolean();
+   }
+ 
+   @Override

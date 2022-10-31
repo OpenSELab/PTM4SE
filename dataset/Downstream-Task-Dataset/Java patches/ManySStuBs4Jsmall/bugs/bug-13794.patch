@@ -1,0 +1,28 @@
+diff --git a/src/com/google/javascript/jscomp/PolymerPassFindExterns.java b/src/com/google/javascript/jscomp/PolymerPassFindExterns.java
+index 5ccfc02..c4a0e16 100644
+--- a/src/com/google/javascript/jscomp/PolymerPassFindExterns.java
++++ b/src/com/google/javascript/jscomp/PolymerPassFindExterns.java
+@@ -60,7 +60,8 @@
+    * @return Whether the node is the declaration of PolymerElement.
+    */
+   private static boolean isPolymerElementExterns(Node value) {
+-    return value != null && value.isVar()
++    // Explicitly allow var, let or const.
++    return NodeUtil.isNameDeclaration(value)
+         && value.getFirstChild().matchesQualifiedName(POLYMER_ELEMENT_NAME);
+   }
+ 
+diff --git a/src/com/google/javascript/jscomp/PolymerPassFindExterns.java b/src/com/google/javascript/jscomp/PolymerPassFindExterns.java
+index 5ccfc02..c4a0e16 100644
+--- a/src/com/google/javascript/jscomp/PolymerPassFindExterns.java
++++ b/src/com/google/javascript/jscomp/PolymerPassFindExterns.java
+@@ -60,7 +60,8 @@
+    * @return Whether the node is the declaration of PolymerElement.
+    */
+   private static boolean isPolymerElementExterns(Node value) {
+-    return value != null && value.isVar()
++    // Explicitly allow var, let or const.
++    return NodeUtil.isNameDeclaration(value)
+         && value.getFirstChild().matchesQualifiedName(POLYMER_ELEMENT_NAME);
+   }
+ 

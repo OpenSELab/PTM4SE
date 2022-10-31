@@ -1,0 +1,26 @@
+diff --git a/indexing-hadoop/src/main/java/io/druid/indexer/IndexGeneratorJob.java b/indexing-hadoop/src/main/java/io/druid/indexer/IndexGeneratorJob.java
+index 5edb1f6..2a07fa5 100644
+--- a/indexing-hadoop/src/main/java/io/druid/indexer/IndexGeneratorJob.java
++++ b/indexing-hadoop/src/main/java/io/druid/indexer/IndexGeneratorJob.java
+@@ -454,7 +454,7 @@
+       final ByteBuffer bytes = ByteBuffer.wrap(bytesWritable.getBytes());
+       bytes.position(4); // Skip length added by SortableBytes
+       int shardNum = bytes.getInt();
+-      if (config.get("mapred.job.tracker").equals("local")) {
++      if ("local".equals(config.get("mapreduce.jobtracker.address")) || "local".equals(config.get("mapred.job.tracker"))) {
+         return shardNum % numPartitions;
+       } else {
+         if (shardNum >= numPartitions) {
+diff --git a/indexing-hadoop/src/main/java/io/druid/indexer/IndexGeneratorJob.java b/indexing-hadoop/src/main/java/io/druid/indexer/IndexGeneratorJob.java
+index 5edb1f6..2a07fa5 100644
+--- a/indexing-hadoop/src/main/java/io/druid/indexer/IndexGeneratorJob.java
++++ b/indexing-hadoop/src/main/java/io/druid/indexer/IndexGeneratorJob.java
+@@ -454,7 +454,7 @@
+       final ByteBuffer bytes = ByteBuffer.wrap(bytesWritable.getBytes());
+       bytes.position(4); // Skip length added by SortableBytes
+       int shardNum = bytes.getInt();
+-      if (config.get("mapred.job.tracker").equals("local")) {
++      if ("local".equals(config.get("mapreduce.jobtracker.address")) || "local".equals(config.get("mapred.job.tracker"))) {
+         return shardNum % numPartitions;
+       } else {
+         if (shardNum >= numPartitions) {

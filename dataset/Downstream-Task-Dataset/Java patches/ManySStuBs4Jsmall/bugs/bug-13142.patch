@@ -1,0 +1,44 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
+index 04c02ad..6fe5776 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
+@@ -989,7 +989,7 @@
+ 
+     private static Optional<Integer> getHashChannel(PlanFragment fragment)
+     {
+-        return fragment.getHash().map(symbol -> fragment.getRoot().getOutputSymbols().indexOf(symbol));
++        return fragment.getHash().map(symbol -> fragment.getOutputLayout().indexOf(symbol));
+     }
+ 
+     private static List<Integer> getPartitioningChannels(PlanFragment fragment)
+@@ -997,7 +997,7 @@
+         checkState(fragment.getOutputPartitioning() == OutputPartitioning.HASH, "fragment is not hash partitioned");
+         // We can convert the symbols directly into channels, because the root must be a sink and therefore the layout is fixed
+         return fragment.getPartitionBy().stream()
+-                .map(symbol -> fragment.getRoot().getOutputSymbols().indexOf(symbol))
++                .map(symbol -> fragment.getOutputLayout().indexOf(symbol))
+                 .collect(toImmutableList());
+     }
+ }
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
+index 04c02ad..6fe5776 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlStageExecution.java
+@@ -989,7 +989,7 @@
+ 
+     private static Optional<Integer> getHashChannel(PlanFragment fragment)
+     {
+-        return fragment.getHash().map(symbol -> fragment.getRoot().getOutputSymbols().indexOf(symbol));
++        return fragment.getHash().map(symbol -> fragment.getOutputLayout().indexOf(symbol));
+     }
+ 
+     private static List<Integer> getPartitioningChannels(PlanFragment fragment)
+@@ -997,7 +997,7 @@
+         checkState(fragment.getOutputPartitioning() == OutputPartitioning.HASH, "fragment is not hash partitioned");
+         // We can convert the symbols directly into channels, because the root must be a sink and therefore the layout is fixed
+         return fragment.getPartitionBy().stream()
+-                .map(symbol -> fragment.getRoot().getOutputSymbols().indexOf(symbol))
++                .map(symbol -> fragment.getOutputLayout().indexOf(symbol))
+                 .collect(toImmutableList());
+     }
+ }

@@ -1,0 +1,46 @@
+diff --git a/app/lib/notifications/NotificationTypeFactory.java b/app/lib/notifications/NotificationTypeFactory.java
+index b0735a4..96d2450 100644
+--- a/app/lib/notifications/NotificationTypeFactory.java
++++ b/app/lib/notifications/NotificationTypeFactory.java
+@@ -8,9 +8,6 @@
+ import javax.inject.Inject;
+ import java.io.IOException;
+ 
+-/**
+- * @author Dennis Oelkers <dennis@torch.sh>
+- */
+ public class NotificationTypeFactory {
+     private final StreamService streamService;
+ 
+@@ -49,7 +46,7 @@
+                 } catch (APIException | IOException e) {
+                     streamTitle = "(Stream title unavailable)";
+                 }
+-                long faultCount = Math.round((double)notification.getDetail("fault_count"));
++                long faultCount = (long) notification.getDetail("fault_count");
+                 return new StreamProcessingDisabledNotification(notification, streamTitle, faultCount);
+         }
+ 
+diff --git a/app/lib/notifications/NotificationTypeFactory.java b/app/lib/notifications/NotificationTypeFactory.java
+index b0735a4..96d2450 100644
+--- a/app/lib/notifications/NotificationTypeFactory.java
++++ b/app/lib/notifications/NotificationTypeFactory.java
+@@ -8,9 +8,6 @@
+ import javax.inject.Inject;
+ import java.io.IOException;
+ 
+-/**
+- * @author Dennis Oelkers <dennis@torch.sh>
+- */
+ public class NotificationTypeFactory {
+     private final StreamService streamService;
+ 
+@@ -49,7 +46,7 @@
+                 } catch (APIException | IOException e) {
+                     streamTitle = "(Stream title unavailable)";
+                 }
+-                long faultCount = Math.round((double)notification.getDetail("fault_count"));
++                long faultCount = (long) notification.getDetail("fault_count");
+                 return new StreamProcessingDisabledNotification(notification, streamTitle, faultCount);
+         }
+ 

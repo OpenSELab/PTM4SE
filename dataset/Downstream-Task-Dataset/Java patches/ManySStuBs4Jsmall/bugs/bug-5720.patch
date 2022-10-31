@@ -1,0 +1,26 @@
+diff --git a/components/camel-mail/src/test/java/org/apache/camel/component/mail/MailShutdownCompleteAllTasksTest.java b/components/camel-mail/src/test/java/org/apache/camel/component/mail/MailShutdownCompleteAllTasksTest.java
+index 2247f6f..99aceef 100644
+--- a/components/camel-mail/src/test/java/org/apache/camel/component/mail/MailShutdownCompleteAllTasksTest.java
++++ b/components/camel-mail/src/test/java/org/apache/camel/component/mail/MailShutdownCompleteAllTasksTest.java
+@@ -52,7 +52,7 @@
+         context.addRoutes(new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("pop3://jones@localhost?password=secret").routeId("route1")
++                from("pop3://jones@localhost?password=secret&initialDelay=2s").routeId("route1")
+                         // let it complete all tasks during shutdown
+                         .shutdownRunningTask(ShutdownRunningTask.CompleteAllTasks)
+                         .delay(1000).to("seda:foo");
+diff --git a/components/camel-mail/src/test/java/org/apache/camel/component/mail/MailShutdownCompleteAllTasksTest.java b/components/camel-mail/src/test/java/org/apache/camel/component/mail/MailShutdownCompleteAllTasksTest.java
+index 2247f6f..99aceef 100644
+--- a/components/camel-mail/src/test/java/org/apache/camel/component/mail/MailShutdownCompleteAllTasksTest.java
++++ b/components/camel-mail/src/test/java/org/apache/camel/component/mail/MailShutdownCompleteAllTasksTest.java
+@@ -52,7 +52,7 @@
+         context.addRoutes(new RouteBuilder() {
+             @Override
+             public void configure() throws Exception {
+-                from("pop3://jones@localhost?password=secret").routeId("route1")
++                from("pop3://jones@localhost?password=secret&initialDelay=2s").routeId("route1")
+                         // let it complete all tasks during shutdown
+                         .shutdownRunningTask(ShutdownRunningTask.CompleteAllTasks)
+                         .delay(1000).to("seda:foo");

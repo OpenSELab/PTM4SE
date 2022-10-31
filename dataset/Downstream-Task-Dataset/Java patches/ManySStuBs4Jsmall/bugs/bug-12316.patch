@@ -1,0 +1,70 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandbook.java b/Essentials/src/com/earth2me/essentials/commands/Commandbook.java
+index 90c5c4f..1a28a5f 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandbook.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandbook.java
+@@ -25,26 +25,26 @@
+ 		{
+ 			BookMeta bmeta = (BookMeta)item.getItemMeta();
+ 
+-			if (args[0].equalsIgnoreCase("author"))
++			if (args.length > 1 && args[0].equalsIgnoreCase("author"))
+ 			{
+ 				if (user.isAuthorized("essentals.book.author"))
+ 				{
+ 					bmeta.setAuthor(args[1]);
+ 					item.setItemMeta(bmeta);
+-					user.sendMessage(_("bookAuthorSet", args[1]));
++					user.sendMessage(_("bookAuthorSet", getFinalArg(args, 1)));
+ 				}
+ 				else
+ 				{
+ 					throw new Exception(_("denyChangeAuthor"));
+ 				}
+ 			}
+-			else if (args[0].equalsIgnoreCase("title"))
++			else if (args.length > 1 && args[0].equalsIgnoreCase("title"))
+ 			{
+ 				if (user.isAuthorized("essentials.book.title") && (isAuthor(bmeta, player) || user.isAuthorized("essentials.book.others")))
+ 				{
+ 					bmeta.setTitle(args[1]);
+ 					item.setItemMeta(bmeta);
+-					user.sendMessage(_("bookTitleSet", args[1]));
++					user.sendMessage(_("bookTitleSet", getFinalArg(args, 1)));
+ 				}
+ 				else
+ 				{
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandbook.java b/Essentials/src/com/earth2me/essentials/commands/Commandbook.java
+index 90c5c4f..1a28a5f 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandbook.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandbook.java
+@@ -25,26 +25,26 @@
+ 		{
+ 			BookMeta bmeta = (BookMeta)item.getItemMeta();
+ 
+-			if (args[0].equalsIgnoreCase("author"))
++			if (args.length > 1 && args[0].equalsIgnoreCase("author"))
+ 			{
+ 				if (user.isAuthorized("essentals.book.author"))
+ 				{
+ 					bmeta.setAuthor(args[1]);
+ 					item.setItemMeta(bmeta);
+-					user.sendMessage(_("bookAuthorSet", args[1]));
++					user.sendMessage(_("bookAuthorSet", getFinalArg(args, 1)));
+ 				}
+ 				else
+ 				{
+ 					throw new Exception(_("denyChangeAuthor"));
+ 				}
+ 			}
+-			else if (args[0].equalsIgnoreCase("title"))
++			else if (args.length > 1 && args[0].equalsIgnoreCase("title"))
+ 			{
+ 				if (user.isAuthorized("essentials.book.title") && (isAuthor(bmeta, player) || user.isAuthorized("essentials.book.others")))
+ 				{
+ 					bmeta.setTitle(args[1]);
+ 					item.setItemMeta(bmeta);
+-					user.sendMessage(_("bookTitleSet", args[1]));
++					user.sendMessage(_("bookTitleSet", getFinalArg(args, 1)));
+ 				}
+ 				else
+ 				{

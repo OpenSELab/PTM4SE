@@ -1,0 +1,48 @@
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+index 5c753c3..782f3b8 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+@@ -4003,7 +4003,7 @@
+ 
+         if (shape != null && numSpecifiedIndex > 0) {
+             Generator<List<List<Integer>>> gen = SpecifiedIndex.iterate(indexes);
+-            INDArray ret = create(shape);
++            INDArray ret = Nd4j.create(shape,'c');
+             int count = 0;
+             while(true) {
+                 try {
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
+index 1bb2d82..192511c 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/indexing/ShapeOffsetResolution.java
+@@ -109,7 +109,7 @@
+                 } else if (indexes[0] instanceof IntervalIndex) {
+                     //allow through
+                 } else {
+-                    throw new UnsupportedOperationException("Illegal combination of indexes for vector");
++                    return false;
+ 
+                 }
+             } else {
+@@ -128,7 +128,7 @@
+                 } else if (indexes[0] instanceof IntervalIndex) {
+                     //allow through
+                 } else {
+-                    throw new UnsupportedOperationException("Illegal combination of indexes for vector");
++                    return false;
+                 }
+             }
+         }
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+index 5c753c3..782f3b8 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+@@ -4003,7 +4003,7 @@
+ 
+         if (shape != null && numSpecifiedIndex > 0) {
+             Generator<List<List<Integer>>> gen = SpecifiedIndex.iterate(indexes);
+-            INDArray ret = create(shape);
++            INDArray ret = Nd4j.create(shape,'c');
+             int count = 0;
+             while(true) {
+                 try {

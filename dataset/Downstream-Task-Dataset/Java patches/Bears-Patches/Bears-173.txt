@@ -1,0 +1,35 @@
+--- a/molgenis-data-csv/src/main/java/org/molgenis/data/csv/CsvIterator.java
++++ b/molgenis-data-csv/src/main/java/org/molgenis/data/csv/CsvIterator.java
+@@ -228,6 +228,10 @@ public class CsvIterator implements CloseableIterator<Entity>
+ 		for (int i = 0; i < headers.length; ++i)
+ 		{
+ 			String header = processCell(headers[i], true);
++			if (columnIdx.containsKey(header))
++			{
++				throw new MolgenisDataException(format("Duplicate column header '%s' not allowed", header));
++			}
+ 			columnIdx.put(header, i);
+ 		}
+ 
+diff --git a/molgenis-data-excel/src/main/java/org/molgenis/data/excel/ExcelRepository.java b/molgenis-data-excel/src/main/java/org/molgenis/data/excel/ExcelRepository.java
+index 53c585c..85bf301 100644
+--- a/molgenis-data-excel/src/main/java/org/molgenis/data/excel/ExcelRepository.java
++++ b/molgenis-data-excel/src/main/java/org/molgenis/data/excel/ExcelRepository.java
+@@ -191,7 +191,16 @@ public class ExcelRepository extends AbstractRepository
+ 			try
+ 			{
+ 				String header = AbstractCellProcessor.processCell(ExcelUtils.toValue(it.next()), true, cellProcessors);
+-				if (null != header) columnIdx.put(header, i++);
++				if (header != null)
++				{
++					if (columnIdx.containsKey(header))
++					{
++						throw new MolgenisDataException(
++								format("Duplicate column header '%s' in sheet '%s' not allowed", header,
++										headerRow.getSheet().getSheetName()));
++					}
++					columnIdx.put(header, i++);
++				}
+ 			}
+ 			catch (final IllegalStateException ex)
+ 			{

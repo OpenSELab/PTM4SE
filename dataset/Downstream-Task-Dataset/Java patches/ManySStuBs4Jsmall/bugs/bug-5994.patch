@@ -1,0 +1,52 @@
+diff --git a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerStartTwiceTest.java b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerStartTwiceTest.java
+index 96f5c48..86f7a18 100644
+--- a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerStartTwiceTest.java
++++ b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerStartTwiceTest.java
+@@ -48,7 +48,7 @@
+             context.start();
+             fail("Expect to catch an exception here");
+         } catch (Exception ex) {
+-            assertTrue(ex.getMessage().endsWith("Multiple consumers for the same endpoint is now allowed: Endpoint[http://localhost:7070/test]"));
++            assertTrue(ex.getMessage().endsWith("Multiple consumers for the same endpoint is not allowed: Endpoint[http://localhost:7070/test]"));
+         }
+                 
+         context.stop();
+diff --git a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfMultipleConsumersSupportTest.java b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfMultipleConsumersSupportTest.java
+index 3b999f4..d94a785 100644
+--- a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfMultipleConsumersSupportTest.java
++++ b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfMultipleConsumersSupportTest.java
+@@ -50,7 +50,7 @@
+             context.start();
+             fail("Should have thrown an exception");
+         } catch (FailedToStartRouteException e) {
+-            assertTrue(e.getMessage().endsWith("Multiple consumers for the same endpoint is now allowed: Endpoint[http://localhost:28080/test]"));
++            assertTrue(e.getMessage().endsWith("Multiple consumers for the same endpoint is not allowed: Endpoint[http://localhost:28080/test]"));
+         }
+     }
+ 
+diff --git a/components/camel-jms/src/test/java/org/apache/camel/component/jms/JmsMultipleConsumersTest.java b/components/camel-jms/src/test/java/org/apache/camel/component/jms/JmsMultipleConsumersTest.java
+index ef19bc7..68c28a4 100644
+--- a/components/camel-jms/src/test/java/org/apache/camel/component/jms/JmsMultipleConsumersTest.java
++++ b/components/camel-jms/src/test/java/org/apache/camel/component/jms/JmsMultipleConsumersTest.java
+@@ -69,7 +69,7 @@
+             context.start();
+             fail("Should have thrown an exception");
+         } catch (FailedToStartRouteException e) {
+-            assertTrue(e.getMessage().endsWith("Multiple consumers for the same endpoint is now allowed: Endpoint[jms://queue:foo]"));
++            assertTrue(e.getMessage().endsWith("Multiple consumers for the same endpoint is not allowed: Endpoint[jms://queue:foo]"));
+         }
+     }
+ 
+diff --git a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerStartTwiceTest.java b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerStartTwiceTest.java
+index 96f5c48..86f7a18 100644
+--- a/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerStartTwiceTest.java
++++ b/components/camel-cxf/src/test/java/org/apache/camel/component/cxf/CxfConsumerStartTwiceTest.java
+@@ -48,7 +48,7 @@
+             context.start();
+             fail("Expect to catch an exception here");
+         } catch (Exception ex) {
+-            assertTrue(ex.getMessage().endsWith("Multiple consumers for the same endpoint is now allowed: Endpoint[http://localhost:7070/test]"));
++            assertTrue(ex.getMessage().endsWith("Multiple consumers for the same endpoint is not allowed: Endpoint[http://localhost:7070/test]"));
+         }
+                 
+         context.stop();

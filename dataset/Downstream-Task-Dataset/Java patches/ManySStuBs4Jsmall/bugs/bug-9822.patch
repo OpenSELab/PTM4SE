@@ -1,0 +1,113 @@
+diff --git a/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedLocalVariableCheckTest.java b/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedLocalVariableCheckTest.java
+index 30dded5..ec10e0a 100644
+--- a/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedLocalVariableCheckTest.java
++++ b/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedLocalVariableCheckTest.java
+@@ -11,10 +11,10 @@
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(UnusedLocalVariableCheck.class);
+         final String[] expected = {
+-            "13:13: Unread local variable 'mUnreadPrimitive'.",
+-            "24:16: Unread local variable 'unreadObject'.",
+-            "36:15: Unread local variable 'unreadArray'.",
+-            "45:13: Unread local variable 'java'.",
++            "13:13: Unused local variable 'mUnreadPrimitive'.",
++            "24:16: Unused local variable 'unreadObject'.",
++            "36:15: Unused local variable 'unreadArray'.",
++            "45:13: Unused local variable 'java'.",
+         };
+         verify(checkConfig, getPath("usage/InputUnusedLocal.java"), expected);
+     }
+@@ -25,9 +25,9 @@
+                 createCheckConfig(UnusedLocalVariableCheck.class);
+             checkConfig.addAttribute("ignoreFormat", "Array$");
+             final String[] expected = {
+-                "13:13: Unread local variable 'mUnreadPrimitive'.",
+-                "24:16: Unread local variable 'unreadObject'.",
+-                "45:13: Unread local variable 'java'.",
++                "13:13: Unused local variable 'mUnreadPrimitive'.",
++                "24:16: Unused local variable 'unreadObject'.",
++                "45:13: Unused local variable 'java'.",
+             };
+             verify(checkConfig, getPath("usage/InputUnusedLocal.java"), expected);
+         }
+diff --git a/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedPrivateFieldCheckTest.java b/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedPrivateFieldCheckTest.java
+index af876d1..a996a79 100644
+--- a/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedPrivateFieldCheckTest.java
++++ b/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedPrivateFieldCheckTest.java
+@@ -11,11 +11,11 @@
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(UnusedPrivateFieldCheck.class);
+         final String[] expected = {
+-            "10:17: Unused field 'mUnreadPrimitive'.",
+-            "16:19: Unused field 'mUnreadArray'.",
+-            "20:17: Unused field 'mUnused2'.",
+-            "22:30: Unused field 'SUNUSED'.",
+-            "64:17: Unused field 'mUnused'.",           
++            "10:17: Unused private field 'mUnreadPrimitive'.",
++            "16:19: Unused private field 'mUnreadArray'.",
++            "20:17: Unused private field 'mUnused2'.",
++            "22:30: Unused private field 'SUNUSED'.",
++            "64:17: Unused private field 'mUnused'.",           
+         };
+         verify(checkConfig, getPath("usage/InputUnusedField.java"), expected);
+     }
+@@ -26,10 +26,10 @@
+                 createCheckConfig(UnusedPrivateFieldCheck.class);
+             checkConfig.addAttribute("ignoreFormat", "Array$");
+             final String[] expected = {
+-                "10:17: Unused field 'mUnreadPrimitive'.",
+-                "20:17: Unused field 'mUnused2'.",
+-                "22:30: Unused field 'SUNUSED'.",
+-                "64:17: Unused field 'mUnused'.",
++                "10:17: Unused private field 'mUnreadPrimitive'.",
++                "20:17: Unused private field 'mUnused2'.",
++                "22:30: Unused private field 'SUNUSED'.",
++                "64:17: Unused private field 'mUnused'.",
+             };
+             verify(checkConfig, getPath("usage/InputUnusedField.java"), expected);
+         }
+diff --git a/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedPrivateMethodCheckTest.java b/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedPrivateMethodCheckTest.java
+index 44ec75e..84ed31b 100644
+--- a/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedPrivateMethodCheckTest.java
++++ b/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedPrivateMethodCheckTest.java
+@@ -11,7 +11,7 @@
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(UnusedPrivateMethodCheck.class);
+         final String[] expected = {
+-            "7:18: Unused method 'methodUnused0'.",
++            "7:18: Unused private method 'methodUnused0'.",
+         };
+         verify(checkConfig, getPath("usage/InputUnusedMethod.java"), expected);
+     }
+diff --git a/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedLocalVariableCheckTest.java b/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedLocalVariableCheckTest.java
+index 30dded5..ec10e0a 100644
+--- a/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedLocalVariableCheckTest.java
++++ b/src/tests/com/puppycrawl/tools/checkstyle/checks/usage/UnusedLocalVariableCheckTest.java
+@@ -11,10 +11,10 @@
+         final DefaultConfiguration checkConfig =
+             createCheckConfig(UnusedLocalVariableCheck.class);
+         final String[] expected = {
+-            "13:13: Unread local variable 'mUnreadPrimitive'.",
+-            "24:16: Unread local variable 'unreadObject'.",
+-            "36:15: Unread local variable 'unreadArray'.",
+-            "45:13: Unread local variable 'java'.",
++            "13:13: Unused local variable 'mUnreadPrimitive'.",
++            "24:16: Unused local variable 'unreadObject'.",
++            "36:15: Unused local variable 'unreadArray'.",
++            "45:13: Unused local variable 'java'.",
+         };
+         verify(checkConfig, getPath("usage/InputUnusedLocal.java"), expected);
+     }
+@@ -25,9 +25,9 @@
+                 createCheckConfig(UnusedLocalVariableCheck.class);
+             checkConfig.addAttribute("ignoreFormat", "Array$");
+             final String[] expected = {
+-                "13:13: Unread local variable 'mUnreadPrimitive'.",
+-                "24:16: Unread local variable 'unreadObject'.",
+-                "45:13: Unread local variable 'java'.",
++                "13:13: Unused local variable 'mUnreadPrimitive'.",
++                "24:16: Unused local variable 'unreadObject'.",
++                "45:13: Unused local variable 'java'.",
+             };
+             verify(checkConfig, getPath("usage/InputUnusedLocal.java"), expected);
+         }

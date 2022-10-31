@@ -1,0 +1,20 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/mock/MockSessionStore.java b/wicket-core/src/main/java/org/apache/wicket/mock/MockSessionStore.java
+index 0eb0abe..61c1581 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/mock/MockSessionStore.java
++++ b/wicket-core/src/main/java/org/apache/wicket/mock/MockSessionStore.java
+@@ -86,12 +86,13 @@ public class MockSessionStore implements ISessionStore
+ 
+ 	public void invalidate(Request request)
+ 	{
++		String sessId = sessionId;
++		cleanup();
+ 		for (UnboundListener l : unboundListeners)
+ 		{
+-			l.sessionUnbound(sessionId);
++			l.sessionUnbound(sessId);
+ 		}
+ 
+-		cleanup();
+ 	}
+ 
+ 	public Session lookup(Request request)

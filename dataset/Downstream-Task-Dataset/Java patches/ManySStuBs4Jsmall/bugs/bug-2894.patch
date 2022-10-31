@@ -1,0 +1,26 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/inputs/InputsResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/inputs/InputsResource.java
+index ac9d88e..915cbbe 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/inputs/InputsResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/inputs/InputsResource.java
+@@ -193,7 +193,7 @@
+         }
+ 
+         // Delete in Mongo.
+-        Input.destroy(new BasicDBObject("_id", input.getPersistId()), core, Input.COLLECTION);
++        Input.destroy(new BasicDBObject("_id", new ObjectId(input.getPersistId())), core, Input.COLLECTION);
+ 
+         // Shutdown actual input.
+         input.stop();
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/inputs/InputsResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/inputs/InputsResource.java
+index ac9d88e..915cbbe 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/inputs/InputsResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/inputs/InputsResource.java
+@@ -193,7 +193,7 @@
+         }
+ 
+         // Delete in Mongo.
+-        Input.destroy(new BasicDBObject("_id", input.getPersistId()), core, Input.COLLECTION);
++        Input.destroy(new BasicDBObject("_id", new ObjectId(input.getPersistId())), core, Input.COLLECTION);
+ 
+         // Shutdown actual input.
+         input.stop();

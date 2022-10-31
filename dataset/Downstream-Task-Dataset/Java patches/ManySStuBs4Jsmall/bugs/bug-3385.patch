@@ -1,0 +1,52 @@
+diff --git a/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/router/file/FileRouterEngineTest.java b/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/router/file/FileRouterEngineTest.java
+index 83a1424..95a50a0 100644
+--- a/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/router/file/FileRouterEngineTest.java
++++ b/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/router/file/FileRouterEngineTest.java
+@@ -160,7 +160,7 @@
+ 
+     private void initDic(URL url) {
+         dic = new StaticDirectory<>(url, invokers);
+-        dic.buildRouterChain(invokers);
++        dic.buildRouterChain();
+         dic.getRouterChain().setResidentRouters(Arrays.asList(routerFactory.getRouter(url)));
+     }
+ 
+diff --git a/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/support/AbstractClusterInvokerTest.java b/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/support/AbstractClusterInvokerTest.java
+index 655e649..0cbe5a3 100644
+--- a/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/support/AbstractClusterInvokerTest.java
++++ b/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/support/AbstractClusterInvokerTest.java
+@@ -455,7 +455,7 @@
+     }
+ 
+     private void initDic() {
+-        dic.buildRouterChain(invokers);
++        dic.buildRouterChain();
+     }
+ 
+     @Test()
+diff --git a/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/support/wrapper/MockClusterInvokerTest.java b/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/support/wrapper/MockClusterInvokerTest.java
+index cf5c8a0..f305f91 100644
+--- a/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/support/wrapper/MockClusterInvokerTest.java
++++ b/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/support/wrapper/MockClusterInvokerTest.java
+@@ -652,7 +652,7 @@
+         }
+ 
+         StaticDirectory<IHelloService> dic = new StaticDirectory<IHelloService>(durl, invokers, null);
+-        dic.buildRouterChain(invokers);
++        dic.buildRouterChain();
+         AbstractClusterInvoker<IHelloService> cluster = new AbstractClusterInvoker(dic) {
+             @Override
+             protected Result doInvoke(Invocation invocation, List invokers, LoadBalance loadbalance)
+diff --git a/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/router/file/FileRouterEngineTest.java b/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/router/file/FileRouterEngineTest.java
+index 83a1424..95a50a0 100644
+--- a/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/router/file/FileRouterEngineTest.java
++++ b/dubbo-cluster/src/test/java/org/apache/dubbo/rpc/cluster/router/file/FileRouterEngineTest.java
+@@ -160,7 +160,7 @@
+ 
+     private void initDic(URL url) {
+         dic = new StaticDirectory<>(url, invokers);
+-        dic.buildRouterChain(invokers);
++        dic.buildRouterChain();
+         dic.getRouterChain().setResidentRouters(Arrays.asList(routerFactory.getRouter(url)));
+     }
+ 

@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/zaxxer/hikari/HikariPool.java b/src/main/java/com/zaxxer/hikari/HikariPool.java
+index 12fbf02..0232ed0 100644
+--- a/src/main/java/com/zaxxer/hikari/HikariPool.java
++++ b/src/main/java/com/zaxxer/hikari/HikariPool.java
+@@ -338,7 +338,7 @@
+     {
+         final int acquireTimeout = (int) configuration.getConnectionTimeout();
+         final int acquireRetries = configuration.getAcquireRetries();
+-        final int loginTimeout = Math.max((acquireRetries > 0 && acquireTimeout > 0) ? (acquireTimeout / (acquireRetries + 1)) : acquireTimeout, 50);
++        final int loginTimeout = (acquireRetries > 0 && acquireTimeout > 0) ? Math.max((acquireTimeout / (acquireRetries + 1)), 50) : acquireTimeout;
+ 
+         for (int retries = 0; retries <= acquireRetries && !shutdown; retries++)
+         {
+diff --git a/src/main/java/com/zaxxer/hikari/HikariPool.java b/src/main/java/com/zaxxer/hikari/HikariPool.java
+index 12fbf02..0232ed0 100644
+--- a/src/main/java/com/zaxxer/hikari/HikariPool.java
++++ b/src/main/java/com/zaxxer/hikari/HikariPool.java
+@@ -338,7 +338,7 @@
+     {
+         final int acquireTimeout = (int) configuration.getConnectionTimeout();
+         final int acquireRetries = configuration.getAcquireRetries();
+-        final int loginTimeout = Math.max((acquireRetries > 0 && acquireTimeout > 0) ? (acquireTimeout / (acquireRetries + 1)) : acquireTimeout, 50);
++        final int loginTimeout = (acquireRetries > 0 && acquireTimeout > 0) ? Math.max((acquireTimeout / (acquireRetries + 1)), 50) : acquireTimeout;
+ 
+         for (int retries = 0; retries <= acquireRetries && !shutdown; retries++)
+         {

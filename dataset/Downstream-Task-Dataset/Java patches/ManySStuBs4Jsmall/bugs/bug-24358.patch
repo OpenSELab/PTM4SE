@@ -1,0 +1,14 @@
+diff --git a/twitter4j-core/src/test/java/twitter4j/conf/ConfigurationTest.java b/twitter4j-core/src/test/java/twitter4j/conf/ConfigurationTest.java
+index ae32920..de2d299 100644
+--- a/twitter4j-core/src/test/java/twitter4j/conf/ConfigurationTest.java
++++ b/twitter4j-core/src/test/java/twitter4j/conf/ConfigurationTest.java
+@@ -248,7 +248,8 @@
+         writeFile("./twitter4j.properties", "twitter4j.restBaseURL=http://somewhere.com/"
+         + "\n" + "twitter4j.http.useSSL=true");
+         conf = new PropertyConfiguration("/");
+-        assertEquals("https://somewhere.com/", conf.getRestBaseURL());
++        // useSSL doesn't take effect if restBaseURL is explicitly specified.
++        assertEquals("http://somewhere.com/", conf.getRestBaseURL());
+         deleteFile("./twitter4j.properties");
+         conf = new PropertyConfiguration();
+ 

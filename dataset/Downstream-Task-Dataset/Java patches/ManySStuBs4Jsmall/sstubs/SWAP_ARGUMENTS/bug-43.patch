@@ -1,0 +1,81 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
+index c67d9aa..f1c1b3f 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
+@@ -178,7 +178,7 @@
+         final String[] fileExtensions = {"java", "xml", "properties"};
+         c.setFileExtensions(fileExtensions);
+         final int counter = c.process(files);
+-        assertEquals(counter, 1); // comparing to 1 as there is only one legal file in input
++        assertEquals(1, counter); // comparing to 1 as there is only one legal file in input
+     }
+ 
+     @SuppressWarnings("deprecation")
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/api/JavadocTagInfoTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/api/JavadocTagInfoTest.java
+index 7f23234..240dc6c 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/api/JavadocTagInfoTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/api/JavadocTagInfoTest.java
+@@ -303,7 +303,7 @@
+ 
+     @Test
+     public void testCoverage() {
+-        assertEquals(JavadocTagInfo.VERSION.getType(), JavadocTagInfo.Type.BLOCK);
++        assertEquals(JavadocTagInfo.Type.BLOCK, JavadocTagInfo.VERSION.getType());
+ 
+         assertEquals("text [@version] name [version] type [BLOCK]", JavadocTagInfo.VERSION.toString());
+ 
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/UniquePropertiesCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/UniquePropertiesCheckTest.java
+index c5ba375..89230f6 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/UniquePropertiesCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/UniquePropertiesCheckTest.java
+@@ -81,7 +81,7 @@
+         final int stringNumber =
+                 UniquePropertiesCheck.getLineNumber(testStrings,
+                         "some key");
+-        Assert.assertEquals(stringNumber, 0);
++        Assert.assertEquals(0, stringNumber);
+     }
+ 
+     /**
+@@ -97,12 +97,12 @@
+         final SortedSet<LocalizedMessage> messages =
+                 check.process(file, Collections.<String>emptyList());
+         Assert.assertEquals("Wrong messages count: " + messages.size(),
+-                messages.size(), 1);
++                1, messages.size());
+         final LocalizedMessage message = messages.iterator().next();
+         final String retrievedMessage = messages.iterator().next().getKey();
+         Assert.assertEquals("Message key '" + retrievedMessage
+-                + "' is not valid", retrievedMessage,
+-                "unable.open.cause");
++                + "' is not valid", "unable.open.cause",
++                retrievedMessage);
+         Assert.assertEquals("Message '" + message.getMessage()
+                 + "' is not valid", message.getMessage(),
+                 getCheckMessage(IO_EXCEPTION_KEY, fileName, getFileNotFoundDetail(file)));
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/indentation/CommentsIndentationCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/indentation/CommentsIndentationCheckTest.java
+index 22421ff..cb2c118 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/indentation/CommentsIndentationCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/indentation/CommentsIndentationCheckTest.java
+@@ -90,7 +90,7 @@
+         }
+         catch (IllegalArgumentException e) {
+             final String msg = e.getMessage();
+-            Assert.assertEquals(msg, "Unexpected token type: methodStub");
++            Assert.assertEquals("Unexpected token type: methodStub", msg);
+         }
+     }
+ }
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
+index c67d9aa..f1c1b3f 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/CheckerTest.java
+@@ -178,7 +178,7 @@
+         final String[] fileExtensions = {"java", "xml", "properties"};
+         c.setFileExtensions(fileExtensions);
+         final int counter = c.process(files);
+-        assertEquals(counter, 1); // comparing to 1 as there is only one legal file in input
++        assertEquals(1, counter); // comparing to 1 as there is only one legal file in input
+     }
+ 
+     @SuppressWarnings("deprecation")

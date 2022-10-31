@@ -1,0 +1,44 @@
+diff --git a/core/server/src/main/java/alluxio/worker/file/FileDataManager.java b/core/server/src/main/java/alluxio/worker/file/FileDataManager.java
+index 7e238e6..c8d598c 100644
+--- a/core/server/src/main/java/alluxio/worker/file/FileDataManager.java
++++ b/core/server/src/main/java/alluxio/worker/file/FileDataManager.java
+@@ -171,7 +171,7 @@
+    */
+   public void lockBlocks(long fileId, List<Long> blockIds) throws IOException {
+     Map<Long, Long> blockIdToLockId = new HashMap<>();
+-    List<Throwable> errors = new ArrayList<Throwable>();
++    List<Throwable> errors = new ArrayList<>();
+     synchronized (mLock) {
+       if (mPersistingInProgressFiles.containsKey(fileId)) {
+         throw new IOException("the file " + fileId + " is already being persisted");
+@@ -226,7 +226,7 @@
+     OutputStream outputStream = mUfs.create(dstPath);
+     final WritableByteChannel outputChannel = Channels.newChannel(outputStream);
+ 
+-    List<Throwable> errors = new ArrayList<Throwable>();
++    List<Throwable> errors = new ArrayList<>();
+     try {
+       for (long blockId : blockIds) {
+         long lockId = blockIdToLockId.get(blockId);
+diff --git a/core/server/src/main/java/alluxio/worker/file/FileDataManager.java b/core/server/src/main/java/alluxio/worker/file/FileDataManager.java
+index 7e238e6..c8d598c 100644
+--- a/core/server/src/main/java/alluxio/worker/file/FileDataManager.java
++++ b/core/server/src/main/java/alluxio/worker/file/FileDataManager.java
+@@ -171,7 +171,7 @@
+    */
+   public void lockBlocks(long fileId, List<Long> blockIds) throws IOException {
+     Map<Long, Long> blockIdToLockId = new HashMap<>();
+-    List<Throwable> errors = new ArrayList<Throwable>();
++    List<Throwable> errors = new ArrayList<>();
+     synchronized (mLock) {
+       if (mPersistingInProgressFiles.containsKey(fileId)) {
+         throw new IOException("the file " + fileId + " is already being persisted");
+@@ -226,7 +226,7 @@
+     OutputStream outputStream = mUfs.create(dstPath);
+     final WritableByteChannel outputChannel = Channels.newChannel(outputStream);
+ 
+-    List<Throwable> errors = new ArrayList<Throwable>();
++    List<Throwable> errors = new ArrayList<>();
+     try {
+       for (long blockId : blockIds) {
+         long lockId = blockIdToLockId.get(blockId);

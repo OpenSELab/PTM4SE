@@ -1,0 +1,13 @@
+diff --git a/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java b/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
+index ca9ad81..7ff51a1 100644
+--- a/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
++++ b/tests/src/test/java/alluxio/worker/AlluxioWorkerRestApiTest.java
+@@ -63,7 +63,7 @@
+   @Before
+   public void before() {
+     mWorker = PowerMockito.spy(mResource.get().getWorker());
+-    Whitebox.setInternalState(DefaultAlluxioWorker.class, "sAlluxioWorker", mWorker);
++    Whitebox.setInternalState(AlluxioWorkerService.Factory.class, "sAlluxioWorker", mWorker);
+     BlockWorker blockWorker = PowerMockito.mock(BlockWorker.class);
+     Whitebox.setInternalState(mWorker, "mBlockWorker", blockWorker);
+     mStoreMeta = PowerMockito.mock(BlockStoreMeta.class);

@@ -1,0 +1,56 @@
+diff --git a/core/client/src/test/java/alluxio/client/file/FileSystemWorkerClientTestUtils.java b/core/client/src/test/java/alluxio/client/file/FileSystemWorkerClientTestUtils.java
+index 2f3a40e..2ff5404 100644
+--- a/core/client/src/test/java/alluxio/client/file/FileSystemWorkerClientTestUtils.java
++++ b/core/client/src/test/java/alluxio/client/file/FileSystemWorkerClientTestUtils.java
+@@ -21,19 +21,19 @@
+  */
+ public class FileSystemWorkerClientTestUtils {
+   /**
+-   * Resets the {@link FileSystemWorkerClient#CLIENT_POOL} and
+-   * {@link FileSystemWorkerClient#HEARTBEAT_CLIENT_POOL}.
++   * Resets the {@link FileSystemWorkerClient#CLIENT_POOLS} and
++   * {@link FileSystemWorkerClient#HEARTBEAT_CLIENT_POOLS}.
+    */
+   public static void resetPool() {
+     ConcurrentHashMapV8<InetSocketAddress, FileSystemWorkerThriftClientPool> poolMap =
+-        Whitebox.getInternalState(FileSystemWorkerClient.class, "CLIENT_POOL");
++        Whitebox.getInternalState(FileSystemWorkerClient.class, "CLIENT_POOLS");
+     for (FileSystemWorkerThriftClientPool pool : poolMap.values()) {
+       pool.close();
+     }
+     poolMap.clear();
+ 
+     ConcurrentHashMapV8<InetSocketAddress, FileSystemWorkerThriftClientPool> heartbeatPoolMap =
+-        Whitebox.getInternalState(FileSystemWorkerClient.class, "HEARTBEAT_CLIENT_POOL");
++        Whitebox.getInternalState(FileSystemWorkerClient.class, "HEARTBEAT_CLIENT_POOLS");
+     for (FileSystemWorkerThriftClientPool pool : heartbeatPoolMap.values()) {
+       pool.close();
+     }
+diff --git a/core/client/src/test/java/alluxio/client/file/FileSystemWorkerClientTestUtils.java b/core/client/src/test/java/alluxio/client/file/FileSystemWorkerClientTestUtils.java
+index 2f3a40e..2ff5404 100644
+--- a/core/client/src/test/java/alluxio/client/file/FileSystemWorkerClientTestUtils.java
++++ b/core/client/src/test/java/alluxio/client/file/FileSystemWorkerClientTestUtils.java
+@@ -21,19 +21,19 @@
+  */
+ public class FileSystemWorkerClientTestUtils {
+   /**
+-   * Resets the {@link FileSystemWorkerClient#CLIENT_POOL} and
+-   * {@link FileSystemWorkerClient#HEARTBEAT_CLIENT_POOL}.
++   * Resets the {@link FileSystemWorkerClient#CLIENT_POOLS} and
++   * {@link FileSystemWorkerClient#HEARTBEAT_CLIENT_POOLS}.
+    */
+   public static void resetPool() {
+     ConcurrentHashMapV8<InetSocketAddress, FileSystemWorkerThriftClientPool> poolMap =
+-        Whitebox.getInternalState(FileSystemWorkerClient.class, "CLIENT_POOL");
++        Whitebox.getInternalState(FileSystemWorkerClient.class, "CLIENT_POOLS");
+     for (FileSystemWorkerThriftClientPool pool : poolMap.values()) {
+       pool.close();
+     }
+     poolMap.clear();
+ 
+     ConcurrentHashMapV8<InetSocketAddress, FileSystemWorkerThriftClientPool> heartbeatPoolMap =
+-        Whitebox.getInternalState(FileSystemWorkerClient.class, "HEARTBEAT_CLIENT_POOL");
++        Whitebox.getInternalState(FileSystemWorkerClient.class, "HEARTBEAT_CLIENT_POOLS");
+     for (FileSystemWorkerThriftClientPool pool : heartbeatPoolMap.values()) {
+       pool.close();
+     }

@@ -1,0 +1,30 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+index e5e0729..364c32a 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+@@ -7189,8 +7189,8 @@
+         stats.setHeapOccupancy((int)(occupancy * 100));
+       }
+     }
+-    stats.setCompactionPressure((int)rsServices.getCompactionPressure()*100 > 100 ? 100 :
+-                (int)rsServices.getCompactionPressure()*100);
++    stats.setCompactionPressure((int) (rsServices.getCompactionPressure() * 100 > 100 ? 100
++        : rsServices.getCompactionPressure() * 100));
+     return stats.build();
+   }
+ 
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+index e5e0729..364c32a 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+@@ -7189,8 +7189,8 @@
+         stats.setHeapOccupancy((int)(occupancy * 100));
+       }
+     }
+-    stats.setCompactionPressure((int)rsServices.getCompactionPressure()*100 > 100 ? 100 :
+-                (int)rsServices.getCompactionPressure()*100);
++    stats.setCompactionPressure((int) (rsServices.getCompactionPressure() * 100 > 100 ? 100
++        : rsServices.getCompactionPressure() * 100));
+     return stats.build();
+   }
+ 

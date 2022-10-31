@@ -1,0 +1,28 @@
+diff --git a/api/src/main/java/org/openmrs/api/impl/OrderServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/OrderServiceImpl.java
+index 48ad71f..315fb5e 100644
+--- a/api/src/main/java/org/openmrs/api/impl/OrderServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/OrderServiceImpl.java
+@@ -116,7 +116,8 @@
+ 			}
+ 			//this order's order type should match that of the previous
+ 			if (orderType == null || (previousOrder != null && !orderType.equals(previousOrder.getOrderType()))) {
+-				throw new APIException("Cannot determine the order type of the order");
++				throw new APIException(
++				        "Cannot determine the order type of the order, make sure the concept's class is mapped to an order type");
+ 			}
+ 			order.setOrderType(orderType);
+ 		}
+diff --git a/api/src/main/java/org/openmrs/api/impl/OrderServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/OrderServiceImpl.java
+index 48ad71f..315fb5e 100644
+--- a/api/src/main/java/org/openmrs/api/impl/OrderServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/OrderServiceImpl.java
+@@ -116,7 +116,8 @@
+ 			}
+ 			//this order's order type should match that of the previous
+ 			if (orderType == null || (previousOrder != null && !orderType.equals(previousOrder.getOrderType()))) {
+-				throw new APIException("Cannot determine the order type of the order");
++				throw new APIException(
++				        "Cannot determine the order type of the order, make sure the concept's class is mapped to an order type");
+ 			}
+ 			order.setOrderType(orderType);
+ 		}

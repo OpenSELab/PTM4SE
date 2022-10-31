@@ -1,0 +1,26 @@
+diff --git a/examples/camel-example-spring-boot-rest-jpa/src/main/java/org/apache/camel/example/spring/boot/rest/jpa/Application.java b/examples/camel-example-spring-boot-rest-jpa/src/main/java/org/apache/camel/example/spring/boot/rest/jpa/Application.java
+index bfd8c27..c5d920d 100644
+--- a/examples/camel-example-spring-boot-rest-jpa/src/main/java/org/apache/camel/example/spring/boot/rest/jpa/Application.java
++++ b/examples/camel-example-spring-boot-rest-jpa/src/main/java/org/apache/camel/example/spring/boot/rest/jpa/Application.java
+@@ -74,7 +74,7 @@
+             from("timer:new-order?delay=1s&period={{example.generateOrderPeriod:2s}}")
+                 .routeId("generate-order")
+                 .bean("orderService", "generateOrder")
+-                .to("jpa:io.fabric8.quickstarts.camel.Order")
++                .to("jpa:org.apache.camel.example.spring.boot.rest.jpa.Order")
+                 .log("Inserted new order ${body.id}");
+ 
+             // A second route polls the DB for new orders and processes them
+diff --git a/examples/camel-example-spring-boot-rest-jpa/src/main/java/org/apache/camel/example/spring/boot/rest/jpa/Application.java b/examples/camel-example-spring-boot-rest-jpa/src/main/java/org/apache/camel/example/spring/boot/rest/jpa/Application.java
+index bfd8c27..c5d920d 100644
+--- a/examples/camel-example-spring-boot-rest-jpa/src/main/java/org/apache/camel/example/spring/boot/rest/jpa/Application.java
++++ b/examples/camel-example-spring-boot-rest-jpa/src/main/java/org/apache/camel/example/spring/boot/rest/jpa/Application.java
+@@ -74,7 +74,7 @@
+             from("timer:new-order?delay=1s&period={{example.generateOrderPeriod:2s}}")
+                 .routeId("generate-order")
+                 .bean("orderService", "generateOrder")
+-                .to("jpa:io.fabric8.quickstarts.camel.Order")
++                .to("jpa:org.apache.camel.example.spring.boot.rest.jpa.Order")
+                 .log("Inserted new order ${body.id}");
+ 
+             // A second route polls the DB for new orders and processes them

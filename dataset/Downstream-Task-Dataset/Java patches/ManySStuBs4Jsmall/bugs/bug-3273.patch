@@ -1,0 +1,39 @@
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest.java b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest.java
+index 377ecac..f968392 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest.java
+@@ -36,7 +36,7 @@
+                      "WHERE TerritoryID IS NOT NULL " + //
+                      "    AND SalesYTD <> 0;";
+ 
+-        String expect = "SELECT c.FirstName, c.LastName, ROW_NUMBER() OVER () ORDER BY SalesYTD DESC AS 'Row Number', s.SalesYTD, a.PostalCode" //
++        String expect = "SELECT c.FirstName, c.LastName, ROW_NUMBER() OVER (ORDER BY SalesYTD DESC) AS 'Row Number', s.SalesYTD, a.PostalCode" //
+                         + "\nFROM Sales.SalesPerson s"
+                         + "\n\tINNER JOIN Person.Contact c ON s.SalesPersonID = c.ContactID"
+                         + "\n\tINNER JOIN Person.Address a ON a.AddressID = c.ContactID" //
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest2.java b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest2.java
+index dfa6d28..2f32dbf 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest2.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest2.java
+@@ -35,7 +35,7 @@
+                      "   WHERE RowNumber BETWEEN ? AND ?";
+ 
+         String expect = "SELECT *" +
+-        		"\nFROM (SELECT ROW_NUMBER() OVER () ORDER BY FAlertDate DESC, FAlertLevel, FAlertType AS RowNumber, *" +
++        		"\nFROM (SELECT ROW_NUMBER() OVER (ORDER BY FAlertDate DESC, FAlertLevel, FAlertType) AS RowNumber, *" +
+         		"\n\tFROM monitor_business" +
+         		"\n\tWHERE FRemoveAlert = ?" +
+         		"\n\t) temp_table" +
+diff --git a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest.java b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest.java
+index 377ecac..f968392 100644
+--- a/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest.java
++++ b/src/test/java/com/alibaba/druid/bvt/sql/sqlserver/SQLServerRowNumberTest.java
+@@ -36,7 +36,7 @@
+                      "WHERE TerritoryID IS NOT NULL " + //
+                      "    AND SalesYTD <> 0;";
+ 
+-        String expect = "SELECT c.FirstName, c.LastName, ROW_NUMBER() OVER () ORDER BY SalesYTD DESC AS 'Row Number', s.SalesYTD, a.PostalCode" //
++        String expect = "SELECT c.FirstName, c.LastName, ROW_NUMBER() OVER (ORDER BY SalesYTD DESC) AS 'Row Number', s.SalesYTD, a.PostalCode" //
+                         + "\nFROM Sales.SalesPerson s"
+                         + "\n\tINNER JOIN Person.Contact c ON s.SalesPersonID = c.ContactID"
+                         + "\n\tINNER JOIN Person.Address a ON a.AddressID = c.ContactID" //

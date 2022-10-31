@@ -1,0 +1,85 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultExchange.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultExchange.java
+index b755b70..2c4a615 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultExchange.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultExchange.java
+@@ -26,6 +26,7 @@ import org.apache.camel.Endpoint;
+ import org.apache.camel.Exchange;
+ import org.apache.camel.ExchangePattern;
+ import org.apache.camel.Message;
++import org.apache.camel.MessageHistory;
+ import org.apache.camel.spi.Synchronization;
+ import org.apache.camel.spi.UnitOfWork;
+ import org.apache.camel.util.ExchangeHelper;
+@@ -95,10 +96,18 @@ public final class DefaultExchange implements Exchange {
+         return exchange;
+     }
+ 
++    @SuppressWarnings("unchecked")
+     private static Map<String, Object> safeCopy(Map<String, Object> properties) {
+         if (properties == null) {
+             return null;
+         }
++
++        // safe copy message history using a defensive copy
++        List<MessageHistory> history = (List<MessageHistory>) properties.remove(Exchange.MESSAGE_HISTORY);
++        if (history != null) {
++            properties.put(Exchange.MESSAGE_HISTORY, new ArrayList<MessageHistory>(history));
++        }
++
+         return new ConcurrentHashMap<String, Object>(properties);
+     }
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/Splitter.java b/camel-core/src/main/java/org/apache/camel/processor/Splitter.java
+index 76b5e02..a9dd334 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/Splitter.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/Splitter.java
+@@ -252,6 +252,8 @@ public class Splitter extends MulticastProcessor implements AsyncProcessor, Trac
+         Exchange answer = ExchangeHelper.createCopy(exchange, preserveExchangeId);
+         // we do not want attachments for the splitted sub-messages
+         answer.getIn().setAttachments(null);
++        // we do not want to copy the message history for splitted sub-messages
++        answer.getProperties().remove(Exchange.MESSAGE_HISTORY);
+         return answer;
+     }
+ }
+diff --git a/camel-core/src/main/java/org/apache/camel/util/ExchangeHelper.java b/camel-core/src/main/java/org/apache/camel/util/ExchangeHelper.java
+index b6f04d8..bc9943d 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/ExchangeHelper.java
++++ b/camel-core/src/main/java/org/apache/camel/util/ExchangeHelper.java
+@@ -16,7 +16,9 @@
+  */
+ package org.apache.camel.util;
+ 
++import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.List;
+ import java.util.Map;
+ import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.ExecutionException;
+@@ -32,6 +34,7 @@ import org.apache.camel.Exchange;
+ import org.apache.camel.ExchangePattern;
+ import org.apache.camel.InvalidPayloadException;
+ import org.apache.camel.Message;
++import org.apache.camel.MessageHistory;
+ import org.apache.camel.NoSuchBeanException;
+ import org.apache.camel.NoSuchEndpointException;
+ import org.apache.camel.NoSuchHeaderException;
+@@ -813,10 +816,18 @@ public final class ExchangeHelper {
+         return answer;
+     }
+ 
++    @SuppressWarnings("unchecked")
+     private static Map<String, Object> safeCopy(Map<String, Object> properties) {
+         if (properties == null) {
+             return null;
+         }
++
++        // safe copy message history using a defensive copy
++        List<MessageHistory> history = (List<MessageHistory>) properties.remove(Exchange.MESSAGE_HISTORY);
++        if (history != null) {
++            properties.put(Exchange.MESSAGE_HISTORY, new ArrayList<MessageHistory>(history));
++        }
++
+         return new ConcurrentHashMap<String, Object>(properties);
+     }
+ }

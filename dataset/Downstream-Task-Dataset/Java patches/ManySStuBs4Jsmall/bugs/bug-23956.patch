@@ -1,0 +1,13 @@
+diff --git a/testsuite/spec/src/test/java/org/jboss/as/test/spec/ejb3/mdb/JMSMessageDrivenBeanTestCase.java b/testsuite/spec/src/test/java/org/jboss/as/test/spec/ejb3/mdb/JMSMessageDrivenBeanTestCase.java
+index 9d59f76..e960fc7 100644
+--- a/testsuite/spec/src/test/java/org/jboss/as/test/spec/ejb3/mdb/JMSMessageDrivenBeanTestCase.java
++++ b/testsuite/spec/src/test/java/org/jboss/as/test/spec/ejb3/mdb/JMSMessageDrivenBeanTestCase.java
+@@ -71,7 +71,7 @@
+             final QueueReceiver receiver = session.createReceiver(replyDestination);
+             final Message message = session.createTextMessage("Test");
+             message.setJMSReplyTo(replyDestination);
+-            final Destination destination = (Destination) ctx.lookup("java:jboss/queue/test");
++            final Destination destination = (Destination) ctx.lookup("java:jboss/jms/queue/test");
+             final MessageProducer producer = session.createProducer(destination);
+             producer.send(message);
+             producer.close();

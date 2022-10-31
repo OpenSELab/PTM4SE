@@ -1,0 +1,78 @@
+--- a/src/main/java/com/fasterxml/jackson/databind/SerializerProvider.java
++++ b/src/main/java/com/fasterxml/jackson/databind/SerializerProvider.java
+@@ -1155,7 +1155,7 @@ public abstract class SerializerProvider
+             String msg, Object... msgArgs) throws JsonMappingException {
+         String beanDesc = "N/A";
+         if (bean != null) {
+-            beanDesc = _desc(bean.getType().getGenericSignature());
++            beanDesc = ClassUtil.nameOf(bean.getBeanClass());
+         }
+         msg = String.format("Invalid type definition for type %s: %s",
+                 beanDesc, _format(msg, msgArgs));
+@@ -1178,7 +1178,7 @@ public abstract class SerializerProvider
+         }
+         String beanDesc = "N/A";
+         if (bean != null) {
+-            beanDesc = _desc(bean.getType().getGenericSignature());
++            beanDesc = ClassUtil.nameOf(bean.getBeanClass());
+         }
+         message = String.format("Invalid definition for property %s (of type %s): %s",
+                 propName, beanDesc, message);
+diff --git a/src/main/java/com/fasterxml/jackson/databind/ser/BeanSerializerBuilder.java b/src/main/java/com/fasterxml/jackson/databind/ser/BeanSerializerBuilder.java
+index 95613e1..c89d380 100644
+--- a/src/main/java/com/fasterxml/jackson/databind/ser/BeanSerializerBuilder.java
++++ b/src/main/java/com/fasterxml/jackson/databind/ser/BeanSerializerBuilder.java
+@@ -37,7 +37,7 @@ public class BeanSerializerBuilder
+     /**
+      * Bean properties, in order of serialization
+      */
+-    protected List<BeanPropertyWriter> _properties;
++    protected List<BeanPropertyWriter> _properties = Collections.emptyList();
+ 
+     /**
+      * Optional array of filtered property writers; if null, no
+@@ -108,10 +113,22 @@ public class BeanSerializerBuilder
+     public void setFilteredProperties(BeanPropertyWriter[] properties) {
++        if (properties != null) {
++            if (properties.length != _properties.size()) { // as per [databind#1612]
++                throw new IllegalArgumentException(String.format(
++                        "Trying to set %d filtered properties; must match length of non-filtered `properties` (%d)",
++                        properties.length, _properties.size()));
++            }
++        }
+         _filteredProperties = properties;
+     }
+@@ -185,6 +197,14 @@ public class BeanSerializerBuilder
+                 }
+             }
+         }
++        // 27-Apr-2017, tatu: Verify that filtered-properties settings are compatible
++        if (_filteredProperties != null) {
++            if (_filteredProperties.length != _properties.size()) {
++                throw new IllegalStateException(String.format(
++"Mismatch between `properties` size (%d), `filteredProperties` (%s): should have as many (or `null` for latter)",
++_properties.size(), _filteredProperties.length));
++            }
++        }
+         if (_anyGetter != null) {
+             _anyGetter.fixAccess(_config);
+         }
+diff --git a/src/main/java/com/fasterxml/jackson/databind/ser/BeanSerializerFactory.java b/src/main/java/com/fasterxml/jackson/databind/ser/BeanSerializerFactory.java
+index f0fa9c5..50436bb 100644
+--- a/src/main/java/com/fasterxml/jackson/databind/ser/BeanSerializerFactory.java
++++ b/src/main/java/com/fasterxml/jackson/databind/ser/BeanSerializerFactory.java
+@@ -520,7 +520,13 @@ public class BeanSerializerFactory
+             }
+         }
+ 
+-        JsonSerializer<Object> ser = (JsonSerializer<Object>) builder.build();
++        JsonSerializer<Object> ser = null;
++        try {
++            ser = (JsonSerializer<Object>) builder.build();
++        } catch (RuntimeException e) {
++            prov.reportBadTypeDefinition(beanDesc, "Failed to construct BeanSerializer for %s: (%s) %s",
++                    beanDesc.getType(), e.getClass().getName(), e.getMessage());
++        }
+         if (ser == null) {
+             // If we get this far, there were no properties found, so no regular BeanSerializer
+             // would be constructed. But, couple of exceptions.

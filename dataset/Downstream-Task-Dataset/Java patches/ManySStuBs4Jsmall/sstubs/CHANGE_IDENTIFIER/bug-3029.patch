@@ -1,0 +1,142 @@
+diff --git a/modules/swagger-models/src/main/java/io/swagger/models/RefResponse.java b/modules/swagger-models/src/main/java/io/swagger/models/RefResponse.java
+index 3cce777..b677597 100644
+--- a/modules/swagger-models/src/main/java/io/swagger/models/RefResponse.java
++++ b/modules/swagger-models/src/main/java/io/swagger/models/RefResponse.java
+@@ -52,27 +52,27 @@
+     }
+ 
+     @Override
+-    public ResponseImpl schema(Property property) {
++    public Response schema(Property property) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+     @Override
+-    public ResponseImpl description(String description) {
++    public Response description(String description) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+     @Override
+-    public ResponseImpl example(String type, Object example) {
++    public Response example(String type, Object example) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+     @Override
+-    public ResponseImpl header(String name, Property property) {
++    public Response header(String name, Property property) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+     @Override
+-    public ResponseImpl headers(Map<String, Property> headers) {
++    public Response headers(Map<String, Property> headers) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+diff --git a/modules/swagger-models/src/main/java/io/swagger/models/Response.java b/modules/swagger-models/src/main/java/io/swagger/models/Response.java
+index b0cf545..53d624c 100644
+--- a/modules/swagger-models/src/main/java/io/swagger/models/Response.java
++++ b/modules/swagger-models/src/main/java/io/swagger/models/Response.java
+@@ -8,15 +8,15 @@
+  * Created by russellb337 on 7/9/15.
+  */
+ public interface Response {
+-    ResponseImpl schema(Property property);
++    Response schema(Property property);
+ 
+-    ResponseImpl description(String description);
++    Response description(String description);
+ 
+-    ResponseImpl example(String type, Object example);
++    Response example(String type, Object example);
+ 
+-    ResponseImpl header(String name, Property property);
++    Response header(String name, Property property);
+ 
+-    ResponseImpl headers(Map<String, Property> headers);
++    Response headers(Map<String, Property> headers);
+ 
+     String getDescription();
+ 
+diff --git a/modules/swagger-models/src/main/java/io/swagger/models/ResponseImpl.java b/modules/swagger-models/src/main/java/io/swagger/models/ResponseImpl.java
+index 1268977..732460c 100644
+--- a/modules/swagger-models/src/main/java/io/swagger/models/ResponseImpl.java
++++ b/modules/swagger-models/src/main/java/io/swagger/models/ResponseImpl.java
+@@ -13,19 +13,19 @@
+     private Map<String, Property> headers;
+ 
+     @Override
+-    public ResponseImpl schema(Property property) {
++    public Response schema(Property property) {
+         this.setSchema(property);
+         return this;
+     }
+ 
+     @Override
+-    public ResponseImpl description(String description) {
++    public Response description(String description) {
+         this.setDescription(description);
+         return this;
+     }
+ 
+     @Override
+-    public ResponseImpl example(String type, Object example) {
++    public Response example(String type, Object example) {
+         if (examples == null) {
+             examples = new HashMap<String, Object>();
+         }
+@@ -34,13 +34,13 @@
+     }
+ 
+     @Override
+-    public ResponseImpl header(String name, Property property) {
++    public Response header(String name, Property property) {
+         addHeader(name, property);
+         return this;
+     }
+ 
+     @Override
+-    public ResponseImpl headers(Map<String, Property> headers) {
++    public Response headers(Map<String, Property> headers) {
+         this.headers = headers;
+         return this;
+     }
+diff --git a/modules/swagger-models/src/main/java/io/swagger/models/RefResponse.java b/modules/swagger-models/src/main/java/io/swagger/models/RefResponse.java
+index 3cce777..b677597 100644
+--- a/modules/swagger-models/src/main/java/io/swagger/models/RefResponse.java
++++ b/modules/swagger-models/src/main/java/io/swagger/models/RefResponse.java
+@@ -52,27 +52,27 @@
+     }
+ 
+     @Override
+-    public ResponseImpl schema(Property property) {
++    public Response schema(Property property) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+     @Override
+-    public ResponseImpl description(String description) {
++    public Response description(String description) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+     @Override
+-    public ResponseImpl example(String type, Object example) {
++    public Response example(String type, Object example) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+     @Override
+-    public ResponseImpl header(String name, Property property) {
++    public Response header(String name, Property property) {
+         throw new RuntimeException("Not implemented");
+     }
+ 
+     @Override
+-    public ResponseImpl headers(Map<String, Property> headers) {
++    public Response headers(Map<String, Property> headers) {
+         throw new RuntimeException("Not implemented");
+     }
+ 

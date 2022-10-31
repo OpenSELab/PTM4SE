@@ -1,0 +1,143 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/IdentityMap.java b/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
+index cd9e3b4..f82db0f 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
+@@ -627,7 +627,7 @@
+ 			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
+ 			if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				map.keyTable[currentIndex] = null;
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java b/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
+index b94b1c8..89df6ac 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
+@@ -677,7 +677,7 @@
+ 				throw new IllegalStateException("next must be called before remove.");
+ 			} else if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				map.keyTable[currentIndex] = EMPTY;
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntIntMap.java b/gdx/src/com/badlogic/gdx/utils/IntIntMap.java
+index 2411a18..812e625 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntIntMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntIntMap.java
+@@ -662,7 +662,7 @@
+ 				throw new IllegalStateException("next must be called before remove.");
+ 			} else if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				map.keyTable[currentIndex] = EMPTY;
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntMap.java b/gdx/src/com/badlogic/gdx/utils/IntMap.java
+index 1d5f683..9fabe0e 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntMap.java
+@@ -686,7 +686,7 @@
+ 				throw new IllegalStateException("next must be called before remove.");
+ 			} else if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				map.keyTable[currentIndex] = EMPTY;
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntSet.java b/gdx/src/com/badlogic/gdx/utils/IntSet.java
+index 6f53ebf..dca8d8c 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntSet.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntSet.java
+@@ -525,7 +525,7 @@
+ 				throw new IllegalStateException("next must be called before remove.");
+ 			} else if (currentIndex >= set.capacity) {
+ 				set.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				set.keyTable[currentIndex] = EMPTY;
+diff --git a/gdx/src/com/badlogic/gdx/utils/LongMap.java b/gdx/src/com/badlogic/gdx/utils/LongMap.java
+index ba96c4d..3881934 100644
+--- a/gdx/src/com/badlogic/gdx/utils/LongMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/LongMap.java
+@@ -678,7 +678,7 @@
+ 				throw new IllegalStateException("next must be called before remove.");
+ 			} else if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				map.keyTable[currentIndex] = EMPTY;
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectFloatMap.java b/gdx/src/com/badlogic/gdx/utils/ObjectFloatMap.java
+index e9cac95..4130d9b 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectFloatMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectFloatMap.java
+@@ -611,7 +611,7 @@
+ 			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
+ 			if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				map.keyTable[currentIndex] = null;
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectIntMap.java b/gdx/src/com/badlogic/gdx/utils/ObjectIntMap.java
+index 2760eec..886ab6d 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectIntMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectIntMap.java
+@@ -611,7 +611,7 @@
+ 			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
+ 			if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				map.keyTable[currentIndex] = null;
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectMap.java b/gdx/src/com/badlogic/gdx/utils/ObjectMap.java
+index d85c75a..da0b6e0 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectMap.java
+@@ -643,7 +643,7 @@
+ 			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
+ 			if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				advance();
+ 			} else {
+ 				map.keyTable[currentIndex] = null;
+diff --git a/gdx/src/com/badlogic/gdx/utils/ObjectSet.java b/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
+index 00cccbd..fff4c7b 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
++++ b/gdx/src/com/badlogic/gdx/utils/ObjectSet.java
+@@ -484,7 +484,7 @@
+ 			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
+ 			if (currentIndex >= set.capacity) {
+ 				set.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				set.keyTable[currentIndex] = null;
+diff --git a/gdx/src/com/badlogic/gdx/utils/IdentityMap.java b/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
+index cd9e3b4..f82db0f 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IdentityMap.java
+@@ -627,7 +627,7 @@
+ 			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
+ 			if (currentIndex >= map.capacity) {
+ 				map.removeStashIndex(currentIndex);
+-				nextIndex = currentIndex;
++				nextIndex = currentIndex - 1;
+ 				findNextIndex();
+ 			} else {
+ 				map.keyTable[currentIndex] = null;

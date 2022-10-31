@@ -1,0 +1,490 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/OrderedPropertyIndex.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/OrderedPropertyIndex.java
+index 74cfd81..0574916 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/OrderedPropertyIndex.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/OrderedPropertyIndex.java
+@@ -44,6 +44,7 @@ public class OrderedPropertyIndex implements QueryIndex, AdvancedQueryIndex {
+ 
+     private static final Logger LOG = LoggerFactory.getLogger(OrderedPropertyIndex.class);
+ 
++    @Override
+     public String getIndexName() {
+         return TYPE;
+     }
+@@ -57,6 +58,7 @@ public class OrderedPropertyIndex implements QueryIndex, AdvancedQueryIndex {
+      * 
+      * !!! for now we want to skip the use-case of NON range-queries !!!
+      */
++    @Override
+     public double getCost(Filter filter, NodeState root) {
+         throw new UnsupportedOperationException("Not supported as implementing AdvancedQueryIndex");
+     }
+@@ -181,6 +183,7 @@ public class OrderedPropertyIndex implements QueryIndex, AdvancedQueryIndex {
+ 
+         Filter filter = plan.getFilter();
+         List<OrderEntry> sortOrder = plan.getSortOrder();
++        String pathPrefix = plan.getPathPrefix();
+         Iterable<String> paths = null;
+         OrderedContentMirrorStoreStrategy strategy
+                 = OrderedPropertyIndexLookup.getStrategy(plan.getDefinition());
+@@ -190,7 +193,7 @@ public class OrderedPropertyIndex implements QueryIndex, AdvancedQueryIndex {
+             String propertyName = PathUtils.getName(pr.propertyName);
+             depth = PathUtils.getDepth(propertyName);
+             paths = strategy.query(plan.getFilter(), propertyName,
+-                    plan.getDefinition(), pr);
++                    plan.getDefinition(), pr, pathPrefix);
+         }
+         if (paths == null && sortOrder != null && !sortOrder.isEmpty()) {
+             // we could be here if we have a query where the ORDER BY makes us play it.
+@@ -198,7 +201,7 @@ public class OrderedPropertyIndex implements QueryIndex, AdvancedQueryIndex {
+                 String propertyName = PathUtils.getName(oe.getPropertyName());
+                 depth = PathUtils.getDepth(oe.getPropertyName());
+                 paths = strategy.query(plan.getFilter(), propertyName,
+-                        plan.getDefinition(), new PropertyRestriction());
++                        plan.getDefinition(), new PropertyRestriction(), pathPrefix);
+             }
+         }
+ 
+@@ -209,7 +212,6 @@ public class OrderedPropertyIndex implements QueryIndex, AdvancedQueryIndex {
+                             + filter);
+         }
+         Cursor cursor = Cursors.newPathCursor(paths, filter.getQueryEngineSettings());
+-        cursor = Cursors.newPrefixCursor(cursor, plan.getPathPrefix());
+         if (depth > 1) {
+             cursor = Cursors.newAncestorCursor(cursor, depth - 1, filter.getQueryEngineSettings());
+         }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/OrderedPropertyIndexLookup.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/OrderedPropertyIndexLookup.java
+index df94011..dc35da4 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/OrderedPropertyIndexLookup.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/OrderedPropertyIndexLookup.java
+@@ -203,7 +203,8 @@ public class OrderedPropertyIndexLookup {
+         if (indexMeta == null) {
+             throw new IllegalArgumentException("No index for " + propertyName);
+         }
+-        return getStrategy(indexMeta).query(filter, propertyName, indexMeta, pr);
++        return getStrategy(indexMeta).query(
++                filter, propertyName, indexMeta, pr, "");
+     }
+ 
+     /**
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexLookup.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexLookup.java
+index ae18d9b..cfd96e2 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexLookup.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexLookup.java
+@@ -129,7 +129,7 @@ public class PropertyIndexLookup {
+             return Double.POSITIVE_INFINITY;
+         }
+         return COST_OVERHEAD +
+-                getStrategy(indexMeta).count(indexMeta, encode(value), MAX_COST);
++                getStrategy(indexMeta).count(filter, indexMeta, encode(value), MAX_COST);
+     }
+ 
+     /**
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexPlan.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexPlan.java
+index 5cc398d..8ace776 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexPlan.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/PropertyIndexPlan.java
+@@ -135,7 +135,7 @@ public class PropertyIndexPlan {
+ 
+                 if (restriction != null) {
+                     Set<String> values = getValues(restriction);
+-                    double cost = strategy.count(definition, values, MAX_COST);
++                    double cost = strategy.count(filter, definition, values, MAX_COST);
+                     if (cost < bestCost) {
+                         bestDepth = depth;
+                         bestValues = values;
+@@ -152,7 +152,7 @@ public class PropertyIndexPlan {
+                 if (constraint instanceof OrImpl) {
+                     Set<String> values = findMultiProperty((OrImpl) constraint);
+                     if (values != null) {
+-                        double cost = strategy.count(definition, values, MAX_COST);
++                        double cost = strategy.count(filter, definition, values, MAX_COST);
+                         if (cost < bestCost) {
+                             bestDepth = 1;
+                             bestValues = values;
+@@ -208,7 +208,7 @@ public class PropertyIndexPlan {
+         }
+     }
+ 
+-    private Set<String> getValues(PropertyRestriction restriction) {
++    private static Set<String> getValues(PropertyRestriction restriction) {
+         if (restriction.firstIncluding
+                 && restriction.lastIncluding
+                 && restriction.first != null
+@@ -249,6 +249,7 @@ public class PropertyIndexPlan {
+ 
+     //------------------------------------------------------------< Object >--
+ 
++    @Override
+     public String toString() {
+         StringBuilder buffer = new StringBuilder("property ");
+         buffer.append(name);
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/ContentMirrorStoreStrategy.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/ContentMirrorStoreStrategy.java
+index be32205..26eed1e 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/ContentMirrorStoreStrategy.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/ContentMirrorStoreStrategy.java
+@@ -121,7 +121,7 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+         return new Iterable<String>() {
+             @Override
+             public Iterator<String> iterator() {
+-                PathIterator it = new PathIterator(filter, indexName);
++                PathIterator it = new PathIterator(filter, indexName, "");
+                 if (values == null) {
+                     it.setPathContainsValue(true);
+                     it.enqueue(getChildNodeEntries(index).iterator());
+@@ -157,8 +157,18 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+         return count(indexMeta, INDEX_CONTENT_NODE_NAME, values, max);
+     }
+ 
++    @Override
++    public long count(final Filter filter, NodeState indexMeta, Set<String> values, int max) {
++        return count(filter, indexMeta, INDEX_CONTENT_NODE_NAME, values, max);
++    }
++
+     public long count(NodeState indexMeta, final String indexStorageNodeName,
+             Set<String> values, int max) {
++        return count(null, indexMeta, indexStorageNodeName, values, max);
++    }
++
++    public long count(Filter filter, NodeState indexMeta, final String indexStorageNodeName,
++            Set<String> values, int max) {
+         NodeState index = indexMeta.getChildNode(indexStorageNodeName);
+         int count = 0;
+         if (values == null) {
+@@ -196,6 +206,11 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+             }
+             max = Math.max(10, max / size);
+             int i = 0;
++            String filterRootPath = null;
++            if (filter != null &&
++                    filter.getPathRestriction().equals(Filter.PathRestriction.ALL_CHILDREN)) {
++                filterRootPath = filter.getPath();
++            }
+             for (String p : values) {
+                 if (count > max && i > 3) {
+                     // the total count is extrapolated from the the number 
+@@ -204,6 +219,16 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+                     break;
+                 }
+                 NodeState s = index.getChildNode(p);
++                if (filterRootPath != null && s.exists()) {
++                    // Descend directly to path restriction inside index tree
++                    for (String pathFragment : PathUtils
++                            .elements(filterRootPath)) {
++                        s = s.getChildNode(pathFragment);
++                        if (!s.exists()) {
++                            break;
++                        }
++                    }
++                }
+                 if (s.exists()) {
+                     CountingNodeVisitor v = new CountingNodeVisitor(max);
+                     v.visit(s);
+@@ -227,6 +252,8 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+         private int readCount;
+         private boolean init;
+         private boolean closed;
++        private String filterPath;
++        private String pathPrefix;
+         private String parentPath;
+         private String currentPath;
+         private boolean pathContainsValue;
+@@ -237,9 +264,19 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+         private final Set<String> knownPaths = Sets.newHashSet();
+         private final long maxMemoryEntries;
+ 
+-        PathIterator(Filter filter, String indexName) {
++        PathIterator(Filter filter, String indexName, String pathPrefix) {
+             this.filter = filter;
++            this.pathPrefix = pathPrefix;
+             this.indexName = indexName;
++            boolean shouldDescendDirectly = filter.getPathRestriction().equals(Filter.PathRestriction.ALL_CHILDREN);
++            if (shouldDescendDirectly) {            
++                filterPath = filter.getPath();
++                if (PathUtils.denotesRoot(filterPath)) {
++                    filterPath = "";
++                }
++            } else {
++                filterPath = "";
++            }            
+             parentPath = "";
+             currentPath = "/";
+             this.maxMemoryEntries = filter.getQueryEngineSettings().getLimitInMemory();
+@@ -305,6 +342,25 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+                     }
+                     currentPath = PathUtils.concat(parentPath, name);
+ 
++                    if (!"".equals(filterPath)) {
++                        String p = currentPath;
++                        if (pathContainsValue) {
++                            String value = PathUtils.elements(p).iterator().next();
++                            p = PathUtils.relativize(value, p);                        
++                        }
++                        if ("".equals(pathPrefix)) {
++                            p = PathUtils.concat("/", p);
++                        } else {
++                            p = PathUtils.concat(pathPrefix, p);
++                        }
++                        if (!"".equals(p) && 
++                                !p.equals(filterPath) && 
++                                !PathUtils.isAncestor(p, filterPath) && 
++                                !PathUtils.isAncestor(filterPath, p)) {
++                            continue;
++                        }
++                    }
++
+                     nodeIterators.addLast(node.getChildNodeEntries().iterator());
+                     parentPath = currentPath;
+ 
+@@ -330,7 +386,7 @@ public class ContentMirrorStoreStrategy implements IndexStoreStrategy {
+                 fetchNext();
+                 init = true;
+             }
+-            String result = currentPath;
++            String result = PathUtils.concat(pathPrefix, currentPath);
+             fetchNext();
+             return result;
+         }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/IndexStoreStrategy.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/IndexStoreStrategy.java
+index 5864eef..6438fc0 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/IndexStoreStrategy.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/IndexStoreStrategy.java
+@@ -43,7 +43,7 @@ public interface IndexStoreStrategy {
+     /**
+      * Search for a given set of values.
+      * 
+-     * @param filter the filter (used for logging)
++     * @param filter the filter (can optionally be used for optimized query execution)
+      * @param indexName the name of the index (for logging)
+      * @param indexMeta the index metadata node (may not be null)
+      * @param values values to look for (null to check for property existence)
+@@ -62,4 +62,16 @@ public interface IndexStoreStrategy {
+      */
+     long count(NodeState indexMeta, Set<String> values, int max);
+ 
++    /**
++     * Count the occurrence of a given set of values. Used in calculating the
++     * cost of an index.
++     *
++     * @param filter the filter which can be used to estimate better cost
++     * @param indexMeta the index metadata node (may not be null)
++     * @param values values to look for (null to check for property existence)
++     * @param max the maximum value to return
++     * @return the aggregated count of occurrences for each provided value
++     */
++    long count(Filter filter, NodeState indexMeta, Set<String> values, int max);
++
+ }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/OrderedContentMirrorStoreStrategy.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/OrderedContentMirrorStoreStrategy.java
+index 2445869..411f734 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/OrderedContentMirrorStoreStrategy.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/OrderedContentMirrorStoreStrategy.java
+@@ -264,6 +264,11 @@ public class OrderedContentMirrorStoreStrategy extends ContentMirrorStoreStrateg
+         }
+         return cne;
+     }
++    
++    public Iterable<String> query(final Filter filter, final String indexName,
++            final NodeState indexMeta, final PropertyRestriction pr) {
++        return query(filter, indexName, indexMeta, pr, "");
++    }
+ 
+     /**
+      * search the index for the provided PropertyRestriction
+@@ -275,8 +280,9 @@ public class OrderedContentMirrorStoreStrategy extends ContentMirrorStoreStrateg
+      * @return the iterable
+      */
+     public Iterable<String> query(final Filter filter, final String indexName,
+-                                  final NodeState indexMeta, final PropertyRestriction pr) {
+-        return query(filter, indexName, indexMeta, INDEX_CONTENT_NODE_NAME, pr);
++                                  final NodeState indexMeta, final PropertyRestriction pr,
++                                  String pathPrefix) {
++        return query(filter, indexName, indexMeta, INDEX_CONTENT_NODE_NAME, pr, pathPrefix);
+     }
+ 
+     /**
+@@ -292,7 +298,7 @@ public class OrderedContentMirrorStoreStrategy extends ContentMirrorStoreStrateg
+      */
+     public Iterable<String> query(final Filter filter, final String indexName,
+                                   final NodeState indexMeta, final String indexStorageNodeName,
+-                                  final PropertyRestriction pr) {
++                                  final PropertyRestriction pr, String pathPrefix) {
+         if (LOG.isDebugEnabled()) {
+             LOG.debug("query() - filter: {}", filter);            
+             LOG.debug("query() - indexName: {}", indexName);            
+@@ -325,11 +331,14 @@ public class OrderedContentMirrorStoreStrategy extends ContentMirrorStoreStrateg
+                         indexState.getChildNode(firstValuableItemKey));
+                     if (direction.isAscending()) {
+                         childrenIterable = new SeekedIterable(indexState, firstValueableItem);
+-                        it = new QueryResultsWrapper(filter, indexName, childrenIterable);
++                        it = new QueryResultsWrapper(filter, indexName, 
++                                childrenIterable, pathPrefix);
+                     } else {
+-                        it = new QueryResultsWrapper(filter, indexName, new BetweenIterable(
+-                            indexState, firstValueableItem, firstEncoded,
+-                            pr.firstIncluding, direction));
++                        it = new QueryResultsWrapper(filter, indexName, 
++                                new BetweenIterable(
++                                        indexState, firstValueableItem, firstEncoded,
++                                        pr.firstIncluding, direction),
++                                pathPrefix);
+                     }
+                 }
+             } else {
+@@ -362,7 +371,8 @@ public class OrderedContentMirrorStoreStrategy extends ContentMirrorStoreStrateg
+                         indexState.getChildNode(firstValuableItemKey));
+                     childrenIterable = new BetweenIterable(indexState, firstValueableItem, last,
+                         includeLast, direction);
+-                    it = new QueryResultsWrapper(filter, indexName, childrenIterable);
++                    it = new QueryResultsWrapper(filter, indexName, 
++                            childrenIterable, pathPrefix);
+                 }
+             }
+ 
+@@ -387,18 +397,21 @@ public class OrderedContentMirrorStoreStrategy extends ContentMirrorStoreStrateg
+                 firstValueableItem = new OrderedChildNodeEntry(firstValueableItemKey,
+                     indexState.getChildNode(firstValueableItemKey));
+                 if (direction.isAscending()) {
+-                    it = new QueryResultsWrapper(filter, indexName, new BetweenIterable(indexState,
+-                        firstValueableItem, searchfor, include, direction));
++                    it = new QueryResultsWrapper(filter, indexName, 
++                            new BetweenIterable(indexState, firstValueableItem, searchfor, include, direction),
++                            pathPrefix);
+                 } else {
+-                    it = new QueryResultsWrapper(filter, indexName, new SeekedIterable(indexState,
+-                        firstValueableItem));
++                    it = new QueryResultsWrapper(filter, indexName, 
++                            new SeekedIterable(indexState, firstValueableItem),
++                            pathPrefix);
+                 }
+             }
+             return it;
+         } else {
+             // property is not null. AKA "open query"
+             LOG.debug("property is not null. AKA 'open query'. FullIterable");
+-            return new QueryResultsWrapper(filter, indexName, new FullIterable(indexState, false));
++            return new QueryResultsWrapper(filter, indexName, 
++                    new FullIterable(indexState, false), pathPrefix);
+         }
+     }
+     
+@@ -602,17 +615,20 @@ public class OrderedContentMirrorStoreStrategy extends ContentMirrorStoreStrateg
+         private Iterable<ChildNodeEntry> children;
+         private String indexName;
+         private Filter filter;
++        private String pathPrefix;
+ 
+         public QueryResultsWrapper(Filter filter, String indexName,
+-                                   Iterable<ChildNodeEntry> children) {
++                                   Iterable<ChildNodeEntry> children,
++                                   String pathPrefix) {
+             this.children = children;
+             this.indexName = indexName;
+             this.filter = filter;
++            this.pathPrefix = pathPrefix;
+         }
+ 
+         @Override
+         public Iterator<String> iterator() {
+-            PathIterator pi = new PathIterator(filter, indexName);
++            PathIterator pi = new PathIterator(filter, indexName, pathPrefix);
+             pi.setPathContainsValue(true);
+             pi.enqueue(children.iterator());
+             return pi;
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/UniqueEntryStoreStrategy.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/UniqueEntryStoreStrategy.java
+index 15111ec..ca80c7e 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/UniqueEntryStoreStrategy.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/UniqueEntryStoreStrategy.java
+@@ -166,4 +166,8 @@ public class UniqueEntryStoreStrategy implements IndexStoreStrategy {
+         return count;
+     }
+ 
++    @Override
++    public long count(final Filter filter, NodeState indexMeta, Set<String> values, int max) {
++        return count(indexMeta, values, max);
++    }
+ }
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/Cursors.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/Cursors.java
+index 4d85191..ff4a1ab 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/Cursors.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/spi/query/Cursors.java
+@@ -24,7 +24,6 @@ import java.util.List;
+ 
+ import javax.annotation.Nullable;
+ 
+-import org.apache.jackrabbit.oak.api.PropertyValue;
+ import org.apache.jackrabbit.oak.commons.PathUtils;
+ import org.apache.jackrabbit.oak.plugins.memory.MemoryChildNodeEntry;
+ import org.apache.jackrabbit.oak.query.FilterIterators;
+@@ -74,23 +73,6 @@ public class Cursors {
+     }
+ 
+     /**
+-     * Creates a cursor which wraps another cursor and adds a path prefix to
+-     * each of row of the wrapped cursor. This method will return the passed
+-     * cursor as is if {@code path} is the empty string or the root path ("/").
+-     *
+-     * @param c    the cursor to wrap.
+-     * @param path the path prefix.
+-     * @return the cursor.
+-     */
+-    public static Cursor newPrefixCursor(Cursor c, String path) {
+-        if (path.isEmpty() || PathUtils.denotesRoot(path)) {
+-            // no need to wrap
+-            return c;
+-        }
+-        return new PrefixCursor(c, path);
+-    }
+-    
+-    /**
+      * Creates a {@link Cursor} over paths, and make the result distinct.
+      * The iterator might return duplicate paths
+      * 
+@@ -220,48 +202,6 @@ public class Cursors {
+     }
+ 
+     /**
+-     * A cursor which wraps another cursor and adds a path prefix to each of
+-     * row of the wrapped cursor.
+-     */
+-    private static final class PrefixCursor extends AbstractCursor {
+-
+-        private final Cursor c;
+-        private final String path;
+-
+-        PrefixCursor(Cursor c, String prefix) {
+-            this.c = c;
+-            this.path = prefix;
+-        }
+-
+-        @Override
+-        public IndexRow next() {
+-            final IndexRow r = c.next();
+-            return new IndexRow() {
+-
+-                @Override
+-                public String getPath() {
+-                    String sub = r.getPath();
+-                    if (PathUtils.isAbsolute(sub)) {
+-                        return path + sub;
+-                    } else {
+-                        return PathUtils.concat(path, r.getPath());
+-                    }
+-                }
+-
+-                @Override
+-                public PropertyValue getValue(String columnName) {
+-                    return r.getValue(columnName);
+-                }
+-            };
+-        }
+-
+-        @Override
+-        public boolean hasNext() {
+-            return c.hasNext();
+-        }
+-    }
+-
+-    /**
+      * A cursor that reads all nodes in a given subtree.
+      */
+     private static class TraversingCursor extends AbstractCursor {

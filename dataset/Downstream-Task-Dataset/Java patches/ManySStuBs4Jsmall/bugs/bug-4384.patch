@@ -1,0 +1,26 @@
+diff --git a/examples/camel-example-twitter-salesforce/src/main/java/org/apache/camel/example/mention/TwitterSalesforceRoute.java b/examples/camel-example-twitter-salesforce/src/main/java/org/apache/camel/example/mention/TwitterSalesforceRoute.java
+index 6027f15..5a3a600 100644
+--- a/examples/camel-example-twitter-salesforce/src/main/java/org/apache/camel/example/mention/TwitterSalesforceRoute.java
++++ b/examples/camel-example-twitter-salesforce/src/main/java/org/apache/camel/example/mention/TwitterSalesforceRoute.java
+@@ -27,7 +27,7 @@
+     @Override
+     public void configure() throws Exception {
+         from("twitter-timeline:mentions")
+-            .log("Mention ${body}")
++            .log("Tweet id ${body.id} mention: ${body}")
+             .process(exchange -> {
+                 Status status = exchange.getIn().getBody(Status.class);
+                 User user = status.getUser();
+diff --git a/examples/camel-example-twitter-salesforce/src/main/java/org/apache/camel/example/mention/TwitterSalesforceRoute.java b/examples/camel-example-twitter-salesforce/src/main/java/org/apache/camel/example/mention/TwitterSalesforceRoute.java
+index 6027f15..5a3a600 100644
+--- a/examples/camel-example-twitter-salesforce/src/main/java/org/apache/camel/example/mention/TwitterSalesforceRoute.java
++++ b/examples/camel-example-twitter-salesforce/src/main/java/org/apache/camel/example/mention/TwitterSalesforceRoute.java
+@@ -27,7 +27,7 @@
+     @Override
+     public void configure() throws Exception {
+         from("twitter-timeline:mentions")
+-            .log("Mention ${body}")
++            .log("Tweet id ${body.id} mention: ${body}")
+             .process(exchange -> {
+                 Status status = exchange.getIn().getBody(Status.class);
+                 User user = status.getUser();

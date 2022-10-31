@@ -1,0 +1,66 @@
+diff --git a/core/src/main/java/tachyon/client/BlockInStream.java b/core/src/main/java/tachyon/client/BlockInStream.java
+index 3b14b21..df09198 100644
+--- a/core/src/main/java/tachyon/client/BlockInStream.java
++++ b/core/src/main/java/tachyon/client/BlockInStream.java
+@@ -35,7 +35,7 @@
+    */
+   public static BlockInStream get(TachyonFile tachyonFile, ReadType readType, int blockIndex)
+       throws IOException {
+-    return get(tachyonFile, readType, blockIndex, null);
++    return get(tachyonFile, readType, blockIndex, tachyonFile.getUFSConf());
+   }
+ 
+   /**
+diff --git a/core/src/main/java/tachyon/client/FileOutStream.java b/core/src/main/java/tachyon/client/FileOutStream.java
+index 4624ccb..5231990 100644
+--- a/core/src/main/java/tachyon/client/FileOutStream.java
++++ b/core/src/main/java/tachyon/client/FileOutStream.java
+@@ -68,7 +68,8 @@
+     mCachedBytes = 0;
+ 
+     if (mWriteType.isThrough()) {
+-      mUnderFsFile = CommonUtils.concat(mTachyonFS.createAndGetUserUfsTempFolder(), mFile.mFileId);
++      mUnderFsFile = CommonUtils.concat(mTachyonFS.createAndGetUserUfsTempFolder(ufsConf), 
++            mFile.mFileId);
+       UnderFileSystem underfsClient = UnderFileSystem.get(mUnderFsFile, ufsConf);
+       if (mBlockCapacityByte > Integer.MAX_VALUE) {
+         throw new IOException("BLOCK_CAPCAITY (" + mBlockCapacityByte + ") can not bigger than "
+diff --git a/core/src/main/java/tachyon/client/TachyonFS.java b/core/src/main/java/tachyon/client/TachyonFS.java
+index a7dc3ea..0dd6e6d 100644
+--- a/core/src/main/java/tachyon/client/TachyonFS.java
++++ b/core/src/main/java/tachyon/client/TachyonFS.java
+@@ -257,18 +257,18 @@
+ 
+   /**
+    * Create a user UnderFileSystem temporary folder and return it
+-   * 
++   * @param ufsConf the configuration of UnderFileSystem
+    * @return the UnderFileSystem temporary folder
+    * @throws IOException
+    */
+-  synchronized String createAndGetUserUfsTempFolder() throws IOException {
++  synchronized String createAndGetUserUfsTempFolder(Object ufsConf) throws IOException {
+     String tmpFolder = mWorkerClient.getUserUfsTempFolder();
+     if (tmpFolder == null) {
+       return null;
+     }
+ 
+     if (mUnderFileSystem == null) {
+-      mUnderFileSystem = UnderFileSystem.get(tmpFolder);
++      mUnderFileSystem = UnderFileSystem.get(tmpFolder, ufsConf);
+     }
+ 
+     mUnderFileSystem.mkdirs(tmpFolder, true);
+diff --git a/core/src/main/java/tachyon/client/BlockInStream.java b/core/src/main/java/tachyon/client/BlockInStream.java
+index 3b14b21..df09198 100644
+--- a/core/src/main/java/tachyon/client/BlockInStream.java
++++ b/core/src/main/java/tachyon/client/BlockInStream.java
+@@ -35,7 +35,7 @@
+    */
+   public static BlockInStream get(TachyonFile tachyonFile, ReadType readType, int blockIndex)
+       throws IOException {
+-    return get(tachyonFile, readType, blockIndex, null);
++    return get(tachyonFile, readType, blockIndex, tachyonFile.getUFSConf());
+   }
+ 
+   /**

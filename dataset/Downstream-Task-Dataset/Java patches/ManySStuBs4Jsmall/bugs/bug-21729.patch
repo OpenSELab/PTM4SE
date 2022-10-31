@@ -1,0 +1,62 @@
+diff --git a/src/main/java/com/squareup/java/JavaWriter.java b/src/main/java/com/squareup/java/JavaWriter.java
+index 8f83418..382f5a6 100644
+--- a/src/main/java/com/squareup/java/JavaWriter.java
++++ b/src/main/java/com/squareup/java/JavaWriter.java
+@@ -292,7 +292,7 @@
+ 
+   /** Equivalent to {@code annotation(annotationType.getName(), emptyMap())}. */
+   public JavaWriter emitAnnotation(Class<? extends Annotation> annotationType) throws IOException {
+-    return emitAnnotation(annotationType.getName(), Collections.<String, Object>emptyMap());
++    return emitAnnotation(type(annotationType), Collections.<String, Object>emptyMap());
+   }
+ 
+   /**
+@@ -304,7 +304,7 @@
+    */
+   public JavaWriter emitAnnotation(Class<? extends Annotation> annotationType, Object value)
+       throws IOException {
+-    return emitAnnotation(annotationType.getName(), value);
++    return emitAnnotation(type(annotationType), value);
+   }
+ 
+   /**
+@@ -328,7 +328,7 @@
+   /** Equivalent to {@code annotation(annotationType.getName(), attributes)}. */
+   public JavaWriter emitAnnotation(Class<? extends Annotation> annotationType,
+       Map<String, ?> attributes) throws IOException {
+-    return emitAnnotation(annotationType.getName(), attributes);
++    return emitAnnotation(type(annotationType), attributes);
+   }
+ 
+   /**
+diff --git a/src/main/java/com/squareup/java/JavaWriter.java b/src/main/java/com/squareup/java/JavaWriter.java
+index 8f83418..382f5a6 100644
+--- a/src/main/java/com/squareup/java/JavaWriter.java
++++ b/src/main/java/com/squareup/java/JavaWriter.java
+@@ -292,7 +292,7 @@
+ 
+   /** Equivalent to {@code annotation(annotationType.getName(), emptyMap())}. */
+   public JavaWriter emitAnnotation(Class<? extends Annotation> annotationType) throws IOException {
+-    return emitAnnotation(annotationType.getName(), Collections.<String, Object>emptyMap());
++    return emitAnnotation(type(annotationType), Collections.<String, Object>emptyMap());
+   }
+ 
+   /**
+@@ -304,7 +304,7 @@
+    */
+   public JavaWriter emitAnnotation(Class<? extends Annotation> annotationType, Object value)
+       throws IOException {
+-    return emitAnnotation(annotationType.getName(), value);
++    return emitAnnotation(type(annotationType), value);
+   }
+ 
+   /**
+@@ -328,7 +328,7 @@
+   /** Equivalent to {@code annotation(annotationType.getName(), attributes)}. */
+   public JavaWriter emitAnnotation(Class<? extends Annotation> annotationType,
+       Map<String, ?> attributes) throws IOException {
+-    return emitAnnotation(annotationType.getName(), attributes);
++    return emitAnnotation(type(annotationType), attributes);
+   }
+ 
+   /**

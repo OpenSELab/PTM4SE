@@ -1,0 +1,44 @@
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index aea3b06..1f22493 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -6767,7 +6767,7 @@
+                 try {
+                     Var.pushThreadBindings(
+                             RT.map(CLEAR_PATH, new PathNode(PATHTYPE.PATH,branch)));
+-                    thenExpr = analyze(C.EXPRESSION, me.getValue());
++                    thenExpr = analyze(context, me.getValue());
+                     }
+                 finally{
+                     Var.popThreadBindings();
+@@ -6779,7 +6779,7 @@
+             try {
+                 Var.pushThreadBindings(
+                         RT.map(CLEAR_PATH, new PathNode(PATHTYPE.PATH,branch)));
+-                defaultExpr = analyze(C.EXPRESSION, args.nth(5));
++                defaultExpr = analyze(context, args.nth(5));
+                 }
+             finally{
+                 Var.popThreadBindings();
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index aea3b06..1f22493 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -6767,7 +6767,7 @@
+                 try {
+                     Var.pushThreadBindings(
+                             RT.map(CLEAR_PATH, new PathNode(PATHTYPE.PATH,branch)));
+-                    thenExpr = analyze(C.EXPRESSION, me.getValue());
++                    thenExpr = analyze(context, me.getValue());
+                     }
+                 finally{
+                     Var.popThreadBindings();
+@@ -6779,7 +6779,7 @@
+             try {
+                 Var.pushThreadBindings(
+                         RT.map(CLEAR_PATH, new PathNode(PATHTYPE.PATH,branch)));
+-                defaultExpr = analyze(C.EXPRESSION, args.nth(5));
++                defaultExpr = analyze(context, args.nth(5));
+                 }
+             finally{
+                 Var.popThreadBindings();

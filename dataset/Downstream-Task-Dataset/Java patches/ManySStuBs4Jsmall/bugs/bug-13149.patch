@@ -1,0 +1,13 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/analyzer/TupleAnalyzer.java b/presto-main/src/main/java/com/facebook/presto/sql/analyzer/TupleAnalyzer.java
+index 766486d..b9702da 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/analyzer/TupleAnalyzer.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/analyzer/TupleAnalyzer.java
+@@ -373,7 +373,7 @@
+         TupleDescriptor outputDescriptor = analyzer.process(node.getRelations().get(0), context).withOnlyVisibleFields();
+ 
+         for (Relation relation : Iterables.skip(node.getRelations(), 1)) {
+-            TupleDescriptor descriptor = analyzer.process(relation, context);
++            TupleDescriptor descriptor = analyzer.process(relation, context).withOnlyVisibleFields();
+             int outputFieldSize = outputDescriptor.getVisibleFields().size();
+             int descFieldSize = descriptor.getVisibleFields().size();
+             if (outputFieldSize != descFieldSize) {

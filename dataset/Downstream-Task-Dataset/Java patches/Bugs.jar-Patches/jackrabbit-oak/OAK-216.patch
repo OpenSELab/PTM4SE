@@ -1,0 +1,24 @@
+diff --git a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexProviderService.java b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexProviderService.java
+index c8f0cfe..29a893a 100644
+--- a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexProviderService.java
++++ b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndexProviderService.java
+@@ -190,7 +190,7 @@ public class LuceneIndexProviderService {
+     private IndexAugmentorFactory augmentorFactory;
+ 
+     @Reference(policy = ReferencePolicy.DYNAMIC,
+-            cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE,
++            cardinality = ReferenceCardinality.OPTIONAL_UNARY,
+             policyOption = ReferencePolicyOption.GREEDY
+     )
+     private volatile PreExtractedTextProvider extractedTextProvider;
+@@ -441,7 +441,9 @@ public class LuceneIndexProviderService {
+                 PROP_EXTRACTED_TEXT_CACHE_EXPIRY_DEFAULT);
+ 
+         extractedTextCache = new ExtractedTextCache(cacheSizeInMB * ONE_MB, cacheExpiryInSecs);
+-
++        if (extractedTextProvider != null){
++            registerExtractedTextProvider(extractedTextProvider);
++        }
+         CacheStats stats = extractedTextCache.getCacheStats();
+         if (stats != null){
+             oakRegs.add(registerMBean(whiteboard,

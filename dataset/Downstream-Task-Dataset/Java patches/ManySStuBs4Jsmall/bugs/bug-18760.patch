@@ -1,0 +1,26 @@
+diff --git a/buffer/src/main/java/io/netty/buffer/PoolThreadCache.java b/buffer/src/main/java/io/netty/buffer/PoolThreadCache.java
+index 755f157..fbcfaaf 100644
+--- a/buffer/src/main/java/io/netty/buffer/PoolThreadCache.java
++++ b/buffer/src/main/java/io/netty/buffer/PoolThreadCache.java
+@@ -129,7 +129,7 @@
+             int cacheSize, int maxCachedBufferCapacity, PoolArena<T> area) {
+         if (cacheSize > 0) {
+             int max = Math.min(area.chunkSize, maxCachedBufferCapacity);
+-            int arraySize = Math.max(1, max / area.pageSize);
++            int arraySize = Math.max(1, log2(max / area.pageSize) + 1);
+ 
+             @SuppressWarnings("unchecked")
+             NormalMemoryRegionCache<T>[] cache = new NormalMemoryRegionCache[arraySize];
+diff --git a/buffer/src/main/java/io/netty/buffer/PoolThreadCache.java b/buffer/src/main/java/io/netty/buffer/PoolThreadCache.java
+index 755f157..fbcfaaf 100644
+--- a/buffer/src/main/java/io/netty/buffer/PoolThreadCache.java
++++ b/buffer/src/main/java/io/netty/buffer/PoolThreadCache.java
+@@ -129,7 +129,7 @@
+             int cacheSize, int maxCachedBufferCapacity, PoolArena<T> area) {
+         if (cacheSize > 0) {
+             int max = Math.min(area.chunkSize, maxCachedBufferCapacity);
+-            int arraySize = Math.max(1, max / area.pageSize);
++            int arraySize = Math.max(1, log2(max / area.pageSize) + 1);
+ 
+             @SuppressWarnings("unchecked")
+             NormalMemoryRegionCache<T>[] cache = new NormalMemoryRegionCache[arraySize];

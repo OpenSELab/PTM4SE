@@ -1,0 +1,67 @@
+--- a/src/main/java/spoon/support/compiler/jdt/ReferenceBuilder.java
++++ b/src/main/java/spoon/support/compiler/jdt/ReferenceBuilder.java
+@@ -632,6 +632,7 @@ public class ReferenceBuilder {
+ 				ref = getTypeReference(binding.actualType());
+ 			} else {
+ 				ref = this.jdtTreeBuilder.getFactory().Core().createTypeReference();
++				this.exploringParameterizedBindings.put(binding, ref);
+ 				if (binding.isAnonymousType()) {
+ 					ref.setSimpleName("");
+ 				} else {
+@@ -702,7 +703,13 @@ public class ReferenceBuilder {
+ 				// if the type parameter has a super class other than java.lang.Object, we get it
+ 				// superClass.superclass() is null if it's java.lang.Object
+ 				if (superClass != null && !(superClass.superclass() == null)) {
+-					refSuperClass = this.getTypeReference(superClass);
++
++					// this case could happen with Enum<E extends Enum<E>> for example:
++					// in that case we only want to have E -> Enum -> E
++					// to conserve the same behavior as JavaReflectionTreeBuilder
++					if (!(superClass instanceof ParameterizedTypeBinding) || !this.exploringParameterizedBindings.containsKey(superClass)) {
++						refSuperClass = this.getTypeReference(superClass);
++					}
+ 
+ 				// if the type parameter has a super interface, then we'll get it too, as a superclass
+ 				// type parameter can only extends an interface or a class, so we don't make the distinction
+--- a/src/main/java/spoon/support/reflect/reference/CtExecutableReferenceImpl.java
++++ b/src/main/java/spoon/support/reflect/reference/CtExecutableReferenceImpl.java
+@@ -150,7 +150,10 @@ public class CtExecutableReferenceImpl<T> extends CtReferenceImpl implements CtE
+ 	@SuppressWarnings("unchecked")
+ 	public CtExecutable<T> getDeclaration() {
+ 		final CtTypeReference<?> typeRef = getDeclaringType();
+-		return typeRef == null ? null : getCtExecutable(typeRef.getDeclaration());
++		if (typeRef == null || typeRef.getDeclaration() == null) {
++			return null;
++		}
++		return getCtExecutable(typeRef.getDeclaration());
+ 	}
+ 
+ 	@Override
+--- a/src/main/java/spoon/support/visitor/AbstractTypingContext.java
++++ b/src/main/java/spoon/support/visitor/AbstractTypingContext.java
+@@ -71,9 +71,6 @@ abstract class AbstractTypingContext implements GenericTypeAdapter {
+ 			return adaptTypeParameterReferenceBoundingType(typeParamRef, typeParamRef.getBoundingType());
+ 		}
+ 		CtTypeReference<?> typeRefAdapted = adaptTypeParameter(typeParamRef.getDeclaration());
+-		if (typeRefAdapted instanceof CtTypeParameterReference) {
+-			return adaptTypeParameterReferenceBoundingType((CtTypeParameterReference) typeRefAdapted, typeParamRef.getBoundingType());
+-		}
+ 		return typeRefAdapted;
+ 	}
+ 
+--- a/src/main/java/spoon/support/visitor/java/JavaReflectionTreeBuilder.java
++++ b/src/main/java/spoon/support/visitor/java/JavaReflectionTreeBuilder.java
+@@ -329,7 +329,12 @@ public class JavaReflectionTreeBuilder extends JavaReflectionVisitorImpl {
+ 
+ 	@Override
+ 	public void visitType(Type type) {
+-		final CtTypeReference<?> ctTypeReference = factory.Core().createTypeReference();
++		CtTypeReference<?> ctTypeReference;
++		if (type instanceof TypeVariable) {
++			ctTypeReference = factory.Core().createTypeParameterReference();
++		} else {
++			ctTypeReference = factory.Core().createTypeReference();
++		}
+ 		enter(new TypeReferenceRuntimeBuilderContext(ctTypeReference));
+ 		ctTypeReference.setSimpleName(getTypeName(type));
+ 

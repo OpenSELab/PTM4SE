@@ -1,0 +1,18 @@
+diff --git a/src/main/java/org/apache/ibatis/executor/statement/SimpleStatementHandler.java b/src/main/java/org/apache/ibatis/executor/statement/SimpleStatementHandler.java
+index 731d8bd..73f1d82 100644
+--- a/src/main/java/org/apache/ibatis/executor/statement/SimpleStatementHandler.java
++++ b/src/main/java/org/apache/ibatis/executor/statement/SimpleStatementHandler.java
+@@ -62,11 +62,11 @@
+     statement.addBatch(sql);
+   }
+ 
+-  public List query(Statement statement, ResultHandler resultHandler)
++  public <E> List<E> query(Statement statement, ResultHandler resultHandler)
+       throws SQLException {
+     String sql = boundSql.getSql();
+     statement.execute(sql);
+-    return resultSetHandler.handleResultSets(statement);
++    return resultSetHandler.<E>handleResultSets(statement);
+   }
+ 
+   protected Statement instantiateStatement(Connection connection) throws SQLException {

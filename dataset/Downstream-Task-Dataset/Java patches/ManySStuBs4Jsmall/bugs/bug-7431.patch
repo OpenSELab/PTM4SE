@@ -1,0 +1,26 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
+index 32757e2..9b4621e 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
+@@ -179,7 +179,7 @@
+ 
+   private void addSlab(int blockSize, int numBlocks) {
+     LOG.info("Creating a slab of blockSize " + blockSize + " with " + numBlocks
+-        + " blocks, " + StringUtils.humanReadableInt(blockSize * numBlocks) + "bytes.");
++        + " blocks, " + StringUtils.humanReadableInt(blockSize * (long) numBlocks) + "bytes.");
+     sizer.put(blockSize, new SingleSizeCache(blockSize, numBlocks, this));
+   }
+ 
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
+index 32757e2..9b4621e 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/slab/SlabCache.java
+@@ -179,7 +179,7 @@
+ 
+   private void addSlab(int blockSize, int numBlocks) {
+     LOG.info("Creating a slab of blockSize " + blockSize + " with " + numBlocks
+-        + " blocks, " + StringUtils.humanReadableInt(blockSize * numBlocks) + "bytes.");
++        + " blocks, " + StringUtils.humanReadableInt(blockSize * (long) numBlocks) + "bytes.");
+     sizer.put(blockSize, new SingleSizeCache(blockSize, numBlocks, this));
+   }
+ 

@@ -1,0 +1,47 @@
+diff --git a/transport/src/main/java/io/netty/channel/socket/aio/AioCompletionHandler.java b/transport/src/main/java/io/netty/channel/socket/aio/AioCompletionHandler.java
+index d873187..8659cd9 100644
+--- a/transport/src/main/java/io/netty/channel/socket/aio/AioCompletionHandler.java
++++ b/transport/src/main/java/io/netty/channel/socket/aio/AioCompletionHandler.java
+@@ -37,7 +37,7 @@
+      */
+     protected abstract void failed0(Throwable exc, A channel);
+ 
+-    private static final int MAX_STACK_DEPTH = 4;
++    private static final int MAX_STACK_DEPTH = Integer.MAX_VALUE;
+     private static final ThreadLocal<Integer> STACK_DEPTH = new ThreadLocal<Integer>() {
+         @Override
+         protected Integer initialValue() {
+diff --git a/transport/src/main/java/io/netty/channel/socket/aio/AioSocketChannel.java b/transport/src/main/java/io/netty/channel/socket/aio/AioSocketChannel.java
+index d31b753..ea6bc0c 100644
+--- a/transport/src/main/java/io/netty/channel/socket/aio/AioSocketChannel.java
++++ b/transport/src/main/java/io/netty/channel/socket/aio/AioSocketChannel.java
+@@ -190,7 +190,7 @@
+ 
+             if (empty) {
+                 // Reset reader/writerIndex to 0 if the buffer is empty.
+-                buf.clear();
++                buf.discardReadBytes();
+             }
+ 
+             channel.notifyFlushFutures(writtenBytes);
+@@ -274,7 +274,6 @@
+                     channel.unsafe().close(channel.unsafe().voidFuture());
+                 } else {
+                     // start the next read
+-                    //channel.readTask.run();
+                     channel.eventLoop().execute(channel.readTask);
+                 }
+             }
+diff --git a/transport/src/main/java/io/netty/channel/socket/aio/AioCompletionHandler.java b/transport/src/main/java/io/netty/channel/socket/aio/AioCompletionHandler.java
+index d873187..8659cd9 100644
+--- a/transport/src/main/java/io/netty/channel/socket/aio/AioCompletionHandler.java
++++ b/transport/src/main/java/io/netty/channel/socket/aio/AioCompletionHandler.java
+@@ -37,7 +37,7 @@
+      */
+     protected abstract void failed0(Throwable exc, A channel);
+ 
+-    private static final int MAX_STACK_DEPTH = 4;
++    private static final int MAX_STACK_DEPTH = Integer.MAX_VALUE;
+     private static final ThreadLocal<Integer> STACK_DEPTH = new ThreadLocal<Integer>() {
+         @Override
+         protected Integer initialValue() {

@@ -1,0 +1,45 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/ComponentEventSender.java b/wicket-core/src/main/java/org/apache/wicket/ComponentEventSender.java
+index efbd0ff..a01f8d4 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/ComponentEventSender.java
++++ b/wicket-core/src/main/java/org/apache/wicket/ComponentEventSender.java
+@@ -164,6 +164,10 @@ final class ComponentEventSender implements IEventSource
+ 		{
+ 			Visits.visitPostOrder(cursor, new ComponentEventVisitor(event, dispatcher));
+ 		}
++		else
++		{
++			dispatcher.dispatchEvent(cursor, event);
++		}
+ 		if (event.isStop())
+ 		{
+ 			return;
+diff --git a/wicket-core/src/main/java/org/apache/wicket/event/Broadcast.java b/wicket-core/src/main/java/org/apache/wicket/event/Broadcast.java
+index 401a4f2..5328637 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/event/Broadcast.java
++++ b/wicket-core/src/main/java/org/apache/wicket/event/Broadcast.java
+@@ -39,6 +39,12 @@ public enum Broadcast {
+ 	 * <li>{@link Component}s</li>
+ 	 * </ol>
+ 	 * 
++	 * Components receive the event with a preorder breadth-first traversal, eg: Apply recursively:
++	 * <ol>
++	 * <li>The component receives the event</li>
++	 * <li>The component's children receive the event</li>
++	 * </ol>
++	 * 
+ 	 * Any sink along the path can be specified and traversal will start with the specified sink as
+ 	 * root, eg:
+ 	 * 
+@@ -61,6 +67,12 @@ public enum Broadcast {
+ 	 * <li>{@link Application}</li>
+ 	 * </ol>
+ 	 * 
++	 * Components receive the event with a postorder depth-first traversal, eg: Apply recursively:
++	 * <ol>
++	 * <li>The component's children receive the event</li>
++	 * <li>The component receives the event</li>
++	 * </ol>
++	 * 
+ 	 * Any sink along the path can be specified and traversal will start with the specified sink as
+ 	 * root, eg:
+ 	 * 

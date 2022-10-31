@@ -1,0 +1,117 @@
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ee/datasourcedefinition/DataSourceBean.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ee/datasourcedefinition/DataSourceBean.java
+index 1a8042b..7fa06bf 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ee/datasourcedefinition/DataSourceBean.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ee/datasourcedefinition/DataSourceBean.java
+@@ -47,13 +47,13 @@
+     /**
+      * This should be injected with the same datasource as above, as they both have the same name
+      */
+-    @Resource(name="java:comp/ds")
++    @Resource(lookup="java:comp/ds")
+     private DataSource dataSource2;
+ 
+     @Resource(lookup = "java:app/DataSource")
+     private DataSource dataSource3;
+ 
+-    @Resource(name="org.jboss.as.test.integration.ee.datasourcedefinition.DataSourceBean/dataSource3")
++    @Resource(lookup="org.jboss.as.test.integration.ee.datasourcedefinition.DataSourceBean/dataSource3")
+     private DataSource dataSource4;
+ 
+ 
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/interceptor/inject/SimpleInterceptor.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/interceptor/inject/SimpleInterceptor.java
+index 728fb56..cdea546 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/interceptor/inject/SimpleInterceptor.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ejb/interceptor/inject/SimpleInterceptor.java
+@@ -37,7 +37,7 @@
+ public class SimpleInterceptor
+ {
+ 
+-   @Resource (name = "java:jboss/datasources/ExampleDS")
++   @Resource (lookup = "java:jboss/datasources/ExampleDS")
+    private DataSource ds;
+    
+    // an injection-target is configured for this field through ejb-jar.xml
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/sar/injection/resource/X.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/sar/injection/resource/X.java
+index 50f43e2..8259c17 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/sar/injection/resource/X.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/sar/injection/resource/X.java
+@@ -35,10 +35,10 @@
+ 
+     private TransactionManager transactionManager;
+ 
+-    @Resource(name = "java:jboss/mail")
++    @Resource(lookup = "java:jboss/mail")
+     private Context context;
+ 
+-    @Resource(name = "java:/TransactionManager")
++    @Resource(lookup = "java:/TransactionManager")
+     public void setTransactionManager(TransactionManager transactionManager) {
+         this.transactionManager = transactionManager;
+     }
+diff --git a/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/SimplifiedMessageProducer.java b/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/SimplifiedMessageProducer.java
+index e963a36..6a9c731 100644
+--- a/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/SimplifiedMessageProducer.java
++++ b/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/SimplifiedMessageProducer.java
+@@ -41,7 +41,7 @@
+     @Resource
+     private ConnectionFactory defaultConnectionFactory;
+ 
+-    @Resource(name = "java:/ConnectionFactory")
++    @Resource(lookup = "java:/ConnectionFactory")
+     private ConnectionFactory regularConnectionFactory;
+ 
+     public void sendWithDefaultJMSConnectionFactory(Destination destination, String text) throws Exception {
+diff --git a/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/TransactedQueueMessageSender.java b/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/TransactedQueueMessageSender.java
+index ad210b5..39d7397 100644
+--- a/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/TransactedQueueMessageSender.java
++++ b/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/TransactedQueueMessageSender.java
+@@ -43,10 +43,10 @@
+ 
+     private static final Logger logger = Logger.getLogger(TransactedQueueMessageSender.class);
+ 
+-    @Resource(name = "java:/queue/myAwesomeQueue")
++    @Resource(lookup = "java:/queue/myAwesomeQueue")
+     private Queue queue;
+ 
+-    @Resource(name = "java:/ConnectionFactory")
++    @Resource(lookup = "java:/ConnectionFactory")
+     private ConnectionFactory factory;
+ 
+     @Resource
+diff --git a/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/TransactedTopicMessageSender.java b/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/TransactedTopicMessageSender.java
+index b8b8cd8..043af10 100644
+--- a/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/TransactedTopicMessageSender.java
++++ b/testsuite/integration/smoke/src/test/java/org/jboss/as/test/smoke/jms/auxiliary/TransactedTopicMessageSender.java
+@@ -43,10 +43,10 @@
+ 
+     private static final Logger logger = Logger.getLogger(TransactedTopicMessageSender.class);
+ 
+-    @Resource(name = "java:/topic/myAwesomeTopic")
++    @Resource(lookup = "java:/topic/myAwesomeTopic")
+     private Topic topic;
+ 
+-    @Resource(name = "java:/ConnectionFactory")
++    @Resource(lookup = "java:/ConnectionFactory")
+     private ConnectionFactory factory;
+ 
+     @Resource
+diff --git a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ee/datasourcedefinition/DataSourceBean.java b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ee/datasourcedefinition/DataSourceBean.java
+index 1a8042b..7fa06bf 100644
+--- a/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ee/datasourcedefinition/DataSourceBean.java
++++ b/testsuite/integration/basic/src/test/java/org/jboss/as/test/integration/ee/datasourcedefinition/DataSourceBean.java
+@@ -47,13 +47,13 @@
+     /**
+      * This should be injected with the same datasource as above, as they both have the same name
+      */
+-    @Resource(name="java:comp/ds")
++    @Resource(lookup="java:comp/ds")
+     private DataSource dataSource2;
+ 
+     @Resource(lookup = "java:app/DataSource")
+     private DataSource dataSource3;
+ 
+-    @Resource(name="org.jboss.as.test.integration.ee.datasourcedefinition.DataSourceBean/dataSource3")
++    @Resource(lookup="org.jboss.as.test.integration.ee.datasourcedefinition.DataSourceBean/dataSource3")
+     private DataSource dataSource4;
+ 
+ 

@@ -1,0 +1,44 @@
+diff --git a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+index bf6583e..07f4a91 100644
+--- a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
++++ b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+@@ -1360,7 +1360,7 @@
+     HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION("hive.parquet.timestamp.skip.conversion", true,
+         "Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion" +
+             "on reading parquet files from other tools"),
+-    HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE("hive.parquet.mr.int96.enable.utc.write.zone", false,
++    PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE("parquet.mr.int96.enable.utc.write.zone", false,
+         "Enable this variable to use UTC as the default timezone for new Parquet tables."),
+     HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS("hive.int.timestamp.conversion.in.seconds", false,
+         "Boolean/tinyint/smallint/int/bigint value is interpreted as milliseconds during the timestamp conversion.\n" +
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
+index 3b5c2fd..87a2c9c 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
+@@ -4384,11 +4384,11 @@
+       }
+     }
+ 
+-    // If HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE is set to True, then set new Parquet tables timezone
++    // If PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE is set to True, then set new Parquet tables timezone
+     // to UTC by default (only if the table property is not set)
+     if (tbl.getSerializationLib().equals(ParquetHiveSerDe.class.getName())) {
+       SessionState ss = SessionState.get();
+-      if (ss.getConf().getBoolVar(ConfVars.HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE)) {
++      if (ss.getConf().getBoolVar(ConfVars.PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE)) {
+         String parquetTimezone = tbl.getProperty(ParquetTableUtils.PARQUET_INT96_WRITE_ZONE_PROPERTY);
+         if (parquetTimezone == null || parquetTimezone.isEmpty()) {
+           tbl.setProperty(ParquetTableUtils.PARQUET_INT96_WRITE_ZONE_PROPERTY, ParquetTableUtils.PARQUET_INT96_NO_ADJUSTMENT_ZONE);
+diff --git a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+index bf6583e..07f4a91 100644
+--- a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
++++ b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+@@ -1360,7 +1360,7 @@
+     HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION("hive.parquet.timestamp.skip.conversion", true,
+         "Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion" +
+             "on reading parquet files from other tools"),
+-    HIVE_PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE("hive.parquet.mr.int96.enable.utc.write.zone", false,
++    PARQUET_INT96_DEFAULT_UTC_WRITE_ZONE("parquet.mr.int96.enable.utc.write.zone", false,
+         "Enable this variable to use UTC as the default timezone for new Parquet tables."),
+     HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS("hive.int.timestamp.conversion.in.seconds", false,
+         "Boolean/tinyint/smallint/int/bigint value is interpreted as milliseconds during the timestamp conversion.\n" +

@@ -1,0 +1,13 @@
+diff --git a/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestExternalHiveTable.java b/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestExternalHiveTable.java
+index bf964b2..c5cadd1 100644
+--- a/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestExternalHiveTable.java
++++ b/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestExternalHiveTable.java
+@@ -91,7 +91,7 @@
+     private void insertNationPartition(TableInstance nation, int partition)
+     {
+         onHive().executeQuery(
+-                "INSERT INTO " + EXTERNAL_TABLE_NAME + " PARTITION (p_regionkey=" + partition + ")"
++                "INSERT INTO TABLE " + EXTERNAL_TABLE_NAME + " PARTITION (p_regionkey=" + partition + ")"
+                         + " SELECT p_nationkey, p_name, p_comment FROM " + nation.getNameInDatabase()
+                         + " WHERE p_regionkey=" + partition);
+     }

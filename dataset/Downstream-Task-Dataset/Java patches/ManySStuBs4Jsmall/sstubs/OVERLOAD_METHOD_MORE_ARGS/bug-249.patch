@@ -1,0 +1,16 @@
+diff --git a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/metrics2/impl/MetricsSystemImpl.java b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/metrics2/impl/MetricsSystemImpl.java
+index b7f264b..fb2aa0e 100644
+--- a/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/metrics2/impl/MetricsSystemImpl.java
++++ b/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/metrics2/impl/MetricsSystemImpl.java
+@@ -368,9 +368,8 @@
+           public void run() {
+             try {
+               onTimerEvent();
+-            }
+-            catch (Exception e) {
+-              LOG.warn(e);
++            } catch (Exception e) {
++              LOG.warn("Error invoking metrics timer", e);
+             }
+           }
+         }, millis, millis);

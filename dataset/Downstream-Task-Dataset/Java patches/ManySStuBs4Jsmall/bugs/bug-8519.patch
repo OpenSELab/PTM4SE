@@ -1,0 +1,39 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java b/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
+index e4ea50e..4adb3ca 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
+@@ -105,7 +105,7 @@
+                 checkShortName = checkFullName.substring(0, checkFullName.lastIndexOf(SUFFIX));
+             }
+             else {
+-                checkShortName = checkFullName.substring(0, checkFullName.length());
++                checkShortName = checkFullName;
+             }
+         }
+         else {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/SummaryJavadocCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/SummaryJavadocCheck.java
+index 48ad4e1..2b9d26d 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/SummaryJavadocCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/SummaryJavadocCheck.java
+@@ -239,7 +239,7 @@
+ 
+             if (child.getType() != JavadocTokenTypes.JAVADOC_INLINE_TAG
+                 && text.contains(periodSuffix)) {
+-                result.append(text.substring(0, text.indexOf(periodSuffix) + 1));
++                result.append(text, 0, text.indexOf(periodSuffix) + 1);
+                 break;
+             }
+             else {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java b/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
+index e4ea50e..4adb3ca 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/AuditEventDefaultFormatter.java
+@@ -105,7 +105,7 @@
+                 checkShortName = checkFullName.substring(0, checkFullName.lastIndexOf(SUFFIX));
+             }
+             else {
+-                checkShortName = checkFullName.substring(0, checkFullName.length());
++                checkShortName = checkFullName;
+             }
+         }
+         else {

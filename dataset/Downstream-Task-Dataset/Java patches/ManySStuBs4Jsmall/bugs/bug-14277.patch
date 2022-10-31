@@ -1,0 +1,26 @@
+diff --git a/src/com/google/javascript/jscomp/TypeInference.java b/src/com/google/javascript/jscomp/TypeInference.java
+index 57c3a19..70bc602 100644
+--- a/src/com/google/javascript/jscomp/TypeInference.java
++++ b/src/com/google/javascript/jscomp/TypeInference.java
+@@ -1038,7 +1038,7 @@
+     }
+ 
+     if (bind.thisValue != null && target.isFunction()) {
+-      JSType thisType = bind.thisValue.getJSType();
++      JSType thisType = getJSType(bind.thisValue);
+       if (thisType.toObjectType() != null && !thisType.isUnknownType()
+           && callTargetFn.getTypeOfThis().isUnknownType()) {
+         callTargetFn = new FunctionBuilder(registry)
+diff --git a/src/com/google/javascript/jscomp/TypeInference.java b/src/com/google/javascript/jscomp/TypeInference.java
+index 57c3a19..70bc602 100644
+--- a/src/com/google/javascript/jscomp/TypeInference.java
++++ b/src/com/google/javascript/jscomp/TypeInference.java
+@@ -1038,7 +1038,7 @@
+     }
+ 
+     if (bind.thisValue != null && target.isFunction()) {
+-      JSType thisType = bind.thisValue.getJSType();
++      JSType thisType = getJSType(bind.thisValue);
+       if (thisType.toObjectType() != null && !thisType.isUnknownType()
+           && callTargetFn.getTypeOfThis().isUnknownType()) {
+         callTargetFn = new FunctionBuilder(registry)

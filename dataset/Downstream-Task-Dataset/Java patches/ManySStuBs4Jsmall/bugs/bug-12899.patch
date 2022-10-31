@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/plan/ExchangeNode.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/plan/ExchangeNode.java
+index 8de6e99..184d58c 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/plan/ExchangeNode.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/plan/ExchangeNode.java
+@@ -127,7 +127,7 @@
+                 scope,
+                 partitioningScheme,
+                 ImmutableList.of(child),
+-                ImmutableList.of(child.getOutputSymbols()));
++                ImmutableList.of(partitioningScheme.getOutputLayout()));
+     }
+ 
+     public static ExchangeNode replicatedExchange(PlanNodeId id, Scope scope, PlanNode child)
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/plan/ExchangeNode.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/plan/ExchangeNode.java
+index 8de6e99..184d58c 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/plan/ExchangeNode.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/plan/ExchangeNode.java
+@@ -127,7 +127,7 @@
+                 scope,
+                 partitioningScheme,
+                 ImmutableList.of(child),
+-                ImmutableList.of(child.getOutputSymbols()));
++                ImmutableList.of(partitioningScheme.getOutputLayout()));
+     }
+ 
+     public static ExchangeNode replicatedExchange(PlanNodeId id, Scope scope, PlanNode child)

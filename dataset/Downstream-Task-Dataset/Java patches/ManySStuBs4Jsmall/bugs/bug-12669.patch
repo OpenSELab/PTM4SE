@@ -1,0 +1,28 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/aggregation/state/StateCompiler.java b/presto-main/src/main/java/com/facebook/presto/operator/aggregation/state/StateCompiler.java
+index f1c3a93..771f665 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/aggregation/state/StateCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/aggregation/state/StateCompiler.java
+@@ -172,9 +172,9 @@
+ 
+         Class<? extends AccumulatorStateSerializer> serializerClass = defineClass(definition, AccumulatorStateSerializer.class, callSiteBinder.getBindings(), classLoader);
+         try {
+-            return (AccumulatorStateSerializer<T>) serializerClass.newInstance();
++            return (AccumulatorStateSerializer<T>) serializerClass.getConstructor().newInstance();
+         }
+-        catch (InstantiationException | IllegalAccessException e) {
++        catch (ReflectiveOperationException e) {
+             throw new RuntimeException(e);
+         }
+     }
+@@ -400,9 +400,9 @@
+ 
+         Class<? extends AccumulatorStateFactory> factoryClass = defineClass(definition, AccumulatorStateFactory.class, classLoader);
+         try {
+-            return (AccumulatorStateFactory<T>) factoryClass.newInstance();
++            return (AccumulatorStateFactory<T>) factoryClass.getConstructor().newInstance();
+         }
+-        catch (InstantiationException | IllegalAccessException e) {
++        catch (ReflectiveOperationException e) {
+             throw new RuntimeException(e);
+         }
+     }

@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/ning/http/client/providers/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/NettyAsyncHttpProvider.java
+index a896cc8..e2e2cea 100644
+--- a/src/main/java/com/ning/http/client/providers/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/NettyAsyncHttpProvider.java
+@@ -246,7 +246,7 @@
+ 
+             public ConnectListener<T> build() throws IOException {
+ 
+-                URI uri = createUri(request.getRawUrl());
++                URI uri = createUri(request.getRawUrl().replace(" ","%20"));
+                 HttpRequest nettyRequest = buildRequest(config, request, uri, true);
+ 
+                 log.debug("Executing the doConnect operation: %s", asyncHandler);
+diff --git a/src/main/java/com/ning/http/client/providers/NettyAsyncHttpProvider.java b/src/main/java/com/ning/http/client/providers/NettyAsyncHttpProvider.java
+index a896cc8..e2e2cea 100644
+--- a/src/main/java/com/ning/http/client/providers/NettyAsyncHttpProvider.java
++++ b/src/main/java/com/ning/http/client/providers/NettyAsyncHttpProvider.java
+@@ -246,7 +246,7 @@
+ 
+             public ConnectListener<T> build() throws IOException {
+ 
+-                URI uri = createUri(request.getRawUrl());
++                URI uri = createUri(request.getRawUrl().replace(" ","%20"));
+                 HttpRequest nettyRequest = buildRequest(config, request, uri, true);
+ 
+                 log.debug("Executing the doConnect operation: %s", asyncHandler);

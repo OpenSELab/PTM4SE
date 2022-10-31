@@ -1,0 +1,125 @@
+diff --git a/components/camel-guice/src/main/java/org/apache/camel/guice/Main.java b/components/camel-guice/src/main/java/org/apache/camel/guice/Main.java
+index 5a0857a..c9c18c0 100644
+--- a/components/camel-guice/src/main/java/org/apache/camel/guice/Main.java
++++ b/components/camel-guice/src/main/java/org/apache/camel/guice/Main.java
+@@ -59,7 +59,7 @@
+ */
+     }
+ 
+-    public static void main(String... args) {
++    public static void main(String... args) throws Exception {
+         Main main = new Main();
+         instance = main;
+         main.run(args);
+diff --git a/components/camel-spring-javaconfig/src/main/java/org/apache/camel/spring/javaconfig/Main.java b/components/camel-spring-javaconfig/src/main/java/org/apache/camel/spring/javaconfig/Main.java
+index 0a5e94d..19a8258 100644
+--- a/components/camel-spring-javaconfig/src/main/java/org/apache/camel/spring/javaconfig/Main.java
++++ b/components/camel-spring-javaconfig/src/main/java/org/apache/camel/spring/javaconfig/Main.java
+@@ -52,7 +52,7 @@
+         });
+     }
+     
+-    public static void main(String... args) {
++    public static void main(String... args) throws Exception {
+         Main main = new Main();
+         instance = main;
+         main.enableHangupSupport();
+diff --git a/examples/camel-example-bam/src/main/java/org/apache/camel/example/bam/Main.java b/examples/camel-example-bam/src/main/java/org/apache/camel/example/bam/Main.java
+index 729a026..5c3855c 100644
+--- a/examples/camel-example-bam/src/main/java/org/apache/camel/example/bam/Main.java
++++ b/examples/camel-example-bam/src/main/java/org/apache/camel/example/bam/Main.java
+@@ -23,7 +23,7 @@
+     private Main() {
+         // do nothing here
+     }
+-    public static void main(String[] args) {
++    public static void main(String[] args) throws Exception {
+         org.apache.camel.spring.Main.main(args);
+     }
+ }
+diff --git a/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/Main.java b/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/Main.java
+index e7d1282..fa375e1 100644
+--- a/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/Main.java
++++ b/examples/camel-example-etl/src/main/java/org/apache/camel/example/etl/Main.java
+@@ -22,7 +22,7 @@
+  * @version $Revision$
+  */
+ public class Main extends org.apache.camel.spring.Main {
+-    public static void main(String[] args) {
++    public static void main(String[] args) throws Exception {
+         new Main().run(args);
+     }
+ }
+diff --git a/examples/camel-example-guice-jms/src/main/java/org/apache/camel/example/guice/jms/MyRouteBuilder.java b/examples/camel-example-guice-jms/src/main/java/org/apache/camel/example/guice/jms/MyRouteBuilder.java
+index ee39b1c..c2c8e08 100644
+--- a/examples/camel-example-guice-jms/src/main/java/org/apache/camel/example/guice/jms/MyRouteBuilder.java
++++ b/examples/camel-example-guice-jms/src/main/java/org/apache/camel/example/guice/jms/MyRouteBuilder.java
+@@ -30,8 +30,9 @@
+      * Allow this route to be run as an application
+      *
+      * @param args
++     * @throws Exception 
+      */
+-    public static void main(String[] args) {
++    public static void main(String[] args) throws Exception {
+         new Main().run(args);
+     }
+ 
+diff --git a/examples/camel-example-osgi/src/main/java/org/apache/camel/example/osgi/MyRouteBuilder.java b/examples/camel-example-osgi/src/main/java/org/apache/camel/example/osgi/MyRouteBuilder.java
+index 85e7e23..7732561 100644
+--- a/examples/camel-example-osgi/src/main/java/org/apache/camel/example/osgi/MyRouteBuilder.java
++++ b/examples/camel-example-osgi/src/main/java/org/apache/camel/example/osgi/MyRouteBuilder.java
+@@ -29,8 +29,9 @@
+      * Allow this route to be run as an application
+      *
+      * @param args
++     * @throws Exception 
+      */
+-    public static void main(String[] args) {
++    public static void main(String[] args) throws Exception {
+         new Main().run(args);
+     }
+ 
+diff --git a/examples/camel-example-spring-javaconfig/src/main/java/org/apache/camel/example/spring/javaconfig/MyRouteConfig.java b/examples/camel-example-spring-javaconfig/src/main/java/org/apache/camel/example/spring/javaconfig/MyRouteConfig.java
+index 914bd8d..ec06a2f 100644
+--- a/examples/camel-example-spring-javaconfig/src/main/java/org/apache/camel/example/spring/javaconfig/MyRouteConfig.java
++++ b/examples/camel-example-spring-javaconfig/src/main/java/org/apache/camel/example/spring/javaconfig/MyRouteConfig.java
+@@ -37,8 +37,9 @@
+      * Allow this route to be run as an application
+      *
+      * @param args
++     * @throws Exception 
+      */
+-    public static void main(String[] args) {
++    public static void main(String[] args) throws Exception {
+         new Main().run(args);
+     }
+     
+diff --git a/examples/camel-example-spring/src/main/java/org/apache/camel/example/spring/MyRouteBuilder.java b/examples/camel-example-spring/src/main/java/org/apache/camel/example/spring/MyRouteBuilder.java
+index 835f70a..b06f9e9 100644
+--- a/examples/camel-example-spring/src/main/java/org/apache/camel/example/spring/MyRouteBuilder.java
++++ b/examples/camel-example-spring/src/main/java/org/apache/camel/example/spring/MyRouteBuilder.java
+@@ -29,8 +29,9 @@
+      * Allow this route to be run as an application
+      *
+      * @param args
++     * @throws Exception 
+      */
+-    public static void main(String[] args) {
++    public static void main(String[] args) throws Exception {
+         new Main().run(args);
+     }
+ 
+diff --git a/components/camel-guice/src/main/java/org/apache/camel/guice/Main.java b/components/camel-guice/src/main/java/org/apache/camel/guice/Main.java
+index 5a0857a..c9c18c0 100644
+--- a/components/camel-guice/src/main/java/org/apache/camel/guice/Main.java
++++ b/components/camel-guice/src/main/java/org/apache/camel/guice/Main.java
+@@ -59,7 +59,7 @@
+ */
+     }
+ 
+-    public static void main(String... args) {
++    public static void main(String... args) throws Exception {
+         Main main = new Main();
+         instance = main;
+         main.run(args);

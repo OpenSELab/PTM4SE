@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index f3e75b5..3a6d57b 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -1056,7 +1056,7 @@
+ 
+     private static Object attributeWithoutException(HttpServletRequest request, String attribute) {
+         try {
+-            return request.getAttribute(attribute);
++            return request.getAttribute(attribute) == null ? "" : request.getAttribute(attribute);
+         } catch (NullPointerException ex) {
+             // https://github.com/Atmosphere/atmosphere/issues/1732
+             logger.trace("Unexpected NPE", ex);
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index f3e75b5..3a6d57b 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -1056,7 +1056,7 @@
+ 
+     private static Object attributeWithoutException(HttpServletRequest request, String attribute) {
+         try {
+-            return request.getAttribute(attribute);
++            return request.getAttribute(attribute) == null ? "" : request.getAttribute(attribute);
+         } catch (NullPointerException ex) {
+             // https://github.com/Atmosphere/atmosphere/issues/1732
+             logger.trace("Unexpected NPE", ex);

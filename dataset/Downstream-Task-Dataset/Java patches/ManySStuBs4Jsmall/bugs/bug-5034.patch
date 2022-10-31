@@ -1,0 +1,26 @@
+diff --git a/components/camel-netty4/src/main/java/org/apache/camel/component/netty4/SingleUDPNettyServerBootstrapFactory.java b/components/camel-netty4/src/main/java/org/apache/camel/component/netty4/SingleUDPNettyServerBootstrapFactory.java
+index a545002..13d2166 100644
+--- a/components/camel-netty4/src/main/java/org/apache/camel/component/netty4/SingleUDPNettyServerBootstrapFactory.java
++++ b/components/camel-netty4/src/main/java/org/apache/camel/component/netty4/SingleUDPNettyServerBootstrapFactory.java
+@@ -161,7 +161,7 @@
+         SubnetUtils multicastSubnet = new SubnetUtils(MULTICAST_SUBNET);
+ 
+         if (multicastSubnet.getInfo().isInRange(configuration.getHost())) {
+-            ChannelFuture channelFuture = bootstrap.bind(hostAddress);
++            ChannelFuture channelFuture = bootstrap.bind(configuration.getPort());
+             channelFuture.awaitUninterruptibly();
+             channel = channelFuture.channel();
+             DatagramChannel datagramChannel = (DatagramChannel) channel;
+diff --git a/components/camel-netty4/src/main/java/org/apache/camel/component/netty4/SingleUDPNettyServerBootstrapFactory.java b/components/camel-netty4/src/main/java/org/apache/camel/component/netty4/SingleUDPNettyServerBootstrapFactory.java
+index a545002..13d2166 100644
+--- a/components/camel-netty4/src/main/java/org/apache/camel/component/netty4/SingleUDPNettyServerBootstrapFactory.java
++++ b/components/camel-netty4/src/main/java/org/apache/camel/component/netty4/SingleUDPNettyServerBootstrapFactory.java
+@@ -161,7 +161,7 @@
+         SubnetUtils multicastSubnet = new SubnetUtils(MULTICAST_SUBNET);
+ 
+         if (multicastSubnet.getInfo().isInRange(configuration.getHost())) {
+-            ChannelFuture channelFuture = bootstrap.bind(hostAddress);
++            ChannelFuture channelFuture = bootstrap.bind(configuration.getPort());
+             channelFuture.awaitUninterruptibly();
+             channel = channelFuture.channel();
+             DatagramChannel datagramChannel = (DatagramChannel) channel;

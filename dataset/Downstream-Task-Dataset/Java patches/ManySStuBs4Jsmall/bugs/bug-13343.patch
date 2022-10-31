@@ -1,0 +1,13 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/block/uncompressed/UncompressedLongBlockCursor.java b/presto-main/src/main/java/com/facebook/presto/block/uncompressed/UncompressedLongBlockCursor.java
+index 7c5f7b4..f3519a9 100644
+--- a/presto-main/src/main/java/com/facebook/presto/block/uncompressed/UncompressedLongBlockCursor.java
++++ b/presto-main/src/main/java/com/facebook/presto/block/uncompressed/UncompressedLongBlockCursor.java
+@@ -95,7 +95,7 @@
+         Preconditions.checkArgument(newPosition >= this.position, "Can't advance backwards");
+ 
+         // advance to specified position
+-        position = newPosition;
++        position = Math.max(newPosition, this.range.getStart());
+ 
+         // adjust offset
+         offset = (int) ((position - this.range.getStart()) * SIZE_OF_LONG);

@@ -1,0 +1,44 @@
+diff --git a/spring-boot/src/main/java/org/springframework/boot/context/embedded/tomcat/TomcatEmbeddedServletContainerFactory.java b/spring-boot/src/main/java/org/springframework/boot/context/embedded/tomcat/TomcatEmbeddedServletContainerFactory.java
+index 4447a2a..65e42b2 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/context/embedded/tomcat/TomcatEmbeddedServletContainerFactory.java
++++ b/spring-boot/src/main/java/org/springframework/boot/context/embedded/tomcat/TomcatEmbeddedServletContainerFactory.java
+@@ -330,7 +330,7 @@
+ 		}
+ 		catch (FileNotFoundException ex) {
+ 			throw new EmbeddedServletContainerException(
+-					"Could load key store: " + ex.getMessage(), ex);
++					"Could not load key store: " + ex.getMessage(), ex);
+ 		}
+ 		if (ssl.getKeyStoreType() != null) {
+ 			protocol.setKeystoreType(ssl.getKeyStoreType());
+@@ -348,7 +348,7 @@
+ 			}
+ 			catch (FileNotFoundException ex) {
+ 				throw new EmbeddedServletContainerException(
+-						"Could load trust store: " + ex.getMessage(), ex);
++						"Could not load trust store: " + ex.getMessage(), ex);
+ 			}
+ 		}
+ 		protocol.setTruststorePass(ssl.getTrustStorePassword());
+diff --git a/spring-boot/src/main/java/org/springframework/boot/context/embedded/tomcat/TomcatEmbeddedServletContainerFactory.java b/spring-boot/src/main/java/org/springframework/boot/context/embedded/tomcat/TomcatEmbeddedServletContainerFactory.java
+index 4447a2a..65e42b2 100644
+--- a/spring-boot/src/main/java/org/springframework/boot/context/embedded/tomcat/TomcatEmbeddedServletContainerFactory.java
++++ b/spring-boot/src/main/java/org/springframework/boot/context/embedded/tomcat/TomcatEmbeddedServletContainerFactory.java
+@@ -330,7 +330,7 @@
+ 		}
+ 		catch (FileNotFoundException ex) {
+ 			throw new EmbeddedServletContainerException(
+-					"Could load key store: " + ex.getMessage(), ex);
++					"Could not load key store: " + ex.getMessage(), ex);
+ 		}
+ 		if (ssl.getKeyStoreType() != null) {
+ 			protocol.setKeystoreType(ssl.getKeyStoreType());
+@@ -348,7 +348,7 @@
+ 			}
+ 			catch (FileNotFoundException ex) {
+ 				throw new EmbeddedServletContainerException(
+-						"Could load trust store: " + ex.getMessage(), ex);
++						"Could not load trust store: " + ex.getMessage(), ex);
+ 			}
+ 		}
+ 		protocol.setTruststorePass(ssl.getTrustStorePassword());

@@ -1,0 +1,65 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
+index 26ed24d..6f79e06 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
+@@ -458,7 +458,7 @@
+             dispatcher.fireFileStarted(path);
+             final Set<String> currentFileKeys = fileKeys.get(currentFile);
+             final Set<String> missingKeys = keysThatMustExist.stream()
+-                .filter(e -> !currentFileKeys.contains(e)).collect(Collectors.toSet());
++                .filter(key -> !currentFileKeys.contains(key)).collect(Collectors.toSet());
+             if (!missingKeys.isEmpty()) {
+                 for (Object key : missingKeys) {
+                     log(0, MSG_KEY, key);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
+index d73250e..86c549b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/AbstractClassCouplingCheck.java
+@@ -145,7 +145,7 @@
+      */
+     public final void setExcludedPackages(String... excludedPackages) {
+         final List<String> invalidIdentifiers = Arrays.stream(excludedPackages)
+-            .filter(x -> !CommonUtils.isName(x))
++            .filter(packageName -> !CommonUtils.isName(packageName))
+             .collect(Collectors.toList());
+         if (!invalidIdentifiers.isEmpty()) {
+             throw new IllegalArgumentException(
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/ParameterNameCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/ParameterNameCheck.java
+index 8c01409..f8a0444 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/ParameterNameCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/naming/ParameterNameCheck.java
+@@ -163,7 +163,7 @@
+      * @return whether the method matches the expected access modifier.
+      */
+     private boolean matchAccessModifiers(final AccessModifier accessModifier) {
+-        return Arrays.stream(accessModifiers).anyMatch(el -> el == accessModifier);
++        return Arrays.stream(accessModifiers).anyMatch(modifier -> modifier == accessModifier);
+     }
+ 
+     /**
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/MainFrame.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/MainFrame.java
+index 4521f89..fddb853 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/MainFrame.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/MainFrame.java
+@@ -107,7 +107,7 @@
+ 
+         final JComboBox<ParseMode> modesCombobox = new JComboBox<>(ParseMode.values());
+         modesCombobox.setSelectedIndex(0);
+-        modesCombobox.addActionListener(e -> {
++        modesCombobox.addActionListener(event -> {
+             model.setParseMode((ParseMode) modesCombobox.getSelectedItem());
+             reloadAction.actionPerformed(null);
+         });
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
+index 26ed24d..6f79e06 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/TranslationCheck.java
+@@ -458,7 +458,7 @@
+             dispatcher.fireFileStarted(path);
+             final Set<String> currentFileKeys = fileKeys.get(currentFile);
+             final Set<String> missingKeys = keysThatMustExist.stream()
+-                .filter(e -> !currentFileKeys.contains(e)).collect(Collectors.toSet());
++                .filter(key -> !currentFileKeys.contains(key)).collect(Collectors.toSet());
+             if (!missingKeys.isEmpty()) {
+                 for (Object key : missingKeys) {
+                     log(0, MSG_KEY, key);

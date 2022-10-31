@@ -1,0 +1,52 @@
+diff --git a/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/ClassFiltersTest.java b/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/ClassFiltersTest.java
+index 349d876..c89daf4 100644
+--- a/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/ClassFiltersTest.java
++++ b/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/ClassFiltersTest.java
+@@ -14,7 +14,7 @@
+ 
+         assertTrue(ClassFilters.name("com.navercorp.mock.TestObjectNestedClass$InstanceInner").accept(clazz));
+         assertFalse(ClassFilters.name("com.navercorp.mock.InvalidClassName").accept(clazz));
+-        assertFalse(ClassFilters.name(null).accept(clazz));
++        assertFalse(ClassFilters.name((String[]) null).accept(clazz));
+         assertFalse(ClassFilters.name(null, null).accept(clazz));
+     }
+ 
+diff --git a/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/MethodFiltersTest.java b/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/MethodFiltersTest.java
+index e6e4d28..89067fd 100644
+--- a/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/MethodFiltersTest.java
++++ b/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/MethodFiltersTest.java
+@@ -17,7 +17,7 @@
+         assertTrue(MethodFilters.name("call").accept(method));
+         assertFalse(MethodFilters.name("execute").accept(method));
+         assertFalse(MethodFilters.name().accept(method));
+-        assertFalse(MethodFilters.name(null).accept(method));
++        assertFalse(MethodFilters.name((String[]) null).accept(method));
+         assertFalse(MethodFilters.name(null, null).accept(method));
+     }
+     
+diff --git a/commons/src/test/java/com/navercorp/pinpoint/common/util/OutputParameterParserTest.java b/commons/src/test/java/com/navercorp/pinpoint/common/util/OutputParameterParserTest.java
+index 9083d14..2bab59e 100644
+--- a/commons/src/test/java/com/navercorp/pinpoint/common/util/OutputParameterParserTest.java
++++ b/commons/src/test/java/com/navercorp/pinpoint/common/util/OutputParameterParserTest.java
+@@ -54,7 +54,7 @@
+             Assert.assertArrayEquals(result.toArray(new String[result.size()]), params);
+         } catch (AssertionError e) {
+             logger.warn("parseResult:{}", result);
+-            logger.warn("params:{}", params);
++            logger.warn("params:{}", (Object[]) params);
+             throw e;
+         }
+     }
+diff --git a/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/ClassFiltersTest.java b/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/ClassFiltersTest.java
+index 349d876..c89daf4 100644
+--- a/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/ClassFiltersTest.java
++++ b/bootstrap-core/src/test/java/com/navercorp/pinpoint/bootstrap/instrument/ClassFiltersTest.java
+@@ -14,7 +14,7 @@
+ 
+         assertTrue(ClassFilters.name("com.navercorp.mock.TestObjectNestedClass$InstanceInner").accept(clazz));
+         assertFalse(ClassFilters.name("com.navercorp.mock.InvalidClassName").accept(clazz));
+-        assertFalse(ClassFilters.name(null).accept(clazz));
++        assertFalse(ClassFilters.name((String[]) null).accept(clazz));
+         assertFalse(ClassFilters.name(null, null).accept(clazz));
+     }
+ 

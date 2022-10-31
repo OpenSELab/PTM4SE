@@ -1,0 +1,13 @@
+diff --git a/core/server/worker/src/main/java/alluxio/worker/SessionCleaner.java b/core/server/worker/src/main/java/alluxio/worker/SessionCleaner.java
+index d122fbc..d777415 100644
+--- a/core/server/worker/src/main/java/alluxio/worker/SessionCleaner.java
++++ b/core/server/worker/src/main/java/alluxio/worker/SessionCleaner.java
+@@ -52,7 +52,7 @@
+     for (SessionCleanable sc : sessionCleanable) {
+       mSessionCleanables.add(sc);
+     }
+-    mCheckIntervalMs = Configuration.getInt(PropertyKey.WORKER_BLOCK_HEARTBEAT_INTERVAL_MS);
++    mCheckIntervalMs = (int) Configuration.getMs(PropertyKey.WORKER_BLOCK_HEARTBEAT_INTERVAL_MS);
+ 
+     mRunning = true;
+   }

@@ -1,0 +1,43 @@
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+index 80400d3..b11ec4c 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+@@ -4119,7 +4119,7 @@
+         }
+ 
+         if(dimension >= rank())
+-            throw new IllegalArgumentException("Invalid size index " + dimension + " wher it's >= rank " + rank());
++            throw new IllegalArgumentException("Invalid size index " + dimension + " where its >= rank " + rank());
+ 
+ 
+         return shapeOf().getInt(dimension);
+diff --git a/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/client/ParameterServerClientTest.java b/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/client/ParameterServerClientTest.java
+index 35c7dd0..fa26e81 100644
+--- a/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/client/ParameterServerClientTest.java
++++ b/nd4j-parameter-server-parent/nd4j-parameter-server-client/src/test/java/org/nd4j/parameterserver/client/ParameterServerClientTest.java
+@@ -42,7 +42,7 @@
+         masterNode = new ParameterServerSubscriber(mediaDriver);
+         masterNode.run(new String[] {
+                 "-m","true",
+-                "-l",String.valueOf(parameterLength),
++                "-s","1," + String.valueOf(parameterLength),
+                 "-p","40123",
+                 "-h","localhost",
+                 "-id","11",
+diff --git a/nd4j-serde/nd4j-aeron/src/main/java/org/nd4j/aeron/ipc/NDArrayMessage.java b/nd4j-serde/nd4j-aeron/src/main/java/org/nd4j/aeron/ipc/NDArrayMessage.java
+index 50269ac..c74548a 100644
+--- a/nd4j-serde/nd4j-aeron/src/main/java/org/nd4j/aeron/ipc/NDArrayMessage.java
++++ b/nd4j-serde/nd4j-aeron/src/main/java/org/nd4j/aeron/ipc/NDArrayMessage.java
+diff --git a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+index 80400d3..b11ec4c 100644
+--- a/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
++++ b/nd4j-backends/nd4j-api-parent/nd4j-api/src/main/java/org/nd4j/linalg/api/ndarray/BaseNDArray.java
+@@ -4119,7 +4119,7 @@
+         }
+ 
+         if(dimension >= rank())
+-            throw new IllegalArgumentException("Invalid size index " + dimension + " wher it's >= rank " + rank());
++            throw new IllegalArgumentException("Invalid size index " + dimension + " where its >= rank " + rank());
+ 
+ 
+         return shapeOf().getInt(dimension);

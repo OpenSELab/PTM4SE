@@ -1,0 +1,13 @@
+diff --git a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LucenePropertyIndex.java b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LucenePropertyIndex.java
+index 42a7804..5079088 100644
+--- a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LucenePropertyIndex.java
++++ b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LucenePropertyIndex.java
+@@ -1528,6 +1528,8 @@ public class LucenePropertyIndex implements AdvancedQueryIndex, QueryIndex, Nati
+                     String sub = pathRow.getPath();
+                     if (isVirtualRow()) {
+                         return sub;
++                    } else if (!"".equals(pathPrefix) && PathUtils.denotesRoot(sub)) {
++                        return pathPrefix;
+                     } else if (PathUtils.isAbsolute(sub)) {
+                         return pathPrefix + sub;
+                     } else {

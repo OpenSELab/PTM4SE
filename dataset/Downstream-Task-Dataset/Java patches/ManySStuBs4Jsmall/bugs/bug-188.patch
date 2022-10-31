@@ -1,0 +1,16 @@
+diff --git a/modules/activiti-upgrade/src/test/java/org/activiti/upgrade/DatabaseFormatterPostgres.java b/modules/activiti-upgrade/src/test/java/org/activiti/upgrade/DatabaseFormatterPostgres.java
+index 62e7d9c..57fd66c 100644
+--- a/modules/activiti-upgrade/src/test/java/org/activiti/upgrade/DatabaseFormatterPostgres.java
++++ b/modules/activiti-upgrade/src/test/java/org/activiti/upgrade/DatabaseFormatterPostgres.java
+@@ -18,9 +18,9 @@
+   @Override
+   public String formatBinary(byte[] bytes) {
+     StringBuffer sb = new StringBuffer();
+-    sb.append("E'\\\\x");
++    sb.append("decode('");
+     appendBytesInHex(sb, bytes);
+-    sb.append("'");
++    sb.append("', 'hex')");
+     return sb.toString();
+   }
+ 

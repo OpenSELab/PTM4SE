@@ -1,0 +1,13 @@
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/ZookeeperJobWorker.java b/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/ZookeeperJobWorker.java
+index 7f22013..2b68830 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/ZookeeperJobWorker.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/cluster/zookeeper/ZookeeperJobWorker.java
+@@ -216,7 +216,7 @@
+ 
+             long startTimeMillis = System.currentTimeMillis();
+ 
+-            while (jobQueue.size() == 0 && !isOverWaitTime(waitTime, startTimeMillis) && workerState.isStarted()) {
++            while (jobQueue.isEmpty() && !isOverWaitTime(waitTime, startTimeMillis) && workerState.isStarted()) {
+                 try {
+                     lock.wait(waitUnitTime);
+                 } catch (InterruptedException ignore) {

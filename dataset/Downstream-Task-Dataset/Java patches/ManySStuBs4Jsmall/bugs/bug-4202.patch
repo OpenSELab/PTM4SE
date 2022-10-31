@@ -1,0 +1,39 @@
+diff --git a/components/camel-docker/src/main/java/org/apache/camel/component/docker/producer/AsyncDockerProducer.java b/components/camel-docker/src/main/java/org/apache/camel/component/docker/producer/AsyncDockerProducer.java
+index 4298742..00aeb96 100644
+--- a/components/camel-docker/src/main/java/org/apache/camel/component/docker/producer/AsyncDockerProducer.java
++++ b/components/camel-docker/src/main/java/org/apache/camel/component/docker/producer/AsyncDockerProducer.java
+@@ -487,7 +487,7 @@
+      */
+     private ExecStartCmd executeExecStartRequest(DockerClient client, Message message) {
+ 
+-        LOGGER.debug("Executing Docker Exec Create Request");
++        LOGGER.debug("Executing Docker Exec Start Request");
+ 
+         String execId = DockerHelper.getProperty(DockerConstants.DOCKER_EXEC_ID, configuration, message, String.class);
+ 
+diff --git a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/RemoteFileConsumer.java b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/RemoteFileConsumer.java
+index b1ae6d7..4f3b0fe 100644
+--- a/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/RemoteFileConsumer.java
++++ b/components/camel-ftp/src/main/java/org/apache/camel/component/file/remote/RemoteFileConsumer.java
+@@ -113,7 +113,7 @@
+             exchange.addOnCompletion(new SynchronizationAdapter() {
+                 @Override
+                 public void onDone(Exchange exchange) {
+-                    log.trace("postPollCheck disconnect from: {}", getEndpoint());
++                    log.trace("processExchange disconnect from: {}", getEndpoint());
+                     disconnect();
+                 }
+ 
+diff --git a/components/camel-docker/src/main/java/org/apache/camel/component/docker/producer/AsyncDockerProducer.java b/components/camel-docker/src/main/java/org/apache/camel/component/docker/producer/AsyncDockerProducer.java
+index 4298742..00aeb96 100644
+--- a/components/camel-docker/src/main/java/org/apache/camel/component/docker/producer/AsyncDockerProducer.java
++++ b/components/camel-docker/src/main/java/org/apache/camel/component/docker/producer/AsyncDockerProducer.java
+@@ -487,7 +487,7 @@
+      */
+     private ExecStartCmd executeExecStartRequest(DockerClient client, Message message) {
+ 
+-        LOGGER.debug("Executing Docker Exec Create Request");
++        LOGGER.debug("Executing Docker Exec Start Request");
+ 
+         String execId = DockerHelper.getProperty(DockerConstants.DOCKER_EXEC_ID, configuration, message, String.class);
+ 

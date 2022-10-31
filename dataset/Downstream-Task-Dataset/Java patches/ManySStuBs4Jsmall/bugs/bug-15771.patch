@@ -1,0 +1,44 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/partition/impl/PartitionStateGeneratorTest.java b/hazelcast/src/test/java/com/hazelcast/partition/impl/PartitionStateGeneratorTest.java
+index 85bb0ea..9381eea 100644
+--- a/hazelcast/src/test/java/com/hazelcast/partition/impl/PartitionStateGeneratorTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/partition/impl/PartitionStateGeneratorTest.java
+@@ -291,7 +291,7 @@
+         if (startAfter != null) {
+             Address address = startAfter.getAddress();
+             byte[] startIp = address.getInetAddress().getAddress();
+-            if (startIp[3] < 255) {
++            if ((0xff & startIp[3]) < 255) {
+                 ip[2] = startIp[2];
+                 ip[3] = (byte) (startIp[3] + 1);
+             } else {
+@@ -315,7 +315,7 @@
+             MemberImpl m = new MemberImpl(new Address(InetAddress.getByAddress(new byte[]{ip[0], ip[1], ip[2], ip[3]})
+                     , port), false);
+             members.add(m);
+-            if (ip[3] == 255) {
++            if ((0xff & ip[3]) == 255) {
+                 ip[2] = ++ip[2];
+             }
+         }
+diff --git a/hazelcast/src/test/java/com/hazelcast/partition/impl/PartitionStateGeneratorTest.java b/hazelcast/src/test/java/com/hazelcast/partition/impl/PartitionStateGeneratorTest.java
+index 85bb0ea..9381eea 100644
+--- a/hazelcast/src/test/java/com/hazelcast/partition/impl/PartitionStateGeneratorTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/partition/impl/PartitionStateGeneratorTest.java
+@@ -291,7 +291,7 @@
+         if (startAfter != null) {
+             Address address = startAfter.getAddress();
+             byte[] startIp = address.getInetAddress().getAddress();
+-            if (startIp[3] < 255) {
++            if ((0xff & startIp[3]) < 255) {
+                 ip[2] = startIp[2];
+                 ip[3] = (byte) (startIp[3] + 1);
+             } else {
+@@ -315,7 +315,7 @@
+             MemberImpl m = new MemberImpl(new Address(InetAddress.getByAddress(new byte[]{ip[0], ip[1], ip[2], ip[3]})
+                     , port), false);
+             members.add(m);
+-            if (ip[3] == 255) {
++            if ((0xff & ip[3]) == 255) {
+                 ip[2] = ++ip[2];
+             }
+         }

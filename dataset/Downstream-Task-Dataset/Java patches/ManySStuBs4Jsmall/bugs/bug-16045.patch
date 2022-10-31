@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/util/executor/DelegatingFuture.java b/hazelcast/src/main/java/com/hazelcast/util/executor/DelegatingFuture.java
+index 632e9ca..5e363ea 100644
+--- a/hazelcast/src/main/java/com/hazelcast/util/executor/DelegatingFuture.java
++++ b/hazelcast/src/main/java/com/hazelcast/util/executor/DelegatingFuture.java
+@@ -109,7 +109,7 @@
+     }
+ 
+     public final boolean isDone() {
+-        return done;
++        return done ? done : future.isDone();
+     }
+ 
+     protected void setError(Throwable error) {
+diff --git a/hazelcast/src/main/java/com/hazelcast/util/executor/DelegatingFuture.java b/hazelcast/src/main/java/com/hazelcast/util/executor/DelegatingFuture.java
+index 632e9ca..5e363ea 100644
+--- a/hazelcast/src/main/java/com/hazelcast/util/executor/DelegatingFuture.java
++++ b/hazelcast/src/main/java/com/hazelcast/util/executor/DelegatingFuture.java
+@@ -109,7 +109,7 @@
+     }
+ 
+     public final boolean isDone() {
+-        return done;
++        return done ? done : future.isDone();
+     }
+ 
+     protected void setError(Throwable error) {

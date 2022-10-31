@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/opencloudb/route/RouteService.java b/src/main/java/org/opencloudb/route/RouteService.java
+index 57c0df4..5e3d44a 100644
+--- a/src/main/java/org/opencloudb/route/RouteService.java
++++ b/src/main/java/org/opencloudb/route/RouteService.java
+@@ -113,7 +113,7 @@
+ 					charset, sc, tableId2DataNodeCache);
+ 		}
+ 
+-		if (sqlType == ServerParse.SELECT && rrs.isCacheAble()) {
++		if (rrs!=null && sqlType == ServerParse.SELECT && rrs.isCacheAble()) {
+ 			sqlRouteCache.putIfAbsent(cacheKey, rrs);
+ 		}
+ 		return rrs;
+diff --git a/src/main/java/org/opencloudb/route/RouteService.java b/src/main/java/org/opencloudb/route/RouteService.java
+index 57c0df4..5e3d44a 100644
+--- a/src/main/java/org/opencloudb/route/RouteService.java
++++ b/src/main/java/org/opencloudb/route/RouteService.java
+@@ -113,7 +113,7 @@
+ 					charset, sc, tableId2DataNodeCache);
+ 		}
+ 
+-		if (sqlType == ServerParse.SELECT && rrs.isCacheAble()) {
++		if (rrs!=null && sqlType == ServerParse.SELECT && rrs.isCacheAble()) {
+ 			sqlRouteCache.putIfAbsent(cacheKey, rrs);
+ 		}
+ 		return rrs;

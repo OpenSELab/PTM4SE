@@ -1,0 +1,41 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/proxy/txn/xa/XATransactionContextProxy.java b/hazelcast-client/src/main/java/com/hazelcast/client/proxy/txn/xa/XATransactionContextProxy.java
+index 8b826e2..60db0e2 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/proxy/txn/xa/XATransactionContextProxy.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/proxy/txn/xa/XATransactionContextProxy.java
+@@ -71,24 +71,24 @@
+         try {
+             connection = transactionManager.connect();
+         } catch (Exception e) {
+-            throw new HazelcastException("Could not obtain Connection!!!", e);
++            throw new HazelcastException("Could not obtain Connection!", e);
+         }
+         this.transaction = new XATransactionProxy(client, connection, xid, timeout);
+     }
+ 
+     @Override
+     public void beginTransaction() {
+-        throw new UnsupportedOperationException("XA Transaction cannot be started manually!!!");
++        throw new UnsupportedOperationException("XA Transaction cannot be started manually!");
+     }
+ 
+     @Override
+     public void commitTransaction() throws TransactionException {
+-        throw new UnsupportedOperationException("XA Transaction cannot be committed manually!!!");
++        throw new UnsupportedOperationException("XA Transaction cannot be committed manually!");
+     }
+ 
+     @Override
+     public void rollbackTransaction() {
+-        throw new UnsupportedOperationException("XA Transaction cannot be rollbacked manually!!!");
++        throw new UnsupportedOperationException("XA Transaction cannot be rolled back manually!");
+     }
+ 
+     @Override
+@@ -166,6 +166,6 @@
+ 
+     @Override
+     public XAResource getXaResource() {
+-        throw new UnsupportedOperationException("Use HazelcastInstance.getXAResource() instead!!!");
++        throw new UnsupportedOperationException("Use HazelcastInstance.getXAResource() instead!");
+     }
+ }

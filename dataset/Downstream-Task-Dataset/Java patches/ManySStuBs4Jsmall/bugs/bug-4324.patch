@@ -1,0 +1,16 @@
+diff --git a/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/SjmsMessage.java b/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/SjmsMessage.java
+index 3abdd93..d352034 100644
+--- a/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/SjmsMessage.java
++++ b/components/camel-sjms/src/main/java/org/apache/camel/component/sjms/SjmsMessage.java
+@@ -253,9 +253,8 @@
+             String id = getDestinationAsString(jmsMessage.getJMSDestination());
+             if(id != null) {
+                 id += jmsMessage.getJMSMessageID();
+-            }
+-            else {
+-                id = super.createMessageId();
++            } else {
++                id = jmsMessage.getJMSMessageID();
+             }
+             return getSanitizedString(id);
+         } catch (JMSException e) {

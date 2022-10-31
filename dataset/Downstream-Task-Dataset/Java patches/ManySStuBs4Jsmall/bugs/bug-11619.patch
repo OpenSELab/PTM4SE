@@ -1,0 +1,13 @@
+diff --git a/processing/src/main/java/io/druid/query/metadata/SegmentMetadataQueryRunnerFactory.java b/processing/src/main/java/io/druid/query/metadata/SegmentMetadataQueryRunnerFactory.java
+index 0e846b8..1e067c5 100644
+--- a/processing/src/main/java/io/druid/query/metadata/SegmentMetadataQueryRunnerFactory.java
++++ b/processing/src/main/java/io/druid/query/metadata/SegmentMetadataQueryRunnerFactory.java
+@@ -87,7 +87,7 @@
+         SegmentMetadataQuery query = (SegmentMetadataQuery) inQ;
+         final SegmentAnalyzer analyzer = new SegmentAnalyzer(query.getAnalysisTypes());
+         final Map<String, ColumnAnalysis> analyzedColumns = analyzer.analyze(segment);
+-        final int numRows = analyzer.numRows(segment);
++        final long numRows = analyzer.numRows(segment);
+         long totalSize = 0;
+ 
+         if (analyzer.analyzingSize()) {

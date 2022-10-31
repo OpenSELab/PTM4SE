@@ -1,0 +1,26 @@
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/jms/bridge/JMSBridgeHandler.java b/messaging/src/main/java/org/jboss/as/messaging/jms/bridge/JMSBridgeHandler.java
+index 2656adf..407665d 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/jms/bridge/JMSBridgeHandler.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/jms/bridge/JMSBridgeHandler.java
+@@ -88,7 +88,7 @@
+             final String name = operation.require(NAME).asString();
+             if (STARTED.equals(name)) {
+                 context.getResult().set(bridge.isStarted());
+-            } else if (PAUSED.equals(name)) {
++            } else if (PAUSED.getName().equals(name)) {
+                 context.getResult().set(bridge.isPaused());
+             } else {
+                 throw MESSAGES.unsupportedAttribute(name);
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/jms/bridge/JMSBridgeHandler.java b/messaging/src/main/java/org/jboss/as/messaging/jms/bridge/JMSBridgeHandler.java
+index 2656adf..407665d 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/jms/bridge/JMSBridgeHandler.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/jms/bridge/JMSBridgeHandler.java
+@@ -88,7 +88,7 @@
+             final String name = operation.require(NAME).asString();
+             if (STARTED.equals(name)) {
+                 context.getResult().set(bridge.isStarted());
+-            } else if (PAUSED.equals(name)) {
++            } else if (PAUSED.getName().equals(name)) {
+                 context.getResult().set(bridge.isPaused());
+             } else {
+                 throw MESSAGES.unsupportedAttribute(name);

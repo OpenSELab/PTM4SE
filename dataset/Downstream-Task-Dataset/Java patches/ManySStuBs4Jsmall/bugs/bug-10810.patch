@@ -1,0 +1,157 @@
+diff --git a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/DoubleColumnCondition.java b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/DoubleColumnCondition.java
+index 4e65346..43dd572 100644
+--- a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/DoubleColumnCondition.java
++++ b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/DoubleColumnCondition.java
+@@ -33,7 +33,7 @@
+ public class DoubleColumnCondition extends BaseColumnCondition {
+ 
+     private final ConditionOp op;
+-    private final double value;
++    private final Double value;
+     private final Set<Double> set;
+ 
+     /**
+@@ -94,7 +94,7 @@
+             throw new IllegalArgumentException("Invalid condition op: can ONLY use this constructor with InSet or NotInSet ops");
+         }
+         this.op = op;
+-        this.value = 0;
++        this.value = null;
+         this.set = set;
+     }
+ 
+@@ -103,7 +103,7 @@
+                                   @JsonProperty("value") double value, @JsonProperty("set") Set<Double> set) {
+         super(columnName, DEFAULT_SEQUENCE_CONDITION_MODE);
+         this.op = op;
+-        this.value = value;
++        this.value = (set == null ? value : null);
+         this.set = set;
+     }
+ 
+diff --git a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/IntegerColumnCondition.java b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/IntegerColumnCondition.java
+index df5f32f..fc85a70 100644
+--- a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/IntegerColumnCondition.java
++++ b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/IntegerColumnCondition.java
+@@ -33,7 +33,7 @@
+ public class IntegerColumnCondition extends BaseColumnCondition {
+ 
+     private final ConditionOp op;
+-    private final int value;
++    private final Integer value;
+     private final Set<Integer> set;
+ 
+     /**
+@@ -94,16 +94,16 @@
+             throw new IllegalArgumentException("Invalid condition op: can ONLY use this constructor with InSet or NotInSet ops");
+         }
+         this.op = op;
+-        this.value = 0;
++        this.value = null;
+         this.set = set;
+     }
+ 
+     //Private constructor for Jackson deserialization only
+     private IntegerColumnCondition(@JsonProperty("columnName") String columnName, @JsonProperty("op") ConditionOp op,
+-                                   @JsonProperty("value") int value, @JsonProperty("set") Set<Integer> set) {
++                                   @JsonProperty("value") Integer value, @JsonProperty("set") Set<Integer> set) {
+         super(columnName, DEFAULT_SEQUENCE_CONDITION_MODE);
+         this.op = op;
+-        this.value = value;
++        this.value = (set == null ? value : null);
+         this.set = set;
+     }
+ 
+diff --git a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/LongColumnCondition.java b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/LongColumnCondition.java
+index d7c5c0a..231a5f6 100644
+--- a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/LongColumnCondition.java
++++ b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/LongColumnCondition.java
+@@ -33,7 +33,7 @@
+ public class LongColumnCondition extends BaseColumnCondition {
+ 
+     private final ConditionOp op;
+-    private final long value;
++    private final Long value;
+     private final Set<Long> set;
+ 
+     /**
+@@ -94,7 +94,7 @@
+             throw new IllegalArgumentException("Invalid condition op: can ONLY use this constructor with InSet or NotInSet ops");
+         }
+         this.op = op;
+-        this.value = 0;
++        this.value = null;
+         this.set = set;
+     }
+ 
+@@ -103,7 +103,7 @@
+                                 @JsonProperty("value") long value, @JsonProperty("set") Set<Long> set) {
+         super(columnName, DEFAULT_SEQUENCE_CONDITION_MODE);
+         this.op = op;
+-        this.value = value;
++        this.value = (set == null ? value : null);
+         this.set = set;
+     }
+ 
+diff --git a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/TimeColumnCondition.java b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/TimeColumnCondition.java
+index fac50fe..c2a3fb3 100644
+--- a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/TimeColumnCondition.java
++++ b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/TimeColumnCondition.java
+@@ -33,7 +33,7 @@
+ public class TimeColumnCondition extends BaseColumnCondition {
+ 
+     private final ConditionOp op;
+-    private final long value;
++    private final Long value;
+     private final Set<Long> set;
+ 
+     /**
+@@ -94,7 +94,7 @@
+             throw new IllegalArgumentException("Invalid condition op: can ONLY use this constructor with InSet or NotInSet ops");
+         }
+         this.op = op;
+-        this.value = 0;
++        this.value = null;
+         this.set = set;
+     }
+ 
+@@ -103,7 +103,7 @@
+                                 @JsonProperty("value") long value, @JsonProperty("set") Set<Long> set) {
+         super(columnName, DEFAULT_SEQUENCE_CONDITION_MODE);
+         this.op = op;
+-        this.value = value;
++        this.value = (set == null ? value : null);
+         this.set = set;
+     }
+ 
+diff --git a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/DoubleColumnCondition.java b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/DoubleColumnCondition.java
+index 4e65346..43dd572 100644
+--- a/datavec-api/src/main/java/org/datavec/api/transform/condition/column/DoubleColumnCondition.java
++++ b/datavec-api/src/main/java/org/datavec/api/transform/condition/column/DoubleColumnCondition.java
+@@ -33,7 +33,7 @@
+ public class DoubleColumnCondition extends BaseColumnCondition {
+ 
+     private final ConditionOp op;
+-    private final double value;
++    private final Double value;
+     private final Set<Double> set;
+ 
+     /**
+@@ -94,7 +94,7 @@
+             throw new IllegalArgumentException("Invalid condition op: can ONLY use this constructor with InSet or NotInSet ops");
+         }
+         this.op = op;
+-        this.value = 0;
++        this.value = null;
+         this.set = set;
+     }
+ 
+@@ -103,7 +103,7 @@
+                                   @JsonProperty("value") double value, @JsonProperty("set") Set<Double> set) {
+         super(columnName, DEFAULT_SEQUENCE_CONDITION_MODE);
+         this.op = op;
+-        this.value = value;
++        this.value = (set == null ? value : null);
+         this.set = set;
+     }
+ 

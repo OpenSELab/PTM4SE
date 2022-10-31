@@ -1,0 +1,60 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandgive.java b/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
+index 7dd3a48..bfaae0a 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
+@@ -30,11 +30,11 @@
+ 		String itemname = stack.getType().toString().toLowerCase().replace("_", "");
+ 		if (sender instanceof Player
+ 			&& (ess.getSettings().permissionBasedItemSpawn()
+-				? !ess.getUser(sender).isAuthorized("essentials.give.item-all")
++				? (!ess.getUser(sender).isAuthorized("essentials.give.item-all")
+ 				  && !ess.getUser(sender).isAuthorized("essentials.give.item-" + itemname)
+-				  && !ess.getUser(sender).isAuthorized("essentials.give.item-" + stack.getTypeId())
+-				: !ess.getUser(sender).isAuthorized("essentials.itemspawn.exempt")
+-				  && !ess.getUser(sender).canSpawnItem(stack.getTypeId())))
++				   && !ess.getUser(sender).isAuthorized("essentials.give.item-" + stack.getTypeId()))
++				: (!ess.getUser(sender).isAuthorized("essentials.itemspawn.exempt")
++				   && !ess.getUser(sender).canSpawnItem(stack.getTypeId()))))
+ 		{
+ 			sender.sendMessage(ChatColor.RED + "You are not allowed to spawn the item " + itemname);
+ 			return;
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commanditem.java b/Essentials/src/com/earth2me/essentials/commands/Commanditem.java
+index 119d0cc..6750fbf 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commanditem.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commanditem.java
+@@ -26,11 +26,11 @@
+ 
+ 		String itemname = stack.getType().toString().toLowerCase().replace("_", "");
+ 		if (ess.getSettings().permissionBasedItemSpawn()
+-			? !user.isAuthorized("essentials.itemspawn.item-all")
++			? (!user.isAuthorized("essentials.itemspawn.item-all")
+ 			  && !user.isAuthorized("essentials.itemspawn.item-" + itemname)
+-			  && !user.isAuthorized("essentials.itemspawn.item-" + stack.getTypeId())
+-			: !user.isAuthorized("essentials.itemspawn.exempt")
+-			  && !user.canSpawnItem(stack.getTypeId()))
++			   && !user.isAuthorized("essentials.itemspawn.item-" + stack.getTypeId()))
++			: (!user.isAuthorized("essentials.itemspawn.exempt")
++			   && !user.canSpawnItem(stack.getTypeId())))
+ 		{
+ 			user.sendMessage(ChatColor.RED + "You are not allowed to spawn the item " + itemname);
+ 			return;
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandgive.java b/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
+index 7dd3a48..bfaae0a 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandgive.java
+@@ -30,11 +30,11 @@
+ 		String itemname = stack.getType().toString().toLowerCase().replace("_", "");
+ 		if (sender instanceof Player
+ 			&& (ess.getSettings().permissionBasedItemSpawn()
+-				? !ess.getUser(sender).isAuthorized("essentials.give.item-all")
++				? (!ess.getUser(sender).isAuthorized("essentials.give.item-all")
+ 				  && !ess.getUser(sender).isAuthorized("essentials.give.item-" + itemname)
+-				  && !ess.getUser(sender).isAuthorized("essentials.give.item-" + stack.getTypeId())
+-				: !ess.getUser(sender).isAuthorized("essentials.itemspawn.exempt")
+-				  && !ess.getUser(sender).canSpawnItem(stack.getTypeId())))
++				   && !ess.getUser(sender).isAuthorized("essentials.give.item-" + stack.getTypeId()))
++				: (!ess.getUser(sender).isAuthorized("essentials.itemspawn.exempt")
++				   && !ess.getUser(sender).canSpawnItem(stack.getTypeId()))))
+ 		{
+ 			sender.sendMessage(ChatColor.RED + "You are not allowed to spawn the item " + itemname);
+ 			return;

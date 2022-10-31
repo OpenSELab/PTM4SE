@@ -1,0 +1,368 @@
+diff --git a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
+index ccc3563..729ba3a 100644
+--- a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
++++ b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
+@@ -282,7 +282,7 @@
+                     logger.info("Unsupported MAX!Cube message detected. Ignoring and continue with next Line.");
+                     this.messageProcessor.reset();
+                 } catch (MessageIsWaitingException ex) {
+-                    logger.info("There was and unhandled message waiting. Ignoring and continue with next Line.");
++                    logger.info("There was an unhandled message waiting. Ignoring and continue with next Line.");
+                     this.messageProcessor.reset();
+                 } catch (Exception e) {
+                     logger.info("Failed to process message received by MAX! protocol.");
+diff --git a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/message/Device.java b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/message/Device.java
+index 2d5c1fe..029e710 100644
+--- a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/message/Device.java
++++ b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/message/Device.java
+@@ -84,7 +84,7 @@
+         String rfAddress = Utils.toHex(raw[0] & 0xFF, raw[1] & 0xFF, raw[2] & 0xFF);
+ 
+         // Based on the RF address and the corresponding configuration,
+-        // create the device based on the type specified in it's configuration
++        // create the device based on the type specified in its configuration
+ 
+         Device device = Device.create(rfAddress, configurations);
+         if (device == null) {
+diff --git a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/message/S_Message.java b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/message/S_Message.java
+index e1c80c2..7f2d813 100644
+--- a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/message/S_Message.java
++++ b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/message/S_Message.java
+@@ -39,7 +39,7 @@
+                 logger.debug("Exception occurred during parsing of S message: {}", e.getMessage(), e);
+             }
+         } else {
+-            logger.debug("Unexpected # of tolkens ({}) received in S message: {}", tokens.length, this.getPayload());
++            logger.debug("Unexpected # of tokens ({}) received in S message: {}", tokens.length, this.getPayload());
+         }
+     }
+ 
+diff --git a/bundles/binding/org.openhab.binding.maxcul/src/main/java/org/openhab/binding/maxcul/internal/MaxCulBinding.java b/bundles/binding/org.openhab.binding.maxcul/src/main/java/org/openhab/binding/maxcul/internal/MaxCulBinding.java
+index 61b4038..25be031 100644
+--- a/bundles/binding/org.openhab.binding.maxcul/src/main/java/org/openhab/binding/maxcul/internal/MaxCulBinding.java
++++ b/bundles/binding/org.openhab.binding.maxcul/src/main/java/org/openhab/binding/maxcul/internal/MaxCulBinding.java
+diff --git a/bundles/binding/org.openhab.binding.maxcul/src/main/java/org/openhab/binding/maxcul/internal/MaxCulGenericBindingProvider.java b/bundles/binding/org.openhab.binding.maxcul/src/main/java/org/openhab/binding/maxcul/internal/MaxCulGenericBindingProvider.java
+index d2ce571..570bebf 100644
+--- a/bundles/binding/org.openhab.binding.maxcul/src/main/java/org/openhab/binding/maxcul/internal/MaxCulGenericBindingProvider.java
++++ b/bundles/binding/org.openhab.binding.maxcul/src/main/java/org/openhab/binding/maxcul/internal/MaxCulGenericBindingProvider.java
+@@ -215,7 +215,7 @@
+      * -> B,C B -> C,D
+      */
+     private void buildAssociationMap() {
+-        // TODO refactor into it's own class e.g. AssociationMap extends HashMap
++        // TODO refactor into its own class e.g. AssociationMap extends HashMap
+         if (super.bindingConfigs.values().isEmpty() == false) {
+             logger.debug(
+                     "Found " + super.bindingConfigs.values().size() + " binding configs to process in association map");
+@@ -249,7 +249,7 @@
+                         }
+                     }
+                 } else if (config.getAssociatedSerialNum().isEmpty() == false) {
+-                    /* new serial number, add it and it's associations */
++                    /* new serial number, add it and its associations */
+                     HashSet<MaxCulBindingConfig> set = new HashSet<MaxCulBindingConfig>();
+                     for (String serial : config.getAssociatedSerialNum()) {
+                         /*
+diff --git a/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/MiosUnit.java b/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/MiosUnit.java
+index 9d59dee..b6a9aed 100644
+--- a/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/MiosUnit.java
++++ b/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/MiosUnit.java
+@@ -65,7 +65,7 @@
+     private static final Logger logger = LoggerFactory.getLogger(MiosUnit.class);
+ 
+     /**
+-     * All MiOS unit's have a name, that must be specified as the configuration is being loaded.
++     * All MiOS units have a name, that must be specified as the configuration is being loaded.
+      */
+     public MiosUnit(String name) {
+         this.name = name;
+diff --git a/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/MiosUnitConnector.java b/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/MiosUnitConnector.java
+index 53ccc3e..5336942 100644
+--- a/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/MiosUnitConnector.java
++++ b/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/MiosUnitConnector.java
+@@ -191,7 +191,7 @@
+                     command.toString(), config.getItemName());
+             return;
+         } else if (newCommand.equals("")) {
+-            logger.trace("callDevice: Item '{}' has disabled the use of Command '{}' via it's configuration '{}'",
++            logger.trace("callDevice: Item '{}' has disabled the use of Command '{}' via its configuration '{}'",
+                     new Object[] { config.getItemName(), command.toString(), config.toProperty() });
+             return;
+         }
+diff --git a/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/config/DeviceBindingConfig.java b/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/config/DeviceBindingConfig.java
+index 6e8d54e..e028e61 100644
+--- a/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/config/DeviceBindingConfig.java
++++ b/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/config/DeviceBindingConfig.java
+@@ -76,7 +76,7 @@
+  * <p>
+  *
+  * In addition to binding against a Device's Variables, you can bind to the set of Device Attributes it exposes.
+- * Specifically it's <code>id</code> and <code>status</code>:
++ * Specifically its <code>id</code> and <code>status</code>:
+  * <p>
+  * <ul>
+  * <li>
+diff --git a/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/config/MiosBindingConfig.java b/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/config/MiosBindingConfig.java
+index 242fc42..560680b 100644
+--- a/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/config/MiosBindingConfig.java
++++ b/bundles/binding/org.openhab.binding.mios/src/main/java/org/openhab/binding/mios/internal/config/MiosBindingConfig.java
+@@ -388,7 +388,7 @@
+      * If the <code>in:</code> parameter is missing, then no transformation will occur, and the source-value will be
+      * returned (as a <code>StringType</code>).
+      * <p>
+-     * If the <code>in:</code> parameter is present, then it's value is used to determine which openHAB
++     * If the <code>in:</code> parameter is present, then its value is used to determine which openHAB
+      * TransformationService should be used to transform the value.
+      * 
+      * @return the transformed value, or the input (<code>value</code>) if no transformation has been specified in the
+@@ -441,7 +441,7 @@
+      * Transform data in an openHAB Item into a form suitable for use in calls made to a MiOS Unit.
+      * <p>
+      * 
+-     * In order to calls a MiOS Unit, we may need to transform an Item's current value from it's openHAB State to a form
++     * In order to calls a MiOS Unit, we may need to transform an Item's current value from its openHAB State to a form
+      * suitable for transmission to remote MiOS Unit.
+      * <p>
+      * This method is responsible for transforming an Item's State value, using metadata supplied by the user, via the
+@@ -450,7 +450,7 @@
+      * If the <code>out:</code> parameter is missing, then no transformation will occur, and the source-value will be
+      * returned.
+      * <p>
+-     * If the <code>out:</code> parameter is present, then it's value is used to determine which openHAB
++     * If the <code>out:</code> parameter is present, then its value is used to determine which openHAB
+      * TransformationService should be used to transform the value.
+      * 
+      * @return the transformed value, or the input (<code>value</code>) if no transformation has been specified in the
+diff --git a/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/ProcessImageFactory.java b/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/ProcessImageFactory.java
+index 9858d67..8a21a51 100644
+--- a/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/ProcessImageFactory.java
++++ b/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/ProcessImageFactory.java
+@@ -18,7 +18,7 @@
+ 
+ /**
+  * Interface defining the factory methods for
+- * the process image and it's elements.
++ * the process image and its elements.
+  *
+  * @author Dieter Wimberger
+  * @version @version@ (@date@)
+diff --git a/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleDigitalOut.java b/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleDigitalOut.java
+index 454c49d..76f0d67 100644
+--- a/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleDigitalOut.java
++++ b/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleDigitalOut.java
+@@ -34,7 +34,7 @@
+ 
+     /**
+      * Constructs a new <tt>SimpleDigitalOut</tt> instance.
+-     * It's state will be invalid.
++     * Its state will be invalid.
+      */
+     public SimpleDigitalOut() {
+     }// constructor
+diff --git a/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleInputRegister.java b/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleInputRegister.java
+index 68c64af..4ffcef3 100644
+--- a/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleInputRegister.java
++++ b/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleInputRegister.java
+@@ -29,7 +29,7 @@
+ 
+     /**
+      * Constructs a new <tt>SimpleInputRegister</tt> instance.
+-     * It's state will be invalid.
++     * Its state will be invalid.
+      */
+     public SimpleInputRegister() {
+     }// constructor
+diff --git a/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleRegister.java b/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleRegister.java
+index 1797803..8e5c969 100644
+--- a/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleRegister.java
++++ b/bundles/binding/org.openhab.binding.modbus/src/main/java/net/wimpi/modbus/procimg/SimpleRegister.java
+@@ -29,7 +29,7 @@
+ 
+     /**
+      * Constructs a new <tt>SimpleRegister</tt> instance.
+-     * It's state will be invalid.
++     * Its state will be invalid.
+      */
+     public SimpleRegister() {
+         m_Register = null;
+diff --git a/bundles/binding/org.openhab.binding.mpd/src/main/java/org/openhab/binding/mpd/internal/MpdBinding.java b/bundles/binding/org.openhab.binding.mpd/src/main/java/org/openhab/binding/mpd/internal/MpdBinding.java
+index d43123a..728d751 100644
+--- a/bundles/binding/org.openhab.binding.mpd/src/main/java/org/openhab/binding/mpd/internal/MpdBinding.java
++++ b/bundles/binding/org.openhab.binding.mpd/src/main/java/org/openhab/binding/mpd/internal/MpdBinding.java
+@@ -178,11 +178,11 @@
+ 
+     /**
+      * Executes the given <code>playerCommandLine</code> on the MPD. The
+-     * <code>playerCommandLine</code> is split into it's properties
++     * <code>playerCommandLine</code> is split into its properties
+      * <code>playerId</code> and <code>playerCommand</code>.
+      *
+      * @param playerCommandLine the complete commandLine which gets splitted into
+-     *            it's properties.
++     *            its properties.
+      */
+     private void executePlayerCommand(String playerCommandLine, Object commandParams) {
+         String[] commandParts = playerCommandLine.split(":");
+@@ -266,7 +266,7 @@
+             } catch (MPDPlayerException pe) {
+                 logger.error("error while executing {} command: " + pe.getMessage(), pCommand);
+             } catch (Exception e) {
+-                logger.warn("unknow playerCommand '{}'", playerCommand);
++                logger.warn("unknown playerCommand '{}'", playerCommand);
+             }
+         } else {
+             logger.warn("didn't find player configuration instance for playerId '{}'", playerId);
+@@ -619,7 +619,7 @@
+             Set<JobKey> jobKeys = sched.getJobKeys(jobGroupEquals(MPD_SCHEDULER_GROUP));
+             if (jobKeys.size() > 0) {
+                 sched.deleteJobs(new ArrayList<JobKey>(jobKeys));
+-                logger.debug("Found {} jobs to delete from DefaulScheduler (keys={})", jobKeys.size(), jobKeys);
++                logger.debug("Found {} jobs to delete from DefaultScheduler (keys={})", jobKeys.size(), jobKeys);
+             }
+         } catch (SchedulerException e) {
+             logger.warn("Couldn't remove job: {}", e.getMessage());
+diff --git a/bundles/binding/org.openhab.binding.mqtt/src/main/java/org/openhab/binding/mqtt/internal/MqttEventBusBinding.java b/bundles/binding/org.openhab.binding.mqtt/src/main/java/org/openhab/binding/mqtt/internal/MqttEventBusBinding.java
+index 953789f..f495739 100644
+--- a/bundles/binding/org.openhab.binding.mqtt/src/main/java/org/openhab/binding/mqtt/internal/MqttEventBusBinding.java
++++ b/bundles/binding/org.openhab.binding.mqtt/src/main/java/org/openhab/binding/mqtt/internal/MqttEventBusBinding.java
+@@ -211,7 +211,7 @@
+     private void setupEventBusCommandSubscriber(String topic) {
+ 
+         if (StringUtils.isBlank(topic)) {
+-            logger.trace("No topic defined for Event Bus Command Subsriber");
++            logger.trace("No topic defined for Event Bus Command Subscriber");
+             return;
+         }
+ 
+@@ -260,7 +260,7 @@
+     private void setupEventBusStateSubscriber(String topic) {
+ 
+         if (StringUtils.isBlank(topic)) {
+-            logger.trace("No topic defined for Event Bus State Subsriber");
++            logger.trace("No topic defined for Event Bus State Subscriber");
+             return;
+         }
+ 
+diff --git a/bundles/binding/org.openhab.binding.mqttitude/src/main/java/org/openhab/binding/mqttitude/internal/MqttitudeBinding.java b/bundles/binding/org.openhab.binding.mqttitude/src/main/java/org/openhab/binding/mqttitude/internal/MqttitudeBinding.java
+index 38887d8..786be0b 100644
+--- a/bundles/binding/org.openhab.binding.mqttitude/src/main/java/org/openhab/binding/mqttitude/internal/MqttitudeBinding.java
++++ b/bundles/binding/org.openhab.binding.mqttitude/src/main/java/org/openhab/binding/mqttitude/internal/MqttitudeBinding.java
+@@ -91,7 +91,7 @@
+      */
+     @Override
+     public void deactivate() {
+-        logger.debug("Deactivating Mqtt binding");
++        logger.debug("Deactivating Mqttitude binding");
+         super.deactivate();
+         unregisterAll();
+     }
+diff --git a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
+index def815a..bda224d 100644
+--- a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
++++ b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqBinding.java
+@@ -290,7 +290,7 @@
+ 
+     /**
+      * Checks whether the command is value and if the deviceID exists then get
+-     * status of Garage Door Opener and send command to change it's state
++     * status of Garage Door Opener and send command to change its state
+      * opposite of its current state
+      *
+      * @param command
+@@ -353,7 +353,7 @@
+             pollFuture.cancel(false);
+         }
+ 
+-        logger.trace("rapidRefreshFuture scheduleing for {} millis", millis);
++        logger.trace("rapidRefreshFuture scheduling for {} millis", millis);
+         // start polling at the RAPID_REFRESH_SECS interval
+         pollFuture = pollService.scheduleAtFixedRate(new Runnable() {
+             @Override
+diff --git a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqData.java b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqData.java
+index 03fa020..459d16e 100644
+--- a/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqData.java
++++ b/bundles/binding/org.openhab.binding.myq/src/main/java/org/openhab/binding/myq/internal/MyqData.java
+@@ -96,7 +96,7 @@
+      * 
+      */
+     public GarageDoorData getGarageData() throws InvalidLoginException, IOException {
+-        logger.trace("Retreiveing door data");
++        logger.trace("Retrieving door data");
+         String url = String.format("%s/api/v4/userdevicedetails/get?appId=%s&SecurityToken=%s", WEBSITE, enc(appId),
+                 enc(getSecurityToken()));
+ 
+@@ -175,7 +175,7 @@
+     private synchronized JsonNode request(String method, String url, String payload, String payloadType, boolean retry)
+             throws IOException, InvalidLoginException {
+ 
+-        logger.trace("Requsting URL {}", url);
++        logger.trace("Requesting URL {}", url);
+ 
+         String dataString = executeUrl(method, url, header, payload == null ? null : IOUtils.toInputStream(payload),
+                 payloadType, timeout);
+diff --git a/bundles/binding/org.openhab.binding.mystromecopower/src/main/java/org/openhab/binding/mystromecopower/internal/MyStromEcoPowerBinding.java b/bundles/binding/org.openhab.binding.mystromecopower/src/main/java/org/openhab/binding/mystromecopower/internal/MyStromEcoPowerBinding.java
+index 3b7423a..baf2cfe 100644
+--- a/bundles/binding/org.openhab.binding.mystromecopower/src/main/java/org/openhab/binding/mystromecopower/internal/MyStromEcoPowerBinding.java
++++ b/bundles/binding/org.openhab.binding.mystromecopower/src/main/java/org/openhab/binding/mystromecopower/internal/MyStromEcoPowerBinding.java
+@@ -172,7 +172,7 @@
+                         }
+                     }
+                 } else {
+-                    logger.warn("The device itemName '{}' not found on discovery verify device is not offline",
++                    logger.warn("The device itemName '{}' not found on discovery. Verify device is not offline",
+                             itemName);
+                 }
+             }
+@@ -198,7 +198,7 @@
+             if (deviceId != null) {
+                 if (provider.getIsSwitch(itemName)) {
+                     try {
+-                        logger.debug("Command '{}' is about to be send to item '{}'", command, itemName);
++                        logger.debug("Command '{}' is about to be sent to item '{}'", command, itemName);
+ 
+                         if (OnOffType.ON.equals(command) || OnOffType.OFF.equals(command)) {
+                             // on/off command
+@@ -253,7 +253,7 @@
+                     }
+                 }
+             } else {
+-                logger.error("Unable to send command to '{}' device is not in discovery table", itemName);
++                logger.error("Unable to send command to '{}'. Device is not in discovery table", itemName);
+             }
+         }
+     }
+diff --git a/bundles/binding/org.openhab.binding.mystromecopower/src/main/java/org/openhab/binding/mystromecopower/internal/api/MystromClient.java b/bundles/binding/org.openhab.binding.mystromecopower/src/main/java/org/openhab/binding/mystromecopower/internal/api/MystromClient.java
+index 8758ec8..d223d96 100644
+--- a/bundles/binding/org.openhab.binding.mystromecopower/src/main/java/org/openhab/binding/mystromecopower/internal/api/MystromClient.java
++++ b/bundles/binding/org.openhab.binding.mystromecopower/src/main/java/org/openhab/binding/mystromecopower/internal/api/MystromClient.java
+@@ -85,7 +85,7 @@
+             if (!status.equals("ok")) {
+                 return false;
+             }
+-            logger.debug("Logon successfull");
++            logger.debug("Logon successful");
+ 
+             authToken = jsonObject.get("authToken").getAsString();
+ 
+@@ -243,7 +243,7 @@
+             }
+ 
+             String newState = jsonObject.get("state").getAsString();
+-            logger.debug("Switch state for device '{}' successfull, state is '{}'", deviceId, newState);
++            logger.debug("Switch state for device '{}' successful, state is '{}'", deviceId, newState);
+ 
+             return true;
+         } catch (Exception ex) {
+diff --git a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
+index ccc3563..729ba3a 100644
+--- a/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
++++ b/bundles/binding/org.openhab.binding.maxcube/src/main/java/org/openhab/binding/maxcube/internal/MaxCubeBinding.java
+@@ -282,7 +282,7 @@
+                     logger.info("Unsupported MAX!Cube message detected. Ignoring and continue with next Line.");
+                     this.messageProcessor.reset();
+                 } catch (MessageIsWaitingException ex) {
+-                    logger.info("There was and unhandled message waiting. Ignoring and continue with next Line.");
++                    logger.info("There was an unhandled message waiting. Ignoring and continue with next Line.");
+                     this.messageProcessor.reset();
+                 } catch (Exception e) {
+                     logger.info("Failed to process message received by MAX! protocol.");

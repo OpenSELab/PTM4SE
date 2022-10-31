@@ -1,0 +1,26 @@
+diff --git a/test/com/google/javascript/jscomp/SymbolTableTest.java b/test/com/google/javascript/jscomp/SymbolTableTest.java
+index 682f90c..b8475cd 100644
+--- a/test/com/google/javascript/jscomp/SymbolTableTest.java
++++ b/test/com/google/javascript/jscomp/SymbolTableTest.java
+@@ -1421,7 +1421,7 @@
+     // Add window so that it triggers logic that defines all global externs on window.
+     // See DeclaredGlobalExternsOnWindow.java pass.
+     String externs = lines("/** @externs */", "var window", "var foo;");
+-    String mainCode = lines("foo;", "window.foo;");
++    String mainCode = lines("foo = 2;", "window.foo = 1;");
+     SymbolTable table = createSymbolTable(mainCode, externs);
+ 
+     Map<String, Integer> refsPerFile = new HashMap<>();
+diff --git a/test/com/google/javascript/jscomp/SymbolTableTest.java b/test/com/google/javascript/jscomp/SymbolTableTest.java
+index 682f90c..b8475cd 100644
+--- a/test/com/google/javascript/jscomp/SymbolTableTest.java
++++ b/test/com/google/javascript/jscomp/SymbolTableTest.java
+@@ -1421,7 +1421,7 @@
+     // Add window so that it triggers logic that defines all global externs on window.
+     // See DeclaredGlobalExternsOnWindow.java pass.
+     String externs = lines("/** @externs */", "var window", "var foo;");
+-    String mainCode = lines("foo;", "window.foo;");
++    String mainCode = lines("foo = 2;", "window.foo = 1;");
+     SymbolTable table = createSymbolTable(mainCode, externs);
+ 
+     Map<String, Integer> refsPerFile = new HashMap<>();

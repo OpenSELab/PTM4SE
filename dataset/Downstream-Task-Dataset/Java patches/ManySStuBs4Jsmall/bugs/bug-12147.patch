@@ -1,0 +1,32 @@
+diff --git a/vertx-core/src/main/java/org/vertx/java/core/dns/impl/netty/DnsResponseDecoder.java b/vertx-core/src/main/java/org/vertx/java/core/dns/impl/netty/DnsResponseDecoder.java
+index 235d672..8b90297 100644
+--- a/vertx-core/src/main/java/org/vertx/java/core/dns/impl/netty/DnsResponseDecoder.java
++++ b/vertx-core/src/main/java/org/vertx/java/core/dns/impl/netty/DnsResponseDecoder.java
+@@ -169,9 +169,8 @@
+             response.addQuestion(decodeQuestion(buf));
+         }
+         if (header.getResponseCode() != 0) {
+-            System.err.println("Encountered error decoding DNS response for domain \""
+-                    + response.getQuestions().get(0).name() + "\": "
+-                    + DnsResponseCode.valueOf(header.getResponseCode()));
++            // TODO: Provide patch upstream to Netty
++            return response;
+         }
+         for (int i = 0; i < header.getReadAnswers(); i++) {
+             response.addAnswer(decodeResource(buf, allocator));
+diff --git a/vertx-core/src/main/java/org/vertx/java/core/dns/impl/netty/DnsResponseDecoder.java b/vertx-core/src/main/java/org/vertx/java/core/dns/impl/netty/DnsResponseDecoder.java
+index 235d672..8b90297 100644
+--- a/vertx-core/src/main/java/org/vertx/java/core/dns/impl/netty/DnsResponseDecoder.java
++++ b/vertx-core/src/main/java/org/vertx/java/core/dns/impl/netty/DnsResponseDecoder.java
+@@ -169,9 +169,8 @@
+             response.addQuestion(decodeQuestion(buf));
+         }
+         if (header.getResponseCode() != 0) {
+-            System.err.println("Encountered error decoding DNS response for domain \""
+-                    + response.getQuestions().get(0).name() + "\": "
+-                    + DnsResponseCode.valueOf(header.getResponseCode()));
++            // TODO: Provide patch upstream to Netty
++            return response;
+         }
+         for (int i = 0; i < header.getReadAnswers(); i++) {
+             response.addAnswer(decodeResource(buf, allocator));

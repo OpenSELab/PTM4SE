@@ -1,0 +1,62 @@
+diff --git a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/InputService.java b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/InputService.java
+index 9ed90f7..e374419 100644
+--- a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/InputService.java
++++ b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/InputService.java
+@@ -153,7 +153,7 @@
+ 
+     public Map<Node, Map<String, String>> getAllInputTypes() throws IOException, APIException {
+         Map<Node, Map<String, String>> result = Maps.newHashMap();
+-        Map<Node, InputTypesResponse> inputTypesResponseMap = api.path(resource.types(), InputTypesResponse.class)
++        Map<Node, InputTypesResponse> inputTypesResponseMap = api.path(routes.InputTypesResource().types(), InputTypesResponse.class)
+                 .fromAllNodes().executeOnAll();
+ 
+         for (Map.Entry<Node, InputTypesResponse> entry : inputTypesResponseMap.entrySet())
+@@ -163,7 +163,7 @@
+     }
+ 
+     public InputTypeSummaryResponse getInputTypeInformation(Node node, String type) throws IOException, APIException {
+-        return api.path(resource.info(type), InputTypeSummaryResponse.class).node(node).execute();
++        return api.path(routes.InputTypesResource().info(type), InputTypeSummaryResponse.class).node(node).execute();
+     }
+ 
+     public Map<String, InputTypeSummaryResponse> getAllInputTypeInformation() throws IOException, APIException {
+diff --git a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/Node.java b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/Node.java
+index 38b5aaf..2056472 100644
+--- a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/Node.java
++++ b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/Node.java
+@@ -285,11 +285,11 @@
+     }
+ 
+     public Map<String, String> getInputTypes() throws IOException, APIException {
+-        return api.path(routes.InputsResource().types(), InputTypesResponse.class).node(this).execute().types;
++        return api.path(routes.InputTypesResource().types(), InputTypesResponse.class).node(this).execute().types;
+     }
+ 
+     public InputTypeSummaryResponse getInputTypeInformation(String type) throws IOException, APIException {
+-        return api.path(routes.InputsResource().info(type), InputTypeSummaryResponse.class).node(this).execute();
++        return api.path(routes.InputTypesResource().info(type), InputTypeSummaryResponse.class).node(this).execute();
+     }
+ 
+     public Map<String, InputTypeSummaryResponse> getAllInputTypeInformation() throws IOException, APIException {
+diff --git a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/InputService.java b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/InputService.java
+index 9ed90f7..e374419 100644
+--- a/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/InputService.java
++++ b/graylog2-rest-client/src/main/java/org/graylog2/restclient/models/InputService.java
+@@ -153,7 +153,7 @@
+ 
+     public Map<Node, Map<String, String>> getAllInputTypes() throws IOException, APIException {
+         Map<Node, Map<String, String>> result = Maps.newHashMap();
+-        Map<Node, InputTypesResponse> inputTypesResponseMap = api.path(resource.types(), InputTypesResponse.class)
++        Map<Node, InputTypesResponse> inputTypesResponseMap = api.path(routes.InputTypesResource().types(), InputTypesResponse.class)
+                 .fromAllNodes().executeOnAll();
+ 
+         for (Map.Entry<Node, InputTypesResponse> entry : inputTypesResponseMap.entrySet())
+@@ -163,7 +163,7 @@
+     }
+ 
+     public InputTypeSummaryResponse getInputTypeInformation(Node node, String type) throws IOException, APIException {
+-        return api.path(resource.info(type), InputTypeSummaryResponse.class).node(node).execute();
++        return api.path(routes.InputTypesResource().info(type), InputTypeSummaryResponse.class).node(node).execute();
+     }
+ 
+     public Map<String, InputTypeSummaryResponse> getAllInputTypeInformation() throws IOException, APIException {

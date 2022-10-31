@@ -1,0 +1,13 @@
+diff --git a/memcached/src/main/java/com/yahoo/ycsb/db/MemcachedClient.java b/memcached/src/main/java/com/yahoo/ycsb/db/MemcachedClient.java
+index 8a95d8f..9ce0b93 100644
+--- a/memcached/src/main/java/com/yahoo/ycsb/db/MemcachedClient.java
++++ b/memcached/src/main/java/com/yahoo/ycsb/db/MemcachedClient.java
+@@ -262,7 +262,7 @@
+       String value, Set<String> fields,
+       Map<String, ByteIterator> result) throws IOException {
+     JsonNode json = MAPPER.readTree(value);
+-    boolean checkFields = fields != null && fields.size() > 0;
++    boolean checkFields = fields != null && !fields.isEmpty();
+     for (Iterator<Map.Entry<String, JsonNode>> jsonFields = json.getFields();
+          jsonFields.hasNext();
+          /* increment in loop body */) {

@@ -1,0 +1,65 @@
+diff --git a/core/client/src/main/java/alluxio/client/netty/NettyUfsBlockReader.java b/core/client/src/main/java/alluxio/client/netty/NettyUfsBlockReader.java
+index ad6dbdf..92dfc8d 100644
+--- a/core/client/src/main/java/alluxio/client/netty/NettyUfsBlockReader.java
++++ b/core/client/src/main/java/alluxio/client/netty/NettyUfsBlockReader.java
+@@ -42,7 +42,7 @@
+  */
+ @NotThreadSafe
+ public final class NettyUfsBlockReader implements UfsBlockReader {
+-  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++  private static final Logger LOG = LoggerFactory.getLogger(NettyUfsBlockReader.class);
+ 
+   private final FileSystemContext mContext;
+   /** A reference to read response so we can explicitly release the resource after reading. */
+diff --git a/core/server/worker/src/main/java/alluxio/worker/block/UfsBlockReader.java b/core/server/worker/src/main/java/alluxio/worker/block/UfsBlockReader.java
+index 0524b0a..e2ab7a3 100644
+--- a/core/server/worker/src/main/java/alluxio/worker/block/UfsBlockReader.java
++++ b/core/server/worker/src/main/java/alluxio/worker/block/UfsBlockReader.java
+@@ -45,7 +45,7 @@
+  */
+ @NotThreadSafe
+ public final class UfsBlockReader implements BlockReader {
+-  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++  private static final Logger LOG = LoggerFactory.getLogger(UfsBlockReader.class);
+ 
+   private static final long FILE_BUFFER_SIZE = Configuration.getBytes(
+       PropertyKey.WORKER_FILE_BUFFER_SIZE);
+diff --git a/core/server/worker/src/main/java/alluxio/worker/block/UfsBlockStore.java b/core/server/worker/src/main/java/alluxio/worker/block/UfsBlockStore.java
+index 0522f57..32bd6a7 100644
+--- a/core/server/worker/src/main/java/alluxio/worker/block/UfsBlockStore.java
++++ b/core/server/worker/src/main/java/alluxio/worker/block/UfsBlockStore.java
+@@ -41,7 +41,7 @@
+  * releaseAccess(sessionId, blockId)
+  */
+ public final class UfsBlockStore {
+-  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++  private static final Logger LOG = LoggerFactory.getLogger(UfsBlockStore.class);
+ 
+   private final ReentrantLock mLock = new ReentrantLock();
+   @GuardedBy("mLock")
+diff --git a/core/server/worker/src/main/java/alluxio/worker/netty/DataServerUfsBlockReadHandler.java b/core/server/worker/src/main/java/alluxio/worker/netty/DataServerUfsBlockReadHandler.java
+index 67226fe..34b9997 100644
+--- a/core/server/worker/src/main/java/alluxio/worker/netty/DataServerUfsBlockReadHandler.java
++++ b/core/server/worker/src/main/java/alluxio/worker/netty/DataServerUfsBlockReadHandler.java
+@@ -37,7 +37,7 @@
+  */
+ @NotThreadSafe
+ public final class DataServerUfsBlockReadHandler extends DataServerReadHandler {
+-  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++  private static final Logger LOG = LoggerFactory.getLogger(DataServerUfsBlockReadHandler.class);
+ 
+   /** The Block Worker. */
+   private final BlockWorker mWorker;
+diff --git a/core/client/src/main/java/alluxio/client/netty/NettyUfsBlockReader.java b/core/client/src/main/java/alluxio/client/netty/NettyUfsBlockReader.java
+index ad6dbdf..92dfc8d 100644
+--- a/core/client/src/main/java/alluxio/client/netty/NettyUfsBlockReader.java
++++ b/core/client/src/main/java/alluxio/client/netty/NettyUfsBlockReader.java
+@@ -42,7 +42,7 @@
+  */
+ @NotThreadSafe
+ public final class NettyUfsBlockReader implements UfsBlockReader {
+-  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++  private static final Logger LOG = LoggerFactory.getLogger(NettyUfsBlockReader.class);
+ 
+   private final FileSystemContext mContext;
+   /** A reference to read response so we can explicitly release the resource after reading. */

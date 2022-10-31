@@ -1,0 +1,15 @@
+diff --git a/src/main/java/com/alibaba/fastjson/parser/deserializer/MapDeserializer.java b/src/main/java/com/alibaba/fastjson/parser/deserializer/MapDeserializer.java
+index 497388c..078dc06 100644
+--- a/src/main/java/com/alibaba/fastjson/parser/deserializer/MapDeserializer.java
++++ b/src/main/java/com/alibaba/fastjson/parser/deserializer/MapDeserializer.java
+@@ -29,7 +29,9 @@
+             return null;
+         }
+ 
+-        Map<Object, Object> map = createMap(type, lexer.getFeatures());
++        Map<Object, Object> map = (lexer.getFeatures() & Feature.OrderedField.mask) != 0
++                ? createMap(type, lexer.getFeatures())
++                : createMap(type);
+ 
+         ParseContext context = parser.getContext();
+ 

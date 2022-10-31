@@ -1,0 +1,52 @@
+diff --git a/src/main/java/com/alibaba/druid/stat/TableStat.java b/src/main/java/com/alibaba/druid/stat/TableStat.java
+index df624a5..62f9063 100644
+--- a/src/main/java/com/alibaba/druid/stat/TableStat.java
++++ b/src/main/java/com/alibaba/druid/stat/TableStat.java
+@@ -220,7 +220,7 @@
+         }
+ 
+         public String toString() {
+-            return this.name;
++            return SQLUtils.normalize(this.name);
+         }
+     }
+ 
+@@ -545,10 +545,10 @@
+ 
+         public String toString() {
+             if (table != null) {
+-                return table + "." + name;
++                return SQLUtils.normalize(table) + "." + SQLUtils.normalize(name);
+             }
+ 
+-            return name;
++            return SQLUtils.normalize(name);
+         }
+ 
+         public boolean equals(Object obj) {
+diff --git a/src/main/java/com/alibaba/druid/stat/TableStat.java b/src/main/java/com/alibaba/druid/stat/TableStat.java
+index df624a5..62f9063 100644
+--- a/src/main/java/com/alibaba/druid/stat/TableStat.java
++++ b/src/main/java/com/alibaba/druid/stat/TableStat.java
+@@ -220,7 +220,7 @@
+         }
+ 
+         public String toString() {
+-            return this.name;
++            return SQLUtils.normalize(this.name);
+         }
+     }
+ 
+@@ -545,10 +545,10 @@
+ 
+         public String toString() {
+             if (table != null) {
+-                return table + "." + name;
++                return SQLUtils.normalize(table) + "." + SQLUtils.normalize(name);
+             }
+ 
+-            return name;
++            return SQLUtils.normalize(name);
+         }
+ 
+         public boolean equals(Object obj) {

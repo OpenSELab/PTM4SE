@@ -1,0 +1,22 @@
+diff --git a/tests/camel-itest/src/test/java/org/apache/camel/itest/issues/JettyHttpTest.java b/tests/camel-itest/src/test/java/org/apache/camel/itest/issues/JettyHttpTest.java
+index 0931cc8..8f0f5b3 100644
+--- a/tests/camel-itest/src/test/java/org/apache/camel/itest/issues/JettyHttpTest.java
++++ b/tests/camel-itest/src/test/java/org/apache/camel/itest/issues/JettyHttpTest.java
+@@ -38,7 +38,7 @@
+     @Test
+     public void testGetRootPath() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+-        mock.expectedBodiesReceived("Hi! /someservice");
++        mock.expectedBodiesReceived("Hi! /someservice/myservice");
+ 
+         template.sendBody("direct:root", "");
+ 
+@@ -48,7 +48,7 @@
+     @Test
+     public void testGetWithRelativePath() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+-        mock.expectedBodiesReceived("Hi! /someservice/relative");
++        mock.expectedBodiesReceived("Hi! /someservice/myservice/relative");
+         
+         template.sendBody("direct:relative", "");
+         assertMockEndpointsSatisfied();

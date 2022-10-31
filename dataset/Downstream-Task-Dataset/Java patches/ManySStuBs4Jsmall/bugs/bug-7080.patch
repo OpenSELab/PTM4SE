@@ -1,0 +1,14 @@
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/java/org/apache/hadoop/yarn/server/nodemanager/DefaultContainerExecutor.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/java/org/apache/hadoop/yarn/server/nodemanager/DefaultContainerExecutor.java
+index 507f7a0..9e2e111 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/java/org/apache/hadoop/yarn/server/nodemanager/DefaultContainerExecutor.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-server/hadoop-yarn-server-nodemanager/src/main/java/org/apache/hadoop/yarn/server/nodemanager/DefaultContainerExecutor.java
+@@ -213,7 +213,8 @@
+         LOG.warn("Exception from container-launch with container ID: "
+             + containerId + " and exit code: " + exitCode , e);
+         logOutput(shExec.getOutput());
+-        String diagnostics = "Exception from container-launch: \n"
++        String diagnostics = "Exception from container-launch: "
++            + e + "\n"
+             + StringUtils.stringifyException(e) + "\n" + shExec.getOutput();
+         container.handle(new ContainerDiagnosticsUpdateEvent(containerId,
+             diagnostics));

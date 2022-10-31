@@ -1,0 +1,28 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/JspTemplateAvailabilityProvider.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/JspTemplateAvailabilityProvider.java
+index 2d51660..e2088b9 100755
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/JspTemplateAvailabilityProvider.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/JspTemplateAvailabilityProvider.java
+@@ -38,7 +38,8 @@
+ 			ClassLoader classLoader, ResourceLoader resourceLoader) {
+ 		if (ClassUtils.isPresent("org.apache.jasper.compiler.JspConfig", classLoader)) {
+ 			String resourceName = getResourceName(view, environment);
+-			return resourceLoader.getResource(resourceName).exists();
++			return resourceLoader.getResource(resourceName).exists() ||
++					resourceLoader.getResource("file:./src/main/webapp" + resourceName).exists();
+ 		}
+ 		return false;
+ 	}
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/JspTemplateAvailabilityProvider.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/JspTemplateAvailabilityProvider.java
+index 2d51660..e2088b9 100755
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/JspTemplateAvailabilityProvider.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/web/JspTemplateAvailabilityProvider.java
+@@ -38,7 +38,8 @@
+ 			ClassLoader classLoader, ResourceLoader resourceLoader) {
+ 		if (ClassUtils.isPresent("org.apache.jasper.compiler.JspConfig", classLoader)) {
+ 			String resourceName = getResourceName(view, environment);
+-			return resourceLoader.getResource(resourceName).exists();
++			return resourceLoader.getResource(resourceName).exists() ||
++					resourceLoader.getResource("file:./src/main/webapp" + resourceName).exists();
+ 		}
+ 		return false;
+ 	}

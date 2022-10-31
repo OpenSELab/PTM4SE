@@ -1,0 +1,42 @@
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/windowing/triggers/ContinuousProcessingTimeTrigger.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/windowing/triggers/ContinuousProcessingTimeTrigger.java
+index eacdf0b..a952c42 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/windowing/triggers/ContinuousProcessingTimeTrigger.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/windowing/triggers/ContinuousProcessingTimeTrigger.java
+@@ -58,14 +58,14 @@
+ 			long start = currentTime - (currentTime % interval);
+ 			fireState.update(start + interval);
+ 
+-			ctx.registerProcessingTimeTimer(nextFireTimestamp);
++			ctx.registerProcessingTimeTimer((start + interval));
+ 			return TriggerResult.CONTINUE;
+ 		}
+ 		if (currentTime > nextFireTimestamp) {
+ 			long start = currentTime - (currentTime % interval);
+ 			fireState.update(start + interval);
+ 
+-			ctx.registerProcessingTimeTimer(nextFireTimestamp);
++			ctx.registerProcessingTimeTimer((start + interval));
+ 
+ 			return TriggerResult.FIRE;
+ 		}
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/windowing/triggers/ContinuousProcessingTimeTrigger.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/windowing/triggers/ContinuousProcessingTimeTrigger.java
+index eacdf0b..a952c42 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/windowing/triggers/ContinuousProcessingTimeTrigger.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/windowing/triggers/ContinuousProcessingTimeTrigger.java
+@@ -58,14 +58,14 @@
+ 			long start = currentTime - (currentTime % interval);
+ 			fireState.update(start + interval);
+ 
+-			ctx.registerProcessingTimeTimer(nextFireTimestamp);
++			ctx.registerProcessingTimeTimer((start + interval));
+ 			return TriggerResult.CONTINUE;
+ 		}
+ 		if (currentTime > nextFireTimestamp) {
+ 			long start = currentTime - (currentTime % interval);
+ 			fireState.update(start + interval);
+ 
+-			ctx.registerProcessingTimeTimer(nextFireTimestamp);
++			ctx.registerProcessingTimeTimer((start + interval));
+ 
+ 			return TriggerResult.FIRE;
+ 		}

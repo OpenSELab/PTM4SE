@@ -1,0 +1,65 @@
+diff --git a/maven-core/src/main/java/org/apache/maven/toolchain/DefaultToolchainManagerPrivate.java b/maven-core/src/main/java/org/apache/maven/toolchain/DefaultToolchainManagerPrivate.java
+index 923db00..e2eacea 100644
+--- a/maven-core/src/main/java/org/apache/maven/toolchain/DefaultToolchainManagerPrivate.java
++++ b/maven-core/src/main/java/org/apache/maven/toolchain/DefaultToolchainManagerPrivate.java
+@@ -74,7 +74,7 @@
+             throw new MisconfiguredToolchainException( e.getMessage(), e );
+         }
+         
+-        PersistedToolchains pers = buildResult.getEffectiveToolchains();
++        PersistedToolchains effectiveToolchains = buildResult.getEffectiveToolchains();
+ 
+         List<ToolchainPrivate> toRet = new ArrayList<ToolchainPrivate>();
+ 
+@@ -84,9 +84,9 @@
+             logger.error( "Missing toolchain factory for type: " + type
+                 + ". Possibly caused by misconfigured project." );
+         }
+-        else if ( pers != null )
++        else
+         {
+-            List<ToolchainModel> lst = pers.getToolchains();
++            List<ToolchainModel> lst = effectiveToolchains.getToolchains();
+             if ( lst != null )
+             {
+                 for ( ToolchainModel toolchainModel : lst )
+@@ -97,11 +97,9 @@ else if ( pers != null )
+                     }
+                 }
+             }
+-        }
+-
+-        for ( ToolchainFactory toolchainFactory : factories.values() )
+-        {
+-            ToolchainPrivate tool = toolchainFactory.createDefaultToolchain();
++            
++            // add default toolchain
++            ToolchainPrivate tool = fact.createDefaultToolchain();
+             if ( tool != null )
+             {
+                 toRet.add( tool );
+diff --git a/maven-core/src/main/java/org/apache/maven/toolchain/building/DefaultToolchainsBuildingResult.java b/maven-core/src/main/java/org/apache/maven/toolchain/building/DefaultToolchainsBuildingResult.java
+index b50473f..b72e5aa 100644
+--- a/maven-core/src/main/java/org/apache/maven/toolchain/building/DefaultToolchainsBuildingResult.java
++++ b/maven-core/src/main/java/org/apache/maven/toolchain/building/DefaultToolchainsBuildingResult.java
+@@ -26,6 +26,7 @@
+ import org.apache.maven.toolchain.model.PersistedToolchains;
+ 
+ /**
++ * Holds the result of the merged toolchains and holds the problems during this build, if any.
+  * 
+  * @author Robert Scholte
+  * @since 3.2.6
+@@ -38,6 +39,12 @@
+     
+     private List<Problem> problems;
+     
++    /**
++     * Default constructor
++     * 
++     * @param effectiveToolchains the merged toolchains, may not be {@code null}
++     * @param problems the problems while building the effectiveToolchains, if any.
++     */
+     public DefaultToolchainsBuildingResult( PersistedToolchains effectiveToolchains, List<Problem> problems )
+     {
+         this.effectiveToolchains = effectiveToolchains;

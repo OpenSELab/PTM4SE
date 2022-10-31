@@ -1,0 +1,22 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/BaseCheckTestSupport.java b/src/test/java/com/puppycrawl/tools/checkstyle/BaseCheckTestSupport.java
+index 5241a1e..e2ffab8 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/BaseCheckTestSupport.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/BaseCheckTestSupport.java
+@@ -41,7 +41,7 @@
+     protected final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+     protected final PrintStream stream = new PrintStream(baos);
+ 
+-    public static DefaultConfiguration createCheckConfig(Class<?> clazz) {
++    protected static DefaultConfiguration createCheckConfig(Class<?> clazz) {
+         return new DefaultConfiguration(clazz.getName());
+     }
+ 
+@@ -135,7 +135,7 @@
+      * @param messageKey the key of message in 'messages.properties' file.
+      * @param arguments  the arguments of message in 'messages.properties' file.
+      */
+-    public String getCheckMessage(String messageKey, Object... arguments) {
++    protected String getCheckMessage(String messageKey, Object... arguments) {
+         Properties pr = new Properties();
+         try {
+             pr.load(getClass().getResourceAsStream("messages.properties"));

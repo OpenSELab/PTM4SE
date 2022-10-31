@@ -1,0 +1,54 @@
+diff --git a/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java b/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
+index 55015a2..02b3ea3 100644
+--- a/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
++++ b/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
+@@ -178,7 +178,7 @@
+             }
+ 
+             // Skip standard or already set fields.
+-            if (message.getField(key) != null || Message.RESERVED_FIELDS.contains(key)) {
++            if (message.getField(key) != null || (Message.RESERVED_FIELDS.contains(key) && !Message.RESERVED_SETTABLE_FIELDS.contains(key))) {
+                 continue;
+             }
+ 
+diff --git a/graylog2-shared/src/main/java/org/graylog2/shared/buffers/processors/DecodingProcessor.java b/graylog2-shared/src/main/java/org/graylog2/shared/buffers/processors/DecodingProcessor.java
+index f035386..6e21b7a 100644
+--- a/graylog2-shared/src/main/java/org/graylog2/shared/buffers/processors/DecodingProcessor.java
++++ b/graylog2-shared/src/main/java/org/graylog2/shared/buffers/processors/DecodingProcessor.java
+@@ -146,17 +146,19 @@
+         for (final RawMessage.SourceNode node : raw.getSourceNodes()) {
+             switch (node.type) {
+                 case SERVER:
+-                    // Currently only one of each type supported at the moment.
++                    // Always use the last source node.
+                     if (message.getField("gl2_source_input") != null) {
+-                        throw new IllegalStateException("Multiple server nodes");
++                        LOG.debug("Multiple server nodes ({} {}) set for message id {}",
++                                message.getField("gl2_source_input"), node.nodeId, message.getId());
+                     }
+                     message.addField("gl2_source_input", node.inputId);
+                     message.addField("gl2_source_node", node.nodeId);
+                     break;
+                 case RADIO:
+-                    // Currently only one of each type supported at the moment.
++                    // Always use the last source node.
+                     if (message.getField("gl2_source_radio_input") != null) {
+-                        throw new IllegalStateException("Multiple radio nodes");
++                        LOG.debug("Multiple radio nodes ({} {}) set for message id {}",
++                                message.getField("gl2_source_radio_input"), node.nodeId, message.getId());
+                     }
+                     message.addField("gl2_source_radio_input", node.inputId);
+                     message.addField("gl2_source_radio", node.nodeId);
+diff --git a/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java b/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
+index 55015a2..02b3ea3 100644
+--- a/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
++++ b/graylog2-inputs/src/main/java/org/graylog2/inputs/codecs/GelfCodec.java
+@@ -178,7 +178,7 @@
+             }
+ 
+             // Skip standard or already set fields.
+-            if (message.getField(key) != null || Message.RESERVED_FIELDS.contains(key)) {
++            if (message.getField(key) != null || (Message.RESERVED_FIELDS.contains(key) && !Message.RESERVED_SETTABLE_FIELDS.contains(key))) {
+                 continue;
+             }
+ 

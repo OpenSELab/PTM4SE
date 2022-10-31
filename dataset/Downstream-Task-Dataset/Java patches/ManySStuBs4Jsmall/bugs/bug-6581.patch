@@ -1,0 +1,44 @@
+diff --git a/flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/DataStream.java b/flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/DataStream.java
+index b30d261..b7ad97e 100644
+--- a/flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/DataStream.java
++++ b/flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/DataStream.java
+@@ -1128,7 +1128,7 @@
+ 				operatorName, outTypeInfo, invokable);
+ 
+ 		streamGraph.addStreamVertex(returnStream.getId(), invokable, getType(), outTypeInfo,
+-				operatorName, degreeOfParallelism);
++				operatorName, returnStream.getParallelism());
+ 
+ 		connectGraph(inputStream, returnStream.getId(), 0);
+ 
+@@ -1195,7 +1195,7 @@
+ 				sinkInvokable);
+ 
+ 		streamGraph.addStreamVertex(returnStream.getId(), sinkInvokable, getType(), null, "sink",
+-				degreeOfParallelism);
++				returnStream.getParallelism());
+ 
+ 		this.connectGraph(this.copy(), returnStream.getId(), 0);
+ 
+diff --git a/flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/DataStream.java b/flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/DataStream.java
+index b30d261..b7ad97e 100644
+--- a/flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/DataStream.java
++++ b/flink-addons/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/datastream/DataStream.java
+@@ -1128,7 +1128,7 @@
+ 				operatorName, outTypeInfo, invokable);
+ 
+ 		streamGraph.addStreamVertex(returnStream.getId(), invokable, getType(), outTypeInfo,
+-				operatorName, degreeOfParallelism);
++				operatorName, returnStream.getParallelism());
+ 
+ 		connectGraph(inputStream, returnStream.getId(), 0);
+ 
+@@ -1195,7 +1195,7 @@
+ 				sinkInvokable);
+ 
+ 		streamGraph.addStreamVertex(returnStream.getId(), sinkInvokable, getType(), null, "sink",
+-				degreeOfParallelism);
++				returnStream.getParallelism());
+ 
+ 		this.connectGraph(this.copy(), returnStream.getId(), 0);
+ 

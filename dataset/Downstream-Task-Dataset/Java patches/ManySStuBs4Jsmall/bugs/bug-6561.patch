@@ -1,0 +1,46 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/client/JobClient.java b/flink-runtime/src/main/java/org/apache/flink/runtime/client/JobClient.java
+index aa03491..72f39d6 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/client/JobClient.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/client/JobClient.java
+@@ -140,7 +140,7 @@
+ 					new JobClientMessages.SubmitJobAndWait(jobGraph),
+ 					new Timeout(AkkaUtils.INF_TIMEOUT()));
+ 
+-			Object answer = Await.result(future, timeout);
++			Object answer = Await.result(future, AkkaUtils.INF_TIMEOUT());
+ 
+ 			if (answer instanceof JobManagerMessages.JobResultSuccess) {
+ 				LOG.info("Job execution complete");
+@@ -161,7 +161,8 @@
+ 			throw e;
+ 		}
+ 		catch (TimeoutException e) {
+-			throw new JobTimeoutException(jobGraph.getJobID(), "Lost connection to JobManager", e);
++			throw new JobTimeoutException(jobGraph.getJobID(), "Timeout while waiting for JobManager answer. " +
++					"Job time exceeded " + AkkaUtils.INF_TIMEOUT(), e);
+ 		}
+ 		catch (Throwable t) {
+ 			throw new JobExecutionException(jobGraph.getJobID(),
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/client/JobClient.java b/flink-runtime/src/main/java/org/apache/flink/runtime/client/JobClient.java
+index aa03491..72f39d6 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/client/JobClient.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/client/JobClient.java
+@@ -140,7 +140,7 @@
+ 					new JobClientMessages.SubmitJobAndWait(jobGraph),
+ 					new Timeout(AkkaUtils.INF_TIMEOUT()));
+ 
+-			Object answer = Await.result(future, timeout);
++			Object answer = Await.result(future, AkkaUtils.INF_TIMEOUT());
+ 
+ 			if (answer instanceof JobManagerMessages.JobResultSuccess) {
+ 				LOG.info("Job execution complete");
+@@ -161,7 +161,8 @@
+ 			throw e;
+ 		}
+ 		catch (TimeoutException e) {
+-			throw new JobTimeoutException(jobGraph.getJobID(), "Lost connection to JobManager", e);
++			throw new JobTimeoutException(jobGraph.getJobID(), "Timeout while waiting for JobManager answer. " +
++					"Job time exceeded " + AkkaUtils.INF_TIMEOUT(), e);
+ 		}
+ 		catch (Throwable t) {
+ 			throw new JobExecutionException(jobGraph.getJobID(),

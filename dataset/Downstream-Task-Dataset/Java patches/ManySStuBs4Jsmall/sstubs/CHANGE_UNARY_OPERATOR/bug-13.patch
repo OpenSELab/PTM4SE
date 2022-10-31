@@ -1,0 +1,39 @@
+diff --git a/src/main/java/tachyon/MasterInfo.java b/src/main/java/tachyon/MasterInfo.java
+index 59e1fbd..6d8153e 100644
+--- a/src/main/java/tachyon/MasterInfo.java
++++ b/src/main/java/tachyon/MasterInfo.java
+@@ -153,7 +153,7 @@
+                       dep.addLostFile(tFile.getId());
+                       LOG.info("File " + tFile.getId() + " got lost from worker " + worker.getId() +
+                           " . Trying to recompute it using dependency " + dep.ID);
+-                      if (getPath(tFile).startsWith(MASTER_CONF.TEMPORARY_FOLDER)) {
++                      if (!getPath(tFile).startsWith(MASTER_CONF.TEMPORARY_FOLDER)) {
+                         mMustRecomputeDependencies.add(depId);
+                       }
+                     }
+diff --git a/src/main/java/tachyon/conf/MasterConf.java b/src/main/java/tachyon/conf/MasterConf.java
+index c67fb48..935ac15 100644
+--- a/src/main/java/tachyon/conf/MasterConf.java
++++ b/src/main/java/tachyon/conf/MasterConf.java
+@@ -33,7 +33,7 @@
+     HOSTNAME = getProperty("tachyon.master.hostname", "localhost");
+     PORT = getIntProperty("tachyon.master.port", Constants.DEFAULT_MASTER_PORT);
+     WEB_PORT = getIntProperty("tachyon.master.web.port", Constants.DEFAULT_MASTER_WEB_PORT);
+-    TEMPORARY_FOLDER = getProperty("tachyon.master.hostname", "/tmp");
++    TEMPORARY_FOLDER = getProperty("tachyon.master.temporary.folder", "/tmp");
+ 
+     HEARTBEAT_INTERVAL_MS = getIntProperty("tachyon.master.heartbeat.interval.ms", 1000);
+     SELECTOR_THREADS = getIntProperty("tachyon.master.selector.threads", 3);
+diff --git a/src/main/java/tachyon/MasterInfo.java b/src/main/java/tachyon/MasterInfo.java
+index 59e1fbd..6d8153e 100644
+--- a/src/main/java/tachyon/MasterInfo.java
++++ b/src/main/java/tachyon/MasterInfo.java
+@@ -153,7 +153,7 @@
+                       dep.addLostFile(tFile.getId());
+                       LOG.info("File " + tFile.getId() + " got lost from worker " + worker.getId() +
+                           " . Trying to recompute it using dependency " + dep.ID);
+-                      if (getPath(tFile).startsWith(MASTER_CONF.TEMPORARY_FOLDER)) {
++                      if (!getPath(tFile).startsWith(MASTER_CONF.TEMPORARY_FOLDER)) {
+                         mMustRecomputeDependencies.add(depId);
+                       }
+                     }

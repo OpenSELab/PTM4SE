@@ -1,0 +1,51 @@
+--- a/src/main/java/spoon/support/visitor/ClassTypingContext.java
++++ b/src/main/java/spoon/support/visitor/ClassTypingContext.java
+@@ -691,6 +692,19 @@ public class ClassTypingContext extends AbstractTypingContext {
+ 					//the type cannot be adapted.
+ 					return false;
+ 				}
++
++				// we can be in a case where thisType is CtType and thatType is CtType<?>
++				// the types are not equals but it's overridden
++				// in that specific case we simply remove the list of actualTypeArguments from thatType
++				if (thisType.getActualTypeArguments().isEmpty() && thatType.getActualTypeArguments().size() == 1) {
++					CtTypeReference actualTA = thatType.getActualTypeArguments().get(0);
++					if (actualTA instanceof CtWildcardReference) {
++						if (((CtWildcardReference) actualTA).getBoundingType() == null) {
++							thatType.setActualTypeArguments(Collections.EMPTY_LIST);
++						}
++					}
++				}
++
+ 				if (thisType.equals(thatType) == false) {
+ 					return false;
+ 				}
+--- a/src/main/java/spoon/template/Substitution.java
++++ b/src/main/java/spoon/template/Substitution.java
+@@ -171,6 +172,7 @@ public abstract class Substitution {
+ 	 */
+ 	static void insertAllMethods(CtType<?> targetType, Template<?> template, CtClass<?> sourceClass) {
+ 
++		Set<CtMethod<?>> methodsOfTemplate = sourceClass.getFactory().Type().get(Template.class).getMethods();
+ 		// insert all the methods
+ 		for (CtMethod<?> m : sourceClass.getMethods()) {
+ 			if (m.getAnnotation(Local.class) != null) {
+@@ -179,6 +181,18 @@ public abstract class Substitution {
+ 			if (m.getAnnotation(Parameter.class) != null) {
+ 				continue;
+ 			}
++
++			boolean isOverridingTemplateItf = false;
++			for (CtMethod m2 : methodsOfTemplate) {
++				if (m.isOverriding(m2)) {
++					isOverridingTemplateItf = true;
++				}
++			}
++
++			if (isOverridingTemplateItf) {
++				continue;
++			}
++
+ 			insertMethod(targetType, template, m);
+ 		}
+ 	}

@@ -1,0 +1,16 @@
+diff --git a/maven-model-builder/src/main/java/org/apache/maven/model/interpolation/StringSearchModelInterpolator.java b/maven-model-builder/src/main/java/org/apache/maven/model/interpolation/StringSearchModelInterpolator.java
+index 8f7085a..590f2da 100644
+--- a/maven-model-builder/src/main/java/org/apache/maven/model/interpolation/StringSearchModelInterpolator.java
++++ b/maven-model-builder/src/main/java/org/apache/maven/model/interpolation/StringSearchModelInterpolator.java
+@@ -324,6 +324,11 @@ public class StringSearchModelInterpolator
+ 
+         private boolean isQualifiedForInterpolation( Field field, Class<?> fieldType )
+         {
++            if ( Map.class.equals( fieldType ) && "locations".equals( field.getName() ) )
++            {
++                return false;
++            }
++
+             Boolean primitive = fieldIsPrimitiveByClass.get( fieldType );
+             if ( primitive == null )
+             {

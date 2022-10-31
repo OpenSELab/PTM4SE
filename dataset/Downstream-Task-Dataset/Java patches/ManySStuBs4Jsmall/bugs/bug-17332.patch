@@ -1,0 +1,26 @@
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
+index f28db67..3d1891e 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
+@@ -83,7 +83,7 @@
+ 
+ 			private void focusChanged (FocusEvent event) {
+ 				Stage stage = getStage();
+-				if (isModal && stage.getRoot().getChildren().peek() == Dialog.this) { // This dialog is the top most actor.
++				if (isModal && stage != null && stage.getRoot().getChildren().peek() == Dialog.this) { // Dialog is top most actor.
+ 					Actor newFocusedActor = event.getRelatedActor();
+ 					if (newFocusedActor == null || !newFocusedActor.isDescendantOf(Dialog.this)) event.cancel();
+ 				}
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
+index f28db67..3d1891e 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Dialog.java
+@@ -83,7 +83,7 @@
+ 
+ 			private void focusChanged (FocusEvent event) {
+ 				Stage stage = getStage();
+-				if (isModal && stage.getRoot().getChildren().peek() == Dialog.this) { // This dialog is the top most actor.
++				if (isModal && stage != null && stage.getRoot().getChildren().peek() == Dialog.this) { // Dialog is top most actor.
+ 					Actor newFocusedActor = event.getRelatedActor();
+ 					if (newFocusedActor == null || !newFocusedActor.isDescendantOf(Dialog.this)) event.cancel();
+ 				}

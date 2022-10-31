@@ -1,0 +1,122 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
+index 775d9ae..b9b9935 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
+@@ -150,7 +150,7 @@
+     @Override
+     public final void visitToken(DetailAST blockCommentNode) {
+         if (JavadocUtils.isJavadocComment(blockCommentNode)) {
+-            this.blockCommentAst = blockCommentNode;
++            blockCommentAst = blockCommentNode;
+ 
+             final String treeCacheKey = blockCommentNode.getLineNo() + ":"
+                     + blockCommentNode.getColumnNo();
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
+index 2e32464..9d584a9 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
+@@ -469,8 +469,8 @@
+     private boolean shouldCheck(final DetailAST ast, final Scope nodeScope) {
+         final Scope surroundingScope = ScopeUtils.getSurroundingScope(ast);
+ 
+-        return nodeScope.isIn(this.scope)
+-                && surroundingScope.isIn(this.scope)
++        return nodeScope.isIn(scope)
++                && surroundingScope.isIn(scope)
+                 && (excludeScope == null || !nodeScope.isIn(excludeScope)
+                     || !surroundingScope.isIn(excludeScope));
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocStyleCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocStyleCheck.java
+index 2e3ac51..0db7637 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocStyleCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocStyleCheck.java
+@@ -184,8 +184,8 @@
+             ? Scope.PUBLIC : declaredScope;
+         final Scope surroundingScope = ScopeUtils.getSurroundingScope(ast);
+ 
+-        return customScope.isIn(this.scope)
+-            && (surroundingScope == null || surroundingScope.isIn(this.scope))
++        return customScope.isIn(scope)
++            && (surroundingScope == null || surroundingScope.isIn(scope))
+             && (excludeScope == null
+                 || !customScope.isIn(excludeScope)
+                 || surroundingScope != null
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
+index 0423924..4c3f07a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTypeCheck.java
+@@ -222,8 +222,8 @@
+                 ? Scope.PUBLIC : declaredScope;
+         final Scope surroundingScope = ScopeUtils.getSurroundingScope(ast);
+ 
+-        return customScope.isIn(this.scope)
+-            && (surroundingScope == null || surroundingScope.isIn(this.scope))
++        return customScope.isIn(scope)
++            && (surroundingScope == null || surroundingScope.isIn(scope))
+             && (excludeScope == null
+                 || !customScope.isIn(excludeScope)
+                 || surroundingScope != null
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocVariableCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocVariableCheck.java
+index de3ca70..539e567 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocVariableCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocVariableCheck.java
+@@ -142,7 +142,7 @@
+ 
+         final Scope surroundingScope = ScopeUtils.getSurroundingScope(ast);
+ 
+-        return customScope.isIn(this.scope) && surroundingScope.isIn(this.scope)
++        return customScope.isIn(scope) && surroundingScope.isIn(scope)
+             && (excludeScope == null
+                 || !customScope.isIn(excludeScope)
+                 || !surroundingScope.isIn(excludeScope));
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/SingleLineJavadocCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/SingleLineJavadocCheck.java
+index 8722462..2c4a567 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/SingleLineJavadocCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/SingleLineJavadocCheck.java
+@@ -83,7 +83,7 @@
+         for (String sTag : sTags) {
+             tagList.add(sTag.trim());
+         }
+-        this.ignoredTags = tagList;
++        ignoredTags = tagList;
+     }
+ 
+     /**
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/MultilineDetector.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/MultilineDetector.java
+index 1d58695..d9993cb 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/MultilineDetector.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/MultilineDetector.java
+@@ -76,7 +76,7 @@
+      * @param fileText the text to process
+      */
+     public void processLines(FileText fileText) {
+-        this.text = new FileText(fileText);
++        text = new FileText(fileText);
+         resetState();
+ 
+         if (Strings.isNullOrEmpty(options.getFormat())) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/RegexpSinglelineJavaCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/RegexpSinglelineJavaCheck.java
+index 3d69a84..094176b 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/RegexpSinglelineJavaCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/regexp/RegexpSinglelineJavaCheck.java
+@@ -106,6 +106,6 @@
+      * @param ignore whether to ignore comments when matching.
+      */
+     public void setIgnoreComments(boolean ignore) {
+-        this.ignoreComments = ignore;
++        ignoreComments = ignore;
+     }
+ }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
+index 775d9ae..b9b9935 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AbstractJavadocCheck.java
+@@ -150,7 +150,7 @@
+     @Override
+     public final void visitToken(DetailAST blockCommentNode) {
+         if (JavadocUtils.isJavadocComment(blockCommentNode)) {
+-            this.blockCommentAst = blockCommentNode;
++            blockCommentAst = blockCommentNode;
+ 
+             final String treeCacheKey = blockCommentNode.getLineNo() + ":"
+                     + blockCommentNode.getColumnNo();

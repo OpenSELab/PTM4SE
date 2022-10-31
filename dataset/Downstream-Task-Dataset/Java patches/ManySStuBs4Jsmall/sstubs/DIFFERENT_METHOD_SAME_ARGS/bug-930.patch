@@ -1,0 +1,110 @@
+diff --git a/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java b/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
+index 6a1062d..f6f6cca 100644
+--- a/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
++++ b/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
+@@ -119,7 +119,7 @@
+             String sessionTTL = getParam("session-ttl-seconds");
+             if (sessionTTL != null) {
+                 MapConfig mapConfig = hzConfig.getMapConfig(clusterMapName);
+-                mapConfig.setTimeToLiveSeconds(Integer.valueOf(sessionTTL));
++                mapConfig.setTimeToLiveSeconds(Integer.parseInt(sessionTTL));
+                 hzConfig.addMapConfig(mapConfig);
+             }
+         } catch (UnsupportedOperationException ignored) {
+diff --git a/hazelcast/src/main/java/com/hazelcast/ascii/memcache/SetCommandParser.java b/hazelcast/src/main/java/com/hazelcast/ascii/memcache/SetCommandParser.java
+index c7d803b..5dcc1ca 100644
+--- a/hazelcast/src/main/java/com/hazelcast/ascii/memcache/SetCommandParser.java
++++ b/hazelcast/src/main/java/com/hazelcast/ascii/memcache/SetCommandParser.java
+@@ -44,7 +44,7 @@
+             return new ErrorCommand(ERROR_CLIENT);
+         }
+         if (st.hasMoreTokens()) {
+-            flag = Integer.valueOf(st.nextToken());
++            flag = Integer.parseInt(st.nextToken());
+         } else {
+             return new ErrorCommand(ERROR_CLIENT);
+         }
+diff --git a/hazelcast/src/main/java/com/hazelcast/examples/AllTest.java b/hazelcast/src/main/java/com/hazelcast/examples/AllTest.java
+index ffd12ba..c01f6db 100644
+--- a/hazelcast/src/main/java/com/hazelcast/examples/AllTest.java
++++ b/hazelcast/src/main/java/com/hazelcast/examples/AllTest.java
+@@ -81,7 +81,7 @@
+      * @param args the number of threads to start
+      */
+     public static void main(String[] args) {
+-        int nThreads = (args.length == 0) ? 10 : new Integer(args[0]);
++        int nThreads = (args.length == 0) ? 10 : Integer.parseInt(args[0]);
+         final AllTest allTest = new AllTest(nThreads);
+         allTest.start();
+         Executors.newSingleThreadExecutor().execute(new Runnable() {
+diff --git a/hazelcast/src/main/java/com/hazelcast/examples/TestApp.java b/hazelcast/src/main/java/com/hazelcast/examples/TestApp.java
+index c8b085e..e583dd5 100644
+--- a/hazelcast/src/main/java/com/hazelcast/examples/TestApp.java
++++ b/hazelcast/src/main/java/com/hazelcast/examples/TestApp.java
+@@ -631,7 +631,7 @@
+     private void handleAtomicNumberSet(String[] args) {
+         long v = 0;
+         if (args.length > 1) {
+-            v = Long.valueOf(args[1]);
++            v = Long.parseLong(args[1]);
+         }
+         getAtomicNumber().set(v);
+         println(getAtomicNumber().get());
+@@ -848,7 +848,7 @@
+ 
+     protected void handleMapTryLock(String[] args) {
+         String key = args[1];
+-        long time = (args.length > 2) ? Long.valueOf(args[2]) : 0;
++        long time = (args.length > 2) ? Long.parseLong(args[2]) : 0;
+         boolean locked;
+         if (time == 0) {
+             locked = getMap().tryLock(key);
+@@ -971,7 +971,7 @@
+ 
+     protected void handleMultiMapTryLock(String[] args) {
+         String key = args[1];
+-        long time = (args.length > 2) ? Long.valueOf(args[2]) : 0;
++        long time = (args.length > 2) ? Long.parseLong(args[2]) : 0;
+         boolean locked;
+         if (time == 0) {
+             locked = getMultiMap().tryLock(key);
+@@ -1019,7 +1019,7 @@
+             if (timeout == null) {
+                 println(lock.tryLock());
+             } else {
+-                long time = Long.valueOf(timeout);
++                long time = Long.parseLong(timeout);
+                 try {
+                     println(lock.tryLock(time, TimeUnit.SECONDS));
+                 } catch (InterruptedException e) {
+@@ -1232,7 +1232,7 @@
+     protected void handleQOffer(String[] args) {
+         long timeout = 0;
+         if (args.length > 2) {
+-            timeout = Long.valueOf(args[2]);
++            timeout = Long.parseLong(args[2]);
+         }
+         try {
+             boolean offered = getQueue().offer(args[1], timeout, TimeUnit.SECONDS);
+@@ -1253,7 +1253,7 @@
+     protected void handleQPoll(String[] args) {
+         long timeout = 0;
+         if (args.length > 1) {
+-            timeout = Long.valueOf(args[1]);
++            timeout = Long.parseLong(args[1]);
+         }
+         try {
+             println(getQueue().poll(timeout, TimeUnit.SECONDS));
+diff --git a/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java b/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
+index 6a1062d..f6f6cca 100644
+--- a/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
++++ b/hazelcast-wm/src/main/java/com/hazelcast/web/WebFilter.java
+@@ -119,7 +119,7 @@
+             String sessionTTL = getParam("session-ttl-seconds");
+             if (sessionTTL != null) {
+                 MapConfig mapConfig = hzConfig.getMapConfig(clusterMapName);
+-                mapConfig.setTimeToLiveSeconds(Integer.valueOf(sessionTTL));
++                mapConfig.setTimeToLiveSeconds(Integer.parseInt(sessionTTL));
+                 hzConfig.addMapConfig(mapConfig);
+             }
+         } catch (UnsupportedOperationException ignored) {

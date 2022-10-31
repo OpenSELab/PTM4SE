@@ -1,0 +1,72 @@
+diff --git a/flink-core/src/main/java/org/apache/flink/api/common/io/GenericCsvInputFormat.java b/flink-core/src/main/java/org/apache/flink/api/common/io/GenericCsvInputFormat.java
+index b132ca2..8d979bb 100644
+--- a/flink-core/src/main/java/org/apache/flink/api/common/io/GenericCsvInputFormat.java
++++ b/flink-core/src/main/java/org/apache/flink/api/common/io/GenericCsvInputFormat.java
+@@ -53,6 +53,8 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
+ 	
+ 	private static final byte[] DEFAULT_FIELD_DELIMITER = new byte[] {','};
+ 
++	private static final byte BACKSLASH = 92;
++
+ 	// --------------------------------------------------------------------------------------------
+ 	//  Variables for internal operation.
+ 	//  They are all transient, because we do not want them so be serialized 
+@@ -443,9 +445,10 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
+ 		if(quotedStringParsing == true && bytes[i] == quoteCharacter) {
+ 
+ 			// quoted string parsing enabled and field is quoted
+-			// search for ending quote character
++			// search for ending quote character, continue when it is escaped
+ 			i++;
+-			while(i < limit && bytes[i] != quoteCharacter) {
++
++			while (i < limit && (bytes[i] != quoteCharacter || bytes[i-1] == BACKSLASH)){
+ 				i++;
+ 			}
+ 			i++;
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/StringParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/StringParser.java
+index 27e49f5..47e4494 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/StringParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/StringParser.java
+@@ -27,6 +27,7 @@ public class StringParser extends FieldParser<String> {
+ 
+ 	private boolean quotedStringParsing = false;
+ 	private byte quoteCharacter;
++	private static final byte BACKSLASH = 92;
+ 
+ 	private String result;
+ 
+@@ -46,8 +47,8 @@ public class StringParser extends FieldParser<String> {
+ 			// quoted string parsing enabled and first character Vis a quote
+ 			i++;
+ 
+-			// search for ending quote character
+-			while(i < limit && bytes[i] != quoteCharacter) {
++			// search for ending quote character, continue when it is escaped
++			while (i < limit && (bytes[i] != quoteCharacter || bytes[i-1] == BACKSLASH)){
+ 				i++;
+ 			}
+ 
+diff --git a/flink-core/src/main/java/org/apache/flink/types/parser/StringValueParser.java b/flink-core/src/main/java/org/apache/flink/types/parser/StringValueParser.java
+index 086e3e4..bcb1042 100644
+--- a/flink-core/src/main/java/org/apache/flink/types/parser/StringValueParser.java
++++ b/flink-core/src/main/java/org/apache/flink/types/parser/StringValueParser.java
+@@ -31,6 +31,7 @@ public class StringValueParser extends FieldParser<StringValue> {
+ 
+ 	private boolean quotedStringParsing = false;
+ 	private byte quoteCharacter;
++	private static final byte BACKSLASH = 92;
+ 
+ 	private StringValue result;
+ 
+@@ -51,8 +52,8 @@ public class StringValueParser extends FieldParser<StringValue> {
+ 			// quoted string parsing enabled and first character is a quote
+ 			i++;
+ 
+-			// search for ending quote character
+-			while(i < limit && bytes[i] != quoteCharacter) {
++			// search for ending quote character, continue when it is escaped
++			while (i < limit && (bytes[i] != quoteCharacter || bytes[i-1] == BACKSLASH)){
+ 				i++;
+ 			}
+ 

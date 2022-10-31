@@ -1,0 +1,26 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/TaskManager.java b/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/TaskManager.java
+index 305d39f..cbcc9f5 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/TaskManager.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/TaskManager.java
+@@ -120,7 +120,7 @@
+ 	
+ 	// --------------------------------------------------------------------------------------------
+ 	
+-	private final ExecutorService executorService = Executors.newCachedThreadPool(ExecutorThreadFactory.INSTANCE);
++	private final ExecutorService executorService = Executors.newFixedThreadPool(2 * Hardware.getNumberCPUCores(), ExecutorThreadFactory.INSTANCE);
+ 	
+ 	
+ 	private final InstanceConnectionInfo localInstanceConnectionInfo;
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/TaskManager.java b/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/TaskManager.java
+index 305d39f..cbcc9f5 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/TaskManager.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/taskmanager/TaskManager.java
+@@ -120,7 +120,7 @@
+ 	
+ 	// --------------------------------------------------------------------------------------------
+ 	
+-	private final ExecutorService executorService = Executors.newCachedThreadPool(ExecutorThreadFactory.INSTANCE);
++	private final ExecutorService executorService = Executors.newFixedThreadPool(2 * Hardware.getNumberCPUCores(), ExecutorThreadFactory.INSTANCE);
+ 	
+ 	
+ 	private final InstanceConnectionInfo localInstanceConnectionInfo;

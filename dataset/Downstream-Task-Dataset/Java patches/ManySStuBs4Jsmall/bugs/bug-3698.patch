@@ -1,0 +1,60 @@
+diff --git a/tool-testsuite/test/org/antlr/v4/test/tool/TestSymbolIssues.java b/tool-testsuite/test/org/antlr/v4/test/tool/TestSymbolIssues.java
+index 51cffb9..6d56775 100644
+--- a/tool-testsuite/test/org/antlr/v4/test/tool/TestSymbolIssues.java
++++ b/tool-testsuite/test/org/antlr/v4/test/tool/TestSymbolIssues.java
+@@ -329,10 +329,10 @@
+ 				"TOKEN_RANGE_3:    'Z' | 'K'..'R' | 'O'..'V';\n" +
+ 				"TOKEN_RANGE_4:    'g'..'l' | [g-l];\n",             // Handling in ATNOptimizer.
+ 
+-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:2:18: chars \"a-f\" declared multiply times in set [aa-f]\n" +
+-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:3:18: chars \"D-J\" declared multiply times in set [A-FD-J]\n" +
+-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:4:13: chars \"O-V\" declared multiply times in set 'Z' | 'K'..'R' | 'O'..'V'\n" +
+-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4::: chars \"g-l\" declared multiply times in set [g-l]\n"
++				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:2:18: chars \"a-f\" used multiple times in set [aa-f]\n" +
++				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:3:18: chars \"D-J\" used multiple times in set [A-FD-J]\n" +
++				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:4:13: chars \"O-V\" used multiple times in set 'Z' | 'K'..'R' | 'O'..'V'\n" +
++				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4::: chars \"g-l\" used multiple times in set [g-l]\n"
+ 		};
+ 
+ 		testErrors(test, false);
+diff --git a/tool/src/org/antlr/v4/tool/ErrorType.java b/tool/src/org/antlr/v4/tool/ErrorType.java
+index 65b1863..c4a3861 100644
+--- a/tool/src/org/antlr/v4/tool/ErrorType.java
++++ b/tool/src/org/antlr/v4/tool/ErrorType.java
+@@ -1034,7 +1034,7 @@
+ 	/**
+ 	 * Compiler Warning 180.
+ 	 *
+-	 * <p>chars "a-f" declared multiply times in set [a-fc-m]</p>
++	 * <p>chars "a-f" used multiple times in set [a-fc-m]</p>
+ 	 *
+ 	 * <pre>
+ 	 * A:    [aa-z];   // warning
+@@ -1043,7 +1043,7 @@
+ 	 *
+ 	 * TODO: Does not work with fragment rules.
+ 	 */
+-	CHARACTERS_COLLISION_IN_SET(180, "chars \"<arg>\" declared multiply times in set <arg2>", ErrorSeverity.WARNING),
++	CHARACTERS_COLLISION_IN_SET(180, "chars \"<arg>\" used multiple times in set <arg2>", ErrorSeverity.WARNING),
+ 
+ 	/*
+ 	 * Backward incompatibility errors
+diff --git a/tool-testsuite/test/org/antlr/v4/test/tool/TestSymbolIssues.java b/tool-testsuite/test/org/antlr/v4/test/tool/TestSymbolIssues.java
+index 51cffb9..6d56775 100644
+--- a/tool-testsuite/test/org/antlr/v4/test/tool/TestSymbolIssues.java
++++ b/tool-testsuite/test/org/antlr/v4/test/tool/TestSymbolIssues.java
+@@ -329,10 +329,10 @@
+ 				"TOKEN_RANGE_3:    'Z' | 'K'..'R' | 'O'..'V';\n" +
+ 				"TOKEN_RANGE_4:    'g'..'l' | [g-l];\n",             // Handling in ATNOptimizer.
+ 
+-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:2:18: chars \"a-f\" declared multiply times in set [aa-f]\n" +
+-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:3:18: chars \"D-J\" declared multiply times in set [A-FD-J]\n" +
+-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:4:13: chars \"O-V\" declared multiply times in set 'Z' | 'K'..'R' | 'O'..'V'\n" +
+-				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4::: chars \"g-l\" declared multiply times in set [g-l]\n"
++				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:2:18: chars \"a-f\" used multiple times in set [aa-f]\n" +
++				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:3:18: chars \"D-J\" used multiple times in set [A-FD-J]\n" +
++				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4:4:13: chars \"O-V\" used multiple times in set 'Z' | 'K'..'R' | 'O'..'V'\n" +
++				"warning(" + ErrorType.CHARACTERS_COLLISION_IN_SET.code + "): L.g4::: chars \"g-l\" used multiple times in set [g-l]\n"
+ 		};
+ 
+ 		testErrors(test, false);

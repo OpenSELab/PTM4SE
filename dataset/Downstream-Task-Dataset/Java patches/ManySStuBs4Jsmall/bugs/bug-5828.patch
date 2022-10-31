@@ -1,0 +1,28 @@
+diff --git a/components/camel-sip/src/test/java/org/apache/camel/component/sip/PublishSubscribeTest.java b/components/camel-sip/src/test/java/org/apache/camel/component/sip/PublishSubscribeTest.java
+index 1591a13..211fa14 100644
+--- a/components/camel-sip/src/test/java/org/apache/camel/component/sip/PublishSubscribeTest.java
++++ b/components/camel-sip/src/test/java/org/apache/camel/component/sip/PublishSubscribeTest.java
+@@ -47,8 +47,7 @@
+         }
+ 
+         unreachableEndpoint.expectedMessageCount(0);
+-        // we get a header and a body hence 2 messages
+-        resultEndpoint.expectedMessageCount(2);
++        resultEndpoint.expectedMinimumMessageCount(1);
+         
+         producerTemplate.sendBodyAndHeader(
+             "sip://agent@localhost:5152?stackName=client&eventHeaderName=evtHdrName&eventId=evtid&fromUser=user2&fromHost=localhost&fromPort=3534", 
+diff --git a/components/camel-sip/src/test/java/org/apache/camel/component/sip/PublishSubscribeTest.java b/components/camel-sip/src/test/java/org/apache/camel/component/sip/PublishSubscribeTest.java
+index 1591a13..211fa14 100644
+--- a/components/camel-sip/src/test/java/org/apache/camel/component/sip/PublishSubscribeTest.java
++++ b/components/camel-sip/src/test/java/org/apache/camel/component/sip/PublishSubscribeTest.java
+@@ -47,8 +47,7 @@
+         }
+ 
+         unreachableEndpoint.expectedMessageCount(0);
+-        // we get a header and a body hence 2 messages
+-        resultEndpoint.expectedMessageCount(2);
++        resultEndpoint.expectedMinimumMessageCount(1);
+         
+         producerTemplate.sendBodyAndHeader(
+             "sip://agent@localhost:5152?stackName=client&eventHeaderName=evtHdrName&eventId=evtid&fromUser=user2&fromHost=localhost&fromPort=3534", 

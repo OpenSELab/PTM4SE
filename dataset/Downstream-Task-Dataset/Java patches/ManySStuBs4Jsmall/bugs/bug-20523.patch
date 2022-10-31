@@ -1,0 +1,39 @@
+diff --git a/src/api/org/openmrs/arden/MLMObjectElement.java b/src/api/org/openmrs/arden/MLMObjectElement.java
+index c787857..9940424 100644
+--- a/src/api/org/openmrs/arden/MLMObjectElement.java
++++ b/src/api/org/openmrs/arden/MLMObjectElement.java
+@@ -122,7 +122,7 @@
+ 				w.append("\n\t\t\tResult " + key + "=new Result((String) parameters.get(\"" + key + "\")");
+ 			} else {
+ 				w.append("\n\t\t\tResult " + key + "=context.read(\n\t\t\t\tpatient,context.getLogicDataSource(\""
+-				        + this.datasource + "\"),\n\t\t\t\tnew LogicCriteria(\"" + cn.trim() + "\")");
++				        + this.datasource + "\"),\n\t\t\t\tnew LogicCriteriaImpl(\"" + cn.trim() + "\")");
+ 			}
+ 			if (hasWhere) {
+ 				if (whereType.equals("withinPreceding")) {
+diff --git a/src/api/org/openmrs/arden/impl/ArdenServiceImpl.java b/src/api/org/openmrs/arden/impl/ArdenServiceImpl.java
+index 8284fb7..70ff98b 100644
+--- a/src/api/org/openmrs/arden/impl/ArdenServiceImpl.java
++++ b/src/api/org/openmrs/arden/impl/ArdenServiceImpl.java
+@@ -159,7 +159,7 @@
+ 		     w.write("import org.openmrs.Patient;\n");
+              w.write("import org.openmrs.api.context.Context;\n");
+              w.write("import org.openmrs.logic.LogicContext;\n");
+-             w.write("import org.openmrs.logic.LogicCriteria;\n");
++             w.write("import org.openmrs.logic.LogicCriteriaImpl;\n");
+              w.write("import org.openmrs.logic.LogicException;\n");
+              w.write("import org.openmrs.logic.LogicService;\n");
+              w.write("import org.openmrs.logic.Rule;\n");
+diff --git a/src/api/org/openmrs/arden/MLMObjectElement.java b/src/api/org/openmrs/arden/MLMObjectElement.java
+index c787857..9940424 100644
+--- a/src/api/org/openmrs/arden/MLMObjectElement.java
++++ b/src/api/org/openmrs/arden/MLMObjectElement.java
+@@ -122,7 +122,7 @@
+ 				w.append("\n\t\t\tResult " + key + "=new Result((String) parameters.get(\"" + key + "\")");
+ 			} else {
+ 				w.append("\n\t\t\tResult " + key + "=context.read(\n\t\t\t\tpatient,context.getLogicDataSource(\""
+-				        + this.datasource + "\"),\n\t\t\t\tnew LogicCriteria(\"" + cn.trim() + "\")");
++				        + this.datasource + "\"),\n\t\t\t\tnew LogicCriteriaImpl(\"" + cn.trim() + "\")");
+ 			}
+ 			if (hasWhere) {
+ 				if (whereType.equals("withinPreceding")) {

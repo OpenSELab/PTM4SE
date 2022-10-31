@@ -1,0 +1,27 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/EssentialsToggleCommand.java b/Essentials/src/com/earth2me/essentials/commands/EssentialsToggleCommand.java
+index 022bc2f..9fe317b 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/EssentialsToggleCommand.java
++++ b/Essentials/src/com/earth2me/essentials/commands/EssentialsToggleCommand.java
+@@ -31,11 +31,11 @@
+ 		return null;
+ 	}
+ 
+-	protected void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
++	protected void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws PlayerNotFoundException, NotEnoughArgumentsException
+ 	{
+ 		if (args.length < 1 || args[0].trim().length() < 2)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 
+ 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+@@ -68,7 +68,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 

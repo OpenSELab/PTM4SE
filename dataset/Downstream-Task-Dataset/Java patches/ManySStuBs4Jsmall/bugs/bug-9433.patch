@@ -1,0 +1,81 @@
+diff --git a/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java b/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
+index a36aee0..3f264de 100644
+--- a/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
++++ b/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
+@@ -32,14 +32,14 @@
+ 	final Pattern warnPattern = Utils.createPattern(".*[ ]*//[ ]*warn[ ]*|/[*]warn[*]/");
+ 
+ 	public ConfigurationBuilder(File aROOT)
+-			throws CheckstyleException, IOException {
++			throws CheckstyleException {
+ 		root = aROOT;
+ 		config = getConfigurationFromXML(XML_NAME, System.getProperties());
+ 		listFiles(files, root, "java");
+ 	}
+ 
+ 	private static Configuration getConfigurationFromXML(String aConfigName,
+-			Properties aProps) throws CheckstyleException {
++			Properties aProps) {
+ 		try {
+ 			return ConfigurationLoader.loadConfiguration(aConfigName,
+ 					new PropertiesExpander(aProps));
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/DebugChecker.java b/src/test/java/com/puppycrawl/tools/checkstyle/DebugChecker.java
+index 0cbb1b1..e90276c 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/DebugChecker.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/DebugChecker.java
+@@ -8,7 +8,7 @@
+ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+ 
+ class DebugChecker extends Checker {
+-    public DebugChecker() throws CheckstyleException {
++    public DebugChecker() {
+     }
+ 
+     @Override
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/imports/PkgControlRegExpTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/imports/PkgControlRegExpTest.java
+index c3148ca..6bd51d6 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/imports/PkgControlRegExpTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/imports/PkgControlRegExpTest.java
+@@ -30,7 +30,7 @@
+     private final PkgControl pcCommon = new PkgControl(pcRoot, "common");
+ 
+     @Before
+-    public void setUp() throws Exception {
++    public void setUp() {
+         pcRoot.addGuard(new Guard(false, false, ".*\\.(spring|lui)framework", false, true));
+         pcRoot.addGuard(new Guard(false, false, "org\\.hibernate", false, true));
+         pcRoot.addGuard(new Guard(true, false, "org\\.(apache|lui)\\.commons", false, true));
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/imports/PkgControlTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/imports/PkgControlTest.java
+index f794a00..3dea603 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/imports/PkgControlTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/imports/PkgControlTest.java
+@@ -30,7 +30,7 @@
+     private final PkgControl pcCommon = new PkgControl(pcRoot, "common");
+ 
+     @Before
+-    public void setUp() throws Exception {
++    public void setUp() {
+         pcRoot.addGuard(new Guard(false, false, "org.springframework", false, false));
+         pcRoot.addGuard(new Guard(false, false, "org.hibernate", false, false));
+         pcRoot.addGuard(new Guard(true, false, "org.apache.commons", false, false));
+diff --git a/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java b/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
+index a36aee0..3f264de 100644
+--- a/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
++++ b/src/it/java/com/google/checkstyle/test/base/ConfigurationBuilder.java
+@@ -32,14 +32,14 @@
+ 	final Pattern warnPattern = Utils.createPattern(".*[ ]*//[ ]*warn[ ]*|/[*]warn[*]/");
+ 
+ 	public ConfigurationBuilder(File aROOT)
+-			throws CheckstyleException, IOException {
++			throws CheckstyleException {
+ 		root = aROOT;
+ 		config = getConfigurationFromXML(XML_NAME, System.getProperties());
+ 		listFiles(files, root, "java");
+ 	}
+ 
+ 	private static Configuration getConfigurationFromXML(String aConfigName,
+-			Properties aProps) throws CheckstyleException {
++			Properties aProps) {
+ 		try {
+ 			return ConfigurationLoader.loadConfiguration(aConfigName,
+ 					new PropertiesExpander(aProps));

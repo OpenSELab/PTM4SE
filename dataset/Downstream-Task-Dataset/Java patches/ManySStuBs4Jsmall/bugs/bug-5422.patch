@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java b/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
+index 94623f8..74e6278 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
++++ b/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
+@@ -89,7 +89,7 @@
+         if (ref != null) {
+ 
+             // if the given size is not provided, we just use the existing queue as is
+-            if (size != null && ref.getSize() != size) {
++            if (size != null && !size.equals(ref.getSize())) {
+                 // there is already a queue, so make sure the size matches
+                 throw new IllegalArgumentException("Cannot use existing queue " + key + " as the existing queue size "
+                         + (ref.getSize() != null ? ref.getSize() : Integer.MAX_VALUE) + " does not match given queue size " + size);
+diff --git a/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java b/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
+index 94623f8..74e6278 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
++++ b/camel-core/src/main/java/org/apache/camel/component/seda/SedaComponent.java
+@@ -89,7 +89,7 @@
+         if (ref != null) {
+ 
+             // if the given size is not provided, we just use the existing queue as is
+-            if (size != null && ref.getSize() != size) {
++            if (size != null && !size.equals(ref.getSize())) {
+                 // there is already a queue, so make sure the size matches
+                 throw new IllegalArgumentException("Cannot use existing queue " + key + " as the existing queue size "
+                         + (ref.getSize() != null ? ref.getSize() : Integer.MAX_VALUE) + " does not match given queue size " + size);

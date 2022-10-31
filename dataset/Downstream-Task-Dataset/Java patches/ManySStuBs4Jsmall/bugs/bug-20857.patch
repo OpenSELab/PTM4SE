@@ -1,0 +1,216 @@
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
+index 5c0b27c..c03057f 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
+@@ -439,7 +439,7 @@
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<OtherExampleBean> otherExampleBean() {
+-			return new TestParameterizedContainer<OtherExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}
+@@ -449,7 +449,7 @@
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<CustomExampleBean> customExampleBean() {
+-			return new TestParameterizedContainer<CustomExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}
+@@ -482,7 +482,7 @@
+ 		@Bean
+ 		@ConditionalOnBean(parameterizedContainer = TestParameterizedContainer.class)
+ 		public TestParameterizedContainer<CustomExampleBean> conditionalCustomExampleBean() {
+-			return new TestParameterizedContainer<CustomExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBeanTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBeanTests.java
+index 31f14d8..2296ca3 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBeanTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBeanTests.java
+@@ -741,7 +741,7 @@
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<OtherExampleBean> otherExampleBean() {
+-			return new TestParameterizedContainer<OtherExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}
+@@ -751,7 +751,7 @@
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<CustomExampleBean> customExampleBean() {
+-			return new TestParameterizedContainer<CustomExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}
+@@ -784,7 +784,7 @@
+ 		@Bean
+ 		@ConditionalOnMissingBean(parameterizedContainer = TestParameterizedContainer.class)
+ 		public TestParameterizedContainer<CustomExampleBean> conditionalCustomExampleBean() {
+-			return new TestParameterizedContainer<CustomExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
+index 38c36cd..d259f8d 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
+@@ -243,7 +243,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<ResourceUrlEncodingFilter> filterRegistration() {
+-			FilterRegistrationBean<ResourceUrlEncodingFilter> bean = new FilterRegistrationBean<ResourceUrlEncodingFilter>(
++			FilterRegistrationBean<ResourceUrlEncodingFilter> bean = new FilterRegistrationBean<>(
+ 					new ResourceUrlEncodingFilter());
+ 			bean.setDispatcherTypes(EnumSet.of(DispatcherType.INCLUDE));
+ 			return bean;
+@@ -257,8 +257,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<OrderedCharacterEncodingFilter> filterRegistration() {
+-			return new FilterRegistrationBean<OrderedCharacterEncodingFilter>(
+-					new OrderedCharacterEncodingFilter());
++			return new FilterRegistrationBean<>(new OrderedCharacterEncodingFilter());
+ 		}
+ 
+ 	}
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
+index d068b19..bc47193 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
+@@ -358,7 +358,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<ResourceUrlEncodingFilter> filterRegistration() {
+-			FilterRegistrationBean<ResourceUrlEncodingFilter> bean = new FilterRegistrationBean<ResourceUrlEncodingFilter>(
++			FilterRegistrationBean<ResourceUrlEncodingFilter> bean = new FilterRegistrationBean<>(
+ 					new ResourceUrlEncodingFilter());
+ 			bean.setDispatcherTypes(EnumSet.of(DispatcherType.INCLUDE));
+ 			return bean;
+@@ -372,8 +372,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<OrderedCharacterEncodingFilter> filterRegistration() {
+-			return new FilterRegistrationBean<OrderedCharacterEncodingFilter>(
+-					new OrderedCharacterEncodingFilter());
++			return new FilterRegistrationBean<>(new OrderedCharacterEncodingFilter());
+ 		}
+ 
+ 	}
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/web/servlet/ConditionalOnMissingFilterBeanTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/web/servlet/ConditionalOnMissingFilterBeanTests.java
+index 7220d85..41fd8bb 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/web/servlet/ConditionalOnMissingFilterBeanTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/web/servlet/ConditionalOnMissingFilterBeanTests.java
+@@ -154,7 +154,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<OtherFilter> myOtherFilter() {
+-			return new FilterRegistrationBean<OtherFilter>(new OtherFilter());
++			return new FilterRegistrationBean<>(new OtherFilter());
+ 		}
+ 
+ 	}
+@@ -164,7 +164,7 @@
+ 
+ 		@Bean
+ 		public FilterRegistrationBean<TestFilter> myTestFilter() {
+-			return new FilterRegistrationBean<TestFilter>(new TestFilter());
++			return new FilterRegistrationBean<>(new TestFilter());
+ 		}
+ 
+ 	}
+@@ -197,7 +197,7 @@
+ 		@Bean
+ 		@ConditionalOnMissingFilterBean
+ 		public FilterRegistrationBean<TestFilter> testFilter() {
+-			return new FilterRegistrationBean<TestFilter>(new TestFilter());
++			return new FilterRegistrationBean<>(new TestFilter());
+ 		}
+ 
+ 	}
+diff --git a/spring-boot-project/spring-boot-devtools/src/test/java/org/springframework/boot/devtools/filewatch/FileSystemWatcherTests.java b/spring-boot-project/spring-boot-devtools/src/test/java/org/springframework/boot/devtools/filewatch/FileSystemWatcherTests.java
+index e42fce7..90ac96c 100644
+--- a/spring-boot-project/spring-boot-devtools/src/test/java/org/springframework/boot/devtools/filewatch/FileSystemWatcherTests.java
++++ b/spring-boot-project/spring-boot-devtools/src/test/java/org/springframework/boot/devtools/filewatch/FileSystemWatcherTests.java
+@@ -50,7 +50,7 @@
+ 	private FileSystemWatcher watcher;
+ 
+ 	private List<Set<ChangedFiles>> changes = Collections
+-			.synchronizedList(new ArrayList<Set<ChangedFiles>>());
++			.synchronizedList(new ArrayList<>());
+ 
+ 	@Rule
+ 	public TemporaryFolder temp = new TemporaryFolder();
+diff --git a/spring-boot-project/spring-boot-test-autoconfigure/src/test/java/org/springframework/boot/test/autoconfigure/web/servlet/mockmvc/HateoasController.java b/spring-boot-project/spring-boot-test-autoconfigure/src/test/java/org/springframework/boot/test/autoconfigure/web/servlet/mockmvc/HateoasController.java
+index 6d6e35c..905b1e8 100644
+--- a/spring-boot-project/spring-boot-test-autoconfigure/src/test/java/org/springframework/boot/test/autoconfigure/web/servlet/mockmvc/HateoasController.java
++++ b/spring-boot-project/spring-boot-test-autoconfigure/src/test/java/org/springframework/boot/test/autoconfigure/web/servlet/mockmvc/HateoasController.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2012-2017 the original author or authors.
++ * Copyright 2012-2018 the original author or authors.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -35,7 +35,7 @@
+ 
+ 	@RequestMapping("/resource")
+ 	public Resource<Map<String, String>> resource() {
+-		return new Resource<>(new HashMap<String, String>(),
++		return new Resource<>(new HashMap<>(),
+ 				new Link("self", "http://api.example.com"));
+ 	}
+ 
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/ConversionServiceDeducer.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/ConversionServiceDeducer.java
+index 8dfbd54..f5b6a06 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/ConversionServiceDeducer.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/ConversionServiceDeducer.java
+@@ -81,7 +81,7 @@
+ 
+ 		private <T> List<T> beans(Class<T> type, String qualifier,
+ 				ListableBeanFactory beanFactory) {
+-			return new ArrayList<T>(BeanFactoryAnnotationUtils
++			return new ArrayList<>(BeanFactoryAnnotationUtils
+ 					.qualifiedBeansOfType(beanFactory, type, qualifier).values());
+ 		}
+ 
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
+index 5c0b27c..c03057f 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
+@@ -439,7 +439,7 @@
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<OtherExampleBean> otherExampleBean() {
+-			return new TestParameterizedContainer<OtherExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}
+@@ -449,7 +449,7 @@
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<CustomExampleBean> customExampleBean() {
+-			return new TestParameterizedContainer<CustomExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}
+@@ -482,7 +482,7 @@
+ 		@Bean
+ 		@ConditionalOnBean(parameterizedContainer = TestParameterizedContainer.class)
+ 		public TestParameterizedContainer<CustomExampleBean> conditionalCustomExampleBean() {
+-			return new TestParameterizedContainer<CustomExampleBean>();
++			return new TestParameterizedContainer<>();
+ 		}
+ 
+ 	}

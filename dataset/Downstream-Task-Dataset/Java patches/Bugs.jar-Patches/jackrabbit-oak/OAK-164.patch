@@ -1,0 +1,88 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/accesscontrol/AccessControlValidator.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/accesscontrol/AccessControlValidator.java
+index 3aa11f9..0721f2b 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/accesscontrol/AccessControlValidator.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/accesscontrol/AccessControlValidator.java
+@@ -42,6 +42,7 @@ import org.apache.jackrabbit.oak.plugins.tree.impl.AbstractTree;
+ import org.apache.jackrabbit.oak.plugins.tree.impl.TreeConstants;
+ import org.apache.jackrabbit.oak.spi.commit.DefaultValidator;
+ import org.apache.jackrabbit.oak.spi.commit.Validator;
++import org.apache.jackrabbit.oak.spi.commit.VisibleValidator;
+ import org.apache.jackrabbit.oak.spi.security.authorization.accesscontrol.AccessControlConstants;
+ import org.apache.jackrabbit.oak.spi.security.authorization.restriction.Restriction;
+ import org.apache.jackrabbit.oak.spi.security.authorization.restriction.RestrictionProvider;
+@@ -122,7 +123,7 @@ class AccessControlValidator extends DefaultValidator implements AccessControlCo
+         Tree treeAfter = checkNotNull(parentAfter.getChild(name));
+ 
+         checkValidTree(parentAfter, treeAfter, after);
+-        return new AccessControlValidator(this, treeAfter);
++        return newValidator(this, treeAfter);
+     }
+ 
+     @Override
+@@ -130,7 +131,7 @@ class AccessControlValidator extends DefaultValidator implements AccessControlCo
+         Tree treeAfter = checkNotNull(parentAfter.getChild(name));
+ 
+         checkValidTree(parentAfter, treeAfter, after);
+-        return new AccessControlValidator(this, treeAfter);
++        return newValidator(this, treeAfter);
+     }
+ 
+     @Override
+@@ -141,6 +142,14 @@ class AccessControlValidator extends DefaultValidator implements AccessControlCo
+ 
+     //------------------------------------------------------------< private >---
+ 
++    private static Validator newValidator(AccessControlValidator parent,
++                                          Tree parentAfter) {
++        return new VisibleValidator(
++                new AccessControlValidator(parent, parentAfter),
++                true,
++                true);
++    }
++
+     private void checkValidTree(Tree parentAfter, Tree treeAfter, NodeState nodeAfter) throws CommitFailedException {
+         if (isPolicy(treeAfter)) {
+             checkValidPolicy(parentAfter, treeAfter, nodeAfter);
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/user/UserValidator.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/user/UserValidator.java
+index 975f5eb..7d6a2e9 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/user/UserValidator.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/user/UserValidator.java
+@@ -139,12 +139,13 @@ class UserValidator extends DefaultValidator implements UserConstants {
+         Tree tree = checkNotNull(parentAfter.getChild(name));
+ 
+         validateAuthorizable(tree, UserUtil.getType(tree));
+-        return new VisibleValidator(new UserValidator(null, tree, provider), true, true);
++        return newValidator(null, tree, provider);
+     }
+ 
+     @Override
+     public Validator childNodeChanged(String name, NodeState before, NodeState after) throws CommitFailedException {
+-        return new UserValidator(parentBefore.getChild(name), parentAfter.getChild(name), provider);
++        return newValidator(parentBefore.getChild(name),
++                parentAfter.getChild(name), provider);
+     }
+ 
+     @Override
+@@ -158,12 +159,21 @@ class UserValidator extends DefaultValidator implements UserConstants {
+             }
+             return null;
+         } else {
+-            return new VisibleValidator(new UserValidator(tree, null, provider), true, true);
++            return newValidator(tree, null, provider);
+         }
+     }
+ 
+     //------------------------------------------------------------< private >---
+ 
++    private static Validator newValidator(Tree parentBefore,
++                                          Tree parentAfter,
++                                          UserValidatorProvider provider) {
++        return new VisibleValidator(
++                new UserValidator(parentBefore, parentAfter, provider),
++                true,
++                true);
++    }
++
+     private boolean isAdminUser(@Nonnull Tree userTree) {
+         if (userTree.exists() && isUser(userTree)) {
+             String id = UserUtil.getAuthorizableId(userTree);

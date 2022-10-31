@@ -1,0 +1,15 @@
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/Id.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/Id.java
+index a263ddb..021b5ef 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/Id.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/model/Id.java
+@@ -113,7 +113,9 @@ public class Id implements Comparable<Id> {
+         
+         for (int i = 0; i < len; i++) {
+             if (raw[i] != other[i]) {
+-                return raw[i] - other[i];
++                final int rawValue = raw[i] & 0xFF; // unsigned value
++                final int otherValue = other[i] & 0xFF; // unsigned value
++                return rawValue - otherValue;
+             }
+         }
+         return raw.length - other.length;

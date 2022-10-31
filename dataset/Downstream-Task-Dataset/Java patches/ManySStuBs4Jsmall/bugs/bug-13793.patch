@@ -1,0 +1,34 @@
+diff --git a/src/com/google/javascript/jscomp/SymbolTable.java b/src/com/google/javascript/jscomp/SymbolTable.java
+index 0257c05..3f61fa0 100644
+--- a/src/com/google/javascript/jscomp/SymbolTable.java
++++ b/src/com/google/javascript/jscomp/SymbolTable.java
+@@ -1719,10 +1719,11 @@
+       if (result == null) {
+         // If we can't find this type, it might be a reference to a
+         // primitive type (like {string}). Autobox it to check.
++        // Alternatively it can be a type from externs.
+         JSType type = typeRegistry.getType(dottedName);
+         JSType autobox = type == null ? null : type.autoboxesTo();
+         result = autobox == null
+-            ? null : getSymbolForTypeHelper(autobox, true);
++            ? getSymbolForTypeHelper(type, true) : getSymbolForTypeHelper(autobox, true);
+       }
+       return result;
+     }
+diff --git a/src/com/google/javascript/jscomp/SymbolTable.java b/src/com/google/javascript/jscomp/SymbolTable.java
+index 0257c05..3f61fa0 100644
+--- a/src/com/google/javascript/jscomp/SymbolTable.java
++++ b/src/com/google/javascript/jscomp/SymbolTable.java
+@@ -1719,10 +1719,11 @@
+       if (result == null) {
+         // If we can't find this type, it might be a reference to a
+         // primitive type (like {string}). Autobox it to check.
++        // Alternatively it can be a type from externs.
+         JSType type = typeRegistry.getType(dottedName);
+         JSType autobox = type == null ? null : type.autoboxesTo();
+         result = autobox == null
+-            ? null : getSymbolForTypeHelper(autobox, true);
++            ? getSymbolForTypeHelper(type, true) : getSymbolForTypeHelper(autobox, true);
+       }
+       return result;
+     }

@@ -1,0 +1,75 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index f6bc16d..46cf465 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -102,7 +102,7 @@
+         }
+     }
+ 
+-    public boolean destroybed() {
++    public boolean destroyed() {
+         return destroyed.get();
+     }
+ 
+@@ -151,7 +151,7 @@
+      */
+     @Override
+     public String getMethod() {
+-        return b.methodType;
++        return b.methodType != null ? b.methodType : b.request.getMethod();
+     }
+ 
+     /**
+@@ -846,7 +846,7 @@
+         private int offset;
+         private int length;
+         private String encoding = "UTF-8";
+-        private String methodType = "GET";
++        private String methodType;
+         private String contentType;
+         private String data;
+         private Map<String, String> headers = new HashMap<String, String>();
+diff --git a/modules/cpr/src/main/java/org/atmosphere/handler/AbstractReflectorAtmosphereHandler.java b/modules/cpr/src/main/java/org/atmosphere/handler/AbstractReflectorAtmosphereHandler.java
+index 0d940e9..13505ac 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/handler/AbstractReflectorAtmosphereHandler.java
++++ b/modules/cpr/src/main/java/org/atmosphere/handler/AbstractReflectorAtmosphereHandler.java
+@@ -91,7 +91,7 @@
+             throws IOException {
+ 
+         Object message = event.getMessage();
+-        if (message == null || event.isCancelled() || event.getResource().getRequest().destroybed()) return;
++        if (message == null || event.isCancelled() || event.getResource().getRequest().destroyed()) return;
+ 
+         if (event.getResource().getSerializer() != null) {
+             try {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index f6bc16d..46cf465 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -102,7 +102,7 @@
+         }
+     }
+ 
+-    public boolean destroybed() {
++    public boolean destroyed() {
+         return destroyed.get();
+     }
+ 
+@@ -151,7 +151,7 @@
+      */
+     @Override
+     public String getMethod() {
+-        return b.methodType;
++        return b.methodType != null ? b.methodType : b.request.getMethod();
+     }
+ 
+     /**
+@@ -846,7 +846,7 @@
+         private int offset;
+         private int length;
+         private String encoding = "UTF-8";
+-        private String methodType = "GET";
++        private String methodType;
+         private String contentType;
+         private String data;
+         private Map<String, String> headers = new HashMap<String, String>();

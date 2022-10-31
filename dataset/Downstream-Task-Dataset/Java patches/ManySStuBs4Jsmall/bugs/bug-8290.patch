@@ -1,0 +1,31 @@
+diff --git a/src/main/java/org/b3log/solo/repository/CategoryTagRepository.java b/src/main/java/org/b3log/solo/repository/CategoryTagRepository.java
+index 2a4aea7..976f1bc 100644
+--- a/src/main/java/org/b3log/solo/repository/CategoryTagRepository.java
++++ b/src/main/java/org/b3log/solo/repository/CategoryTagRepository.java
+@@ -29,7 +29,7 @@
+  * Category-Tag relation repository.
+  *
+  * @author <a href="http://88250.b3log.org">Liang Ding</a>
+- * @version 1.1.0.2, Sep 30, 2018
++ * @version 1.1.0.3, Jan 15, 2019
+  * @since 2.0.0
+  */
+ @Repository
+@@ -64,7 +64,7 @@
+      */
+     public JSONObject getByCategoryId(final String categoryId, final int currentPageNum, final int pageSize) throws RepositoryException {
+         final Query query = new Query().setFilter(new PropertyFilter(Category.CATEGORY + "_" + Keys.OBJECT_ID, FilterOperator.EQUAL, categoryId)).
+-                setCurrentPageNum(currentPageNum).setPageSize(pageSize).setPageCount(1);
++                setPage(currentPageNum, pageSize).setPageCount(1);
+ 
+         return get(query);
+     }
+@@ -91,7 +91,7 @@
+      */
+     public JSONObject getByTagId(final String tagId, final int currentPageNum, final int pageSize) throws RepositoryException {
+         final Query query = new Query().setFilter(new PropertyFilter(Tag.TAG + "_" + Keys.OBJECT_ID, FilterOperator.EQUAL, tagId)).
+-                setCurrentPageNum(currentPageNum).setPageSize(pageSize).setPageCount(1);
++                setPage(currentPageNum, pageSize).setPageCount(1);
+ 
+         return get(query);
+     }

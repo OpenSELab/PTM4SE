@@ -1,0 +1,30 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/ConsolePrinter.java b/presto-main/src/main/java/com/facebook/presto/operator/ConsolePrinter.java
+index 7f4e75d..f463e79 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/ConsolePrinter.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/ConsolePrinter.java
+@@ -129,7 +129,9 @@
+                     if (!first) {
+                         writer.write(delimiter);
+                     }
+-                    Joiner.on(delimiter).appendTo(writer, tuple.toValues());
++                    Joiner.on(delimiter)
++                            .useForNull("")
++                            .appendTo(writer, tuple.toValues());
+                     first = false;
+                 }
+                 writer.write('\n');
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/ConsolePrinter.java b/presto-main/src/main/java/com/facebook/presto/operator/ConsolePrinter.java
+index 7f4e75d..f463e79 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/ConsolePrinter.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/ConsolePrinter.java
+@@ -129,7 +129,9 @@
+                     if (!first) {
+                         writer.write(delimiter);
+                     }
+-                    Joiner.on(delimiter).appendTo(writer, tuple.toValues());
++                    Joiner.on(delimiter)
++                            .useForNull("")
++                            .appendTo(writer, tuple.toValues());
+                     first = false;
+                 }
+                 writer.write('\n');

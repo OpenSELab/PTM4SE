@@ -1,0 +1,54 @@
+diff --git a/retrofit/src/main/java/retrofit/converter/GsonConverter.java b/retrofit/src/main/java/retrofit/converter/GsonConverter.java
+index 7edd47b..0997bd7 100644
+--- a/retrofit/src/main/java/retrofit/converter/GsonConverter.java
++++ b/retrofit/src/main/java/retrofit/converter/GsonConverter.java
+@@ -77,11 +77,11 @@
+ 
+   private static class JsonTypedOutput implements TypedOutput {
+     private final byte[] jsonBytes;
+-    private final String encode;
++    private final String mimeType;
+ 
+     JsonTypedOutput(byte[] jsonBytes, String encode) {
+       this.jsonBytes = jsonBytes;
+-      this.encode = encode;
++      this.mimeType = "application/json; charset=" + encode;
+     }
+ 
+     @Override public String fileName() {
+@@ -89,7 +89,7 @@
+     }
+ 
+     @Override public String mimeType() {
+-      return "application/json; charset=" + encode;
++      return mimeType;
+     }
+ 
+     @Override public long length() {
+diff --git a/retrofit/src/main/java/retrofit/converter/GsonConverter.java b/retrofit/src/main/java/retrofit/converter/GsonConverter.java
+index 7edd47b..0997bd7 100644
+--- a/retrofit/src/main/java/retrofit/converter/GsonConverter.java
++++ b/retrofit/src/main/java/retrofit/converter/GsonConverter.java
+@@ -77,11 +77,11 @@
+ 
+   private static class JsonTypedOutput implements TypedOutput {
+     private final byte[] jsonBytes;
+-    private final String encode;
++    private final String mimeType;
+ 
+     JsonTypedOutput(byte[] jsonBytes, String encode) {
+       this.jsonBytes = jsonBytes;
+-      this.encode = encode;
++      this.mimeType = "application/json; charset=" + encode;
+     }
+ 
+     @Override public String fileName() {
+@@ -89,7 +89,7 @@
+     }
+ 
+     @Override public String mimeType() {
+-      return "application/json; charset=" + encode;
++      return mimeType;
+     }
+ 
+     @Override public long length() {

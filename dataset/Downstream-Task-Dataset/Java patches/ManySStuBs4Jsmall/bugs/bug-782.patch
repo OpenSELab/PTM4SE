@@ -1,0 +1,72 @@
+diff --git a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystemFactory.java b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystemFactory.java
+index 7cd6e0e..0c6c3ef 100644
+--- a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystemFactory.java
++++ b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystemFactory.java
+@@ -72,15 +72,15 @@
+    * @return true if both access and secret key are present, false otherwise
+    */
+   private boolean addAndCheckGoogleCredentials(Configuration configuration) {
++    // TODO(binfan): remove System.getProperty as it is covered by configuration
+     String accessKeyConf = Constants.GCS_ACCESS_KEY;
+-    if (System.getProperty(accessKeyConf) != null && configuration.get(accessKeyConf) == null) {
++    if (System.getProperty(accessKeyConf) != null && !configuration.containsKey(accessKeyConf)) {
+       configuration.set(accessKeyConf, System.getProperty(accessKeyConf));
+     }
+     String secretKeyConf = Constants.GCS_SECRET_KEY;
+-    if (System.getProperty(secretKeyConf) != null && configuration.get(secretKeyConf) == null) {
++    if (System.getProperty(secretKeyConf) != null && !configuration.containsKey(secretKeyConf)) {
+       configuration.set(secretKeyConf, System.getProperty(secretKeyConf));
+     }
+-    return configuration.get(accessKeyConf) != null
+-        && configuration.get(secretKeyConf) != null;
++    return configuration.containsKey(accessKeyConf) && configuration.containsKey(secretKeyConf);
+   }
+ }
+diff --git a/underfs/s3/src/main/java/alluxio/underfs/s3/S3UnderFileSystemFactory.java b/underfs/s3/src/main/java/alluxio/underfs/s3/S3UnderFileSystemFactory.java
+index ca2b3a6..f86c2c1 100644
+--- a/underfs/s3/src/main/java/alluxio/underfs/s3/S3UnderFileSystemFactory.java
++++ b/underfs/s3/src/main/java/alluxio/underfs/s3/S3UnderFileSystemFactory.java
+@@ -72,15 +72,15 @@
+    * @return true if both access and secret key are present, false otherwise
+    */
+   private boolean addAndCheckAWSCredentials(Configuration configuration) {
++    // TODO(binfan): remove System.getProperty as it is covered by configuration
+     String accessKeyConf = Constants.S3_ACCESS_KEY;
+-    if (System.getProperty(accessKeyConf) != null && configuration.get(accessKeyConf) == null) {
++    if (System.getProperty(accessKeyConf) != null && !configuration.containsKey(accessKeyConf)) {
+       configuration.set(accessKeyConf, System.getProperty(accessKeyConf));
+     }
+     String secretKeyConf = Constants.S3_SECRET_KEY;
+-    if (System.getProperty(secretKeyConf) != null && configuration.get(secretKeyConf) == null) {
++    if (System.getProperty(secretKeyConf) != null && !configuration.containsKey(secretKeyConf)) {
+       configuration.set(secretKeyConf, System.getProperty(secretKeyConf));
+     }
+-    return configuration.get(accessKeyConf) != null
+-        && configuration.get(secretKeyConf) != null;
++    return configuration.containsKey(accessKeyConf) && configuration.containsKey(secretKeyConf);
+   }
+ }
+diff --git a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystemFactory.java b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystemFactory.java
+index 7cd6e0e..0c6c3ef 100644
+--- a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystemFactory.java
++++ b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSUnderFileSystemFactory.java
+@@ -72,15 +72,15 @@
+    * @return true if both access and secret key are present, false otherwise
+    */
+   private boolean addAndCheckGoogleCredentials(Configuration configuration) {
++    // TODO(binfan): remove System.getProperty as it is covered by configuration
+     String accessKeyConf = Constants.GCS_ACCESS_KEY;
+-    if (System.getProperty(accessKeyConf) != null && configuration.get(accessKeyConf) == null) {
++    if (System.getProperty(accessKeyConf) != null && !configuration.containsKey(accessKeyConf)) {
+       configuration.set(accessKeyConf, System.getProperty(accessKeyConf));
+     }
+     String secretKeyConf = Constants.GCS_SECRET_KEY;
+-    if (System.getProperty(secretKeyConf) != null && configuration.get(secretKeyConf) == null) {
++    if (System.getProperty(secretKeyConf) != null && !configuration.containsKey(secretKeyConf)) {
+       configuration.set(secretKeyConf, System.getProperty(secretKeyConf));
+     }
+-    return configuration.get(accessKeyConf) != null
+-        && configuration.get(secretKeyConf) != null;
++    return configuration.containsKey(accessKeyConf) && configuration.containsKey(secretKeyConf);
+   }
+ }

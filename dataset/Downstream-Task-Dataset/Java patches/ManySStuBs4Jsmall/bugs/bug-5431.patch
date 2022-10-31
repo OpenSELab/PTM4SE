@@ -1,0 +1,54 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/validator/DefaultLSResourceResolver.java b/camel-core/src/main/java/org/apache/camel/component/validator/DefaultLSResourceResolver.java
+index 86db2e8..622e257 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/validator/DefaultLSResourceResolver.java
++++ b/camel-core/src/main/java/org/apache/camel/component/validator/DefaultLSResourceResolver.java
+@@ -65,7 +65,7 @@
+         String resourceURI = null;
+         // Build up the relative path for using relatedURI and baseURI
+         if (baseURI == null) {
+-            relatedURI = getUri(systemId);
++            relatedURI = FileUtil.compactPath(getUri(systemId), '/');
+             resourceURI = relatedURI;
+         } else {
+             String relatedPath = relatedURIMap.get(baseURI);
+@@ -74,11 +74,11 @@
+                 if (relatedPath == null) {
+                     relatedPath = "";
+                 }
+-                relatedURI = FileUtil.onlyPath(relatedURI) + "/" + systemId;
++                relatedURI = FileUtil.compactPath(FileUtil.onlyPath(relatedURI) + "/" + systemId, '/');
+                 resourceURI = relatedURI;
+                 relatedURIMap.put(baseURI, relatedPath);
+             } else {
+-                resourceURI = relatedPath + "/" + systemId;
++                resourceURI = FileUtil.compactPath(relatedPath + "/" + systemId, '/');
+                 relatedURI = resourceURI;
+             }
+         }
+diff --git a/camel-core/src/main/java/org/apache/camel/component/validator/DefaultLSResourceResolver.java b/camel-core/src/main/java/org/apache/camel/component/validator/DefaultLSResourceResolver.java
+index 86db2e8..622e257 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/validator/DefaultLSResourceResolver.java
++++ b/camel-core/src/main/java/org/apache/camel/component/validator/DefaultLSResourceResolver.java
+@@ -65,7 +65,7 @@
+         String resourceURI = null;
+         // Build up the relative path for using relatedURI and baseURI
+         if (baseURI == null) {
+-            relatedURI = getUri(systemId);
++            relatedURI = FileUtil.compactPath(getUri(systemId), '/');
+             resourceURI = relatedURI;
+         } else {
+             String relatedPath = relatedURIMap.get(baseURI);
+@@ -74,11 +74,11 @@
+                 if (relatedPath == null) {
+                     relatedPath = "";
+                 }
+-                relatedURI = FileUtil.onlyPath(relatedURI) + "/" + systemId;
++                relatedURI = FileUtil.compactPath(FileUtil.onlyPath(relatedURI) + "/" + systemId, '/');
+                 resourceURI = relatedURI;
+                 relatedURIMap.put(baseURI, relatedPath);
+             } else {
+-                resourceURI = relatedPath + "/" + systemId;
++                resourceURI = FileUtil.compactPath(relatedPath + "/" + systemId, '/');
+                 relatedURI = resourceURI;
+             }
+         }

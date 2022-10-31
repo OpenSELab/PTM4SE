@@ -1,0 +1,18 @@
+diff --git a/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-app/src/main/java/org/apache/hadoop/mapreduce/v2/app/webapp/CountersBlock.java b/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-app/src/main/java/org/apache/hadoop/mapreduce/v2/app/webapp/CountersBlock.java
+index 1b20c5d..568658e 100644
+--- a/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-app/src/main/java/org/apache/hadoop/mapreduce/v2/app/webapp/CountersBlock.java
++++ b/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-app/src/main/java/org/apache/hadoop/mapreduce/v2/app/webapp/CountersBlock.java
+@@ -139,10 +139,10 @@
+           Counter mc = mg == null ? null : mg.findCounter(counter.getName());
+           Counter rc = rg == null ? null : rg.findCounter(counter.getName());
+           groupRow.
+-            td(mc == null ? "0" : String.valueOf(mc.getValue())).
+-            td(rc == null ? "0" : String.valueOf(rc.getValue()));
++            td(mc == null ? "0" : String.format("%,d", mc.getValue())).
++            td(rc == null ? "0" : String.format("%,d", rc.getValue()));
+         }
+-        groupRow.td(String.valueOf(counter.getValue()))._();
++        groupRow.td(String.format("%,d", counter.getValue()))._();
+       }
+       group._()._()._()._();
+     }

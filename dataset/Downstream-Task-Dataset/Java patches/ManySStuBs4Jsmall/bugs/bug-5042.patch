@@ -1,0 +1,67 @@
+diff --git a/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsComputeProducer.java b/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsComputeProducer.java
+index 4bc01d8..b730595f 100644
+--- a/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsComputeProducer.java
++++ b/components/camel-jclouds/src/main/java/org/apache/camel/component/jclouds/JcloudsComputeProducer.java
+@@ -264,7 +264,7 @@
+         String operation = getEndpoint().getOperation();
+ 
+         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(JcloudsConstants.OPERATION))) {
+-            operation = (String) exchange.getIn().getHeader(JcloudsConstants.OPERATION);
++            operation = exchange.getIn().getHeader(JcloudsConstants.OPERATION, String.class);
+         }
+         return operation;
+     }
+@@ -300,7 +300,7 @@
+         String imageId = getEndpoint().getImageId();
+ 
+         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(JcloudsConstants.IMAGE_ID))) {
+-            imageId = (String) exchange.getIn().getHeader(JcloudsConstants.IMAGE_ID);
++            imageId = exchange.getIn().getHeader(JcloudsConstants.IMAGE_ID, String.class);
+         }
+         return imageId;
+     }
+@@ -312,7 +312,7 @@
+         String hardwareId = getEndpoint().getHardwareId();
+ 
+         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(JcloudsConstants.HARDWARE_ID))) {
+-            hardwareId = (String) exchange.getIn().getHeader(JcloudsConstants.HARDWARE_ID);
++            hardwareId = exchange.getIn().getHeader(JcloudsConstants.HARDWARE_ID, String.class);
+         }
+         return hardwareId;
+     }
+@@ -324,7 +324,7 @@
+         String locationId = getEndpoint().getLocationId();
+ 
+         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(JcloudsConstants.LOCATION_ID))) {
+-            locationId = (String) exchange.getIn().getHeader(JcloudsConstants.LOCATION_ID);
++            locationId = exchange.getIn().getHeader(JcloudsConstants.LOCATION_ID, String.class);
+         }
+         return locationId;
+     }
+@@ -336,7 +336,7 @@
+         String nodeId = getEndpoint().getNodeId();
+ 
+         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(JcloudsConstants.NODE_ID))) {
+-            nodeId = (String) exchange.getIn().getHeader(JcloudsConstants.NODE_ID);
++            nodeId = exchange.getIn().getHeader(JcloudsConstants.NODE_ID, String.class);
+         }
+         return nodeId;
+     }
+@@ -348,7 +348,7 @@
+         String group = getEndpoint().getGroup();
+ 
+         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(JcloudsConstants.GROUP))) {
+-            group = (String) exchange.getIn().getHeader(JcloudsConstants.GROUP);
++            group = exchange.getIn().getHeader(JcloudsConstants.GROUP, String.class);
+         }
+         return group;
+     }
+@@ -360,7 +360,7 @@
+         String user = getEndpoint().getUser();
+ 
+         if (ObjectHelper.isNotEmpty(exchange.getIn().getHeader(JcloudsConstants.USER))) {
+-            user = (String) exchange.getIn().getHeader(JcloudsConstants.USER);
++            user = exchange.getIn().getHeader(JcloudsConstants.USER, String.class);
+         }
+         return user;
+     }

@@ -1,0 +1,44 @@
+diff --git a/controller/src/main/java/org/jboss/as/controller/operations/global/GlobalOperationHandlers.java b/controller/src/main/java/org/jboss/as/controller/operations/global/GlobalOperationHandlers.java
+index c44b17b..ebfc745 100644
+--- a/controller/src/main/java/org/jboss/as/controller/operations/global/GlobalOperationHandlers.java
++++ b/controller/src/main/java/org/jboss/as/controller/operations/global/GlobalOperationHandlers.java
+@@ -395,7 +395,7 @@
+             }
+ 
+             if (aliasEntry == null) {
+-                if (resource.hasChildren(childType)) {
++                if (resource != null && resource.hasChildren(childType)) {
+                     set.addAll(resource.getChildrenNames(childType));
+                 }
+             } else {
+@@ -403,7 +403,7 @@
+                 PathAddress target = aliasEntry.convertToTargetAddress(addr.append(element));
+                 PathAddress targetParent = target.subAddress(0, target.size() - 1);
+                 Resource parentResource = context.readResourceFromRoot(targetParent);
+-                if (parentResource.hasChildren(target.getLastElement().getKey())) {
++                if (parentResource != null && parentResource.hasChildren(target.getLastElement().getKey())) {
+                     set.add(element.getValue());
+                 }
+             }
+diff --git a/controller/src/main/java/org/jboss/as/controller/operations/global/GlobalOperationHandlers.java b/controller/src/main/java/org/jboss/as/controller/operations/global/GlobalOperationHandlers.java
+index c44b17b..ebfc745 100644
+--- a/controller/src/main/java/org/jboss/as/controller/operations/global/GlobalOperationHandlers.java
++++ b/controller/src/main/java/org/jboss/as/controller/operations/global/GlobalOperationHandlers.java
+@@ -395,7 +395,7 @@
+             }
+ 
+             if (aliasEntry == null) {
+-                if (resource.hasChildren(childType)) {
++                if (resource != null && resource.hasChildren(childType)) {
+                     set.addAll(resource.getChildrenNames(childType));
+                 }
+             } else {
+@@ -403,7 +403,7 @@
+                 PathAddress target = aliasEntry.convertToTargetAddress(addr.append(element));
+                 PathAddress targetParent = target.subAddress(0, target.size() - 1);
+                 Resource parentResource = context.readResourceFromRoot(targetParent);
+-                if (parentResource.hasChildren(target.getLastElement().getKey())) {
++                if (parentResource != null && parentResource.hasChildren(target.getLastElement().getKey())) {
+                     set.add(element.getValue());
+                 }
+             }

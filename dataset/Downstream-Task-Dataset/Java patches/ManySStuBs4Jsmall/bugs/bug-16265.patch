@@ -1,0 +1,94 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java b/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
+index 59220a3..dd08519 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
+@@ -188,11 +188,11 @@
+         return size() == 0;
+     }
+ 
+-    public <K> Set<K> localKeySet() {
++    public Set<K> localKeySet() {
+         throw new UnsupportedOperationException();
+     }
+ 
+-    public <K> Set<K> localKeySet(Predicate predicate) {
++    public Set<K> localKeySet(Predicate predicate) {
+         throw new UnsupportedOperationException();
+     }
+ 
+diff --git a/hazelcast/src/main/java/com/hazelcast/core/IMap.java b/hazelcast/src/main/java/com/hazelcast/core/IMap.java
+index 35e3ba2..cb1ac2e 100644
+--- a/hazelcast/src/main/java/com/hazelcast/core/IMap.java
++++ b/hazelcast/src/main/java/com/hazelcast/core/IMap.java
+@@ -200,7 +200,7 @@
+      * @param predicate query criteria
+      * @return result key set of the query
+      */
+-    <K> Set<K> keySet(Predicate predicate);
++    Set<K> keySet(Predicate predicate);
+ 
+     /**
+      * Queries the map based on the specified predicate and
+@@ -212,7 +212,7 @@
+      * @return result entry set of the query
+      */
+ 
+-    <K, V> Set<Map.Entry<K, V>> entrySet(Predicate predicate);
++    Set<Map.Entry<K, V>> entrySet(Predicate predicate);
+ 
+     /**
+      * Queries the map based on the specified predicate and
+@@ -238,7 +238,7 @@
+      *
+      * @return locally owned keys.
+      */
+-    <K> Set<K> localKeySet();
++    Set<K> localKeySet();
+ 
+     /**
+      * Returns the keys of matching locally owned entries.
+@@ -253,7 +253,7 @@
+      * @param predicate query criteria
+      * @return keys of matching locally owned entries.
+      */
+-    <K> Set<K> localKeySet(Predicate predicate);
++    Set<K> localKeySet(Predicate predicate);
+ 
+     /**
+      * Adds an index to this map for the specified entries so
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ReplicatedMapFactory.java b/hazelcast/src/main/java/com/hazelcast/impl/ReplicatedMapFactory.java
+index fd1a7d9..fa686a5 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ReplicatedMapFactory.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ReplicatedMapFactory.java
+@@ -200,11 +200,11 @@
+             return result;
+         }
+ 
+-        public <K> Set<K> localKeySet() {
++        public Set<K> localKeySet() {
+             return distributedMap.localKeySet();
+         }
+ 
+-        public <K> Set<K> localKeySet(Predicate predicate) {
++        public Set<K> localKeySet(Predicate predicate) {
+             return null;  //To change body of implemented methods use File | Settings | File Templates.
+         }
+ 
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java b/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
+index 59220a3..dd08519 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/MapClientProxy.java
+@@ -188,11 +188,11 @@
+         return size() == 0;
+     }
+ 
+-    public <K> Set<K> localKeySet() {
++    public Set<K> localKeySet() {
+         throw new UnsupportedOperationException();
+     }
+ 
+-    public <K> Set<K> localKeySet(Predicate predicate) {
++    public Set<K> localKeySet(Predicate predicate) {
+         throw new UnsupportedOperationException();
+     }
+ 

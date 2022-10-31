@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/interceptor/AtmosphereResourceStateRecovery.java b/modules/cpr/src/main/java/org/atmosphere/interceptor/AtmosphereResourceStateRecovery.java
+index 64530a6..1defe4b 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/interceptor/AtmosphereResourceStateRecovery.java
++++ b/modules/cpr/src/main/java/org/atmosphere/interceptor/AtmosphereResourceStateRecovery.java
+@@ -266,7 +266,7 @@
+             if (b != null && (force || !b.getID().equalsIgnoreCase(r.getBroadcaster().getID()))) {
+                 // We cannot add the resource now. we need to first make sure there is no cached message.
+                 cache = b.getBroadcasterConfig().getBroadcasterCache();
+-                List<Object> t = cache.retrieveFromCache(b.getID(), r);
++                List<Object> t = cache.retrieveFromCache(b.getID(), r.uuid());
+ 
+                 cachedMessages = b.getBroadcasterConfig().applyFilters(r, t);
+                 if (t.size() > 0) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/interceptor/AtmosphereResourceStateRecovery.java b/modules/cpr/src/main/java/org/atmosphere/interceptor/AtmosphereResourceStateRecovery.java
+index 64530a6..1defe4b 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/interceptor/AtmosphereResourceStateRecovery.java
++++ b/modules/cpr/src/main/java/org/atmosphere/interceptor/AtmosphereResourceStateRecovery.java
+@@ -266,7 +266,7 @@
+             if (b != null && (force || !b.getID().equalsIgnoreCase(r.getBroadcaster().getID()))) {
+                 // We cannot add the resource now. we need to first make sure there is no cached message.
+                 cache = b.getBroadcasterConfig().getBroadcasterCache();
+-                List<Object> t = cache.retrieveFromCache(b.getID(), r);
++                List<Object> t = cache.retrieveFromCache(b.getID(), r.uuid());
+ 
+                 cachedMessages = b.getBroadcasterConfig().applyFilters(r, t);
+                 if (t.size() > 0) {

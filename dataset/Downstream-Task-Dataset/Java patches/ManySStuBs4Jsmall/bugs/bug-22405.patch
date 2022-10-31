@@ -1,0 +1,26 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 8b36550..f53b594 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -2886,7 +2886,7 @@
+      * @return true if the library/module/package of the corresponding type needs to be imported
+      */
+     protected boolean needToImport(String type) {
+-        return !defaultIncludes.contains(type)
++        return StringUtils.isNotBlank(type) && !defaultIncludes.contains(type)
+             && !languageSpecificPrimitives.contains(type);
+     }
+ 
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 8b36550..f53b594 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -2886,7 +2886,7 @@
+      * @return true if the library/module/package of the corresponding type needs to be imported
+      */
+     protected boolean needToImport(String type) {
+-        return !defaultIncludes.contains(type)
++        return StringUtils.isNotBlank(type) && !defaultIncludes.contains(type)
+             && !languageSpecificPrimitives.contains(type);
+     }
+ 

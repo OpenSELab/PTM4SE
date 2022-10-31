@@ -1,0 +1,21 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index c5dbd5c..ee33f8e 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -1415,6 +1415,7 @@ public class DefaultCamelContext extends ServiceSupport implements ModelCamelCon
+         getManagementStrategy().start();
+ 
+         // start lifecycle strategies
++        ServiceHelper.startServices(lifecycleStrategies);
+         Iterator<LifecycleStrategy> it = lifecycleStrategies.iterator();
+         while (it.hasNext()) {
+             LifecycleStrategy strategy = it.next();
+@@ -1526,6 +1527,8 @@ public class DefaultCamelContext extends ServiceSupport implements ModelCamelCon
+ 
+         // shutdown management as the last one
+         shutdownServices(managementStrategy);
++        shutdownServices(lifecycleStrategies);
++        lifecycleStrategies.clear();
+ 
+         // stop the lazy created so they can be re-created on restart
+         forceStopLazyInitialization();

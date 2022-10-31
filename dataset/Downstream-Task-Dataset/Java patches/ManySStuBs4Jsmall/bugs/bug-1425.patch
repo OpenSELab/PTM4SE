@@ -1,0 +1,68 @@
+diff --git a/core/src/main/java/tachyon/client/TachyonFS.java b/core/src/main/java/tachyon/client/TachyonFS.java
+index 80d0739..da0bbf1 100644
+--- a/core/src/main/java/tachyon/client/TachyonFS.java
++++ b/core/src/main/java/tachyon/client/TachyonFS.java
+@@ -168,7 +168,8 @@
+   private TachyonFS(TachyonConf tachyonConf) throws IOException {
+     super(tachyonConf);
+ 
+-    String masterHost = NetworkUtils.getLocalHostName(tachyonConf);
++    String masterHost = tachyonConf.get(Constants.MASTER_HOSTNAME,
++        NetworkUtils.getLocalHostName(tachyonConf));
+     int masterPort = tachyonConf.getInt(Constants.MASTER_PORT, Constants.DEFAULT_MASTER_PORT);
+ 
+     mMasterAddress = new InetSocketAddress(masterHost, masterPort);
+diff --git a/core/src/main/java/tachyon/worker/TachyonWorker.java b/core/src/main/java/tachyon/worker/TachyonWorker.java
+index 76a164a..e248f02 100644
+--- a/core/src/main/java/tachyon/worker/TachyonWorker.java
++++ b/core/src/main/java/tachyon/worker/TachyonWorker.java
+@@ -97,7 +97,8 @@
+    * @return The new TachyonWorker
+    */
+   public static synchronized TachyonWorker createWorker(TachyonConf tachyonConf) {
+-    String masterHostname = NetworkUtils.getLocalHostName(tachyonConf);
++    String masterHostname = tachyonConf.get(Constants.MASTER_HOSTNAME,
++        NetworkUtils.getLocalHostName(tachyonConf));
+     int masterPort = tachyonConf.getInt(Constants.MASTER_PORT, Constants.DEFAULT_MASTER_PORT);
+     String workerHostName = NetworkUtils.getLocalHostName(tachyonConf);
+     int workerPort = tachyonConf.getInt(Constants.WORKER_PORT, Constants.DEFAULT_WORKER_PORT);
+diff --git a/core/src/test/java/tachyon/client/TachyonFSTest.java b/core/src/test/java/tachyon/client/TachyonFSTest.java
+index a34ab1a..4717618 100644
+--- a/core/src/test/java/tachyon/client/TachyonFSTest.java
++++ b/core/src/test/java/tachyon/client/TachyonFSTest.java
+@@ -364,7 +364,7 @@
+     String localhost = NetworkUtils.getLocalHostName(Constants.DEFAULT_HOST_RESOLUTION_TIMEOUT_MS);
+     String localIP = NetworkUtils.getLocalIpAddress(Constants.DEFAULT_HOST_RESOLUTION_TIMEOUT_MS);
+     String[] resultUrls =
+-        new String[] {"tachyon://" + localhost + "/" + localIP + ":19998", "tachyon-ft://" + localhost + "/" + localIP + ":19998",};
++        new String[] {"tachyon://localhost/127.0.0.1:19998", "tachyon-ft://localhost/127.0.0.1:19998",};
+     for (int i = 0, n = originUrls.length; i < n; i ++) {
+       String originUrl = originUrls[i];
+       String resultUrl = resultUrls[i];
+@@ -380,10 +380,10 @@
+ 
+     copyConf.set(Constants.USE_ZOOKEEPER, "false");
+     tfs = TachyonFS.get(copyConf);
+-    Assert.assertEquals("tachyon://" + localhost + "/" + localIP + ":19998", tfs.toString());
++    Assert.assertEquals("tachyon://localhost/127.0.0.1:19998", tfs.toString());
+ 
+     copyConf.set(Constants.USE_ZOOKEEPER, "true");
+     tfs = TachyonFS.get(copyConf);
+-    Assert.assertEquals("tachyon-ft://" + localhost + "/" + localIP + ":19998", tfs.toString());
++    Assert.assertEquals("tachyon-ft://localhost/127.0.0.1:19998", tfs.toString());
+   }
+ }
+diff --git a/core/src/main/java/tachyon/client/TachyonFS.java b/core/src/main/java/tachyon/client/TachyonFS.java
+index 80d0739..da0bbf1 100644
+--- a/core/src/main/java/tachyon/client/TachyonFS.java
++++ b/core/src/main/java/tachyon/client/TachyonFS.java
+@@ -168,7 +168,8 @@
+   private TachyonFS(TachyonConf tachyonConf) throws IOException {
+     super(tachyonConf);
+ 
+-    String masterHost = NetworkUtils.getLocalHostName(tachyonConf);
++    String masterHost = tachyonConf.get(Constants.MASTER_HOSTNAME,
++        NetworkUtils.getLocalHostName(tachyonConf));
+     int masterPort = tachyonConf.getInt(Constants.MASTER_PORT, Constants.DEFAULT_MASTER_PORT);
+ 
+     mMasterAddress = new InetSocketAddress(masterHost, masterPort);

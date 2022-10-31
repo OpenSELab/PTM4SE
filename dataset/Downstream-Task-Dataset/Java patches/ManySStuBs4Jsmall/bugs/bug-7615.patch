@@ -1,0 +1,39 @@
+diff --git a/druid-handler/src/java/org/apache/hadoop/hive/druid/io/DruidVectorizedWrapper.java b/druid-handler/src/java/org/apache/hadoop/hive/druid/io/DruidVectorizedWrapper.java
+index 5db6be8..586631d 100644
+--- a/druid-handler/src/java/org/apache/hadoop/hive/druid/io/DruidVectorizedWrapper.java
++++ b/druid-handler/src/java/org/apache/hadoop/hive/druid/io/DruidVectorizedWrapper.java
+@@ -77,7 +77,7 @@
+     }
+ 
+     druidWritable = baseReader.createValue();
+-    rowBoat = new Object[projectedColumns.length];
++    rowBoat = new Object[rbCtx.getDataColumnCount()];
+   }
+ 
+   @Override public boolean next(NullWritable nullWritable, VectorizedRowBatch vectorizedRowBatch) throws IOException {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/rules/HiveExpandDistinctAggregatesRule.java b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/rules/HiveExpandDistinctAggregatesRule.java
+index b33c4c5..c7bb23d 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/rules/HiveExpandDistinctAggregatesRule.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/optimizer/calcite/rules/HiveExpandDistinctAggregatesRule.java
+@@ -165,7 +165,7 @@
+     final RelMetadataQuery mq = call.getMetadataQuery();
+     if ((nonDistinctCount == 0) && (argListSets.size() == 1)) {
+       for (Integer arg : argListSets.iterator().next()) {
+-        Set<RelColumnOrigin> colOrigs = mq.getColumnOrigins(aggregate, arg);
++        Set<RelColumnOrigin> colOrigs = mq.getColumnOrigins(aggregate.getInput(), arg);
+         if (null != colOrigs) {
+           for (RelColumnOrigin colOrig : colOrigs) {
+             RelOptHiveTable hiveTbl = (RelOptHiveTable)colOrig.getOriginTable();
+diff --git a/druid-handler/src/java/org/apache/hadoop/hive/druid/io/DruidVectorizedWrapper.java b/druid-handler/src/java/org/apache/hadoop/hive/druid/io/DruidVectorizedWrapper.java
+index 5db6be8..586631d 100644
+--- a/druid-handler/src/java/org/apache/hadoop/hive/druid/io/DruidVectorizedWrapper.java
++++ b/druid-handler/src/java/org/apache/hadoop/hive/druid/io/DruidVectorizedWrapper.java
+@@ -77,7 +77,7 @@
+     }
+ 
+     druidWritable = baseReader.createValue();
+-    rowBoat = new Object[projectedColumns.length];
++    rowBoat = new Object[rbCtx.getDataColumnCount()];
+   }
+ 
+   @Override public boolean next(NullWritable nullWritable, VectorizedRowBatch vectorizedRowBatch) throws IOException {

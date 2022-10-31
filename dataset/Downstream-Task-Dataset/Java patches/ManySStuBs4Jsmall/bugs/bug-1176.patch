@@ -1,0 +1,53 @@
+diff --git a/integration-tests/src/test/java/tachyon/hadoop/HdfsFileInputStreamIntegrationTest.java b/integration-tests/src/test/java/tachyon/hadoop/HdfsFileInputStreamIntegrationTest.java
+index bb3e4f4..cd302c4 100644
+--- a/integration-tests/src/test/java/tachyon/hadoop/HdfsFileInputStreamIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/hadoop/HdfsFileInputStreamIntegrationTest.java
+@@ -48,13 +48,13 @@
+  */
+ public class HdfsFileInputStreamIntegrationTest {
+   private static final int USER_QUOTA_UNIT_BYTES = 100;
+-  private static final int WORKER_CAPACITY = 10000;
++  private static final int WORKER_CAPACITY = 10 * Constants.MB;
+   private static final int FILE_LEN = 255;
+   private static final int BUFFER_SIZE = 50;
+ 
+   @ClassRule
+   public static LocalTachyonClusterResource sLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(WORKER_CAPACITY, USER_QUOTA_UNIT_BYTES, Constants.GB);
++      new LocalTachyonClusterResource(WORKER_CAPACITY, USER_QUOTA_UNIT_BYTES, Constants.MB);
+   private static TachyonFileSystem sTachyonFileSystem = null;
+   private HdfsFileInputStream mInMemInputStream;
+   private HdfsFileInputStream mUfsInputStream;
+diff --git a/integration-tests/src/test/java/tachyon/shell/TfsShellUtilsTest.java b/integration-tests/src/test/java/tachyon/shell/TfsShellUtilsTest.java
+index 4e52830..adde513 100644
+--- a/integration-tests/src/test/java/tachyon/shell/TfsShellUtilsTest.java
++++ b/integration-tests/src/test/java/tachyon/shell/TfsShellUtilsTest.java
+@@ -51,7 +51,7 @@
+   private static final int SIZE_BYTES = Constants.MB * 10;
+   @Rule
+   public LocalTachyonClusterResource mLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(SIZE_BYTES, 1000, Constants.GB);
++      new LocalTachyonClusterResource(SIZE_BYTES, 1000, Constants.MB);
+   private TachyonFileSystem mTfs = null;
+ 
+   @Before
+diff --git a/integration-tests/src/test/java/tachyon/hadoop/HdfsFileInputStreamIntegrationTest.java b/integration-tests/src/test/java/tachyon/hadoop/HdfsFileInputStreamIntegrationTest.java
+index bb3e4f4..cd302c4 100644
+--- a/integration-tests/src/test/java/tachyon/hadoop/HdfsFileInputStreamIntegrationTest.java
++++ b/integration-tests/src/test/java/tachyon/hadoop/HdfsFileInputStreamIntegrationTest.java
+@@ -48,13 +48,13 @@
+  */
+ public class HdfsFileInputStreamIntegrationTest {
+   private static final int USER_QUOTA_UNIT_BYTES = 100;
+-  private static final int WORKER_CAPACITY = 10000;
++  private static final int WORKER_CAPACITY = 10 * Constants.MB;
+   private static final int FILE_LEN = 255;
+   private static final int BUFFER_SIZE = 50;
+ 
+   @ClassRule
+   public static LocalTachyonClusterResource sLocalTachyonClusterResource =
+-      new LocalTachyonClusterResource(WORKER_CAPACITY, USER_QUOTA_UNIT_BYTES, Constants.GB);
++      new LocalTachyonClusterResource(WORKER_CAPACITY, USER_QUOTA_UNIT_BYTES, Constants.MB);
+   private static TachyonFileSystem sTachyonFileSystem = null;
+   private HdfsFileInputStream mInMemInputStream;
+   private HdfsFileInputStream mUfsInputStream;

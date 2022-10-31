@@ -1,0 +1,14 @@
+diff --git a/components/camel-spring/src/test/java/org/apache/camel/spring/config/ErrorHandlerTest.java b/components/camel-spring/src/test/java/org/apache/camel/spring/config/ErrorHandlerTest.java
+index 3c2d0b5..490d7ca 100644
+--- a/components/camel-spring/src/test/java/org/apache/camel/spring/config/ErrorHandlerTest.java
++++ b/components/camel-spring/src/test/java/org/apache/camel/spring/config/ErrorHandlerTest.java
+@@ -35,7 +35,8 @@
+     }
+ 
+     public void testEndpointConfiguration() throws Exception {
+-        SpringCamelContext context = applicationContext.getBeansOfType(SpringCamelContext.class).values().iterator().next();
++        // must type cast to work with Spring 2.5.x
++        SpringCamelContext context = (SpringCamelContext) applicationContext.getBeansOfType(SpringCamelContext.class).values().iterator().next();
+         List<Route> list = context.getRoutes();
+         assertEquals("Number routes created" + list, 2, list.size());
+         for (Route route : list) {

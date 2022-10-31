@@ -1,0 +1,14 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java b/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
+index 37b718b..c3a0166 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/handler/render/WebPageRenderer.java
+@@ -163,7 +163,8 @@ public class WebPageRenderer extends PageRenderer
+ 			// if there is saved response for this URL render it
+ 			bufferedResponse.writeTo((WebResponse)requestCycle.getResponse());
+ 		}
+-		else if (getRedirectPolicy() == RedirectPolicy.NEVER_REDIRECT || isOnePassRender() //
++		else if (getRedirectPolicy() == RedirectPolicy.NEVER_REDIRECT ||
++			(isOnePassRender() && isAjax == false) //
+ 			||
+ 			(!isAjax //
+ 				&&

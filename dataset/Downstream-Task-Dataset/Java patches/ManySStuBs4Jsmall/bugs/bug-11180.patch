@@ -1,0 +1,44 @@
+diff --git a/dropwizard-migrations/src/main/java/io/dropwizard/migrations/MigrationsBundle.java b/dropwizard-migrations/src/main/java/io/dropwizard/migrations/MigrationsBundle.java
+index 8bd75a2..bf863e1 100644
+--- a/dropwizard-migrations/src/main/java/io/dropwizard/migrations/MigrationsBundle.java
++++ b/dropwizard-migrations/src/main/java/io/dropwizard/migrations/MigrationsBundle.java
+@@ -7,7 +7,7 @@
+ import io.dropwizard.setup.Environment;
+ 
+ public abstract class MigrationsBundle<T extends Configuration> implements Bundle, DatabaseConfiguration<T> {
+-    public static final String DEFAULT_NAME = "db";
++    private static final String DEFAULT_NAME = "db";
+ 
+     @Override
+     @SuppressWarnings("unchecked")
+@@ -16,7 +16,7 @@
+         bootstrap.addCommand(new DbCommand<>(name(), this, klass));
+     }
+ 
+-    protected String name() {
++    public String name() {
+         return DEFAULT_NAME;
+     }
+ 
+diff --git a/dropwizard-migrations/src/main/java/io/dropwizard/migrations/MigrationsBundle.java b/dropwizard-migrations/src/main/java/io/dropwizard/migrations/MigrationsBundle.java
+index 8bd75a2..bf863e1 100644
+--- a/dropwizard-migrations/src/main/java/io/dropwizard/migrations/MigrationsBundle.java
++++ b/dropwizard-migrations/src/main/java/io/dropwizard/migrations/MigrationsBundle.java
+@@ -7,7 +7,7 @@
+ import io.dropwizard.setup.Environment;
+ 
+ public abstract class MigrationsBundle<T extends Configuration> implements Bundle, DatabaseConfiguration<T> {
+-    public static final String DEFAULT_NAME = "db";
++    private static final String DEFAULT_NAME = "db";
+ 
+     @Override
+     @SuppressWarnings("unchecked")
+@@ -16,7 +16,7 @@
+         bootstrap.addCommand(new DbCommand<>(name(), this, klass));
+     }
+ 
+-    protected String name() {
++    public String name() {
+         return DEFAULT_NAME;
+     }
+ 

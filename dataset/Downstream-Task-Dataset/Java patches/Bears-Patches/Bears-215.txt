@@ -1,0 +1,25 @@
+--- a/src/main/java/spoon/reflect/visitor/ImportScannerImpl.java
++++ b/src/main/java/spoon/reflect/visitor/ImportScannerImpl.java
+@@ -153,20 +155,71 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 		stringBuilder.append(ctJavaDoc.getContent());
+ 
+ 		for (CtJavaDocTag ctJavaDocTag : ctJavaDoc.getTags()) {
+-			stringBuilder.append(ctJavaDocTag.getContent());
++			stringBuilder.append("\n").append(ctJavaDocTag.getType()).append(" ").append(ctJavaDocTag.getContent());
+ 		}
+ 
+ 		String javadoc = stringBuilder.toString();
+ 		for (CtImport ctImport : this.usedImport.keySet()) {
+ 			switch (ctImport.getImportKind()) {
+ 				case TYPE:
+-					if (javadoc.contains(ctImport.getReference().getSimpleName())) {
+-						this.setImportUsed(ctImport);
++					if (javadoc.contains(ctImport.getReference().getSimpleName()) && ctImport.getReference() instanceof CtTypeReference) {
++						//assure that it is not just any occurrence of same substring, but it is real javadoc link to the same type
++						if (matchesTypeName(javadoc, (CtTypeReference<?>) ctImport.getReference())) {
++							this.setImportUsed(ctImport);
++						}
+ 					}
+ 					break;
+ 			}
+ 		}

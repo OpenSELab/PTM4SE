@@ -1,0 +1,17 @@
+diff --git a/log4j-slf4j-impl/src/main/java/org/apache/logging/slf4j/Log4jMarker.java b/log4j-slf4j-impl/src/main/java/org/apache/logging/slf4j/Log4jMarker.java
+index c2273f5..d57cf19 100644
+--- a/log4j-slf4j-impl/src/main/java/org/apache/logging/slf4j/Log4jMarker.java
++++ b/log4j-slf4j-impl/src/main/java/org/apache/logging/slf4j/Log4jMarker.java
+@@ -55,9 +55,9 @@ public class Log4jMarker implements Marker {
+     }
+ 
+     @Override
+-    public boolean remove(final Marker marker) {
+-        return this.marker.remove(MarkerManager.getMarker(marker.getName()));
+-    }
++	public boolean remove(final Marker marker) {
++		return marker != null ? this.marker.remove(MarkerManager.getMarker(marker.getName())) : false;
++	}
+ 
+     @Override
+     public String getName() {

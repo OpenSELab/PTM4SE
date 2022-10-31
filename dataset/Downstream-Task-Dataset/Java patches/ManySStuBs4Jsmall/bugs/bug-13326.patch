@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlTaskExecution.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlTaskExecution.java
+index 4a0522d..77385b8 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlTaskExecution.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlTaskExecution.java
+@@ -235,7 +235,7 @@
+             try (PageIterator pages = operator.iterator(operatorStats)) {
+                 while (pages.hasNext()) {
+                     Page page = pages.next();
+-                    taskOutput.getStats().addOutputDataSize(new DataSize(page.getDataSize(), Unit.BYTE));
++                    taskOutput.getStats().addOutputDataSize(page.getDataSize());
+                     taskOutput.getStats().addOutputPositions(page.getPositionCount());
+                     if (!taskOutput.addPage(page)) {
+                         pages.close();
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlTaskExecution.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlTaskExecution.java
+index 4a0522d..77385b8 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlTaskExecution.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlTaskExecution.java
+@@ -235,7 +235,7 @@
+             try (PageIterator pages = operator.iterator(operatorStats)) {
+                 while (pages.hasNext()) {
+                     Page page = pages.next();
+-                    taskOutput.getStats().addOutputDataSize(new DataSize(page.getDataSize(), Unit.BYTE));
++                    taskOutput.getStats().addOutputDataSize(page.getDataSize());
+                     taskOutput.getStats().addOutputPositions(page.getPositionCount());
+                     if (!taskOutput.addPage(page)) {
+                         pages.close();

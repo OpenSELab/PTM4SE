@@ -1,0 +1,208 @@
+diff --git a/src/com/google/javascript/jscomp/ijs/JsdocUtil.java b/src/com/google/javascript/jscomp/ijs/JsdocUtil.java
+index b60ef2e..59ba500 100644
+--- a/src/com/google/javascript/jscomp/ijs/JsdocUtil.java
++++ b/src/com/google/javascript/jscomp/ijs/JsdocUtil.java
+@@ -37,7 +37,7 @@
+   }
+ 
+   static JSDocInfo getUnusableTypeJSDoc(JSDocInfo oldJSDoc) {
+-    return getConstJSDoc(oldJSDoc, new Node(Token.STAR));
++    return getConstJSDoc(oldJSDoc, "UnusableType");
+   }
+ 
+   static JSDocInfo getQmarkTypeJSDoc() {
+diff --git a/test/com/google/javascript/jscomp/ijs/ConvertToTypedInterfaceTest.java b/test/com/google/javascript/jscomp/ijs/ConvertToTypedInterfaceTest.java
+index 3d96b89..101e767 100644
+--- a/test/com/google/javascript/jscomp/ijs/ConvertToTypedInterfaceTest.java
++++ b/test/com/google/javascript/jscomp/ijs/ConvertToTypedInterfaceTest.java
+@@ -53,7 +53,7 @@
+   }
+ 
+   public void testUnannotatedDeclaration() {
+-    test("var x;", "/** @const {*} */ var x;");
++    test("var x;", "/** @const {UnusableType} */ var x;");
+   }
+ 
+   public void testSimpleConstJsdocPropagation() {
+@@ -71,7 +71,7 @@
+ 
+     test(
+         "/** @const */ var x = cond ? true : 5;",
+-        "/** @const {*} */ var x;",
++        "/** @const {UnusableType} */ var x;",
+         warning(ConvertToTypedInterface.CONSTANT_WITHOUT_EXPLICIT_TYPE));
+   }
+ 
+@@ -92,7 +92,7 @@
+ 
+     test(
+         "const x = cond ? true : 5;",
+-        "/** @const {*} */ var x;",
++        "/** @const {UnusableType} */ var x;",
+         warning(ConvertToTypedInterface.CONSTANT_WITHOUT_EXPLICIT_TYPE));
+   }
+ 
+@@ -125,7 +125,7 @@
+ 
+     test(
+         "/** @constructor */ function Foo() { this.x = undefined; }",
+-        "/** @constructor */ function Foo() {} \n /** @const {*} */ Foo.prototype.x;");
++        "/** @constructor */ function Foo() {} \n /** @const {UnusableType} */ Foo.prototype.x;");
+ 
+     test(
+         "/** @constructor */ function Foo() { /** @type {?number} */ this.x = null; this.x = 5; }",
+@@ -134,7 +134,7 @@
+ 
+     test(
+         "/** @constructor */ function Foo() { /** @const */ this.x = cond ? true : 5; }",
+-        "/** @constructor */ function Foo() {}  /** @const {*} */ Foo.prototype.x;",
++        "/** @constructor */ function Foo() {}  /** @const {UnusableType} */ Foo.prototype.x;",
+         warning(ConvertToTypedInterface.CONSTANT_WITHOUT_EXPLICIT_TYPE));
+   }
+ 
+@@ -161,7 +161,7 @@
+          lines(
+              "/** @constructor */ function Foo() { this.x = null; }",
+              "Foo.prototype.x = 5;"),
+-         "/** @constructor */ function Foo() {} \n /** @const {*} */ Foo.prototype.x;");
++         "/** @constructor */ function Foo() {} \n /** @const {UnusableType} */ Foo.prototype.x;");
+   }
+ 
+   public void testConstJsdocPropagationForGlobalNames() {
+@@ -432,7 +432,7 @@
+             "}"),
+         lines(
+             "/** @constructor */ function Foo() {}",
+-            "/** @const @private {*} */ Foo.prototype.x;"));
++            "/** @const @private {UnusableType} */ Foo.prototype.x;"));
+   }
+ 
+   public void testConstPropagationPrivateProperties2() {
+@@ -442,7 +442,7 @@
+             "",
+             "/** @private @const */",
+             "a.b.c.helper_ = someComplicatedExpression();"),
+-        "goog.provide('a.b.c');   /** @private @const {*} */ a.b.c.helper_;");
++        "goog.provide('a.b.c');   /** @private @const {UnusableType} */ a.b.c.helper_;");
+   }
+ 
+   public void testOverrideAnnotationCountsAsDeclaration() {
+@@ -848,7 +848,7 @@
+         lines(
+             "goog.module('a.b.c');",
+             "class Foo {}",
+-            "/** @const {*} */ Foo.something",
++            "/** @const {UnusableType} */ Foo.something",
+             "exports = Foo;"));
+ 
+     test(
+@@ -863,7 +863,7 @@
+             "a.b.c.something = otherfile.modify.something + 1;"),
+         lines(
+             "goog.provide('a.b.c');",
+-            "/** @const {*} */ a.b.c.something;"));
++            "/** @const {UnusableType} */ a.b.c.something;"));
+   }
+ 
+   public void testRemoveCalls() {
+@@ -895,7 +895,7 @@
+ 
+     test(
+         "var x = 7; /** @enum {number} */ var E = { A: x };",
+-        "/** @const {*} */ var x; /** @enum {number} */ var E = { A: 0 };");
++        "/** @const {UnusableType} */ var x; /** @enum {number} */ var E = { A: 0 };");
+   }
+ 
+   public void testEnumInsideNamespace() {
+@@ -1075,10 +1075,10 @@
+     test("while (true) { foo(); break; }", "");
+ 
+     test("for (var i = 0; i < 10; i++) { var field = 88; }",
+-        "/** @const {*} */ var i; /** @const {*} */ var field;");
++        "/** @const {UnusableType} */ var i; /** @const {UnusableType} */ var field;");
+ 
+     test("for (var i = 0, arraySize = getSize(); i < arraySize; i++) { foo(arr[i]); }",
+-        "/** @const {*} */ var i; /** @const {*} */ var arraySize;");
++        "/** @const {UnusableType} */ var i; /** @const {UnusableType} */ var arraySize;");
+ 
+     test(
+         "while (i++ < 10) { var /** number */ field = i; }",
+@@ -1098,7 +1098,7 @@
+ 
+     test(
+         "for (var i = 0; i < 10; i++) { var /** number */ field = i; }",
+-        "/** @const {*} */ var i; /** @type {number } */ var field;");
++        "/** @const {UnusableType} */ var i; /** @type {number} */ var field;");
+   }
+ 
+   public void testSymbols() {
+@@ -1142,7 +1142,7 @@
+ 
+     test(
+         "/** @const */ var ns = {untyped: foo()};",
+-        "/** @const */ var ns = {/** @const {*} */ untyped: 0};");
++        "/** @const */ var ns = {/** @const {UnusableType} */ untyped: 0};");
+ 
+   }
+ 
+@@ -1174,7 +1174,7 @@
+ 
+     test(
+         "/** @const */ var ns = {}; ns.x = 5; ns.x = 7;",
+-        "/** @const */ var ns = {}; /** @const {*} */ ns.x;");
++        "/** @const */ var ns = {}; /** @const {UnusableType} */ ns.x;");
+ 
+     test(
+         "const ns = {}; /** @type {number} */ ns.x = 5; ns.x = 7;",
+@@ -1186,9 +1186,9 @@
+ 
+     test("/** @type {number} */ var x = 4; x = 7;", "/** @type {number} */ var x;");
+ 
+-    test("var x = 4; var x = 7;", "/** @const {*} */ var x;");
++    test("var x = 4; var x = 7;", "/** @const {UnusableType} */ var x;");
+ 
+-    test("var x = 4; x = 7;", "/** @const {*} */ var x;");
++    test("var x = 4; x = 7;", "/** @const {UnusableType} */ var x;");
+   }
+ 
+   public void testArrowFunctions() {
+@@ -1478,7 +1478,7 @@
+   public void testAnonymousClassDoesntCrash() {
+     test(
+         "let Foo = fooFactory(class { constructor() {} });",
+-        "/** @const {*} */ var Foo;");
++        "/** @const {UnusableType} */ var Foo;");
+ 
+     test(
+         lines(
+@@ -1489,7 +1489,7 @@
+             "  }",
+             "});",
+             ""),
+-        "/** @const {*} */ var Foo;");
++        "/** @const {UnusableType} */ var Foo;");
+ 
+     test(
+         lines(
+@@ -1519,7 +1519,7 @@
+ 
+     test(
+         "const RandomStuff = { [foo()]: 4, method() {}, 9.4: 'bar', set y(x) {} };",
+-        "const RandomStuff = { method() {}, /** @const @type {*} */ '9.4': 0, set y(x) {} };");
++        "const RandomStuff = { method() {}, /** @const {UnusableType} */ '9.4': 0, set y(x) {} };");
+   }
+ 
+ 
+diff --git a/src/com/google/javascript/jscomp/ijs/JsdocUtil.java b/src/com/google/javascript/jscomp/ijs/JsdocUtil.java
+index b60ef2e..59ba500 100644
+--- a/src/com/google/javascript/jscomp/ijs/JsdocUtil.java
++++ b/src/com/google/javascript/jscomp/ijs/JsdocUtil.java
+@@ -37,7 +37,7 @@
+   }
+ 
+   static JSDocInfo getUnusableTypeJSDoc(JSDocInfo oldJSDoc) {
+-    return getConstJSDoc(oldJSDoc, new Node(Token.STAR));
++    return getConstJSDoc(oldJSDoc, "UnusableType");
+   }
+ 
+   static JSDocInfo getQmarkTypeJSDoc() {

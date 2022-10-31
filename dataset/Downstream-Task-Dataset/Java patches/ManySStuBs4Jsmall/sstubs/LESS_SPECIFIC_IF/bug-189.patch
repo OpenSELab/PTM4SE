@@ -1,0 +1,52 @@
+diff --git a/src/api/org/openmrs/aop/RequiredDataAdvice.java b/src/api/org/openmrs/aop/RequiredDataAdvice.java
+index d89f00a..dd5a715 100644
+--- a/src/api/org/openmrs/aop/RequiredDataAdvice.java
++++ b/src/api/org/openmrs/aop/RequiredDataAdvice.java
+@@ -98,7 +98,9 @@
+ 	public void before(Method method, Object[] args, Object target) throws Throwable {
+ 		String methodName = method.getName();
+ 		
+-		if (methodName.startsWith("save")) {
++		// the "create" and "update" are in to cover old deprecated methods since AOP doesn't occur
++		// on method calls within a class, only on calls to methods from external classes to methods
++		if (methodName.startsWith("save") || methodName.startsWith("create") || methodName.startsWith("update")) {
+ 			Object mainArgument = args[0];
+ 			
+ 			// fail early on a null parameter
+diff --git a/src/web/org/openmrs/web/dwr/DWRRelationshipService.java b/src/web/org/openmrs/web/dwr/DWRRelationshipService.java
+index 223eb26..c9530fb 100644
+--- a/src/web/org/openmrs/web/dwr/DWRRelationshipService.java
++++ b/src/web/org/openmrs/web/dwr/DWRRelationshipService.java
+@@ -37,7 +37,7 @@
+ 		rel.setPersonA(personA);
+ 		rel.setPersonB(personB);
+ 		rel.setRelationshipType(relType);
+-		ps.createRelationship(rel);
++		ps.saveRelationship(rel);
+ 	}
+ 	
+ 	public void voidRelationship(Integer relationshipId, String voidReason) {
+@@ -50,7 +50,7 @@
+ 		
+ 		Vector<RelationshipListItem> ret = new Vector<RelationshipListItem>();
+ 		List<Relationship> rels = Context.getPersonService()
+-		        .getRelationships(Context.getPersonService().getPerson(personId));
++		        .getRelationshipsByPerson(Context.getPersonService().getPerson(personId));
+ 		for (Relationship rel : rels) {
+ 			if (!rel.isVoided()
+ 			        && (relationshipTypeId == null || rel.getRelationshipType().getRelationshipTypeId().equals(
+diff --git a/src/api/org/openmrs/aop/RequiredDataAdvice.java b/src/api/org/openmrs/aop/RequiredDataAdvice.java
+index d89f00a..dd5a715 100644
+--- a/src/api/org/openmrs/aop/RequiredDataAdvice.java
++++ b/src/api/org/openmrs/aop/RequiredDataAdvice.java
+@@ -98,7 +98,9 @@
+ 	public void before(Method method, Object[] args, Object target) throws Throwable {
+ 		String methodName = method.getName();
+ 		
+-		if (methodName.startsWith("save")) {
++		// the "create" and "update" are in to cover old deprecated methods since AOP doesn't occur
++		// on method calls within a class, only on calls to methods from external classes to methods
++		if (methodName.startsWith("save") || methodName.startsWith("create") || methodName.startsWith("update")) {
+ 			Object mainArgument = args[0];
+ 			
+ 			// fail early on a null parameter

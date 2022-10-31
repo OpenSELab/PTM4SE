@@ -1,0 +1,113 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Component.java b/wicket-core/src/main/java/org/apache/wicket/Component.java
+index 238b278..6644c24 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Component.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Component.java
+@@ -23,6 +23,7 @@ import java.util.List;
+ import java.util.Locale;
+ import java.util.Stack;
+ 
++import org.apache.wicket.ajax.IAjaxRegionMarkupIdProvider;
+ import org.apache.wicket.authorization.Action;
+ import org.apache.wicket.authorization.AuthorizationException;
+ import org.apache.wicket.authorization.IAuthorizationStrategy;
+@@ -2463,7 +2464,7 @@ public abstract class Component
+ 		}
+ 		response.write(tag.getName());
+ 		response.write(" id=\"");
+-		response.write(getMarkupId());
++		response.write(getAjaxRegionMarkupId());
+ 		response.write("\" style=\"display:none\"></");
+ 		if (ns != null)
+ 		{
+@@ -2473,6 +2474,39 @@ public abstract class Component
+ 		response.write(">");
+ 	}
+ 
++
++	/**
++	 * Returns the id of the markup region that will be updated via ajax. This can be different to
++	 * the markup id of the component if a {@link IAjaxRegionMarkupIdProvider} behavior has been
++	 * added.
++	 * 
++	 * @return the markup id of the region to be updated via ajax.
++	 */
++	public final String getAjaxRegionMarkupId()
++	{
++		String markupId = null;
++		for (Behavior behavior : getBehaviors())
++		{
++			if (behavior instanceof IAjaxRegionMarkupIdProvider)
++			{
++				markupId = ((IAjaxRegionMarkupIdProvider)behavior).getAjaxRegionMarkupId(this);
++			}
++		}
++		if (markupId == null)
++		{
++			if (this instanceof IAjaxRegionMarkupIdProvider)
++			{
++				markupId = ((IAjaxRegionMarkupIdProvider)this).getAjaxRegionMarkupId(this);
++			}
++		}
++		if (markupId == null)
++		{
++			markupId = getMarkupId();
++		}
++		return markupId;
++	}
++
++
+ 	/**
+ 	 * THIS METHOD IS NOT PART OF THE WICKET PUBLIC API. DO NOT USE IT.
+ 	 * <p>
+diff --git a/wicket-core/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java b/wicket-core/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
+index f6ff1ad..7b2467e 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
++++ b/wicket-core/src/main/java/org/apache/wicket/ajax/AjaxRequestTarget.java
+@@ -31,7 +31,6 @@ import org.apache.wicket.Application;
+ import org.apache.wicket.Component;
+ import org.apache.wicket.MarkupContainer;
+ import org.apache.wicket.Page;
+-import org.apache.wicket.behavior.Behavior;
+ import org.apache.wicket.event.Broadcast;
+ import org.apache.wicket.markup.html.IHeaderResponse;
+ import org.apache.wicket.markup.html.internal.HeaderResponse;
+@@ -753,7 +752,7 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 
+ 			if (!containsAncestorFor(component))
+ 			{
+-				respondComponent(response, getAjaxRegionMarkupId(component), component);
++				respondComponent(response, component.getAjaxRegionMarkupId(), component);
+ 			}
+ 		}
+ 
+@@ -803,30 +802,6 @@ public class AjaxRequestTarget implements IPageRequestHandler
+ 		}
+ 	}
+ 
+-	private String getAjaxRegionMarkupId(Component component)
+-	{
+-		String markupId = null;
+-		for (Behavior behavior : component.getBehaviors())
+-		{
+-			if (behavior instanceof IAjaxRegionMarkupIdProvider)
+-			{
+-				markupId = ((IAjaxRegionMarkupIdProvider)behavior).getAjaxRegionMarkupId(component);
+-			}
+-		}
+-		if (markupId == null)
+-		{
+-			if (component instanceof IAjaxRegionMarkupIdProvider)
+-			{
+-				markupId = ((IAjaxRegionMarkupIdProvider)component).getAjaxRegionMarkupId(component);
+-			}
+-		}
+-		if (markupId == null)
+-		{
+-			markupId = component.getMarkupId();
+-		}
+-		return markupId;
+-	}
+-
+ 	/**
+ 	 * Checks if the target contains an ancestor for the given component
+ 	 * 

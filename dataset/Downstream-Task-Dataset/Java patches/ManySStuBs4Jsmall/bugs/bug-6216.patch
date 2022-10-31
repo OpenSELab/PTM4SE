@@ -1,0 +1,28 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/model/DelayerType.java b/camel-core/src/main/java/org/apache/camel/model/DelayerType.java
+index 50f44d8..9b3ebd1 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/DelayerType.java
++++ b/camel-core/src/main/java/org/apache/camel/model/DelayerType.java
+@@ -83,7 +83,8 @@
+     private Expression createAbsoluteTimeDelayExpression(RouteContext routeContext) {
+         ExpressionType expr = getExpression();
+         if (expr != null) {
+-            if (ObjectHelper.isNotNullAndNonEmpty(expr.getLanguage())) {
++            if (ObjectHelper.isNotNullAndNonEmpty(expr.getExpression()) || 
++                expr.getExpressionValue() != null) {
+                 return expr.createExpression(routeContext);
+             } 
+         } 
+diff --git a/camel-core/src/main/java/org/apache/camel/model/DelayerType.java b/camel-core/src/main/java/org/apache/camel/model/DelayerType.java
+index 50f44d8..9b3ebd1 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/DelayerType.java
++++ b/camel-core/src/main/java/org/apache/camel/model/DelayerType.java
+@@ -83,7 +83,8 @@
+     private Expression createAbsoluteTimeDelayExpression(RouteContext routeContext) {
+         ExpressionType expr = getExpression();
+         if (expr != null) {
+-            if (ObjectHelper.isNotNullAndNonEmpty(expr.getLanguage())) {
++            if (ObjectHelper.isNotNullAndNonEmpty(expr.getExpression()) || 
++                expr.getExpressionValue() != null) {
+                 return expr.createExpression(routeContext);
+             } 
+         } 

@@ -1,0 +1,43 @@
+diff --git a/AttributesImpl/src/org/gephi/data/attributes/AttributeTableImpl.java b/AttributesImpl/src/org/gephi/data/attributes/AttributeTableImpl.java
+index f5483e0..b735432 100644
+--- a/AttributesImpl/src/org/gephi/data/attributes/AttributeTableImpl.java
++++ b/AttributesImpl/src/org/gephi/data/attributes/AttributeTableImpl.java
+@@ -200,7 +200,7 @@
+     }
+ 
+     public synchronized boolean hasColumn(String title) {
+-        return columnsMap.containsKey(title.toLowerCase());
++        return columnsMap.containsKey(title) || columnsMap.containsKey(title.toLowerCase());
+     }
+ 
+     public synchronized int getVersion() {
+diff --git a/DesktopDataLaboratory/src/org/gephi/desktop/datalab/utils/TimeIntervalGraphics.java b/DesktopDataLaboratory/src/org/gephi/desktop/datalab/utils/TimeIntervalGraphics.java
+index c14e955..7063670 100644
+--- a/DesktopDataLaboratory/src/org/gephi/desktop/datalab/utils/TimeIntervalGraphics.java
++++ b/DesktopDataLaboratory/src/org/gephi/desktop/datalab/utils/TimeIntervalGraphics.java
+@@ -112,10 +112,10 @@
+             throw new IllegalArgumentException("start should be less or equal than end");
+         }
+         if (start < min) {
+-            throw new IllegalArgumentException("start should be greater or equal than the minimum time set");
++            throw new IllegalArgumentException("start should be greater or equal than the minimum time set, "+start+"<"+min);
+         }
+         if (end > max) {
+-            throw new IllegalArgumentException("end should be lesser or equal than the maximum time set");
++            throw new IllegalArgumentException("end should be lesser or equal than the maximum time set, "+end+">"+max);
+         }
+ 
+         if (fill == null) {
+diff --git a/AttributesImpl/src/org/gephi/data/attributes/AttributeTableImpl.java b/AttributesImpl/src/org/gephi/data/attributes/AttributeTableImpl.java
+index f5483e0..b735432 100644
+--- a/AttributesImpl/src/org/gephi/data/attributes/AttributeTableImpl.java
++++ b/AttributesImpl/src/org/gephi/data/attributes/AttributeTableImpl.java
+@@ -200,7 +200,7 @@
+     }
+ 
+     public synchronized boolean hasColumn(String title) {
+-        return columnsMap.containsKey(title.toLowerCase());
++        return columnsMap.containsKey(title) || columnsMap.containsKey(title.toLowerCase());
+     }
+ 
+     public synchronized int getVersion() {

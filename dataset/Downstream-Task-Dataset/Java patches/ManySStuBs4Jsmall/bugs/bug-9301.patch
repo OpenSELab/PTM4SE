@@ -1,0 +1,28 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index 3a75316..b5aef5f 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -297,7 +297,8 @@
+             for (final int token : check.getRequiredTokens()) {
+                 if (Arrays.binarySearch(defaultTokens, token) < 0) {
+                     final String message = String.format("Token \"%s\" from required tokens was"
+-                            + " not found in default tokens list in check %s", token, check);
++                            + " not found in default tokens list in check %s",
++                            token, check.getClass().getName());
+                     throw new CheckstyleException(message);
+                 }
+             }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index 3a75316..b5aef5f 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -297,7 +297,8 @@
+             for (final int token : check.getRequiredTokens()) {
+                 if (Arrays.binarySearch(defaultTokens, token) < 0) {
+                     final String message = String.format("Token \"%s\" from required tokens was"
+-                            + " not found in default tokens list in check %s", token, check);
++                            + " not found in default tokens list in check %s",
++                            token, check.getClass().getName());
+                     throw new CheckstyleException(message);
+                 }
+             }

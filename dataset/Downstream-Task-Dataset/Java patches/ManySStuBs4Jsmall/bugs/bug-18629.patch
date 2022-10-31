@@ -1,0 +1,26 @@
+diff --git a/codec/src/main/java/io/netty/handler/codec/compression/Lz4FrameEncoder.java b/codec/src/main/java/io/netty/handler/codec/compression/Lz4FrameEncoder.java
+index 2ee6e7b..055690b 100644
+--- a/codec/src/main/java/io/netty/handler/codec/compression/Lz4FrameEncoder.java
++++ b/codec/src/main/java/io/netty/handler/codec/compression/Lz4FrameEncoder.java
+@@ -261,7 +261,7 @@
+             ByteBuffer outNioBuffer = out.internalNioBuffer(idx + HEADER_LENGTH, out.writableBytes() - HEADER_LENGTH);
+             int pos = outNioBuffer.position();
+             // We always want to start at position 0 as we take care of reusing the buffer in the encode(...) loop.
+-            compressor.compress(buffer.internalNioBuffer(0, flushableBytes), outNioBuffer);
++            compressor.compress(buffer.internalNioBuffer(buffer.readerIndex(), flushableBytes), outNioBuffer);
+             compressedLength = outNioBuffer.position() - pos;
+         } catch (LZ4Exception e) {
+             throw new CompressionException(e);
+diff --git a/codec/src/main/java/io/netty/handler/codec/compression/Lz4FrameEncoder.java b/codec/src/main/java/io/netty/handler/codec/compression/Lz4FrameEncoder.java
+index 2ee6e7b..055690b 100644
+--- a/codec/src/main/java/io/netty/handler/codec/compression/Lz4FrameEncoder.java
++++ b/codec/src/main/java/io/netty/handler/codec/compression/Lz4FrameEncoder.java
+@@ -261,7 +261,7 @@
+             ByteBuffer outNioBuffer = out.internalNioBuffer(idx + HEADER_LENGTH, out.writableBytes() - HEADER_LENGTH);
+             int pos = outNioBuffer.position();
+             // We always want to start at position 0 as we take care of reusing the buffer in the encode(...) loop.
+-            compressor.compress(buffer.internalNioBuffer(0, flushableBytes), outNioBuffer);
++            compressor.compress(buffer.internalNioBuffer(buffer.readerIndex(), flushableBytes), outNioBuffer);
+             compressedLength = outNioBuffer.position() - pos;
+         } catch (LZ4Exception e) {
+             throw new CompressionException(e);

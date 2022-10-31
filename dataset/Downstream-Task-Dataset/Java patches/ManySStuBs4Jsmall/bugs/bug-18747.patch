@@ -1,0 +1,30 @@
+diff --git a/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java b/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
+index fb44342..ed6dd1c 100644
+--- a/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
++++ b/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
+@@ -192,8 +192,8 @@
+         }
+ 
+         long newWriteBufferSize = TOTAL_PENDING_SIZE_UPDATER.addAndGet(this, -size);
+-        if (notifyWritability && newWriteBufferSize == 0
+-            || newWriteBufferSize <= channel.config().getWriteBufferLowWaterMark()) {
++        if (notifyWritability && (newWriteBufferSize == 0
++            || newWriteBufferSize <= channel.config().getWriteBufferLowWaterMark())) {
+             setWritable(invokeLater);
+         }
+     }
+diff --git a/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java b/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
+index fb44342..ed6dd1c 100644
+--- a/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
++++ b/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java
+@@ -192,8 +192,8 @@
+         }
+ 
+         long newWriteBufferSize = TOTAL_PENDING_SIZE_UPDATER.addAndGet(this, -size);
+-        if (notifyWritability && newWriteBufferSize == 0
+-            || newWriteBufferSize <= channel.config().getWriteBufferLowWaterMark()) {
++        if (notifyWritability && (newWriteBufferSize == 0
++            || newWriteBufferSize <= channel.config().getWriteBufferLowWaterMark())) {
+             setWritable(invokeLater);
+         }
+     }

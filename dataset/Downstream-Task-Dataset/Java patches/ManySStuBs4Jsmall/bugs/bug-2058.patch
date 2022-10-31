@@ -1,0 +1,80 @@
+diff --git a/integration-tests/cpr/src/test/java/org/atmosphere/tests/websocket/BaseTest.java b/integration-tests/cpr/src/test/java/org/atmosphere/tests/websocket/BaseTest.java
+index 7a55845..920aef1 100644
+--- a/integration-tests/cpr/src/test/java/org/atmosphere/tests/websocket/BaseTest.java
++++ b/integration-tests/cpr/src/test/java/org/atmosphere/tests/websocket/BaseTest.java
+@@ -167,7 +167,7 @@
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+                 if (event.isSuspended()) {
+                     sessionOnPost.set(event.getResource().session());
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                 }
+             }
+         }, BroadcasterFactory.getDefault().get(DefaultBroadcaster.class, "suspend"));
+@@ -244,7 +244,7 @@
+ 
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+                 if (event.isSuspended()) {
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                 }
+             }
+         }, BroadcasterFactory.getDefault().get(DefaultBroadcaster.class, "suspend"));
+@@ -352,7 +352,7 @@
+ 
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+                 if (event.isSuspended()) {
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                 }
+             }
+         }, BroadcasterFactory.getDefault().get(DefaultBroadcaster.class, "suspend"));
+@@ -459,7 +459,7 @@
+ 
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+                 if (event.isSuspended()) {
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                 }
+             }
+         }, BroadcasterFactory.getDefault().get(DefaultBroadcaster.class, "suspend"));
+diff --git a/integration-tests/cpr/src/test/java/org/atmosphere/tests/websocket/BaseTest.java b/integration-tests/cpr/src/test/java/org/atmosphere/tests/websocket/BaseTest.java
+index 7a55845..920aef1 100644
+--- a/integration-tests/cpr/src/test/java/org/atmosphere/tests/websocket/BaseTest.java
++++ b/integration-tests/cpr/src/test/java/org/atmosphere/tests/websocket/BaseTest.java
+@@ -167,7 +167,7 @@
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+                 if (event.isSuspended()) {
+                     sessionOnPost.set(event.getResource().session());
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                 }
+             }
+         }, BroadcasterFactory.getDefault().get(DefaultBroadcaster.class, "suspend"));
+@@ -244,7 +244,7 @@
+ 
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+                 if (event.isSuspended()) {
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                 }
+             }
+         }, BroadcasterFactory.getDefault().get(DefaultBroadcaster.class, "suspend"));
+@@ -352,7 +352,7 @@
+ 
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+                 if (event.isSuspended()) {
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                 }
+             }
+         }, BroadcasterFactory.getDefault().get(DefaultBroadcaster.class, "suspend"));
+@@ -459,7 +459,7 @@
+ 
+             public void onStateChange(AtmosphereResourceEvent event) throws IOException {
+                 if (event.isSuspended()) {
+-                    event.write(event.getMessage().toString().getBytes());
++                    event.getResource().write(event.getMessage().toString().getBytes());
+                 }
+             }
+         }, BroadcasterFactory.getDefault().get(DefaultBroadcaster.class, "suspend"));

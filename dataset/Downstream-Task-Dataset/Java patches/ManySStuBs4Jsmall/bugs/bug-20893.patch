@@ -1,0 +1,509 @@
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
+index 2e9f098..dc24458 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
+@@ -155,8 +155,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfMissingBeanDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithoutCustomConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithoutCustomConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("otherExampleBean")));
+ 	}
+@@ -164,8 +164,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfExistingBeanMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -173,8 +173,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfMissingBeanRegistrationDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithoutCustomContainerConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithoutCustomContainerConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("otherExampleBean")));
+ 	}
+@@ -182,8 +182,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfExistingBeanRegistrationMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -191,8 +191,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnTypeIsOfExistingBeanMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithReturnTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithReturnTypeConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -200,8 +200,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnTypeIsOfExistingBeanRegistrationMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithReturnTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithReturnTypeConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -209,8 +209,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnRegistrationTypeIsOfExistingBeanMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithReturnRegistrationTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithReturnRegistrationTypeConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -218,8 +218,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnRegistrationTypeIsOfExistingBeanRegistrationMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithReturnRegistrationTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithReturnRegistrationTypeConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -415,7 +415,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithCustomConfig {
++	static class ParameterizedWithCustomConfig {
+ 
+ 		@Bean
+ 		public CustomExampleBean customExampleBean() {
+@@ -425,7 +425,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithoutCustomConfig {
++	static class ParameterizedWithoutCustomConfig {
+ 
+ 		@Bean
+ 		public OtherExampleBean otherExampleBean() {
+@@ -435,7 +435,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithoutCustomContainerConfig {
++	static class ParameterizedWithoutCustomContainerConfig {
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<OtherExampleBean> otherExampleBean() {
+@@ -445,7 +445,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithCustomContainerConfig {
++	static class ParameterizedWithCustomContainerConfig {
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<CustomExampleBean> customExampleBean() {
+@@ -455,7 +455,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithValueConfig {
++	static class ParameterizedConditionWithValueConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnBean(value = CustomExampleBean.class, parameterizedContainer = TestParameterizedContainer.class)
+@@ -466,7 +466,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithReturnTypeConfig {
++	static class ParameterizedConditionWithReturnTypeConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnBean(parameterizedContainer = TestParameterizedContainer.class)
+@@ -477,7 +477,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithReturnRegistrationTypeConfig {
++	static class ParameterizedConditionWithReturnRegistrationTypeConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnBean(parameterizedContainer = TestParameterizedContainer.class)
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBeanTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBeanTests.java
+index 16f33bc..01aa534 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBeanTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBeanTests.java
+@@ -310,8 +310,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfMissingBeanMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithoutCustomConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithoutCustomConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"otherExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -319,8 +319,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfExistingBeanDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("customExampleBean")));
+ 	}
+@@ -328,8 +328,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfMissingBeanRegistrationMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithoutCustomContainerConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithoutCustomContainerConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"otherExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -337,8 +337,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfExistingBeanRegistrationDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("customExampleBean")));
+ 	}
+@@ -346,8 +346,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnTypeIsOfExistingBeanDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithReturnTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithReturnTypeConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("customExampleBean")));
+ 	}
+@@ -355,8 +355,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnTypeIsOfExistingBeanRegistrationDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithReturnTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithReturnTypeConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("customExampleBean")));
+ 	}
+@@ -364,8 +364,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnRegistrationTypeIsOfExistingBeanDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithReturnRegistrationTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithReturnRegistrationTypeConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("customExampleBean")));
+ 	}
+@@ -373,8 +373,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnRegistrationTypeIsOfExistingBeanRegistrationDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithReturnRegistrationTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithReturnRegistrationTypeConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("customExampleBean")));
+ 	}
+@@ -717,7 +717,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithCustomConfig {
++	static class ParameterizedWithCustomConfig {
+ 
+ 		@Bean
+ 		public CustomExampleBean customExampleBean() {
+@@ -727,7 +727,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithoutCustomConfig {
++	static class ParameterizedWithoutCustomConfig {
+ 
+ 		@Bean
+ 		public OtherExampleBean otherExampleBean() {
+@@ -737,7 +737,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithoutCustomContainerConfig {
++	static class ParameterizedWithoutCustomContainerConfig {
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<OtherExampleBean> otherExampleBean() {
+@@ -747,7 +747,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithCustomContainerConfig {
++	static class ParameterizedWithCustomContainerConfig {
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<CustomExampleBean> customExampleBean() {
+@@ -757,7 +757,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithValueConfig {
++	static class ParameterizedConditionWithValueConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnMissingBean(value = CustomExampleBean.class, parameterizedContainer = TestParameterizedContainer.class)
+@@ -768,7 +768,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithReturnTypeConfig {
++	static class ParameterizedConditionWithReturnTypeConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnMissingBean(parameterizedContainer = TestParameterizedContainer.class)
+@@ -779,7 +779,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithReturnRegistrationTypeConfig {
++	static class ParameterizedConditionWithReturnRegistrationTypeConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnMissingBean(parameterizedContainer = TestParameterizedContainer.class)
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
+index f9cd6d8..bd31961 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/freemarker/FreeMarkerAutoConfigurationServletIntegrationTests.java
+@@ -242,7 +242,7 @@
+ 	static class FilterRegistrationResourceConfiguration {
+ 
+ 		@Bean
+-		public FilterRegistrationBean<ResourceUrlEncodingFilter> filterRegisration() {
++		public FilterRegistrationBean<ResourceUrlEncodingFilter> filterRegistration() {
+ 			FilterRegistrationBean<ResourceUrlEncodingFilter> bean = new FilterRegistrationBean<ResourceUrlEncodingFilter>(
+ 					new ResourceUrlEncodingFilter());
+ 			bean.setDispatcherTypes(EnumSet.of(DispatcherType.INCLUDE));
+@@ -256,7 +256,7 @@
+ 	static class FilterRegistrationOtherConfiguration {
+ 
+ 		@Bean
+-		public FilterRegistrationBean<OrderedCharacterEncodingFilter> filterRegisration() {
++		public FilterRegistrationBean<OrderedCharacterEncodingFilter> filterRegistration() {
+ 			return new FilterRegistrationBean<OrderedCharacterEncodingFilter>(
+ 					new OrderedCharacterEncodingFilter());
+ 		}
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
+index f0539bd..92a1edc 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/thymeleaf/ThymeleafServletAutoConfigurationTests.java
+@@ -356,7 +356,7 @@
+ 	static class FilterRegistrationResourceConfiguration {
+ 
+ 		@Bean
+-		public FilterRegistrationBean<ResourceUrlEncodingFilter> filterRegisration() {
++		public FilterRegistrationBean<ResourceUrlEncodingFilter> filterRegistration() {
+ 			FilterRegistrationBean<ResourceUrlEncodingFilter> bean = new FilterRegistrationBean<ResourceUrlEncodingFilter>(
+ 					new ResourceUrlEncodingFilter());
+ 			bean.setDispatcherTypes(EnumSet.of(DispatcherType.INCLUDE));
+@@ -370,7 +370,7 @@
+ 	static class FilterRegistrationOtherConfiguration {
+ 
+ 		@Bean
+-		public FilterRegistrationBean<OrderedCharacterEncodingFilter> filterRegisration() {
++		public FilterRegistrationBean<OrderedCharacterEncodingFilter> filterRegistration() {
+ 			return new FilterRegistrationBean<OrderedCharacterEncodingFilter>(
+ 					new OrderedCharacterEncodingFilter());
+ 		}
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
+index 2e9f098..dc24458 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/test/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBeanTests.java
+@@ -155,8 +155,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfMissingBeanDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithoutCustomConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithoutCustomConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("otherExampleBean")));
+ 	}
+@@ -164,8 +164,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfExistingBeanMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -173,8 +173,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfMissingBeanRegistrationDoesNotMatch() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithoutCustomContainerConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithoutCustomContainerConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context)
+ 						.satisfies(exampleBeanRequirement("otherExampleBean")));
+ 	}
+@@ -182,8 +182,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenValueIsOfExistingBeanRegistrationMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithValueConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithValueConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -191,8 +191,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnTypeIsOfExistingBeanMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithReturnTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithReturnTypeConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -200,8 +200,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnTypeIsOfExistingBeanRegistrationMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithReturnTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithReturnTypeConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -209,8 +209,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnRegistrationTypeIsOfExistingBeanMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomConfig.class,
+-						ParmeterizedConditionWithReturnRegistrationTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomConfig.class,
++						ParameterizedConditionWithReturnRegistrationTypeConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -218,8 +218,8 @@
+ 	@Test
+ 	public void parameterizedContainerWhenReturnRegistrationTypeIsOfExistingBeanRegistrationMatches() {
+ 		this.contextRunner
+-				.withUserConfiguration(ParmeterizedWithCustomContainerConfig.class,
+-						ParmeterizedConditionWithReturnRegistrationTypeConfig.class)
++				.withUserConfiguration(ParameterizedWithCustomContainerConfig.class,
++						ParameterizedConditionWithReturnRegistrationTypeConfig.class)
+ 				.run((context) -> assertThat(context).satisfies(exampleBeanRequirement(
+ 						"customExampleBean", "conditionalCustomExampleBean")));
+ 	}
+@@ -415,7 +415,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithCustomConfig {
++	static class ParameterizedWithCustomConfig {
+ 
+ 		@Bean
+ 		public CustomExampleBean customExampleBean() {
+@@ -425,7 +425,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithoutCustomConfig {
++	static class ParameterizedWithoutCustomConfig {
+ 
+ 		@Bean
+ 		public OtherExampleBean otherExampleBean() {
+@@ -435,7 +435,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithoutCustomContainerConfig {
++	static class ParameterizedWithoutCustomContainerConfig {
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<OtherExampleBean> otherExampleBean() {
+@@ -445,7 +445,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedWithCustomContainerConfig {
++	static class ParameterizedWithCustomContainerConfig {
+ 
+ 		@Bean
+ 		public TestParameterizedContainer<CustomExampleBean> customExampleBean() {
+@@ -455,7 +455,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithValueConfig {
++	static class ParameterizedConditionWithValueConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnBean(value = CustomExampleBean.class, parameterizedContainer = TestParameterizedContainer.class)
+@@ -466,7 +466,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithReturnTypeConfig {
++	static class ParameterizedConditionWithReturnTypeConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnBean(parameterizedContainer = TestParameterizedContainer.class)
+@@ -477,7 +477,7 @@
+ 	}
+ 
+ 	@Configuration
+-	static class ParmeterizedConditionWithReturnRegistrationTypeConfig {
++	static class ParameterizedConditionWithReturnRegistrationTypeConfig {
+ 
+ 		@Bean
+ 		@ConditionalOnBean(parameterizedContainer = TestParameterizedContainer.class)

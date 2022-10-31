@@ -1,0 +1,48 @@
+diff --git a/indexing-service/src/main/java/io/druid/indexing/overlord/IndexerDBCoordinator.java b/indexing-service/src/main/java/io/druid/indexing/overlord/IndexerDBCoordinator.java
+index dc02ee9..2afa4ed 100644
+--- a/indexing-service/src/main/java/io/druid/indexing/overlord/IndexerDBCoordinator.java
++++ b/indexing-service/src/main/java/io/druid/indexing/overlord/IndexerDBCoordinator.java
+@@ -90,7 +90,7 @@
+             final ResultIterator<Map<String, Object>> dbSegments =
+                 handle.createQuery(
+                     String.format(
+-                        "SELECT payload FROM %s WHERE used = 1 AND dataSource = :dataSource",
++                        "SELECT payload FROM %s WHERE used = true AND dataSource = :dataSource",
+                         dbTables.getSegmentsTable()
+                     )
+                 )
+@@ -304,8 +304,8 @@
+             return handle.createQuery(
+                 String.format(
+                     DbConnector.isPostgreSQL(handle)?
+-                        "SELECT payload FROM %s WHERE dataSource = :dataSource and start >= :start and \"end\" <= :end and used = 0":
+-                        "SELECT payload FROM %s WHERE dataSource = :dataSource and start >= :start and end <= :end and used = 0",
++                        "SELECT payload FROM %s WHERE dataSource = :dataSource and start >= :start and \"end\" <= :end and used = false":
++                        "SELECT payload FROM %s WHERE dataSource = :dataSource and start >= :start and end <= :end and used = false",
+                     dbTables.getSegmentsTable()
+                 )
+             )
+diff --git a/indexing-service/src/main/java/io/druid/indexing/overlord/IndexerDBCoordinator.java b/indexing-service/src/main/java/io/druid/indexing/overlord/IndexerDBCoordinator.java
+index dc02ee9..2afa4ed 100644
+--- a/indexing-service/src/main/java/io/druid/indexing/overlord/IndexerDBCoordinator.java
++++ b/indexing-service/src/main/java/io/druid/indexing/overlord/IndexerDBCoordinator.java
+@@ -90,7 +90,7 @@
+             final ResultIterator<Map<String, Object>> dbSegments =
+                 handle.createQuery(
+                     String.format(
+-                        "SELECT payload FROM %s WHERE used = 1 AND dataSource = :dataSource",
++                        "SELECT payload FROM %s WHERE used = true AND dataSource = :dataSource",
+                         dbTables.getSegmentsTable()
+                     )
+                 )
+@@ -304,8 +304,8 @@
+             return handle.createQuery(
+                 String.format(
+                     DbConnector.isPostgreSQL(handle)?
+-                        "SELECT payload FROM %s WHERE dataSource = :dataSource and start >= :start and \"end\" <= :end and used = 0":
+-                        "SELECT payload FROM %s WHERE dataSource = :dataSource and start >= :start and end <= :end and used = 0",
++                        "SELECT payload FROM %s WHERE dataSource = :dataSource and start >= :start and \"end\" <= :end and used = false":
++                        "SELECT payload FROM %s WHERE dataSource = :dataSource and start >= :start and end <= :end and used = false",
+                     dbTables.getSegmentsTable()
+                 )
+             )

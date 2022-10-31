@@ -1,0 +1,17 @@
+--- a/molgenis-data-security/src/main/java/org/molgenis/data/security/owned/AbstractRowLevelSecurityRepositoryDecorator.java
++++ b/molgenis-data-security/src/main/java/org/molgenis/data/security/owned/AbstractRowLevelSecurityRepositoryDecorator.java
+@@ -75,14 +75,7 @@ public abstract class AbstractRowLevelSecurityRepositoryDecorator<E extends Enti
+ 	@Override
+ 	public E findOne(Query<E> q)
+ 	{
+-		E entity = delegate().findOne(q);
+-
+-		if (entity != null && !isOperationPermitted(entity, Action.READ))
+-		{
+-			return null;
+-		}
+-
+-		return entity;
++		return findAllPermitted(q, Action.READ).findFirst().orElse(null);
+ 	}
+ 

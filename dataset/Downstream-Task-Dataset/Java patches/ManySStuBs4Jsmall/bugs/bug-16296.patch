@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java b/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
+index d408af9..08016d7 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
+@@ -2824,7 +2824,7 @@
+         void removeAndPurgeRecord(Record record) {
+             Block ownerBlock = blocks[record.getBlockId()];
+             if (thisAddress.equals(ownerBlock.getRealOwner())) {
+-                node.queryService.updateIndex(name, null, record, record.getValue().hashCode());
++                node.queryService.updateIndex(name, null, record, Integer.MIN_VALUE);
+             }
+             Record removedRecord = mapRecords.remove(record.getKey());
+             if (removedRecord != record) {
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java b/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
+index d408af9..08016d7 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ConcurrentMapManager.java
+@@ -2824,7 +2824,7 @@
+         void removeAndPurgeRecord(Record record) {
+             Block ownerBlock = blocks[record.getBlockId()];
+             if (thisAddress.equals(ownerBlock.getRealOwner())) {
+-                node.queryService.updateIndex(name, null, record, record.getValue().hashCode());
++                node.queryService.updateIndex(name, null, record, Integer.MIN_VALUE);
+             }
+             Record removedRecord = mapRecords.remove(record.getKey());
+             if (removedRecord != record) {

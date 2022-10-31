@@ -1,0 +1,12 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/convolution/CnnLossLayer.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/convolution/CnnLossLayer.java
+index 105b078..6f6a966 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/convolution/CnnLossLayer.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/convolution/CnnLossLayer.java
+@@ -241,6 +241,6 @@
+             summedScores.addi(l1l2);
+         }
+ 
+-        return summedScores;
++        return workspaceMgr.leverageTo(ArrayType.ACTIVATIONS, summedScores);
+     }
+ }

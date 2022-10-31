@@ -1,0 +1,155 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
+index 3a24747..308565a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
+@@ -143,7 +143,8 @@
+             method.findFirstToken(TokenTypes.MODIFIERS);
+         // exit on fast lane if there is nothing to check here
+ 
+-        if (method.branchContains(TokenTypes.PARAMETER_DEF)
++        if (method.findFirstToken(TokenTypes.PARAMETERS)
++                .findFirstToken(TokenTypes.PARAMETER_DEF) != null
+                 // ignore abstract and native methods
+                 && modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
+                 && modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) == null) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/MissingOverrideCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/MissingOverrideCheck.java
+index 0efc580..054bab9 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/MissingOverrideCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/annotation/MissingOverrideCheck.java
+@@ -160,8 +160,8 @@
+             if (javaFiveCompatibility) {
+                 final DetailAST defOrNew = ast.getParent().getParent();
+ 
+-                if (defOrNew.branchContains(TokenTypes.EXTENDS_CLAUSE)
+-                    || defOrNew.branchContains(TokenTypes.IMPLEMENTS_CLAUSE)
++                if (defOrNew.findFirstToken(TokenTypes.EXTENDS_CLAUSE) != null
++                    || defOrNew.findFirstToken(TokenTypes.IMPLEMENTS_CLAUSE) != null
+                     || defOrNew.getType() == TokenTypes.LITERAL_NEW) {
+                     check = false;
+                 }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsAvoidNullCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsAvoidNullCheck.java
+index a7ccf4c..955ec1e 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsAvoidNullCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsAvoidNullCheck.java
+@@ -162,7 +162,7 @@
+                 && astType != TokenTypes.SLIST
+                 && astType != TokenTypes.LITERAL_NEW
+                 || astType == TokenTypes.LITERAL_NEW
+-                    && ast.branchContains(TokenTypes.LCURLY)) {
++                    && ast.findFirstToken(TokenTypes.OBJBLOCK) != null) {
+             currentFrame = currentFrame.getParent();
+         }
+         else if (astType == TokenTypes.SLIST) {
+@@ -243,7 +243,7 @@
+      * @param ast LITERAL_NEW ast.
+      */
+     private void processLiteralNew(DetailAST ast) {
+-        if (ast.branchContains(TokenTypes.LCURLY)) {
++        if (ast.findFirstToken(TokenTypes.OBJBLOCK) != null) {
+             final FieldFrame frame = new FieldFrame(currentFrame);
+             currentFrame.addChild(frame);
+             currentFrame = frame;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsHashCodeCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsHashCodeCheck.java
+index c5f0820..843ba13 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsHashCodeCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/EqualsHashCodeCheck.java
+@@ -120,7 +120,7 @@
+         return CheckUtils.isEqualsMethod(ast)
+                 && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
+                 && isObjectParam(parameters.getFirstChild())
+-                && (ast.branchContains(TokenTypes.SLIST)
++                && (ast.findFirstToken(TokenTypes.SLIST) != null
+                         || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
+     }
+ 
+@@ -141,7 +141,7 @@
+                 && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
+                 && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null
+                 && parameters.getFirstChild() == null
+-                && (ast.branchContains(TokenTypes.SLIST)
++                && (ast.findFirstToken(TokenTypes.SLIST) != null
+                         || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
+index 7c96b21..bb17e95 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/FinalLocalVariableCheck.java
+@@ -203,7 +203,8 @@
+                 break;
+             case TokenTypes.PARAMETER_DEF:
+                 if (!isInLambda(ast)
+-                        && !ast.branchContains(TokenTypes.FINAL)
++                        && ast.findFirstToken(TokenTypes.MODIFIERS)
++                            .findFirstToken(TokenTypes.FINAL) == null
+                         && !isInAbstractOrNativeMethod(ast)
+                         && !ScopeUtils.isInInterfaceBlock(ast)
+                         && !isMultipleTypeCatch(ast)) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java
+index abadbaf..e9d34f1 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java
+@@ -607,7 +607,8 @@
+             else {
+                 final DetailAST frameNameIdent = variableDeclarationFrame.getFrameNameIdent();
+                 final DetailAST definitionToken = frameNameIdent.getParent();
+-                staticContext = definitionToken.branchContains(TokenTypes.LITERAL_STATIC);
++                staticContext = definitionToken.findFirstToken(TokenTypes.MODIFIERS)
++                        .findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+             }
+         }
+         return !staticContext;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
+index c0bb9be..2d2c3a6 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocTagInfo.java
+@@ -138,7 +138,8 @@
+             final int astType = ast.getType();
+ 
+             return astType == TokenTypes.METHOD_DEF
+-                && !ast.branchContains(TokenTypes.LITERAL_STATIC)
++                && ast.findFirstToken(TokenTypes.MODIFIERS)
++                    .findFirstToken(TokenTypes.LITERAL_STATIC) == null
+                 && ScopeUtils.getScopeFromMods(ast
+                     .findFirstToken(TokenTypes.MODIFIERS)) != Scope.PRIVATE;
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
+index 0d7f2d8..cc8d1b6 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/RedundantModifierCheck.java
+@@ -309,7 +309,7 @@
+             checkForRedundantModifier(ast, TokenTypes.FINAL);
+         }
+ 
+-        if (!ast.branchContains(TokenTypes.SLIST)) {
++        if (ast.findFirstToken(TokenTypes.SLIST) == null) {
+             processAbstractMethodParameters(ast);
+         }
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/utils/AnnotationUtility.java b/src/main/java/com/puppycrawl/tools/checkstyle/utils/AnnotationUtility.java
+index 72c99c8..bb673e9 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/utils/AnnotationUtility.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/utils/AnnotationUtility.java
+@@ -84,7 +84,7 @@
+             throw new IllegalArgumentException(THE_AST_IS_NULL);
+         }
+         final DetailAST holder = getAnnotationHolder(ast);
+-        return holder != null && holder.branchContains(TokenTypes.ANNOTATION);
++        return holder != null && holder.findFirstToken(TokenTypes.ANNOTATION) != null;
+     }
+ 
+     /**
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
+index 3a24747..308565a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/FinalParametersCheck.java
+@@ -143,7 +143,8 @@
+             method.findFirstToken(TokenTypes.MODIFIERS);
+         // exit on fast lane if there is nothing to check here
+ 
+-        if (method.branchContains(TokenTypes.PARAMETER_DEF)
++        if (method.findFirstToken(TokenTypes.PARAMETERS)
++                .findFirstToken(TokenTypes.PARAMETER_DEF) != null
+                 // ignore abstract and native methods
+                 && modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
+                 && modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) == null) {

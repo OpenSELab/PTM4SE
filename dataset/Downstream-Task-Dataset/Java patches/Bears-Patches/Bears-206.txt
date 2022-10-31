@@ -1,0 +1,56 @@
+--- a/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/PageBox.java
++++ b/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/PageBox.java
+@@ -304,10 +304,10 @@ public class PageBox {
+         }
+         
+         if (dir == IdentValue.LTR) { 
+-            return (x > 0 ? ((int) (fx / fw)) : 0);
++            return (int) (x > 0 ? (Math.ceil(fx / fw) - 1) : 0);
+         }
+         
+-        return (x < 0 ? ((int) (Math.abs(fx) / fw)) : 0);
++        return (int) (x < 0 ? (Math.ceil(Math.abs(fx) / fw)) : 0);
+     }
+     
+     /**
+diff --git a/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/displaylist/PagedBoxCollector.java b/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/displaylist/PagedBoxCollector.java
+index c790942..6d638f7 100644
+--- a/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/displaylist/PagedBoxCollector.java
++++ b/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/displaylist/PagedBoxCollector.java
+@@ -613,9 +614,16 @@ public class PagedBoxCollector {
+         
+         AffineTransform ctm = container.getContainingLayer().getCurrentTransformMatrix();
+         Rectangle bounds = container.getBorderBox(c);
+-        // TODO: RTL overflow.
+-        int maxX = (int) (ctm == null ? bounds.getMaxX() : getMaxXFromTransformedBox(bounds, ctm));
+-        int maxShadowPages = basePageBox.getMaxShadowPagesForXPos(c, maxX);
++        FourPoint corners = ctm == null ? null : getCornersFromTransformedBounds(bounds, ctm);
++
++        int maxShadowPages;
++        if (basePageBox.getCutOffPageDirection() == IdentValue.LTR) { 
++            int maxX = (int) (ctm == null ? bounds.getMaxX() : getMaxX(corners));
++            maxShadowPages = Math.min(basePageBox.getMaxInsertedPages(), basePageBox.getMaxShadowPagesForXPos(c, maxX));
++        } else {
++            int minX = (int) (ctm == null ? bounds.getMinX() : getMinX(corners));
++            maxShadowPages = Math.min(basePageBox.getMaxInsertedPages(), basePageBox.getMaxShadowPagesForXPos(c, minX));
++        }
+         
+         for (int i = 0; i < maxShadowPages; i++) {
+             Rectangle shadowPageClip = pageResult.getShadowWindowOnDocument(basePageBox, c, i);
+diff --git a/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/displaylist/TransformCreator.java b/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/displaylist/TransformCreator.java
+index d73d007..47c5aa3 100644
+--- a/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/displaylist/TransformCreator.java
++++ b/openhtmltopdf-core/src/main/java/com/openhtmltopdf/render/displaylist/TransformCreator.java
+@@ -103,11 +103,7 @@ public class TransformCreator {
+ 	    
+ 	    Rectangle shadow = page.getDocumentCoordinatesContentBoundsForInsertedPage(c, shadowPageNumber);
+ 	    
+-	    if (page.getCutOffPageDirection() == IdentValue.LTR) { 
+-	        return absTranslateX - (float) shadow.getMinX() + (page.getMarginBorderPadding(c, CalculatedStyle.LEFT) * (shadowPageNumber + 1));
+-	    } else {
+-	        return absTranslateX - (float) shadow.getMinX() + (page.getMarginBorderPadding(c, CalculatedStyle.RIGHT) * (shadowPageNumber + 1));
+-	    }
++	    return absTranslateX - (float) shadow.getMinX() + (page.getMarginBorderPadding(c, CalculatedStyle.LEFT));
+ 	}
+ 	
+ 	/**

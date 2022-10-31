@@ -1,0 +1,26 @@
+diff --git a/components/camel-google-bigquery/src/main/java/org/apache/camel/component/google/bigquery/GoogleBigQueryProducer.java b/components/camel-google-bigquery/src/main/java/org/apache/camel/component/google/bigquery/GoogleBigQueryProducer.java
+index f590515..b2b6593 100644
+--- a/components/camel-google-bigquery/src/main/java/org/apache/camel/component/google/bigquery/GoogleBigQueryProducer.java
++++ b/components/camel-google-bigquery/src/main/java/org/apache/camel/component/google/bigquery/GoogleBigQueryProducer.java
+@@ -121,7 +121,7 @@
+     private int process(String tableId, String partitionDecorator, String suffix, List<Exchange> exchanges, String exchangeId) throws Exception {
+         String tableIdWithPartition = Strings.isNullOrEmpty(partitionDecorator)
+                 ? tableId
+-                : (tableId + "?" + partitionDecorator);
++                : (tableId + "$" + partitionDecorator);
+ 
+         List<TableDataInsertAllRequest.Rows> apiRequestRows = new ArrayList<>();
+         for (Exchange ex: exchanges) {
+diff --git a/components/camel-google-bigquery/src/main/java/org/apache/camel/component/google/bigquery/GoogleBigQueryProducer.java b/components/camel-google-bigquery/src/main/java/org/apache/camel/component/google/bigquery/GoogleBigQueryProducer.java
+index f590515..b2b6593 100644
+--- a/components/camel-google-bigquery/src/main/java/org/apache/camel/component/google/bigquery/GoogleBigQueryProducer.java
++++ b/components/camel-google-bigquery/src/main/java/org/apache/camel/component/google/bigquery/GoogleBigQueryProducer.java
+@@ -121,7 +121,7 @@
+     private int process(String tableId, String partitionDecorator, String suffix, List<Exchange> exchanges, String exchangeId) throws Exception {
+         String tableIdWithPartition = Strings.isNullOrEmpty(partitionDecorator)
+                 ? tableId
+-                : (tableId + "?" + partitionDecorator);
++                : (tableId + "$" + partitionDecorator);
+ 
+         List<TableDataInsertAllRequest.Rows> apiRequestRows = new ArrayList<>();
+         for (Exchange ex: exchanges) {

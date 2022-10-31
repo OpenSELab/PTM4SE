@@ -1,0 +1,52 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesBidirectionalLSTM.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesBidirectionalLSTM.java
+index b7ea90d..91e9b33 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesBidirectionalLSTM.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesBidirectionalLSTM.java
+@@ -63,7 +63,7 @@
+             if(constraints == null){
+                 constraints = new ArrayList<>();
+             }
+-            for (LayerConstraint c : builder.allParamConstraints) {
++            for (LayerConstraint c : ((Builder) builder).recurrentConstraints) {
+                 LayerConstraint c2 = c.clone();
+                 Set<String> s = new HashSet<>();
+                 s.add(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS);
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesLSTM.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesLSTM.java
+index 25bd29b..7d79b04 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesLSTM.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesLSTM.java
+@@ -66,7 +66,7 @@
+             if(constraints == null){
+                 constraints = new ArrayList<>();
+             }
+-            for (LayerConstraint c : builder.allParamConstraints) {
++            for (LayerConstraint c : ((Builder) builder).recurrentConstraints) {
+                 LayerConstraint c2 = c.clone();
+                 c2.setParams(Collections.singleton(GravesLSTMParamInitializer.RECURRENT_WEIGHT_KEY));
+                 constraints.add(c2);
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/LSTM.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/LSTM.java
+index 763712b..757b71e 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/LSTM.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/LSTM.java
+@@ -64,7 +64,7 @@
+             if(constraints == null){
+                 constraints = new ArrayList<>();
+             }
+-            for (LayerConstraint c : builder.allParamConstraints) {
++            for (LayerConstraint c : ((Builder) builder).recurrentConstraints) {
+                 LayerConstraint c2 = c.clone();
+                 c2.setParams(Collections.singleton(LSTMParamInitializer.RECURRENT_WEIGHT_KEY));
+                 constraints.add(c2);
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesBidirectionalLSTM.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesBidirectionalLSTM.java
+index b7ea90d..91e9b33 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesBidirectionalLSTM.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/layers/GravesBidirectionalLSTM.java
+@@ -63,7 +63,7 @@
+             if(constraints == null){
+                 constraints = new ArrayList<>();
+             }
+-            for (LayerConstraint c : builder.allParamConstraints) {
++            for (LayerConstraint c : ((Builder) builder).recurrentConstraints) {
+                 LayerConstraint c2 = c.clone();
+                 Set<String> s = new HashSet<>();
+                 s.add(GravesBidirectionalLSTMParamInitializer.RECURRENT_WEIGHT_KEY_FORWARDS);

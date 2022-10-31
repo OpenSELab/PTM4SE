@@ -1,0 +1,52 @@
+diff --git a/indexing-service/src/main/java/io/druid/indexing/overlord/http/OverlordResource.java b/indexing-service/src/main/java/io/druid/indexing/overlord/http/OverlordResource.java
+index 58c917c..248d661 100644
+--- a/indexing-service/src/main/java/io/druid/indexing/overlord/http/OverlordResource.java
++++ b/indexing-service/src/main/java/io/druid/indexing/overlord/http/OverlordResource.java
+@@ -398,7 +398,12 @@
+       if (stream.isPresent()) {
+         return Response.ok(stream.get().getInput()).build();
+       } else {
+-        return Response.status(Response.Status.NOT_FOUND).build();
++        return Response.status(Response.Status.NOT_FOUND)
++                       .entity(
++                           "No log was found for this task. "
++                           + "The task may not exist, or it may not have begun running yet."
++                       )
++                       .build();
+       }
+     }
+     catch (Exception e) {
+diff --git a/s3-extensions/src/main/java/io/druid/storage/s3/S3TaskLogs.java b/s3-extensions/src/main/java/io/druid/storage/s3/S3TaskLogs.java
+index 572959a..0463304 100644
+--- a/s3-extensions/src/main/java/io/druid/storage/s3/S3TaskLogs.java
++++ b/s3-extensions/src/main/java/io/druid/storage/s3/S3TaskLogs.java
+@@ -97,8 +97,9 @@
+       );
+     }
+     catch (ServiceException e) {
+-      if (e.getErrorCode() != null && (e.getErrorCode().equals("NoSuchKey") || e.getErrorCode()
+-                                                                                .equals("NoSuchBucket"))) {
++      if (404 == e.getResponseCode()
++          || "NoSuchKey".equals(e.getErrorCode())
++          || "NoSuchBucket".equals(e.getErrorCode())) {
+         return Optional.absent();
+       } else {
+         throw new IOException(String.format("Failed to stream logs from: %s", taskKey), e);
+diff --git a/indexing-service/src/main/java/io/druid/indexing/overlord/http/OverlordResource.java b/indexing-service/src/main/java/io/druid/indexing/overlord/http/OverlordResource.java
+index 58c917c..248d661 100644
+--- a/indexing-service/src/main/java/io/druid/indexing/overlord/http/OverlordResource.java
++++ b/indexing-service/src/main/java/io/druid/indexing/overlord/http/OverlordResource.java
+@@ -398,7 +398,12 @@
+       if (stream.isPresent()) {
+         return Response.ok(stream.get().getInput()).build();
+       } else {
+-        return Response.status(Response.Status.NOT_FOUND).build();
++        return Response.status(Response.Status.NOT_FOUND)
++                       .entity(
++                           "No log was found for this task. "
++                           + "The task may not exist, or it may not have begun running yet."
++                       )
++                       .build();
+       }
+     }
+     catch (Exception e) {

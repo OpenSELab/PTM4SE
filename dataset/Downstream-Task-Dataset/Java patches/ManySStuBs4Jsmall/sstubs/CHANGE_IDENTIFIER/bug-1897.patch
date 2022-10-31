@@ -1,0 +1,91 @@
+diff --git a/core/src/com/google/inject/TypeLiteral.java b/core/src/com/google/inject/TypeLiteral.java
+index 61034b3..d18087d 100644
+--- a/core/src/com/google/inject/TypeLiteral.java
++++ b/core/src/com/google/inject/TypeLiteral.java
+@@ -171,7 +171,7 @@
+     for (int t = 0; t < types.length; t++) {
+       result[t] = resolve(types[t]);
+     }
+-    return ImmutableList.of(result);
++    return ImmutableList.copyOf(result);
+   }
+ 
+   /**
+diff --git a/core/src/com/google/inject/internal/InjectorImpl.java b/core/src/com/google/inject/internal/InjectorImpl.java
+index 320efb7..40cb77a 100644
+--- a/core/src/com/google/inject/internal/InjectorImpl.java
++++ b/core/src/com/google/inject/internal/InjectorImpl.java
+@@ -220,7 +220,7 @@
+   }
+ 
+   public Injector createChildInjector(Module... modules) {
+-    return createChildInjector(ImmutableList.of(modules));
++    return createChildInjector(ImmutableList.copyOf(modules));
+   }
+ 
+   /**
+diff --git a/core/src/com/google/inject/spi/InterceptorBinding.java b/core/src/com/google/inject/spi/InterceptorBinding.java
+index 4d87157..a16e701 100644
+--- a/core/src/com/google/inject/spi/InterceptorBinding.java
++++ b/core/src/com/google/inject/spi/InterceptorBinding.java
+@@ -56,7 +56,7 @@
+     this.source = checkNotNull(source, "source");
+     this.classMatcher = checkNotNull(classMatcher, "classMatcher");
+     this.methodMatcher = checkNotNull(methodMatcher, "methodMatcher");
+-    this.interceptors = ImmutableList.of(interceptors);
++    this.interceptors = ImmutableList.copyOf(interceptors);
+   }
+ 
+   public Object getSource() {
+diff --git a/core/src/com/google/inject/spi/Message.java b/core/src/com/google/inject/spi/Message.java
+index 3571ecd..14d3bcc 100644
+--- a/core/src/com/google/inject/spi/Message.java
++++ b/core/src/com/google/inject/spi/Message.java
+@@ -126,7 +126,7 @@
+     for (int i = 0; i < sourcesAsStrings.length; i++) {
+       sourcesAsStrings[i] = Errors.convert(sourcesAsStrings[i]).toString();
+     }
+-    return new Message(ImmutableList.of(sourcesAsStrings), message, cause);
++    return new Message(ImmutableList.copyOf(sourcesAsStrings), message, cause);
+   }
+ 
+   private static final long serialVersionUID = 0;
+diff --git a/core/src/com/google/inject/spi/ProvisionListenerBinding.java b/core/src/com/google/inject/spi/ProvisionListenerBinding.java
+index 301d670..479e9f5 100644
+--- a/core/src/com/google/inject/spi/ProvisionListenerBinding.java
++++ b/core/src/com/google/inject/spi/ProvisionListenerBinding.java
+@@ -41,7 +41,7 @@
+       ProvisionListener[] listeners) {
+     this.source = source;
+     this.keyMatcher = typeMatcher;
+-    this.listeners = ImmutableList.of(listeners);
++    this.listeners = ImmutableList.copyOf(listeners);
+   }
+ 
+   /** Returns the registered listeners. */
+diff --git a/core/src/com/google/inject/util/Modules.java b/core/src/com/google/inject/util/Modules.java
+index 70cab05..27eed97 100644
+--- a/core/src/com/google/inject/util/Modules.java
++++ b/core/src/com/google/inject/util/Modules.java
+@@ -100,7 +100,7 @@
+    * Returns a new module that installs all of {@code modules}.
+    */
+   public static Module combine(Module... modules) {
+-    return combine(ImmutableSet.of(modules));
++    return combine(ImmutableSet.copyOf(modules));
+   }
+ 
+   /**
+diff --git a/core/src/com/google/inject/TypeLiteral.java b/core/src/com/google/inject/TypeLiteral.java
+index 61034b3..d18087d 100644
+--- a/core/src/com/google/inject/TypeLiteral.java
++++ b/core/src/com/google/inject/TypeLiteral.java
+@@ -171,7 +171,7 @@
+     for (int t = 0; t < types.length; t++) {
+       result[t] = resolve(types[t]);
+     }
+-    return ImmutableList.of(result);
++    return ImmutableList.copyOf(result);
+   }
+ 
+   /**

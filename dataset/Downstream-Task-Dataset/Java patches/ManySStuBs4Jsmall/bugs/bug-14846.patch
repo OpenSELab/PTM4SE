@@ -1,0 +1,71 @@
+diff --git a/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java b/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
+index f5d84ae..dd48553 100644
+--- a/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
++++ b/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
+@@ -201,7 +201,10 @@
+       return expectedSize + 1;
+     }
+     if (expectedSize < Ints.MAX_POWER_OF_TWO) {
+-      return expectedSize + expectedSize / 3;
++      // This is the calculation used in JDK8 to resize when a putAll
++      // happens; it seems to be the most conservative calculation we
++      // can make.  0,75 is the default load factor.
++      return (int) ((float) expectedSize / 0.75F + 1.0F);
+     }
+     return Integer.MAX_VALUE; // any large value
+   }
+diff --git a/guava-tests/test/com/google/common/collect/MapsTest.java b/guava-tests/test/com/google/common/collect/MapsTest.java
+index 226d831..0b29067 100644
+--- a/guava-tests/test/com/google/common/collect/MapsTest.java
++++ b/guava-tests/test/com/google/common/collect/MapsTest.java
+@@ -146,7 +146,7 @@
+        */
+       HashMap<Integer, Void> map2 = Maps.newHashMapWithExpectedSize(size);
+       map2.putAll(map1);
+-      assertEquals("table size after adding " + size + "elements",
++      assertEquals("table size after adding " + size + " elements: ",
+           initialBuckets, bucketsOf(map2));
+     }
+   }
+@@ -156,7 +156,8 @@
+     Field tableField = HashMap.class.getDeclaredField("table");
+     tableField.setAccessible(true);
+     Object[] table = (Object[]) tableField.get(hashMap);
+-    return table.length;
++    // In JDK8, table is set lazily, so it may be null.
++    return table == null ? 0 : table.length;
+   }
+ 
+   public void testCapacityForLargeSizes() {
+diff --git a/guava/src/com/google/common/collect/Maps.java b/guava/src/com/google/common/collect/Maps.java
+index e8ab643..34d4ab3 100644
+--- a/guava/src/com/google/common/collect/Maps.java
++++ b/guava/src/com/google/common/collect/Maps.java
+@@ -206,7 +206,10 @@
+       return expectedSize + 1;
+     }
+     if (expectedSize < Ints.MAX_POWER_OF_TWO) {
+-      return expectedSize + expectedSize / 3;
++      // This is the calculation used in JDK8 to resize when a putAll
++      // happens; it seems to be the most conservative calculation we
++      // can make.  0,75 is the default load factor.
++      return (int) ((float) expectedSize / 0.75F + 1.0F);
+     }
+     return Integer.MAX_VALUE; // any large value
+   }
+diff --git a/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java b/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
+index f5d84ae..dd48553 100644
+--- a/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
++++ b/guava-gwt/src-super/com/google/common/collect/super/com/google/common/collect/Maps.java
+@@ -201,7 +201,10 @@
+       return expectedSize + 1;
+     }
+     if (expectedSize < Ints.MAX_POWER_OF_TWO) {
+-      return expectedSize + expectedSize / 3;
++      // This is the calculation used in JDK8 to resize when a putAll
++      // happens; it seems to be the most conservative calculation we
++      // can make.  0,75 is the default load factor.
++      return (int) ((float) expectedSize / 0.75F + 1.0F);
+     }
+     return Integer.MAX_VALUE; // any large value
+   }

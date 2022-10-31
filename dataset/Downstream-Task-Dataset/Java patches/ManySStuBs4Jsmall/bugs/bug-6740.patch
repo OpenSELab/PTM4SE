@@ -1,0 +1,211 @@
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/MeteorTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/MeteorTest.java
+index acb6d52..3e82268 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/MeteorTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/MeteorTest.java
+@@ -39,7 +39,7 @@
+ 	 */
+ 	protected static void assertEquals(final SopremoPlan expectedPlan, final SopremoPlan actualPlan) {
+ 		final List<Operator<?>> unmatchingOperators = actualPlan.getUnmatchingOperators(expectedPlan);
+-		if (unmatchingOperators != null)
++		if (!unmatchingOperators.isEmpty())
+ 			if (unmatchingOperators.get(0).getClass() == unmatchingOperators.get(1).getClass())
+ 				Assert.failNotEquals("operators are different", "\n" + unmatchingOperators.get(1), "\n"
+ 					+ unmatchingOperators.get(0));
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/DifferenceTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/DifferenceTest.java
+index 85188fb..c913bd7 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/DifferenceTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/DifferenceTest.java
+@@ -26,7 +26,7 @@
+ 			withInputs(difference);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/FilterTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/FilterTest.java
+index 8166ee6..208fe2e 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/FilterTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/FilterTest.java
+@@ -53,7 +53,7 @@
+ 
+ 		// System.out.println(Sop);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/GroupingTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/GroupingTest.java
+index 9a10a4e..5a77c4d 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/GroupingTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/GroupingTest.java
+@@ -49,7 +49,7 @@
+ 		final Sink output = new Sink("output.json").withInputs(selection);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ 	@Test
+@@ -76,7 +76,7 @@
+ 		final Sink output = new Sink("output.json").withInputs(selection);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ 	@Test
+@@ -103,7 +103,7 @@
+ 		final Sink output = new Sink("output.json").withInputs(selection);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ 	@Test
+@@ -138,7 +138,7 @@
+ 		final Sink output = new Sink("output.json").withInputs(selection);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ 	@Test
+@@ -173,7 +173,7 @@
+ 		final Sink output = new Sink("output.json").withInputs(selection);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/IntersectionTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/IntersectionTest.java
+index 5d15b28..6ee1075 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/IntersectionTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/IntersectionTest.java
+@@ -24,7 +24,7 @@
+ 		final Sink output = new Sink("newUsers.json").withInputs(intersection);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/JoinTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/JoinTest.java
+index 1da230a..bf4a2f2 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/JoinTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/JoinTest.java
+@@ -37,7 +37,7 @@
+ 		final Sink result = new Sink("result.json").withInputs(join);
+ 		expectedPlan.setSinks(result);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ 	@Test
+@@ -63,7 +63,7 @@
+ 		final Sink result = new Sink("result.json").withInputs(join);
+ 		expectedPlan.setSinks(result);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ 	@Test
+@@ -91,6 +91,6 @@
+ 		final Sink result = new Sink("result.json").withInputs(join);
+ 		expectedPlan.setSinks(result);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/ReplaceTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/ReplaceTest.java
+index 2c73a4d..541cf6f 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/ReplaceTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/ReplaceTest.java
+@@ -32,7 +32,7 @@
+ 		final Sink normalizedPersons = new Sink("normalizedPersons.json").withInputs(replace);
+ 		expectedPlan.setSinks(normalizedPersons);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ 	@Test
+@@ -54,7 +54,7 @@
+ 		final Sink normalizedPersons = new Sink("normalizedPersons.json").withInputs(replace);
+ 		expectedPlan.setSinks(normalizedPersons);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ 	@Test
+@@ -79,6 +79,6 @@
+ 		final Sink normalizedPersons = new Sink("normalizedPersons.json").withInputs(replace);
+ 		expectedPlan.setSinks(normalizedPersons);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/TransformTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/TransformTest.java
+index 81fd818..ffe18e7 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/TransformTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/TransformTest.java
+@@ -49,7 +49,7 @@
+ 		final Sink output = new Sink("output.json").withInputs(projection);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ 
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/UnionAllTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/UnionAllTest.java
+index 050bb02..c410e65 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/UnionAllTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/UnionAllTest.java
+@@ -24,6 +24,6 @@
+ 		final Sink output = new Sink("allUsers.json").withInputs(union);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/UnionTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/UnionTest.java
+index d02a292..025db61 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/UnionTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/base/UnionTest.java
+@@ -25,6 +25,6 @@
+ 		final Sink output = new Sink("allUsers.json").withInputs(union);
+ 		expectedPlan.setSinks(output);
+ 
+-		assertEquals(expectedPlan, actualPlan);
++		assertPlanEquals(expectedPlan, actualPlan);
+ 	}
+ }
+diff --git a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/MeteorTest.java b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/MeteorTest.java
+index acb6d52..3e82268 100755
+--- a/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/MeteorTest.java
++++ b/meteor/meteor-meteor/src/test/java/eu/stratosphere/meteor/MeteorTest.java
+@@ -39,7 +39,7 @@
+ 	 */
+ 	protected static void assertEquals(final SopremoPlan expectedPlan, final SopremoPlan actualPlan) {
+ 		final List<Operator<?>> unmatchingOperators = actualPlan.getUnmatchingOperators(expectedPlan);
+-		if (unmatchingOperators != null)
++		if (!unmatchingOperators.isEmpty())
+ 			if (unmatchingOperators.get(0).getClass() == unmatchingOperators.get(1).getClass())
+ 				Assert.failNotEquals("operators are different", "\n" + unmatchingOperators.get(1), "\n"
+ 					+ unmatchingOperators.get(0));

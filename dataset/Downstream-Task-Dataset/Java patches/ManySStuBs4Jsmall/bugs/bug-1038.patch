@@ -1,0 +1,26 @@
+diff --git a/tests/src/test/java/alluxio/master/lineage/LineageMasterIntegrationTest.java b/tests/src/test/java/alluxio/master/lineage/LineageMasterIntegrationTest.java
+index c9d3dae..c492525 100644
+--- a/tests/src/test/java/alluxio/master/lineage/LineageMasterIntegrationTest.java
++++ b/tests/src/test/java/alluxio/master/lineage/LineageMasterIntegrationTest.java
+@@ -115,7 +115,7 @@
+       List<LineageInfo> infos = lineageMasterClient.getLineageInfoList();
+       AlluxioURI uri = new AlluxioURI(infos.get(0).getOutputFiles().get(0));
+       URIStatus status = getFileSystemMasterClient().getStatus(uri);
+-      Assert.assertEquals(PersistenceState.NOT_PERSISTED.toString(), status.getPersistenceState());
++      Assert.assertNotEquals(PersistenceState.PERSISTED.toString(), status.getPersistenceState());
+       Assert.assertTrue(status.isCompleted());
+ 
+       IntegrationTestUtils.waitForPersist(mLocalAlluxioClusterResource, uri);
+diff --git a/tests/src/test/java/alluxio/master/lineage/LineageMasterIntegrationTest.java b/tests/src/test/java/alluxio/master/lineage/LineageMasterIntegrationTest.java
+index c9d3dae..c492525 100644
+--- a/tests/src/test/java/alluxio/master/lineage/LineageMasterIntegrationTest.java
++++ b/tests/src/test/java/alluxio/master/lineage/LineageMasterIntegrationTest.java
+@@ -115,7 +115,7 @@
+       List<LineageInfo> infos = lineageMasterClient.getLineageInfoList();
+       AlluxioURI uri = new AlluxioURI(infos.get(0).getOutputFiles().get(0));
+       URIStatus status = getFileSystemMasterClient().getStatus(uri);
+-      Assert.assertEquals(PersistenceState.NOT_PERSISTED.toString(), status.getPersistenceState());
++      Assert.assertNotEquals(PersistenceState.PERSISTED.toString(), status.getPersistenceState());
+       Assert.assertTrue(status.isCompleted());
+ 
+       IntegrationTestUtils.waitForPersist(mLocalAlluxioClusterResource, uri);

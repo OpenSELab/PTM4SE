@@ -1,0 +1,13 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryNodeBuilder.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryNodeBuilder.java
+index c3b3885..00136aa 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryNodeBuilder.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/memory/MemoryNodeBuilder.java
+@@ -260,7 +260,7 @@ public class MemoryNodeBuilder implements NodeBuilder {
+ 
+     @Override
+     public boolean isNew() {
+-        return !isRoot() && !parent.base().hasChildNode(name) && parent.hasChildNode(name);
++        return exists() && !base.exists();
+     }
+ 
+     @Override

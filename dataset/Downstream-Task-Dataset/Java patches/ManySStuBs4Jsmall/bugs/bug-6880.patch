@@ -1,0 +1,26 @@
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
+index ff67b46..b0aee97 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
+@@ -676,7 +676,7 @@
+ 
+ 			final ExecutionVertex vertex = it.next();
+ 			final ExecutionState state = vertex.getExecutionState();
+-			if (state == ExecutionState.RUNNING) {
++			if (state != ExecutionState.FAILED) {
+ 				final TaskCancelResult result = vertex.cancelTask();
+ 				if (result.getReturnCode() == AbstractTaskResult.ReturnCode.ERROR) {
+ 					errorResult = result;
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
+index ff67b46..b0aee97 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
+@@ -676,7 +676,7 @@
+ 
+ 			final ExecutionVertex vertex = it.next();
+ 			final ExecutionState state = vertex.getExecutionState();
+-			if (state == ExecutionState.RUNNING) {
++			if (state != ExecutionState.FAILED) {
+ 				final TaskCancelResult result = vertex.cancelTask();
+ 				if (result.getReturnCode() == AbstractTaskResult.ReturnCode.ERROR) {
+ 					errorResult = result;

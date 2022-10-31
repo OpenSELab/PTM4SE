@@ -1,0 +1,156 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheSplitBrainHandlerService.java b/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheSplitBrainHandlerService.java
+index 83b4eb3..203889f 100644
+--- a/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheSplitBrainHandlerService.java
++++ b/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheSplitBrainHandlerService.java
+@@ -142,7 +142,7 @@
+ 
+     private class CacheMerger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(CacheService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/cardinality/impl/CardinalityEstimatorService.java b/hazelcast/src/main/java/com/hazelcast/cardinality/impl/CardinalityEstimatorService.java
+index 1a443d2..a7277bd 100644
+--- a/hazelcast/src/main/java/com/hazelcast/cardinality/impl/CardinalityEstimatorService.java
++++ b/hazelcast/src/main/java/com/hazelcast/cardinality/impl/CardinalityEstimatorService.java
+@@ -219,7 +219,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(CardinalityEstimatorService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/collection/impl/collection/CollectionService.java b/hazelcast/src/main/java/com/hazelcast/collection/impl/collection/CollectionService.java
+index 1540cfb..cd58107 100644
+--- a/hazelcast/src/main/java/com/hazelcast/collection/impl/collection/CollectionService.java
++++ b/hazelcast/src/main/java/com/hazelcast/collection/impl/collection/CollectionService.java
+@@ -232,7 +232,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(CollectionService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/collection/impl/queue/QueueService.java b/hazelcast/src/main/java/com/hazelcast/collection/impl/queue/QueueService.java
+index 3569829..397c40c 100644
+--- a/hazelcast/src/main/java/com/hazelcast/collection/impl/queue/QueueService.java
++++ b/hazelcast/src/main/java/com/hazelcast/collection/impl/queue/QueueService.java
+@@ -423,7 +423,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(CollectionService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/AtomicLongService.java b/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/AtomicLongService.java
+index abd5f58..443672f 100644
+--- a/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/AtomicLongService.java
++++ b/hazelcast/src/main/java/com/hazelcast/concurrent/atomiclong/AtomicLongService.java
+@@ -227,7 +227,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(AtomicLongService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/concurrent/atomicreference/AtomicReferenceService.java b/hazelcast/src/main/java/com/hazelcast/concurrent/atomicreference/AtomicReferenceService.java
+index a3c5ee7..f35e8c0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/concurrent/atomicreference/AtomicReferenceService.java
++++ b/hazelcast/src/main/java/com/hazelcast/concurrent/atomicreference/AtomicReferenceService.java
+@@ -229,7 +229,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(AtomicReferenceService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/impl/MapSplitBrainHandlerService.java b/hazelcast/src/main/java/com/hazelcast/map/impl/MapSplitBrainHandlerService.java
+index 91a92c2..cf465b7 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/impl/MapSplitBrainHandlerService.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/impl/MapSplitBrainHandlerService.java
+@@ -127,7 +127,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(MapSplitBrainHandlerService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/multimap/impl/MultiMapService.java b/hazelcast/src/main/java/com/hazelcast/multimap/impl/MultiMapService.java
+index 618cf64..bd62cad 100644
+--- a/hazelcast/src/main/java/com/hazelcast/multimap/impl/MultiMapService.java
++++ b/hazelcast/src/main/java/com/hazelcast/multimap/impl/MultiMapService.java
+@@ -534,7 +534,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(CollectionService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/replicatedmap/impl/ReplicatedMapSplitBrainHandlerService.java b/hazelcast/src/main/java/com/hazelcast/replicatedmap/impl/ReplicatedMapSplitBrainHandlerService.java
+index 0d7f33e..4bce185 100644
+--- a/hazelcast/src/main/java/com/hazelcast/replicatedmap/impl/ReplicatedMapSplitBrainHandlerService.java
++++ b/hazelcast/src/main/java/com/hazelcast/replicatedmap/impl/ReplicatedMapSplitBrainHandlerService.java
+@@ -104,7 +104,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(ReplicatedMapSplitBrainHandlerService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/ringbuffer/impl/RingbufferService.java b/hazelcast/src/main/java/com/hazelcast/ringbuffer/impl/RingbufferService.java
+index d892f1d..5e095d4 100644
+--- a/hazelcast/src/main/java/com/hazelcast/ringbuffer/impl/RingbufferService.java
++++ b/hazelcast/src/main/java/com/hazelcast/ringbuffer/impl/RingbufferService.java
+@@ -396,7 +396,7 @@
+ 
+     private class Merger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(RingbufferService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/DistributedScheduledExecutorService.java b/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/DistributedScheduledExecutorService.java
+index 2a65b55..93f6254 100644
+--- a/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/DistributedScheduledExecutorService.java
++++ b/hazelcast/src/main/java/com/hazelcast/scheduledexecutor/impl/DistributedScheduledExecutorService.java
+@@ -356,7 +356,7 @@
+     private class Merger
+             implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(DistributedScheduledExecutorService.class);
+         private final Semaphore semaphore = new Semaphore(0);
+diff --git a/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheSplitBrainHandlerService.java b/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheSplitBrainHandlerService.java
+index 83b4eb3..203889f 100644
+--- a/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheSplitBrainHandlerService.java
++++ b/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheSplitBrainHandlerService.java
+@@ -142,7 +142,7 @@
+ 
+     private class CacheMerger implements Runnable {
+ 
+-        private static final int TIMEOUT_FACTOR = 500;
++        private static final long TIMEOUT_FACTOR = 500;
+ 
+         private final ILogger logger = nodeEngine.getLogger(CacheService.class);
+         private final Semaphore semaphore = new Semaphore(0);

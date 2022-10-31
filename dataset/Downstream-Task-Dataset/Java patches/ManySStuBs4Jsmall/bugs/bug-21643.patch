@@ -1,0 +1,39 @@
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/config/annotation/builders/ClientDetailsServiceBuilder.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/config/annotation/builders/ClientDetailsServiceBuilder.java
+index ac0df52..ead812e 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/config/annotation/builders/ClientDetailsServiceBuilder.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/config/annotation/builders/ClientDetailsServiceBuilder.java
+@@ -203,7 +203,7 @@
+ 				}
+ 				int index = pair.indexOf(separator);
+ 				String key = pair.substring(0, index > 0 ? index : pair.length());
+-				String value = index > 0 ? null : pair.substring(index);
++				String value = index > 0 ? pair.substring(index) : null;
+ 				this.additionalInformation.put(key, (Object) value);
+ 			}
+ 			return this;
+diff --git a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/config/annotation/AuthorizationServerConfigurationTests.java b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/config/annotation/AuthorizationServerConfigurationTests.java
+index 346fd49..d5e1701 100644
+--- a/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/config/annotation/AuthorizationServerConfigurationTests.java
++++ b/spring-security-oauth2/src/test/java/org/springframework/security/oauth2/config/annotation/AuthorizationServerConfigurationTests.java
+@@ -147,7 +147,7 @@
+ 		            .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+ 		            .scopes("read", "write", "trust")
+ 		            .accessTokenValiditySeconds(60)
+-		            .additionalInformation("foo:bar", "spam:bucket");
++		            .additionalInformation("foo:bar", "spam:bucket", "crap");
+ 		 	// @formatter:on
+ 		}
+ 
+diff --git a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/config/annotation/builders/ClientDetailsServiceBuilder.java b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/config/annotation/builders/ClientDetailsServiceBuilder.java
+index ac0df52..ead812e 100644
+--- a/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/config/annotation/builders/ClientDetailsServiceBuilder.java
++++ b/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/config/annotation/builders/ClientDetailsServiceBuilder.java
+@@ -203,7 +203,7 @@
+ 				}
+ 				int index = pair.indexOf(separator);
+ 				String key = pair.substring(0, index > 0 ? index : pair.length());
+-				String value = index > 0 ? null : pair.substring(index);
++				String value = index > 0 ? pair.substring(index) : null;
+ 				this.additionalInformation.put(key, (Object) value);
+ 			}
+ 			return this;

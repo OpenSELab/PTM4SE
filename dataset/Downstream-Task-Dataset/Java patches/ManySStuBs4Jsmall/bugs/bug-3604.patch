@@ -1,0 +1,28 @@
+diff --git a/src/main/java/com/alibaba/fastjson/serializer/ObjectFieldSerializer.java b/src/main/java/com/alibaba/fastjson/serializer/ObjectFieldSerializer.java
+index 7d492e3..1835818 100755
+--- a/src/main/java/com/alibaba/fastjson/serializer/ObjectFieldSerializer.java
++++ b/src/main/java/com/alibaba/fastjson/serializer/ObjectFieldSerializer.java
+@@ -115,7 +115,8 @@
+             }
+ 
+             ObjectSerializer fieldSerializer = runtimeInfo.fieldSerializer;
+-            if (out.writeMapNullValue) {
++            if ((out.writeMapNullValue) 
++                    && fieldSerializer instanceof ASMJavaBeanSerializer) {
+                 out.writeNull();
+                 return;
+             }
+diff --git a/src/main/java/com/alibaba/fastjson/serializer/ObjectFieldSerializer.java b/src/main/java/com/alibaba/fastjson/serializer/ObjectFieldSerializer.java
+index 7d492e3..1835818 100755
+--- a/src/main/java/com/alibaba/fastjson/serializer/ObjectFieldSerializer.java
++++ b/src/main/java/com/alibaba/fastjson/serializer/ObjectFieldSerializer.java
+@@ -115,7 +115,8 @@
+             }
+ 
+             ObjectSerializer fieldSerializer = runtimeInfo.fieldSerializer;
+-            if (out.writeMapNullValue) {
++            if ((out.writeMapNullValue) 
++                    && fieldSerializer instanceof ASMJavaBeanSerializer) {
+                 out.writeNull();
+                 return;
+             }

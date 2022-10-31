@@ -1,0 +1,15 @@
+diff --git a/api/src/test/java/org/openmrs/api/EncounterServiceTest.java b/api/src/test/java/org/openmrs/api/EncounterServiceTest.java
+index f5513cc..667918d 100644
+--- a/api/src/test/java/org/openmrs/api/EncounterServiceTest.java
++++ b/api/src/test/java/org/openmrs/api/EncounterServiceTest.java
+@@ -884,8 +884,8 @@
+ 	 * @see org.openmrs.api.EncounterService#getEncounters(org.openmrs.parameter.EncounterSearchCriteria)
+ 	 */
+ 	@Test
+-	@Verifies(value = "should get encounters by date changed", method = "getEncounters(EncounterSearchParameter)")
+-	public void getEncounters_shouldGetEncountersByDateChanged() throws Exception {
++	@Verifies(value = "should get encounters modified after specified date", method = "getEncounters(EncounterSearchParameter)")
++	public void getEncounters_shouldGetEncountersModifiedAfterSpecifiedDate() throws Exception {
+ 		EncounterService encounterService = Context.getEncounterService();
+ 		Assert.assertEquals(7, encounterService.getEncounters(
+ 				encounterSearchForVoidedWithDateChanged("2006-01-01")).size());

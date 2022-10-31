@@ -1,0 +1,96 @@
+diff --git a/maven-project/src/main/java/org/apache/maven/profiles/DefaultProfileManager.java b/maven-project/src/main/java/org/apache/maven/profiles/DefaultProfileManager.java
+index 5f6534d..68acd29 100644
+--- a/maven-project/src/main/java/org/apache/maven/profiles/DefaultProfileManager.java
++++ b/maven-project/src/main/java/org/apache/maven/profiles/DefaultProfileManager.java
+@@ -66,13 +66,14 @@ public class DefaultProfileManager
+      */
+     public DefaultProfileManager( PlexusContainer container, Properties props )
+     {
+-        this( container, (Settings)null );
+-        if (props != null) {
+-            systemProperties = props;
+-        }
++        this( container, (Settings)null, props );
+         
+     }
+ 
++    /**
++     * @deprecated without passing in the system properties, the SystemPropertiesProfileActivator will not work correctly
++     * in embedded envirnments.
++     */
+     public DefaultProfileManager( PlexusContainer container, Settings settings )
+     {
+         this.container = container;
+@@ -80,6 +81,23 @@ public class DefaultProfileManager
+         loadSettingsProfiles( settings );
+     }
+     
++    /**
++     * the properties passed to the profile manager are the props that
++     * are passed to maven, possibly containing profile activator properties
++     *
++     */
++    public DefaultProfileManager( PlexusContainer container, Settings settings, Properties props )
++    {
++        this.container = container;
++
++        loadSettingsProfiles( settings );
++        
++        if ( props != null )
++        {
++            systemProperties = props;
++        }
++    }
++    
+     public Properties getSystemProperties() {
+         return systemProperties;
+     }
+diff --git a/maven-project/src/main/java/org/apache/maven/project/artifact/MavenMetadataSource.java b/maven-project/src/main/java/org/apache/maven/project/artifact/MavenMetadataSource.java
+index ffa3ac6..bde81f3 100644
+--- a/maven-project/src/main/java/org/apache/maven/project/artifact/MavenMetadataSource.java
++++ b/maven-project/src/main/java/org/apache/maven/project/artifact/MavenMetadataSource.java
+@@ -48,7 +48,6 @@ import org.codehaus.plexus.util.StringUtils;
+ import java.io.File;
+ import java.util.ArrayList;
+ import java.util.Collections;
+-import java.util.HashSet;
+ import java.util.Iterator;
+ import java.util.LinkedHashSet;
+ import java.util.List;
+@@ -337,7 +336,9 @@ public class MavenMetadataSource
+                 artifact.setFile( new File( d.getSystemPath() ) );
+             }
+ 
+-            if ( artifact != null && ( dependencyFilter == null || dependencyFilter.include( artifact ) ) )
++            ArtifactFilter artifactFilter = dependencyFilter;
++            
++            if ( artifact != null && ( artifactFilter == null || artifactFilter.include( artifact ) ) )
+             {
+                 if ( d.getExclusions() != null && !d.getExclusions().isEmpty() )
+                 {
+@@ -350,20 +351,20 @@ public class MavenMetadataSource
+ 
+                     ArtifactFilter newFilter = new ExcludesArtifactFilter( exclusions );
+ 
+-                    if ( dependencyFilter != null )
++                    if ( artifactFilter != null )
+                     {
+                         AndArtifactFilter filter = new AndArtifactFilter();
+-                        filter.add( dependencyFilter );
++                        filter.add( artifactFilter );
+                         filter.add( newFilter );
+-                        dependencyFilter = filter;
++                        artifactFilter = filter;
+                     }
+                     else
+                     {
+-                        dependencyFilter = newFilter;
++                        artifactFilter = newFilter;
+                     }
+                 }
+ 
+-                artifact.setDependencyFilter( dependencyFilter );
++                artifact.setDependencyFilter( artifactFilter );
+ 
+                 if ( project != null )
+                 {

@@ -1,0 +1,42 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/feedback/IFeedbackMessageFilter.java b/wicket-core/src/main/java/org/apache/wicket/feedback/IFeedbackMessageFilter.java
+index 83706e5..fdd3057 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/feedback/IFeedbackMessageFilter.java
++++ b/wicket-core/src/main/java/org/apache/wicket/feedback/IFeedbackMessageFilter.java
+@@ -28,7 +28,7 @@ public interface IFeedbackMessageFilter extends IClusterable
+ 	/**
+ 	 * Filter that returns simply all available messages.
+ 	 */
+-	public static final IFeedbackMessageFilter ALL = new IFeedbackMessageFilter()
++	IFeedbackMessageFilter ALL = new IFeedbackMessageFilter()
+ 	{
+ 		private static final long serialVersionUID = 1L;
+ 
+@@ -42,7 +42,7 @@ public interface IFeedbackMessageFilter extends IClusterable
+ 	/**
+ 	 * Filter that does not match any message
+ 	 */
+-	public static final IFeedbackMessageFilter NONE = new IFeedbackMessageFilter()
++	IFeedbackMessageFilter NONE = new IFeedbackMessageFilter()
+ 	{
+ 		private static final long serialVersionUID = 1L;
+ 
+@@ -59,4 +59,4 @@ public interface IFeedbackMessageFilter extends IClusterable
+ 	 * @return True if the message should be included, false to exclude it
+ 	 */
+ 	boolean accept(FeedbackMessage message);
+-}
+\ No newline at end of file
++}
+diff --git a/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java b/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
+index 93adebe..aa6ba63 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
++++ b/wicket-core/src/main/java/org/apache/wicket/markup/html/form/Form.java
+@@ -1145,7 +1145,7 @@ public class Form<T> extends WebMarkupContainer implements IFormSubmitListener,
+ 			@Override
+ 			public void component(final Component component, final IVisit<Boolean> visit)
+ 			{
+-				if (component.hasErrorMessage())
++				if (component.isVisibleInHierarchy() && component.isEnabledInHierarchy() && component.hasErrorMessage())
+ 				{
+ 					visit.stop(true);
+ 				}

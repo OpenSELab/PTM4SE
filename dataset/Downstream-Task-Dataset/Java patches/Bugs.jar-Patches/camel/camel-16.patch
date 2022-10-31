@@ -1,0 +1,21 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java b/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
+index 63e4710..7fb6666 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/FromDefinition.java
+@@ -77,8 +77,15 @@ public class FromDefinition extends OptionalIdentifiedDefinition<FromDefinition>
+ 
+     // Properties
+     // -----------------------------------------------------------------------
++
+     public String getUri() {
+-        return uri;
++        if (uri != null) {
++            return uri;
++        } else if (endpoint != null) {
++            return endpoint.getEndpointUri();
++        } else {
++            return null;
++        }
+     }
+ 
+     /**

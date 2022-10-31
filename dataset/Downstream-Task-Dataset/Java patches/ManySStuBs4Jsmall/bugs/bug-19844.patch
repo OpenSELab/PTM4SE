@@ -1,0 +1,26 @@
+diff --git a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/config/ZWaveConfiguration.java b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/config/ZWaveConfiguration.java
+index c679ee3..ace9a1f 100644
+--- a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/config/ZWaveConfiguration.java
++++ b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/config/ZWaveConfiguration.java
+@@ -270,7 +270,7 @@
+ 					Date lastDead = node.getDeadTime();
+ 					Long timeSinceLastDead = Long.MAX_VALUE;
+ 					if(lastDead != null) {
+-						timeSinceLastDead = lastDead.getTime() - System.currentTimeMillis();
++						timeSinceLastDead = System.currentTimeMillis() - lastDead.getTime();
+ 					}
+ 					if(node.getDeadCount() > 0 && timeSinceLastDead < 86400000)
+ 						record.state = OpenHABConfigurationRecord.STATE.WARNING;
+diff --git a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/config/ZWaveConfiguration.java b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/config/ZWaveConfiguration.java
+index c679ee3..ace9a1f 100644
+--- a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/config/ZWaveConfiguration.java
++++ b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/config/ZWaveConfiguration.java
+@@ -270,7 +270,7 @@
+ 					Date lastDead = node.getDeadTime();
+ 					Long timeSinceLastDead = Long.MAX_VALUE;
+ 					if(lastDead != null) {
+-						timeSinceLastDead = lastDead.getTime() - System.currentTimeMillis();
++						timeSinceLastDead = System.currentTimeMillis() - lastDead.getTime();
+ 					}
+ 					if(node.getDeadCount() > 0 && timeSinceLastDead < 86400000)
+ 						record.state = OpenHABConfigurationRecord.STATE.WARNING;

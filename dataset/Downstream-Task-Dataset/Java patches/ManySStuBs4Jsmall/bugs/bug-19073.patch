@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageDecoder.java b/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageDecoder.java
+index 7b0f214..e9541d9 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageDecoder.java
++++ b/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageDecoder.java
+@@ -603,7 +603,7 @@
+         return new String[] {
+                 sb.substring(aStart, aEnd),
+                 sb.substring(bStart, bEnd),
+-                sb.substring(cStart, cEnd) };
++                cStart < cEnd? sb.substring(cStart, cEnd) : "" };
+     }
+ 
+     private String[] splitHeader(String sb) {
+diff --git a/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageDecoder.java b/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageDecoder.java
+index 7b0f214..e9541d9 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageDecoder.java
++++ b/src/main/java/org/jboss/netty/handler/codec/http/HttpMessageDecoder.java
+@@ -603,7 +603,7 @@
+         return new String[] {
+                 sb.substring(aStart, aEnd),
+                 sb.substring(bStart, bEnd),
+-                sb.substring(cStart, cEnd) };
++                cStart < cEnd? sb.substring(cStart, cEnd) : "" };
+     }
+ 
+     private String[] splitHeader(String sb) {

@@ -1,0 +1,13 @@
+diff --git a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRouteSimpleTest.java b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRouteSimpleTest.java
+index da7abf5..a7ce942 100644
+--- a/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRouteSimpleTest.java
++++ b/components/camel-netty4-http/src/test/java/org/apache/camel/component/netty4/http/NettyRouteSimpleTest.java
+@@ -41,7 +41,7 @@
+             public void configure() throws Exception {
+                 from("netty4-http:http://0.0.0.0:{{port}}/foo")
+                     .to("mock:input1")
+-                    .to("netty4-http:http://0.0.0.0:" + port2 + "/bar");
++                    .to("netty4-http:http://localhost:" + port2 + "/bar");
+                 from("netty4-http:http://0.0.0.0:" + port2 + "/bar")
+                     .to("mock:input2")
+                     .transform().constant("Bye World");

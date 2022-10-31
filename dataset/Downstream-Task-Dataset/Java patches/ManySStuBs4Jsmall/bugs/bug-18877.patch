@@ -1,0 +1,26 @@
+diff --git a/buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java b/buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java
+index b6ab641..e2fe391 100644
+--- a/buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java
++++ b/buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java
+@@ -1348,7 +1348,7 @@
+         for (int i = 0; i < buffer.capacity(); i ++) {
+             buffer.writeByte((byte) i);
+         }
+-        ByteBuf copy = copiedBuffer(buffer);
++        ByteBuf copy = freeLater(copiedBuffer(buffer));
+ 
+         // Discard the first (CAPACITY / 2 - 1) bytes.
+         buffer.setIndex(CAPACITY / 2 - 1, CAPACITY - 1);
+diff --git a/buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java b/buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java
+index b6ab641..e2fe391 100644
+--- a/buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java
++++ b/buffer/src/test/java/io/netty/buffer/AbstractByteBufTest.java
+@@ -1348,7 +1348,7 @@
+         for (int i = 0; i < buffer.capacity(); i ++) {
+             buffer.writeByte((byte) i);
+         }
+-        ByteBuf copy = copiedBuffer(buffer);
++        ByteBuf copy = freeLater(copiedBuffer(buffer));
+ 
+         // Discard the first (CAPACITY / 2 - 1) bytes.
+         buffer.setIndex(CAPACITY / 2 - 1, CAPACITY - 1);

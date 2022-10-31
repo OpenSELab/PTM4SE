@@ -1,0 +1,26 @@
+diff --git a/examples/camel-example-cafe/src/main/java/org/apache/camel/example/cafe/CafeRouteBuilder.java b/examples/camel-example-cafe/src/main/java/org/apache/camel/example/cafe/CafeRouteBuilder.java
+index 85c210f..9a0fa50 100644
+--- a/examples/camel-example-cafe/src/main/java/org/apache/camel/example/cafe/CafeRouteBuilder.java
++++ b/examples/camel-example-cafe/src/main/java/org/apache/camel/example/cafe/CafeRouteBuilder.java
+@@ -78,7 +78,7 @@
+         
+         from("direct:drink").recipientList().method("drinkRouter");
+         
+-        from("seda:coldDrinks?concurrentConsumers=2").to("bean: ?method=prepareColdDrink").to("direct:deliveries");
++        from("seda:coldDrinks?concurrentConsumers=2").to("bean:barista?method=prepareColdDrink").to("direct:deliveries");
+         from("seda:hotDrinks?concurrentConsumers=3").to("bean:barista?method=prepareHotDrink").to("direct:deliveries");
+         
+         from("direct:deliveries")
+diff --git a/examples/camel-example-cafe/src/main/java/org/apache/camel/example/cafe/CafeRouteBuilder.java b/examples/camel-example-cafe/src/main/java/org/apache/camel/example/cafe/CafeRouteBuilder.java
+index 85c210f..9a0fa50 100644
+--- a/examples/camel-example-cafe/src/main/java/org/apache/camel/example/cafe/CafeRouteBuilder.java
++++ b/examples/camel-example-cafe/src/main/java/org/apache/camel/example/cafe/CafeRouteBuilder.java
+@@ -78,7 +78,7 @@
+         
+         from("direct:drink").recipientList().method("drinkRouter");
+         
+-        from("seda:coldDrinks?concurrentConsumers=2").to("bean: ?method=prepareColdDrink").to("direct:deliveries");
++        from("seda:coldDrinks?concurrentConsumers=2").to("bean:barista?method=prepareColdDrink").to("direct:deliveries");
+         from("seda:hotDrinks?concurrentConsumers=3").to("bean:barista?method=prepareHotDrink").to("direct:deliveries");
+         
+         from("direct:deliveries")

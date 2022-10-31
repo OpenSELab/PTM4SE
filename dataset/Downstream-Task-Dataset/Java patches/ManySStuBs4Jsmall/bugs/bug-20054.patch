@@ -1,0 +1,120 @@
+diff --git a/api/src/main/java/org/openmrs/api/SerializationService.java b/api/src/main/java/org/openmrs/api/SerializationService.java
+index 4d89dda..f142a3b 100644
+--- a/api/src/main/java/org/openmrs/api/SerializationService.java
++++ b/api/src/main/java/org/openmrs/api/SerializationService.java
+@@ -66,7 +66,7 @@
+ 	 */
+ 	@Logging(ignoredArgumentIndexes = { 0 })
+     @Authorized
+-	public <T extends Object> T deserialize(String serializedObject, Class<? extends T> objectClass,
++	public <T> T deserialize(String serializedObject, Class<? extends T> objectClass,
+ 	        Class<? extends OpenmrsSerializer> serializerClass) throws SerializationException;
+ 	
+ 	/**
+diff --git a/api/src/main/java/org/openmrs/api/context/Context.java b/api/src/main/java/org/openmrs/api/context/Context.java
+index e716ab7..9e04e9a 100644
+--- a/api/src/main/java/org/openmrs/api/context/Context.java
++++ b/api/src/main/java/org/openmrs/api/context/Context.java
+@@ -928,7 +928,7 @@
+ 	 * @return The requested Service
+ 	 * @should return the same object when called multiple times for the same class
+ 	 */
+-	public static <T extends Object> T getService(Class<? extends T> cls) {
++	public static <T> T getService(Class<? extends T> cls) {
+ 		return getServiceContext().getService(cls);
+ 	}
+ 
+@@ -1190,7 +1190,7 @@
+ 	 * @since 1.5
+ 	 * @see ServiceContext#getRegisteredComponents(Class)
+ 	 */
+-	public static <T extends Object> List<T> getRegisteredComponents(Class<T> type) {
++	public static <T> List<T> getRegisteredComponents(Class<T> type) {
+ 		return getServiceContext().getRegisteredComponents(type);
+ 	}
+ 
+diff --git a/api/src/main/java/org/openmrs/api/context/ServiceContext.java b/api/src/main/java/org/openmrs/api/context/ServiceContext.java
+index 05e2210..bd6b217 100644
+--- a/api/src/main/java/org/openmrs/api/context/ServiceContext.java
++++ b/api/src/main/java/org/openmrs/api/context/ServiceContext.java
+@@ -612,7 +612,7 @@
+ 	 * @return Object that is a proxy for the <code>cls</code> class
+ 	 */
+ 	@SuppressWarnings("unchecked")
+-	public <T extends Object> T getService(Class<? extends T> cls) {
++	public <T> T getService(Class<? extends T> cls) {
+ 		if (log.isTraceEnabled()) {
+ 			log.trace("Getting service: " + cls);
+ 		}
+diff --git a/api/src/main/java/org/openmrs/api/impl/SerializationServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/SerializationServiceImpl.java
+index 619b10e..f1b17a6 100644
+--- a/api/src/main/java/org/openmrs/api/impl/SerializationServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/SerializationServiceImpl.java
+@@ -101,7 +101,7 @@
+ 	 *      java.lang.Class)
+ 	 */
+ 	@Override
+-	public <T extends Object> T deserialize(String serializedObject, Class<? extends T> objectClass,
++	public <T> T deserialize(String serializedObject, Class<? extends T> objectClass,
+ 	        Class<? extends OpenmrsSerializer> serializerClass) throws SerializationException {
+ 		
+ 		// Get appropriate OpenmrsSerializer implementation
+diff --git a/api/src/main/java/org/openmrs/serialization/OpenmrsSerializer.java b/api/src/main/java/org/openmrs/serialization/OpenmrsSerializer.java
+index b21bee2..288f551 100644
+--- a/api/src/main/java/org/openmrs/serialization/OpenmrsSerializer.java
++++ b/api/src/main/java/org/openmrs/serialization/OpenmrsSerializer.java
+@@ -29,5 +29,5 @@
+ 	 * @param clazz - The class to deserialize the Object into
+ 	 * @return hydrated object of the appropriate type
+ 	 */
+-	public <T extends Object> T deserialize(String serializedObject, Class<? extends T> clazz) throws SerializationException;
++	public <T> T deserialize(String serializedObject, Class<? extends T> clazz) throws SerializationException;
+ }
+diff --git a/api/src/main/java/org/openmrs/serialization/SimpleXStreamSerializer.java b/api/src/main/java/org/openmrs/serialization/SimpleXStreamSerializer.java
+index 57b57c9..780a55d 100644
+--- a/api/src/main/java/org/openmrs/serialization/SimpleXStreamSerializer.java
++++ b/api/src/main/java/org/openmrs/serialization/SimpleXStreamSerializer.java
+@@ -101,7 +101,7 @@
+ 	 */
+ 	@Override
+ 	@SuppressWarnings("unchecked")
+-	public <T extends Object> T deserialize(String serializedObject, Class<? extends T> clazz) throws SerializationException {
++	public <T> T deserialize(String serializedObject, Class<? extends T> clazz) throws SerializationException {
+ 		
+ 		try {
+ 			return (T) xstream.fromXML(serializedObject);
+diff --git a/api/src/main/java/org/openmrs/util/OpenmrsUtil.java b/api/src/main/java/org/openmrs/util/OpenmrsUtil.java
+index 4c73e59..a4deccc 100644
+--- a/api/src/main/java/org/openmrs/util/OpenmrsUtil.java
++++ b/api/src/main/java/org/openmrs/util/OpenmrsUtil.java
+@@ -132,7 +132,7 @@
+ 	 * @param newList
+ 	 * @return [List toAdd, List toDelete] with respect to origList
+ 	 */
+-	public static <E extends Object> Collection<Collection<E>> compareLists(Collection<E> origList, Collection<E> newList) {
++	public static <E> Collection<Collection<E>> compareLists(Collection<E> origList, Collection<E> newList) {
+ 		// TODO finish function
+ 		
+ 		Collection<Collection<E>> returnList = new ArrayList<>();
+@@ -689,7 +689,7 @@
+ 	 * @param separator string to put between all elements
+ 	 * @return a String representing the toString() of all elements in c, separated by separator
+ 	 */
+-	public static <E extends Object> String join(Collection<E> c, String separator) {
++	public static <E> String join(Collection<E> c, String separator) {
+ 		if (c == null) {
+ 			return "";
+ 		}
+diff --git a/api/src/main/java/org/openmrs/api/SerializationService.java b/api/src/main/java/org/openmrs/api/SerializationService.java
+index 4d89dda..f142a3b 100644
+--- a/api/src/main/java/org/openmrs/api/SerializationService.java
++++ b/api/src/main/java/org/openmrs/api/SerializationService.java
+@@ -66,7 +66,7 @@
+ 	 */
+ 	@Logging(ignoredArgumentIndexes = { 0 })
+     @Authorized
+-	public <T extends Object> T deserialize(String serializedObject, Class<? extends T> objectClass,
++	public <T> T deserialize(String serializedObject, Class<? extends T> objectClass,
+ 	        Class<? extends OpenmrsSerializer> serializerClass) throws SerializationException;
+ 	
+ 	/**

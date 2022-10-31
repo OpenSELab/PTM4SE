@@ -1,0 +1,36 @@
+diff --git a/storm-webapp/src/main/java/org/apache/storm/daemon/ui/UIHelpers.java b/storm-webapp/src/main/java/org/apache/storm/daemon/ui/UIHelpers.java
+index 9f6f81f..22d1872 100644
+--- a/storm-webapp/src/main/java/org/apache/storm/daemon/ui/UIHelpers.java
++++ b/storm-webapp/src/main/java/org/apache/storm/daemon/ui/UIHelpers.java
+@@ -581,11 +581,9 @@
+         result.put("schedulerDisplayResource",
+                 conf.get(DaemonConfig.SCHEDULER_DISPLAY_RESOURCE));
+         result.put("memAssignedPercentUtil", supervisorTotalMemory > 0
+-                ? String.valueOf((supervisorTotalMemory - supervisorUsedMemory)  * 100.0
+-                / supervisorTotalMemory) : "0.0");
++                ? StatsUtil.floatStr((supervisorUsedMemory  * 100.0) / supervisorTotalMemory) : "0.0");
+         result.put("cpuAssignedPercentUtil", supervisorTotalCpu > 0
+-                ? String.valueOf((supervisorTotalCpu - supervisorUsedCpu) * 100.0
+-                / supervisorTotalCpu) : "0.0");
++                ? StatsUtil.floatStr((supervisorUsedCpu * 100.0) / supervisorTotalCpu) : "0.0");
+         result.put("bugtracker-url", conf.get(DaemonConfig.UI_PROJECT_BUGTRACKER_URL));
+         result.put("central-log-url", conf.get(DaemonConfig.UI_CENTRAL_LOGGING_URL));
+         return result;
+diff --git a/storm-webapp/src/main/java/org/apache/storm/daemon/ui/UIHelpers.java b/storm-webapp/src/main/java/org/apache/storm/daemon/ui/UIHelpers.java
+index 9f6f81f..22d1872 100644
+--- a/storm-webapp/src/main/java/org/apache/storm/daemon/ui/UIHelpers.java
++++ b/storm-webapp/src/main/java/org/apache/storm/daemon/ui/UIHelpers.java
+@@ -581,11 +581,9 @@
+         result.put("schedulerDisplayResource",
+                 conf.get(DaemonConfig.SCHEDULER_DISPLAY_RESOURCE));
+         result.put("memAssignedPercentUtil", supervisorTotalMemory > 0
+-                ? String.valueOf((supervisorTotalMemory - supervisorUsedMemory)  * 100.0
+-                / supervisorTotalMemory) : "0.0");
++                ? StatsUtil.floatStr((supervisorUsedMemory  * 100.0) / supervisorTotalMemory) : "0.0");
+         result.put("cpuAssignedPercentUtil", supervisorTotalCpu > 0
+-                ? String.valueOf((supervisorTotalCpu - supervisorUsedCpu) * 100.0
+-                / supervisorTotalCpu) : "0.0");
++                ? StatsUtil.floatStr((supervisorUsedCpu * 100.0) / supervisorTotalCpu) : "0.0");
+         result.put("bugtracker-url", conf.get(DaemonConfig.UI_PROJECT_BUGTRACKER_URL));
+         result.put("central-log-url", conf.get(DaemonConfig.UI_CENTRAL_LOGGING_URL));
+         return result;

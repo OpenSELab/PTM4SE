@@ -1,0 +1,26 @@
+diff --git a/src/jvm/clojure/lang/Reflector.java b/src/jvm/clojure/lang/Reflector.java
+index 117a56b..dd534e6 100644
+--- a/src/jvm/clojure/lang/Reflector.java
++++ b/src/jvm/clojure/lang/Reflector.java
+@@ -83,7 +83,7 @@
+ 		{
+ 		//public method of non-public class, try to find it in hierarchy
+ 		Method oldm = m;
+-		m = getAsMethodOfPublicBase(m.getDeclaringClass(), m);
++		m = getAsMethodOfPublicBase(target.getClass(), m);
+ 		if(m == null)
+ 			throw new IllegalArgumentException("Can't call public method of non-public class: " +
+ 			                                    oldm.toString());
+diff --git a/src/jvm/clojure/lang/Reflector.java b/src/jvm/clojure/lang/Reflector.java
+index 117a56b..dd534e6 100644
+--- a/src/jvm/clojure/lang/Reflector.java
++++ b/src/jvm/clojure/lang/Reflector.java
+@@ -83,7 +83,7 @@
+ 		{
+ 		//public method of non-public class, try to find it in hierarchy
+ 		Method oldm = m;
+-		m = getAsMethodOfPublicBase(m.getDeclaringClass(), m);
++		m = getAsMethodOfPublicBase(target.getClass(), m);
+ 		if(m == null)
+ 			throw new IllegalArgumentException("Can't call public method of non-public class: " +
+ 			                                    oldm.toString());

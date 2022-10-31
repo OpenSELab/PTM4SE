@@ -1,0 +1,26 @@
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/remote/LocalEjbReceiver.java b/ejb3/src/main/java/org/jboss/as/ejb3/remote/LocalEjbReceiver.java
+index 24185a5..5ec41e2 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/remote/LocalEjbReceiver.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/remote/LocalEjbReceiver.java
+@@ -203,7 +203,7 @@
+             return null;
+         }
+ 
+-        if (allowPassByReference && target.isAssignableFrom(object.getClass())) {
++        if (allowPassByReference && (target.isPrimitive() || target.isAssignableFrom(object.getClass()))) {
+             return object;
+         }
+         return clone(cloner, object);
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/remote/LocalEjbReceiver.java b/ejb3/src/main/java/org/jboss/as/ejb3/remote/LocalEjbReceiver.java
+index 24185a5..5ec41e2 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/remote/LocalEjbReceiver.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/remote/LocalEjbReceiver.java
+@@ -203,7 +203,7 @@
+             return null;
+         }
+ 
+-        if (allowPassByReference && target.isAssignableFrom(object.getClass())) {
++        if (allowPassByReference && (target.isPrimitive() || target.isAssignableFrom(object.getClass()))) {
+             return object;
+         }
+         return clone(cloner, object);

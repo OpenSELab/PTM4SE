@@ -1,0 +1,80 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/metrics/NPathComplexityCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/metrics/NPathComplexityCheckTest.java
+index 955f2e8..88bf0b7 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/metrics/NPathComplexityCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/metrics/NPathComplexityCheckTest.java
+@@ -41,7 +41,7 @@
+     @Override
+     protected String getPath(String filename) throws IOException {
+         return super.getPath("checks" + File.separator
+-                + "metrics" + File.separator + filename);
++                + "metrics" + File.separator + "npathcomplexity" + File.separator + filename);
+     }
+ 
+     @Test
+@@ -62,7 +62,7 @@
+             "104:13: " + getCheckMessage(MSG_KEY, 2, 0),
+         };
+ 
+-        verify(checkConfig, getPath("InputComplexity.java"), expected);
++        verify(checkConfig, getPath("InputNPathComplexityDefault.java"), expected);
+     }
+ 
+     @Test
+@@ -104,7 +104,7 @@
+             "13:5: " + getCheckMessage(MSG_KEY, largerThanMaxInt, 0),
+         };
+ 
+-        verify(checkConfig, getPath("InputComplexityOverflow.java"), expected);
++        verify(checkConfig, getPath("InputNPathComplexityOverflow.java"), expected);
+     }
+ 
+     @Test
+@@ -114,7 +114,7 @@
+ 
+         createChecker(checkConfig);
+         final String[] expected = CommonUtils.EMPTY_STRING_ARRAY;
+-        verify(checkConfig, getPath("InputComplexity.java"), expected);
++        verify(checkConfig, getPath("InputNPathComplexityDefault.java"), expected);
+     }
+ 
+     @Test
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/metrics/NPathComplexityCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/metrics/NPathComplexityCheckTest.java
+index 955f2e8..88bf0b7 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/metrics/NPathComplexityCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/metrics/NPathComplexityCheckTest.java
+@@ -41,7 +41,7 @@
+     @Override
+     protected String getPath(String filename) throws IOException {
+         return super.getPath("checks" + File.separator
+-                + "metrics" + File.separator + filename);
++                + "metrics" + File.separator + "npathcomplexity" + File.separator + filename);
+     }
+ 
+     @Test
+@@ -62,7 +62,7 @@
+             "104:13: " + getCheckMessage(MSG_KEY, 2, 0),
+         };
+ 
+-        verify(checkConfig, getPath("InputComplexity.java"), expected);
++        verify(checkConfig, getPath("InputNPathComplexityDefault.java"), expected);
+     }
+ 
+     @Test
+@@ -104,7 +104,7 @@
+             "13:5: " + getCheckMessage(MSG_KEY, largerThanMaxInt, 0),
+         };
+ 
+-        verify(checkConfig, getPath("InputComplexityOverflow.java"), expected);
++        verify(checkConfig, getPath("InputNPathComplexityOverflow.java"), expected);
+     }
+ 
+     @Test
+@@ -114,7 +114,7 @@
+ 
+         createChecker(checkConfig);
+         final String[] expected = CommonUtils.EMPTY_STRING_ARRAY;
+-        verify(checkConfig, getPath("InputComplexity.java"), expected);
++        verify(checkConfig, getPath("InputNPathComplexityDefault.java"), expected);
+     }
+ 
+     @Test

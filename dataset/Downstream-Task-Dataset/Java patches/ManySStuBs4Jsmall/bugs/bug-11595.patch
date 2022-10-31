@@ -1,0 +1,34 @@
+diff --git a/extensions-core/kafka-indexing-service/src/main/java/io/druid/indexing/kafka/KafkaIndexTask.java b/extensions-core/kafka-indexing-service/src/main/java/io/druid/indexing/kafka/KafkaIndexTask.java
+index eef8aac..8edda9e 100644
+--- a/extensions-core/kafka-indexing-service/src/main/java/io/druid/indexing/kafka/KafkaIndexTask.java
++++ b/extensions-core/kafka-indexing-service/src/main/java/io/druid/indexing/kafka/KafkaIndexTask.java
+@@ -1063,10 +1063,10 @@
+          .emit();
+       // wait for being killed by supervisor
+       try {
+-        Thread.sleep(Long.MAX_VALUE);
++        pause(-1);
+       }
+       catch (InterruptedException e) {
+-        throw new RuntimeException("Got interrupted while waiting to be killed");
++        throw new RuntimeException("Got interrupted while pausing task");
+       }
+     } else {
+       log.makeAlert("Failed to send reset request for partitions [%s]", partitionOffsetMap.keySet()).emit();
+diff --git a/extensions-core/kafka-indexing-service/src/main/java/io/druid/indexing/kafka/KafkaIndexTask.java b/extensions-core/kafka-indexing-service/src/main/java/io/druid/indexing/kafka/KafkaIndexTask.java
+index eef8aac..8edda9e 100644
+--- a/extensions-core/kafka-indexing-service/src/main/java/io/druid/indexing/kafka/KafkaIndexTask.java
++++ b/extensions-core/kafka-indexing-service/src/main/java/io/druid/indexing/kafka/KafkaIndexTask.java
+@@ -1063,10 +1063,10 @@
+          .emit();
+       // wait for being killed by supervisor
+       try {
+-        Thread.sleep(Long.MAX_VALUE);
++        pause(-1);
+       }
+       catch (InterruptedException e) {
+-        throw new RuntimeException("Got interrupted while waiting to be killed");
++        throw new RuntimeException("Got interrupted while pausing task");
+       }
+     } else {
+       log.makeAlert("Failed to send reset request for partitions [%s]", partitionOffsetMap.keySet()).emit();

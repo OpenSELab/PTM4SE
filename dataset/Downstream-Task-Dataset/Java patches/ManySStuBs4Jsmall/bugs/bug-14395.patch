@@ -1,0 +1,76 @@
+diff --git a/lib/rhino/src/org/mozilla/javascript/ScriptRuntime.java b/lib/rhino/src/org/mozilla/javascript/ScriptRuntime.java
+index 0fd297a..5b37dfc 100644
+--- a/lib/rhino/src/org/mozilla/javascript/ScriptRuntime.java
++++ b/lib/rhino/src/org/mozilla/javascript/ScriptRuntime.java
+@@ -298,7 +298,7 @@
+ 
+     public static Number wrapNumber(double x)
+     {
+-        if (x != x) {
++        if (Double.isNaN(x)) {
+             return ScriptRuntime.NaNobj;
+         }
+         return new Double(x);
+@@ -320,7 +320,7 @@
+                 return ((CharSequence) val).length() != 0;
+             if (val instanceof Number) {
+                 double d = ((Number) val).doubleValue();
+-                return (d == d && d != 0.0);
++                return (!Double.isNaN(d) && d != 0.0);
+             }
+             if (val instanceof Scriptable) {
+                 if (val instanceof ScriptableObject &&
+@@ -785,7 +785,7 @@
+     }
+ 
+     public static String numberToString(double d, int base) {
+-        if (d != d)
++        if (Double.isNaN(d))
+             return "NaN";
+         if (d == Double.POSITIVE_INFINITY)
+             return "Infinity";
+@@ -1070,7 +1070,7 @@
+     // convenience method
+     public static double toInteger(double d) {
+         // if it's NaN
+-        if (d != d)
++        if (Double.isNaN(d))
+             return +0.0;
+ 
+         if (d == 0.0 ||
+@@ -1112,7 +1112,7 @@
+             return id;
+         }
+ 
+-        if (d != d
++        if (Double.isNaN(d)
+             || d == Double.POSITIVE_INFINITY
+             || d == Double.NEGATIVE_INFINITY)
+         {
+@@ -1142,7 +1142,7 @@
+             return l & 0xffffffffL;
+         }
+ 
+-        if (d != d
++        if (Double.isNaN(d)
+             || d == Double.POSITIVE_INFINITY
+             || d == Double.NEGATIVE_INFINITY)
+         {
+@@ -1174,7 +1174,7 @@
+             return (char)i;
+         }
+ 
+-        if (d != d
++        if (Double.isNaN(d)
+             || d == Double.POSITIVE_INFINITY
+             || d == Double.NEGATIVE_INFINITY)
+         {
+@@ -2910,7 +2910,7 @@
+             }
+             // NaN check
+             double d = ((Number)x).doubleValue();
+-            return d == d;
++            return !Double.isNaN(d);
+         }
+         if (x == null || x == Undefined.instance) {
+             return false;

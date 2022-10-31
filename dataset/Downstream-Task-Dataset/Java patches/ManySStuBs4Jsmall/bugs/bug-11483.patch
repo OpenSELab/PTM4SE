@@ -1,0 +1,39 @@
+diff --git a/metrics-core/src/main/java/com/codahale/metrics/InstrumentedExecutorService.java b/metrics-core/src/main/java/com/codahale/metrics/InstrumentedExecutorService.java
+index f63cf2f..1aa1d01 100644
+--- a/metrics-core/src/main/java/com/codahale/metrics/InstrumentedExecutorService.java
++++ b/metrics-core/src/main/java/com/codahale/metrics/InstrumentedExecutorService.java
+@@ -131,7 +131,7 @@
+     private <T> Collection<? extends Callable<T>> instrument(Collection<? extends Callable<T>> tasks) {
+         final List<InstrumentedCallable<T>> instrumented = new ArrayList<InstrumentedCallable<T>>(tasks.size());
+         for (Callable<T> task : tasks) {
+-            instrumented.add(new InstrumentedCallable(task));
++            instrumented.add(new InstrumentedCallable<T>(task));
+         }
+         return instrumented;
+     }
+diff --git a/metrics-core/src/test/java/com/codahale/metrics/MetricRegistryTest.java b/metrics-core/src/test/java/com/codahale/metrics/MetricRegistryTest.java
+index cabfe4d..9bf8a1c 100644
+--- a/metrics-core/src/test/java/com/codahale/metrics/MetricRegistryTest.java
++++ b/metrics-core/src/test/java/com/codahale/metrics/MetricRegistryTest.java
+@@ -319,7 +319,7 @@
+     @Test
+     @SuppressWarnings("NullArgumentToVariableArgMethod")
+     public void elidesNullValuesFromNamesWhenOnlyOneNullPassedIn() throws Exception {
+-        assertThat(name("one", null))
++        assertThat(name("one", (String)null))
+                 .isEqualTo("one");
+     }
+ 
+diff --git a/metrics-core/src/main/java/com/codahale/metrics/InstrumentedExecutorService.java b/metrics-core/src/main/java/com/codahale/metrics/InstrumentedExecutorService.java
+index f63cf2f..1aa1d01 100644
+--- a/metrics-core/src/main/java/com/codahale/metrics/InstrumentedExecutorService.java
++++ b/metrics-core/src/main/java/com/codahale/metrics/InstrumentedExecutorService.java
+@@ -131,7 +131,7 @@
+     private <T> Collection<? extends Callable<T>> instrument(Collection<? extends Callable<T>> tasks) {
+         final List<InstrumentedCallable<T>> instrumented = new ArrayList<InstrumentedCallable<T>>(tasks.size());
+         for (Callable<T> task : tasks) {
+-            instrumented.add(new InstrumentedCallable(task));
++            instrumented.add(new InstrumentedCallable<T>(task));
+         }
+         return instrumented;
+     }

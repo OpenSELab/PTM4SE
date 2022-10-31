@@ -1,0 +1,13 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java b/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
+index b3c95f5..03ff1ad 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntFloatMap.java
+@@ -87,7 +87,7 @@
+ 
+ 	/** Creates a new map identical to the specified map. */
+ 	public IntFloatMap (IntFloatMap map) {
+-		this(map.capacity, map.loadFactor);
++		this((int)Math.floor(map.capacity * map.loadFactor), map.loadFactor);
+ 		stashSize = map.stashSize;
+ 		System.arraycopy(map.keyTable, 0, keyTable, 0, map.keyTable.length);
+ 		System.arraycopy(map.valueTable, 0, valueTable, 0, map.valueTable.length);

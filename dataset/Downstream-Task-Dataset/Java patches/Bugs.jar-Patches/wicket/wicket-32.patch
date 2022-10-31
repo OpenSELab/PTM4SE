@@ -1,0 +1,112 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/request/resource/AbstractResource.java b/wicket/src/main/java/org/apache/wicket/request/resource/AbstractResource.java
+index 1f6f526..00358a06 100644
+--- a/wicket/src/main/java/org/apache/wicket/request/resource/AbstractResource.java
++++ b/wicket/src/main/java/org/apache/wicket/request/resource/AbstractResource.java
+@@ -463,7 +463,7 @@ public abstract class AbstractResource implements IResource
+ 				@Override
+ 				public void write(byte[] b, int off, int len) throws IOException
+ 				{
+-					if (off == 0 || len == b.length)
++					if (off == 0 && len == b.length)
+ 					{
+ 						write(b);
+ 					}
+diff --git a/wicket/src/main/java/org/apache/wicket/util/resource/UrlResourceStream.java b/wicket/src/main/java/org/apache/wicket/util/resource/UrlResourceStream.java
+index 8a0cef7..02a144b 100644
+--- a/wicket/src/main/java/org/apache/wicket/util/resource/UrlResourceStream.java
++++ b/wicket/src/main/java/org/apache/wicket/util/resource/UrlResourceStream.java
+@@ -193,26 +193,26 @@ public class UrlResourceStream extends AbstractResourceStream
+ 	@Override
+ 	public Time lastModifiedTime()
+ 	{
+-		if (file != null)
++		try
+ 		{
+-			// in case the file has been removed by now
+-			if (file.exists() == false)
++			if (file != null)
+ 			{
+-				return null;
+-			}
++				// in case the file has been removed by now
++				if (file.exists() == false)
++				{
++					return null;
++				}
+ 
+-			long lastModified = file.lastModified();
++				long lastModified = file.lastModified();
+ 
+-			// if last modified changed update content length and last modified date
+-			if (lastModified != this.lastModified)
+-			{
+-				this.lastModified = lastModified;
+-				contentLength = (int)file.length();
++				// if last modified changed update content length and last modified date
++				if (lastModified != this.lastModified)
++				{
++					this.lastModified = lastModified;
++					setContentLength();
++				}
+ 			}
+-		}
+-		else
+-		{
+-			try
++			else
+ 			{
+ 				long lastModified = Connections.getLastModified(url);
+ 
+@@ -221,31 +221,35 @@ public class UrlResourceStream extends AbstractResourceStream
+ 				{
+ 					this.lastModified = lastModified;
+ 
+-					URLConnection connection = url.openConnection();
+-					contentLength = connection.getContentLength();
+-					Connections.close(connection);
++					setContentLength();
+ 				}
+ 			}
+-			catch (IOException e)
++			return Time.milliseconds(lastModified);
++		}
++		catch (IOException e)
++		{
++			if (url.toString().indexOf(".jar!") >= 0)
+ 			{
+-				if (url.toString().indexOf(".jar!") >= 0)
++				if (log.isDebugEnabled())
+ 				{
+-					if (log.isDebugEnabled())
+-					{
+-						log.debug("getLastModified for " + url + " failed: " + e.getMessage());
+-					}
++					log.debug("getLastModified for " + url + " failed: " + e.getMessage());
+ 				}
+-				else
+-				{
+-					log.warn("getLastModified for " + url + " failed: " + e.getMessage());
+-				}
+-
+-				// allow modification watcher to detect the problem
+-				return null;
++			}
++			else
++			{
++				log.warn("getLastModified for " + url + " failed: " + e.getMessage());
+ 			}
+ 
++			// allow modification watcher to detect the problem
++			return null;
+ 		}
+-		return Time.milliseconds(lastModified);
++	}
++
++	private void setContentLength() throws IOException
++	{
++		URLConnection connection = url.openConnection();
++		contentLength = connection.getContentLength();
++		Connections.close(connection);
+ 	}
+ 
+ 	/**

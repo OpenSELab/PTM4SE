@@ -1,0 +1,41 @@
+diff --git a/controller/src/main/java/org/jboss/as/controller/remote/ModelControllerOperationHandlerService.java b/controller/src/main/java/org/jboss/as/controller/remote/ModelControllerOperationHandlerService.java
+index f297e58..a998863 100644
+--- a/controller/src/main/java/org/jboss/as/controller/remote/ModelControllerOperationHandlerService.java
++++ b/controller/src/main/java/org/jboss/as/controller/remote/ModelControllerOperationHandlerService.java
+@@ -39,7 +39,7 @@
+  */
+ public class ModelControllerOperationHandlerService implements Service<ModelControllerOperationHandler>{
+ 
+-    private static final Logger log = Logger.getLogger("org.jboss.server.management");
++    protected static final Logger log = Logger.getLogger("org.jboss.server.management");
+ 
+     public static final ServiceName OPERATION_HANDLER_NAME_SUFFIX = ServiceName.of("operation", "handler");
+ 
+diff --git a/server/src/main/java/org/jboss/as/server/mgmt/ServerControllerOperationHandlerService.java b/server/src/main/java/org/jboss/as/server/mgmt/ServerControllerOperationHandlerService.java
+index fccdb6c..ca86549 100644
+--- a/server/src/main/java/org/jboss/as/server/mgmt/ServerControllerOperationHandlerService.java
++++ b/server/src/main/java/org/jboss/as/server/mgmt/ServerControllerOperationHandlerService.java
+@@ -46,7 +46,9 @@
+     @Override
+     public void start(StartContext context) throws StartException {
+         super.start(context);
+-        managementCommunicationService.getValue().addHandler(getValue());
++        // FIXME enable when remoting is added
++//        managementCommunicationService.getValue().addHandler(getValue());
++        log.error("FIXME re-enable management comms");
+     }
+ 
+     public void stop(StartContext context) {
+diff --git a/controller/src/main/java/org/jboss/as/controller/remote/ModelControllerOperationHandlerService.java b/controller/src/main/java/org/jboss/as/controller/remote/ModelControllerOperationHandlerService.java
+index f297e58..a998863 100644
+--- a/controller/src/main/java/org/jboss/as/controller/remote/ModelControllerOperationHandlerService.java
++++ b/controller/src/main/java/org/jboss/as/controller/remote/ModelControllerOperationHandlerService.java
+@@ -39,7 +39,7 @@
+  */
+ public class ModelControllerOperationHandlerService implements Service<ModelControllerOperationHandler>{
+ 
+-    private static final Logger log = Logger.getLogger("org.jboss.server.management");
++    protected static final Logger log = Logger.getLogger("org.jboss.server.management");
+ 
+     public static final ServiceName OPERATION_HANDLER_NAME_SUFFIX = ServiceName.of("operation", "handler");
+ 

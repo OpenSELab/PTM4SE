@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/CamelContainer.java b/camel-core/src/main/java/org/apache/camel/CamelContainer.java
+index e49cb8b..a7711a6 100644
+--- a/camel-core/src/main/java/org/apache/camel/CamelContainer.java
++++ b/camel-core/src/main/java/org/apache/camel/CamelContainer.java
+@@ -70,7 +70,7 @@
+         return new DefaultExchangeConverter();
+     }
+ 
+-	public Component getOrCreateComponent(String componentName, Callable<Component> factory) {
++	public Component getOrCreateComponent(String componentName, Callable<Component<E>> factory) {
+ 		synchronized(components) { 
+ 			Component component = components.get(componentName);
+ 			if( component == null ) {
+diff --git a/camel-core/src/main/java/org/apache/camel/CamelContainer.java b/camel-core/src/main/java/org/apache/camel/CamelContainer.java
+index e49cb8b..a7711a6 100644
+--- a/camel-core/src/main/java/org/apache/camel/CamelContainer.java
++++ b/camel-core/src/main/java/org/apache/camel/CamelContainer.java
+@@ -70,7 +70,7 @@
+         return new DefaultExchangeConverter();
+     }
+ 
+-	public Component getOrCreateComponent(String componentName, Callable<Component> factory) {
++	public Component getOrCreateComponent(String componentName, Callable<Component<E>> factory) {
+ 		synchronized(components) { 
+ 			Component component = components.get(componentName);
+ 			if( component == null ) {

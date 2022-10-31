@@ -1,0 +1,56 @@
+diff --git a/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/LogSoftMax.java b/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/LogSoftMax.java
+index 8678f0c..64bee4b 100644
+--- a/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/LogSoftMax.java
++++ b/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/LogSoftMax.java
+@@ -140,10 +140,10 @@
+             throw new IllegalArgumentException("Only supports row wise calculations");
+         if(x.isMatrix()) {
+ 
+-            INDArray rowMax = x.max(1).transpose();
++            INDArray rowMax = x.max(1);
+             INDArray xMinusRowMax = x.subColumnVector(rowMax);
+             INDArray expXMinusRowMax = Nd4j.getExecutioner().execAndReturn(new Exp(xMinusRowMax.dup()));
+-            INDArray logRowSumExp = expXMinusRowMax.sum(1).transpose();
++            INDArray logRowSumExp = expXMinusRowMax.sum(1);
+             Nd4j.getExecutioner().exec(new Log(logRowSumExp));
+ 
+             INDArray logsoftmax = xMinusRowMax.subiColumnVector(logRowSumExp);
+diff --git a/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SoftMax.java b/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SoftMax.java
+index f478fa5..c96d69f 100644
+--- a/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SoftMax.java
++++ b/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/SoftMax.java
+@@ -176,7 +176,7 @@
+         if(dimensions[0] != 1)
+             throw new IllegalArgumentException("Only supports row wise calculations");
+         if(x.isMatrix()) {
+-            INDArray maxAlongDimension = x.max(dimensions).transpose();
++            INDArray maxAlongDimension = x.max(dimensions);
+             if(!maxAlongDimension.isVector() && !maxAlongDimension.isScalar())
+                 throw new IllegalStateException("Max along dimension for input must either be a row vector or scalar");
+ 
+@@ -188,7 +188,7 @@
+             } else {
+                 exp = Nd4j.getExecutioner().execAndReturn(new Exp(xMinusMax));
+             }
+-            INDArray sum = exp.sum(dimensions).transpose();
++            INDArray sum = exp.sum(dimensions);
+             exp.diviColumnVector(sum);
+ 
+             if(z == null) z = exp;
+diff --git a/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/LogSoftMax.java b/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/LogSoftMax.java
+index 8678f0c..64bee4b 100644
+--- a/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/LogSoftMax.java
++++ b/nd4j-api/src/main/java/org/nd4j/linalg/api/ops/impl/transforms/LogSoftMax.java
+@@ -140,10 +140,10 @@
+             throw new IllegalArgumentException("Only supports row wise calculations");
+         if(x.isMatrix()) {
+ 
+-            INDArray rowMax = x.max(1).transpose();
++            INDArray rowMax = x.max(1);
+             INDArray xMinusRowMax = x.subColumnVector(rowMax);
+             INDArray expXMinusRowMax = Nd4j.getExecutioner().execAndReturn(new Exp(xMinusRowMax.dup()));
+-            INDArray logRowSumExp = expXMinusRowMax.sum(1).transpose();
++            INDArray logRowSumExp = expXMinusRowMax.sum(1);
+             Nd4j.getExecutioner().exec(new Log(logRowSumExp));
+ 
+             INDArray logsoftmax = xMinusRowMax.subiColumnVector(logRowSumExp);

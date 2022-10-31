@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/PartitionedLookupSource.java b/presto-main/src/main/java/com/facebook/presto/operator/PartitionedLookupSource.java
+index 9bc39cc..c3b497a 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/PartitionedLookupSource.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/PartitionedLookupSource.java
+@@ -154,7 +154,7 @@
+ 
+     private long encodePartitionedJoinPosition(int partition, int joinPosition)
+     {
+-        return (joinPosition << shiftSize) | (partition);
++        return (((long) joinPosition) << shiftSize) | (partition);
+     }
+ 
+     private static class PartitionedLookupOuterPositionIterator
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/PartitionedLookupSource.java b/presto-main/src/main/java/com/facebook/presto/operator/PartitionedLookupSource.java
+index 9bc39cc..c3b497a 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/PartitionedLookupSource.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/PartitionedLookupSource.java
+@@ -154,7 +154,7 @@
+ 
+     private long encodePartitionedJoinPosition(int partition, int joinPosition)
+     {
+-        return (joinPosition << shiftSize) | (partition);
++        return (((long) joinPosition) << shiftSize) | (partition);
+     }
+ 
+     private static class PartitionedLookupOuterPositionIterator

@@ -1,0 +1,26 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/indexer/searches/Searches.java b/graylog2-server/src/main/java/org/graylog2/indexer/searches/Searches.java
+index 5b4015c..82fe100 100644
+--- a/graylog2-server/src/main/java/org/graylog2/indexer/searches/Searches.java
++++ b/graylog2-server/src/main/java/org/graylog2/indexer/searches/Searches.java
+@@ -579,7 +579,7 @@
+         if (failedShards > 0) {
+             final List<String> errors = StreamSupport.stream(shards.path("failures").spliterator(), false)
+                 .map(failure -> failure.path("reason").path("reason").asText())
+-                .filter(String::isEmpty)
++                .filter(s -> !s.isEmpty())
+                 .collect(Collectors.toList());
+ 
+             final List<String> nonNumericFieldErrors = errors.stream()
+diff --git a/graylog2-server/src/main/java/org/graylog2/indexer/searches/Searches.java b/graylog2-server/src/main/java/org/graylog2/indexer/searches/Searches.java
+index 5b4015c..82fe100 100644
+--- a/graylog2-server/src/main/java/org/graylog2/indexer/searches/Searches.java
++++ b/graylog2-server/src/main/java/org/graylog2/indexer/searches/Searches.java
+@@ -579,7 +579,7 @@
+         if (failedShards > 0) {
+             final List<String> errors = StreamSupport.stream(shards.path("failures").spliterator(), false)
+                 .map(failure -> failure.path("reason").path("reason").asText())
+-                .filter(String::isEmpty)
++                .filter(s -> !s.isEmpty())
+                 .collect(Collectors.toList());
+ 
+             final List<String> nonNumericFieldErrors = errors.stream()

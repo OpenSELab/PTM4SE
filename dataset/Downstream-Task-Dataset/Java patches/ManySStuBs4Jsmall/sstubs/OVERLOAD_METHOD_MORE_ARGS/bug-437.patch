@@ -1,0 +1,124 @@
+diff --git a/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/multilayer/MultiLayerTest.java b/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/multilayer/MultiLayerTest.java
+index 1d03aa7..86573e1 100644
+--- a/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/multilayer/MultiLayerTest.java
++++ b/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/multilayer/MultiLayerTest.java
+@@ -72,7 +72,7 @@
+                 .weightInit(WeightInit.DISTRIBUTION).dist(Nd4j.getDistributions().createNormal(1,1e-5))
+                 .iterations(100).learningRate(1e-3).iterationListener(new ScoreIterationListener(10))
+                 .nIn(next.numInputs()).nOut(next.numOutcomes()).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory)
+-                .list(4).hiddenLayerSizes(600,250,100).override(new ConfOverride() {
++                .list(4).hiddenLayerSizes(600,250,100).override(3, new ConfOverride() {
+                     @Override
+                     public void overrideLayer(int i, NeuralNetConfiguration.Builder builder) {
+                         if (i == 3) {
+@@ -108,7 +108,7 @@
+                 .list(2).backward(true)
+                 .preProcessor(0,new ConvolutionPostProcessor())
+                 .hiddenLayerSizes(new int[]{9})
+-                .override(new ClassifierOverride(1)).build();
++                .override(1, new ClassifierOverride(1)).build();
+ 
+         MultiLayerNetwork network = new MultiLayerNetwork(conf);
+         DataSetIterator iter = new IrisDataSetIterator(150, 150);
+@@ -144,7 +144,7 @@
+                 .activationFunction("tanh")
+                 .nIn(4).nOut(3).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory)
+                 .list(3).backward(true)
+-                .hiddenLayerSizes(new int[]{3, 2}).override(new ClassifierOverride(2)).build();
++                .hiddenLayerSizes(new int[]{3, 2}).override(2, new ClassifierOverride(2)).build();
+ 
+         MultiLayerNetwork network = new MultiLayerNetwork(conf);
+         DataSetIterator iter = new IrisDataSetIterator(150, 150);
+@@ -182,7 +182,7 @@
+                 .learningRate(1e-1f).iterationListener(new ScoreIterationListener(2))
+                 .nIn(4).nOut(3).list(2)
+                 .hiddenLayerSizes(new int[]{3})
+-                .override(new ClassifierOverride(1)).build();
++                .override(1, new ClassifierOverride(1)).build();
+ 
+             NeuralNetConfiguration conf2 = new NeuralNetConfiguration.Builder()
+                     .layerFactory(LayerFactories.getFactory(RBM.class))
+diff --git a/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/test/java/org/deeplearning4j/scaleout/perform/MultiLayerWorkPerformerTests.java b/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/test/java/org/deeplearning4j/scaleout/perform/MultiLayerWorkPerformerTests.java
+index e5f8cbb..5234a2a 100644
+--- a/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/test/java/org/deeplearning4j/scaleout/perform/MultiLayerWorkPerformerTests.java
++++ b/deeplearning4j-scaleout/deeplearning4j-scaleout-akka/src/test/java/org/deeplearning4j/scaleout/perform/MultiLayerWorkPerformerTests.java
+@@ -44,7 +44,7 @@
+                 .momentum(9e-1f).weightInit(WeightInit.DISTRIBUTION).dist(Nd4j.getDistributions().createNormal(1e-1,1))
+                 .lossFunction(LossFunctions.LossFunction.RECONSTRUCTION_CROSSENTROPY).iterations(10)
+                 .learningRate(1e-1f).nIn(4).nOut(3).layerFactory(layerFactory)
+-                .list(2).hiddenLayerSizes(new int[]{3}).override(new ConfOverride() {
++                .list(2).hiddenLayerSizes(new int[]{3}).override(1, new ConfOverride() {
+                     @Override
+                     public void overrideLayer(int i, NeuralNetConfiguration.Builder builder) {
+ 
+diff --git a/deeplearning4j-scaleout/spark/dl4j-spark/src/test/java/org/deeplearning4j/spark/impl/multilayer/TestSparkMultiLayer.java b/deeplearning4j-scaleout/spark/dl4j-spark/src/test/java/org/deeplearning4j/spark/impl/multilayer/TestSparkMultiLayer.java
+index 5ea9a49..242ebbc 100644
+--- a/deeplearning4j-scaleout/spark/dl4j-spark/src/test/java/org/deeplearning4j/spark/impl/multilayer/TestSparkMultiLayer.java
++++ b/deeplearning4j-scaleout/spark/dl4j-spark/src/test/java/org/deeplearning4j/spark/impl/multilayer/TestSparkMultiLayer.java
+@@ -68,7 +68,7 @@
+                 .visibleUnit(RBM.VisibleUnit.GAUSSIAN)
+                 .hiddenUnit(RBM.HiddenUnit.RECTIFIED)
+                 .activationFunction("tanh").list(2).hiddenLayerSizes(3)
+-                .override(new ConfOverride() {
++                .override(1, new ConfOverride() {
+                     @Override
+                     public void overrideLayer(int i, NeuralNetConfiguration.Builder builder) {
+                         if (i == 1) {
+@@ -105,7 +105,7 @@
+                 .hiddenUnit(RBM.HiddenUnit.RECTIFIED)
+                 .nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class))
+                 .list(3).hiddenLayerSizes(3,2)
+-                .override(new ConfOverride() {
++                .override(2, new ConfOverride() {
+                     @Override
+                     public void overrideLayer(int i, NeuralNetConfiguration.Builder builder) {
+ 
+@@ -153,7 +153,7 @@
+         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
+                 .nIn(4).nOut(3).layerFactory(LayerFactories.getFactory(RBM.class))
+                 .activationFunction("tanh").list(2).hiddenLayerSizes(3)
+-                .override(new ConfOverride() {
++                .override(1, new ConfOverride() {
+                     @Override
+                     public void overrideLayer(int i, NeuralNetConfiguration.Builder builder) {
+                         if (i == 1) {
+diff --git a/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/multilayer/MultiLayerTest.java b/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/multilayer/MultiLayerTest.java
+index 1d03aa7..86573e1 100644
+--- a/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/multilayer/MultiLayerTest.java
++++ b/deeplearning4j-core/src/test/java/org/deeplearning4j/nn/multilayer/MultiLayerTest.java
+@@ -72,7 +72,7 @@
+                 .weightInit(WeightInit.DISTRIBUTION).dist(Nd4j.getDistributions().createNormal(1,1e-5))
+                 .iterations(100).learningRate(1e-3).iterationListener(new ScoreIterationListener(10))
+                 .nIn(next.numInputs()).nOut(next.numOutcomes()).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory)
+-                .list(4).hiddenLayerSizes(600,250,100).override(new ConfOverride() {
++                .list(4).hiddenLayerSizes(600,250,100).override(3, new ConfOverride() {
+                     @Override
+                     public void overrideLayer(int i, NeuralNetConfiguration.Builder builder) {
+                         if (i == 3) {
+@@ -108,7 +108,7 @@
+                 .list(2).backward(true)
+                 .preProcessor(0,new ConvolutionPostProcessor())
+                 .hiddenLayerSizes(new int[]{9})
+-                .override(new ClassifierOverride(1)).build();
++                .override(1, new ClassifierOverride(1)).build();
+ 
+         MultiLayerNetwork network = new MultiLayerNetwork(conf);
+         DataSetIterator iter = new IrisDataSetIterator(150, 150);
+@@ -144,7 +144,7 @@
+                 .activationFunction("tanh")
+                 .nIn(4).nOut(3).visibleUnit(RBM.VisibleUnit.GAUSSIAN).hiddenUnit(RBM.HiddenUnit.RECTIFIED).layerFactory(layerFactory)
+                 .list(3).backward(true)
+-                .hiddenLayerSizes(new int[]{3, 2}).override(new ClassifierOverride(2)).build();
++                .hiddenLayerSizes(new int[]{3, 2}).override(2, new ClassifierOverride(2)).build();
+ 
+         MultiLayerNetwork network = new MultiLayerNetwork(conf);
+         DataSetIterator iter = new IrisDataSetIterator(150, 150);
+@@ -182,7 +182,7 @@
+                 .learningRate(1e-1f).iterationListener(new ScoreIterationListener(2))
+                 .nIn(4).nOut(3).list(2)
+                 .hiddenLayerSizes(new int[]{3})
+-                .override(new ClassifierOverride(1)).build();
++                .override(1, new ClassifierOverride(1)).build();
+ 
+             NeuralNetConfiguration conf2 = new NeuralNetConfiguration.Builder()
+                     .layerFactory(LayerFactories.getFactory(RBM.class))

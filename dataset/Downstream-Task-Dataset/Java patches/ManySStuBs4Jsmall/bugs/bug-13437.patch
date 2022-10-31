@@ -1,0 +1,26 @@
+diff --git a/modules/ExportPlugin/src/main/java/org/gephi/io/exporter/plugin/ExporterGEXF.java b/modules/ExportPlugin/src/main/java/org/gephi/io/exporter/plugin/ExporterGEXF.java
+index 403ebc3..9f0616b 100644
+--- a/modules/ExportPlugin/src/main/java/org/gephi/io/exporter/plugin/ExporterGEXF.java
++++ b/modules/ExportPlugin/src/main/java/org/gephi/io/exporter/plugin/ExporterGEXF.java
+@@ -159,7 +159,7 @@
+     public boolean execute() {
+         attributeModel = workspace.getLookup().lookup(AttributeModel.class);
+         graphModel = workspace.getLookup().lookup(GraphModel.class);
+-        dynamicModel = workspace.getLookup().lookup(DynamicModel.class);
++        dynamicModel = Lookup.getDefault().lookup(DynamicController.class).getModel(workspace);
+         HierarchicalGraph graph;
+         if (exportVisible) {
+             graph = graphModel.getHierarchicalGraphVisible();
+diff --git a/modules/ExportPlugin/src/main/java/org/gephi/io/exporter/plugin/ExporterGEXF.java b/modules/ExportPlugin/src/main/java/org/gephi/io/exporter/plugin/ExporterGEXF.java
+index 403ebc3..9f0616b 100644
+--- a/modules/ExportPlugin/src/main/java/org/gephi/io/exporter/plugin/ExporterGEXF.java
++++ b/modules/ExportPlugin/src/main/java/org/gephi/io/exporter/plugin/ExporterGEXF.java
+@@ -159,7 +159,7 @@
+     public boolean execute() {
+         attributeModel = workspace.getLookup().lookup(AttributeModel.class);
+         graphModel = workspace.getLookup().lookup(GraphModel.class);
+-        dynamicModel = workspace.getLookup().lookup(DynamicModel.class);
++        dynamicModel = Lookup.getDefault().lookup(DynamicController.class).getModel(workspace);
+         HierarchicalGraph graph;
+         if (exportVisible) {
+             graph = graphModel.getHierarchicalGraphVisible();

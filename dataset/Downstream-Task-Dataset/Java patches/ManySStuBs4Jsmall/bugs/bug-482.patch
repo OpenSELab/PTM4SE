@@ -1,0 +1,48 @@
+diff --git a/core/common/src/main/java/alluxio/util/CommonUtils.java b/core/common/src/main/java/alluxio/util/CommonUtils.java
+index b6ef4c9..b13e715 100644
+--- a/core/common/src/main/java/alluxio/util/CommonUtils.java
++++ b/core/common/src/main/java/alluxio/util/CommonUtils.java
+@@ -244,7 +244,8 @@
+     int timeout = options.getTimeout();
+     while (!condition.apply(null)) {
+       if (timeout != WaitForOptions.NEVER && System.currentTimeMillis() - start > timeout) {
+-        throw new RuntimeException("Timed out waiting for " + description);
++        throw new RuntimeException(
++            String.format("Timed out waiting for %s after %d ms", description, timeout));
+       }
+       CommonUtils.sleepMs(interval);
+     }
+@@ -267,7 +268,8 @@
+     int timeout = options.getTimeout();
+     while ((t = operation.apply(null)) == null) {
+       if (timeout != WaitForOptions.NEVER && System.currentTimeMillis() - start > timeout) {
+-        throw new RuntimeException("Timed out waiting for " + description);
++        throw new RuntimeException(
++            String.format("Timed out waiting for %s after %d ms", description, timeout));
+       }
+       CommonUtils.sleepMs(interval);
+     }
+diff --git a/core/common/src/main/java/alluxio/util/CommonUtils.java b/core/common/src/main/java/alluxio/util/CommonUtils.java
+index b6ef4c9..b13e715 100644
+--- a/core/common/src/main/java/alluxio/util/CommonUtils.java
++++ b/core/common/src/main/java/alluxio/util/CommonUtils.java
+@@ -244,7 +244,8 @@
+     int timeout = options.getTimeout();
+     while (!condition.apply(null)) {
+       if (timeout != WaitForOptions.NEVER && System.currentTimeMillis() - start > timeout) {
+-        throw new RuntimeException("Timed out waiting for " + description);
++        throw new RuntimeException(
++            String.format("Timed out waiting for %s after %d ms", description, timeout));
+       }
+       CommonUtils.sleepMs(interval);
+     }
+@@ -267,7 +268,8 @@
+     int timeout = options.getTimeout();
+     while ((t = operation.apply(null)) == null) {
+       if (timeout != WaitForOptions.NEVER && System.currentTimeMillis() - start > timeout) {
+-        throw new RuntimeException("Timed out waiting for " + description);
++        throw new RuntimeException(
++            String.format("Timed out waiting for %s after %d ms", description, timeout));
+       }
+       CommonUtils.sleepMs(interval);
+     }

@@ -1,0 +1,56 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ArrayTypeStyleCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ArrayTypeStyleCheck.java
+index 49058b8..8e8aff3 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ArrayTypeStyleCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ArrayTypeStyleCheck.java
+@@ -62,10 +62,7 @@
+                 || (variableAST.getColumnNo() > aAST.getColumnNo());
+ 
+             if (isJavaStyle != mJavaStyle) {
+-                log(
+-                    aAST.getLineNo(),
+-                    aAST.getColumnNo(),
+-                    "Array brackets at illegal position.");
++                log(aAST.getLineNo(), aAST.getColumnNo(), "array.type.style");
+             }
+         }
+     }
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/design/HideUtilityClassConstructorCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/design/HideUtilityClassConstructorCheck.java
+index c3b08a1..d5d604c 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/design/HideUtilityClassConstructorCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/design/HideUtilityClassConstructorCheck.java
+@@ -31,7 +31,7 @@
+  * </p>
+  *
+  * @author lkuehne
+- * @version $Revision: 1.8 $
++ * @version $Revision: 1.9 $
+  */
+ public class HideUtilityClassConstructorCheck extends Check
+ {
+@@ -88,9 +88,7 @@
+         if (extendsJLO
+                 && hasMethod && !hasNonStaticMethod && hasAccessibleCtor)
+         {
+-            log(aAST.getLineNo(), aAST.getColumnNo(),
+-                "Utility classes should not have "
+-                + "a public or default constructor.");
++            log(aAST.getLineNo(), aAST.getColumnNo(), "hide.utility.class");
+         }
+     }
+ }
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ArrayTypeStyleCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ArrayTypeStyleCheck.java
+index 49058b8..8e8aff3 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ArrayTypeStyleCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/ArrayTypeStyleCheck.java
+@@ -62,10 +62,7 @@
+                 || (variableAST.getColumnNo() > aAST.getColumnNo());
+ 
+             if (isJavaStyle != mJavaStyle) {
+-                log(
+-                    aAST.getLineNo(),
+-                    aAST.getColumnNo(),
+-                    "Array brackets at illegal position.");
++                log(aAST.getLineNo(), aAST.getColumnNo(), "array.type.style");
+             }
+         }
+     }

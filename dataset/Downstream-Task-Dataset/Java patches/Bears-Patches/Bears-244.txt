@@ -1,0 +1,28 @@
+--- a/src/main/java/org/springframework/data/convert/ClassGeneratingEntityInstantiator.java
++++ b/src/main/java/org/springframework/data/convert/ClassGeneratingEntityInstantiator.java
+@@ -154,6 +154,10 @@ public class ClassGeneratingEntityInstantiator implements EntityInstantiator {
+ 			return true;
+ 		}
+ 
++		if (!ClassUtils.isPresent(ObjectInstantiator.class.getName(), type.getClassLoader())) {
++			return true;
++		}
++
+ 		return false;
+ 	}
+ 
+diff --git a/src/main/java/org/springframework/data/mapping/model/ClassGeneratingPropertyAccessorFactory.java b/src/main/java/org/springframework/data/mapping/model/ClassGeneratingPropertyAccessorFactory.java
+index 133f099..582047e 100644
+--- a/src/main/java/org/springframework/data/mapping/model/ClassGeneratingPropertyAccessorFactory.java
++++ b/src/main/java/org/springframework/data/mapping/model/ClassGeneratingPropertyAccessorFactory.java
+@@ -139,7 +140,9 @@ public class ClassGeneratingPropertyAccessorFactory implements PersistentPropert
+ 
+ 		Class<?> type = entity.getType();
+ 		return type.getClassLoader() != null
+-				&& (type.getPackage() == null || !type.getPackage().getName().startsWith("java"));
++				&& (type.getPackage() == null || !type.getPackage().getName().startsWith("java"))
++				&& ClassUtils.isPresent(PersistentPropertyAccessor.class.getName(), type.getClassLoader())
++				&& ClassUtils.isPresent(Assert.class.getName(), type.getClassLoader());
+ 	}
+ 
+ 	private boolean hasUniquePropertyHashCodes(PersistentEntity<?, ?> entity) {

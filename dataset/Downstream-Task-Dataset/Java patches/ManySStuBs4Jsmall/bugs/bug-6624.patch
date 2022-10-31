@@ -1,0 +1,26 @@
+diff --git a/flink-addons/flink-streaming/src/main/java/eu/stratosphere/streaming/api/streamcomponent/StreamWindowTask.java b/flink-addons/flink-streaming/src/main/java/eu/stratosphere/streaming/api/streamcomponent/StreamWindowTask.java
+index dc7b3a2..2d47a20 100644
+--- a/flink-addons/flink-streaming/src/main/java/eu/stratosphere/streaming/api/streamcomponent/StreamWindowTask.java
++++ b/flink-addons/flink-streaming/src/main/java/eu/stratosphere/streaming/api/streamcomponent/StreamWindowTask.java
+@@ -53,7 +53,7 @@
+ 
+ 	@Override
+ 	public void flatMap(Tuple value, Collector<Tuple> out) throws Exception {
+-		long progress = value.getField(windowFieldId);
++		long progress = (Long) value.getField(windowFieldId);
+ 		if (initTimestamp == -1) {
+ 			initTimestamp = progress;
+ 			nextTimestamp = initTimestamp + computeGranularity;
+diff --git a/flink-addons/flink-streaming/src/main/java/eu/stratosphere/streaming/api/streamcomponent/StreamWindowTask.java b/flink-addons/flink-streaming/src/main/java/eu/stratosphere/streaming/api/streamcomponent/StreamWindowTask.java
+index dc7b3a2..2d47a20 100644
+--- a/flink-addons/flink-streaming/src/main/java/eu/stratosphere/streaming/api/streamcomponent/StreamWindowTask.java
++++ b/flink-addons/flink-streaming/src/main/java/eu/stratosphere/streaming/api/streamcomponent/StreamWindowTask.java
+@@ -53,7 +53,7 @@
+ 
+ 	@Override
+ 	public void flatMap(Tuple value, Collector<Tuple> out) throws Exception {
+-		long progress = value.getField(windowFieldId);
++		long progress = (Long) value.getField(windowFieldId);
+ 		if (initTimestamp == -1) {
+ 			initTimestamp = progress;
+ 			nextTimestamp = initTimestamp + computeGranularity;

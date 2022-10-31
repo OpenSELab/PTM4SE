@@ -1,0 +1,116 @@
+diff --git a/core-client/src/main/java/org/glassfish/jersey/client/JerseyWebTarget.java b/core-client/src/main/java/org/glassfish/jersey/client/JerseyWebTarget.java
+index 60752ad..fc01cc4 100644
+--- a/core-client/src/main/java/org/glassfish/jersey/client/JerseyWebTarget.java
++++ b/core-client/src/main/java/org/glassfish/jersey/client/JerseyWebTarget.java
+@@ -69,7 +69,7 @@
+      * @param parent parent client.
+      */
+     /*package*/ JerseyWebTarget(String uri, JerseyClient parent) {
+-        this(UriBuilder.fromUri(uri), parent.getConfiguration().snapshot());
++        this(UriBuilder.fromUri(uri), parent.getConfiguration());
+     }
+ 
+ 
+@@ -80,7 +80,7 @@
+      * @param parent parent client.
+      */
+     /*package*/ JerseyWebTarget(URI uri, JerseyClient parent) {
+-        this(UriBuilder.fromUri(uri), parent.getConfiguration().snapshot());
++        this(UriBuilder.fromUri(uri), parent.getConfiguration());
+     }
+ 
+ 
+@@ -91,7 +91,7 @@
+      * @param parent     parent client.
+      */
+     /*package*/ JerseyWebTarget(UriBuilder uriBuilder, JerseyClient parent) {
+-        this(uriBuilder.clone(), parent.getConfiguration().snapshot());
++        this(uriBuilder.clone(), parent.getConfiguration());
+     }
+ 
+     /**
+@@ -102,7 +102,7 @@
+      */
+     /*package*/ JerseyWebTarget(Link link, JerseyClient parent) {
+         // TODO handle relative links
+-        this(UriBuilder.fromUri(link.getUri()), parent.getConfiguration().snapshot());
++        this(UriBuilder.fromUri(link.getUri()), parent.getConfiguration());
+     }
+ 
+     /**
+@@ -112,7 +112,7 @@
+      * @param that       original target to copy the internal data from.
+      */
+     protected JerseyWebTarget(UriBuilder uriBuilder, JerseyWebTarget that) {
+-        this(uriBuilder, that.config.snapshot());
++        this(uriBuilder, that.config);
+     }
+ 
+     /**
+@@ -125,7 +125,7 @@
+         clientConfig.checkClient();
+ 
+         this.targetUri = uriBuilder;
+-        this.config = clientConfig;
++        this.config = clientConfig.snapshot();
+     }
+ 
+     @Override
+diff --git a/core-client/src/main/java/org/glassfish/jersey/client/JerseyWebTarget.java b/core-client/src/main/java/org/glassfish/jersey/client/JerseyWebTarget.java
+index 60752ad..fc01cc4 100644
+--- a/core-client/src/main/java/org/glassfish/jersey/client/JerseyWebTarget.java
++++ b/core-client/src/main/java/org/glassfish/jersey/client/JerseyWebTarget.java
+@@ -69,7 +69,7 @@
+      * @param parent parent client.
+      */
+     /*package*/ JerseyWebTarget(String uri, JerseyClient parent) {
+-        this(UriBuilder.fromUri(uri), parent.getConfiguration().snapshot());
++        this(UriBuilder.fromUri(uri), parent.getConfiguration());
+     }
+ 
+ 
+@@ -80,7 +80,7 @@
+      * @param parent parent client.
+      */
+     /*package*/ JerseyWebTarget(URI uri, JerseyClient parent) {
+-        this(UriBuilder.fromUri(uri), parent.getConfiguration().snapshot());
++        this(UriBuilder.fromUri(uri), parent.getConfiguration());
+     }
+ 
+ 
+@@ -91,7 +91,7 @@
+      * @param parent     parent client.
+      */
+     /*package*/ JerseyWebTarget(UriBuilder uriBuilder, JerseyClient parent) {
+-        this(uriBuilder.clone(), parent.getConfiguration().snapshot());
++        this(uriBuilder.clone(), parent.getConfiguration());
+     }
+ 
+     /**
+@@ -102,7 +102,7 @@
+      */
+     /*package*/ JerseyWebTarget(Link link, JerseyClient parent) {
+         // TODO handle relative links
+-        this(UriBuilder.fromUri(link.getUri()), parent.getConfiguration().snapshot());
++        this(UriBuilder.fromUri(link.getUri()), parent.getConfiguration());
+     }
+ 
+     /**
+@@ -112,7 +112,7 @@
+      * @param that       original target to copy the internal data from.
+      */
+     protected JerseyWebTarget(UriBuilder uriBuilder, JerseyWebTarget that) {
+-        this(uriBuilder, that.config.snapshot());
++        this(uriBuilder, that.config);
+     }
+ 
+     /**
+@@ -125,7 +125,7 @@
+         clientConfig.checkClient();
+ 
+         this.targetUri = uriBuilder;
+-        this.config = clientConfig;
++        this.config = clientConfig.snapshot();
+     }
+ 
+     @Override

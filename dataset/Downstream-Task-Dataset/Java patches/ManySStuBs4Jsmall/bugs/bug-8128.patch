@@ -1,0 +1,26 @@
+diff --git a/storm-core/test/jvm/backtype/storm/utils/DisruptorQueueTest.java b/storm-core/test/jvm/backtype/storm/utils/DisruptorQueueTest.java
+index 281c19a..2ab0109 100644
+--- a/storm-core/test/jvm/backtype/storm/utils/DisruptorQueueTest.java
++++ b/storm-core/test/jvm/backtype/storm/utils/DisruptorQueueTest.java
+@@ -126,7 +126,7 @@
+ 
+         @Override
+         public void run() {
+-            for (long i = 0; i < _max; i++) {
++            for (long i = 0; i < _max && !(Thread.currentThread().isInterrupted()); i++) {
+                 queue.publish(i);
+             }
+         }
+diff --git a/storm-core/test/jvm/backtype/storm/utils/DisruptorQueueTest.java b/storm-core/test/jvm/backtype/storm/utils/DisruptorQueueTest.java
+index 281c19a..2ab0109 100644
+--- a/storm-core/test/jvm/backtype/storm/utils/DisruptorQueueTest.java
++++ b/storm-core/test/jvm/backtype/storm/utils/DisruptorQueueTest.java
+@@ -126,7 +126,7 @@
+ 
+         @Override
+         public void run() {
+-            for (long i = 0; i < _max; i++) {
++            for (long i = 0; i < _max && !(Thread.currentThread().isInterrupted()); i++) {
+                 queue.publish(i);
+             }
+         }

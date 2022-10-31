@@ -1,0 +1,26 @@
+diff --git a/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2Connection.java b/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2Connection.java
+index 9b86589..1261a59 100644
+--- a/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2Connection.java
++++ b/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2Connection.java
+@@ -1050,7 +1050,7 @@
+             }
+             if (state.localSideOpen() || state.remoteSideOpen()) {
+                 if (!canOpenStream()) {
+-                    throw connectionError(REFUSED_STREAM, "Maximum active streams violated for this endpoint.");
++                    throw streamError(streamId, REFUSED_STREAM, "Maximum active streams violated for this endpoint.");
+                 }
+             } else if (numStreams == maxStreams) {
+                 throw streamError(streamId, REFUSED_STREAM, "Maximum streams violated for this endpoint.");
+diff --git a/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2Connection.java b/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2Connection.java
+index 9b86589..1261a59 100644
+--- a/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2Connection.java
++++ b/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2Connection.java
+@@ -1050,7 +1050,7 @@
+             }
+             if (state.localSideOpen() || state.remoteSideOpen()) {
+                 if (!canOpenStream()) {
+-                    throw connectionError(REFUSED_STREAM, "Maximum active streams violated for this endpoint.");
++                    throw streamError(streamId, REFUSED_STREAM, "Maximum active streams violated for this endpoint.");
+                 }
+             } else if (numStreams == maxStreams) {
+                 throw streamError(streamId, REFUSED_STREAM, "Maximum streams violated for this endpoint.");

@@ -1,0 +1,127 @@
+--- a/src/main/java/spoon/reflect/annotations/MetamodelPropertyField.java
++++ b/src/main/java/spoon/reflect/annotations/MetamodelPropertyField.java
+@@ -33,5 +33,5 @@ import java.lang.annotation.Target;
+ @Retention(RetentionPolicy.RUNTIME)
+ @Target({ ElementType.FIELD })
+ public @interface MetamodelPropertyField {
+-	CtRole role();
++	CtRole[] role();
+ }
+--- a/src/main/java/spoon/reflect/code/CtCase.java
++++ b/src/main/java/spoon/reflect/code/CtCase.java
+@@ -40,13 +39,13 @@ public interface CtCase<S> extends CtStatement, CtStatementList {
+ 	/**
+ 	 * Gets the case expression.
+ 	 */
+-	@PropertyGetter(role = CASE)
++	@PropertyGetter(role = EXPRESSION)
+ 	CtExpression<S> getCaseExpression();
+ 
+ 	/**
+ 	 * Sets the case expression.
+ 	 */
+-	@PropertySetter(role = CASE)
++	@PropertySetter(role = EXPRESSION)
+ 	<T extends CtCase<S>> T setCaseExpression(CtExpression<S> caseExpression);
+ 
+ 	@Override
+--- a/src/main/java/spoon/reflect/code/CtCatch.java
++++ b/src/main/java/spoon/reflect/code/CtCatch.java
+@@ -46,7 +46,7 @@ public interface CtCatch extends CtCodeElement, CtBodyHolder {
+ 	 * Gets the catch's body.
+ 	 */
+ 	@Override
+-	@PropertySetter(role = BODY)
++	@PropertyGetter(role = BODY)
+ 	CtBlock<?> getBody();
+ 
+ 	@Override
+--- a/src/main/java/spoon/reflect/code/CtConstructorCall.java
++++ b/src/main/java/spoon/reflect/code/CtConstructorCall.java
+@@ -75,6 +75,6 @@ public interface CtConstructorCall<T> extends CtTargetedExpression<T, CtExpressi
+ 
+ 	@Override
+ 	@DerivedProperty
+-	@PropertySetter(role = TYPE)
++	@PropertyGetter(role = TYPE)
+ 	CtTypeReference<T> getType();
+ }
+--- a/src/main/java/spoon/reflect/code/CtNewClass.java
++++ b/src/main/java/spoon/reflect/code/CtNewClass.java
+@@ -77,13 +77,13 @@ public interface CtNewClass<T> extends CtConstructorCall<T> {
+ 	/**
+ 	 * Gets the created class.
+ 	 */
+-	@PropertyGetter(role = EXPRESSION)
++	@PropertyGetter(role = NESTED_TYPE)
+ 	CtClass<?> getAnonymousClass();
+ 
+ 	/**
+ 	 * Sets the created class.
+ 	 */
+-	@PropertySetter(role = EXPRESSION)
++	@PropertySetter(role = NESTED_TYPE)
+ 	<N extends CtNewClass> N setAnonymousClass(CtClass<?> anonymousClass);
+ 
+ 	@Override
+--- a/src/main/java/spoon/reflect/declaration/CtCodeSnippet.java
++++ b/src/main/java/spoon/reflect/declaration/CtCodeSnippet.java
+@@ -36,13 +36,13 @@ public interface CtCodeSnippet {
+ 	/**
+ 	 * Sets the textual value of the code.
+ 	 */
+-	@PropertyGetter(role = EXPRESSION)
++	@PropertySetter(role = EXPRESSION)
+ 	<C extends CtCodeSnippet> C setValue(String value);
+ 
+ 	/**
+ 	 * Gets the textual value of the code.
+ 	 */
+-	@PropertySetter(role = EXPRESSION)
++	@PropertyGetter(role = EXPRESSION)
+ 	String getValue();
+ 
+ }
+--- a/src/main/java/spoon/reflect/declaration/CtModifiable.java
++++ b/src/main/java/spoon/reflect/declaration/CtModifiable.java
+@@ -80,6 +81,6 @@ public interface CtModifiable extends CtElement {
+ 	/**
+ 	 * Gets the visibility of this modifiable element.
+ 	 */
+-	@PropertyGetter(role = MODIFIER)
++	@DerivedProperty
+ 	ModifierKind getVisibility();
+ }
+--- a/src/main/java/spoon/support/reflect/code/CtCaseImpl.java
++++ b/src/main/java/spoon/support/reflect/code/CtCaseImpl.java
+@@ -34,7 +34,7 @@ import static spoon.reflect.ModelElementContainerDefaultCapacities.CASE_STATEMEN
+ public class CtCaseImpl<E> extends CtStatementImpl implements CtCase<E> {
+ 	private static final long serialVersionUID = 1L;
+ 
+-	@MetamodelPropertyField(role = CtRole.CASE)
++	@MetamodelPropertyField(role = CtRole.EXPRESSION)
+ 	CtExpression<E> caseExpression;
+ 
+ 	@MetamodelPropertyField(role = CtRole.STATEMENT)
+--- a/src/main/java/spoon/support/reflect/code/CtNewClassImpl.java
++++ b/src/main/java/spoon/support/reflect/code/CtNewClassImpl.java
+@@ -25,7 +25,7 @@ import spoon.reflect.annotations.MetamodelPropertyField;
+ public class CtNewClassImpl<T> extends CtConstructorCallImpl<T> implements CtNewClass<T> {
+ 	private static final long serialVersionUID = 1L;
+ 
+-	@MetamodelPropertyField(role = CtRole.EXPRESSION)
++	@MetamodelPropertyField(role = CtRole.NESTED_TYPE)
+ 	CtClass<?> anonymousClass;
+ 
+ 	@Override
+--- a/src/main/java/spoon/support/reflect/declaration/CtTypeImpl.java
++++ b/src/main/java/spoon/support/reflect/declaration/CtTypeImpl.java
+@@ -82,7 +82,7 @@ public abstract class CtTypeImpl<T> extends CtNamedElementImpl implements CtType
+ 	@MetamodelPropertyField(role = CtRole.MODIFIER)
+ 	Set<ModifierKind> modifiers = emptySet();
+ 
+-	@MetamodelPropertyField(role = CtRole.FIELD)
++	@MetamodelPropertyField(role = {CtRole.FIELD, CtRole.EXECUTABLE, CtRole.NESTED_TYPE})
+ 	List<CtTypeMember> typeMembers = emptyList();
+ 
+ 	public CtTypeImpl() {

@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
+index c3e7a6b..a4d6409 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
+@@ -965,7 +965,7 @@
+             }
+             Optional<Symbol> ordinalitySymbol = node.getOrdinalitySymbol();
+             Optional<Type> ordinalityType = ordinalitySymbol.map(context.getTypes()::get);
+-            ordinalityType.ifPresent(type -> checkState(type == BigintType.BIGINT, "Type of ordinalitySymbol must always be BIGINT."));
++            ordinalityType.ifPresent(type -> checkState(type.equals(BigintType.BIGINT), "Type of ordinalitySymbol must always be BIGINT."));
+ 
+             List<Integer> replicateChannels = getChannelsForSymbols(node.getReplicateSymbols(), source.getLayout());
+             List<Integer> unnestChannels = getChannelsForSymbols(unnestSymbols, source.getLayout());
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
+index c3e7a6b..a4d6409 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
+@@ -965,7 +965,7 @@
+             }
+             Optional<Symbol> ordinalitySymbol = node.getOrdinalitySymbol();
+             Optional<Type> ordinalityType = ordinalitySymbol.map(context.getTypes()::get);
+-            ordinalityType.ifPresent(type -> checkState(type == BigintType.BIGINT, "Type of ordinalitySymbol must always be BIGINT."));
++            ordinalityType.ifPresent(type -> checkState(type.equals(BigintType.BIGINT), "Type of ordinalitySymbol must always be BIGINT."));
+ 
+             List<Integer> replicateChannels = getChannelsForSymbols(node.getReplicateSymbols(), source.getLayout());
+             List<Integer> unnestChannels = getChannelsForSymbols(unnestSymbols, source.getLayout());

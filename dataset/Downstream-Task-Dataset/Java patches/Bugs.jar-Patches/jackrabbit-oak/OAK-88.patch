@@ -1,0 +1,12 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/MissingLastRevSeeker.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/MissingLastRevSeeker.java
+index eef7c82..7659ec4 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/MissingLastRevSeeker.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/document/MissingLastRevSeeker.java
+@@ -94,6 +94,7 @@ public class MissingLastRevSeeker {
+     public void releaseRecoveryLock(int clusterId){
+         UpdateOp update = new UpdateOp(Integer.toString(clusterId), true);
+         update.set(ClusterNodeInfo.REV_RECOVERY_LOCK, null);
++        update.set(ClusterNodeInfo.STATE, null);
+         store.createOrUpdate(Collection.CLUSTER_NODES, update);
+     }
+ 

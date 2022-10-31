@@ -1,0 +1,38 @@
+diff --git a/guava/src/com/google/common/collect/Collections2.java b/guava/src/com/google/common/collect/Collections2.java
+index 5e661e1..ae8ae77 100644
+--- a/guava/src/com/google/common/collect/Collections2.java
++++ b/guava/src/com/google/common/collect/Collections2.java
+@@ -196,12 +196,12 @@
+ 
+     @Override
+     public boolean removeAll(final Collection<?> collection) {
+-      return Iterables.removeIf(unfiltered, and(predicate, in(collection)));
++      return Iterables.removeIf(unfiltered, and(predicate, Predicates.<Object>in(collection)));
+     }
+ 
+     @Override
+     public boolean retainAll(final Collection<?> collection) {
+-      return Iterables.removeIf(unfiltered, and(predicate, not(in(collection))));
++      return Iterables.removeIf(unfiltered, and(predicate, not(Predicates.<Object>in(collection))));
+     }
+ 
+     @Override
+diff --git a/guava/src/com/google/common/collect/Collections2.java b/guava/src/com/google/common/collect/Collections2.java
+index 5e661e1..ae8ae77 100644
+--- a/guava/src/com/google/common/collect/Collections2.java
++++ b/guava/src/com/google/common/collect/Collections2.java
+@@ -196,12 +196,12 @@
+ 
+     @Override
+     public boolean removeAll(final Collection<?> collection) {
+-      return Iterables.removeIf(unfiltered, and(predicate, in(collection)));
++      return Iterables.removeIf(unfiltered, and(predicate, Predicates.<Object>in(collection)));
+     }
+ 
+     @Override
+     public boolean retainAll(final Collection<?> collection) {
+-      return Iterables.removeIf(unfiltered, and(predicate, not(in(collection))));
++      return Iterables.removeIf(unfiltered, and(predicate, not(Predicates.<Object>in(collection))));
+     }
+ 
+     @Override

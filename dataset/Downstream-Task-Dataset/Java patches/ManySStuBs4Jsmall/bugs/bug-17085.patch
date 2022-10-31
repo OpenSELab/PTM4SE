@@ -1,0 +1,42 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java b/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
+index 7042397..c8bbee2 100644
+--- a/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
++++ b/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
+@@ -185,7 +185,7 @@
+ 
+ 	/** Returns true if the parent directories of the file can be created and the file can be written. */
+ 	private boolean canWrite (File file) {
+-		if (file.canWrite()) return true; // File exists and is writable.
++		if (file.canWrite() && file.canExecute()) return true; // File exists and is writable.
+ 		File parent = file.getParentFile();
+ 		parent.mkdirs();
+ 		if (!parent.isDirectory()) return false;
+diff --git a/tests/gdx-tests/src/com/badlogic/gdx/tests/UtfFontTest.java b/tests/gdx-tests/src/com/badlogic/gdx/tests/UtfFontTest.java
+index 6a440f3..5e7b14e 100644
+--- a/tests/gdx-tests/src/com/badlogic/gdx/tests/UtfFontTest.java
++++ b/tests/gdx-tests/src/com/badlogic/gdx/tests/UtfFontTest.java
+@@ -6,6 +6,11 @@
+ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+ import com.badlogic.gdx.tests.utils.GdxTest;
+ 
++/**
++ * See <a href="https://github.com/libgdx/libgdx/issues/1315">#1315</a>
++ * @author badlogic
++ *
++ */
+ public class UtfFontTest extends GdxTest {
+ 	BitmapFont font;
+ 	SpriteBatch batch;
+diff --git a/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java b/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
+index 7042397..c8bbee2 100644
+--- a/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
++++ b/gdx/src/com/badlogic/gdx/utils/SharedLibraryLoader.java
+@@ -185,7 +185,7 @@
+ 
+ 	/** Returns true if the parent directories of the file can be created and the file can be written. */
+ 	private boolean canWrite (File file) {
+-		if (file.canWrite()) return true; // File exists and is writable.
++		if (file.canWrite() && file.canExecute()) return true; // File exists and is writable.
+ 		File parent = file.getParentFile();
+ 		parent.mkdirs();
+ 		if (!parent.isDirectory()) return false;

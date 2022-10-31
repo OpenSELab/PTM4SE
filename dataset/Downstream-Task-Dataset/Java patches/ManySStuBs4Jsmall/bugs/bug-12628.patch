@@ -1,0 +1,206 @@
+diff --git a/presto-accumulo/src/main/java/com/facebook/presto/accumulo/index/IndexLookup.java b/presto-accumulo/src/main/java/com/facebook/presto/accumulo/index/IndexLookup.java
+index 213ec8c..ed6d59e 100644
+--- a/presto-accumulo/src/main/java/com/facebook/presto/accumulo/index/IndexLookup.java
++++ b/presto-accumulo/src/main/java/com/facebook/presto/accumulo/index/IndexLookup.java
+@@ -188,7 +188,7 @@
+                 }
+             }
+             else {
+-                LOG.warn("Query containts constraint on non-indexed column %s. Is it worth indexing?", columnConstraint.getName());
++                LOG.warn("Query contains constraint on non-indexed column %s. Is it worth indexing?", columnConstraint.getName());
+             }
+         }
+         return builder.build();
+diff --git a/presto-accumulo/src/test/java/com/facebook/presto/accumulo/TestAccumuloDistributedQueries.java b/presto-accumulo/src/test/java/com/facebook/presto/accumulo/TestAccumuloDistributedQueries.java
+index 96b8a4a..5f5fc6b 100644
+--- a/presto-accumulo/src/test/java/com/facebook/presto/accumulo/TestAccumuloDistributedQueries.java
++++ b/presto-accumulo/src/test/java/com/facebook/presto/accumulo/TestAccumuloDistributedQueries.java
+@@ -32,7 +32,7 @@
+  * For the lineitem and partsupp tables, there is no unique identifier,
+  * so a generated UUID is used in order to prevent overwriting rows of data.
+  * This is the same for any test cases that were creating tables with duplicate rows,
+- * so some test cases are overriden from the base class and slightly modified to add an additional UUID column.
++ * so some test cases are overridden from the base class and slightly modified to add an additional UUID column.
+  */
+ public class TestAccumuloDistributedQueries
+         extends AbstractTestDistributedQueries
+diff --git a/presto-main/src/test/java/com/facebook/presto/metadata/TestFunctionRegistry.java b/presto-main/src/test/java/com/facebook/presto/metadata/TestFunctionRegistry.java
+index 42042ad..cebb39d 100644
+--- a/presto-main/src/test/java/com/facebook/presto/metadata/TestFunctionRegistry.java
++++ b/presto-main/src/test/java/com/facebook/presto/metadata/TestFunctionRegistry.java
+@@ -275,7 +275,7 @@
+                 .forParameters("unknown", "bigint")
+                 .returns(functionSignature("bigint", "bigint"));
+ 
+-        // when coercion between the types doesn't exist, but the return type is the same, so the random function must be choosen
++        // when coercion between the types doesn't exist, but the return type is the same, so the random function must be chosen
+         assertThatResolveFunction()
+                 .among(
+                         functionSignature(ImmutableList.of("JoniRegExp"), "boolean"),
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestAnnotationEngineForAggregates.java b/presto-main/src/test/java/com/facebook/presto/operator/TestAnnotationEngineForAggregates.java
+index 225e306..8964d7d 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestAnnotationEngineForAggregates.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestAnnotationEngineForAggregates.java
+@@ -1072,7 +1072,7 @@
+     }
+ 
+     @AggregationFunction("fixed_type_parameter_injection")
+-    @Description("Simple aggregate with fixed paramter type injected")
++    @Description("Simple aggregate with fixed parameter type injected")
+     public static class FixedTypeParameterInjectionAggregateFunction
+     {
+         @InputFunction
+@@ -1116,7 +1116,7 @@
+                 false);
+ 
+         ParametricAggregation aggregation = parseFunctionDefinition(FixedTypeParameterInjectionAggregateFunction.class);
+-        assertEquals(aggregation.getDescription(), "Simple aggregate with fixed paramter type injected");
++        assertEquals(aggregation.getDescription(), "Simple aggregate with fixed parameter type injected");
+         assertTrue(aggregation.isDeterministic());
+         assertEquals(aggregation.getSignature(), expectedSignature);
+         ParametricImplementationsGroup<AggregationImplementation> implementations = aggregation.getImplementations();
+@@ -1132,7 +1132,7 @@
+     }
+ 
+     @AggregationFunction("partially_fixed_type_parameter_injection")
+-    @Description("Simple aggregate with fixed paramter type injected")
++    @Description("Simple aggregate with fixed parameter type injected")
+     public static class PartiallyFixedTypeParameterInjectionAggregateFunction
+     {
+         @InputFunction
+@@ -1182,7 +1182,7 @@
+                 false);
+ 
+         ParametricAggregation aggregation = parseFunctionDefinition(PartiallyFixedTypeParameterInjectionAggregateFunction.class);
+-        assertEquals(aggregation.getDescription(), "Simple aggregate with fixed paramter type injected");
++        assertEquals(aggregation.getDescription(), "Simple aggregate with fixed parameter type injected");
+         assertTrue(aggregation.isDeterministic());
+         assertEquals(aggregation.getSignature(), expectedSignature);
+         ParametricImplementationsGroup<AggregationImplementation> implementations = aggregation.getImplementations();
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/project/TestPageProcessor.java b/presto-main/src/test/java/com/facebook/presto/operator/project/TestPageProcessor.java
+index c0bb0847f..4dec128 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/project/TestPageProcessor.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/project/TestPageProcessor.java
+@@ -279,7 +279,7 @@
+             assertPageEquals(ImmutableList.of(VARCHAR, VARCHAR), actualPage, expectedPage);
+             pageCount++;
+ 
+-            // batch size will be further reduced to fit withing the bounds
++            // batch size will be further reduced to fit within the bounds
+             if (actualPage.getSizeInBytes() > MAX_PAGE_SIZE_IN_BYTES) {
+                 batchSize = batchSize / 2;
+             }
+diff --git a/presto-main/src/test/java/com/facebook/presto/sql/planner/TestDomainTranslator.java b/presto-main/src/test/java/com/facebook/presto/sql/planner/TestDomainTranslator.java
+index e4386bd..a12a71a 100644
+--- a/presto-main/src/test/java/com/facebook/presto/sql/planner/TestDomainTranslator.java
++++ b/presto-main/src/test/java/com/facebook/presto/sql/planner/TestDomainTranslator.java
+@@ -1068,7 +1068,7 @@
+     {
+         Type columnType = columnValues.getType();
+         Type literalType = literalValues.getType();
+-        Type superType = metadata.getTypeManager().getCommonSuperType(columnType, literalType).orElseThrow(() -> new IllegalArgumentException("uncompatible types in test (" + columnType + ", " + literalType + ")"));
++        Type superType = metadata.getTypeManager().getCommonSuperType(columnType, literalType).orElseThrow(() -> new IllegalArgumentException("incompatible types in test (" + columnType + ", " + literalType + ")"));
+ 
+         Expression max = toExpression(literalValues.getMax(), literalType);
+         Expression min = toExpression(literalValues.getMin(), literalType);
+diff --git a/presto-memory-context/src/main/java/com/facebook/presto/memory/context/MemoryTrackingContext.java b/presto-memory-context/src/main/java/com/facebook/presto/memory/context/MemoryTrackingContext.java
+index 6452bfb..3d9e756 100644
+--- a/presto-memory-context/src/main/java/com/facebook/presto/memory/context/MemoryTrackingContext.java
++++ b/presto-memory-context/src/main/java/com/facebook/presto/memory/context/MemoryTrackingContext.java
+@@ -81,19 +81,19 @@
+ 
+     public LocalMemoryContext localUserMemoryContext()
+     {
+-        verify(userLocalMemoryContext != null, "local memory contexts are not initalized");
++        verify(userLocalMemoryContext != null, "local memory contexts are not initialized");
+         return userLocalMemoryContext;
+     }
+ 
+     public LocalMemoryContext localSystemMemoryContext()
+     {
+-        verify(systemLocalMemoryContext != null, "local memory contexts are not initalized");
++        verify(systemLocalMemoryContext != null, "local memory contexts are not initialized");
+         return systemLocalMemoryContext;
+     }
+ 
+     public LocalMemoryContext localRevocableMemoryContext()
+     {
+-        verify(revocableLocalMemoryContext != null, "local memory contexts are not initalized");
++        verify(revocableLocalMemoryContext != null, "local memory contexts are not initialized");
+         return revocableLocalMemoryContext;
+     }
+ 
+@@ -141,7 +141,7 @@
+     }
+ 
+     /**
+-     * This method has to be called to initalize the local memory contexts. Otherwise, calls to methods
++     * This method has to be called to initialize the local memory contexts. Otherwise, calls to methods
+      * localUserMemoryContext(), localSystemMemoryContext(), etc. will fail.
+      */
+     public void initializeLocalMemoryContexts(String allocationTag)
+diff --git a/presto-mongodb/src/test/java/com/facebook/presto/mongodb/TestMongoPlugin.java b/presto-mongodb/src/test/java/com/facebook/presto/mongodb/TestMongoPlugin.java
+index b9d839c..ec49f59 100644
+--- a/presto-mongodb/src/test/java/com/facebook/presto/mongodb/TestMongoPlugin.java
++++ b/presto-mongodb/src/test/java/com/facebook/presto/mongodb/TestMongoPlugin.java
+@@ -59,7 +59,7 @@
+     }
+ 
+     @AfterClass(alwaysRun = true)
+-    public void destory()
++    public void destroy()
+     {
+         server.shutdown();
+     }
+diff --git a/presto-rcfile/src/main/java/com/facebook/presto/rcfile/RcFileReader.java b/presto-rcfile/src/main/java/com/facebook/presto/rcfile/RcFileReader.java
+index 4d06022..f20637b 100644
+--- a/presto-rcfile/src/main/java/com/facebook/presto/rcfile/RcFileReader.java
++++ b/presto-rcfile/src/main/java/com/facebook/presto/rcfile/RcFileReader.java
+@@ -223,7 +223,7 @@
+         syncSecond = input.readLong();
+         validateWrite(validation -> validation.getSyncSecond() == syncSecond, "Unexpected sync sequence");
+ 
+-        // seek to first sync point withing the specified region, unless the region starts at the beginning
++        // seek to first sync point within the specified region, unless the region starts at the beginning
+         // of the file.  In that case, the reader owns all row groups up to the first sync point.
+         if (offset != 0) {
+             // if the specified file region does not contain the start of a sync sequence, this call will close the reader
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+index d93bd3b..274f5c2 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+@@ -691,7 +691,7 @@
+                         "SELECT * FROM a",
+                 "VALUES (1.1, 2), (sin(3.3), 2+2)");
+ 
+-        // implicity coersions
++        // implicit coersions
+         assertQuery("VALUES 1, 2.2, 3, 4.4");
+         assertQuery("VALUES (1, 2), (3.3, 4.4)");
+         assertQuery("VALUES true, 1.0 in (1, 2, 3)");
+diff --git a/presto-tests/src/test/java/com/facebook/presto/tests/TestTpchLocalStats.java b/presto-tests/src/test/java/com/facebook/presto/tests/TestTpchLocalStats.java
+index f71f1f9..d28c01a 100644
+--- a/presto-tests/src/test/java/com/facebook/presto/tests/TestTpchLocalStats.java
++++ b/presto-tests/src/test/java/com/facebook/presto/tests/TestTpchLocalStats.java
+@@ -471,7 +471,7 @@
+                 checks -> checks.estimate(OUTPUT_ROW_COUNT, absoluteError(45, 45)));
+ 
+         statisticsAssertion.check("SELECT * FROM orders WHERE o_custkey < 900 EXCEPT SELECT * FROM orders WHERE o_custkey > 600",
+-                // TODO fix EXCEPT stats calculation as custkey values distirbution is pretty linear
++                // TODO fix EXCEPT stats calculation as custkey values distribution is pretty linear
+                 checks -> checks
+                         .estimate(OUTPUT_ROW_COUNT, relativeError(1.5, 2))
+                         .estimate(distinctValuesCount("o_orderkey"), relativeError(0.5, 1))
+diff --git a/presto-accumulo/src/main/java/com/facebook/presto/accumulo/index/IndexLookup.java b/presto-accumulo/src/main/java/com/facebook/presto/accumulo/index/IndexLookup.java
+index 213ec8c..ed6d59e 100644
+--- a/presto-accumulo/src/main/java/com/facebook/presto/accumulo/index/IndexLookup.java
++++ b/presto-accumulo/src/main/java/com/facebook/presto/accumulo/index/IndexLookup.java
+@@ -188,7 +188,7 @@
+                 }
+             }
+             else {
+-                LOG.warn("Query containts constraint on non-indexed column %s. Is it worth indexing?", columnConstraint.getName());
++                LOG.warn("Query contains constraint on non-indexed column %s. Is it worth indexing?", columnConstraint.getName());
+             }
+         }
+         return builder.build();

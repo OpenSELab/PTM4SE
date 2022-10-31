@@ -1,0 +1,39 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index c5f0282..abb3079 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -1654,7 +1654,7 @@
+         req.setAttribute(PROPERTY_USE_STREAM, useStreamForFlushingComments);
+         req.setAttribute(BROADCASTER_CLASS, broadcasterClassName);
+         req.setAttribute(ATMOSPHERE_CONFIG, config);
+-        req.setAttribute(FrameworkConfig.THROW_EXCEPTION_ON_CLONED_REQUEST, config.isThrowExceptionOnCloned());
++        req.setAttribute(FrameworkConfig.THROW_EXCEPTION_ON_CLONED_REQUEST, ""+config.isThrowExceptionOnCloned());
+         boolean skip = true;
+         String s = config.getInitParameter(ALLOW_QUERYSTRING_AS_REQUEST);
+         if (s != null) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index 78442fe..734c279 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -1526,7 +1526,7 @@
+ 
+         if (loadInMemory) {
+             String s = (String) request.getAttribute(FrameworkConfig.THROW_EXCEPTION_ON_CLONED_REQUEST);
+-            boolean throwException = s == null ? false : Boolean.parseBoolean(s);
++            boolean throwException = s != null && Boolean.parseBoolean(s);
+             r = new NoOpsRequest(throwException);
+             if (isWrapped) {
+                 load(b.request, b);
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index c5f0282..abb3079 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -1654,7 +1654,7 @@
+         req.setAttribute(PROPERTY_USE_STREAM, useStreamForFlushingComments);
+         req.setAttribute(BROADCASTER_CLASS, broadcasterClassName);
+         req.setAttribute(ATMOSPHERE_CONFIG, config);
+-        req.setAttribute(FrameworkConfig.THROW_EXCEPTION_ON_CLONED_REQUEST, config.isThrowExceptionOnCloned());
++        req.setAttribute(FrameworkConfig.THROW_EXCEPTION_ON_CLONED_REQUEST, ""+config.isThrowExceptionOnCloned());
+         boolean skip = true;
+         String s = config.getInitParameter(ALLOW_QUERYSTRING_AS_REQUEST);
+         if (s != null) {

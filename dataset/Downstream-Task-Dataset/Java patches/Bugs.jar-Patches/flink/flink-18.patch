@@ -1,0 +1,38 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestClientHandler.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestClientHandler.java
+index fef21ce..12ed140 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestClientHandler.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/netty/PartitionRequestClientHandler.java
+@@ -133,7 +133,10 @@ class PartitionRequestClientHandler extends ChannelInboundHandlerAdapter {
+ 			}
+ 
+ 			inputChannels.clear();
+-			ctx.close();
++
++			if (ctx != null) {
++				ctx.close();
++			}
+ 		}
+ 	}
+ 
+@@ -187,6 +190,13 @@ class PartitionRequestClientHandler extends ChannelInboundHandlerAdapter {
+ 		try {
+ 			if (bufferOrEvent.isBuffer()) {
+ 				// ---- Buffer ------------------------------------------------
++
++				// Early return for empty buffers. Otherwise Netty's readBytes() throws an
++				// IndexOutOfBoundsException.
++				if (bufferOrEvent.getSize() == 0) {
++					return true;
++				}
++
+ 				BufferProvider bufferProvider = inputChannel.getBufferProvider();
+ 
+ 				if (bufferProvider == null) {
+@@ -216,7 +226,6 @@ class PartitionRequestClientHandler extends ChannelInboundHandlerAdapter {
+ 			}
+ 			else {
+ 				// ---- Event -------------------------------------------------
+-
+ 				// TODO We can just keep the serialized data in the Netty buffer and release it later at the reader
+ 				byte[] byteArray = new byte[bufferOrEvent.getSize()];
+ 				bufferOrEvent.getNettyBuffer().readBytes(byteArray);

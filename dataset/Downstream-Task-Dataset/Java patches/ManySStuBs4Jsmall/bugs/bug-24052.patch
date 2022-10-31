@@ -1,0 +1,32 @@
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/component/ArrayKey.java b/ejb3/src/main/java/org/jboss/as/ejb3/component/ArrayKey.java
+index 43faf0f..31442a8 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/component/ArrayKey.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/component/ArrayKey.java
+@@ -40,9 +40,9 @@
+ 
+     @Override
+     public boolean equals(Object obj) {
+-        if (!obj.getClass().isArray())
++        if (!(obj instanceof ArrayKey))
+             return false;
+-        return Arrays.equals(a, (Object[]) obj);
++        return Arrays.equals(a, ((ArrayKey) obj).a);
+     }
+ 
+     @Override
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/component/ArrayKey.java b/ejb3/src/main/java/org/jboss/as/ejb3/component/ArrayKey.java
+index 43faf0f..31442a8 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/component/ArrayKey.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/component/ArrayKey.java
+@@ -40,9 +40,9 @@
+ 
+     @Override
+     public boolean equals(Object obj) {
+-        if (!obj.getClass().isArray())
++        if (!(obj instanceof ArrayKey))
+             return false;
+-        return Arrays.equals(a, (Object[]) obj);
++        return Arrays.equals(a, ((ArrayKey) obj).a);
+     }
+ 
+     @Override

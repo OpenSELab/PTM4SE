@@ -1,0 +1,63 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/PropertyDerivations.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/PropertyDerivations.java
+index 73b1726..1953482 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/PropertyDerivations.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/PropertyDerivations.java
+@@ -187,7 +187,7 @@
+         @Override
+         public ActualProperties visitApply(ApplyNode node, List<ActualProperties> inputProperties)
+         {
+-            return inputProperties.get(0); // apply node input (outer query)
++            throw new IllegalArgumentException("Unexpected node: " + node.getClass().getName());
+         }
+ 
+         @Override
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/StreamPropertyDerivations.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/StreamPropertyDerivations.java
+index ba6d142..e85b10d 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/StreamPropertyDerivations.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/StreamPropertyDerivations.java
+@@ -494,7 +494,7 @@
+         @Override
+         public StreamProperties visitApply(ApplyNode node, List<StreamProperties> inputProperties)
+         {
+-            return inputProperties.get(0);
++            throw new IllegalStateException("Unexpected node: " + node.getClass());
+         }
+ 
+         @Override
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+index 8564c86..1d6eb4c 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+@@ -7161,7 +7161,7 @@
+     @Test
+     public void testCorrelatedInPredicateSubqueries()
+     {
+-        String errorMsg = "Unsupported correlated subquery type";
++        String errorMsg = "Unexpected node: com.facebook.presto.sql.planner.plan.ApplyNode";
+ 
+         assertQuery("SELECT orderkey, clerk IN (SELECT clerk FROM orders s WHERE s.custkey = o.custkey AND s.orderkey < o.orderkey) FROM orders o");
+         assertQuery("SELECT orderkey FROM orders o WHERE clerk IN (SELECT clerk FROM orders s WHERE s.custkey = o.custkey AND s.orderkey < o.orderkey)");
+@@ -7193,7 +7193,9 @@
+         assertQueryFails("SELECT * FROM lineitem l1 JOIN lineitem l2 ON l1.orderkey IN (SELECT l2.orderkey)", errorMsg);
+ 
+         // subrelation
+-        assertQueryFails("SELECT * FROM lineitem l WHERE (SELECT * FROM (SELECT 1 IN (SELECT 2 * l.orderkey)))", errorMsg);
++        assertQueryFails(
++                "SELECT * FROM lineitem l WHERE (SELECT * FROM (SELECT 1 IN (SELECT 2 * l.orderkey)))",
++                "Unexpected node: com.facebook.presto.sql.planner.plan.LateralJoinNode");
+ 
+         // two level of nesting
+         assertQueryFails("SELECT * FROM lineitem l WHERE true IN (SELECT 1 IN (SELECT 2 * l.orderkey))", errorMsg);
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/PropertyDerivations.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/PropertyDerivations.java
+index 73b1726..1953482 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/PropertyDerivations.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/optimizations/PropertyDerivations.java
+@@ -187,7 +187,7 @@
+         @Override
+         public ActualProperties visitApply(ApplyNode node, List<ActualProperties> inputProperties)
+         {
+-            return inputProperties.get(0); // apply node input (outer query)
++            throw new IllegalArgumentException("Unexpected node: " + node.getClass().getName());
+         }
+ 
+         @Override

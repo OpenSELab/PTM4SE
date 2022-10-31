@@ -1,0 +1,26 @@
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/data/impl/MybatisJobDataManager.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/data/impl/MybatisJobDataManager.java
+index bd2bdab..ab4a17d 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/data/impl/MybatisJobDataManager.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/data/impl/MybatisJobDataManager.java
+@@ -198,7 +198,7 @@
+     Map<String, Object> params = new HashMap<String, Object>(2);
+     params.put("id", jobId);
+     params.put("dueDate", new Date(getProcessEngineConfiguration().getClock().getCurrentTime().getTime()));
+-    getDbSqlSession().update("unlockJob", params);
++    getDbSqlSession().update("unacquireJob", params);
+   }
+   
+ }
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/data/impl/MybatisJobDataManager.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/data/impl/MybatisJobDataManager.java
+index bd2bdab..ab4a17d 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/data/impl/MybatisJobDataManager.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/persistence/entity/data/impl/MybatisJobDataManager.java
+@@ -198,7 +198,7 @@
+     Map<String, Object> params = new HashMap<String, Object>(2);
+     params.put("id", jobId);
+     params.put("dueDate", new Date(getProcessEngineConfiguration().getClock().getCurrentTime().getTime()));
+-    getDbSqlSession().update("unlockJob", params);
++    getDbSqlSession().update("unacquireJob", params);
+   }
+   
+ }

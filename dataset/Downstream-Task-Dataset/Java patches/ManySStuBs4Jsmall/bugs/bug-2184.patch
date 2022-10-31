@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cache/BroadcasterCacheBase.java b/modules/cpr/src/main/java/org/atmosphere/cache/BroadcasterCacheBase.java
+index d825b69..fcd81ed 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cache/BroadcasterCacheBase.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cache/BroadcasterCacheBase.java
+@@ -175,7 +175,7 @@
+ 
+         CachedMessage cm = retrieveLastMessage(r);
+         boolean isNew = false;
+-        if (cm == null && r.getRequest().getAttribute(AtmosphereResourceImpl.PRE_SUSPEND) != null) {
++        if (cm == null && AtmosphereResourceImpl.class.cast(r).isInScope() && r.getRequest().getAttribute(AtmosphereResourceImpl.PRE_SUSPEND) != null) {
+             isNew = true;
+         }
+ 
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cache/BroadcasterCacheBase.java b/modules/cpr/src/main/java/org/atmosphere/cache/BroadcasterCacheBase.java
+index d825b69..fcd81ed 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cache/BroadcasterCacheBase.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cache/BroadcasterCacheBase.java
+@@ -175,7 +175,7 @@
+ 
+         CachedMessage cm = retrieveLastMessage(r);
+         boolean isNew = false;
+-        if (cm == null && r.getRequest().getAttribute(AtmosphereResourceImpl.PRE_SUSPEND) != null) {
++        if (cm == null && AtmosphereResourceImpl.class.cast(r).isInScope() && r.getRequest().getAttribute(AtmosphereResourceImpl.PRE_SUSPEND) != null) {
+             isNew = true;
+         }
+ 

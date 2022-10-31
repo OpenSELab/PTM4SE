@@ -1,0 +1,80 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/interceptor/JSONPAtmosphereInterceptor.java b/modules/cpr/src/main/java/org/atmosphere/interceptor/JSONPAtmosphereInterceptor.java
+index 93a418c..14f6855 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/interceptor/JSONPAtmosphereInterceptor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/interceptor/JSONPAtmosphereInterceptor.java
+@@ -75,9 +75,9 @@
+                 public AsyncIOWriter write(String data) throws IOException {
+                     String callbackName = callbackName();
+                     if (!data.startsWith("\"")) {
+-                        data = callbackName + "({\"message\" : \"" + data + "\"})";
++                        data = callbackName + "({\"message\" : \"" + data + "\"});";
+                     } else {
+-                        data = callbackName + "({\"message\" :" + data + "})";
++                        data = callbackName + "({\"message\" :" + data + "});";
+                     }
+ 
+                     response.write(data);
+@@ -90,9 +90,9 @@
+                     String callbackName = callbackName();
+ 
+                     if (contentType != null && !contentType.contains("json")) {
+-                        response.write(callbackName + "({\"message\" : \"").write(data).write("\"})");
++                        response.write(callbackName + "({\"message\" : \"").write(data).write("\"});");
+                     } else {
+-                        response.write(callbackName + "({\"message\" :").write(data).write("})");
++                        response.write(callbackName + "({\"message\" :").write(data).write("});");
+                     }
+                     return this;
+                 }
+@@ -103,9 +103,9 @@
+                     String callbackName = callbackName();
+ 
+                     if (contentType != null && !contentType.contains("json")) {
+-                        response.write(callbackName + "({\"message\" : \"").write(data, offset, length).write("\"})");
++                        response.write(callbackName + "({\"message\" : \"").write(data, offset, length).write("\"});");
+                     } else {
+-                        response.write(callbackName + "({\"message\" :").write(data, offset, length).write("})");
++                        response.write(callbackName + "({\"message\" :").write(data, offset, length).write("});");
+                     }
+                     return this;
+                 }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/interceptor/JSONPAtmosphereInterceptor.java b/modules/cpr/src/main/java/org/atmosphere/interceptor/JSONPAtmosphereInterceptor.java
+index 93a418c..14f6855 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/interceptor/JSONPAtmosphereInterceptor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/interceptor/JSONPAtmosphereInterceptor.java
+@@ -75,9 +75,9 @@
+                 public AsyncIOWriter write(String data) throws IOException {
+                     String callbackName = callbackName();
+                     if (!data.startsWith("\"")) {
+-                        data = callbackName + "({\"message\" : \"" + data + "\"})";
++                        data = callbackName + "({\"message\" : \"" + data + "\"});";
+                     } else {
+-                        data = callbackName + "({\"message\" :" + data + "})";
++                        data = callbackName + "({\"message\" :" + data + "});";
+                     }
+ 
+                     response.write(data);
+@@ -90,9 +90,9 @@
+                     String callbackName = callbackName();
+ 
+                     if (contentType != null && !contentType.contains("json")) {
+-                        response.write(callbackName + "({\"message\" : \"").write(data).write("\"})");
++                        response.write(callbackName + "({\"message\" : \"").write(data).write("\"});");
+                     } else {
+-                        response.write(callbackName + "({\"message\" :").write(data).write("})");
++                        response.write(callbackName + "({\"message\" :").write(data).write("});");
+                     }
+                     return this;
+                 }
+@@ -103,9 +103,9 @@
+                     String callbackName = callbackName();
+ 
+                     if (contentType != null && !contentType.contains("json")) {
+-                        response.write(callbackName + "({\"message\" : \"").write(data, offset, length).write("\"})");
++                        response.write(callbackName + "({\"message\" : \"").write(data, offset, length).write("\"});");
+                     } else {
+-                        response.write(callbackName + "({\"message\" :").write(data, offset, length).write("})");
++                        response.write(callbackName + "({\"message\" :").write(data, offset, length).write("});");
+                     }
+                     return this;
+                 }

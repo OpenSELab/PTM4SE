@@ -1,0 +1,13 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
+index 08faca3..fe765fb 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
+@@ -407,7 +407,7 @@
+ 
+         return () -> {
+             try {
+-                return functionClass.newInstance();
++                return functionClass.getConstructor().newInstance();
+             }
+             catch (ReflectiveOperationException e) {
+                 throw new PrestoException(COMPILER_ERROR, e);

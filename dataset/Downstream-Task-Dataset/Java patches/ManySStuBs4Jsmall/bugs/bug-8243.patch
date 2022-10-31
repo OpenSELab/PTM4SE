@@ -1,0 +1,34 @@
+diff --git a/aws-java-sdk-dynamodb/src/main/java/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBReflector.java b/aws-java-sdk-dynamodb/src/main/java/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBReflector.java
+index 5b6913e..75a2838 100644
+--- a/aws-java-sdk-dynamodb/src/main/java/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBReflector.java
++++ b/aws-java-sdk-dynamodb/src/main/java/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBReflector.java
+@@ -265,10 +265,10 @@
+                     setter = getter.getDeclaringClass().getMethod(setterName, getter.getReturnType());
+                 } catch ( NoSuchMethodException e ) {
+                     throw new DynamoDBMappingException("Expected a public, one-argument method called " + setterName
+-                            + " on class " + getter.getDeclaringClass(), e);
++                            + " on " + getter.getDeclaringClass(), e);
+                 } catch ( SecurityException e ) {
+                     throw new DynamoDBMappingException("No access to public, one-argument method called " + setterName
+-                            + " on class " + getter.getDeclaringClass(), e);
++                            + " on " + getter.getDeclaringClass(), e);
+                 }
+                 setterCache.put(getter, setter);
+             }
+diff --git a/aws-java-sdk-dynamodb/src/main/java/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBReflector.java b/aws-java-sdk-dynamodb/src/main/java/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBReflector.java
+index 5b6913e..75a2838 100644
+--- a/aws-java-sdk-dynamodb/src/main/java/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBReflector.java
++++ b/aws-java-sdk-dynamodb/src/main/java/com/amazonaws/services/dynamodbv2/datamodeling/DynamoDBReflector.java
+@@ -265,10 +265,10 @@
+                     setter = getter.getDeclaringClass().getMethod(setterName, getter.getReturnType());
+                 } catch ( NoSuchMethodException e ) {
+                     throw new DynamoDBMappingException("Expected a public, one-argument method called " + setterName
+-                            + " on class " + getter.getDeclaringClass(), e);
++                            + " on " + getter.getDeclaringClass(), e);
+                 } catch ( SecurityException e ) {
+                     throw new DynamoDBMappingException("No access to public, one-argument method called " + setterName
+-                            + " on class " + getter.getDeclaringClass(), e);
++                            + " on " + getter.getDeclaringClass(), e);
+                 }
+                 setterCache.put(getter, setter);
+             }

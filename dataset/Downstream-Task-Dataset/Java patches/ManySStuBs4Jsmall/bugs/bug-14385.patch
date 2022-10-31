@@ -1,0 +1,13 @@
+diff --git a/lib/rhino/src/org/mozilla/javascript/NativeJSON.java b/lib/rhino/src/org/mozilla/javascript/NativeJSON.java
+index 1337d91..b342ca7 100644
+--- a/lib/rhino/src/org/mozilla/javascript/NativeJSON.java
++++ b/lib/rhino/src/org/mozilla/javascript/NativeJSON.java
+@@ -307,7 +307,7 @@
+ 
+         if (value instanceof Number) {
+             double d = ((Number) value).doubleValue();
+-            if (d == d && d != Double.POSITIVE_INFINITY &&
++            if (!Double.isNaN(d) && d != Double.POSITIVE_INFINITY &&
+                 d != Double.NEGATIVE_INFINITY)
+             {
+                 return ScriptRuntime.toString(value);

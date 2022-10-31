@@ -1,0 +1,19 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java b/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
+index 30293fb..55e3184 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
++++ b/wicket-core/src/main/java/org/apache/wicket/MarkupContainer.java
+@@ -2178,9 +2178,13 @@ public abstract class MarkupContainer extends Component implements Iterable<Comp
+ 			{
+ 				return DequeueTagAction.SKIP;
+ 			}
++			else if (wicketTag.isChildTag())
++			{
++				return DequeueTagAction.DEQUEUE;
++			}
+ 			else
+ 			{
+-				return null; // dont know
++				return null; // don't know
+ 			}
+ 		}
+ 		return DequeueTagAction.DEQUEUE;

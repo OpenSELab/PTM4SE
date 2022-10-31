@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java b/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
+index 56e6907..c3fd667 100644
+--- a/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
++++ b/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
+@@ -956,7 +956,7 @@
+     synchronized (this.regionPlans) {
+       existingPlan = this.regionPlans.get(encodedName);
+       if (existingPlan == null || forceNewPlan ||
+-          existingPlan.getDestination().equals(serverToExclude)) {
++          (existingPlan != null && existingPlan.getDestination().equals(serverToExclude))) {
+         newPlan = true;
+         this.regionPlans.put(encodedName, randomPlan);
+       }
+diff --git a/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java b/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
+index 56e6907..c3fd667 100644
+--- a/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
++++ b/src/main/java/org/apache/hadoop/hbase/master/AssignmentManager.java
+@@ -956,7 +956,7 @@
+     synchronized (this.regionPlans) {
+       existingPlan = this.regionPlans.get(encodedName);
+       if (existingPlan == null || forceNewPlan ||
+-          existingPlan.getDestination().equals(serverToExclude)) {
++          (existingPlan != null && existingPlan.getDestination().equals(serverToExclude))) {
+         newPlan = true;
+         this.regionPlans.put(encodedName, randomPlan);
+       }

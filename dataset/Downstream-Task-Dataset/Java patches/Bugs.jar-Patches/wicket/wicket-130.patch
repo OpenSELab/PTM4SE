@@ -1,0 +1,29 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/model/StringResourceModel.java b/wicket-core/src/main/java/org/apache/wicket/model/StringResourceModel.java
+index fe74c2f..573a162 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/model/StringResourceModel.java
++++ b/wicket-core/src/main/java/org/apache/wicket/model/StringResourceModel.java
+@@ -233,6 +233,15 @@ public class StringResourceModel extends LoadableDetachableModel<String>
+ 		}
+ 
+ 		@Override
++		protected void onDetach()
++		{
++			if (StringResourceModel.this.component == null)
++			{
++				StringResourceModel.this.onDetach();
++			}
++		}
++
++		@Override
+ 		protected String load()
+ 		{
+ 			if (StringResourceModel.this.component != null)
+@@ -582,6 +591,8 @@ public class StringResourceModel extends LoadableDetachableModel<String>
+ 	@Override
+ 	protected final void onDetach()
+ 	{
++		super.onDetach();
++
+ 		// detach any model
+ 		if (model != null)
+ 		{

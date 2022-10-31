@@ -1,0 +1,39 @@
+diff --git a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSOutputStream.java b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSOutputStream.java
+index 283c9c6..5e94192 100644
+--- a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSOutputStream.java
++++ b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSOutputStream.java
+@@ -120,7 +120,7 @@
+       obj.setBucketName(mBucketName);
+       obj.setDataInputFile(mFile);
+       obj.setContentLength(mFile.length());
+-      obj.setContentEncoding(Mimetypes.MIMETYPE_BINARY_OCTET_STREAM);
++      obj.setContentType(Mimetypes.MIMETYPE_BINARY_OCTET_STREAM);
+       if (mHash != null) {
+         obj.setMd5Hash(mHash.digest());
+       } else {
+diff --git a/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AOutputStream.java b/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AOutputStream.java
+index 72fa3fa..f1cff5b 100644
+--- a/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AOutputStream.java
++++ b/underfs/s3a/src/main/java/alluxio/underfs/s3a/S3AOutputStream.java
+@@ -142,7 +142,7 @@
+         meta.setContentMD5(new String(Base64.encode(mHash.digest())));
+       }
+       meta.setContentLength(mFile.length());
+-      meta.setContentEncoding(Mimetypes.MIMETYPE_OCTET_STREAM);
++      meta.setContentType(Mimetypes.MIMETYPE_OCTET_STREAM);
+ 
+       // Generate the put request and wait for the transfer manager to complete the upload, then
+       // delete the temporary file on the local machine
+diff --git a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSOutputStream.java b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSOutputStream.java
+index 283c9c6..5e94192 100644
+--- a/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSOutputStream.java
++++ b/underfs/gcs/src/main/java/alluxio/underfs/gcs/GCSOutputStream.java
+@@ -120,7 +120,7 @@
+       obj.setBucketName(mBucketName);
+       obj.setDataInputFile(mFile);
+       obj.setContentLength(mFile.length());
+-      obj.setContentEncoding(Mimetypes.MIMETYPE_BINARY_OCTET_STREAM);
++      obj.setContentType(Mimetypes.MIMETYPE_BINARY_OCTET_STREAM);
+       if (mHash != null) {
+         obj.setMd5Hash(mHash.digest());
+       } else {

@@ -1,0 +1,24 @@
+diff --git a/spring-boot-samples/spring-boot-sample-reactive-oauth2-client/src/test/java/sample/oauth2/client/SampleReactiveOAuth2ClientApplicationTests.java b/spring-boot-samples/spring-boot-sample-reactive-oauth2-client/src/test/java/sample/oauth2/client/SampleReactiveOAuth2ClientApplicationTests.java
+index 66fce8a..506f3d0 100644
+--- a/spring-boot-samples/spring-boot-sample-reactive-oauth2-client/src/test/java/sample/oauth2/client/SampleReactiveOAuth2ClientApplicationTests.java
++++ b/spring-boot-samples/spring-boot-sample-reactive-oauth2-client/src/test/java/sample/oauth2/client/SampleReactiveOAuth2ClientApplicationTests.java
+@@ -29,8 +29,8 @@
+ @RunWith(SpringRunner.class)
+ @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
+ 		"APP-CLIENT-ID=my-client-id", "APP-CLIENT-SECRET=my-client-secret",
+-		"GOOGLE-CLIENT-ID=my-google-client-id",
+-		"GOOGLE-CLIENT-SECRET=my-google-client-secret" })
++		"YAHOO-CLIENT-ID=my-google-client-id",
++		"YAHOO-CLIENT-SECRET=my-google-client-secret" })
+ public class SampleReactiveOAuth2ClientApplicationTests {
+ 
+ 	@Autowired
+@@ -47,7 +47,7 @@
+ 		byte[] body = this.webTestClient.get().uri("/login").exchange().expectStatus()
+ 				.isOk().returnResult(String.class).getResponseBodyContent();
+ 		String bodyString = new String(body);
+-		assertThat(bodyString).contains("/oauth2/authorization/google");
++		assertThat(bodyString).contains("/oauth2/authorization/yahoo");
+ 		assertThat(bodyString).contains("/oauth2/authorization/github-client-1");
+ 		assertThat(bodyString).contains("/oauth2/authorization/github-client-2");
+ 	}

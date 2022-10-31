@@ -1,0 +1,24 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/ProducerCache.java b/camel-core/src/main/java/org/apache/camel/impl/ProducerCache.java
+index 6b292c0..b35eca5 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/ProducerCache.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/ProducerCache.java
+@@ -30,6 +30,7 @@ import org.apache.camel.Processor;
+ import org.apache.camel.Producer;
+ import org.apache.camel.ProducerCallback;
+ import org.apache.camel.ServicePoolAware;
++import org.apache.camel.ShutdownableService;
+ import org.apache.camel.processor.UnitOfWorkProducer;
+ import org.apache.camel.spi.ServicePool;
+ import org.apache.camel.support.ServiceSupport;
+@@ -137,6 +138,11 @@ public class ProducerCache extends ServiceSupport {
+         } else if (!producer.isSingleton()) {
+             // stop non singleton producers as we should not leak resources
+             producer.stop();
++
++            // shutdown as well in case the producer is shutdownable
++            if (producer instanceof ShutdownableService) {
++                ShutdownableService.class.cast(producer).shutdown();
++            }
+         }
+     }
+ 

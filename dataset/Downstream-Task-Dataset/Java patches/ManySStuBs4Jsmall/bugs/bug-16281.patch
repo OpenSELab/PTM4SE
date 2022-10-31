@@ -1,0 +1,39 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ExecutorServiceProxy.java b/hazelcast/src/main/java/com/hazelcast/impl/ExecutorServiceProxy.java
+index d4e7458..da6b1d7 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ExecutorServiceProxy.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ExecutorServiceProxy.java
+@@ -64,7 +64,7 @@
+         return false;
+     }
+ 
+-    public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException {
++    public <T> List<Future<T>> invokeAll(Collection<Callable<T>> tasks) throws InterruptedException {
+     	// Inspired to JDK7
+     	if (tasks == null)
+     		throw new NullPointerException();
+diff --git a/hazelcast/src/test/java/com/hazelcast/core/ExecutorServiceTest.java b/hazelcast/src/test/java/com/hazelcast/core/ExecutorServiceTest.java
+index 7e3ac21..9678ad7 100644
+--- a/hazelcast/src/test/java/com/hazelcast/core/ExecutorServiceTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/core/ExecutorServiceTest.java
+@@ -152,7 +152,7 @@
+         assertFalse(executor.isShutdown());
+         
+         // Only one task
+-        ArrayList<BasicTestTask> tasks = new ArrayList<BasicTestTask>();
++        ArrayList<Callable<String>> tasks = new ArrayList<Callable<String>>();
+         tasks.add(new BasicTestTask());
+         List<Future<String>> futures = executor.invokeAll(tasks);
+         assertEquals(futures.size(), 1);
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/ExecutorServiceProxy.java b/hazelcast/src/main/java/com/hazelcast/impl/ExecutorServiceProxy.java
+index d4e7458..da6b1d7 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/ExecutorServiceProxy.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/ExecutorServiceProxy.java
+@@ -64,7 +64,7 @@
+         return false;
+     }
+ 
+-    public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException {
++    public <T> List<Future<T>> invokeAll(Collection<Callable<T>> tasks) throws InterruptedException {
+     	// Inspired to JDK7
+     	if (tasks == null)
+     		throw new NullPointerException();

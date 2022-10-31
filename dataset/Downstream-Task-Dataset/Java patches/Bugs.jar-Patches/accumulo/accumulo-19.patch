@@ -1,0 +1,21 @@
+diff --git a/core/src/main/java/org/apache/accumulo/core/file/FileOperations.java b/core/src/main/java/org/apache/accumulo/core/file/FileOperations.java
+index 9f60725..17e540b 100644
+--- a/core/src/main/java/org/apache/accumulo/core/file/FileOperations.java
++++ b/core/src/main/java/org/apache/accumulo/core/file/FileOperations.java
+@@ -44,14 +44,13 @@ class DispatchingFileFactory extends FileOperations {
+     if (name.startsWith(Constants.MAPFILE_EXTENSION + "_")) {
+       return new MapFileOperations();
+     }
+-    
+     String[] sp = name.split("\\.");
+     
+-    if (sp.length != 2) {
++    if (sp.length < 2) {
+       throw new IllegalArgumentException("File name " + name + " has no extension");
+     }
+     
+-    String extension = sp[1];
++    String extension = sp[sp.length - 1];
+     
+     if (extension.equals(Constants.MAPFILE_EXTENSION) || extension.equals(Constants.MAPFILE_EXTENSION + "_tmp")) {
+       return new MapFileOperations();

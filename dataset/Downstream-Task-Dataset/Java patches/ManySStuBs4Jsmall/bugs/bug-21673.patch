@@ -1,0 +1,37 @@
+diff --git a/examples/quickstart/src/test/functional/org/springside/examples/quickstart/functional/gui/TaskGuiFT.java b/examples/quickstart/src/test/functional/org/springside/examples/quickstart/functional/gui/TaskGuiFT.java
+index f92c8a8..709d686 100644
+--- a/examples/quickstart/src/test/functional/org/springside/examples/quickstart/functional/gui/TaskGuiFT.java
++++ b/examples/quickstart/src/test/functional/org/springside/examples/quickstart/functional/gui/TaskGuiFT.java
+@@ -62,6 +62,6 @@
+ 		s.click(By.linkText("创建任务"));
+ 		s.click(By.id("submit_btn"));
+ 
+-		assertEquals("必选字段", s.getText(By.xpath("//fieldset/div/div/label")));
++		assertEquals("必选字段", s.getText(By.xpath("//fieldset/div/div/span")));
+ 	}
+ }
+diff --git a/examples/quickstart/src/test/java/org/springside/examples/quickstart/repository/TaskDaoTest.java b/examples/quickstart/src/test/java/org/springside/examples/quickstart/repository/TaskDaoTest.java
+index 317e966..ba7a995 100644
+--- a/examples/quickstart/src/test/java/org/springside/examples/quickstart/repository/TaskDaoTest.java
++++ b/examples/quickstart/src/test/java/org/springside/examples/quickstart/repository/TaskDaoTest.java
+@@ -20,7 +20,7 @@
+ 
+ 	@Test
+ 	public void findTasksByUserId() throws Exception {
+-		List<Task> tasks = taskDao.findByUserId(1L, new Sort(Direction.ASC, "id"));
++		List<Task> tasks = taskDao.findByUserId(2L, new Sort(Direction.ASC, "id"));
+ 		assertEquals(5, tasks.size());
+ 		assertEquals(new Long(1), tasks.get(0).getId());
+ 
+diff --git a/examples/quickstart/src/test/functional/org/springside/examples/quickstart/functional/gui/TaskGuiFT.java b/examples/quickstart/src/test/functional/org/springside/examples/quickstart/functional/gui/TaskGuiFT.java
+index f92c8a8..709d686 100644
+--- a/examples/quickstart/src/test/functional/org/springside/examples/quickstart/functional/gui/TaskGuiFT.java
++++ b/examples/quickstart/src/test/functional/org/springside/examples/quickstart/functional/gui/TaskGuiFT.java
+@@ -62,6 +62,6 @@
+ 		s.click(By.linkText("创建任务"));
+ 		s.click(By.id("submit_btn"));
+ 
+-		assertEquals("必选字段", s.getText(By.xpath("//fieldset/div/div/label")));
++		assertEquals("必选字段", s.getText(By.xpath("//fieldset/div/div/span")));
+ 	}
+ }

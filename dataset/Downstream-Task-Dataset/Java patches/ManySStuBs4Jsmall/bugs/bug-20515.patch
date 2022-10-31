@@ -1,0 +1,26 @@
+diff --git a/src/api/org/openmrs/Cohort.java b/src/api/org/openmrs/Cohort.java
+index 70e05fd..ca6f3d6 100644
+--- a/src/api/org/openmrs/Cohort.java
++++ b/src/api/org/openmrs/Cohort.java
+@@ -256,7 +256,7 @@
+ 	 */
+ 	public static Cohort intersect(Cohort a, Cohort b) {
+ 		Cohort ret = new Cohort();
+-		ret.setName("(" + a.getName() + " * " + b.getName() + ")");
++		ret.setName("(" + (a == null ? "NULL" : a.getName()) + " * " + (b == null ? "NULL" : b.getName()) + ")");
+ 		if (a != null && b != null) {
+ 			ret.getMemberIds().addAll(a.getMemberIds());
+ 			ret.getMemberIds().retainAll(b.getMemberIds());
+diff --git a/src/api/org/openmrs/Cohort.java b/src/api/org/openmrs/Cohort.java
+index 70e05fd..ca6f3d6 100644
+--- a/src/api/org/openmrs/Cohort.java
++++ b/src/api/org/openmrs/Cohort.java
+@@ -256,7 +256,7 @@
+ 	 */
+ 	public static Cohort intersect(Cohort a, Cohort b) {
+ 		Cohort ret = new Cohort();
+-		ret.setName("(" + a.getName() + " * " + b.getName() + ")");
++		ret.setName("(" + (a == null ? "NULL" : a.getName()) + " * " + (b == null ? "NULL" : b.getName()) + ")");
+ 		if (a != null && b != null) {
+ 			ret.getMemberIds().addAll(a.getMemberIds());
+ 			ret.getMemberIds().retainAll(b.getMemberIds());

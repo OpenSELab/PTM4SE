@@ -1,0 +1,56 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/HeaderCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/HeaderCheck.java
+index 2fb116c..5b60606 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/HeaderCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/HeaderCheck.java
+@@ -60,7 +60,7 @@
+     public void beginTree()
+     {
+         if (mHeaderLines == null) {
+-            log(1, "Unable to check as missing lines to check.");
++            log(1, "header.spec.missing");
+             return;
+         }
+ 
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/SimplifyBooleanExpressionCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/SimplifyBooleanExpressionCheck.java
+index e4e249d..9cca898 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/SimplifyBooleanExpressionCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/SimplifyBooleanExpressionCheck.java
+@@ -72,8 +72,7 @@
+             case TokenTypes.LOR:
+             case TokenTypes.LAND:
+                 log(parent.getLineNo(), parent.getColumnNo(),
+-                        // TODO: i18n
+-                        "Expression can be simplified.");
++                        "simplify.expression");
+                 break;
+             default:
+                 break;
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/SimplifyBooleanReturnCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/SimplifyBooleanReturnCheck.java
+index 9eabedf..b8770e4 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/SimplifyBooleanReturnCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/SimplifyBooleanReturnCheck.java
+@@ -67,10 +67,7 @@
+         if (returnsOnlyBooleanLiteral(thenStatement)
+             && returnsOnlyBooleanLiteral(elseStatement))
+         {
+-            // TODO: i18n
+-            log(aAST.getLineNo(),
+-                aAST.getColumnNo(),
+-                "Remove conditional logic.");
++            log(aAST.getLineNo(), aAST.getColumnNo(), "simplify.boolreturn");
+         }
+     }
+ 
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/HeaderCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/HeaderCheck.java
+index 2fb116c..5b60606 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/HeaderCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/HeaderCheck.java
+@@ -60,7 +60,7 @@
+     public void beginTree()
+     {
+         if (mHeaderLines == null) {
+-            log(1, "Unable to check as missing lines to check.");
++            log(1, "header.spec.missing");
+             return;
+         }
+ 

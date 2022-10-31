@@ -1,0 +1,46 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/AbstractUsageCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/AbstractUsageCheck.java
+index 7dbe344..0e01853 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/AbstractUsageCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/AbstractUsageCheck.java
+@@ -53,7 +53,7 @@
+     private String mIgnoreFormat;
+ 
+     /**
+-     * Constructs an <code>AAbstractUsageCheck</code>.
++     * Constructs an <code>AbstractUsageCheck</code>.
+      */
+     public AbstractUsageCheck()
+     {
+@@ -103,8 +103,7 @@
+     public void visitToken(DetailAST aAST)
+     {
+         if (mustCheckReferenceCount(aAST)) {
+-            final DetailAST nameAST =
+-                (DetailAST) aAST.findFirstToken(TokenTypes.IDENT);
++            final DetailAST nameAST = aAST.findFirstToken(TokenTypes.IDENT);
+             RE regexp = getRegexp();
+             if ((regexp == null) || !regexp.match(nameAST.getText())) {
+                 ASTManager.getInstance().registerCheckNode(this, nameAST);
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/AbstractUsageCheck.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/AbstractUsageCheck.java
+index 7dbe344..0e01853 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/AbstractUsageCheck.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/AbstractUsageCheck.java
+@@ -53,7 +53,7 @@
+     private String mIgnoreFormat;
+ 
+     /**
+-     * Constructs an <code>AAbstractUsageCheck</code>.
++     * Constructs an <code>AbstractUsageCheck</code>.
+      */
+     public AbstractUsageCheck()
+     {
+@@ -103,8 +103,7 @@
+     public void visitToken(DetailAST aAST)
+     {
+         if (mustCheckReferenceCount(aAST)) {
+-            final DetailAST nameAST =
+-                (DetailAST) aAST.findFirstToken(TokenTypes.IDENT);
++            final DetailAST nameAST = aAST.findFirstToken(TokenTypes.IDENT);
+             RE regexp = getRegexp();
+             if ((regexp == null) || !regexp.match(nameAST.getText())) {
+                 ASTManager.getInstance().registerCheckNode(this, nameAST);

@@ -1,0 +1,26 @@
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/AddressSettingsWriteHandler.java b/messaging/src/main/java/org/jboss/as/messaging/AddressSettingsWriteHandler.java
+index 29b143b..0ab9fa6 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/AddressSettingsWriteHandler.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/AddressSettingsWriteHandler.java
+@@ -65,7 +65,7 @@
+         if(def == null) {
+             context.getFailureDescription().set(new ModelNode().set(MESSAGES.unknownAttribute(attribute)));
+         } else {
+-            def.getValidator().validateParameter(ModelDescriptionConstants.VALUE, operation);
++            def.getValidator().validateParameter(ModelDescriptionConstants.VALUE, operation.get(ModelDescriptionConstants.VALUE));
+             resource.getModel().get(attribute).set(operation.get(ModelDescriptionConstants.VALUE));
+ 
+             if(context.isNormalServer()) {
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/AddressSettingsWriteHandler.java b/messaging/src/main/java/org/jboss/as/messaging/AddressSettingsWriteHandler.java
+index 29b143b..0ab9fa6 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/AddressSettingsWriteHandler.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/AddressSettingsWriteHandler.java
+@@ -65,7 +65,7 @@
+         if(def == null) {
+             context.getFailureDescription().set(new ModelNode().set(MESSAGES.unknownAttribute(attribute)));
+         } else {
+-            def.getValidator().validateParameter(ModelDescriptionConstants.VALUE, operation);
++            def.getValidator().validateParameter(ModelDescriptionConstants.VALUE, operation.get(ModelDescriptionConstants.VALUE));
+             resource.getModel().get(attribute).set(operation.get(ModelDescriptionConstants.VALUE));
+ 
+             if(context.isNormalServer()) {

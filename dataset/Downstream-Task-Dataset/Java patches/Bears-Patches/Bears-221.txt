@@ -1,0 +1,16 @@
+--- a/src/main/java/hudson/plugins/ansicolor/AnsiColorConsoleLogFilter.java
++++ b/src/main/java/hudson/plugins/ansicolor/AnsiColorConsoleLogFilter.java
+@@ -39,7 +73,12 @@ public final class AnsiColorConsoleLogFilter extends ConsoleLogFilter implements
+                 @Override
+                 public void emitHtml(String html) {
+                     try {
+-                        new SimpleHtmlNote(html).encodeTo(logger);
++                        byte[] pregenerated = notes.get(html);
++                        if (pregenerated != null) {
++                            logger.write(pregenerated);
++                        } else {
++                            new SimpleHtmlNote(html).encodeTo(logger);
++                        }
+                     } catch (IOException e) {
+                         LOG.log(Level.WARNING, "Failed to add HTML markup '" + html + "'", e);
+                     }

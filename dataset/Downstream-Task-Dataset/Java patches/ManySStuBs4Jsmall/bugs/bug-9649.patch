@@ -1,0 +1,18 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForInitializerPadCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForInitializerPadCheck.java
+index 1d71496..93614de 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForInitializerPadCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/whitespace/EmptyForInitializerPadCheck.java
+@@ -91,11 +91,11 @@
+             //don't check if semi at beginning of line
+             if (!Utils.whitespaceBefore(before, line)) {
+                 final PadOption option = getAbstractOption();
+-                if (PadOption.NOSPACE == option
++                if (option == PadOption.NOSPACE
+                     && Character.isWhitespace(line.charAt(before))) {
+                     log(semi.getLineNo(), before, MSG_PRECEDED, ";");
+                 }
+-                else if (PadOption.SPACE == option
++                else if (option == PadOption.SPACE
+                          && !Character.isWhitespace(line.charAt(before))) {
+                     log(semi.getLineNo(), before, MSG_NOT_PRECEDED, ";");
+                 }

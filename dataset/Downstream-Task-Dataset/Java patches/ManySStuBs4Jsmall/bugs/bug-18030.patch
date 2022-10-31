@@ -1,0 +1,26 @@
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/PooledPacketWrap.java b/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/PooledPacketWrap.java
+index 2bcbc36..57afcea 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/PooledPacketWrap.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/PooledPacketWrap.java
+@@ -43,7 +43,7 @@
+         final DatagramPacket packet = pooledObject.getObject();
+         try {
+             packetHandler.receive(packet);
+-        } catch (Exception e) {
++        } finally {
+             pooledObject.returnObject();
+         }
+     }
+diff --git a/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/PooledPacketWrap.java b/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/PooledPacketWrap.java
+index 2bcbc36..57afcea 100644
+--- a/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/PooledPacketWrap.java
++++ b/collector/src/main/java/com/navercorp/pinpoint/collector/receiver/udp/PooledPacketWrap.java
+@@ -43,7 +43,7 @@
+         final DatagramPacket packet = pooledObject.getObject();
+         try {
+             packetHandler.receive(packet);
+-        } catch (Exception e) {
++        } finally {
+             pooledObject.returnObject();
+         }
+     }

@@ -1,0 +1,59 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
+index fb2e9f1..3a951bf 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
+@@ -777,10 +777,8 @@
+                 final DetailAST firstNodeInsideElseBlock = elseBlock.getFirstChild();
+ 
+                 if (firstNodeInsideElseBlock.getType() == TokenTypes.LITERAL_IF) {
+-                    isVarInOperatorDeclr |=
+-                            isVariableInOperatorExpr(
+-                                firstNodeInsideElseBlock,
+-                                    variable);
++                    isVarInOperatorDeclr =
++                        isVariableInOperatorExpr(firstNodeInsideElseBlock, variable);
+                 }
+             }
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
+index 9d584a9..25dd19a 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/javadoc/JavadocMethodCheck.java
+@@ -493,7 +493,7 @@
+             // Check for inheritDoc
+             boolean hasInheritDocTag = false;
+             while (it.hasNext() && !hasInheritDocTag) {
+-                hasInheritDocTag |= it.next().isInheritDocTag();
++                hasInheritDocTag = it.next().isInheritDocTag();
+             }
+ 
+             checkParamTags(tags, ast, !hasInheritDocTag);
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/ModifierOrderCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/ModifierOrderCheck.java
+index d2e48bd..6632dac 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/ModifierOrderCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/ModifierOrderCheck.java
+@@ -173,6 +173,6 @@
+             }
+         }
+ 
+-        return modifier;
++        return null;
+     }
+ }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
+index fb2e9f1..3a951bf 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
+@@ -777,10 +777,8 @@
+                 final DetailAST firstNodeInsideElseBlock = elseBlock.getFirstChild();
+ 
+                 if (firstNodeInsideElseBlock.getType() == TokenTypes.LITERAL_IF) {
+-                    isVarInOperatorDeclr |=
+-                            isVariableInOperatorExpr(
+-                                firstNodeInsideElseBlock,
+-                                    variable);
++                    isVarInOperatorDeclr =
++                        isVariableInOperatorExpr(firstNodeInsideElseBlock, variable);
+                 }
+             }
+         }

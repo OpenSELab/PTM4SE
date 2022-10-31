@@ -1,0 +1,26 @@
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Button.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Button.java
+index ed0e425..72c21af 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Button.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Button.java
+@@ -91,7 +91,7 @@
+ 	public void setStyle (ButtonStyle style) {
+ 		if (style == null) throw new IllegalArgumentException("style cannot be null.");
+ 		this.style = style;
+-		setBackground(isPressed ? style.down : style.up);
++		setBackground((isPressed && style.down != null) ? style.down : style.up);
+ 		invalidateHierarchy();
+ 	}
+ 
+diff --git a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Button.java b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Button.java
+index ed0e425..72c21af 100644
+--- a/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Button.java
++++ b/gdx/src/com/badlogic/gdx/scenes/scene2d/ui/Button.java
+@@ -91,7 +91,7 @@
+ 	public void setStyle (ButtonStyle style) {
+ 		if (style == null) throw new IllegalArgumentException("style cannot be null.");
+ 		this.style = style;
+-		setBackground(isPressed ? style.down : style.up);
++		setBackground((isPressed && style.down != null) ? style.down : style.up);
+ 		invalidateHierarchy();
+ 	}
+ 

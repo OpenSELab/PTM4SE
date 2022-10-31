@@ -1,0 +1,67 @@
+diff --git a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+index 5345b1a..5eaae41 100644
+--- a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
++++ b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+@@ -222,7 +222,7 @@
+         final String operationPath = apiOperation == null ? null : apiOperation.nickname();
+         return PathUtils.collectPath(context.getParentPath(),
+                 apiAnnotation == null ? null : apiAnnotation.value(),
+-                StringUtils.defaultIfBlank(operationPath, method.getName()));
++                method.getName());
+     }
+ 
+     @Override
+diff --git a/modules/swagger-servlet/src/test/java/io/swagger/servlet/ReaderTest.java b/modules/swagger-servlet/src/test/java/io/swagger/servlet/ReaderTest.java
+index a48d651..a36bacf 100644
+--- a/modules/swagger-servlet/src/test/java/io/swagger/servlet/ReaderTest.java
++++ b/modules/swagger-servlet/src/test/java/io/swagger/servlet/ReaderTest.java
+@@ -43,12 +43,12 @@
+ 
+         Assert.assertEquals(swagger.getHost(), "host");
+         Assert.assertEquals(swagger.getBasePath(), "/api");
+-        Assert.assertNotNull(swagger.getPath("/resources/users"));
++        Assert.assertNotNull(swagger.getPath("/resources/testMethod3"));
+         Assert.assertNotNull(swagger.getDefinitions().get("SampleData"));
+         Assert.assertEquals(swagger.getExternalDocs().getDescription(), "docs");
+         Assert.assertEquals(swagger.getExternalDocs().getUrl(), "url_to_docs");
+ 
+-        Path path = swagger.getPath("/resources/users");
++        Path path = swagger.getPath("/resources/testMethod3");
+         Assert.assertNotNull(path);
+         Operation get = path.getGet();
+         Assert.assertNotNull( get );
+diff --git a/modules/swagger-servlet/src/test/java/io/swagger/servlet/extensions/PathGetterTest.java b/modules/swagger-servlet/src/test/java/io/swagger/servlet/extensions/PathGetterTest.java
+index 4b643b0..3c10923 100644
+--- a/modules/swagger-servlet/src/test/java/io/swagger/servlet/extensions/PathGetterTest.java
++++ b/modules/swagger-servlet/src/test/java/io/swagger/servlet/extensions/PathGetterTest.java
+@@ -13,7 +13,7 @@
+         return new Object[][]{
+                 {"testMethod1", "/tests/resources/testMethod1"},
+                 {"testMethod2", "/tests/resources/testMethod2"},
+-                {"testMethod3", "/tests/resources/users"},
++                {"testMethod3", "/tests/resources/testMethod3"},
+                 {"testMethod4", "/tests/resources/testMethod4"},
+         };
+     }
+@@ -23,7 +23,7 @@
+         return new Object[][]{
+                 {"testMethod1", "/tests/testMethod1"},
+                 {"testMethod2", "/tests/testMethod2"},
+-                {"testMethod3", "/tests/users"},
++                {"testMethod3", "/tests/testMethod3"},
+                 {"testMethod4", "/tests/testMethod4"},
+         };
+     }
+diff --git a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+index 5345b1a..5eaae41 100644
+--- a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
++++ b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+@@ -222,7 +222,7 @@
+         final String operationPath = apiOperation == null ? null : apiOperation.nickname();
+         return PathUtils.collectPath(context.getParentPath(),
+                 apiAnnotation == null ? null : apiAnnotation.value(),
+-                StringUtils.defaultIfBlank(operationPath, method.getName()));
++                method.getName());
+     }
+ 
+     @Override

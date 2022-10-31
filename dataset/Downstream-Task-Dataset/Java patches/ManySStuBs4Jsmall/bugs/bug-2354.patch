@@ -1,0 +1,28 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index 1f956e3..8c9b72c 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -1029,8 +1029,7 @@
+             for (String className : possibleAtmosphereHandlersCandidate) {
+                 try {
+                     className = className.replace('\\', '/');
+-                    className = className.substring(className.indexOf(WEB_INF_CLASSES)
+-                            + WEB_INF_CLASSES.length(), className.lastIndexOf(".")).replace('/', '.');
++                    className = className.replaceFirst("^.*/(WEB-INF|target)/(test-)?classes/(.*)\\.class", "$3");
+                     Class<?> clazz = classloader.loadClass(className);
+ 
+                     if (AtmosphereHandler.class.isAssignableFrom(clazz)) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+index 1f956e3..8c9b72c 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereServlet.java
+@@ -1029,8 +1029,7 @@
+             for (String className : possibleAtmosphereHandlersCandidate) {
+                 try {
+                     className = className.replace('\\', '/');
+-                    className = className.substring(className.indexOf(WEB_INF_CLASSES)
+-                            + WEB_INF_CLASSES.length(), className.lastIndexOf(".")).replace('/', '.');
++                    className = className.replaceFirst("^.*/(WEB-INF|target)/(test-)?classes/(.*)\\.class", "$3");
+                     Class<?> clazz = classloader.loadClass(className);
+ 
+                     if (AtmosphereHandler.class.isAssignableFrom(clazz)) {

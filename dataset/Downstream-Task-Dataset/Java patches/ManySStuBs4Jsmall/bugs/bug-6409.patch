@@ -1,0 +1,26 @@
+diff --git a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/Client.java b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/Client.java
+index 13d34fb..e21145b 100644
+--- a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/Client.java
++++ b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/Client.java
+@@ -133,7 +133,7 @@
+ 
+ 	public CompletableFuture<RESP> sendRequest(final InetSocketAddress serverAddress, final REQ request) {
+ 		if (shutDown.get()) {
+-			return FutureUtils.getFailedFuture(new IllegalStateException("Shut down"));
++			return FutureUtils.getFailedFuture(new IllegalStateException(clientName + " is already shut down."));
+ 		}
+ 
+ 		EstablishedConnection connection = establishedConnections.get(serverAddress);
+diff --git a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/Client.java b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/Client.java
+index 13d34fb..e21145b 100644
+--- a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/Client.java
++++ b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/Client.java
+@@ -133,7 +133,7 @@
+ 
+ 	public CompletableFuture<RESP> sendRequest(final InetSocketAddress serverAddress, final REQ request) {
+ 		if (shutDown.get()) {
+-			return FutureUtils.getFailedFuture(new IllegalStateException("Shut down"));
++			return FutureUtils.getFailedFuture(new IllegalStateException(clientName + " is already shut down."));
+ 		}
+ 
+ 		EstablishedConnection connection = establishedConnections.get(serverAddress);

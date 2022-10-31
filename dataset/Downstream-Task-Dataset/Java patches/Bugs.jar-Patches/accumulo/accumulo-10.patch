@@ -1,0 +1,1029 @@
+diff --git a/proxy/src/main/java/org/apache/accumulo/proxy/ProxyServer.java b/proxy/src/main/java/org/apache/accumulo/proxy/ProxyServer.java
+index 926c413..c0dee9a 100644
+--- a/proxy/src/main/java/org/apache/accumulo/proxy/ProxyServer.java
++++ b/proxy/src/main/java/org/apache/accumulo/proxy/ProxyServer.java
+@@ -50,6 +50,8 @@ import org.apache.accumulo.core.client.ZooKeeperInstance;
+ import org.apache.accumulo.core.client.admin.ActiveCompaction;
+ import org.apache.accumulo.core.client.admin.ActiveScan;
+ import org.apache.accumulo.core.client.admin.TimeType;
++import org.apache.accumulo.core.client.impl.thrift.TableOperationExceptionType;
++import org.apache.accumulo.core.client.impl.thrift.ThriftTableOperationException;
+ import org.apache.accumulo.core.client.mock.MockInstance;
+ import org.apache.accumulo.core.client.security.SecurityErrorCode;
+ import org.apache.accumulo.core.client.security.tokens.AuthenticationToken;
+@@ -144,7 +146,7 @@ public class ProxyServer implements AccumuloProxy.Iface {
+   protected Cache<UUID,BatchWriterPlusException> writerCache;
+   
+   public ProxyServer(Properties props) {
+-
++    
+     String useMock = props.getProperty("org.apache.accumulo.proxy.ProxyServer.useMockInstance");
+     if (useMock != null && Boolean.parseBoolean(useMock))
+       instance = new MockInstance();
+@@ -157,7 +159,7 @@ public class ProxyServer implements AccumuloProxy.Iface {
+     } catch (ClassNotFoundException e) {
+       throw new RuntimeException(e);
+     }
+-
++    
+     scannerCache = CacheBuilder.newBuilder().expireAfterAccess(10, TimeUnit.MINUTES).maximumSize(1000).removalListener(new CloseScanner()).build();
+     
+     writerCache = CacheBuilder.newBuilder().expireAfterAccess(10, TimeUnit.MINUTES).maximumSize(1000).removalListener(new CloseWriter()).build();
+@@ -175,21 +177,27 @@ public class ProxyServer implements AccumuloProxy.Iface {
+     try {
+       throw ex;
+     } catch (MutationsRejectedException e) {
+-        logger.debug(e,e);
+-        return new org.apache.accumulo.proxy.thrift.MutationsRejectedException(e.toString());
++      logger.debug(e, e);
++      return new org.apache.accumulo.proxy.thrift.MutationsRejectedException(e.toString());
+     } catch (AccumuloException e) {
+-      logger.debug(e,e);
++      if (e.getCause() instanceof ThriftTableOperationException) {
++        ThriftTableOperationException ttoe = (ThriftTableOperationException) e.getCause();
++        if (ttoe.type == TableOperationExceptionType.NOTFOUND) {
++          return new org.apache.accumulo.proxy.thrift.TableNotFoundException(e.toString());
++        }
++      }
++      logger.debug(e, e);
+       return new org.apache.accumulo.proxy.thrift.AccumuloException(e.toString());
+     } catch (AccumuloSecurityException e) {
+-      logger.debug(e,e);
++      logger.debug(e, e);
+       if (e.getSecurityErrorCode().equals(SecurityErrorCode.TABLE_DOESNT_EXIST))
+         return new org.apache.accumulo.proxy.thrift.TableNotFoundException(e.toString());
+       return new org.apache.accumulo.proxy.thrift.AccumuloSecurityException(e.toString());
+     } catch (TableNotFoundException e) {
+-      logger.debug(e,e);
++      logger.debug(e, e);
+       return new org.apache.accumulo.proxy.thrift.TableNotFoundException(e.toString());
+     } catch (TableExistsException e) {
+-      logger.debug(e,e);
++      logger.debug(e, e);
+       return new org.apache.accumulo.proxy.thrift.TableExistsException(e.toString());
+     } catch (RuntimeException e) {
+       if (e.getCause() != null) {
+@@ -628,7 +636,7 @@ public class ProxyServer implements AccumuloProxy.Iface {
+   }
+   
+   @Override
+-  public boolean authenticateUser(ByteBuffer login, String principal, Map<String, String> properties) throws TException {
++  public boolean authenticateUser(ByteBuffer login, String principal, Map<String,String> properties) throws TException {
+     try {
+       return getConnector(login).securityOperations().authenticateUser(principal, getToken(principal, properties));
+     } catch (Exception e) {
+@@ -840,7 +848,7 @@ public class ProxyServer implements AccumuloProxy.Iface {
+           }
+         }
+         scanner.setRanges(ranges);
+-
++        
+         if (opts.columns != null) {
+           for (ScanColumn col : opts.columns) {
+             if (col.isSetColQualifier())
+@@ -850,7 +858,7 @@ public class ProxyServer implements AccumuloProxy.Iface {
+           }
+         }
+       }
+-
++      
+       UUID uuid = UUID.randomUUID();
+       
+       ScannerPlusIterator spi = new ScannerPlusIterator();
+@@ -1235,7 +1243,7 @@ public class ProxyServer implements AccumuloProxy.Iface {
+     }
+   }
+   
+-  private AuthenticationToken getToken(String principal, Map<String, String> properties) throws AccumuloSecurityException, AccumuloException {
++  private AuthenticationToken getToken(String principal, Map<String,String> properties) throws AccumuloSecurityException, AccumuloException {
+     Properties props = new Properties();
+     props.putAll(properties);
+     AuthenticationToken token;
+diff --git a/proxy/src/main/java/org/apache/accumulo/proxy/thrift/AccumuloProxy.java b/proxy/src/main/java/org/apache/accumulo/proxy/thrift/AccumuloProxy.java
+index 857320a..f53b6ac 100644
+--- a/proxy/src/main/java/org/apache/accumulo/proxy/thrift/AccumuloProxy.java
++++ b/proxy/src/main/java/org/apache/accumulo/proxy/thrift/AccumuloProxy.java
+@@ -104,17 +104,17 @@ import org.slf4j.LoggerFactory;
+ 
+     public void onlineTable(ByteBuffer login, String tableName) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException;
+ 
+-    public void removeConstraint(ByteBuffer login, String tableName, int constraint) throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException;
++    public void removeConstraint(ByteBuffer login, String tableName, int constraint) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException;
+ 
+     public void removeIterator(ByteBuffer login, String tableName, String iterName, Set<IteratorScope> scopes) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException;
+ 
+-    public void removeTableProperty(ByteBuffer login, String tableName, String property) throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException;
++    public void removeTableProperty(ByteBuffer login, String tableName, String property) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException;
+ 
+     public void renameTable(ByteBuffer login, String oldTableName, String newTableName) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, TableExistsException, org.apache.thrift.TException;
+ 
+     public void setLocalityGroups(ByteBuffer login, String tableName, Map<String,Set<String>> groups) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException;
+ 
+-    public void setTableProperty(ByteBuffer login, String tableName, String property, String value) throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException;
++    public void setTableProperty(ByteBuffer login, String tableName, String property, String value) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException;
+ 
+     public Set<Range> splitRangeByTablets(ByteBuffer login, String tableName, Range range, int maxSplits) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException;
+ 
+@@ -1206,7 +1206,7 @@ import org.slf4j.LoggerFactory;
+       return;
+     }
+ 
+-    public void removeConstraint(ByteBuffer login, String tableName, int constraint) throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException
++    public void removeConstraint(ByteBuffer login, String tableName, int constraint) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException
+     {
+       send_removeConstraint(login, tableName, constraint);
+       recv_removeConstraint();
+@@ -1221,7 +1221,7 @@ import org.slf4j.LoggerFactory;
+       sendBase("removeConstraint", args);
+     }
+ 
+-    public void recv_removeConstraint() throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException
++    public void recv_removeConstraint() throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException
+     {
+       removeConstraint_result result = new removeConstraint_result();
+       receiveBase(result, "removeConstraint");
+@@ -1231,6 +1231,9 @@ import org.slf4j.LoggerFactory;
+       if (result.ouch2 != null) {
+         throw result.ouch2;
+       }
++      if (result.ouch3 != null) {
++        throw result.ouch3;
++      }
+       return;
+     }
+ 
+@@ -1266,7 +1269,7 @@ import org.slf4j.LoggerFactory;
+       return;
+     }
+ 
+-    public void removeTableProperty(ByteBuffer login, String tableName, String property) throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException
++    public void removeTableProperty(ByteBuffer login, String tableName, String property) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException
+     {
+       send_removeTableProperty(login, tableName, property);
+       recv_removeTableProperty();
+@@ -1281,7 +1284,7 @@ import org.slf4j.LoggerFactory;
+       sendBase("removeTableProperty", args);
+     }
+ 
+-    public void recv_removeTableProperty() throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException
++    public void recv_removeTableProperty() throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException
+     {
+       removeTableProperty_result result = new removeTableProperty_result();
+       receiveBase(result, "removeTableProperty");
+@@ -1291,6 +1294,9 @@ import org.slf4j.LoggerFactory;
+       if (result.ouch2 != null) {
+         throw result.ouch2;
+       }
++      if (result.ouch3 != null) {
++        throw result.ouch3;
++      }
+       return;
+     }
+ 
+@@ -1359,7 +1365,7 @@ import org.slf4j.LoggerFactory;
+       return;
+     }
+ 
+-    public void setTableProperty(ByteBuffer login, String tableName, String property, String value) throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException
++    public void setTableProperty(ByteBuffer login, String tableName, String property, String value) throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException
+     {
+       send_setTableProperty(login, tableName, property, value);
+       recv_setTableProperty();
+@@ -1375,7 +1381,7 @@ import org.slf4j.LoggerFactory;
+       sendBase("setTableProperty", args);
+     }
+ 
+-    public void recv_setTableProperty() throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException
++    public void recv_setTableProperty() throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException
+     {
+       setTableProperty_result result = new setTableProperty_result();
+       receiveBase(result, "setTableProperty");
+@@ -1385,6 +1391,9 @@ import org.slf4j.LoggerFactory;
+       if (result.ouch2 != null) {
+         throw result.ouch2;
+       }
++      if (result.ouch3 != null) {
++        throw result.ouch3;
++      }
+       return;
+     }
+ 
+@@ -3575,7 +3584,7 @@ import org.slf4j.LoggerFactory;
+         prot.writeMessageEnd();
+       }
+ 
+-      public void getResult() throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException {
++      public void getResult() throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException {
+         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+           throw new IllegalStateException("Method call not finished!");
+         }
+@@ -3654,7 +3663,7 @@ import org.slf4j.LoggerFactory;
+         prot.writeMessageEnd();
+       }
+ 
+-      public void getResult() throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException {
++      public void getResult() throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException {
+         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+           throw new IllegalStateException("Method call not finished!");
+         }
+@@ -3771,7 +3780,7 @@ import org.slf4j.LoggerFactory;
+         prot.writeMessageEnd();
+       }
+ 
+-      public void getResult() throws AccumuloException, AccumuloSecurityException, org.apache.thrift.TException {
++      public void getResult() throws AccumuloException, AccumuloSecurityException, TableNotFoundException, org.apache.thrift.TException {
+         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+           throw new IllegalStateException("Method call not finished!");
+         }
+@@ -5983,6 +5992,8 @@ import org.slf4j.LoggerFactory;
+           result.ouch1 = ouch1;
+         } catch (AccumuloSecurityException ouch2) {
+           result.ouch2 = ouch2;
++        } catch (TableNotFoundException ouch3) {
++          result.ouch3 = ouch3;
+         }
+         return result;
+       }
+@@ -6037,6 +6048,8 @@ import org.slf4j.LoggerFactory;
+           result.ouch1 = ouch1;
+         } catch (AccumuloSecurityException ouch2) {
+           result.ouch2 = ouch2;
++        } catch (TableNotFoundException ouch3) {
++          result.ouch3 = ouch3;
+         }
+         return result;
+       }
+@@ -6121,6 +6134,8 @@ import org.slf4j.LoggerFactory;
+           result.ouch1 = ouch1;
+         } catch (AccumuloSecurityException ouch2) {
+           result.ouch2 = ouch2;
++        } catch (TableNotFoundException ouch3) {
++          result.ouch3 = ouch3;
+         }
+         return result;
+       }
+@@ -39944,6 +39959,7 @@ import org.slf4j.LoggerFactory;
+ 
+     private static final org.apache.thrift.protocol.TField OUCH1_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+     private static final org.apache.thrift.protocol.TField OUCH2_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
++    private static final org.apache.thrift.protocol.TField OUCH3_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch3", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+ 
+     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+     static {
+@@ -39953,11 +39969,13 @@ import org.slf4j.LoggerFactory;
+ 
+     public AccumuloException ouch1; // required
+     public AccumuloSecurityException ouch2; // required
++    public TableNotFoundException ouch3; // required
+ 
+     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+     @SuppressWarnings("all") public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+       OUCH1((short)1, "ouch1"),
+-      OUCH2((short)2, "ouch2");
++      OUCH2((short)2, "ouch2"),
++      OUCH3((short)3, "ouch3");
+ 
+       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+ 
+@@ -39976,6 +39994,8 @@ import org.slf4j.LoggerFactory;
+             return OUCH1;
+           case 2: // OUCH2
+             return OUCH2;
++          case 3: // OUCH3
++            return OUCH3;
+           default:
+             return null;
+         }
+@@ -40023,6 +40043,8 @@ import org.slf4j.LoggerFactory;
+           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+       tmpMap.put(_Fields.OUCH2, new org.apache.thrift.meta_data.FieldMetaData("ouch2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
++      tmpMap.put(_Fields.OUCH3, new org.apache.thrift.meta_data.FieldMetaData("ouch3", org.apache.thrift.TFieldRequirementType.DEFAULT, 
++          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+       metaDataMap = Collections.unmodifiableMap(tmpMap);
+       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(removeConstraint_result.class, metaDataMap);
+     }
+@@ -40032,11 +40054,13 @@ import org.slf4j.LoggerFactory;
+ 
+     public removeConstraint_result(
+       AccumuloException ouch1,
+-      AccumuloSecurityException ouch2)
++      AccumuloSecurityException ouch2,
++      TableNotFoundException ouch3)
+     {
+       this();
+       this.ouch1 = ouch1;
+       this.ouch2 = ouch2;
++      this.ouch3 = ouch3;
+     }
+ 
+     /**
+@@ -40049,6 +40073,9 @@ import org.slf4j.LoggerFactory;
+       if (other.isSetOuch2()) {
+         this.ouch2 = new AccumuloSecurityException(other.ouch2);
+       }
++      if (other.isSetOuch3()) {
++        this.ouch3 = new TableNotFoundException(other.ouch3);
++      }
+     }
+ 
+     public removeConstraint_result deepCopy() {
+@@ -40059,6 +40086,7 @@ import org.slf4j.LoggerFactory;
+     public void clear() {
+       this.ouch1 = null;
+       this.ouch2 = null;
++      this.ouch3 = null;
+     }
+ 
+     public AccumuloException getOuch1() {
+@@ -40109,6 +40137,30 @@ import org.slf4j.LoggerFactory;
+       }
+     }
+ 
++    public TableNotFoundException getOuch3() {
++      return this.ouch3;
++    }
++
++    public removeConstraint_result setOuch3(TableNotFoundException ouch3) {
++      this.ouch3 = ouch3;
++      return this;
++    }
++
++    public void unsetOuch3() {
++      this.ouch3 = null;
++    }
++
++    /** Returns true if field ouch3 is set (has been assigned a value) and false otherwise */
++    public boolean isSetOuch3() {
++      return this.ouch3 != null;
++    }
++
++    public void setOuch3IsSet(boolean value) {
++      if (!value) {
++        this.ouch3 = null;
++      }
++    }
++
+     public void setFieldValue(_Fields field, Object value) {
+       switch (field) {
+       case OUCH1:
+@@ -40127,6 +40179,14 @@ import org.slf4j.LoggerFactory;
+         }
+         break;
+ 
++      case OUCH3:
++        if (value == null) {
++          unsetOuch3();
++        } else {
++          setOuch3((TableNotFoundException)value);
++        }
++        break;
++
+       }
+     }
+ 
+@@ -40138,6 +40198,9 @@ import org.slf4j.LoggerFactory;
+       case OUCH2:
+         return getOuch2();
+ 
++      case OUCH3:
++        return getOuch3();
++
+       }
+       throw new IllegalStateException();
+     }
+@@ -40153,6 +40216,8 @@ import org.slf4j.LoggerFactory;
+         return isSetOuch1();
+       case OUCH2:
+         return isSetOuch2();
++      case OUCH3:
++        return isSetOuch3();
+       }
+       throw new IllegalStateException();
+     }
+@@ -40188,6 +40253,15 @@ import org.slf4j.LoggerFactory;
+           return false;
+       }
+ 
++      boolean this_present_ouch3 = true && this.isSetOuch3();
++      boolean that_present_ouch3 = true && that.isSetOuch3();
++      if (this_present_ouch3 || that_present_ouch3) {
++        if (!(this_present_ouch3 && that_present_ouch3))
++          return false;
++        if (!this.ouch3.equals(that.ouch3))
++          return false;
++      }
++
+       return true;
+     }
+ 
+@@ -40224,6 +40298,16 @@ import org.slf4j.LoggerFactory;
+           return lastComparison;
+         }
+       }
++      lastComparison = Boolean.valueOf(isSetOuch3()).compareTo(typedOther.isSetOuch3());
++      if (lastComparison != 0) {
++        return lastComparison;
++      }
++      if (isSetOuch3()) {
++        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ouch3, typedOther.ouch3);
++        if (lastComparison != 0) {
++          return lastComparison;
++        }
++      }
+       return 0;
+     }
+ 
+@@ -40259,6 +40343,14 @@ import org.slf4j.LoggerFactory;
+         sb.append(this.ouch2);
+       }
+       first = false;
++      if (!first) sb.append(", ");
++      sb.append("ouch3:");
++      if (this.ouch3 == null) {
++        sb.append("null");
++      } else {
++        sb.append(this.ouch3);
++      }
++      first = false;
+       sb.append(")");
+       return sb.toString();
+     }
+@@ -40320,6 +40412,15 @@ import org.slf4j.LoggerFactory;
+                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+               }
+               break;
++            case 3: // OUCH3
++              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
++                struct.ouch3 = new TableNotFoundException();
++                struct.ouch3.read(iprot);
++                struct.setOuch3IsSet(true);
++              } else { 
++                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
++              }
++              break;
+             default:
+               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+           }
+@@ -40345,6 +40446,11 @@ import org.slf4j.LoggerFactory;
+           struct.ouch2.write(oprot);
+           oprot.writeFieldEnd();
+         }
++        if (struct.ouch3 != null) {
++          oprot.writeFieldBegin(OUCH3_FIELD_DESC);
++          struct.ouch3.write(oprot);
++          oprot.writeFieldEnd();
++        }
+         oprot.writeFieldStop();
+         oprot.writeStructEnd();
+       }
+@@ -40369,19 +40475,25 @@ import org.slf4j.LoggerFactory;
+         if (struct.isSetOuch2()) {
+           optionals.set(1);
+         }
+-        oprot.writeBitSet(optionals, 2);
++        if (struct.isSetOuch3()) {
++          optionals.set(2);
++        }
++        oprot.writeBitSet(optionals, 3);
+         if (struct.isSetOuch1()) {
+           struct.ouch1.write(oprot);
+         }
+         if (struct.isSetOuch2()) {
+           struct.ouch2.write(oprot);
+         }
++        if (struct.isSetOuch3()) {
++          struct.ouch3.write(oprot);
++        }
+       }
+ 
+       @Override
+       public void read(org.apache.thrift.protocol.TProtocol prot, removeConstraint_result struct) throws org.apache.thrift.TException {
+         TTupleProtocol iprot = (TTupleProtocol) prot;
+-        BitSet incoming = iprot.readBitSet(2);
++        BitSet incoming = iprot.readBitSet(3);
+         if (incoming.get(0)) {
+           struct.ouch1 = new AccumuloException();
+           struct.ouch1.read(iprot);
+@@ -40392,6 +40504,11 @@ import org.slf4j.LoggerFactory;
+           struct.ouch2.read(iprot);
+           struct.setOuch2IsSet(true);
+         }
++        if (incoming.get(2)) {
++          struct.ouch3 = new TableNotFoundException();
++          struct.ouch3.read(iprot);
++          struct.setOuch3IsSet(true);
++        }
+       }
+     }
+ 
+@@ -42244,6 +42361,7 @@ import org.slf4j.LoggerFactory;
+ 
+     private static final org.apache.thrift.protocol.TField OUCH1_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+     private static final org.apache.thrift.protocol.TField OUCH2_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
++    private static final org.apache.thrift.protocol.TField OUCH3_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch3", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+ 
+     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+     static {
+@@ -42253,11 +42371,13 @@ import org.slf4j.LoggerFactory;
+ 
+     public AccumuloException ouch1; // required
+     public AccumuloSecurityException ouch2; // required
++    public TableNotFoundException ouch3; // required
+ 
+     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+     @SuppressWarnings("all") public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+       OUCH1((short)1, "ouch1"),
+-      OUCH2((short)2, "ouch2");
++      OUCH2((short)2, "ouch2"),
++      OUCH3((short)3, "ouch3");
+ 
+       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+ 
+@@ -42276,6 +42396,8 @@ import org.slf4j.LoggerFactory;
+             return OUCH1;
+           case 2: // OUCH2
+             return OUCH2;
++          case 3: // OUCH3
++            return OUCH3;
+           default:
+             return null;
+         }
+@@ -42323,6 +42445,8 @@ import org.slf4j.LoggerFactory;
+           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+       tmpMap.put(_Fields.OUCH2, new org.apache.thrift.meta_data.FieldMetaData("ouch2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
++      tmpMap.put(_Fields.OUCH3, new org.apache.thrift.meta_data.FieldMetaData("ouch3", org.apache.thrift.TFieldRequirementType.DEFAULT, 
++          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+       metaDataMap = Collections.unmodifiableMap(tmpMap);
+       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(removeTableProperty_result.class, metaDataMap);
+     }
+@@ -42332,11 +42456,13 @@ import org.slf4j.LoggerFactory;
+ 
+     public removeTableProperty_result(
+       AccumuloException ouch1,
+-      AccumuloSecurityException ouch2)
++      AccumuloSecurityException ouch2,
++      TableNotFoundException ouch3)
+     {
+       this();
+       this.ouch1 = ouch1;
+       this.ouch2 = ouch2;
++      this.ouch3 = ouch3;
+     }
+ 
+     /**
+@@ -42349,6 +42475,9 @@ import org.slf4j.LoggerFactory;
+       if (other.isSetOuch2()) {
+         this.ouch2 = new AccumuloSecurityException(other.ouch2);
+       }
++      if (other.isSetOuch3()) {
++        this.ouch3 = new TableNotFoundException(other.ouch3);
++      }
+     }
+ 
+     public removeTableProperty_result deepCopy() {
+@@ -42359,6 +42488,7 @@ import org.slf4j.LoggerFactory;
+     public void clear() {
+       this.ouch1 = null;
+       this.ouch2 = null;
++      this.ouch3 = null;
+     }
+ 
+     public AccumuloException getOuch1() {
+@@ -42409,6 +42539,30 @@ import org.slf4j.LoggerFactory;
+       }
+     }
+ 
++    public TableNotFoundException getOuch3() {
++      return this.ouch3;
++    }
++
++    public removeTableProperty_result setOuch3(TableNotFoundException ouch3) {
++      this.ouch3 = ouch3;
++      return this;
++    }
++
++    public void unsetOuch3() {
++      this.ouch3 = null;
++    }
++
++    /** Returns true if field ouch3 is set (has been assigned a value) and false otherwise */
++    public boolean isSetOuch3() {
++      return this.ouch3 != null;
++    }
++
++    public void setOuch3IsSet(boolean value) {
++      if (!value) {
++        this.ouch3 = null;
++      }
++    }
++
+     public void setFieldValue(_Fields field, Object value) {
+       switch (field) {
+       case OUCH1:
+@@ -42427,6 +42581,14 @@ import org.slf4j.LoggerFactory;
+         }
+         break;
+ 
++      case OUCH3:
++        if (value == null) {
++          unsetOuch3();
++        } else {
++          setOuch3((TableNotFoundException)value);
++        }
++        break;
++
+       }
+     }
+ 
+@@ -42438,6 +42600,9 @@ import org.slf4j.LoggerFactory;
+       case OUCH2:
+         return getOuch2();
+ 
++      case OUCH3:
++        return getOuch3();
++
+       }
+       throw new IllegalStateException();
+     }
+@@ -42453,6 +42618,8 @@ import org.slf4j.LoggerFactory;
+         return isSetOuch1();
+       case OUCH2:
+         return isSetOuch2();
++      case OUCH3:
++        return isSetOuch3();
+       }
+       throw new IllegalStateException();
+     }
+@@ -42488,6 +42655,15 @@ import org.slf4j.LoggerFactory;
+           return false;
+       }
+ 
++      boolean this_present_ouch3 = true && this.isSetOuch3();
++      boolean that_present_ouch3 = true && that.isSetOuch3();
++      if (this_present_ouch3 || that_present_ouch3) {
++        if (!(this_present_ouch3 && that_present_ouch3))
++          return false;
++        if (!this.ouch3.equals(that.ouch3))
++          return false;
++      }
++
+       return true;
+     }
+ 
+@@ -42524,6 +42700,16 @@ import org.slf4j.LoggerFactory;
+           return lastComparison;
+         }
+       }
++      lastComparison = Boolean.valueOf(isSetOuch3()).compareTo(typedOther.isSetOuch3());
++      if (lastComparison != 0) {
++        return lastComparison;
++      }
++      if (isSetOuch3()) {
++        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ouch3, typedOther.ouch3);
++        if (lastComparison != 0) {
++          return lastComparison;
++        }
++      }
+       return 0;
+     }
+ 
+@@ -42559,6 +42745,14 @@ import org.slf4j.LoggerFactory;
+         sb.append(this.ouch2);
+       }
+       first = false;
++      if (!first) sb.append(", ");
++      sb.append("ouch3:");
++      if (this.ouch3 == null) {
++        sb.append("null");
++      } else {
++        sb.append(this.ouch3);
++      }
++      first = false;
+       sb.append(")");
+       return sb.toString();
+     }
+@@ -42620,6 +42814,15 @@ import org.slf4j.LoggerFactory;
+                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+               }
+               break;
++            case 3: // OUCH3
++              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
++                struct.ouch3 = new TableNotFoundException();
++                struct.ouch3.read(iprot);
++                struct.setOuch3IsSet(true);
++              } else { 
++                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
++              }
++              break;
+             default:
+               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+           }
+@@ -42645,6 +42848,11 @@ import org.slf4j.LoggerFactory;
+           struct.ouch2.write(oprot);
+           oprot.writeFieldEnd();
+         }
++        if (struct.ouch3 != null) {
++          oprot.writeFieldBegin(OUCH3_FIELD_DESC);
++          struct.ouch3.write(oprot);
++          oprot.writeFieldEnd();
++        }
+         oprot.writeFieldStop();
+         oprot.writeStructEnd();
+       }
+@@ -42669,19 +42877,25 @@ import org.slf4j.LoggerFactory;
+         if (struct.isSetOuch2()) {
+           optionals.set(1);
+         }
+-        oprot.writeBitSet(optionals, 2);
++        if (struct.isSetOuch3()) {
++          optionals.set(2);
++        }
++        oprot.writeBitSet(optionals, 3);
+         if (struct.isSetOuch1()) {
+           struct.ouch1.write(oprot);
+         }
+         if (struct.isSetOuch2()) {
+           struct.ouch2.write(oprot);
+         }
++        if (struct.isSetOuch3()) {
++          struct.ouch3.write(oprot);
++        }
+       }
+ 
+       @Override
+       public void read(org.apache.thrift.protocol.TProtocol prot, removeTableProperty_result struct) throws org.apache.thrift.TException {
+         TTupleProtocol iprot = (TTupleProtocol) prot;
+-        BitSet incoming = iprot.readBitSet(2);
++        BitSet incoming = iprot.readBitSet(3);
+         if (incoming.get(0)) {
+           struct.ouch1 = new AccumuloException();
+           struct.ouch1.read(iprot);
+@@ -42692,6 +42906,11 @@ import org.slf4j.LoggerFactory;
+           struct.ouch2.read(iprot);
+           struct.setOuch2IsSet(true);
+         }
++        if (incoming.get(2)) {
++          struct.ouch3 = new TableNotFoundException();
++          struct.ouch3.read(iprot);
++          struct.setOuch3IsSet(true);
++        }
+       }
+     }
+ 
+@@ -45818,6 +46037,7 @@ import org.slf4j.LoggerFactory;
+ 
+     private static final org.apache.thrift.protocol.TField OUCH1_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+     private static final org.apache.thrift.protocol.TField OUCH2_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
++    private static final org.apache.thrift.protocol.TField OUCH3_FIELD_DESC = new org.apache.thrift.protocol.TField("ouch3", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+ 
+     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+     static {
+@@ -45827,11 +46047,13 @@ import org.slf4j.LoggerFactory;
+ 
+     public AccumuloException ouch1; // required
+     public AccumuloSecurityException ouch2; // required
++    public TableNotFoundException ouch3; // required
+ 
+     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+     @SuppressWarnings("all") public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+       OUCH1((short)1, "ouch1"),
+-      OUCH2((short)2, "ouch2");
++      OUCH2((short)2, "ouch2"),
++      OUCH3((short)3, "ouch3");
+ 
+       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+ 
+@@ -45850,6 +46072,8 @@ import org.slf4j.LoggerFactory;
+             return OUCH1;
+           case 2: // OUCH2
+             return OUCH2;
++          case 3: // OUCH3
++            return OUCH3;
+           default:
+             return null;
+         }
+@@ -45897,6 +46121,8 @@ import org.slf4j.LoggerFactory;
+           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+       tmpMap.put(_Fields.OUCH2, new org.apache.thrift.meta_data.FieldMetaData("ouch2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
++      tmpMap.put(_Fields.OUCH3, new org.apache.thrift.meta_data.FieldMetaData("ouch3", org.apache.thrift.TFieldRequirementType.DEFAULT, 
++          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+       metaDataMap = Collections.unmodifiableMap(tmpMap);
+       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(setTableProperty_result.class, metaDataMap);
+     }
+@@ -45906,11 +46132,13 @@ import org.slf4j.LoggerFactory;
+ 
+     public setTableProperty_result(
+       AccumuloException ouch1,
+-      AccumuloSecurityException ouch2)
++      AccumuloSecurityException ouch2,
++      TableNotFoundException ouch3)
+     {
+       this();
+       this.ouch1 = ouch1;
+       this.ouch2 = ouch2;
++      this.ouch3 = ouch3;
+     }
+ 
+     /**
+@@ -45923,6 +46151,9 @@ import org.slf4j.LoggerFactory;
+       if (other.isSetOuch2()) {
+         this.ouch2 = new AccumuloSecurityException(other.ouch2);
+       }
++      if (other.isSetOuch3()) {
++        this.ouch3 = new TableNotFoundException(other.ouch3);
++      }
+     }
+ 
+     public setTableProperty_result deepCopy() {
+@@ -45933,6 +46164,7 @@ import org.slf4j.LoggerFactory;
+     public void clear() {
+       this.ouch1 = null;
+       this.ouch2 = null;
++      this.ouch3 = null;
+     }
+ 
+     public AccumuloException getOuch1() {
+@@ -45983,6 +46215,30 @@ import org.slf4j.LoggerFactory;
+       }
+     }
+ 
++    public TableNotFoundException getOuch3() {
++      return this.ouch3;
++    }
++
++    public setTableProperty_result setOuch3(TableNotFoundException ouch3) {
++      this.ouch3 = ouch3;
++      return this;
++    }
++
++    public void unsetOuch3() {
++      this.ouch3 = null;
++    }
++
++    /** Returns true if field ouch3 is set (has been assigned a value) and false otherwise */
++    public boolean isSetOuch3() {
++      return this.ouch3 != null;
++    }
++
++    public void setOuch3IsSet(boolean value) {
++      if (!value) {
++        this.ouch3 = null;
++      }
++    }
++
+     public void setFieldValue(_Fields field, Object value) {
+       switch (field) {
+       case OUCH1:
+@@ -46001,6 +46257,14 @@ import org.slf4j.LoggerFactory;
+         }
+         break;
+ 
++      case OUCH3:
++        if (value == null) {
++          unsetOuch3();
++        } else {
++          setOuch3((TableNotFoundException)value);
++        }
++        break;
++
+       }
+     }
+ 
+@@ -46012,6 +46276,9 @@ import org.slf4j.LoggerFactory;
+       case OUCH2:
+         return getOuch2();
+ 
++      case OUCH3:
++        return getOuch3();
++
+       }
+       throw new IllegalStateException();
+     }
+@@ -46027,6 +46294,8 @@ import org.slf4j.LoggerFactory;
+         return isSetOuch1();
+       case OUCH2:
+         return isSetOuch2();
++      case OUCH3:
++        return isSetOuch3();
+       }
+       throw new IllegalStateException();
+     }
+@@ -46062,6 +46331,15 @@ import org.slf4j.LoggerFactory;
+           return false;
+       }
+ 
++      boolean this_present_ouch3 = true && this.isSetOuch3();
++      boolean that_present_ouch3 = true && that.isSetOuch3();
++      if (this_present_ouch3 || that_present_ouch3) {
++        if (!(this_present_ouch3 && that_present_ouch3))
++          return false;
++        if (!this.ouch3.equals(that.ouch3))
++          return false;
++      }
++
+       return true;
+     }
+ 
+@@ -46098,6 +46376,16 @@ import org.slf4j.LoggerFactory;
+           return lastComparison;
+         }
+       }
++      lastComparison = Boolean.valueOf(isSetOuch3()).compareTo(typedOther.isSetOuch3());
++      if (lastComparison != 0) {
++        return lastComparison;
++      }
++      if (isSetOuch3()) {
++        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ouch3, typedOther.ouch3);
++        if (lastComparison != 0) {
++          return lastComparison;
++        }
++      }
+       return 0;
+     }
+ 
+@@ -46133,6 +46421,14 @@ import org.slf4j.LoggerFactory;
+         sb.append(this.ouch2);
+       }
+       first = false;
++      if (!first) sb.append(", ");
++      sb.append("ouch3:");
++      if (this.ouch3 == null) {
++        sb.append("null");
++      } else {
++        sb.append(this.ouch3);
++      }
++      first = false;
+       sb.append(")");
+       return sb.toString();
+     }
+@@ -46194,6 +46490,15 @@ import org.slf4j.LoggerFactory;
+                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+               }
+               break;
++            case 3: // OUCH3
++              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
++                struct.ouch3 = new TableNotFoundException();
++                struct.ouch3.read(iprot);
++                struct.setOuch3IsSet(true);
++              } else { 
++                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
++              }
++              break;
+             default:
+               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+           }
+@@ -46219,6 +46524,11 @@ import org.slf4j.LoggerFactory;
+           struct.ouch2.write(oprot);
+           oprot.writeFieldEnd();
+         }
++        if (struct.ouch3 != null) {
++          oprot.writeFieldBegin(OUCH3_FIELD_DESC);
++          struct.ouch3.write(oprot);
++          oprot.writeFieldEnd();
++        }
+         oprot.writeFieldStop();
+         oprot.writeStructEnd();
+       }
+@@ -46243,19 +46553,25 @@ import org.slf4j.LoggerFactory;
+         if (struct.isSetOuch2()) {
+           optionals.set(1);
+         }
+-        oprot.writeBitSet(optionals, 2);
++        if (struct.isSetOuch3()) {
++          optionals.set(2);
++        }
++        oprot.writeBitSet(optionals, 3);
+         if (struct.isSetOuch1()) {
+           struct.ouch1.write(oprot);
+         }
+         if (struct.isSetOuch2()) {
+           struct.ouch2.write(oprot);
+         }
++        if (struct.isSetOuch3()) {
++          struct.ouch3.write(oprot);
++        }
+       }
+ 
+       @Override
+       public void read(org.apache.thrift.protocol.TProtocol prot, setTableProperty_result struct) throws org.apache.thrift.TException {
+         TTupleProtocol iprot = (TTupleProtocol) prot;
+-        BitSet incoming = iprot.readBitSet(2);
++        BitSet incoming = iprot.readBitSet(3);
+         if (incoming.get(0)) {
+           struct.ouch1 = new AccumuloException();
+           struct.ouch1.read(iprot);
+@@ -46266,6 +46582,11 @@ import org.slf4j.LoggerFactory;
+           struct.ouch2.read(iprot);
+           struct.setOuch2IsSet(true);
+         }
++        if (incoming.get(2)) {
++          struct.ouch3 = new TableNotFoundException();
++          struct.ouch3.read(iprot);
++          struct.setOuch3IsSet(true);
++        }
+       }
+     }
+ 

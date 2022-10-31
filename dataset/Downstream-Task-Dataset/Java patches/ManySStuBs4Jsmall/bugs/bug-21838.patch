@@ -1,0 +1,32 @@
+diff --git a/library/src/main/java/com/squareup/otto/Bus.java b/library/src/main/java/com/squareup/otto/Bus.java
+index 3821f47..f86e374 100644
+--- a/library/src/main/java/com/squareup/otto/Bus.java
++++ b/library/src/main/java/com/squareup/otto/Bus.java
+@@ -453,9 +453,9 @@
+   private static void throwRuntimeException(String msg, InvocationTargetException e) {
+     Throwable cause = e.getCause();
+     if (cause != null) {
+-      throw new RuntimeException(msg, cause);
++      throw new RuntimeException(msg + ": " + cause.getMessage(), cause);
+     } else {
+-      throw new RuntimeException(msg);
++      throw new RuntimeException(msg + ": " + e.getMessage(), e);
+     }
+   }
+ 
+diff --git a/library/src/main/java/com/squareup/otto/Bus.java b/library/src/main/java/com/squareup/otto/Bus.java
+index 3821f47..f86e374 100644
+--- a/library/src/main/java/com/squareup/otto/Bus.java
++++ b/library/src/main/java/com/squareup/otto/Bus.java
+@@ -453,9 +453,9 @@
+   private static void throwRuntimeException(String msg, InvocationTargetException e) {
+     Throwable cause = e.getCause();
+     if (cause != null) {
+-      throw new RuntimeException(msg, cause);
++      throw new RuntimeException(msg + ": " + cause.getMessage(), cause);
+     } else {
+-      throw new RuntimeException(msg);
++      throw new RuntimeException(msg + ": " + e.getMessage(), e);
+     }
+   }
+ 

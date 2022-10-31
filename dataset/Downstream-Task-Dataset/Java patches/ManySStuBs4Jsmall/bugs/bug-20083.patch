@@ -1,0 +1,289 @@
+diff --git a/api/src/main/java/org/openmrs/ConceptComplex.java b/api/src/main/java/org/openmrs/ConceptComplex.java
+index 5038944..63edd46 100644
+--- a/api/src/main/java/org/openmrs/ConceptComplex.java
++++ b/api/src/main/java/org/openmrs/ConceptComplex.java
+@@ -85,7 +85,7 @@
+ 			return false;
+ 		}
+ 		
+-		return getDatatype().getHl7Abbreviation().equals("ED");
++		return "ED".equals(getDatatype().getHl7Abbreviation());
+ 	}
+ 	
+ 	/**
+diff --git a/api/src/main/java/org/openmrs/ConceptNumeric.java b/api/src/main/java/org/openmrs/ConceptNumeric.java
+index 013ae10..976b5ec 100644
+--- a/api/src/main/java/org/openmrs/ConceptNumeric.java
++++ b/api/src/main/java/org/openmrs/ConceptNumeric.java
+@@ -193,7 +193,7 @@
+ 	 */
+ 	@Override
+ 	public boolean isNumeric() {
+-		return getDatatype().getName().equals("Numeric");
++		return "Numeric".equals(getDatatype().getName());
+ 	}
+ 	
+ 	/**
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateContextDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateContextDAO.java
+index e6858fc..d2a99b3 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernateContextDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernateContextDAO.java
+@@ -115,7 +115,7 @@
+ 			
+ 			String lockoutTimeString = candidateUser.getUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP, null);
+ 			Long lockoutTime = null;
+-			if (lockoutTimeString != null && !lockoutTimeString.equals("0")) {
++			if (lockoutTimeString != null && !"0".equals(lockoutTimeString)) {
+ 				try {
+ 					// putting this in a try/catch in case the admin decided to put junk into the property
+ 					lockoutTime = Long.valueOf(lockoutTimeString);
+diff --git a/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java b/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
+index 7fbaeb5..a66158f 100644
+--- a/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
++++ b/api/src/main/java/org/openmrs/api/db/hibernate/HibernatePatientDAO.java
+@@ -685,7 +685,7 @@
+ 		if (checkLocation) {
+ 			query.setInteger("locationId", patientIdentifier.getLocation().getLocationId());
+ 		}
+-		return !query.uniqueResult().toString().equals("0");
++		return !"0".equals(query.uniqueResult().toString());
+ 	}
+ 	
+ 	/**
+diff --git a/api/src/main/java/org/openmrs/api/impl/EncounterServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/EncounterServiceImpl.java
+index a694d42..d5a71d5 100644
+--- a/api/src/main/java/org/openmrs/api/impl/EncounterServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/EncounterServiceImpl.java
+@@ -881,7 +881,7 @@
+ 	public void checkIfEncounterTypesAreLocked() {
+ 		String locked = Context.getAdministrationService().getGlobalProperty(
+ 		    OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_TYPES_LOCKED, "false");
+-		if (locked.toLowerCase().equals("true")) {
++		if ("true".equals(locked.toLowerCase())) {
+ 			throw new EncounterTypeLockedException();
+ 		}
+ 	}
+diff --git a/api/src/main/java/org/openmrs/api/impl/FormServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/FormServiceImpl.java
+index 8ca3e7c..b3ac8c1 100644
+--- a/api/src/main/java/org/openmrs/api/impl/FormServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/FormServiceImpl.java
+@@ -784,7 +784,7 @@
+ 	public void checkIfFormsAreLocked() {
+ 		String locked = Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_FORMS_LOCKED,
+ 		    "false");
+-		if (locked.toLowerCase().equals("true")) {
++		if ("true".equals(locked.toLowerCase())) {
+ 			throw new FormsLockedException();
+ 		}
+ 	}
+diff --git a/api/src/main/java/org/openmrs/api/impl/PatientServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/PatientServiceImpl.java
+index 5e08ae3..af0f202 100644
+--- a/api/src/main/java/org/openmrs/api/impl/PatientServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/PatientServiceImpl.java
+@@ -1583,7 +1583,7 @@
+ 	public void checkIfPatientIdentifierTypesAreLocked() {
+ 		String locked = Context.getAdministrationService().getGlobalProperty(
+ 		    OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_TYPES_LOCKED, "false");
+-		if (locked.toLowerCase().equals("true")) {
++		if ("true".equals(locked.toLowerCase())) {
+ 			throw new PatientIdentifierTypeLockedException();
+ 		}
+ 	}
+diff --git a/api/src/main/java/org/openmrs/api/impl/PersonServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/PersonServiceImpl.java
+index 8255142..2622e2c 100644
+--- a/api/src/main/java/org/openmrs/api/impl/PersonServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/PersonServiceImpl.java
+@@ -932,7 +932,7 @@
+ 	public void checkIfPersonAttributeTypesAreLocked() {
+ 		String locked = Context.getAdministrationService().getGlobalProperty(
+ 		    OpenmrsConstants.GLOBAL_PROPERTY_PERSON_ATRIBUTE_TYPES_LOCKED, "false");
+-		if (locked.toLowerCase().equals("true")) {
++		if ("true".equals(locked.toLowerCase())) {
+ 			throw new PersonAttributeTypeLockedException();
+ 		}
+ 	}
+diff --git a/api/src/main/java/org/openmrs/hl7/handler/ORUR01Handler.java b/api/src/main/java/org/openmrs/hl7/handler/ORUR01Handler.java
+index b5c8b1e..ee67549 100644
+--- a/api/src/main/java/org/openmrs/hl7/handler/ORUR01Handler.java
++++ b/api/src/main/java/org/openmrs/hl7/handler/ORUR01Handler.java
+@@ -673,7 +673,7 @@
+ 				concept = concept.hydrate(concept.getConceptId().toString());
+ 				obs.setConcept(concept);
+ 				if (concept.getDatatype().isBoolean()) {
+-					obs.setValueBoolean(value.equals("1"));
++					obs.setValueBoolean("1".equals(value));
+ 				} else if (concept.getDatatype().isNumeric()) {
+ 					try {
+ 						obs.setValueNumeric(Double.valueOf(value));
+diff --git a/api/src/main/java/org/openmrs/hl7/impl/HL7ServiceImpl.java b/api/src/main/java/org/openmrs/hl7/impl/HL7ServiceImpl.java
+index 2003351..c9c6405 100644
+--- a/api/src/main/java/org/openmrs/hl7/impl/HL7ServiceImpl.java
++++ b/api/src/main/java/org/openmrs/hl7/impl/HL7ServiceImpl.java
+@@ -710,7 +710,7 @@
+ 			        + Context.getAdministrationService().getGlobalProperty(
+ 			            OpenmrsConstants.GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS, "false"));
+ 			if (e.getCause() != null
+-			        && e.getCause().getMessage().equals("Could not resolve patient")
++			        && "Could not resolve patient".equals(e.getCause().getMessage())
+ 			        && !"local".equals(hl7InQueue.getHL7Source().getName())
+ 			        && "true".equals(Context.getAdministrationService().getGlobalProperty(
+ 			            OpenmrsConstants.GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS, "false"))) {
+diff --git a/api/src/main/java/org/openmrs/module/ModuleFactory.java b/api/src/main/java/org/openmrs/module/ModuleFactory.java
+index 4770d63..f8cd70b 100644
+--- a/api/src/main/java/org/openmrs/module/ModuleFactory.java
++++ b/api/src/main/java/org/openmrs/module/ModuleFactory.java
+@@ -289,7 +289,7 @@
+ 			
+ 			// if a 'moduleid.started' property doesn't exist, start the module anyway
+ 			// as this is probably the first time they are loading it
+-			if (startedProp == null || startedProp.equals("true") || "true".equalsIgnoreCase(mandatoryProp)
++			if (startedProp == null || "true".equals(startedProp) || "true".equalsIgnoreCase(mandatoryProp)
+ 			        || mod.isMandatory() || isCoreToOpenmrs) {
+ 				modules.add(mod);
+ 			}
+diff --git a/api/src/main/java/org/openmrs/propertyeditor/ConceptAnswersEditor.java b/api/src/main/java/org/openmrs/propertyeditor/ConceptAnswersEditor.java
+index 167bc2b..14353b7 100644
+--- a/api/src/main/java/org/openmrs/propertyeditor/ConceptAnswersEditor.java
++++ b/api/src/main/java/org/openmrs/propertyeditor/ConceptAnswersEditor.java
+@@ -62,7 +62,7 @@
+ 			//set up parameter answer Set for easier add/delete functions and removal of duplicates
+ 			for (String id : conceptIds) {
+ 				id = id.trim();
+-				if (!id.equals("") && !requestConceptIds.contains(id)) { //remove whitespace, blank lines, and duplicates
++				if (!("".equals(id)) && !requestConceptIds.contains(id)) { //remove whitespace, blank lines, and duplicates
+ 					requestConceptIds.add(id);
+ 				}
+ 			}
+diff --git a/api/src/main/java/org/openmrs/propertyeditor/ConceptSetsEditor.java b/api/src/main/java/org/openmrs/propertyeditor/ConceptSetsEditor.java
+index dd28d9f..0bb8577 100644
+--- a/api/src/main/java/org/openmrs/propertyeditor/ConceptSetsEditor.java
++++ b/api/src/main/java/org/openmrs/propertyeditor/ConceptSetsEditor.java
+@@ -58,7 +58,7 @@
+ 			// and removal of duplicates
+ 			for (String id : conceptIds) {
+ 				id = id.trim();
+-				if (!id.equals("") && !requestConceptIds.contains(Integer.valueOf(id))) { //remove whitespace, blank lines, and duplicate entries
++				if (!("".equals(id)) && !requestConceptIds.contains(Integer.valueOf(id))) { //remove whitespace, blank lines, and duplicate entries
+ 					requestConceptIds.add(Integer.valueOf(id));
+ 				}
+ 			}
+diff --git a/api/src/main/java/org/openmrs/util/databasechange/GenerateUuid.java b/api/src/main/java/org/openmrs/util/databasechange/GenerateUuid.java
+index aa74dc9..aea0849 100644
+--- a/api/src/main/java/org/openmrs/util/databasechange/GenerateUuid.java
++++ b/api/src/main/java/org/openmrs/util/databasechange/GenerateUuid.java
+@@ -106,7 +106,7 @@
+ 			initialAutoCommit = connection.getAutoCommit();
+ 			connection.setAutoCommit(false);
+ 			
+-			if (database.getTypeName().equals("mysql")) {
++			if ("mysql".equals(database.getTypeName())) {
+ 				String updateSql = "update %s set " + columnName + " = uuid() where " + columnName + " is null";
+ 				for (String tablename : tableNamesArray) {
+ 					String rawSql = String.format(updateSql, tablename);
+diff --git a/api/src/main/java/org/openmrs/util/databasechange/MigrateConceptReferenceTermChangeSet.java b/api/src/main/java/org/openmrs/util/databasechange/MigrateConceptReferenceTermChangeSet.java
+index 91e72c0..c969a2c 100644
+--- a/api/src/main/java/org/openmrs/util/databasechange/MigrateConceptReferenceTermChangeSet.java
++++ b/api/src/main/java/org/openmrs/util/databasechange/MigrateConceptReferenceTermChangeSet.java
+@@ -230,7 +230,7 @@
+ 			if (comment.startsWith("MAP TYPE:")) {
+ 				comment = comment.substring(9).trim();
+ 				
+-				if (comment.equals("SAME-AS FROM RXNORM")) {
++				if ("SAME-AS FROM RXNORM".equals(comment)) {
+ 					comment = "SAME-AS";
+ 				}
+ 				
+diff --git a/api/src/main/java/org/openmrs/util/databasechange/ProgramValidatorChangeSet.java b/api/src/main/java/org/openmrs/util/databasechange/ProgramValidatorChangeSet.java
+index 0d5d0a9..211815c 100644
+--- a/api/src/main/java/org/openmrs/util/databasechange/ProgramValidatorChangeSet.java
++++ b/api/src/main/java/org/openmrs/util/databasechange/ProgramValidatorChangeSet.java
+@@ -85,7 +85,7 @@
+ 		}
+ 		for (List<Object> row : results) {
+ 			Integer conceptId = Integer.valueOf(row.get(0).toString());
+-			boolean isInitial = row.get(1).toString().equals("1");
++			boolean isInitial = "1".equals(row.get(1).toString());
+ 			int num = Integer.parseInt(row.get(2).toString());
+ 			if (isInitial && num > 0) {
+ 				missingInitial.remove(conceptId);
+diff --git a/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java b/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java
+index bf5de68..2a69405 100644
+--- a/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java
++++ b/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java
+@@ -193,7 +193,7 @@
+ 							inStream = jarFile.getInputStream(entry);
+ 							OpenmrsUtil.copyFile(inStream, outStream);
+ 						}
+-					} else if (name.equals("moduleApplicationContext.xml") || name.equals("webModuleApplicationContext.xml")) {
++					} else if ("moduleApplicationContext.xml".equals(name) || "webModuleApplicationContext.xml".equals(name)) {
+ 						moduleNeedsContextRefresh = true;
+ 					} else if (name.equals(mod.getModuleId() + "Context.xml")) {
+ 						String msg = "DEPRECATED: '" + name
+diff --git a/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterMapping.java b/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterMapping.java
+index 123c189..790296d 100644
+--- a/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterMapping.java
++++ b/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterMapping.java
+@@ -190,7 +190,7 @@
+ 		log.debug("Checking URL <" + requestPath + "> against pattern <" + patternToCheck + ">");
+ 		
+ 		// Match exact or full wildcard
+-		if (patternToCheck.equals("*") || patternToCheck.equals("/*") || patternToCheck.equals(requestPath)) {
++		if ("*".equals(patternToCheck) || "/*".equals(patternToCheck) || patternToCheck.equals(requestPath)) {
+ 			return true;
+ 		}
+ 		
+diff --git a/web/src/main/java/org/openmrs/web/WebUtil.java b/web/src/main/java/org/openmrs/web/WebUtil.java
+index df240c2..36164ed 100644
+--- a/web/src/main/java/org/openmrs/web/WebUtil.java
++++ b/web/src/main/java/org/openmrs/web/WebUtil.java
+@@ -297,7 +297,7 @@
+ 			return null;
+ 		}
+ 		localeString = localeString.trim();
+-		if (localeString.isEmpty() || localeString.equals("_")) {
++		if (localeString.isEmpty() || "_".equals(localeString)) {
+ 			return null;
+ 		}
+ 		int len = localeString.length();
+diff --git a/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java b/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java
+index 17b1568..7617772 100644
+--- a/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java
++++ b/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java
+@@ -130,7 +130,7 @@
+ 			String gzipEnabled = Context.getAdministrationService().getGlobalProperty(
+ 			    OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ENABLED, "");
+ 			
+-			boolean isEnabled = gzipEnabled.toLowerCase().equals("true");
++			boolean isEnabled = "true".equals(gzipEnabled.toLowerCase());
+ 			cachedGZipEnabledFlag = isEnabled;
+ 			return cachedGZipEnabledFlag;
+ 		}
+diff --git a/web/src/main/java/org/openmrs/web/filter/StartupFilter.java b/web/src/main/java/org/openmrs/web/filter/StartupFilter.java
+index 0bcb354..22e3668 100644
+--- a/web/src/main/java/org/openmrs/web/filter/StartupFilter.java
++++ b/web/src/main/java/org/openmrs/web/filter/StartupFilter.java
+@@ -149,9 +149,9 @@
+ 				httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME + "/" + WebConstants.SETUP_PAGE_URL);
+ 			} else {
+ 				
+-				if (httpRequest.getMethod().equals("GET")) {
++				if ("GET".equals(httpRequest.getMethod())) {
+ 					doGet(httpRequest, httpResponse);
+-				} else if (httpRequest.getMethod().equals("POST")) {
++				} else if ("POST".equals(httpRequest.getMethod())) {
+ 					// only clear errors before POSTS so that redirects can show errors too.
+ 					errors.clear();
+ 					msgs.clear();
+diff --git a/api/src/main/java/org/openmrs/ConceptComplex.java b/api/src/main/java/org/openmrs/ConceptComplex.java
+index 5038944..63edd46 100644
+--- a/api/src/main/java/org/openmrs/ConceptComplex.java
++++ b/api/src/main/java/org/openmrs/ConceptComplex.java
+@@ -85,7 +85,7 @@
+ 			return false;
+ 		}
+ 		
+-		return getDatatype().getHl7Abbreviation().equals("ED");
++		return "ED".equals(getDatatype().getHl7Abbreviation());
+ 	}
+ 	
+ 	/**

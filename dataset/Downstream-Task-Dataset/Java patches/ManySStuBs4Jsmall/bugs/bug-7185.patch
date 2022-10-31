@@ -1,0 +1,14 @@
+diff --git a/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-common/src/main/java/org/apache/hadoop/mapreduce/v2/util/MRApps.java b/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-common/src/main/java/org/apache/hadoop/mapreduce/v2/util/MRApps.java
+index 2aa26da..11eca7e 100644
+--- a/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-common/src/main/java/org/apache/hadoop/mapreduce/v2/util/MRApps.java
++++ b/hadoop-mapreduce-project/hadoop-mapreduce-client/hadoop-mapreduce-client-common/src/main/java/org/apache/hadoop/mapreduce/v2/util/MRApps.java
+@@ -189,7 +189,8 @@
+       Apps.addToEnvironment(
+           environment,
+           Environment.CLASSPATH.name(),
+-          thisClassLoader.getResource(mrAppGeneratedClasspathFile).getFile());
++          thisClassLoader.getResource(mrAppGeneratedClasspathFile).getFile()
++            .split("!")[0]);
+ 
+       // Add standard Hadoop classes
+       for (String c : ApplicationConstants.APPLICATION_CLASSPATH) {

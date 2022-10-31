@@ -1,0 +1,15 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
+index 44c660f..f8c87e5 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/VariableDeclarationUsageDistanceCheck.java
+@@ -262,8 +262,8 @@
+         final int parentType = ast.getParent().getType();
+         final DetailAST modifiers = ast.getFirstChild();
+ 
+-        if (!(parentType == TokenTypes.OBJBLOCK
+-                || ignoreFinal && modifiers.branchContains(TokenTypes.FINAL))) {
++        if (parentType != TokenTypes.OBJBLOCK
++                && (!ignoreFinal || !modifiers.branchContains(TokenTypes.FINAL))) {
+             final DetailAST variable = ast.findFirstToken(TokenTypes.IDENT);
+ 
+             if (!isVariableMatchesIgnorePattern(variable.getText())) {

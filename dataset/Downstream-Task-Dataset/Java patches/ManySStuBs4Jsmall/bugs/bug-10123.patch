@@ -1,0 +1,26 @@
+diff --git a/webmagic-core/src/main/java/us/codecraft/webmagic/Page.java b/webmagic-core/src/main/java/us/codecraft/webmagic/Page.java
+index 3cafe62..a74b608 100644
+--- a/webmagic-core/src/main/java/us/codecraft/webmagic/Page.java
++++ b/webmagic-core/src/main/java/us/codecraft/webmagic/Page.java
+@@ -127,7 +127,7 @@
+         synchronized (targetRequests) {
+             for (String s : requests) {
+                 if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
+-                    break;
++                    continue;
+                 }
+                 s = UrlUtils.canonicalizeUrl(s, url.toString());
+                 targetRequests.add(new Request(s).setPriority(priority));
+diff --git a/webmagic-core/src/main/java/us/codecraft/webmagic/Page.java b/webmagic-core/src/main/java/us/codecraft/webmagic/Page.java
+index 3cafe62..a74b608 100644
+--- a/webmagic-core/src/main/java/us/codecraft/webmagic/Page.java
++++ b/webmagic-core/src/main/java/us/codecraft/webmagic/Page.java
+@@ -127,7 +127,7 @@
+         synchronized (targetRequests) {
+             for (String s : requests) {
+                 if (StringUtils.isBlank(s) || s.equals("#") || s.startsWith("javascript:")) {
+-                    break;
++                    continue;
+                 }
+                 s = UrlUtils.canonicalizeUrl(s, url.toString());
+                 targetRequests.add(new Request(s).setPriority(priority));

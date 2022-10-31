@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/util/component/ArgumentSubstitutionParser.java b/camel-core/src/main/java/org/apache/camel/util/component/ArgumentSubstitutionParser.java
+index 43f60e9..0ebf63c 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/component/ArgumentSubstitutionParser.java
++++ b/camel-core/src/main/java/org/apache/camel/util/component/ArgumentSubstitutionParser.java
+@@ -74,7 +74,7 @@
+                             if (matcher.find()) {
+                                 final List<NameReplacement> adapters = argEntry.getValue();
+                                 for (NameReplacement adapter : adapters) {
+-                                    if (adapter.type == null || adapter.type.isAssignableFrom(argument.getType())) {
++                                    if (adapter.type == null || adapter.type == argument.getType()) {
+                                         argument = new Argument(matcher.replaceAll(adapter.replacement), argument.getType());
+                                     }
+                                 }
+diff --git a/camel-core/src/main/java/org/apache/camel/util/component/ArgumentSubstitutionParser.java b/camel-core/src/main/java/org/apache/camel/util/component/ArgumentSubstitutionParser.java
+index 43f60e9..0ebf63c 100644
+--- a/camel-core/src/main/java/org/apache/camel/util/component/ArgumentSubstitutionParser.java
++++ b/camel-core/src/main/java/org/apache/camel/util/component/ArgumentSubstitutionParser.java
+@@ -74,7 +74,7 @@
+                             if (matcher.find()) {
+                                 final List<NameReplacement> adapters = argEntry.getValue();
+                                 for (NameReplacement adapter : adapters) {
+-                                    if (adapter.type == null || adapter.type.isAssignableFrom(argument.getType())) {
++                                    if (adapter.type == null || adapter.type == argument.getType()) {
+                                         argument = new Argument(matcher.replaceAll(adapter.replacement), argument.getType());
+                                     }
+                                 }

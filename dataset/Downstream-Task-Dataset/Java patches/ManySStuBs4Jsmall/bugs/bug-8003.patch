@@ -1,0 +1,44 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
+index 683415f..1c28ac4 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
+@@ -962,7 +962,7 @@
+ 
+   private boolean isPresent(String[] list, String elem) {
+     for (String s : list) {
+-      if (s.equals(elem)) {
++      if (s.toLowerCase().equals(elem)) {
+         return true;
+       }
+     }
+@@ -4518,7 +4518,7 @@
+     int pos = 0;
+     for (String src : joinTree.getBaseSrc()) {
+       if (src != null) {
+-        Operator srcOp = map.get(src);
++        Operator srcOp = map.get(src.toLowerCase());
+ 
+         // for left-semi join, generate an additional selection & group-by
+         // operator before ReduceSink
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
+index 683415f..1c28ac4 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java
+@@ -962,7 +962,7 @@
+ 
+   private boolean isPresent(String[] list, String elem) {
+     for (String s : list) {
+-      if (s.equals(elem)) {
++      if (s.toLowerCase().equals(elem)) {
+         return true;
+       }
+     }
+@@ -4518,7 +4518,7 @@
+     int pos = 0;
+     for (String src : joinTree.getBaseSrc()) {
+       if (src != null) {
+-        Operator srcOp = map.get(src);
++        Operator srcOp = map.get(src.toLowerCase());
+ 
+         // for left-semi join, generate an additional selection & group-by
+         // operator before ReduceSink

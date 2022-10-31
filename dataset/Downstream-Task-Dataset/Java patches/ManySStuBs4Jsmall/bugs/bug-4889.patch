@@ -1,0 +1,22 @@
+diff --git a/components/camel-kafka/src/test/java/org/apache/camel/component/kafka/KafkaComponentTest.java b/components/camel-kafka/src/test/java/org/apache/camel/component/kafka/KafkaComponentTest.java
+index 1c2c564..6a3773a 100644
+--- a/components/camel-kafka/src/test/java/org/apache/camel/component/kafka/KafkaComponentTest.java
++++ b/components/camel-kafka/src/test/java/org/apache/camel/component/kafka/KafkaComponentTest.java
+@@ -59,7 +59,7 @@
+ 
+         KafkaEndpoint endpoint = new KafkaComponent(context).createEndpoint(uri, remaining, params);
+ 
+-        assertEquals(new Integer(0), endpoint.getRequestRequiredAcks());
++        assertEquals("1", endpoint.getRequestRequiredAcks());
+         assertEquals(new Integer(1), endpoint.getBufferMemorySize());
+         assertEquals(new Integer(10), endpoint.getProducerBatchSize());
+         assertEquals(new Integer(12), endpoint.getConnectionMaxIdleMs());
+@@ -155,7 +155,7 @@
+     }
+ 
+     private void setProducerProperty(Map<String, Object> params) {
+-        params.put("requestRequiredAcks", 0);
++        params.put("requestRequiredAcks", "1");
+         params.put("bufferMemorySize", 1);
+         params.put("compressionCodec", "none");
+         params.put("retries", 0);

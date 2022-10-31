@@ -1,0 +1,26 @@
+diff --git a/src/main/java/redis/clients/jedis/Connection.java b/src/main/java/redis/clients/jedis/Connection.java
+index e4db555..a2d5e2b 100644
+--- a/src/main/java/redis/clients/jedis/Connection.java
++++ b/src/main/java/redis/clients/jedis/Connection.java
+@@ -230,7 +230,7 @@
+   @SuppressWarnings("unchecked")
+   public List<Long> getIntegerMultiBulkReply() {
+     flush();
+-    return (List<Long>) Protocol.read(inputStream);
++    return (List<Long>) readProtocolWithCheckingBroken();
+   }
+ 
+   public Object getOne() {
+diff --git a/src/main/java/redis/clients/jedis/Connection.java b/src/main/java/redis/clients/jedis/Connection.java
+index e4db555..a2d5e2b 100644
+--- a/src/main/java/redis/clients/jedis/Connection.java
++++ b/src/main/java/redis/clients/jedis/Connection.java
+@@ -230,7 +230,7 @@
+   @SuppressWarnings("unchecked")
+   public List<Long> getIntegerMultiBulkReply() {
+     flush();
+-    return (List<Long>) Protocol.read(inputStream);
++    return (List<Long>) readProtocolWithCheckingBroken();
+   }
+ 
+   public Object getOne() {

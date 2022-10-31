@@ -1,0 +1,13 @@
+diff --git a/couchbase2/src/main/java/com/yahoo/ycsb/db/couchbase2/Couchbase2Client.java b/couchbase2/src/main/java/com/yahoo/ycsb/db/couchbase2/Couchbase2Client.java
+index 7acd9bb..6697a0c 100644
+--- a/couchbase2/src/main/java/com/yahoo/ycsb/db/couchbase2/Couchbase2Client.java
++++ b/couchbase2/src/main/java/com/yahoo/ycsb/db/couchbase2/Couchbase2Client.java
+@@ -715,7 +715,7 @@
+    */
+   private void waitForMutationResponse(final Observable<? extends Document<?>> input) {
+     if (!syncMutResponse) {
+-      input.subscribe(new Subscriber<Document<?>>() {
++      ((Observable<Document<?>>)input).subscribe(new Subscriber<Document<?>>() {
+         @Override
+         public void onCompleted() {
+         }

@@ -1,0 +1,73 @@
+diff --git a/community/udc-integration/src/test/java/org/neo4j/ext/udc/impl/UdcExtensionImplTest.java b/community/udc-integration/src/test/java/org/neo4j/ext/udc/impl/UdcExtensionImplTest.java
+index 5d068a8..0732849 100644
+--- a/community/udc-integration/src/test/java/org/neo4j/ext/udc/impl/UdcExtensionImplTest.java
++++ b/community/udc-integration/src/test/java/org/neo4j/ext/udc/impl/UdcExtensionImplTest.java
+@@ -442,14 +442,14 @@
+     @Test
+     public void shouldFilterPlusBuildNumbers() throws Exception
+     {
+-        assertThat( new DefaultUdcInformationCollector( null, null, null ).filterVersionForUDC( "1.9.0-M01+00001" ),
++        assertThat( DefaultUdcInformationCollector.filterVersionForUDC( "1.9.0-M01+00001" ),
+                 is( equalTo( "1.9.0-M01" ) ) );
+     }
+ 
+     @Test
+     public void shouldNotFilterSnapshotBuildNumbers() throws Exception
+     {
+-        assertThat( new DefaultUdcInformationCollector( null, null, null ).filterVersionForUDC( "2.0-SNAPSHOT" ),
++        assertThat( DefaultUdcInformationCollector.filterVersionForUDC( "2.0-SNAPSHOT" ),
+                 is( equalTo( "2.0-SNAPSHOT" ) ) );
+ 
+     }
+@@ -457,7 +457,7 @@
+     @Test
+     public void shouldNotFilterReleaseBuildNumbers() throws Exception
+     {
+-        assertThat( new DefaultUdcInformationCollector( null, null, null ).filterVersionForUDC( "1.9" ),
++        assertThat( DefaultUdcInformationCollector.filterVersionForUDC( "1.9" ),
+                 is( equalTo( "1.9" ) ) );
+     }
+ 
+diff --git a/community/udc/src/main/java/org/neo4j/ext/udc/impl/DefaultUdcInformationCollector.java b/community/udc/src/main/java/org/neo4j/ext/udc/impl/DefaultUdcInformationCollector.java
+index 376f9e5..7396a97 100644
+--- a/community/udc/src/main/java/org/neo4j/ext/udc/impl/DefaultUdcInformationCollector.java
++++ b/community/udc/src/main/java/org/neo4j/ext/udc/impl/DefaultUdcInformationCollector.java
+@@ -114,7 +114,7 @@
+         }
+     }
+ 
+-    public String filterVersionForUDC( String version )
++    public static String filterVersionForUDC( String version )
+     {
+         if ( !version.contains( "+" ) )
+         {
+diff --git a/community/udc-integration/src/test/java/org/neo4j/ext/udc/impl/UdcExtensionImplTest.java b/community/udc-integration/src/test/java/org/neo4j/ext/udc/impl/UdcExtensionImplTest.java
+index 5d068a8..0732849 100644
+--- a/community/udc-integration/src/test/java/org/neo4j/ext/udc/impl/UdcExtensionImplTest.java
++++ b/community/udc-integration/src/test/java/org/neo4j/ext/udc/impl/UdcExtensionImplTest.java
+@@ -442,14 +442,14 @@
+     @Test
+     public void shouldFilterPlusBuildNumbers() throws Exception
+     {
+-        assertThat( new DefaultUdcInformationCollector( null, null, null ).filterVersionForUDC( "1.9.0-M01+00001" ),
++        assertThat( DefaultUdcInformationCollector.filterVersionForUDC( "1.9.0-M01+00001" ),
+                 is( equalTo( "1.9.0-M01" ) ) );
+     }
+ 
+     @Test
+     public void shouldNotFilterSnapshotBuildNumbers() throws Exception
+     {
+-        assertThat( new DefaultUdcInformationCollector( null, null, null ).filterVersionForUDC( "2.0-SNAPSHOT" ),
++        assertThat( DefaultUdcInformationCollector.filterVersionForUDC( "2.0-SNAPSHOT" ),
+                 is( equalTo( "2.0-SNAPSHOT" ) ) );
+ 
+     }
+@@ -457,7 +457,7 @@
+     @Test
+     public void shouldNotFilterReleaseBuildNumbers() throws Exception
+     {
+-        assertThat( new DefaultUdcInformationCollector( null, null, null ).filterVersionForUDC( "1.9" ),
++        assertThat( DefaultUdcInformationCollector.filterVersionForUDC( "1.9" ),
+                 is( equalTo( "1.9" ) ) );
+     }
+ 

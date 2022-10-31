@@ -1,0 +1,104 @@
+diff --git a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBindingDatapointReaderTask.java b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBindingDatapointReaderTask.java
+index a09e3f5..0a5f797 100644
+--- a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBindingDatapointReaderTask.java
++++ b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBindingDatapointReaderTask.java
+@@ -63,7 +63,7 @@
+ 
+                 if (dp != null) {
+                     if (mKNXConnected) {
+-                        sLogger.debug("Autorefresh: Trying to read form KNX bus: {}", dp);
++                        sLogger.debug("Autorefresh: Trying to read from KNX bus: {}", dp);
+                         readFromKNXBus(dp);
+ 
+                         long readingPause = KNXConnection.getReadingPause();
+diff --git a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBusReaderScheduler.java b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBusReaderScheduler.java
+index f6e06c0..c0f09e3 100644
+--- a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBusReaderScheduler.java
++++ b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBusReaderScheduler.java
+@@ -142,7 +142,7 @@
+         }
+ 
+         if (mReadQueue.size() > KNXConnection.getMaxRefreshQueueEntries()) {
+-            sLogger.error("Maximium number of permissible reading queue entries reached ('{}'). Ignoring new entries.",
++            sLogger.error("Maximum number of permissible reading queue entries reached ('{}'). Ignoring new entries.",
+                     KNXConnection.getMaxRefreshQueueEntries());
+             return false;
+         }
+@@ -181,7 +181,7 @@
+         }
+ 
+         if (mReadQueue.size() > KNXConnection.getMaxRefreshQueueEntries()) {
+-            sLogger.error("Maximium number of permissible reading queue entries reached ('{}'). Ignoring new entries.",
++            sLogger.error("Maximum number of permissible reading queue entries reached ('{}'). Ignoring new entries.",
+                     KNXConnection.getMaxRefreshQueueEntries());
+             return false;
+         }
+diff --git a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/connection/KNXConnection.java b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/connection/KNXConnection.java
+index 874410a..b2968f3 100644
+--- a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/connection/KNXConnection.java
++++ b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/connection/KNXConnection.java
+@@ -436,7 +436,7 @@
+             if (sPC == null) {
+                 sLogger.debug("Not connected yet. Trying to connect.");
+                 if (!connect()) {
+-                    sLogger.warn("Inital connection to KNX bus failed!");
++                    sLogger.warn("Initial connection to KNX bus failed!");
+                     if (sAutoReconnectPeriod > 0) {
+                         sLogger.info("KNX link will be retried in {} seconds", sAutoReconnectPeriod);
+                         final Timer timer = new Timer();
+diff --git a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/dpt/KNXCoreTypeMapper.java b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/dpt/KNXCoreTypeMapper.java
+index a97de47..b0e425d 100644
+--- a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/dpt/KNXCoreTypeMapper.java
++++ b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/dpt/KNXCoreTypeMapper.java
+@@ -326,7 +326,7 @@
+             }
+             int subNumber = getSubNumber(id);
+             if (subNumber == -1) {
+-                logger.debug("toType: couldn't identify su number in dptID: {}.", id);
++                logger.debug("toType: couldn't identify sub number in dptID: {}.", id);
+                 return null;
+             }
+             /*
+@@ -487,13 +487,13 @@
+                 return new HSBType(color);
+             }
+         } catch (KNXFormatException kfe) {
+-            logger.info("Translator couldn't parse data for datapoint type ‘{}‘ (KNXFormatException).",
++            logger.info("Translator couldn't parse data for datapoint type '{}' (KNXFormatException).",
+                     datapoint.getDPT());
+         } catch (KNXIllegalArgumentException kiae) {
+-            logger.info("Translator couldn't parse data for datapoint type ‘{}‘ (KNXIllegalArgumentException).",
++            logger.info("Translator couldn't parse data for datapoint type '{}' (KNXIllegalArgumentException).",
+                     datapoint.getDPT());
+         } catch (KNXException e) {
+-            logger.warn("Failed creating a translator for datapoint type ‘{}‘.", datapoint.getDPT(), e);
++            logger.warn("Failed creating a translator for datapoint type '{}'.", datapoint.getDPT(), e);
+         }
+ 
+         return null;
+diff --git a/bundles/binding/org.openhab.binding.lightwaverf/src/main/java/org/openhab/binding/lightwaverf/internal/LightwaveRFSenderThread.java b/bundles/binding/org.openhab.binding.lightwaverf/src/main/java/org/openhab/binding/lightwaverf/internal/LightwaveRFSenderThread.java
+index 9329c90..c30d804 100644
+--- a/bundles/binding/org.openhab.binding.lightwaverf/src/main/java/org/openhab/binding/lightwaverf/internal/LightwaveRFSenderThread.java
++++ b/bundles/binding/org.openhab.binding.lightwaverf/src/main/java/org/openhab/binding/lightwaverf/internal/LightwaveRFSenderThread.java
+@@ -122,7 +122,7 @@
+                 if (!unlatched) {
+                     Integer sendCount = retryCountMap.get(commandToSend.getMessageId());
+                     if (sendCount.intValue() >= MAX_RETRY_ATTEMPS) {
+-                        logger.error("Unable to send message {} after {} attemps giving up",
++                        logger.error("Unable to send message {} after {} attempts giving up",
+                                 commandToSend.getLightwaveRfCommandString(), MAX_RETRY_ATTEMPS);
+                         return;
+                     }
+diff --git a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBindingDatapointReaderTask.java b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBindingDatapointReaderTask.java
+index a09e3f5..0a5f797 100644
+--- a/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBindingDatapointReaderTask.java
++++ b/bundles/binding/org.openhab.binding.knx/src/main/java/org/openhab/binding/knx/internal/bus/KNXBindingDatapointReaderTask.java
+@@ -63,7 +63,7 @@
+ 
+                 if (dp != null) {
+                     if (mKNXConnected) {
+-                        sLogger.debug("Autorefresh: Trying to read form KNX bus: {}", dp);
++                        sLogger.debug("Autorefresh: Trying to read from KNX bus: {}", dp);
+                         readFromKNXBus(dp);
+ 
+                         long readingPause = KNXConnection.getReadingPause();

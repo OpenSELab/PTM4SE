@@ -1,0 +1,158 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/Array.java b/gdx/src/com/badlogic/gdx/utils/Array.java
+index e088c30..73562d8 100644
+--- a/gdx/src/com/badlogic/gdx/utils/Array.java
++++ b/gdx/src/com/badlogic/gdx/utils/Array.java
+@@ -311,7 +311,7 @@
+ 	 * @return {@link #items} */
+ 	public T[] ensureCapacity (int additionalCapacity) {
+ 		int sizeNeeded = size + additionalCapacity;
+-		if (sizeNeeded >= items.length) resize(Math.max(8, sizeNeeded));
++		if (sizeNeeded > items.length) resize(Math.max(8, sizeNeeded));
+ 		return items;
+ 	}
+ 
+diff --git a/gdx/src/com/badlogic/gdx/utils/BooleanArray.java b/gdx/src/com/badlogic/gdx/utils/BooleanArray.java
+index b493cf3..771ddbe 100644
+--- a/gdx/src/com/badlogic/gdx/utils/BooleanArray.java
++++ b/gdx/src/com/badlogic/gdx/utils/BooleanArray.java
+@@ -97,7 +97,7 @@
+ 	public void addAll (boolean[] array, int offset, int length) {
+ 		boolean[] items = this.items;
+ 		int sizeNeeded = size + length;
+-		if (sizeNeeded >= items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
++		if (sizeNeeded > items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
+ 		System.arraycopy(array, offset, items, size, length);
+ 		size += length;
+ 	}
+@@ -197,7 +197,7 @@
+ 	 * @return {@link #items} */
+ 	public boolean[] ensureCapacity (int additionalCapacity) {
+ 		int sizeNeeded = size + additionalCapacity;
+-		if (sizeNeeded >= items.length) resize(Math.max(8, sizeNeeded));
++		if (sizeNeeded > items.length) resize(Math.max(8, sizeNeeded));
+ 		return items;
+ 	}
+ 
+diff --git a/gdx/src/com/badlogic/gdx/utils/CharArray.java b/gdx/src/com/badlogic/gdx/utils/CharArray.java
+index bb7d9c5..654e988 100644
+--- a/gdx/src/com/badlogic/gdx/utils/CharArray.java
++++ b/gdx/src/com/badlogic/gdx/utils/CharArray.java
+@@ -95,7 +95,7 @@
+ 	public void addAll (char[] array, int offset, int length) {
+ 		char[] items = this.items;
+ 		int sizeNeeded = size + length ;
+-		if (sizeNeeded >= items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
++		if (sizeNeeded > items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
+ 		System.arraycopy(array, offset, items, size, length);
+ 		size += length;
+ 	}
+@@ -238,7 +238,7 @@
+ 	 * @return {@link #items} */
+ 	public char[] ensureCapacity (int additionalCapacity) {
+ 		int sizeNeeded = size + additionalCapacity;
+-		if (sizeNeeded >= items.length) resize(Math.max(8, sizeNeeded));
++		if (sizeNeeded > items.length) resize(Math.max(8, sizeNeeded));
+ 		return items;
+ 	}
+ 
+diff --git a/gdx/src/com/badlogic/gdx/utils/FloatArray.java b/gdx/src/com/badlogic/gdx/utils/FloatArray.java
+index 7873b21..340b598 100644
+--- a/gdx/src/com/badlogic/gdx/utils/FloatArray.java
++++ b/gdx/src/com/badlogic/gdx/utils/FloatArray.java
+@@ -95,7 +95,7 @@
+ 	public void addAll (float[] array, int offset, int length) {
+ 		float[] items = this.items;
+ 		int sizeNeeded = size + length;
+-		if (sizeNeeded >= items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
++		if (sizeNeeded > items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
+ 		System.arraycopy(array, offset, items, size, length);
+ 		size += length;
+ 	}
+@@ -238,7 +238,7 @@
+ 	 * @return {@link #items} */
+ 	public float[] ensureCapacity (int additionalCapacity) {
+ 		int sizeNeeded = size + additionalCapacity;
+-		if (sizeNeeded >= items.length) resize(Math.max(8, sizeNeeded));
++		if (sizeNeeded > items.length) resize(Math.max(8, sizeNeeded));
+ 		return items;
+ 	}
+ 
+diff --git a/gdx/src/com/badlogic/gdx/utils/IntArray.java b/gdx/src/com/badlogic/gdx/utils/IntArray.java
+index 7bfdbb1..690603c 100644
+--- a/gdx/src/com/badlogic/gdx/utils/IntArray.java
++++ b/gdx/src/com/badlogic/gdx/utils/IntArray.java
+@@ -95,7 +95,7 @@
+ 	public void addAll (int[] array, int offset, int length) {
+ 		int[] items = this.items;
+ 		int sizeNeeded = size + length;
+-		if (sizeNeeded >= items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
++		if (sizeNeeded > items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
+ 		System.arraycopy(array, offset, items, size, length);
+ 		size += length;
+ 	}
+@@ -238,7 +238,7 @@
+ 	 * @return {@link #items} */
+ 	public int[] ensureCapacity (int additionalCapacity) {
+ 		int sizeNeeded = size + additionalCapacity;
+-		if (sizeNeeded >= items.length) resize(Math.max(8, sizeNeeded));
++		if (sizeNeeded > items.length) resize(Math.max(8, sizeNeeded));
+ 		return items;
+ 	}
+ 
+diff --git a/gdx/src/com/badlogic/gdx/utils/LongArray.java b/gdx/src/com/badlogic/gdx/utils/LongArray.java
+index be1c6f7..3db12ca 100644
+--- a/gdx/src/com/badlogic/gdx/utils/LongArray.java
++++ b/gdx/src/com/badlogic/gdx/utils/LongArray.java
+@@ -95,7 +95,7 @@
+ 	public void addAll (long[] array, int offset, int length) {
+ 		long[] items = this.items;
+ 		int sizeNeeded = size + length;
+-		if (sizeNeeded >= items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
++		if (sizeNeeded > items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
+ 		System.arraycopy(array, offset, items, size, length);
+ 		size += length;
+ 	}
+@@ -238,7 +238,7 @@
+ 	 * @return {@link #items} */
+ 	public long[] ensureCapacity (int additionalCapacity) {
+ 		int sizeNeeded = size + additionalCapacity;
+-		if (sizeNeeded >= items.length) resize(Math.max(8, sizeNeeded));
++		if (sizeNeeded > items.length) resize(Math.max(8, sizeNeeded));
+ 		return items;
+ 	}
+ 
+diff --git a/gdx/src/com/badlogic/gdx/utils/ShortArray.java b/gdx/src/com/badlogic/gdx/utils/ShortArray.java
+index 0fb6379..940a321 100644
+--- a/gdx/src/com/badlogic/gdx/utils/ShortArray.java
++++ b/gdx/src/com/badlogic/gdx/utils/ShortArray.java
+@@ -102,7 +102,7 @@
+ 	public void addAll (short[] array, int offset, int length) {
+ 		short[] items = this.items;
+ 		int sizeNeeded = size + length;
+-		if (sizeNeeded >= items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
++		if (sizeNeeded > items.length) items = resize(Math.max(8, (int)(sizeNeeded * 1.75f)));
+ 		System.arraycopy(array, offset, items, size, length);
+ 		size += length;
+ 	}
+@@ -245,7 +245,7 @@
+ 	 * @return {@link #items} */
+ 	public short[] ensureCapacity (int additionalCapacity) {
+ 		int sizeNeeded = size + additionalCapacity;
+-		if (sizeNeeded >= items.length) resize(Math.max(8, sizeNeeded));
++		if (sizeNeeded > items.length) resize(Math.max(8, sizeNeeded));
+ 		return items;
+ 	}
+ 
+diff --git a/gdx/src/com/badlogic/gdx/utils/Array.java b/gdx/src/com/badlogic/gdx/utils/Array.java
+index e088c30..73562d8 100644
+--- a/gdx/src/com/badlogic/gdx/utils/Array.java
++++ b/gdx/src/com/badlogic/gdx/utils/Array.java
+@@ -311,7 +311,7 @@
+ 	 * @return {@link #items} */
+ 	public T[] ensureCapacity (int additionalCapacity) {
+ 		int sizeNeeded = size + additionalCapacity;
+-		if (sizeNeeded >= items.length) resize(Math.max(8, sizeNeeded));
++		if (sizeNeeded > items.length) resize(Math.max(8, sizeNeeded));
+ 		return items;
+ 	}
+ 

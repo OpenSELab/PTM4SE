@@ -1,0 +1,61 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/cache/HazelcastClientCacheManager.java b/hazelcast-client/src/main/java/com/hazelcast/client/cache/HazelcastClientCacheManager.java
+index 9a2c0a0..1303d0d 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/cache/HazelcastClientCacheManager.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/cache/HazelcastClientCacheManager.java
+@@ -126,7 +126,7 @@
+             int partitionId = clientContext.getPartitionService().getPartitionId(cacheConfig.getNameWithPrefix());
+             CacheCreateConfigRequest request = new CacheCreateConfigRequest(cacheConfig, true, partitionId);
+             final Future future = clientContext.getInvocationService().invokeOnKeyOwner(request, cacheConfig.getNameWithPrefix());
+-            return clientContext.getSerializationService().toObject(future.get());
++            return (Boolean) clientContext.getSerializationService().toObject(future.get());
+         } catch (Exception e) {
+             throw ExceptionUtil.rethrow(e);
+         }
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/proxy/ClientCacheProxy.java b/hazelcast-client/src/main/java/com/hazelcast/client/proxy/ClientCacheProxy.java
+index 4cfffa4..fbf5adc 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/proxy/ClientCacheProxy.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/proxy/ClientCacheProxy.java
+@@ -156,7 +156,7 @@
+             return true;
+         }
+         CacheContainsKeyRequest request = new CacheContainsKeyRequest(getDistributedObjectName(), keyData);
+-        return toObject(invoke(request, keyData));
++        return (Boolean) toObject(invoke(request, keyData));
+     }
+ 
+     @Override
+@@ -1103,7 +1103,7 @@
+                     if (eventObject instanceof CacheEventData) {
+                         CacheEventData cacheEventData = (CacheEventData) eventObject;
+                         if (cacheEventData.getCacheEventType() == CacheEventType.COMPLETED) {
+-                            int completionId = toObject(cacheEventData.getDataValue());
++                            Integer completionId = toObject(cacheEventData.getDataValue());
+                             countDownCompletionLatch(completionId);
+                         }
+                     }
+diff --git a/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheProxy.java b/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheProxy.java
+index da63a6d..e808178 100644
+--- a/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheProxy.java
++++ b/hazelcast/src/main/java/com/hazelcast/cache/impl/CacheProxy.java
+@@ -1000,7 +1000,7 @@
+                     if (eventObject instanceof CacheEventData) {
+                         CacheEventData cacheEventData = (CacheEventData) eventObject;
+                         if (cacheEventData.getCacheEventType() == CacheEventType.COMPLETED) {
+-                            int completionId = serializationService.toObject(cacheEventData.getDataValue());
++                            Integer completionId = serializationService.toObject(cacheEventData.getDataValue());
+                             countDownCompletionLatch(completionId);
+                         }
+                     }
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/cache/HazelcastClientCacheManager.java b/hazelcast-client/src/main/java/com/hazelcast/client/cache/HazelcastClientCacheManager.java
+index 9a2c0a0..1303d0d 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/cache/HazelcastClientCacheManager.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/cache/HazelcastClientCacheManager.java
+@@ -126,7 +126,7 @@
+             int partitionId = clientContext.getPartitionService().getPartitionId(cacheConfig.getNameWithPrefix());
+             CacheCreateConfigRequest request = new CacheCreateConfigRequest(cacheConfig, true, partitionId);
+             final Future future = clientContext.getInvocationService().invokeOnKeyOwner(request, cacheConfig.getNameWithPrefix());
+-            return clientContext.getSerializationService().toObject(future.get());
++            return (Boolean) clientContext.getSerializationService().toObject(future.get());
+         } catch (Exception e) {
+             throw ExceptionUtil.rethrow(e);
+         }

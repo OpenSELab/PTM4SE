@@ -1,0 +1,120 @@
+--- a/src/main/java/client/presenter/controller/messages/LoginResponseMessage.java
++++ b/src/main/java/client/presenter/controller/messages/LoginResponseMessage.java
+@@ -24,4 +24,14 @@ public class LoginResponseMessage extends ViewMessage {
+     this.success = success;
+     this.nickname = nickname;
+   }
++
++  @Override
++  public boolean equals(Object o){
++    if (o == null || !(o instanceof LoginResponseMessage)) {
++      return false;
++    }
++    LoginResponseMessage other = (LoginResponseMessage) o;
++    return success == other.success && nickname.equals(other.nickname);
++  }
++
+ }
+
+--- a/src/main/java/client/presenter/controller/messages/MenuMessageResponse.java
++++ b/src/main/java/client/presenter/controller/messages/MenuMessageResponse.java
+@@ -2,6 +2,7 @@ package client.presenter.controller.messages;
+ 
+ import client.presenter.controller.MenuMessageTypes;
+ import client.presenter.controller.ViewMessageType;
++import java.util.Arrays;
+ 
+ public class MenuMessageResponse extends ViewMessage {
+ 
+@@ -25,4 +26,13 @@ public class MenuMessageResponse extends ViewMessage {
+     this.menuType = menuType;
+     this.information = information;
+   }
++
++  @Override
++  public boolean equals(Object o){
++    if (o == null || !(o instanceof MenuMessageResponse)) {
++      return false;
++    }
++    MenuMessageResponse other = (MenuMessageResponse) o;
++    return menuType.equals(other.menuType) && Arrays.equals(information, other.information);
++  }
+ }
+
+
+--- a/src/main/java/client/presenter/controller/messages/RegisterResponseMessage.java
++++ b/src/main/java/client/presenter/controller/messages/RegisterResponseMessage.java
+@@ -1,6 +1,7 @@
+ package client.presenter.controller.messages;
+ 
+ import client.presenter.controller.ViewMessageType;
++import java.util.Arrays;
+ 
+ public class RegisterResponseMessage extends ViewMessage {
+ 
+@@ -24,4 +25,13 @@ public class RegisterResponseMessage extends ViewMessage {
+     this.success = success;
+     this.messages = messages;
+   }
++
++  @Override
++  public boolean equals(Object o){
++    if (o == null || !(o instanceof RegisterResponseMessage)) {
++      return false;
++    }
++    RegisterResponseMessage other = (RegisterResponseMessage) o;
++    return success == other.success && Arrays.equals(messages, other.messages);
++  }
+ }
+
+
+--- a/src/main/java/client/presenter/controller/messages/UnregisterResponseMessage.java
++++ b/src/main/java/client/presenter/controller/messages/UnregisterResponseMessage.java
+@@ -1,6 +1,7 @@
+ package client.presenter.controller.messages;
+ 
+ import client.presenter.controller.ViewMessageType;
++import java.util.Arrays;
+ 
+ public class UnregisterResponseMessage extends ViewMessage{
+ 
+@@ -24,4 +25,13 @@ public class UnregisterResponseMessage extends ViewMessage{
+     this.success = success;
+     this.messages = messages;
+   }
++
++  @Override
++  public boolean equals(Object o){
++    if (o == null || !(o instanceof UnregisterResponseMessage)) {
++      return false;
++    }
++    UnregisterResponseMessage other = (UnregisterResponseMessage) o;
++    return success == other.success && Arrays.equals(messages, other.messages);
++  }
+ }
+
+
+--- a/src/main/java/client/presenter/controller/messages/ViewValidMovesResponse.java
++++ b/src/main/java/client/presenter/controller/messages/ViewValidMovesResponse.java
+@@ -1,6 +1,7 @@
+ package client.presenter.controller.messages;
+ 
+ import client.presenter.controller.ViewMessageType;
++import java.util.Arrays;
+ 
+ public class ViewValidMovesResponse extends ViewMessage {
+ 
+@@ -17,4 +18,13 @@ public class ViewValidMovesResponse extends ViewMessage {
+     super(ViewMessageType.SHOW_VALID_MOVES_RESPONSE);
+     this.locations = locations;
+   }
++
++  @Override
++  public boolean equals(Object o){
++    if (o == null || !(o instanceof ViewValidMovesResponse)) {
++      return false;
++    }
++    ViewValidMovesResponse other = (ViewValidMovesResponse) o;
++    return Arrays.equals(locations, other.locations);
++  }
+ }

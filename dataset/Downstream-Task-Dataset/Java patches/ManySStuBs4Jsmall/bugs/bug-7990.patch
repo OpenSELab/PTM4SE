@@ -1,0 +1,64 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/udf/UDFConv.java b/ql/src/java/org/apache/hadoop/hive/ql/udf/UDFConv.java
+index 1d791e9..624afd1 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/udf/UDFConv.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/udf/UDFConv.java
+@@ -87,14 +87,16 @@
+    * 
+    * @param radix
+    *          must be between MIN_RADIX and MAX_RADIX
++   * @param fromPos
++   *          is the first element that should be conisdered
+    * @return the result should be treated as an unsigned 64-bit integer.
+    */
+-  private long encode(int radix) {
++  private long encode(int radix, int fromPos) {
+     long val = 0;
+     long bound = unsignedLongDiv(-1 - radix, radix); // Possible overflow once
+     // val
+     // exceeds this value
+-    for (int i = 0; i < value.length && value[i] >= 0; i++) {
++    for (int i = fromPos; i < value.length && value[i] >= 0; i++) {
+       if (val >= bound) {
+         // Check for overflow
+         if (unsignedLongDiv(-1 - value[i], radix) < val) {
+@@ -168,7 +170,7 @@
+     char2byte(fromBs, value.length - n.getLength() + first);
+ 
+     // Do the conversion by going through a 64 bit integer
+-    long val = encode(fromBs);
++    long val = encode(fromBs, value.length - n.getLength() + first);
+     if (negative && toBs > 0) {
+       if (val < 0) {
+         val = -1;
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/udf/UDFConv.java b/ql/src/java/org/apache/hadoop/hive/ql/udf/UDFConv.java
+index 1d791e9..624afd1 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/udf/UDFConv.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/udf/UDFConv.java
+@@ -87,14 +87,16 @@
+    * 
+    * @param radix
+    *          must be between MIN_RADIX and MAX_RADIX
++   * @param fromPos
++   *          is the first element that should be conisdered
+    * @return the result should be treated as an unsigned 64-bit integer.
+    */
+-  private long encode(int radix) {
++  private long encode(int radix, int fromPos) {
+     long val = 0;
+     long bound = unsignedLongDiv(-1 - radix, radix); // Possible overflow once
+     // val
+     // exceeds this value
+-    for (int i = 0; i < value.length && value[i] >= 0; i++) {
++    for (int i = fromPos; i < value.length && value[i] >= 0; i++) {
+       if (val >= bound) {
+         // Check for overflow
+         if (unsignedLongDiv(-1 - value[i], radix) < val) {
+@@ -168,7 +170,7 @@
+     char2byte(fromBs, value.length - n.getLength() + first);
+ 
+     // Do the conversion by going through a 64 bit integer
+-    long val = encode(fromBs);
++    long val = encode(fromBs, value.length - n.getLength() + first);
+     if (negative && toBs > 0) {
+       if (val < 0) {
+         val = -1;

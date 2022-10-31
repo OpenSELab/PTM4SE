@@ -1,0 +1,272 @@
+diff --git a/src/com/google/debugging/sourcemap/SourceMapConsumerV3.java b/src/com/google/debugging/sourcemap/SourceMapConsumerV3.java
+index f210637..3b07ae4 100644
+--- a/src/com/google/debugging/sourcemap/SourceMapConsumerV3.java
++++ b/src/com/google/debugging/sourcemap/SourceMapConsumerV3.java
+@@ -229,7 +229,7 @@
+     }
+ 
+     int index = search(entries, column, 0, entries.size() - 1);
+-    Preconditions.checkState(index >= 0, "unexpected:" + index);
++    Preconditions.checkState(index >= 0, "unexpected:%s", index);
+     return getOriginalMappingForEntry(entries.get(index));
+   }
+ 
+diff --git a/src/com/google/javascript/jscomp/Compiler.java b/src/com/google/javascript/jscomp/Compiler.java
+index 4d809dc..1d3bd6b 100644
+--- a/src/com/google/javascript/jscomp/Compiler.java
++++ b/src/com/google/javascript/jscomp/Compiler.java
+@@ -975,8 +975,7 @@
+     if (input == null) {
+       return;
+     }
+-    Preconditions.checkState(input.isExtern(), "Not an extern input: "
+-        + input.getName());
++    Preconditions.checkState(input.isExtern(), "Not an extern input: %s", input.getName());
+     inputsById.remove(id);
+     externs.remove(input);
+     Node root = input.getAstRoot(this);
+@@ -1001,9 +1000,7 @@
+   /** Add a source input dynamically. Intended for incremental compilation. */
+   void addIncrementalSourceAst(JsAst ast) {
+     InputId id = ast.getInputId();
+-    Preconditions.checkState(
+-        getInput(id) == null,
+-        "Duplicate input " + id.getIdName());
++    Preconditions.checkState(getInput(id) == null, "Duplicate input %s", id.getIdName());
+     inputsById.put(id, new CompilerInput(ast));
+   }
+ 
+@@ -1018,9 +1015,7 @@
+    */
+   boolean replaceIncrementalSourceAst(JsAst ast) {
+     CompilerInput oldInput = getInput(ast.getInputId());
+-    Preconditions.checkNotNull(
+-        oldInput,
+-        "No input to replace: " + ast.getInputId().getIdName());
++    Preconditions.checkNotNull(oldInput, "No input to replace: %s", ast.getInputId().getIdName());
+     Node newRoot = ast.getAstRoot(this);
+     if (newRoot == null) {
+       return false;
+diff --git a/src/com/google/javascript/jscomp/DefinitionsRemover.java b/src/com/google/javascript/jscomp/DefinitionsRemover.java
+index 42b9a75..758df0e 100644
+--- a/src/com/google/javascript/jscomp/DefinitionsRemover.java
++++ b/src/com/google/javascript/jscomp/DefinitionsRemover.java
+@@ -157,9 +157,8 @@
+     IncompleteDefinition(Node lValue, boolean inExterns) {
+       super(inExterns);
+       Preconditions.checkNotNull(lValue);
+-      Preconditions.checkArgument(
+-          ALLOWED_TYPES.contains(lValue.getType()),
+-          "Unexpected lValue type " + Token.name(lValue.getType()));
++      Preconditions.checkArgument(ALLOWED_TYPES.contains(lValue.getType()),
++          "Unexpected lValue type %s", Token.name(lValue.getType()));
+       this.lValue = lValue;
+     }
+ 
+@@ -374,8 +373,7 @@
+       super(inExterns);
+       Preconditions.checkArgument(NodeUtil.isVarDeclaration(node));
+       Preconditions.checkArgument(node.hasChildren(),
+-          "VAR Declaration of " + node.getString() +
+-          "should be assigned a value.");
++          "VAR Declaration of %sshould be assigned a value.", node.getString());
+       name = node;
+     }
+ 
+diff --git a/src/com/google/javascript/jscomp/DiagnosticGroups.java b/src/com/google/javascript/jscomp/DiagnosticGroups.java
+index c178aaa..ad25f6e 100644
+--- a/src/com/google/javascript/jscomp/DiagnosticGroups.java
++++ b/src/com/google/javascript/jscomp/DiagnosticGroups.java
+@@ -217,7 +217,7 @@
+   void setWarningLevel(CompilerOptions options,
+       String name, CheckLevel level) {
+     DiagnosticGroup group = forName(name);
+-    Preconditions.checkNotNull(group, "No warning class for name: " + name);
++    Preconditions.checkNotNull(group, "No warning class for name: %s", name);
+     options.setWarningLevel(group, level);
+   }
+ }
+diff --git a/src/com/google/javascript/jscomp/GatherSideEffectSubexpressionsCallback.java b/src/com/google/javascript/jscomp/GatherSideEffectSubexpressionsCallback.java
+index 08ec424..05e89f7 100644
+--- a/src/com/google/javascript/jscomp/GatherSideEffectSubexpressionsCallback.java
++++ b/src/com/google/javascript/jscomp/GatherSideEffectSubexpressionsCallback.java
+@@ -113,7 +113,7 @@
+     public void keepSimplifiedShortCircuitExpression(Node original) {
+       Preconditions.checkArgument(
+           (original.getType() == Token.AND) || (original.getType() == Token.OR),
+-          "Expected: AND or OR, Got: " + Token.name(original.getType()));
++          "Expected: AND or OR, Got: %s", Token.name(original.getType()));
+       Node left = original.getFirstChild();
+       Node right = left.getNext();
+       Node simplifiedRight = simplifyShortCircuitBranch(right);
+@@ -128,9 +128,8 @@
+     public void keepSimplifiedHookExpression(Node hook,
+                                              boolean thenHasSideEffects,
+                                              boolean elseHasSideEffects) {
+-      Preconditions.checkArgument(
+-          hook.getType() == Token.HOOK,
+-          "Expected: HOOK, Got: " + Token.name(hook.getType()));
++      Preconditions.checkArgument(hook.getType() == Token.HOOK,
++          "Expected: HOOK, Got: %s", Token.name(hook.getType()));
+       Node condition = hook.getFirstChild();
+       Node thenBranch = condition.getNext();
+       Node elseBranch = thenBranch.getNext();
+@@ -267,7 +266,7 @@
+   boolean processShortCircuitExpression(Node node) {
+     Preconditions.checkArgument(
+         (node.getType() == Token.AND) || (node.getType() == Token.OR),
+-        "Expected: AND or OR, Got: " + Token.name(node.getType()));
++        "Expected: AND or OR, Got: %s", Token.name(node.getType()));
+ 
+     // keep whole expression if rhs of the branching expression
+     // contains a call.
+@@ -287,9 +286,8 @@
+    * @return true to continue traversal, false otherwise
+    */
+   boolean processHook(Node node) {
+-    Preconditions.checkArgument(
+-        node.getType() == Token.HOOK,
+-        "Expected: HOOK, Got: " + Token.name(node.getType()));
++    Preconditions.checkArgument(node.getType() == Token.HOOK,
++        "Expected: HOOK, Got: %s", Token.name(node.getType()));
+ 
+     Node condition = node.getFirstChild();
+     Node ifBranch = condition.getNext();
+@@ -311,9 +309,8 @@
+    * @return true to continue traversal, false otherwise
+    */
+   boolean processFunctionCall(Node node) {
+-    Preconditions.checkArgument(
+-        node.getType() == Token.CALL,
+-        "Expected: CALL, Got: " + Token.name(node.getType()));
++    Preconditions.checkArgument(node.getType() == Token.CALL,
++        "Expected: CALL, Got: %s", Token.name(node.getType()));
+ 
+     // Calls to functions that are known to be "pure" have no side
+     // effects.
+@@ -339,9 +336,8 @@
+    * @return true to continue traversal, false otherwise
+    */
+   boolean processConstructorCall(Node node) {
+-    Preconditions.checkArgument(
+-        node.getType() == Token.NEW,
+-        "Expected: NEW, Got: " + Token.name(node.getType()));
++    Preconditions.checkArgument(node.getType() == Token.NEW,
++        "Expected: NEW, Got: %s", Token.name(node.getType()));
+ 
+     // Calls to constructors that are known to be "pure" have no
+     // side effects.
+diff --git a/src/com/google/javascript/jscomp/NameAnalyzer.java b/src/com/google/javascript/jscomp/NameAnalyzer.java
+index 5b9ed29..51c79ce 100644
+--- a/src/com/google/javascript/jscomp/NameAnalyzer.java
++++ b/src/com/google/javascript/jscomp/NameAnalyzer.java
+@@ -1671,10 +1671,8 @@
+       case Token.VAR:
+         break;
+       case Token.ASSIGN:
+-        Preconditions.checkArgument(
+-            parent.getType() == Token.FOR,
+-            "Unsupported assignment in replaceWithRhs. parent: " +
+-            Token.name(parent.getType()));
++        Preconditions.checkArgument(parent.getType() == Token.FOR,
++            "Unsupported assignment in replaceWithRhs. parent: %s", Token.name(parent.getType()));
+         break;
+       default:
+         throw new IllegalArgumentException(
+diff --git a/src/com/google/javascript/jscomp/NameReferenceGraphConstruction.java b/src/com/google/javascript/jscomp/NameReferenceGraphConstruction.java
+index b966828..32c673a 100644
+--- a/src/com/google/javascript/jscomp/NameReferenceGraphConstruction.java
++++ b/src/com/google/javascript/jscomp/NameReferenceGraphConstruction.java
+@@ -424,8 +424,8 @@
+       String qNameStr = className + ".prototype." +
+           NodeUtil.getPrototypePropertyName(qName);
+       Name prototypeProp = graph.defineNameIfNotExists(qNameStr, isExtern);
+-      Preconditions.checkNotNull(
+-          prototypeProp, qNameStr + " should be in the name graph as a node.");
++      Preconditions.checkNotNull(prototypeProp,
++          "%s should be in the name graph as a node.", qNameStr);
+       if (assign != null) {
+         prototypeProp.addAssignmentDeclaration(assign);
+       }
+diff --git a/src/com/google/javascript/jscomp/Normalize.java b/src/com/google/javascript/jscomp/Normalize.java
+index 9d2bef0..d945917 100644
+--- a/src/com/google/javascript/jscomp/Normalize.java
++++ b/src/com/google/javascript/jscomp/Normalize.java
+@@ -261,10 +261,10 @@
+ 
+           if (expectedConst) {
+             Preconditions.checkState(expectedConst == isConst,
+-                "The name " + name + " is not annotated as constant.");
++                "The name %s is not annotated as constant.", name);
+           } else {
+             Preconditions.checkState(expectedConst == isConst,
+-                "The name " + name + " should not be annotated as constant.");
++                "The name %s should not be annotated as constant.", name);
+           }
+         }
+ 
+@@ -273,8 +273,7 @@
+           constantMap.put(name, isConst);
+         } else {
+           Preconditions.checkState(value.booleanValue() == isConst,
+-              "The name " + name + " is not consistently annotated as " +
+-              "constant.");
++              "The name %s is not consistently annotated as constant.", name);
+         }
+       }
+     }
+diff --git a/src/com/google/javascript/jscomp/PassFactory.java b/src/com/google/javascript/jscomp/PassFactory.java
+index 7513612..a83e02c 100644
+--- a/src/com/google/javascript/jscomp/PassFactory.java
++++ b/src/com/google/javascript/jscomp/PassFactory.java
+@@ -84,7 +84,7 @@
+    */
+   final CompilerPass create(AbstractCompiler compiler) {
+     Preconditions.checkState(!isCreated || !isOneTimePass,
+-        "One-time passes cannot be run multiple times: " + name);
++        "One-time passes cannot be run multiple times: %s", name);
+     isCreated = true;
+     return createInternal(compiler);
+   }
+diff --git a/src/com/google/javascript/jscomp/PhaseOptimizer.java b/src/com/google/javascript/jscomp/PhaseOptimizer.java
+index 5c21da3..1b8e973 100644
+--- a/src/com/google/javascript/jscomp/PhaseOptimizer.java
++++ b/src/com/google/javascript/jscomp/PhaseOptimizer.java
+@@ -294,9 +294,8 @@
+     @Override
+     void addLoopedPass(PassFactory factory) {
+       String name = factory.getName();
+-      Preconditions.checkArgument(
+-          !myNames.contains(name),
+-          "Already a pass with name '" + name + "' in this loop");
++      Preconditions.checkArgument(!myNames.contains(name),
++          "Already a pass with name '%s' in this loop", name);
+       myNames.add(factory.getName());
+       myPasses.add(new PassFactoryDelegate(compiler, factory));
+     }
+diff --git a/src/com/google/javascript/jscomp/graph/LinkedUndirectedGraph.java b/src/com/google/javascript/jscomp/graph/LinkedUndirectedGraph.java
+index ccb8cf1..45e6922 100644
+--- a/src/com/google/javascript/jscomp/graph/LinkedUndirectedGraph.java
++++ b/src/com/google/javascript/jscomp/graph/LinkedUndirectedGraph.java
+@@ -121,7 +121,7 @@
+   @Override
+   public Iterator<GraphNode<N, E>> getNeighborNodesIterator(N value) {
+     UndiGraphNode<N, E> uNode = getUndirectedGraphNode(value);
+-    Preconditions.checkNotNull(uNode, value + " should be in the graph.");
++    Preconditions.checkNotNull(uNode, "%s should be in the graph.", value);
+     return ((LinkedUndirectedGraphNode<N, E>) uNode).neighborIterator();
+   }
+ 
+diff --git a/src/com/google/debugging/sourcemap/SourceMapConsumerV3.java b/src/com/google/debugging/sourcemap/SourceMapConsumerV3.java
+index f210637..3b07ae4 100644
+--- a/src/com/google/debugging/sourcemap/SourceMapConsumerV3.java
++++ b/src/com/google/debugging/sourcemap/SourceMapConsumerV3.java
+@@ -229,7 +229,7 @@
+     }
+ 
+     int index = search(entries, column, 0, entries.size() - 1);
+-    Preconditions.checkState(index >= 0, "unexpected:" + index);
++    Preconditions.checkState(index >= 0, "unexpected:%s", index);
+     return getOriginalMappingForEntry(entries.get(index));
+   }
+ 

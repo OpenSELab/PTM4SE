@@ -1,0 +1,66 @@
+diff --git a/ee/src/main/java/org/jboss/as/ee/component/MethodInjectionTarget.java b/ee/src/main/java/org/jboss/as/ee/component/MethodInjectionTarget.java
+index 48aff1f..7f680bd 100644
+--- a/ee/src/main/java/org/jboss/as/ee/component/MethodInjectionTarget.java
++++ b/ee/src/main/java/org/jboss/as/ee/component/MethodInjectionTarget.java
+@@ -76,11 +76,15 @@
+         }
+         Iterator<Method> iterator = methods.iterator();
+         if (!iterator.hasNext()) {
+-            throw new DeploymentUnitProcessingException("No matching method found for method '" + name + "' on '" + className + "'");
++            throw new DeploymentUnitProcessingException("No matching method found for method " + name +
++                    paramType != null ? "(" + paramType + ")" : "" +
++                    " on " + className);
+         }
+         Method method = iterator.next();
+         if (iterator.hasNext()) {
+-            throw new DeploymentUnitProcessingException("More than one matching method found for method '" + name + "' on '" + className + "'");
++            throw new DeploymentUnitProcessingException("More than one matching method found for method '" + name +
++                    paramType != null ? "(" + paramType + ")" : "" +
++                    " on " + className);
+         }
+         return new ManagedReferenceMethodInjectionInterceptorFactory(targetContextKey, valueContextKey, factoryValue, method, this.isOptionalInjection());
+     }
+diff --git a/ee/src/main/java/org/jboss/as/ee/component/ResourceInjectionAnnotationParsingProcessor.java b/ee/src/main/java/org/jboss/as/ee/component/ResourceInjectionAnnotationParsingProcessor.java
+index 49da0e6..d91f53b 100644
+--- a/ee/src/main/java/org/jboss/as/ee/component/ResourceInjectionAnnotationParsingProcessor.java
++++ b/ee/src/main/java/org/jboss/as/ee/component/ResourceInjectionAnnotationParsingProcessor.java
+@@ -148,7 +148,7 @@
+         final String injectionType = isEmpty(type) || type.equals(Object.class.getName()) ? fieldInfo.type().name().toString() : type;
+         final String localContextName = isEmpty(name) ? fieldInfo.declaringClass().name().toString() + "/" + fieldName : name;
+         final boolean isEnvEntryType = this.isEnvEntryType(injectionType);
+-        final InjectionTarget targetDescription = new FieldInjectionTarget(fieldInfo.declaringClass().name().toString(), fieldName, injectionType, isEnvEntryType);
++        final InjectionTarget targetDescription = new FieldInjectionTarget(fieldInfo.declaringClass().name().toString(), fieldName, fieldInfo.type().name().toString(), isEnvEntryType);
+         process(phaseContext, classDescription, annotation, injectionType, localContextName, targetDescription, eeModuleDescription);
+     }
+ 
+@@ -163,7 +163,7 @@
+ 
+         final String injectionType = isEmpty(type) || type.equals(Object.class.getName()) ? methodInfo.args()[0].name().toString() : type;
+         final boolean isEnvEntryType = this.isEnvEntryType(injectionType);
+-        final InjectionTarget targetDescription = new MethodInjectionTarget(methodInfo.declaringClass().name().toString(), methodName, injectionType, isEnvEntryType);
++        final InjectionTarget targetDescription = new MethodInjectionTarget(methodInfo.declaringClass().name().toString(), methodName, methodInfo.args()[0].name().toString(), isEnvEntryType);
+         process(phaseContext, classDescription, annotation, injectionType, localContextName, targetDescription, eeModuleDescription);
+     }
+ 
+diff --git a/ee/src/main/java/org/jboss/as/ee/component/MethodInjectionTarget.java b/ee/src/main/java/org/jboss/as/ee/component/MethodInjectionTarget.java
+index 48aff1f..7f680bd 100644
+--- a/ee/src/main/java/org/jboss/as/ee/component/MethodInjectionTarget.java
++++ b/ee/src/main/java/org/jboss/as/ee/component/MethodInjectionTarget.java
+@@ -76,11 +76,15 @@
+         }
+         Iterator<Method> iterator = methods.iterator();
+         if (!iterator.hasNext()) {
+-            throw new DeploymentUnitProcessingException("No matching method found for method '" + name + "' on '" + className + "'");
++            throw new DeploymentUnitProcessingException("No matching method found for method " + name +
++                    paramType != null ? "(" + paramType + ")" : "" +
++                    " on " + className);
+         }
+         Method method = iterator.next();
+         if (iterator.hasNext()) {
+-            throw new DeploymentUnitProcessingException("More than one matching method found for method '" + name + "' on '" + className + "'");
++            throw new DeploymentUnitProcessingException("More than one matching method found for method '" + name +
++                    paramType != null ? "(" + paramType + ")" : "" +
++                    " on " + className);
+         }
+         return new ManagedReferenceMethodInjectionInterceptorFactory(targetContextKey, valueContextKey, factoryValue, method, this.isOptionalInjection());
+     }

@@ -1,0 +1,38 @@
+diff --git a/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/RepositoryUpgrade.java b/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/RepositoryUpgrade.java
+index f4684cc..93b5133 100644
+--- a/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/RepositoryUpgrade.java
++++ b/oak-upgrade/src/main/java/org/apache/jackrabbit/oak/upgrade/RepositoryUpgrade.java
+@@ -462,7 +462,7 @@ public class RepositoryUpgrade {
+                 createIndexEditorProvider()
+             )));
+ 
+-            target.merge(builder, new LoggingCompositeHook(hooks, source, earlyShutdown), CommitInfo.EMPTY);
++            target.merge(builder, new LoggingCompositeHook(hooks, source, overrideEarlyShutdown()), CommitInfo.EMPTY);
+             logger.info("Processing commit hooks completed in {}s ({})", watch.elapsed(TimeUnit.SECONDS), watch);
+             logger.debug("Repository upgrade completed.");
+         } catch (Exception e) {
+@@ -470,6 +470,24 @@ public class RepositoryUpgrade {
+         }
+     }
+ 
++    private boolean overrideEarlyShutdown() {
++        if (earlyShutdown == false) {
++            return false;
++        }
++
++        final VersionCopyConfiguration c = this.versionCopyConfiguration;
++        if (c.isCopyVersions() && c.skipOrphanedVersionsCopy()) {
++            logger.info("Overriding early shutdown to false because of the copy versions settings");
++            return false;
++        }
++        if (c.isCopyVersions() && !c.skipOrphanedVersionsCopy()
++                && c.getOrphanedMinDate().after(c.getVersionsMinDate())) {
++            logger.info("Overriding early shutdown to false because of the copy versions settings");
++            return false;
++        }
++        return true;
++    }
++
+     private static EditorProvider createTypeEditorProvider() {
+         return new EditorProvider() {
+             @Override

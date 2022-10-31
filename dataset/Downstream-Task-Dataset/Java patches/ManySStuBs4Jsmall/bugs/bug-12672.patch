@@ -1,0 +1,13 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
+index eeca7ee..f6e4296 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
+@@ -80,7 +80,7 @@
+         Class<? extends CursorProcessor> cursorProcessor = cursorProcessors.getUnchecked(new CacheKey(filter, projections, uniqueKey));
+         return () -> {
+             try {
+-                return cursorProcessor.newInstance();
++                return cursorProcessor.getConstructor().newInstance();
+             }
+             catch (ReflectiveOperationException e) {
+                 throw new RuntimeException(e);

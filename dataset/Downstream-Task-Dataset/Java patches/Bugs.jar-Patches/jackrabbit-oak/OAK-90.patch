@@ -1,0 +1,18 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/OrderedContentMirrorStoreStrategy.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/OrderedContentMirrorStoreStrategy.java
+index 0fd121c..3f78b78 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/OrderedContentMirrorStoreStrategy.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/index/property/strategy/OrderedContentMirrorStoreStrategy.java
+@@ -1021,8 +1021,11 @@ public class OrderedContentMirrorStoreStrategy extends ContentMirrorStoreStrateg
+         String next = "";
+         PropertyState ps = state.getProperty(NEXT);
+         if (ps != null) {
+-            next = (lane < OrderedIndex.LANES) ? ps.getValue(Type.STRING, lane)
+-                                               : "";
++            if (ps.isArray()) {
++                next = ps.getValue(Type.STRING, Math.min(ps.count() - 1, lane));
++            } else {
++                next = ps.getValue(Type.STRING);
++            }
+         }
+         return next;
+     }

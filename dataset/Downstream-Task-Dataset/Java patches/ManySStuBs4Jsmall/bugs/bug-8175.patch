@@ -1,0 +1,26 @@
+diff --git a/storm-core/src/jvm/backtype/storm/metric/SystemBolt.java b/storm-core/src/jvm/backtype/storm/metric/SystemBolt.java
+index f19b4bd..ea44f67 100644
+--- a/storm-core/src/jvm/backtype/storm/metric/SystemBolt.java
++++ b/storm-core/src/jvm/backtype/storm/metric/SystemBolt.java
+@@ -74,7 +74,7 @@
+ 
+     @Override
+     public void prepare(final Map stormConf, TopologyContext context, OutputCollector collector) {
+-        if(_prepareWasCalled && stormConf.get(Config.STORM_CLUSTER_MODE) != "local") {
++        if(_prepareWasCalled && !"local".equals(stormConf.get(Config.STORM_CLUSTER_MODE))) {
+             throw new RuntimeException("A single worker should have 1 SystemBolt instance.");
+         }
+         _prepareWasCalled = true;
+diff --git a/storm-core/src/jvm/backtype/storm/metric/SystemBolt.java b/storm-core/src/jvm/backtype/storm/metric/SystemBolt.java
+index f19b4bd..ea44f67 100644
+--- a/storm-core/src/jvm/backtype/storm/metric/SystemBolt.java
++++ b/storm-core/src/jvm/backtype/storm/metric/SystemBolt.java
+@@ -74,7 +74,7 @@
+ 
+     @Override
+     public void prepare(final Map stormConf, TopologyContext context, OutputCollector collector) {
+-        if(_prepareWasCalled && stormConf.get(Config.STORM_CLUSTER_MODE) != "local") {
++        if(_prepareWasCalled && !"local".equals(stormConf.get(Config.STORM_CLUSTER_MODE))) {
+             throw new RuntimeException("A single worker should have 1 SystemBolt instance.");
+         }
+         _prepareWasCalled = true;

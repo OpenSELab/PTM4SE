@@ -1,0 +1,13 @@
+diff --git a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/MultiLayerUpdater.java b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/MultiLayerUpdater.java
+index 1f15210..577a29f 100644
+--- a/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/MultiLayerUpdater.java
++++ b/deeplearning4j-core/src/main/java/org/deeplearning4j/nn/updater/MultiLayerUpdater.java
+@@ -50,7 +50,7 @@
+ 		
+ 		for(Map.Entry<String,INDArray> gradientPair : gradient.gradientForVariable().entrySet()) {
+ 			String key = gradientPair.getKey();
+-			int idx = key.indexOf("_");
++			int idx = key.indexOf('_');
+ 			if( idx == -1 ) throw new IllegalStateException("Invalid key: MuliLayerNetwork Gradient key does not have layer separator: \""+key+"\"");
+ 			int layerIdx = Integer.parseInt(key.substring(0, idx));
+ 			

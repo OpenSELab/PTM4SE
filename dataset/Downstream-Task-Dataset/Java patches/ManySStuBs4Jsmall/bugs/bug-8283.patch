@@ -1,0 +1,124 @@
+diff --git a/src/main/java/org/b3log/solo/repository/ArchiveDateArticleRepository.java b/src/main/java/org/b3log/solo/repository/ArchiveDateArticleRepository.java
+index f7ccabc..339cbb8 100644
+--- a/src/main/java/org/b3log/solo/repository/ArchiveDateArticleRepository.java
++++ b/src/main/java/org/b3log/solo/repository/ArchiveDateArticleRepository.java
+@@ -29,7 +29,7 @@
+  * Archive date-Article repository.
+  *
+  * @author <a href="http://88250.b3log.org">Liang Ding</a>
+- * @version 1.0.0.3, Sep 30, 2018
++ * @version 1.0.0.4, Jan 15, 2019
+  * @since 0.3.1
+  */
+ @Repository
+@@ -66,7 +66,7 @@
+     public JSONObject getByArchiveDateId(final String archiveDateId, final int currentPageNum, final int pageSize) throws RepositoryException {
+         final Query query = new Query().setFilter(new PropertyFilter(ArchiveDate.ARCHIVE_DATE + "_" + Keys.OBJECT_ID, FilterOperator.EQUAL, archiveDateId)).
+                 addSort(Article.ARTICLE + "_" + Keys.OBJECT_ID, SortDirection.DESCENDING).
+-                setCurrentPageNum(currentPageNum).setPageSize(pageSize).setPageCount(1);
++                setPage(currentPageNum, pageSize).setPageCount(1);
+ 
+         return get(query);
+     }
+diff --git a/src/main/java/org/b3log/solo/repository/ArticleRepository.java b/src/main/java/org/b3log/solo/repository/ArticleRepository.java
+index aa422ce..d510592 100644
+--- a/src/main/java/org/b3log/solo/repository/ArticleRepository.java
++++ b/src/main/java/org/b3log/solo/repository/ArticleRepository.java
+@@ -206,7 +206,7 @@
+         final Query query = new Query().
+                 setFilter(new PropertyFilter(Article.ARTICLE_IS_PUBLISHED, FilterOperator.EQUAL, true)).
+                 addSort(Article.ARTICLE_UPDATED, SortDirection.DESCENDING).
+-                setCurrentPageNum(1).setPageSize(fetchSize).setPageCount(1);
++                setPage(1, fetchSize).setPageCount(1);
+ 
+         return getList(query);
+     }
+@@ -223,7 +223,7 @@
+                 addSort(Article.ARTICLE_COMMENT_COUNT, SortDirection.DESCENDING).
+                 addSort(Article.ARTICLE_UPDATED, SortDirection.DESCENDING).
+                 setFilter(new PropertyFilter(Article.ARTICLE_IS_PUBLISHED, FilterOperator.EQUAL, true)).
+-                setCurrentPageNum(1).setPageSize(num).setPageCount(1);
++                setPage(1, num).setPageCount(1);
+ 
+         return getList(query);
+     }
+@@ -240,7 +240,7 @@
+                 addSort(Article.ARTICLE_VIEW_COUNT, SortDirection.DESCENDING).
+                 addSort(Article.ARTICLE_UPDATED, SortDirection.DESCENDING).
+                 setFilter(new PropertyFilter(Article.ARTICLE_IS_PUBLISHED, FilterOperator.EQUAL, true)).
+-                setCurrentPageNum(1).setPageSize(num).setPageCount(1);
++                setPage(1, num).setPageCount(1);
+ 
+         return getList(query);
+     }
+@@ -269,7 +269,7 @@
+                         new PropertyFilter(Article.ARTICLE_CREATED, FilterOperator.LESS_THAN, currentArticleCreated),
+                         new PropertyFilter(Article.ARTICLE_IS_PUBLISHED, FilterOperator.EQUAL, true))).
+                 addSort(Article.ARTICLE_CREATED, SortDirection.DESCENDING).
+-                setCurrentPageNum(1).setPageSize(1).setPageCount(1).
++                setPage(1, 1).setPageCount(1).
+                 select(Article.ARTICLE_TITLE, Article.ARTICLE_PERMALINK, Article.ARTICLE_ABSTRACT);
+ 
+         final JSONObject result = get(query);
+@@ -316,7 +316,7 @@
+                         new PropertyFilter(Article.ARTICLE_CREATED, FilterOperator.GREATER_THAN, currentArticleCreated),
+                         new PropertyFilter(Article.ARTICLE_IS_PUBLISHED, FilterOperator.EQUAL, true))).
+                 addSort(Article.ARTICLE_CREATED, SortDirection.ASCENDING).
+-                setCurrentPageNum(1).setPageSize(1).setPageCount(1).
++                setPage(1, 1).setPageCount(1).
+                 select(Article.ARTICLE_TITLE, Article.ARTICLE_PERMALINK, Article.ARTICLE_ABSTRACT);
+ 
+         final JSONObject result = get(query);
+diff --git a/src/main/java/org/b3log/solo/repository/CategoryTagRepository.java b/src/main/java/org/b3log/solo/repository/CategoryTagRepository.java
+index 2a4aea7..976f1bc 100644
+--- a/src/main/java/org/b3log/solo/repository/CategoryTagRepository.java
++++ b/src/main/java/org/b3log/solo/repository/CategoryTagRepository.java
+@@ -29,7 +29,7 @@
+  * Category-Tag relation repository.
+  *
+  * @author <a href="http://88250.b3log.org">Liang Ding</a>
+- * @version 1.1.0.2, Sep 30, 2018
++ * @version 1.1.0.3, Jan 15, 2019
+  * @since 2.0.0
+  */
+ @Repository
+@@ -64,7 +64,7 @@
+      */
+     public JSONObject getByCategoryId(final String categoryId, final int currentPageNum, final int pageSize) throws RepositoryException {
+         final Query query = new Query().setFilter(new PropertyFilter(Category.CATEGORY + "_" + Keys.OBJECT_ID, FilterOperator.EQUAL, categoryId)).
+-                setCurrentPageNum(currentPageNum).setPageSize(pageSize).setPageCount(1);
++                setPage(currentPageNum, pageSize).setPageCount(1);
+ 
+         return get(query);
+     }
+@@ -91,7 +91,7 @@
+      */
+     public JSONObject getByTagId(final String tagId, final int currentPageNum, final int pageSize) throws RepositoryException {
+         final Query query = new Query().setFilter(new PropertyFilter(Tag.TAG + "_" + Keys.OBJECT_ID, FilterOperator.EQUAL, tagId)).
+-                setCurrentPageNum(currentPageNum).setPageSize(pageSize).setPageCount(1);
++                setPage(currentPageNum, pageSize).setPageCount(1);
+ 
+         return get(query);
+     }
+diff --git a/src/main/java/org/b3log/solo/repository/ArchiveDateArticleRepository.java b/src/main/java/org/b3log/solo/repository/ArchiveDateArticleRepository.java
+index f7ccabc..339cbb8 100644
+--- a/src/main/java/org/b3log/solo/repository/ArchiveDateArticleRepository.java
++++ b/src/main/java/org/b3log/solo/repository/ArchiveDateArticleRepository.java
+@@ -29,7 +29,7 @@
+  * Archive date-Article repository.
+  *
+  * @author <a href="http://88250.b3log.org">Liang Ding</a>
+- * @version 1.0.0.3, Sep 30, 2018
++ * @version 1.0.0.4, Jan 15, 2019
+  * @since 0.3.1
+  */
+ @Repository
+@@ -66,7 +66,7 @@
+     public JSONObject getByArchiveDateId(final String archiveDateId, final int currentPageNum, final int pageSize) throws RepositoryException {
+         final Query query = new Query().setFilter(new PropertyFilter(ArchiveDate.ARCHIVE_DATE + "_" + Keys.OBJECT_ID, FilterOperator.EQUAL, archiveDateId)).
+                 addSort(Article.ARTICLE + "_" + Keys.OBJECT_ID, SortDirection.DESCENDING).
+-                setCurrentPageNum(currentPageNum).setPageSize(pageSize).setPageCount(1);
++                setPage(currentPageNum, pageSize).setPageCount(1);
+ 
+         return get(query);
+     }

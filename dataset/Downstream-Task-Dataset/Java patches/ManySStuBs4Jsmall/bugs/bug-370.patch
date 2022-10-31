@@ -1,0 +1,26 @@
+diff --git a/core/client/fs/src/main/java/alluxio/client/block/policy/DeterministicHashPolicy.java b/core/client/fs/src/main/java/alluxio/client/block/policy/DeterministicHashPolicy.java
+index 176ba44..47ba999 100644
+--- a/core/client/fs/src/main/java/alluxio/client/block/policy/DeterministicHashPolicy.java
++++ b/core/client/fs/src/main/java/alluxio/client/block/policy/DeterministicHashPolicy.java
+@@ -79,7 +79,7 @@
+     // Try the next one if the worker mapped from the blockId doesn't work until all the workers
+     // are examined.
+     int hv = Math.abs(mHashFunc.newHasher().putLong(options.getBlockId()).hash().asInt());
+-    int index = (int) (hv % (long) workerInfos.size());
++    int index = hv % workerInfos.size();
+     for (BlockWorkerInfo blockWorkerInfoUnused : workerInfos) {
+       WorkerNetAddress candidate = workerInfos.get(index).getNetAddress();
+       BlockWorkerInfo workerInfo = blockWorkerInfoMap.get(candidate);
+diff --git a/core/client/fs/src/main/java/alluxio/client/block/policy/DeterministicHashPolicy.java b/core/client/fs/src/main/java/alluxio/client/block/policy/DeterministicHashPolicy.java
+index 176ba44..47ba999 100644
+--- a/core/client/fs/src/main/java/alluxio/client/block/policy/DeterministicHashPolicy.java
++++ b/core/client/fs/src/main/java/alluxio/client/block/policy/DeterministicHashPolicy.java
+@@ -79,7 +79,7 @@
+     // Try the next one if the worker mapped from the blockId doesn't work until all the workers
+     // are examined.
+     int hv = Math.abs(mHashFunc.newHasher().putLong(options.getBlockId()).hash().asInt());
+-    int index = (int) (hv % (long) workerInfos.size());
++    int index = hv % workerInfos.size();
+     for (BlockWorkerInfo blockWorkerInfoUnused : workerInfos) {
+       WorkerNetAddress candidate = workerInfos.get(index).getNetAddress();
+       BlockWorkerInfo workerInfo = blockWorkerInfoMap.get(candidate);

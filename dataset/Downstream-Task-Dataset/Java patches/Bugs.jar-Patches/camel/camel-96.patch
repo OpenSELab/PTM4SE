@@ -1,0 +1,64 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/Exchange.java b/camel-core/src/main/java/org/apache/camel/Exchange.java
+index 506ba29..f9f3fe3 100644
+--- a/camel-core/src/main/java/org/apache/camel/Exchange.java
++++ b/camel-core/src/main/java/org/apache/camel/Exchange.java
+@@ -194,6 +194,7 @@ public interface Exchange {
+     String TRACE_EVENT_NODE_ID   = "CamelTraceEventNodeId";
+     String TRACE_EVENT_TIMESTAMP = "CamelTraceEventTimestamp";
+     String TRACE_EVENT_EXCHANGE  = "CamelTraceEventExchange";
++    String TRY_ROUTE_BLOCK       = "TryRouteBlock";
+     String TRANSFER_ENCODING     = "Transfer-Encoding";
+ 
+     String UNIT_OF_WORK_EXHAUSTED    = "CamelUnitOfWorkExhausted";
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
+index 69e4667..697ae32 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
+@@ -885,7 +885,10 @@ public class MulticastProcessor extends ServiceSupport implements AsyncProcessor
+     protected Processor createErrorHandler(RouteContext routeContext, Exchange exchange, Processor processor) {
+         Processor answer;
+ 
+-        if (routeContext != null) {
++        boolean tryBlock = exchange.getProperty(Exchange.TRY_ROUTE_BLOCK, false, boolean.class);
++
++        // do not wrap in error handler if we are inside a try block
++        if (!tryBlock && routeContext != null) {
+             // wrap the producer in error handler so we have fine grained error handling on
+             // the output side instead of the input side
+             // this is needed to support redelivery on that output alone and not doing redelivery
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/TryProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/TryProcessor.java
+index 1bfe5dd..b53a14e 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/TryProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/TryProcessor.java
+@@ -73,6 +73,7 @@ public class TryProcessor extends ServiceSupport implements AsyncProcessor, Navi
+         exchange.setProperty(Exchange.EXCEPTION_HANDLED, null);
+ 
+         while (continueRouting(processors, exchange)) {
++            exchange.setProperty(Exchange.TRY_ROUTE_BLOCK, true);
+             ExchangeHelper.prepareOutToIn(exchange);
+ 
+             // process the next processor
+@@ -92,6 +93,7 @@ public class TryProcessor extends ServiceSupport implements AsyncProcessor, Navi
+         }
+ 
+         ExchangeHelper.prepareOutToIn(exchange);
++        exchange.removeProperty(Exchange.TRY_ROUTE_BLOCK);
+         exchange.setProperty(Exchange.EXCEPTION_HANDLED, lastHandled);
+         LOG.trace("Processing complete for exchangeId: {} >>> {}", exchange.getExchangeId(), exchange);
+         callback.done(true);
+@@ -115,6 +117,7 @@ public class TryProcessor extends ServiceSupport implements AsyncProcessor, Navi
+ 
+                 // continue processing the try .. catch .. finally asynchronously
+                 while (continueRouting(processors, exchange)) {
++                    exchange.setProperty(Exchange.TRY_ROUTE_BLOCK, true);
+                     ExchangeHelper.prepareOutToIn(exchange);
+ 
+                     // process the next processor
+@@ -130,6 +133,7 @@ public class TryProcessor extends ServiceSupport implements AsyncProcessor, Navi
+                 }
+ 
+                 ExchangeHelper.prepareOutToIn(exchange);
++                exchange.removeProperty(Exchange.TRY_ROUTE_BLOCK);
+                 exchange.setProperty(Exchange.EXCEPTION_HANDLED, lastHandled);
+                 LOG.trace("Processing complete for exchangeId: {} >>> {}", exchange.getExchangeId(), exchange);
+                 callback.done(false);

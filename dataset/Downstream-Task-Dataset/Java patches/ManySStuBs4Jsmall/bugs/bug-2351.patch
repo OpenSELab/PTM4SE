@@ -1,0 +1,30 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java b/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
+index fe296fa..d01539f 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
++++ b/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
+@@ -25,7 +25,9 @@
+     @Override
+     public BroadcastAction filter(HttpServletRequest request, HttpServletResponse response, Object message) {
+ 
+-        if (request.getHeader("X-Atmosphere-TrackMessageSize").equalsIgnoreCase("true") && String.class.isAssignableFrom(message.getClass())) {
++        if ("true".equalsIgnoreCase(request.getHeader("X-Atmosphere-TrackMessageSize"))
++                && message != null && String.class.isAssignableFrom(message.getClass())) {
++
+             String msg = message.toString();
+             msg = msg.length() + "|" + msg;
+             return new BroadcastAction(BroadcastAction.ACTION.CONTINUE, msg);
+diff --git a/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java b/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
+index fe296fa..d01539f 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
++++ b/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
+@@ -25,7 +25,9 @@
+     @Override
+     public BroadcastAction filter(HttpServletRequest request, HttpServletResponse response, Object message) {
+ 
+-        if (request.getHeader("X-Atmosphere-TrackMessageSize").equalsIgnoreCase("true") && String.class.isAssignableFrom(message.getClass())) {
++        if ("true".equalsIgnoreCase(request.getHeader("X-Atmosphere-TrackMessageSize"))
++                && message != null && String.class.isAssignableFrom(message.getClass())) {
++
+             String msg = message.toString();
+             msg = msg.length() + "|" + msg;
+             return new BroadcastAction(BroadcastAction.ACTION.CONTINUE, msg);

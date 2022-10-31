@@ -1,0 +1,44 @@
+diff --git a/core/server/master/src/test/java/alluxio/master/SafeModeManagerTest.java b/core/server/master/src/test/java/alluxio/master/SafeModeManagerTest.java
+index 1306722..ccf8bea 100644
+--- a/core/server/master/src/test/java/alluxio/master/SafeModeManagerTest.java
++++ b/core/server/master/src/test/java/alluxio/master/SafeModeManagerTest.java
+@@ -46,7 +46,7 @@
+   public void before() throws Exception {
+     Configuration.set(PropertyKey.MASTER_SAFEMODE_WAIT, SAFEMODE_WAIT_TEST);
+     mScheduledExecutorService =
+-        ThreadUtils.newSingleThreadScheduledExecutor("TestSafeMode");
++        ThreadUtils.newSingleThreadScheduledExecutor("TestSafeModeManager");
+     mSafeModeManager = new DefaultSafeModeManager(mScheduledExecutorService);
+   }
+ 
+@@ -97,7 +97,7 @@
+     assertTrue(mSafeModeManager.isInSafeMode());
+     mSafeModeManager.enterSafeMode();
+ 
+-    // Verifies safe mode timer is reset
++    // Verifies safe mode timer is reset.
+     assertTrue(mSafeModeManager.isInSafeMode());
+     Thread.sleep(Configuration.getMs(PropertyKey.MASTER_SAFEMODE_WAIT) - 100);
+     assertTrue(mSafeModeManager.isInSafeMode());
+diff --git a/core/server/master/src/test/java/alluxio/master/SafeModeManagerTest.java b/core/server/master/src/test/java/alluxio/master/SafeModeManagerTest.java
+index 1306722..ccf8bea 100644
+--- a/core/server/master/src/test/java/alluxio/master/SafeModeManagerTest.java
++++ b/core/server/master/src/test/java/alluxio/master/SafeModeManagerTest.java
+@@ -46,7 +46,7 @@
+   public void before() throws Exception {
+     Configuration.set(PropertyKey.MASTER_SAFEMODE_WAIT, SAFEMODE_WAIT_TEST);
+     mScheduledExecutorService =
+-        ThreadUtils.newSingleThreadScheduledExecutor("TestSafeMode");
++        ThreadUtils.newSingleThreadScheduledExecutor("TestSafeModeManager");
+     mSafeModeManager = new DefaultSafeModeManager(mScheduledExecutorService);
+   }
+ 
+@@ -97,7 +97,7 @@
+     assertTrue(mSafeModeManager.isInSafeMode());
+     mSafeModeManager.enterSafeMode();
+ 
+-    // Verifies safe mode timer is reset
++    // Verifies safe mode timer is reset.
+     assertTrue(mSafeModeManager.isInSafeMode());
+     Thread.sleep(Configuration.getMs(PropertyKey.MASTER_SAFEMODE_WAIT) - 100);
+     assertTrue(mSafeModeManager.isInSafeMode());

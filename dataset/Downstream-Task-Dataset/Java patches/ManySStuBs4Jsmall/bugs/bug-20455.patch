@@ -1,0 +1,26 @@
+diff --git a/web/src/main/java/org/openmrs/web/controller/form/FormFormController.java b/web/src/main/java/org/openmrs/web/controller/form/FormFormController.java
+index 0f7ebc4..33e5af1 100644
+--- a/web/src/main/java/org/openmrs/web/controller/form/FormFormController.java
++++ b/web/src/main/java/org/openmrs/web/controller/form/FormFormController.java
+@@ -112,7 +112,7 @@
+ 						log.error("Error while deleting form " + form.getFormId(), e);
+ 						errors.reject(e.getMessage());
+ 						httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR, "Form.cannot.delete");
+-						throw e;
++						return showForm(request, response, errors);
+ 						//return new ModelAndView(new RedirectView(getSuccessView()));
+ 					}
+ 				} else if (action.equals(msa.getMessage("Form.updateSortOrder"))) {
+diff --git a/web/src/main/java/org/openmrs/web/controller/form/FormFormController.java b/web/src/main/java/org/openmrs/web/controller/form/FormFormController.java
+index 0f7ebc4..33e5af1 100644
+--- a/web/src/main/java/org/openmrs/web/controller/form/FormFormController.java
++++ b/web/src/main/java/org/openmrs/web/controller/form/FormFormController.java
+@@ -112,7 +112,7 @@
+ 						log.error("Error while deleting form " + form.getFormId(), e);
+ 						errors.reject(e.getMessage());
+ 						httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR, "Form.cannot.delete");
+-						throw e;
++						return showForm(request, response, errors);
+ 						//return new ModelAndView(new RedirectView(getSuccessView()));
+ 					}
+ 				} else if (action.equals(msa.getMessage("Form.updateSortOrder"))) {

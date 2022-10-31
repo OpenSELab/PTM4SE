@@ -1,0 +1,26 @@
+diff --git a/twitter4j-stream/src/main/java/twitter4j/UserStreamImpl.java b/twitter4j-stream/src/main/java/twitter4j/UserStreamImpl.java
+index bdca7e9..446cce7 100644
+--- a/twitter4j-stream/src/main/java/twitter4j/UserStreamImpl.java
++++ b/twitter4j-stream/src/main/java/twitter4j/UserStreamImpl.java
+@@ -48,7 +48,7 @@
+ 
+     @Override
+     protected void onDirectMessage(JSONObject json, StreamListener[] listeners) throws TwitterException, JSONException {
+-        DirectMessage directMessage = asDirectMessage(json);
++        DirectMessage directMessage = asDirectMessage(json.getJSONObject("direct_message"));
+         for (StreamListener listener : listeners) {
+             ((UserStreamListener) listener).onDirectMessage(directMessage);
+         }
+diff --git a/twitter4j-stream/src/main/java/twitter4j/UserStreamImpl.java b/twitter4j-stream/src/main/java/twitter4j/UserStreamImpl.java
+index bdca7e9..446cce7 100644
+--- a/twitter4j-stream/src/main/java/twitter4j/UserStreamImpl.java
++++ b/twitter4j-stream/src/main/java/twitter4j/UserStreamImpl.java
+@@ -48,7 +48,7 @@
+ 
+     @Override
+     protected void onDirectMessage(JSONObject json, StreamListener[] listeners) throws TwitterException, JSONException {
+-        DirectMessage directMessage = asDirectMessage(json);
++        DirectMessage directMessage = asDirectMessage(json.getJSONObject("direct_message"));
+         for (StreamListener listener : listeners) {
+             ((UserStreamListener) listener).onDirectMessage(directMessage);
+         }

@@ -1,0 +1,13 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/InternalAbstractGraphDatabase.java b/community/kernel/src/main/java/org/neo4j/kernel/InternalAbstractGraphDatabase.java
+index 9c26b02..2069979 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/InternalAbstractGraphDatabase.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/InternalAbstractGraphDatabase.java
+@@ -349,7 +349,7 @@
+         else
+         {
+             String serviceName = config.get( GraphDatabaseSettings.tx_manager_impl );
+-            if ( serviceName == null )
++            if ( GraphDatabaseSettings.tx_manager_impl.getDefaultValue().equals( serviceName ) )
+             {
+                 txManager = new TxManager( this.storeDir, xaDataSourceManager, kernelPanicEventGenerator,
+                         logging.getLogger( TxManager.class ), fileSystem, stateFactory );

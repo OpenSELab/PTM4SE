@@ -1,0 +1,26 @@
+diff --git a/testsuite/integration/clust/src/test/java/org/jboss/as/test/clustering/unmanaged/singleton/service/MyServiceContextListener.java b/testsuite/integration/clust/src/test/java/org/jboss/as/test/clustering/unmanaged/singleton/service/MyServiceContextListener.java
+index ca97d6d..7943f75 100644
+--- a/testsuite/integration/clust/src/test/java/org/jboss/as/test/clustering/unmanaged/singleton/service/MyServiceContextListener.java
++++ b/testsuite/integration/clust/src/test/java/org/jboss/as/test/clustering/unmanaged/singleton/service/MyServiceContextListener.java
+@@ -28,7 +28,7 @@
+     public void contextInitialized(ServletContextEvent event) {
+         MyService service = new MyService();
+         SingletonService<String> singleton = new SingletonService<String>(service, MyService.SERVICE_NAME);
+-        singleton.setElectionPolicy(new PreferredSingletonElectionPolicy(new NamePreference(PREFERRED_NODE + "/" + SingletonService.DEFAULT_CONTAINER), new SimpleSingletonElectionPolicy()));
++        singleton.setElectionPolicy(new PreferredSingletonElectionPolicy(new NamePreference(PREFERRED_NODE), new SimpleSingletonElectionPolicy()));
+         ServiceController<String> controller = singleton.build(CurrentServiceContainer.getServiceContainer())
+             .addDependency(ServerEnvironmentService.SERVICE_NAME, ServerEnvironment.class, service.getEnvInjector())
+             .install()
+diff --git a/testsuite/integration/clust/src/test/java/org/jboss/as/test/clustering/unmanaged/singleton/service/MyServiceContextListener.java b/testsuite/integration/clust/src/test/java/org/jboss/as/test/clustering/unmanaged/singleton/service/MyServiceContextListener.java
+index ca97d6d..7943f75 100644
+--- a/testsuite/integration/clust/src/test/java/org/jboss/as/test/clustering/unmanaged/singleton/service/MyServiceContextListener.java
++++ b/testsuite/integration/clust/src/test/java/org/jboss/as/test/clustering/unmanaged/singleton/service/MyServiceContextListener.java
+@@ -28,7 +28,7 @@
+     public void contextInitialized(ServletContextEvent event) {
+         MyService service = new MyService();
+         SingletonService<String> singleton = new SingletonService<String>(service, MyService.SERVICE_NAME);
+-        singleton.setElectionPolicy(new PreferredSingletonElectionPolicy(new NamePreference(PREFERRED_NODE + "/" + SingletonService.DEFAULT_CONTAINER), new SimpleSingletonElectionPolicy()));
++        singleton.setElectionPolicy(new PreferredSingletonElectionPolicy(new NamePreference(PREFERRED_NODE), new SimpleSingletonElectionPolicy()));
+         ServiceController<String> controller = singleton.build(CurrentServiceContainer.getServiceContainer())
+             .addDependency(ServerEnvironmentService.SERVICE_NAME, ServerEnvironment.class, service.getEnvInjector())
+             .install()

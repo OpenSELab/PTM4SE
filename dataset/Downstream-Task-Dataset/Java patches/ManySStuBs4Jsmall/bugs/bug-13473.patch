@@ -1,0 +1,22 @@
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/edge/EdgeWeightBuilder.java b/FiltersPlugin/src/org/gephi/filters/plugin/edge/EdgeWeightBuilder.java
+index 3051a34..66d0133 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/edge/EdgeWeightBuilder.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/edge/EdgeWeightBuilder.java
+@@ -106,7 +106,7 @@
+         private Range range;
+         private DynamicAttributesHelper dynamicHelper = new DynamicAttributesHelper(this, null);
+         //States
+-        private List<Float> values;
++        private List<Float> values = new ArrayList<Float>();
+ 
+         public String getName() {
+             return NbBundle.getMessage(EdgeWeightBuilder.class, "EdgeWeightBuilder.name");
+@@ -172,7 +172,7 @@
+         }
+ 
+         public void setRange(Range range) {
+-            if (range.getMinimum() == null && range.getMaximum() == null) {
++            if (range.getMinimum() == null && range.getMaximum() == null && this.range != null) {
+                 //Opening project
+                 this.range = new Range(range.getLowerBound(), range.getUpperBound(), this.range.getMinimum(), this.range.getMaximum());
+             } else {

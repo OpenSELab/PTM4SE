@@ -1,0 +1,55 @@
+diff --git a/src/main/java/com/alibaba/druid/sql/parser/SQLExprParser.java b/src/main/java/com/alibaba/druid/sql/parser/SQLExprParser.java
+index c0dd3d0..f599ac3 100644
+--- a/src/main/java/com/alibaba/druid/sql/parser/SQLExprParser.java
++++ b/src/main/java/com/alibaba/druid/sql/parser/SQLExprParser.java
+@@ -2956,7 +2956,7 @@
+         }
+ 
+         SQLSelectItem selectItem = new SQLSelectItem(expr, alias, connectByRoot);
+-        if (lexer.token == Token.HINT) {
++        if (lexer.token == Token.HINT && !lexer.isEnabled(SQLParserFeature.StrictForWall)) {
+             String comment = "/*" + lexer.stringVal() + "*/";
+             selectItem.addAfterComment(comment);
+             lexer.nextToken();
+diff --git a/src/main/java/com/alibaba/druid/sql/parser/SQLParserFeature.java b/src/main/java/com/alibaba/druid/sql/parser/SQLParserFeature.java
+index fb6a151..5243481 100644
+--- a/src/main/java/com/alibaba/druid/sql/parser/SQLParserFeature.java
++++ b/src/main/java/com/alibaba/druid/sql/parser/SQLParserFeature.java
+@@ -21,7 +21,8 @@
+     EnableSQLBinaryOpExprGroup,
+     OptimizedForParameterized,
+     KeepComments,
+-    SkipComments
++    SkipComments,
++    StrictForWall
+     ;
+ 
+     private SQLParserFeature(){
+diff --git a/src/main/java/com/alibaba/druid/wall/spi/MySqlWallProvider.java b/src/main/java/com/alibaba/druid/wall/spi/MySqlWallProvider.java
+index b2e8724..4d1cc9f 100644
+--- a/src/main/java/com/alibaba/druid/wall/spi/MySqlWallProvider.java
++++ b/src/main/java/com/alibaba/druid/wall/spi/MySqlWallProvider.java
+@@ -39,7 +39,9 @@
+ 
+     @Override
+     public SQLStatementParser createParser(String sql) {
+-        return new MySqlStatementParser(sql, SQLParserFeature.EnableSQLBinaryOpExprGroup
++        return new MySqlStatementParser(sql
++                , SQLParserFeature.EnableSQLBinaryOpExprGroup
++                , SQLParserFeature.StrictForWall
+         );
+     }
+ 
+diff --git a/src/main/java/com/alibaba/druid/sql/parser/SQLExprParser.java b/src/main/java/com/alibaba/druid/sql/parser/SQLExprParser.java
+index c0dd3d0..f599ac3 100644
+--- a/src/main/java/com/alibaba/druid/sql/parser/SQLExprParser.java
++++ b/src/main/java/com/alibaba/druid/sql/parser/SQLExprParser.java
+@@ -2956,7 +2956,7 @@
+         }
+ 
+         SQLSelectItem selectItem = new SQLSelectItem(expr, alias, connectByRoot);
+-        if (lexer.token == Token.HINT) {
++        if (lexer.token == Token.HINT && !lexer.isEnabled(SQLParserFeature.StrictForWall)) {
+             String comment = "/*" + lexer.stringVal() + "*/";
+             selectItem.addAfterComment(comment);
+             lexer.nextToken();

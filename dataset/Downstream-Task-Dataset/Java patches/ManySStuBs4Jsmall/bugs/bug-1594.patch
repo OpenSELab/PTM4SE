@@ -1,0 +1,98 @@
+diff --git a/extras/rxjava/src/test/java/org/asynchttpclient/extras/rxjava/AsyncHttpObservableTest.java b/extras/rxjava/src/test/java/org/asynchttpclient/extras/rxjava/AsyncHttpObservableTest.java
+index 9497d0f..b97993d 100644
+--- a/extras/rxjava/src/test/java/org/asynchttpclient/extras/rxjava/AsyncHttpObservableTest.java
++++ b/extras/rxjava/src/test/java/org/asynchttpclient/extras/rxjava/AsyncHttpObservableTest.java
+@@ -31,7 +31,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.toObservable(() -> client.prepareGet("http://gatling.io"));
++            Observable<Response> o1 = AsyncHttpObservable.toObservable(() -> client.prepareGet("https://gatling.io"));
+             o1.subscribe(tester);
+             tester.awaitTerminalEvent();
+             tester.assertTerminalEvent();
+@@ -51,7 +51,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.toObservable(() -> client.prepareGet("http://gatling.io/ttfn"));
++            Observable<Response> o1 = AsyncHttpObservable.toObservable(() -> client.prepareGet("https://gatling.io/ttfn"));
+             o1.subscribe(tester);
+             tester.awaitTerminalEvent();
+             tester.assertTerminalEvent();
+@@ -71,7 +71,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("http://gatling.io"));
++            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("https://gatling.io"));
+             o1.subscribe(tester);
+             tester.awaitTerminalEvent();
+             tester.assertTerminalEvent();
+@@ -91,7 +91,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("http://gatling.io/ttfn"));
++            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("https://gatling.io/ttfn"));
+             o1.subscribe(tester);
+             tester.awaitTerminalEvent();
+             tester.assertTerminalEvent();
+@@ -111,7 +111,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("http://gatling.io"));
++            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("https://gatling.io"));
+             Observable<Response> o2 = AsyncHttpObservable.observe(() -> client.prepareGet("http://www.wisc.edu").setFollowRedirect(true));
+             Observable<Response> o3 = AsyncHttpObservable.observe(() -> client.prepareGet("http://www.umn.edu").setFollowRedirect(true));
+             Observable<Response> all = Observable.merge(o1, o2, o3);
+diff --git a/extras/rxjava/src/test/java/org/asynchttpclient/extras/rxjava/AsyncHttpObservableTest.java b/extras/rxjava/src/test/java/org/asynchttpclient/extras/rxjava/AsyncHttpObservableTest.java
+index 9497d0f..b97993d 100644
+--- a/extras/rxjava/src/test/java/org/asynchttpclient/extras/rxjava/AsyncHttpObservableTest.java
++++ b/extras/rxjava/src/test/java/org/asynchttpclient/extras/rxjava/AsyncHttpObservableTest.java
+@@ -31,7 +31,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.toObservable(() -> client.prepareGet("http://gatling.io"));
++            Observable<Response> o1 = AsyncHttpObservable.toObservable(() -> client.prepareGet("https://gatling.io"));
+             o1.subscribe(tester);
+             tester.awaitTerminalEvent();
+             tester.assertTerminalEvent();
+@@ -51,7 +51,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.toObservable(() -> client.prepareGet("http://gatling.io/ttfn"));
++            Observable<Response> o1 = AsyncHttpObservable.toObservable(() -> client.prepareGet("https://gatling.io/ttfn"));
+             o1.subscribe(tester);
+             tester.awaitTerminalEvent();
+             tester.assertTerminalEvent();
+@@ -71,7 +71,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("http://gatling.io"));
++            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("https://gatling.io"));
+             o1.subscribe(tester);
+             tester.awaitTerminalEvent();
+             tester.assertTerminalEvent();
+@@ -91,7 +91,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("http://gatling.io/ttfn"));
++            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("https://gatling.io/ttfn"));
+             o1.subscribe(tester);
+             tester.awaitTerminalEvent();
+             tester.assertTerminalEvent();
+@@ -111,7 +111,7 @@
+         final TestSubscriber<Response> tester = new TestSubscriber<>();
+ 
+         try (AsyncHttpClient client = asyncHttpClient()) {
+-            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("http://gatling.io"));
++            Observable<Response> o1 = AsyncHttpObservable.observe(() -> client.prepareGet("https://gatling.io"));
+             Observable<Response> o2 = AsyncHttpObservable.observe(() -> client.prepareGet("http://www.wisc.edu").setFollowRedirect(true));
+             Observable<Response> o3 = AsyncHttpObservable.observe(() -> client.prepareGet("http://www.umn.edu").setFollowRedirect(true));
+             Observable<Response> all = Observable.merge(o1, o2, o3);

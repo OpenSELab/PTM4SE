@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
+index 8502d92..3df78b8 100644
+--- a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
++++ b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
+@@ -84,7 +84,7 @@
+ 
+     @Override
+     public INDArray backprop(INDArray output, int miniBatchSize) {
+-        if (targetShape != output.shape()) {
++        if (!Arrays.equals(targetShape, output.shape())) {
+             throw new IllegalStateException("Unexpected output shape" + Arrays.toString(output.shape())
+                     + " (expected to be " + Arrays.toString(targetShape) + ")");
+         }
+diff --git a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
+index 8502d92..3df78b8 100644
+--- a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
++++ b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/preprocessors/ReshapePreprocessor.java
+@@ -84,7 +84,7 @@
+ 
+     @Override
+     public INDArray backprop(INDArray output, int miniBatchSize) {
+-        if (targetShape != output.shape()) {
++        if (!Arrays.equals(targetShape, output.shape())) {
+             throw new IllegalStateException("Unexpected output shape" + Arrays.toString(output.shape())
+                     + " (expected to be " + Arrays.toString(targetShape) + ")");
+         }

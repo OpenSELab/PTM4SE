@@ -1,0 +1,26 @@
+diff --git a/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/linalg/jcublas/JCublasNDArrayFactory.java b/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/linalg/jcublas/JCublasNDArrayFactory.java
+index 53d0e50..159b978 100644
+--- a/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/linalg/jcublas/JCublasNDArrayFactory.java
++++ b/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/linalg/jcublas/JCublasNDArrayFactory.java
+@@ -465,7 +465,7 @@
+                 allocator.memcpyAsync(ret.data(),new Pointer(allocator.getPointer(m).address()), AllocationUtils.getRequiredMemory(AllocationUtils.buildAllocationShape(m)), linearIndex * (m.data().dataType() == DataBuffer.Type.DOUBLE ? 8 : 4));
+                 linearIndex += m.length();
+             } else {
+-                long[] extras = new long[]{ AddressRetriever.retrieveHostAddress(m.shapeInfoDataBuffer()), context.getOldStream().getNativePointer(), allocator.getDeviceId(), m.length()};
++                long[] extras = new long[]{ AddressRetriever.retrieveHostAddress(m.shapeInfoDataBuffer()), context.getOldStream().getNativePointer(), allocator.getDeviceId(), context.getBufferAllocation(), context.getBufferReduction(), context.getBufferScalar()};
+                 if (m.data().dataType() == DataBuffer.Type.DOUBLE) {
+                     nativeOps.flattenDouble(
+                             extras,
+diff --git a/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/linalg/jcublas/JCublasNDArrayFactory.java b/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/linalg/jcublas/JCublasNDArrayFactory.java
+index 53d0e50..159b978 100644
+--- a/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/linalg/jcublas/JCublasNDArrayFactory.java
++++ b/nd4j-backends/nd4j-backend-impls/nd4j-cuda-7.5/src/main/java/org/nd4j/linalg/jcublas/JCublasNDArrayFactory.java
+@@ -465,7 +465,7 @@
+                 allocator.memcpyAsync(ret.data(),new Pointer(allocator.getPointer(m).address()), AllocationUtils.getRequiredMemory(AllocationUtils.buildAllocationShape(m)), linearIndex * (m.data().dataType() == DataBuffer.Type.DOUBLE ? 8 : 4));
+                 linearIndex += m.length();
+             } else {
+-                long[] extras = new long[]{ AddressRetriever.retrieveHostAddress(m.shapeInfoDataBuffer()), context.getOldStream().getNativePointer(), allocator.getDeviceId(), m.length()};
++                long[] extras = new long[]{ AddressRetriever.retrieveHostAddress(m.shapeInfoDataBuffer()), context.getOldStream().getNativePointer(), allocator.getDeviceId(), context.getBufferAllocation(), context.getBufferReduction(), context.getBufferScalar()};
+                 if (m.data().dataType() == DataBuffer.Type.DOUBLE) {
+                     nativeOps.flattenDouble(
+                             extras,

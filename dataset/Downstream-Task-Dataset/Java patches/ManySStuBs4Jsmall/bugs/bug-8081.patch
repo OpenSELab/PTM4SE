@@ -1,0 +1,26 @@
+diff --git a/storm-client/src/jvm/org/apache/storm/daemon/worker/WorkerState.java b/storm-client/src/jvm/org/apache/storm/daemon/worker/WorkerState.java
+index d679ee8..825de4b 100644
+--- a/storm-client/src/jvm/org/apache/storm/daemon/worker/WorkerState.java
++++ b/storm-client/src/jvm/org/apache/storm/daemon/worker/WorkerState.java
+@@ -485,7 +485,7 @@
+         refreshActiveTimer.schedule(delaySecs, new Runnable() {
+             @Override public void run() {
+                 if (areAllConnectionsReady()) {
+-                    LOG.info("All connections are ready for worker {}:{} with id", assignmentId, port, workerId);
++                    LOG.info("All connections are ready for worker {}:{} with id {}", assignmentId, port, workerId);
+                     isWorkerActive.set(Boolean.TRUE);
+                 } else {
+                     refreshActiveTimer.schedule(recurSecs, () -> activateWorkerWhenAllConnectionsReady(), false, 0);
+diff --git a/storm-client/src/jvm/org/apache/storm/daemon/worker/WorkerState.java b/storm-client/src/jvm/org/apache/storm/daemon/worker/WorkerState.java
+index d679ee8..825de4b 100644
+--- a/storm-client/src/jvm/org/apache/storm/daemon/worker/WorkerState.java
++++ b/storm-client/src/jvm/org/apache/storm/daemon/worker/WorkerState.java
+@@ -485,7 +485,7 @@
+         refreshActiveTimer.schedule(delaySecs, new Runnable() {
+             @Override public void run() {
+                 if (areAllConnectionsReady()) {
+-                    LOG.info("All connections are ready for worker {}:{} with id", assignmentId, port, workerId);
++                    LOG.info("All connections are ready for worker {}:{} with id {}", assignmentId, port, workerId);
+                     isWorkerActive.set(Boolean.TRUE);
+                 } else {
+                     refreshActiveTimer.schedule(recurSecs, () -> activateWorkerWhenAllConnectionsReady(), false, 0);

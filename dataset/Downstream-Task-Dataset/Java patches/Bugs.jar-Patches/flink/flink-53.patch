@@ -1,0 +1,17 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
+index 9430d80..aae0b7c 100755
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
+@@ -746,12 +746,6 @@ public class ExecutionGraph implements Serializable {
+ 
+ 	public void restart() {
+ 		try {
+-			if (state == JobStatus.FAILED) {
+-				if (!transitionState(JobStatus.FAILED, JobStatus.RESTARTING)) {
+-					throw new IllegalStateException("Execution Graph left the state FAILED while trying to restart.");
+-				}
+-			}
+-
+ 			synchronized (progressLock) {
+ 				if (state != JobStatus.RESTARTING) {
+ 					throw new IllegalStateException("Can only restart job from state restarting.");

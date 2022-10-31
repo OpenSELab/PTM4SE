@@ -1,0 +1,44 @@
+diff --git a/community/src/main/java/org/neo4j/server/plugins/PluginMethod.java b/community/src/main/java/org/neo4j/server/plugins/PluginMethod.java
+index b4258d1..0f435e2 100644
+--- a/community/src/main/java/org/neo4j/server/plugins/PluginMethod.java
++++ b/community/src/main/java/org/neo4j/server/plugins/PluginMethod.java
+@@ -163,7 +163,7 @@
+             Class<?> raw = (Class<?>) paramType.getRawType();
+             if ( Set.class.isAssignableFrom( raw ) )
+             {
+-                TypeCaster caster = TYPES.get( raw );
++                TypeCaster caster = TYPES.get( paramType.getActualTypeArguments()[0] );
+                 if ( caster != null )
+                 {
+                     return new ListParameterExtractor( caster, raw, parameter, description )
+@@ -178,7 +178,7 @@
+             }
+             else if ( Iterable.class.isAssignableFrom( raw ) )
+             {
+-                TypeCaster caster = TYPES.get( raw );
++                TypeCaster caster = TYPES.get( paramType.getActualTypeArguments()[0] );
+                 if ( caster != null )
+                 {
+                     return new ListParameterExtractor( caster, raw, parameter, description )
+diff --git a/community/src/main/java/org/neo4j/server/plugins/PluginMethod.java b/community/src/main/java/org/neo4j/server/plugins/PluginMethod.java
+index b4258d1..0f435e2 100644
+--- a/community/src/main/java/org/neo4j/server/plugins/PluginMethod.java
++++ b/community/src/main/java/org/neo4j/server/plugins/PluginMethod.java
+@@ -163,7 +163,7 @@
+             Class<?> raw = (Class<?>) paramType.getRawType();
+             if ( Set.class.isAssignableFrom( raw ) )
+             {
+-                TypeCaster caster = TYPES.get( raw );
++                TypeCaster caster = TYPES.get( paramType.getActualTypeArguments()[0] );
+                 if ( caster != null )
+                 {
+                     return new ListParameterExtractor( caster, raw, parameter, description )
+@@ -178,7 +178,7 @@
+             }
+             else if ( Iterable.class.isAssignableFrom( raw ) )
+             {
+-                TypeCaster caster = TYPES.get( raw );
++                TypeCaster caster = TYPES.get( paramType.getActualTypeArguments()[0] );
+                 if ( caster != null )
+                 {
+                     return new ListParameterExtractor( caster, raw, parameter, description )

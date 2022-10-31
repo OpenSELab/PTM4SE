@@ -1,0 +1,62 @@
+diff --git a/modules/cpr/src/test/java/org/atmosphere/cpr/BroadcasterCacheTest.java b/modules/cpr/src/test/java/org/atmosphere/cpr/BroadcasterCacheTest.java
+index 0c3d010..6074667 100644
+--- a/modules/cpr/src/test/java/org/atmosphere/cpr/BroadcasterCacheTest.java
++++ b/modules/cpr/src/test/java/org/atmosphere/cpr/BroadcasterCacheTest.java
+@@ -203,7 +203,7 @@
+         broadcaster.removeAtmosphereResource(r);
+         broadcaster.broadcast("foo").get();
+ 
+-        List<Object> l = cache.retrieveFromCache(broadcaster.getID(), ar);
++        List<Object> l = cache.retrieveFromCache(broadcaster.getID(), ar.uuid());
+         assertNotNull(l);
+         assertEquals(l.isEmpty(), true);
+     }
+@@ -219,7 +219,7 @@
+         broadcaster.removeAtmosphereResource(r);
+         broadcaster.broadcast("foo").get();
+ 
+-        List<Object> l = cache.retrieveFromCache(broadcaster.getID(), r);
++        List<Object> l = cache.retrieveFromCache(broadcaster.getID(), r.uuid());
+         assertNotNull(l);
+         assertEquals(l.isEmpty(), false);
+     }
+@@ -241,7 +241,7 @@
+         b.broadcast("raide").get();
+ 
+         assertEquals(cache.messages().isEmpty(), false);
+-        List<Object> l = cache.retrieveFromCache(b.getID(), ar);
++        List<Object> l = cache.retrieveFromCache(b.getID(), ar.uuid());
+         assertNotNull(l);
+         assertEquals(l.isEmpty(), false);
+     }
+diff --git a/modules/cpr/src/test/java/org/atmosphere/cpr/BroadcasterCacheTest.java b/modules/cpr/src/test/java/org/atmosphere/cpr/BroadcasterCacheTest.java
+index 0c3d010..6074667 100644
+--- a/modules/cpr/src/test/java/org/atmosphere/cpr/BroadcasterCacheTest.java
++++ b/modules/cpr/src/test/java/org/atmosphere/cpr/BroadcasterCacheTest.java
+@@ -203,7 +203,7 @@
+         broadcaster.removeAtmosphereResource(r);
+         broadcaster.broadcast("foo").get();
+ 
+-        List<Object> l = cache.retrieveFromCache(broadcaster.getID(), ar);
++        List<Object> l = cache.retrieveFromCache(broadcaster.getID(), ar.uuid());
+         assertNotNull(l);
+         assertEquals(l.isEmpty(), true);
+     }
+@@ -219,7 +219,7 @@
+         broadcaster.removeAtmosphereResource(r);
+         broadcaster.broadcast("foo").get();
+ 
+-        List<Object> l = cache.retrieveFromCache(broadcaster.getID(), r);
++        List<Object> l = cache.retrieveFromCache(broadcaster.getID(), r.uuid());
+         assertNotNull(l);
+         assertEquals(l.isEmpty(), false);
+     }
+@@ -241,7 +241,7 @@
+         b.broadcast("raide").get();
+ 
+         assertEquals(cache.messages().isEmpty(), false);
+-        List<Object> l = cache.retrieveFromCache(b.getID(), ar);
++        List<Object> l = cache.retrieveFromCache(b.getID(), ar.uuid());
+         assertNotNull(l);
+         assertEquals(l.isEmpty(), false);
+     }

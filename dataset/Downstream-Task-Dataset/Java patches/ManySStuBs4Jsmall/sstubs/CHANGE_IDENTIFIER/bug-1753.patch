@@ -1,0 +1,24 @@
+diff --git a/test/com/google/javascript/jscomp/DevirtualizePrototypeMethodsTest.java b/test/com/google/javascript/jscomp/DevirtualizePrototypeMethodsTest.java
+index e044b6e..5a2419c 100644
+--- a/test/com/google/javascript/jscomp/DevirtualizePrototypeMethodsTest.java
++++ b/test/com/google/javascript/jscomp/DevirtualizePrototypeMethodsTest.java
+@@ -96,7 +96,8 @@
+             "JSCompiler_StaticMethods_bar(o, 2);",
+             "JSCompiler_StaticMethods_baz(o)");
+ 
+-    static final List<String> EXPECTED_TYPE_CHECKING_OFF = ImmutableList.of(
++    static final ImmutableList<String> EXPECTED_TYPE_CHECKING_OFF =
++        ImmutableList.of(
+         "FUNCTION a = null",
+         "NAME JSCompiler_StaticMethods_foo$self = null",
+         "FUNCTION JSCompiler_StaticMethods_foo = null",
+@@ -108,7 +109,8 @@
+         "CALL JSCompiler_StaticMethods_bar = null",
+         "CALL JSCompiler_StaticMethods_baz = null");
+ 
+-    static final List<String> EXPECTED_TYPE_CHECKING_ON = ImmutableList.of(
++    static final ImmutableList<String> EXPECTED_TYPE_CHECKING_ON =
++        ImmutableList.of(
+         "FUNCTION a = function (new:a): undefined",
+         "NAME JSCompiler_StaticMethods_foo$self = a",
+         "FUNCTION JSCompiler_StaticMethods_foo = function (a): number",

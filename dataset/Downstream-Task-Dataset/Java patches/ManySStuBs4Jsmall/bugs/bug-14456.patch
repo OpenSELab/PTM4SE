@@ -1,0 +1,17 @@
+diff --git a/src/com/google/javascript/jscomp/NameAnalyzer.java b/src/com/google/javascript/jscomp/NameAnalyzer.java
+index 5b9ed29..51c79ce 100644
+--- a/src/com/google/javascript/jscomp/NameAnalyzer.java
++++ b/src/com/google/javascript/jscomp/NameAnalyzer.java
+@@ -1671,10 +1671,8 @@
+       case Token.VAR:
+         break;
+       case Token.ASSIGN:
+-        Preconditions.checkArgument(
+-            parent.getType() == Token.FOR,
+-            "Unsupported assignment in replaceWithRhs. parent: " +
+-            Token.name(parent.getType()));
++        Preconditions.checkArgument(parent.getType() == Token.FOR,
++            "Unsupported assignment in replaceWithRhs. parent: %s", Token.name(parent.getType()));
+         break;
+       default:
+         throw new IllegalArgumentException(

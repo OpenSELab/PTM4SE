@@ -1,0 +1,16 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/builder/NotifyBuilder.java b/camel-core/src/main/java/org/apache/camel/builder/NotifyBuilder.java
+index 1c42ad9..e5933494 100644
+--- a/camel-core/src/main/java/org/apache/camel/builder/NotifyBuilder.java
++++ b/camel-core/src/main/java/org/apache/camel/builder/NotifyBuilder.java
+@@ -154,6 +154,11 @@ public class NotifyBuilder {
+             @Override
+             public boolean onExchange(Exchange exchange) {
+                 String id = EndpointHelper.getRouteIdFromEndpoint(exchange.getFromEndpoint());
++
++                if (id == null) {
++                    id = exchange.getFromRouteId();
++                }
++
+                 // filter non matching exchanges
+                 return EndpointHelper.matchPattern(id, routeId);
+             }

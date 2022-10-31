@@ -1,0 +1,13 @@
+diff --git a/components/camel-netty4/src/test/java/org/apache/camel/component/netty4/NettyUseSharedWorkerThreadPoolManyRoutesTest.java b/components/camel-netty4/src/test/java/org/apache/camel/component/netty4/NettyUseSharedWorkerThreadPoolManyRoutesTest.java
+index c40fb80..fa71b39 100644
+--- a/components/camel-netty4/src/test/java/org/apache/camel/component/netty4/NettyUseSharedWorkerThreadPoolManyRoutesTest.java
++++ b/components/camel-netty4/src/test/java/org/apache/camel/component/netty4/NettyUseSharedWorkerThreadPoolManyRoutesTest.java
+@@ -71,7 +71,7 @@
+ 
+                 for (int i = 0; i < 100; i++) {
+                     from("netty4:tcp://localhost:" + getNextPort() + "?textline=true&sync=true&orderedThreadPoolExecutor=false"
+-                            + "&bossPool=#sharedBoss&workerPool=#sharedWorker")
++                            + "&bossGroup=#sharedBoss&workerGroup=#sharedWorker")
+                         .validate(body().isInstanceOf(String.class))
+                         .to("log:result")
+                         .to("mock:result")

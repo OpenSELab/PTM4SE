@@ -1,0 +1,61 @@
+diff --git a/client/src/main/java/org/asynchttpclient/handler/BodyDeferringAsyncHandler.java b/client/src/main/java/org/asynchttpclient/handler/BodyDeferringAsyncHandler.java
+index 3f53e9e..872d297 100644
+--- a/client/src/main/java/org/asynchttpclient/handler/BodyDeferringAsyncHandler.java
++++ b/client/src/main/java/org/asynchttpclient/handler/BodyDeferringAsyncHandler.java
+@@ -140,7 +140,7 @@
+             headersArrived.countDown();
+         }
+ 
+-        bodyPart.writeTo(output);
++        output.write(bodyPart.getBodyPartBytes());
+         return State.CONTINUE;
+     }
+ 
+diff --git a/client/src/test/java/org/asynchttpclient/reactivestreams/ReactiveStreamsTest.java b/client/src/test/java/org/asynchttpclient/reactivestreams/ReactiveStreamsTest.java
+index 4186f4d..c0cc483 100644
+--- a/client/src/test/java/org/asynchttpclient/reactivestreams/ReactiveStreamsTest.java
++++ b/client/src/test/java/org/asynchttpclient/reactivestreams/ReactiveStreamsTest.java
+@@ -133,7 +133,7 @@
+             List<HttpResponseBodyPart> bodyParts = subscriber.getElements();
+             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+             for (HttpResponseBodyPart part : bodyParts) {
+-                part.writeTo(bytes);
++                bytes.write(part.getBodyPartBytes());
+             }
+             return bytes.toByteArray();
+         }
+diff --git a/client/src/test/java/org/asynchttpclient/request/body/ZeroCopyFileTest.java b/client/src/test/java/org/asynchttpclient/request/body/ZeroCopyFileTest.java
+index aeb8ca3..3f24e78 100644
+--- a/client/src/test/java/org/asynchttpclient/request/body/ZeroCopyFileTest.java
++++ b/client/src/test/java/org/asynchttpclient/request/body/ZeroCopyFileTest.java
+@@ -123,7 +123,7 @@
+                     }
+ 
+                     public State onBodyPartReceived(HttpResponseBodyPart bodyPart) throws Exception {
+-                        bodyPart.writeTo(stream);
++                        stream.write(bodyPart.getBodyPartBytes());
+                         return State.CONTINUE;
+                     }
+ 
+@@ -156,7 +156,7 @@
+                     }
+ 
+                     public State onBodyPartReceived(HttpResponseBodyPart bodyPart) throws Exception {
+-                        bodyPart.writeTo(stream);
++                        stream.write(bodyPart.getBodyPartBytes());
+ 
+                         if (bodyPart.getBodyPartBytes().length == 0) {
+                             return State.ABORT;
+diff --git a/client/src/main/java/org/asynchttpclient/handler/BodyDeferringAsyncHandler.java b/client/src/main/java/org/asynchttpclient/handler/BodyDeferringAsyncHandler.java
+index 3f53e9e..872d297 100644
+--- a/client/src/main/java/org/asynchttpclient/handler/BodyDeferringAsyncHandler.java
++++ b/client/src/main/java/org/asynchttpclient/handler/BodyDeferringAsyncHandler.java
+@@ -140,7 +140,7 @@
+             headersArrived.countDown();
+         }
+ 
+-        bodyPart.writeTo(output);
++        output.write(bodyPart.getBodyPartBytes());
+         return State.CONTINUE;
+     }
+ 

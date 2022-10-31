@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/MulticastService.java b/hazelcast/src/main/java/com/hazelcast/impl/MulticastService.java
+index 985642b..7b456f5 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/MulticastService.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/MulticastService.java
+@@ -47,7 +47,7 @@
+         this.node = node;
+         Config config = node.getConfig();
+         this.multicastSocket = multicastSocket;
+-        int bufferSize = 1024;
++        int bufferSize = 1024 * 1024;
+         this.datagramPacketReceive = new DatagramPacket(new byte[bufferSize], bufferSize);
+         this.datagramPacketSend = new DatagramPacket(new byte[bufferSize], bufferSize, InetAddress
+                 .getByName(config.getNetworkConfig().getJoin().getMulticastConfig().getMulticastGroup()),
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/MulticastService.java b/hazelcast/src/main/java/com/hazelcast/impl/MulticastService.java
+index 985642b..7b456f5 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/MulticastService.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/MulticastService.java
+@@ -47,7 +47,7 @@
+         this.node = node;
+         Config config = node.getConfig();
+         this.multicastSocket = multicastSocket;
+-        int bufferSize = 1024;
++        int bufferSize = 1024 * 1024;
+         this.datagramPacketReceive = new DatagramPacket(new byte[bufferSize], bufferSize);
+         this.datagramPacketSend = new DatagramPacket(new byte[bufferSize], bufferSize, InetAddress
+                 .getByName(config.getNetworkConfig().getJoin().getMulticastConfig().getMulticastGroup()),

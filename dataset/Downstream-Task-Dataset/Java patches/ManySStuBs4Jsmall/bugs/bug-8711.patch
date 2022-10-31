@@ -1,0 +1,80 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AtclauseOrderCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AtclauseOrderCheckTest.java
+index 572ea31..a1c9fc8 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AtclauseOrderCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AtclauseOrderCheckTest.java
+@@ -36,7 +36,8 @@
+     @Override
+     protected String getPath(String filename) throws IOException {
+         return super.getPath("checks" + File.separator
+-                + "javadoc" + File.separator + filename);
++                + "javadoc" + File.separator
++                + "atclauseorder" + File.separator + filename);
+     }
+ 
+     @Test
+@@ -60,7 +61,7 @@
+         final DefaultConfiguration checkConfig = createCheckConfig(AtclauseOrderCheck.class);
+         final String[] expected = CommonUtils.EMPTY_STRING_ARRAY;
+ 
+-        verify(checkConfig, getPath("InputCorrectAtClauseOrder.java"), expected);
++        verify(checkConfig, getPath("InputAtClauseOrderCorrect.java"), expected);
+     }
+ 
+     @Test
+@@ -110,7 +111,7 @@
+             "278: " + getCheckMessage(MSG_KEY, tagOrder),
+             "288: " + getCheckMessage(MSG_KEY, tagOrder),
+         };
+-        verify(checkConfig, getPath("InputIncorrectAtClauseOrder.java"), expected);
++        verify(checkConfig, getPath("InputAtClauseOrderIncorrect.java"), expected);
+     }
+ 
+     @Test
+@@ -127,6 +128,6 @@
+         final String[] expected = {
+             "113: " + getCheckMessage(MSG_KEY, tagOrder),
+         };
+-        verify(checkConfig, getPath("InputIncorrectAtClauseOrder.java"), expected);
++        verify(checkConfig, getPath("InputAtClauseOrderIncorrect.java"), expected);
+     }
+ }
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AtclauseOrderCheckTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AtclauseOrderCheckTest.java
+index 572ea31..a1c9fc8 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AtclauseOrderCheckTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/checks/javadoc/AtclauseOrderCheckTest.java
+@@ -36,7 +36,8 @@
+     @Override
+     protected String getPath(String filename) throws IOException {
+         return super.getPath("checks" + File.separator
+-                + "javadoc" + File.separator + filename);
++                + "javadoc" + File.separator
++                + "atclauseorder" + File.separator + filename);
+     }
+ 
+     @Test
+@@ -60,7 +61,7 @@
+         final DefaultConfiguration checkConfig = createCheckConfig(AtclauseOrderCheck.class);
+         final String[] expected = CommonUtils.EMPTY_STRING_ARRAY;
+ 
+-        verify(checkConfig, getPath("InputCorrectAtClauseOrder.java"), expected);
++        verify(checkConfig, getPath("InputAtClauseOrderCorrect.java"), expected);
+     }
+ 
+     @Test
+@@ -110,7 +111,7 @@
+             "278: " + getCheckMessage(MSG_KEY, tagOrder),
+             "288: " + getCheckMessage(MSG_KEY, tagOrder),
+         };
+-        verify(checkConfig, getPath("InputIncorrectAtClauseOrder.java"), expected);
++        verify(checkConfig, getPath("InputAtClauseOrderIncorrect.java"), expected);
+     }
+ 
+     @Test
+@@ -127,6 +128,6 @@
+         final String[] expected = {
+             "113: " + getCheckMessage(MSG_KEY, tagOrder),
+         };
+-        verify(checkConfig, getPath("InputIncorrectAtClauseOrder.java"), expected);
++        verify(checkConfig, getPath("InputAtClauseOrderIncorrect.java"), expected);
+     }
+ }

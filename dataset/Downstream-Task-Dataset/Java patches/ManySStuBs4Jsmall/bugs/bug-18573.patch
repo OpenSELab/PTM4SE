@@ -1,0 +1,44 @@
+diff --git a/enterprise/src/functionaltest/java/org/neo4j/server/NeoServerStartupLoggingFunctionalTest.java b/enterprise/src/functionaltest/java/org/neo4j/server/NeoServerStartupLoggingFunctionalTest.java
+index 06d0b19..3844564 100644
+--- a/enterprise/src/functionaltest/java/org/neo4j/server/NeoServerStartupLoggingFunctionalTest.java
++++ b/enterprise/src/functionaltest/java/org/neo4j/server/NeoServerStartupLoggingFunctionalTest.java
+@@ -47,7 +47,7 @@
+     @Before
+     public void setupServer() throws IOException {
+         tempDir = new File(ServerTestUtils.createTempDir().getAbsolutePath() + File.separator + "html");
+-        FileUtils.moveDirectory(new File("target/classes/html"), tempDir);
++        FileUtils.moveDirectory(new File("target/classes/webadmin-html"), tempDir);
+ 
+         appender = new InMemoryAppender(Jetty6WebServer.log);
+         server = ServerBuilder.server().withRandomDatabaseDir().withPassingStartupHealthcheck().build();
+@@ -58,7 +58,7 @@
+     @After
+     public void stopServer() throws IOException {
+         server.stop();
+-        FileUtils.moveDirectory(tempDir, new File("target/classes/html"));
++        FileUtils.moveDirectory(tempDir, new File("target/classes/webadmin-html"));
+     }
+ 
+     @Test
+diff --git a/enterprise/src/functionaltest/java/org/neo4j/server/NeoServerStartupLoggingFunctionalTest.java b/enterprise/src/functionaltest/java/org/neo4j/server/NeoServerStartupLoggingFunctionalTest.java
+index 06d0b19..3844564 100644
+--- a/enterprise/src/functionaltest/java/org/neo4j/server/NeoServerStartupLoggingFunctionalTest.java
++++ b/enterprise/src/functionaltest/java/org/neo4j/server/NeoServerStartupLoggingFunctionalTest.java
+@@ -47,7 +47,7 @@
+     @Before
+     public void setupServer() throws IOException {
+         tempDir = new File(ServerTestUtils.createTempDir().getAbsolutePath() + File.separator + "html");
+-        FileUtils.moveDirectory(new File("target/classes/html"), tempDir);
++        FileUtils.moveDirectory(new File("target/classes/webadmin-html"), tempDir);
+ 
+         appender = new InMemoryAppender(Jetty6WebServer.log);
+         server = ServerBuilder.server().withRandomDatabaseDir().withPassingStartupHealthcheck().build();
+@@ -58,7 +58,7 @@
+     @After
+     public void stopServer() throws IOException {
+         server.stop();
+-        FileUtils.moveDirectory(tempDir, new File("target/classes/html"));
++        FileUtils.moveDirectory(tempDir, new File("target/classes/webadmin-html"));
+     }
+ 
+     @Test

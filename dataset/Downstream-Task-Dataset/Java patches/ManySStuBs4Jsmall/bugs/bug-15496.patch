@@ -1,0 +1,65 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecord.java b/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecord.java
+index 8f575c8..4ab8b05 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecord.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecord.java
+@@ -20,7 +20,7 @@
+ 
+ class DataRecord extends AbstractRecord<Data> {
+ 
+-    protected Data value;
++    protected volatile Data value;
+ 
+     DataRecord(Data value) {
+         this.value = value;
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecordWithStats.java b/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecordWithStats.java
+index 11028cc..d0613d1 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecordWithStats.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecordWithStats.java
+@@ -20,7 +20,7 @@
+ 
+ class DataRecordWithStats extends AbstractRecordWithStats<Data> {
+ 
+-    protected Data value;
++    protected volatile Data value;
+ 
+     DataRecordWithStats() {
+         super();
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/impl/record/ObjectRecord.java b/hazelcast/src/main/java/com/hazelcast/map/impl/record/ObjectRecord.java
+index ac62cd0..ceee534 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/impl/record/ObjectRecord.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/impl/record/ObjectRecord.java
+@@ -18,7 +18,7 @@
+ 
+ class ObjectRecord extends AbstractRecord<Object> implements Record<Object> {
+ 
+-    private Object value;
++    private volatile Object value;
+ 
+     ObjectRecord() {
+         super();
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/impl/record/ObjectRecordWithStats.java b/hazelcast/src/main/java/com/hazelcast/map/impl/record/ObjectRecordWithStats.java
+index f59e158..1df5a3e 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/impl/record/ObjectRecordWithStats.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/impl/record/ObjectRecordWithStats.java
+@@ -18,7 +18,7 @@
+ 
+ class ObjectRecordWithStats extends AbstractRecordWithStats<Object> {
+ 
+-    private Object value;
++    private volatile Object value;
+ 
+     public ObjectRecordWithStats() {
+         super();
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecord.java b/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecord.java
+index 8f575c8..4ab8b05 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecord.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/impl/record/DataRecord.java
+@@ -20,7 +20,7 @@
+ 
+ class DataRecord extends AbstractRecord<Data> {
+ 
+-    protected Data value;
++    protected volatile Data value;
+ 
+     DataRecord(Data value) {
+         this.value = value;

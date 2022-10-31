@@ -1,0 +1,12 @@
+--- a/src/main/java/spoon/support/compiler/jdt/ReferenceBuilder.java
++++ b/src/main/java/spoon/support/compiler/jdt/ReferenceBuilder.java
+@@ -641,6 +641,9 @@ public class ReferenceBuilder {
+ 					}
+ 				}
+ 			}
++			if (binding.actualType() instanceof MissingTypeBinding) {
++				ref = getTypeReference(binding.actualType());
++			}
+ 
+ 			if (((ParameterizedTypeBinding) binding).arguments != null) {
+ 				for (TypeBinding b : ((ParameterizedTypeBinding) binding).arguments) {

@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/KerasModel.java b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/KerasModel.java
+index 1116f8a..0baa5cc 100644
+--- a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/KerasModel.java
++++ b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/KerasModel.java
+@@ -440,7 +440,7 @@
+                     paramValue = weightsArchive.readDataSet(layerParamName, rootPrefix + baseAttributes);
+                 } else {
+                     if (layerFragments.length > 1) {
+-                        paramValue = weightsArchive.readDataSet(baseAttributes + layerParamName, rootPrefix, layerName);
++                        paramValue = weightsArchive.readDataSet(layerFragments[0] + "/" + layerParamName, rootPrefix, layerName);
+                     } else {
+                         paramValue = weightsArchive.readDataSet(layerParamName, rootPrefix, layerName);
+                     }
+diff --git a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/KerasModel.java b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/KerasModel.java
+index 1116f8a..0baa5cc 100644
+--- a/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/KerasModel.java
++++ b/deeplearning4j-modelimport/src/main/java/org/deeplearning4j/nn/modelimport/keras/KerasModel.java
+@@ -440,7 +440,7 @@
+                     paramValue = weightsArchive.readDataSet(layerParamName, rootPrefix + baseAttributes);
+                 } else {
+                     if (layerFragments.length > 1) {
+-                        paramValue = weightsArchive.readDataSet(baseAttributes + layerParamName, rootPrefix, layerName);
++                        paramValue = weightsArchive.readDataSet(layerFragments[0] + "/" + layerParamName, rootPrefix, layerName);
+                     } else {
+                         paramValue = weightsArchive.readDataSet(layerParamName, rootPrefix, layerName);
+                     }

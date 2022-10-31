@@ -1,0 +1,60 @@
+--- a/src/main/java/com/fasterxml/jackson/databind/ser/std/StdKeySerializer.java
++++ b/src/main/java/com/fasterxml/jackson/databind/ser/std/StdKeySerializer.java
+@@ -31,12 +31,15 @@ public class StdKeySerializer extends StdSerializer<Object>
+         } else if (cls.isEnum()) {
+             // 24-Sep-2015, tatu: Minor improvement over older (2.6.2 and before) code: at least
+             //     use name/toString() variation for as per configuration
+-            Enum<?> en = (Enum<?>) value;
+-
+             if (provider.isEnabled(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)) {
+-                str = en.toString();
++                str = value.toString();
+             } else {
+-                str = en.name();
++                Enum<?> en = (Enum<?>) value;
++                if (provider.isEnabled(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)) {
++                    str = String.valueOf(en.ordinal());
++                } else {
++                    str = en.name();
++                }
+             }
+         } else if (value instanceof Date) {
+             provider.defaultSerializeDateKey((Date) value, g);
+diff --git a/src/main/java/com/fasterxml/jackson/databind/ser/std/StdKeySerializers.java b/src/main/java/com/fasterxml/jackson/databind/ser/std/StdKeySerializers.java
+index fd6c99b..2462f2e 100644
+--- a/src/main/java/com/fasterxml/jackson/databind/ser/std/StdKeySerializers.java
++++ b/src/main/java/com/fasterxml/jackson/databind/ser/std/StdKeySerializers.java
+@@ -144,9 +144,19 @@ public class StdKeySerializers
+                 break;
+             case TYPE_ENUM:
+                 {
+-                    String str = provider.isEnabled(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
+-                            ? value.toString() : ((Enum<?>) value).name();
+-                    g.writeFieldName(str);
++                    String key;
++
++                    if (provider.isEnabled(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)) {
++                        key = value.toString();
++                    } else {
++                        Enum<?> e = (Enum<?>) value;
++                        if (provider.isEnabled(SerializationFeature.WRITE_ENUMS_USING_INDEX)) {
++                            key = String.valueOf(e.ordinal());
++                        } else {
++                            key = e.name();
++                        }
++                    }
++                    g.writeFieldName(key);
+                 }
+                 break;
+             case TYPE_TO_STRING:
+@@ -250,6 +260,10 @@ public class StdKeySerializers
+                 return;
+             }
+             Enum<?> en = (Enum<?>) value;
++            if (serializers.isEnabled(SerializationFeature.WRITE_ENUMS_USING_INDEX)) {
++                g.writeFieldName(String.valueOf(en.ordinal()));
++                return;
++            }
+             g.writeFieldName(_values.serializedValueFor(en));
+         }
+     }

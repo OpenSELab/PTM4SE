@@ -1,0 +1,54 @@
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+index 9adb424..4f03373 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+@@ -3067,7 +3067,7 @@
+ 
+         MaterializedResult result = computeActual("SHOW TABLES");
+         Set<String> tableNames = ImmutableSet.copyOf(transform(result.getMaterializedRows(), onlyColumnGetter()));
+-        assertEquals(tableNames, expectedTables);
++        assertTrue(tableNames.containsAll(expectedTables));
+     }
+ 
+     @Test
+@@ -3078,11 +3078,11 @@
+ 
+         MaterializedResult result = computeActual("SHOW TABLES FROM " + getSession().getSchema());
+         Set<String> tableNames = ImmutableSet.copyOf(transform(result.getMaterializedRows(), onlyColumnGetter()));
+-        assertEquals(tableNames, expectedTables);
++        assertTrue(tableNames.containsAll(expectedTables));
+ 
+         result = computeActual("SHOW TABLES FROM " + getSession().getCatalog() + "." + getSession().getSchema());
+         tableNames = ImmutableSet.copyOf(transform(result.getMaterializedRows(), onlyColumnGetter()));
+-        assertEquals(tableNames, expectedTables);
++        assertTrue(tableNames.containsAll(expectedTables));
+ 
+         result = computeActual("SHOW TABLES FROM UNKNOWN");
+         tableNames = ImmutableSet.copyOf(transform(result.getMaterializedRows(), onlyColumnGetter()));
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+index 9adb424..4f03373 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestQueries.java
+@@ -3067,7 +3067,7 @@
+ 
+         MaterializedResult result = computeActual("SHOW TABLES");
+         Set<String> tableNames = ImmutableSet.copyOf(transform(result.getMaterializedRows(), onlyColumnGetter()));
+-        assertEquals(tableNames, expectedTables);
++        assertTrue(tableNames.containsAll(expectedTables));
+     }
+ 
+     @Test
+@@ -3078,11 +3078,11 @@
+ 
+         MaterializedResult result = computeActual("SHOW TABLES FROM " + getSession().getSchema());
+         Set<String> tableNames = ImmutableSet.copyOf(transform(result.getMaterializedRows(), onlyColumnGetter()));
+-        assertEquals(tableNames, expectedTables);
++        assertTrue(tableNames.containsAll(expectedTables));
+ 
+         result = computeActual("SHOW TABLES FROM " + getSession().getCatalog() + "." + getSession().getSchema());
+         tableNames = ImmutableSet.copyOf(transform(result.getMaterializedRows(), onlyColumnGetter()));
+-        assertEquals(tableNames, expectedTables);
++        assertTrue(tableNames.containsAll(expectedTables));
+ 
+         result = computeActual("SHOW TABLES FROM UNKNOWN");
+         tableNames = ImmutableSet.copyOf(transform(result.getMaterializedRows(), onlyColumnGetter()));

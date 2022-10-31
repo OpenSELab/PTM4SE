@@ -1,0 +1,29 @@
+--- a/api/src/main/java/org/openmrs/module/htmlformentry/element/EncounterDetailSubmissionElement.java
++++ b/api/src/main/java/org/openmrs/module/htmlformentry/element/EncounterDetailSubmissionElement.java
+@@ -775,12 +776,21 @@ public class EncounterDetailSubmissionElement implements HtmlGeneratorElement, F
+     public void handleSubmission(FormEntrySession session, HttpServletRequest submission) {
+         if (dateWidget != null) {
+             Date date = (Date) dateWidget.getValue(session.getContext(), submission);
+-            if (session.getSubmissionActions().getCurrentEncounter().getEncounterDatetime() != null
+-                    && !session.getSubmissionActions().getCurrentEncounter().getEncounterDatetime().equals(date)) {
+-                session.getContext().setPreviousEncounterDate(
+-                        new Date(session.getSubmissionActions().getCurrentEncounter().getEncounterDatetime().getTime()));
++            Date previousDate = session.getSubmissionActions().getCurrentEncounter().getEncounterDatetime();
++
++            if (previousDate == null) {
++                session.getSubmissionActions().getCurrentEncounter().setEncounterDatetime(date);
++            }
++
++            else {
++                // we don't want to lose any time information just because we edited it with a form that only collects date,
++                // so we only update the date if the date has a time component or the actual date has changed
++                if (hasTimeComponent(date) || !stripTimeComponent(date).equals(stripTimeComponent(previousDate))) {
++                    session.getContext().setPreviousEncounterDate(
++                            new Date(session.getSubmissionActions().getCurrentEncounter().getEncounterDatetime().getTime()));
++                    session.getSubmissionActions().getCurrentEncounter().setEncounterDatetime(date);
++                }
+             }
+-            session.getSubmissionActions().getCurrentEncounter().setEncounterDatetime(date);
+         }
+         if (timeWidget != null) {
+             Date time = (Date) timeWidget.getValue(session.getContext(), submission);

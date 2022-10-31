@@ -1,0 +1,28 @@
+diff --git a/core/client/src/main/java/alluxio/client/file/FileInStream.java b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+index 4058712..cbcdd47 100644
+--- a/core/client/src/main/java/alluxio/client/file/FileInStream.java
++++ b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+@@ -181,7 +181,8 @@
+     int currentOffset = off;
+     int bytesLeftToRead = len;
+ 
+-    while (bytesLeftToRead > 0 && validPosition(mPos)) {
++    while ((mCurrentBlockInStream == null || mCurrentBlockInStream.remaining() != 0)
++        && bytesLeftToRead > 0 && validPosition(mPos)) {
+       checkAndAdvanceBlockInStream();
+ 
+       int bytesToRead = (int) Math.min(bytesLeftToRead, mCurrentBlockInStream.remaining());
+diff --git a/core/client/src/main/java/alluxio/client/file/FileInStream.java b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+index 4058712..cbcdd47 100644
+--- a/core/client/src/main/java/alluxio/client/file/FileInStream.java
++++ b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+@@ -181,7 +181,8 @@
+     int currentOffset = off;
+     int bytesLeftToRead = len;
+ 
+-    while (bytesLeftToRead > 0 && validPosition(mPos)) {
++    while ((mCurrentBlockInStream == null || mCurrentBlockInStream.remaining() != 0)
++        && bytesLeftToRead > 0 && validPosition(mPos)) {
+       checkAndAdvanceBlockInStream();
+ 
+       int bytesToRead = (int) Math.min(bytesLeftToRead, mCurrentBlockInStream.remaining());

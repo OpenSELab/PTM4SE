@@ -1,0 +1,260 @@
+diff --git a/beeline/src/java/org/apache/hive/beeline/HiveSchemaTool.java b/beeline/src/java/org/apache/hive/beeline/HiveSchemaTool.java
+index 04576ae..74591ac 100644
+--- a/beeline/src/java/org/apache/hive/beeline/HiveSchemaTool.java
++++ b/beeline/src/java/org/apache/hive/beeline/HiveSchemaTool.java
+@@ -337,7 +337,7 @@
+       }
+       pStmt.close();
+     } catch (SQLException e) {
+-      throw new HiveMetaException("Failed to get Partiton Location Info.", e);
++      throw new HiveMetaException("Failed to get Partition Location Info.", e);
+     }
+     if (numOfInvalid > 0) {
+       isValid = false;
+diff --git a/beeline/src/test/org/apache/hive/beeline/ProxyAuthTest.java b/beeline/src/test/org/apache/hive/beeline/ProxyAuthTest.java
+index 70fabfd..2420f2a 100644
+--- a/beeline/src/test/org/apache/hive/beeline/ProxyAuthTest.java
++++ b/beeline/src/test/org/apache/hive/beeline/ProxyAuthTest.java
+@@ -196,7 +196,7 @@
+     try {
+       url = "jdbc:hive2://" + host + ":" + port + "/default;auth=delegationToken";
+       con = DriverManager.getConnection(url);
+-      throw new Exception ("connection should have failed after token cancelation");
++      throw new Exception ("connection should have failed after token cancellation");
+     } catch (SQLException e) {
+       // Expected to fail due to canceled token
+     }
+diff --git a/common/src/java/org/apache/hadoop/hive/common/HiveInterruptUtils.java b/common/src/java/org/apache/hadoop/hive/common/HiveInterruptUtils.java
+index 43f670e..244d746 100644
+--- a/common/src/java/org/apache/hadoop/hive/common/HiveInterruptUtils.java
++++ b/common/src/java/org/apache/hadoop/hive/common/HiveInterruptUtils.java
+@@ -64,7 +64,7 @@
+       } catch (InterruptedException e) {
+         interrupt = e;
+       }
+-      throw new RuntimeException("Interuppted", interrupt);
++      throw new RuntimeException("Interrupted", interrupt);
+     }
+   }
+ }
+diff --git a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+index bd25bc7..26b1b18 100644
+--- a/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
++++ b/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java
+@@ -1056,7 +1056,7 @@
+     HIVESCRIPT_ENV_BLACKLIST("hive.script.operator.env.blacklist",
+         "hive.txn.valid.txns,hive.script.operator.env.blacklist",
+         "Comma separated list of keys from the configuration file not to convert to environment " +
+-        "variables when envoking the script operator"),
++        "variables when invoking the script operator"),
+     HIVE_STRICT_CHECKS_LARGE_QUERY("hive.strict.checks.large.query", false,
+         "Enabling strict large query checks disallows the following:\n" +
+         "  Orderby without limit.\n" +
+@@ -1098,7 +1098,7 @@
+     HIVE_CBO_EXTENDED_COST_MODEL("hive.cbo.costmodel.extended", false, "Flag to control enabling the extended cost model based on"
+                                  + "CPU, IO and cardinality. Otherwise, the cost model is based on cardinality."),
+     HIVE_CBO_COST_MODEL_CPU("hive.cbo.costmodel.cpu", "0.000001", "Default cost of a comparison"),
+-    HIVE_CBO_COST_MODEL_NET("hive.cbo.costmodel.network", "150.0", "Default cost of a transfering a byte over network;"
++    HIVE_CBO_COST_MODEL_NET("hive.cbo.costmodel.network", "150.0", "Default cost of a transferring a byte over network;"
+                                                                   + " expressed as multiple of CPU cost"),
+     HIVE_CBO_COST_MODEL_LFS_WRITE("hive.cbo.costmodel.local.fs.write", "4.0", "Default cost of writing a byte to local FS;"
+                                                                              + " expressed as multiple of NETWORK cost"),
+@@ -1307,9 +1307,9 @@
+     HIVEEXIMTESTMODE("hive.exim.test.mode", false,
+         "The subset of test mode that only enables custom path handling for ExIm.", false),
+     HIVETESTMODEPREFIX("hive.test.mode.prefix", "test_",
+-        "In test mode, specfies prefixes for the output table", false),
++        "In test mode, specifies prefixes for the output table", false),
+     HIVETESTMODESAMPLEFREQ("hive.test.mode.samplefreq", 32,
+-        "In test mode, specfies sampling frequency for table, which is not bucketed,\n" +
++        "In test mode, specifies sampling frequency for table, which is not bucketed,\n" +
+         "For example, the following query:\n" +
+         "  INSERT OVERWRITE TABLE dest SELECT col1 from src\n" +
+         "would be converted to\n" +
+@@ -1409,7 +1409,7 @@
+ 
+     HIVE_LAZYSIMPLE_EXTENDED_BOOLEAN_LITERAL("hive.lazysimple.extended_boolean_literal", false,
+         "LazySimpleSerde uses this property to determine if it treats 'T', 't', 'F', 'f',\n" +
+-        "'1', and '0' as extened, legal boolean literal, in addition to 'TRUE' and 'FALSE'.\n" +
++        "'1', and '0' as extended, legal boolean literal, in addition to 'TRUE' and 'FALSE'.\n" +
+         "The default is false, which means only 'TRUE' and 'FALSE' are treated as legal\n" +
+         "boolean literal."),
+ 
+@@ -2602,7 +2602,7 @@
+         "This needs to be set only if SPNEGO is to be used in authentication."),
+     HIVE_SERVER2_PLAIN_LDAP_URL("hive.server2.authentication.ldap.url", null,
+         "LDAP connection URL(s),\n" +
+-         "this value could contain URLs to mutiple LDAP servers instances for HA,\n" +
++         "this value could contain URLs to multiple LDAP servers instances for HA,\n" +
+          "each LDAP URL is separated by a SPACE character. URLs are used in the \n" +
+          " order specified until a connection is successful."),
+     HIVE_SERVER2_PLAIN_LDAP_BASEDN("hive.server2.authentication.ldap.baseDN", null, "LDAP base DN"),
+@@ -2871,9 +2871,9 @@
+         "org.apache.parquet.hadoop.ParquetInputFormat,org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+         "The input formats not supported by row deserialize vectorization."),
+     HIVE_VECTOR_ADAPTOR_USAGE_MODE("hive.vectorized.adaptor.usage.mode", "all", new StringSet("none", "chosen", "all"),
+-        "Specifies the extent to which the VectorUDFAdaptor will be used for UDFs that do not have a cooresponding vectorized class.\n" +
++        "Specifies the extent to which the VectorUDFAdaptor will be used for UDFs that do not have a corresponding vectorized class.\n" +
+         "0. none   : disable any usage of VectorUDFAdaptor\n" +
+-        "1. chosen : use VectorUDFAdaptor for a small set of UDFs that were choosen for good performance\n" +
++        "1. chosen : use VectorUDFAdaptor for a small set of UDFs that were chosen for good performance\n" +
+         "2. all    : use VectorUDFAdaptor for all UDFs"
+     ),
+     HIVE_VECTORIZATION_PTF_ENABLED("hive.vectorized.execution.ptf.enabled", true,
+@@ -3383,7 +3383,7 @@
+     LLAP_DAEMON_WAIT_QUEUE_COMPARATOR_CLASS_NAME(
+       "hive.llap.daemon.wait.queue.comparator.class.name",
+       "org.apache.hadoop.hive.llap.daemon.impl.comparator.ShortestJobFirstComparator",
+-      "The priority comparator to use for LLAP scheduler prioroty queue. The built-in options\n" +
++      "The priority comparator to use for LLAP scheduler priority queue. The built-in options\n" +
+       "are org.apache.hadoop.hive.llap.daemon.impl.comparator.ShortestJobFirstComparator and\n" +
+       ".....FirstInFirstOutComparator", "llap.daemon.wait.queue.comparator.class.name"),
+     LLAP_DAEMON_TASK_SCHEDULER_ENABLE_PREEMPTION(
+@@ -3485,7 +3485,7 @@
+     SPARK_RPC_SERVER_ADDRESS("hive.spark.client.rpc.server.address", "",
+       "The server address of HiverServer2 host to be used for communication between Hive client and remote Spark driver. " +
+       "Default is empty, which means the address will be determined in the same way as for hive.server2.thrift.bind.host." +
+-      "This is only necessary if the host has mutiple network addresses and if a different network address other than " +
++      "This is only necessary if the host has multiple network addresses and if a different network address other than " +
+       "hive.server2.thrift.bind.host is to be used."),
+     SPARK_RPC_SERVER_PORT("hive.spark.client.rpc.server.port", "", "A list of port ranges which can be used by RPC server " +
+         "with the format of 49152-49222,49228 and a random one is selected from the list. Default is empty, which randomly " +
+diff --git a/hbase-handler/src/java/org/apache/hadoop/hive/hbase/HiveHBaseTableInputFormat.java b/hbase-handler/src/java/org/apache/hadoop/hive/hbase/HiveHBaseTableInputFormat.java
+index 8b89817..b6a7f2d 100644
+--- a/hbase-handler/src/java/org/apache/hadoop/hive/hbase/HiveHBaseTableInputFormat.java
++++ b/hbase-handler/src/java/org/apache/hadoop/hive/hbase/HiveHBaseTableInputFormat.java
+@@ -274,7 +274,7 @@
+         objInspector = (PrimitiveObjectInspector)eval.initialize(null);
+         writable = eval.evaluate(null);
+       } catch (ClassCastException cce) {
+-        throw new IOException("Currently only primitve types are supported. Found: " +
++        throw new IOException("Currently only primitive types are supported. Found: " +
+             sc.getConstantDesc().getTypeString());
+       } catch (HiveException e) {
+         throw new IOException(e);
+diff --git a/hcatalog/server-extensions/src/main/java/org/apache/hive/hcatalog/listener/DbNotificationListener.java b/hcatalog/server-extensions/src/main/java/org/apache/hive/hcatalog/listener/DbNotificationListener.java
+index f807055..ec5d1c4 100644
+--- a/hcatalog/server-extensions/src/main/java/org/apache/hive/hcatalog/listener/DbNotificationListener.java
++++ b/hcatalog/server-extensions/src/main/java/org/apache/hive/hcatalog/listener/DbNotificationListener.java
+@@ -604,7 +604,7 @@
+         try {
+           Thread.sleep(sleepTime);
+         } catch (InterruptedException e) {
+-          LOG.info("Cleaner thread sleep interupted", e);
++          LOG.info("Cleaner thread sleep interrupted", e);
+         }
+       }
+     }
+diff --git a/hcatalog/streaming/src/java/org/apache/hive/hcatalog/streaming/mutate/client/lock/HeartbeatTimerTask.java b/hcatalog/streaming/src/java/org/apache/hive/hcatalog/streaming/mutate/client/lock/HeartbeatTimerTask.java
+index 826d1ad..81f99de 100644
+--- a/hcatalog/streaming/src/java/org/apache/hive/hcatalog/streaming/mutate/client/lock/HeartbeatTimerTask.java
++++ b/hcatalog/streaming/src/java/org/apache/hive/hcatalog/streaming/mutate/client/lock/HeartbeatTimerTask.java
+@@ -69,7 +69,7 @@
+   }
+ 
+   private void failLock(Exception e) {
+-    LOG.debug("Lock " + lockId + " failed, cancelling heartbeat and notifiying listener: " + listener, e);
++    LOG.debug("Lock " + lockId + " failed, cancelling heartbeat and notifying listener: " + listener, e);
+     // Cancel the heartbeat
+     cancel();
+     listener.lockFailed(lockId, transactionId, Lock.asStrings(tableDescriptors), e);
+diff --git a/llap-server/src/java/org/apache/hadoop/hive/llap/daemon/impl/LlapDaemon.java b/llap-server/src/java/org/apache/hadoop/hive/llap/daemon/impl/LlapDaemon.java
+index 0a7a0b2..52990c5 100644
+--- a/llap-server/src/java/org/apache/hadoop/hive/llap/daemon/impl/LlapDaemon.java
++++ b/llap-server/src/java/org/apache/hadoop/hive/llap/daemon/impl/LlapDaemon.java
+@@ -135,7 +135,7 @@
+     Preconditions.checkArgument(localDirs != null && localDirs.length > 0,
+         "Work dirs must be specified");
+     Preconditions.checkArgument(shufflePort == 0 || (shufflePort > 1024 && shufflePort < 65536),
+-        "Shuffle Port must be betwee 1024 and 65535, or 0 for automatic selection");
++        "Shuffle Port must be between 1024 and 65535, or 0 for automatic selection");
+     int outputFormatServicePort = HiveConf.getIntVar(daemonConf, HiveConf.ConfVars.LLAP_DAEMON_OUTPUT_SERVICE_PORT);
+     Preconditions.checkArgument(outputFormatServicePort == 0
+         || (outputFormatServicePort > 1024 && outputFormatServicePort < 65536),
+diff --git a/llap-server/src/java/org/apache/hadoop/hive/llap/daemon/impl/LlapProtocolServerImpl.java b/llap-server/src/java/org/apache/hadoop/hive/llap/daemon/impl/LlapProtocolServerImpl.java
+index 51e5626..81785f0 100644
+--- a/llap-server/src/java/org/apache/hadoop/hive/llap/daemon/impl/LlapProtocolServerImpl.java
++++ b/llap-server/src/java/org/apache/hadoop/hive/llap/daemon/impl/LlapProtocolServerImpl.java
+@@ -256,7 +256,7 @@
+     if (isRestrictedToClusterUser && !clusterUser.equals(callingUser.getShortUserName())) {
+       throw new ServiceException("Management protocol ACL is too permissive. The access has been"
+           + " automatically restricted to " + clusterUser + "; " + callingUser.getShortUserName()
+-          + " is denied acccess. Please set " + ConfVars.LLAP_VALIDATE_ACLS.varname + " to false,"
++          + " is denied access. Please set " + ConfVars.LLAP_VALIDATE_ACLS.varname + " to false,"
+           + " or adjust " + ConfVars.LLAP_MANAGEMENT_ACL.varname + " and "
+           + ConfVars.LLAP_MANAGEMENT_ACL_DENY.varname + " to a more restrictive ACL.");
+     }
+diff --git a/llap-server/src/java/org/apache/hadoop/hive/llap/shufflehandler/ShuffleHandler.java b/llap-server/src/java/org/apache/hadoop/hive/llap/shufflehandler/ShuffleHandler.java
+index 51fc1c5..18a37a2 100644
+--- a/llap-server/src/java/org/apache/hadoop/hive/llap/shufflehandler/ShuffleHandler.java
++++ b/llap-server/src/java/org/apache/hadoop/hive/llap/shufflehandler/ShuffleHandler.java
+@@ -240,7 +240,7 @@
+     MutableCounterLong shuffleOutputBytes;
+     @Metric("# of failed shuffle outputs")
+     MutableCounterInt shuffleOutputsFailed;
+-    @Metric("# of succeeeded shuffle outputs")
++    @Metric("# of succeeded shuffle outputs")
+     MutableCounterInt shuffleOutputsOK;
+     @Metric("# of current shuffle connections")
+     MutableGaugeInt shuffleConnections;
+@@ -961,7 +961,7 @@
+           ShuffleHeader.DEFAULT_HTTP_HEADER_VERSION);
+       if (LOG.isDebugEnabled()) {
+         int len = reply.length();
+-        LOG.debug("Fetcher request verfied. enc_str=" + enc_str + ";reply=" +
++        LOG.debug("Fetcher request verified. enc_str=" + enc_str + ";reply=" +
+             reply.substring(len-len/2, len-1));
+       }
+     }
+diff --git a/serde/src/java/org/apache/hadoop/hive/serde2/lazy/objectinspector/primitive/LazyPrimitiveObjectInspectorFactory.java b/serde/src/java/org/apache/hadoop/hive/serde2/lazy/objectinspector/primitive/LazyPrimitiveObjectInspectorFactory.java
+index e673f11..f03bd77 100644
+--- a/serde/src/java/org/apache/hadoop/hive/serde2/lazy/objectinspector/primitive/LazyPrimitiveObjectInspectorFactory.java
++++ b/serde/src/java/org/apache/hadoop/hive/serde2/lazy/objectinspector/primitive/LazyPrimitiveObjectInspectorFactory.java
+@@ -177,7 +177,7 @@
+       break;
+     default:
+       throw new RuntimeException(
+-          "Primitve type " + typeInfo.getPrimitiveCategory() + " should not take parameters");
++          "Primitive type " + typeInfo.getPrimitiveCategory() + " should not take parameters");
+     }
+ 
+     AbstractPrimitiveLazyObjectInspector<?> prev =
+diff --git a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/security/TokenStoreDelegationTokenSecretManager.java b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/security/TokenStoreDelegationTokenSecretManager.java
+index 3f5bd53..7b32544 100644
+--- a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/security/TokenStoreDelegationTokenSecretManager.java
++++ b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/security/TokenStoreDelegationTokenSecretManager.java
+@@ -118,7 +118,7 @@
+   public DelegationTokenIdentifier cancelToken(Token<DelegationTokenIdentifier> token,
+       String canceller) throws IOException {
+     DelegationTokenIdentifier id = getTokenIdentifier(token);
+-    LOGGER.info("Token cancelation requested for identifier: "+id);
++    LOGGER.info("Token cancellation requested for identifier: "+id);
+     this.tokenStore.removeToken(id);
+     return id;
+   }
+diff --git a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/security/ZooKeeperTokenStore.java b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/security/ZooKeeperTokenStore.java
+index 42f2f62..655dabe 100644
+--- a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/security/ZooKeeperTokenStore.java
++++ b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/security/ZooKeeperTokenStore.java
+@@ -442,7 +442,7 @@
+               MetastoreDelegationTokenManager.DELEGATION_TOKEN_STORE_ZK_CONNECT_STR_ALTERNATE,
+               null);
+       if (zkConnectString == null || zkConnectString.trim().isEmpty()) {
+-        throw new IllegalArgumentException("Zookeeper connect string has to be specifed through "
++        throw new IllegalArgumentException("Zookeeper connect string has to be specified through "
+             + "either " + MetastoreDelegationTokenManager.DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
+             + " or "
+             + MetastoreDelegationTokenManager.DELEGATION_TOKEN_STORE_ZK_CONNECT_STR_ALTERNATE
+diff --git a/beeline/src/java/org/apache/hive/beeline/HiveSchemaTool.java b/beeline/src/java/org/apache/hive/beeline/HiveSchemaTool.java
+index 04576ae..74591ac 100644
+--- a/beeline/src/java/org/apache/hive/beeline/HiveSchemaTool.java
++++ b/beeline/src/java/org/apache/hive/beeline/HiveSchemaTool.java
+@@ -337,7 +337,7 @@
+       }
+       pStmt.close();
+     } catch (SQLException e) {
+-      throw new HiveMetaException("Failed to get Partiton Location Info.", e);
++      throw new HiveMetaException("Failed to get Partition Location Info.", e);
+     }
+     if (numOfInvalid > 0) {
+       isValid = false;

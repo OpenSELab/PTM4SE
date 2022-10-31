@@ -1,0 +1,26 @@
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/WindowedStream.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/WindowedStream.java
+index a18a59c..e2f930a 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/WindowedStream.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/WindowedStream.java
+@@ -389,7 +389,7 @@
+ 			Utils.getCallLocationName(), true);
+ 
+ 		TypeInformation<R> resultType = TypeExtractor.getUnaryOperatorReturnType(
+-			function, WindowFunction.class, true, true, getInputType(), null, false);
++			function, WindowFunction.class, true, true, foldAccumulatorType, null, false);
+ 
+ 		return fold(initialValue, foldFunction, function, foldAccumulatorType, resultType);
+ 	}
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/WindowedStream.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/WindowedStream.java
+index a18a59c..e2f930a 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/WindowedStream.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/datastream/WindowedStream.java
+@@ -389,7 +389,7 @@
+ 			Utils.getCallLocationName(), true);
+ 
+ 		TypeInformation<R> resultType = TypeExtractor.getUnaryOperatorReturnType(
+-			function, WindowFunction.class, true, true, getInputType(), null, false);
++			function, WindowFunction.class, true, true, foldAccumulatorType, null, false);
+ 
+ 		return fold(initialValue, foldFunction, function, foldAccumulatorType, resultType);
+ 	}

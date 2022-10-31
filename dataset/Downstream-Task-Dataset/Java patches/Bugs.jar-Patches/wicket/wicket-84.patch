@@ -1,0 +1,22 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/RestartResponseAtInterceptPageException.java b/wicket-core/src/main/java/org/apache/wicket/RestartResponseAtInterceptPageException.java
+index 819df88..1a31878 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/RestartResponseAtInterceptPageException.java
++++ b/wicket-core/src/main/java/org/apache/wicket/RestartResponseAtInterceptPageException.java
+@@ -52,7 +52,7 @@ public class RestartResponseAtInterceptPageException extends ResetResponseExcept
+ 	public RestartResponseAtInterceptPageException(Page interceptPage)
+ 	{
+ 		super(new RenderPageRequestHandler(new PageProvider(interceptPage),
+-			RedirectPolicy.ALWAYS_REDIRECT));
++			RedirectPolicy.AUTO_REDIRECT));
+ 		InterceptData.set();
+ 	}
+ 
+@@ -76,7 +76,7 @@ public class RestartResponseAtInterceptPageException extends ResetResponseExcept
+ 		PageParameters parameters)
+ 	{
+ 		super(new RenderPageRequestHandler(new PageProvider(interceptPageClass, parameters),
+-			RedirectPolicy.ALWAYS_REDIRECT));
++			RedirectPolicy.AUTO_REDIRECT));
+ 		InterceptData.set();
+ 	}
+ 

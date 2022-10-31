@@ -1,0 +1,73 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java b/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
+index a427b25..3d4fec2 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/MulticastProcessor.java
+@@ -888,11 +888,22 @@ public class MulticastProcessor extends ServiceSupport implements AsyncProcessor
+             // keep at least one thread in the pool so we re-use the thread avoiding to create new threads because
+             // the pool shrank to zero.
+             String name = getClass().getSimpleName() + "-AggregateTask";
+-            aggregateExecutorService = camelContext.getExecutorServiceStrategy().newThreadPool(this, name, 1, Integer.MAX_VALUE);
++            aggregateExecutorService = createAggregateExecutorService(name);
+         }
+         ServiceHelper.startServices(processors);
+     }
+ 
++    /**
++     * Strategy to create the thread pool for the aggregator background task which waits for and aggregates
++     * completed tasks when running in parallel mode.
++     *
++     * @param name  the suggested name for the background thread
++     * @return the thread pool
++     */
++    protected ExecutorService createAggregateExecutorService(String name) {
++        return camelContext.getExecutorServiceStrategy().newThreadPool(this, name, 1, Integer.MAX_VALUE);
++    }
++
+     protected void doStop() throws Exception {
+         ServiceHelper.stopServices(processors);
+         errorHandlers.clear();
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/RecipientList.java b/camel-core/src/main/java/org/apache/camel/processor/RecipientList.java
+index 8260c93..f2a163f 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/RecipientList.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/RecipientList.java
+@@ -55,6 +55,7 @@ public class RecipientList extends ServiceSupport implements AsyncProcessor {
+     private boolean streaming;
+     private long timeout;
+     private ExecutorService executorService;
++    private ExecutorService aggregateExecutorService;
+     private AggregationStrategy aggregationStrategy = new UseLatestAggregationStrategy();
+ 
+     public RecipientList(CamelContext camelContext) {
+@@ -108,7 +109,16 @@ public class RecipientList extends ServiceSupport implements AsyncProcessor {
+         Iterator<Object> iter = ObjectHelper.createIterator(recipientList, delimiter);
+ 
+         RecipientListProcessor rlp = new RecipientListProcessor(exchange.getContext(), producerCache, iter, getAggregationStrategy(),
+-                                                                isParallelProcessing(), getExecutorService(), isStreaming(), isStopOnException(), getTimeout());
++                                                                isParallelProcessing(), getExecutorService(), isStreaming(), isStopOnException(), getTimeout()) {
++            @Override
++            protected ExecutorService createAggregateExecutorService(String name) {
++                // use a shared executor service to avoid creating new thread pools
++                if (aggregateExecutorService == null) {
++                    aggregateExecutorService = super.createAggregateExecutorService("RecipientList-AggregateTask");
++                }
++                return aggregateExecutorService;
++            }
++        };
+         rlp.setIgnoreInvalidEndpoints(isIgnoreInvalidEndpoints());
+ 
+         // start the service
+@@ -144,7 +154,7 @@ public class RecipientList extends ServiceSupport implements AsyncProcessor {
+     protected void doStop() throws Exception {
+         ServiceHelper.stopService(producerCache);
+     }
+-    
++
+     public boolean isStreaming() {
+         return streaming;
+     }
+@@ -200,4 +210,5 @@ public class RecipientList extends ServiceSupport implements AsyncProcessor {
+     public void setTimeout(long timeout) {
+         this.timeout = timeout;
+     }
++
+ }

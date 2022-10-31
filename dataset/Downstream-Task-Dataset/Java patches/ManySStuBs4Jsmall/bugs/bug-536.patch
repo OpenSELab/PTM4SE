@@ -1,0 +1,46 @@
+diff --git a/core/common/src/main/java/alluxio/util/ConfigurationUtils.java b/core/common/src/main/java/alluxio/util/ConfigurationUtils.java
+index 520c945..6a9e0e1 100644
+--- a/core/common/src/main/java/alluxio/util/ConfigurationUtils.java
++++ b/core/common/src/main/java/alluxio/util/ConfigurationUtils.java
+@@ -52,7 +52,8 @@
+     try {
+       properties.load(inputStream);
+     } catch (IOException e) {
+-      LOG.error("Unable to load default Alluxio properties file {}", resourceName, e);
++      LOG.warn("Unable to load default Alluxio properties file {} : {}", resourceName,
++          e.getMessage());
+       return null;
+     }
+     return properties;
+@@ -73,7 +74,7 @@
+     } catch (FileNotFoundException e) {
+       return null;
+     } catch (IOException e) {
+-      LOG.error("Unable to load properties file {}", filePath, e);
++      LOG.warn("Unable to load properties file {} : {}", filePath, e.getMessage());
+       return null;
+     }
+     return properties;
+diff --git a/core/common/src/main/java/alluxio/util/ConfigurationUtils.java b/core/common/src/main/java/alluxio/util/ConfigurationUtils.java
+index 520c945..6a9e0e1 100644
+--- a/core/common/src/main/java/alluxio/util/ConfigurationUtils.java
++++ b/core/common/src/main/java/alluxio/util/ConfigurationUtils.java
+@@ -52,7 +52,8 @@
+     try {
+       properties.load(inputStream);
+     } catch (IOException e) {
+-      LOG.error("Unable to load default Alluxio properties file {}", resourceName, e);
++      LOG.warn("Unable to load default Alluxio properties file {} : {}", resourceName,
++          e.getMessage());
+       return null;
+     }
+     return properties;
+@@ -73,7 +74,7 @@
+     } catch (FileNotFoundException e) {
+       return null;
+     } catch (IOException e) {
+-      LOG.error("Unable to load properties file {}", filePath, e);
++      LOG.warn("Unable to load properties file {} : {}", filePath, e.getMessage());
+       return null;
+     }
+     return properties;

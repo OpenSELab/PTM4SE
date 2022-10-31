@@ -1,0 +1,167 @@
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyReactiveWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyReactiveWebServerFactoryTests.java
+index 430ca84..1be5c17 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyReactiveWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyReactiveWebServerFactoryTests.java
+@@ -68,7 +68,7 @@
+ 		HttpHandler handler = mock(HttpHandler.class);
+ 		JettyReactiveWebServerFactory factory = getFactory();
+ 		JettyServerCustomizer[] configurations = new JettyServerCustomizer[4];
+-		Arrays.setAll(configurations, i -> mock(JettyServerCustomizer.class));
++		Arrays.setAll(configurations, (i) -> mock(JettyServerCustomizer.class));
+ 		factory.setServerCustomizers(Arrays.asList(configurations[0], configurations[1]));
+ 		factory.addServerCustomizers(configurations[2], configurations[3]);
+ 		this.webServer = factory.getWebServer(handler);
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyServletWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyServletWebServerFactoryTests.java
+index faf7cd7..2162c0b 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyServletWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyServletWebServerFactoryTests.java
+@@ -75,7 +75,7 @@
+ 	public void jettyConfigurations() throws Exception {
+ 		JettyServletWebServerFactory factory = getFactory();
+ 		Configuration[] configurations = new Configuration[4];
+-		Arrays.setAll(configurations, i -> mock(Configuration.class));
++		Arrays.setAll(configurations, (i) -> mock(Configuration.class));
+ 		factory.setConfigurations(Arrays.asList(configurations[0], configurations[1]));
+ 		factory.addConfigurations(configurations[2], configurations[3]);
+ 		this.webServer = factory.getWebServer();
+@@ -89,7 +89,7 @@
+ 	public void jettyCustomizations() {
+ 		JettyServletWebServerFactory factory = getFactory();
+ 		JettyServerCustomizer[] configurations = new JettyServerCustomizer[4];
+-		Arrays.setAll(configurations, i -> mock(JettyServerCustomizer.class));
++		Arrays.setAll(configurations, (i) -> mock(JettyServerCustomizer.class));
+ 		factory.setServerCustomizers(Arrays.asList(configurations[0], configurations[1]));
+ 		factory.addServerCustomizers(configurations[2], configurations[3]);
+ 		this.webServer = factory.getWebServer();
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/tomcat/TomcatReactiveWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/tomcat/TomcatReactiveWebServerFactoryTests.java
+index a30f07e..4329b1a 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/tomcat/TomcatReactiveWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/tomcat/TomcatReactiveWebServerFactoryTests.java
+@@ -54,7 +54,7 @@
+ 	public void tomcatCustomizers() {
+ 		TomcatReactiveWebServerFactory factory = getFactory();
+ 		TomcatContextCustomizer[] listeners = new TomcatContextCustomizer[4];
+-		Arrays.setAll(listeners, i -> mock(TomcatContextCustomizer.class));
++		Arrays.setAll(listeners, (i) -> mock(TomcatContextCustomizer.class));
+ 		factory.setTomcatContextCustomizers(Arrays.asList(listeners[0], listeners[1]));
+ 		factory.addContextCustomizers(listeners[2], listeners[3]);
+ 		this.webServer = factory.getWebServer(mock(HttpHandler.class));
+@@ -86,7 +86,7 @@
+ 	public void tomcatListeners() {
+ 		TomcatReactiveWebServerFactory factory = getFactory();
+ 		LifecycleListener[] listeners = new LifecycleListener[4];
+-		Arrays.setAll(listeners, i -> mock(LifecycleListener.class));
++		Arrays.setAll(listeners, (i) -> mock(LifecycleListener.class));
+ 		factory.setContextLifecycleListeners(Arrays.asList(listeners[0], listeners[1]));
+ 		factory.addContextLifecycleListeners(listeners[2], listeners[3]);
+ 		this.webServer = factory.getWebServer(mock(HttpHandler.class));
+@@ -117,7 +117,7 @@
+ 		TomcatReactiveWebServerFactory factory = getFactory();
+ 		HttpHandler handler = mock(HttpHandler.class);
+ 		TomcatConnectorCustomizer[] listeners = new TomcatConnectorCustomizer[4];
+-		Arrays.setAll(listeners, i -> mock(TomcatConnectorCustomizer.class));
++		Arrays.setAll(listeners, (i) -> mock(TomcatConnectorCustomizer.class));
+ 		factory.setTomcatConnectorCustomizers(Arrays.asList(listeners[0], listeners[1]));
+ 		factory.addConnectorCustomizers(listeners[2], listeners[3]);
+ 		this.webServer = factory.getWebServer(handler);
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/tomcat/TomcatServletWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/tomcat/TomcatServletWebServerFactoryTests.java
+index c0de25a..ed57e40 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/tomcat/TomcatServletWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/tomcat/TomcatServletWebServerFactoryTests.java
+@@ -121,7 +121,7 @@
+ 	public void tomcatListeners() {
+ 		TomcatServletWebServerFactory factory = getFactory();
+ 		LifecycleListener[] listeners = new LifecycleListener[4];
+-		Arrays.setAll(listeners, i -> mock(LifecycleListener.class));
++		Arrays.setAll(listeners, (i) -> mock(LifecycleListener.class));
+ 		factory.setContextLifecycleListeners(Arrays.asList(listeners[0], listeners[1]));
+ 		factory.addContextLifecycleListeners(listeners[2], listeners[3]);
+ 		this.webServer = factory.getWebServer();
+@@ -135,7 +135,7 @@
+ 	public void tomcatCustomizers() {
+ 		TomcatServletWebServerFactory factory = getFactory();
+ 		TomcatContextCustomizer[] listeners = new TomcatContextCustomizer[4];
+-		Arrays.setAll(listeners, i -> mock(TomcatContextCustomizer.class));
++		Arrays.setAll(listeners, (i) -> mock(TomcatContextCustomizer.class));
+ 		factory.setTomcatContextCustomizers(Arrays.asList(listeners[0], listeners[1]));
+ 		factory.addContextCustomizers(listeners[2], listeners[3]);
+ 		this.webServer = factory.getWebServer();
+@@ -160,7 +160,7 @@
+ 	public void tomcatConnectorCustomizers() {
+ 		TomcatServletWebServerFactory factory = getFactory();
+ 		TomcatConnectorCustomizer[] listeners = new TomcatConnectorCustomizer[4];
+-		Arrays.setAll(listeners, i -> mock(TomcatConnectorCustomizer.class));
++		Arrays.setAll(listeners, (i) -> mock(TomcatConnectorCustomizer.class));
+ 		factory.setTomcatConnectorCustomizers(Arrays.asList(listeners[0], listeners[1]));
+ 		factory.addConnectorCustomizers(listeners[2], listeners[3]);
+ 		this.webServer = factory.getWebServer();
+@@ -174,7 +174,7 @@
+ 	public void tomcatAdditionalConnectors() {
+ 		TomcatServletWebServerFactory factory = getFactory();
+ 		Connector[] listeners = new Connector[4];
+-		Arrays.setAll(listeners, i -> stoppedConnector());
++		Arrays.setAll(listeners, (i) -> stoppedConnector());
+ 		factory.addAdditionalTomcatConnectors(listeners);
+ 		this.webServer = factory.getWebServer();
+ 		Map<Service, Connector[]> connectors = ((TomcatWebServer) this.webServer)
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/undertow/UndertowReactiveWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/undertow/UndertowReactiveWebServerFactoryTests.java
+index 173d5b1..ace65c1 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/undertow/UndertowReactiveWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/undertow/UndertowReactiveWebServerFactoryTests.java
+@@ -77,7 +77,7 @@
+ 		UndertowReactiveWebServerFactory factory = getFactory();
+ 		HttpHandler handler = mock(HttpHandler.class);
+ 		UndertowBuilderCustomizer[] customizers = new UndertowBuilderCustomizer[4];
+-		Arrays.setAll(customizers, i -> mock(UndertowBuilderCustomizer.class));
++		Arrays.setAll(customizers, (i) -> mock(UndertowBuilderCustomizer.class));
+ 		factory.setBuilderCustomizers(Arrays.asList(customizers[0], customizers[1]));
+ 		factory.addBuilderCustomizers(customizers[2], customizers[3]);
+ 		this.webServer = factory.getWebServer(handler);
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/undertow/UndertowServletWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/undertow/UndertowServletWebServerFactoryTests.java
+index 32896ca..028b6c8 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/undertow/UndertowServletWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/undertow/UndertowServletWebServerFactoryTests.java
+@@ -102,7 +102,7 @@
+ 	public void builderCustomizers() {
+ 		UndertowServletWebServerFactory factory = getFactory();
+ 		UndertowBuilderCustomizer[] customizers = new UndertowBuilderCustomizer[4];
+-		Arrays.setAll(customizers, i -> mock(UndertowBuilderCustomizer.class));
++		Arrays.setAll(customizers, (i) -> mock(UndertowBuilderCustomizer.class));
+ 		factory.setBuilderCustomizers(Arrays.asList(customizers[0], customizers[1]));
+ 		factory.addBuilderCustomizers(customizers[2], customizers[3]);
+ 		this.webServer = factory.getWebServer();
+@@ -132,7 +132,7 @@
+ 	public void deploymentInfo() {
+ 		UndertowServletWebServerFactory factory = getFactory();
+ 		UndertowDeploymentInfoCustomizer[] customizers = new UndertowDeploymentInfoCustomizer[4];
+-		Arrays.setAll(customizers, i -> mock(UndertowDeploymentInfoCustomizer.class));
++		Arrays.setAll(customizers, (i) -> mock(UndertowDeploymentInfoCustomizer.class));
+ 		factory.setDeploymentInfoCustomizers(
+ 				Arrays.asList(customizers[0], customizers[1]));
+ 		factory.addDeploymentInfoCustomizers(customizers[2], customizers[3]);
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/servlet/server/AbstractServletWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/servlet/server/AbstractServletWebServerFactoryTests.java
+index e071584..bd0715d 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/servlet/server/AbstractServletWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/servlet/server/AbstractServletWebServerFactoryTests.java
+@@ -305,7 +305,7 @@
+ 	public void multipleConfigurations() throws Exception {
+ 		AbstractServletWebServerFactory factory = getFactory();
+ 		ServletContextInitializer[] initializers = new ServletContextInitializer[6];
+-		Arrays.setAll(initializers, i -> mock(ServletContextInitializer.class));
++		Arrays.setAll(initializers, (i) -> mock(ServletContextInitializer.class));
+ 		factory.setInitializers(Arrays.asList(initializers[2], initializers[3]));
+ 		factory.addInitializers(initializers[4], initializers[5]);
+ 		this.webServer = factory.getWebServer(initializers[0], initializers[1]);
+diff --git a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyReactiveWebServerFactoryTests.java b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyReactiveWebServerFactoryTests.java
+index 430ca84..1be5c17 100644
+--- a/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyReactiveWebServerFactoryTests.java
++++ b/spring-boot-project/spring-boot/src/test/java/org/springframework/boot/web/embedded/jetty/JettyReactiveWebServerFactoryTests.java
+@@ -68,7 +68,7 @@
+ 		HttpHandler handler = mock(HttpHandler.class);
+ 		JettyReactiveWebServerFactory factory = getFactory();
+ 		JettyServerCustomizer[] configurations = new JettyServerCustomizer[4];
+-		Arrays.setAll(configurations, i -> mock(JettyServerCustomizer.class));
++		Arrays.setAll(configurations, (i) -> mock(JettyServerCustomizer.class));
+ 		factory.setServerCustomizers(Arrays.asList(configurations[0], configurations[1]));
+ 		factory.addServerCustomizers(configurations[2], configurations[3]);
+ 		this.webServer = factory.getWebServer(handler);

@@ -1,0 +1,30 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
+index a14248e..4ba58d3 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
+@@ -405,8 +405,8 @@
+ 					}
+ 					else {
+ 						if (!(success.equals(Messages.getAcknowledge()))) {
+-							markFailed(new Exception("Failed to deploy the task to slot " + slot +
+-									": Response was not of type Acknowledge"));
++							markFailed(new Exception("Failed to deploy the task to slot. Response was not of type 'Acknowledge', but was " + success
++									+ "\nSlot Details: " + slot));
+ 						}
+ 					}
+ 				}
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
+index a14248e..4ba58d3 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
+@@ -405,8 +405,8 @@
+ 					}
+ 					else {
+ 						if (!(success.equals(Messages.getAcknowledge()))) {
+-							markFailed(new Exception("Failed to deploy the task to slot " + slot +
+-									": Response was not of type Acknowledge"));
++							markFailed(new Exception("Failed to deploy the task to slot. Response was not of type 'Acknowledge', but was " + success
++									+ "\nSlot Details: " + slot));
+ 						}
+ 					}
+ 				}

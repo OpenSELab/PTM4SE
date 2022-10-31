@@ -1,0 +1,22 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/Component.java b/wicket-core/src/main/java/org/apache/wicket/Component.java
+index fb56254..342f107 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/Component.java
++++ b/wicket-core/src/main/java/org/apache/wicket/Component.java
+@@ -2985,15 +2985,11 @@ public abstract class Component
+ 		// Change model
+ 		if (wrappedModel != model)
+ 		{
+-			if (wrappedModel != null)
+-			{
+-				addStateChange();
+-			}
+-
++			modelChanging();
+ 			setModelImpl(wrap(model));
++			modelChanged();
+ 		}
+ 
+-		modelChanged();
+ 		return this;
+ 	}
+ 

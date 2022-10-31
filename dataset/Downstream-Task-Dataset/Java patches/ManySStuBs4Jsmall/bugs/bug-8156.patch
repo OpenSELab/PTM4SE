@@ -1,0 +1,44 @@
+diff --git a/external/storm-kafka/src/jvm/storm/kafka/PartitionManager.java b/external/storm-kafka/src/jvm/storm/kafka/PartitionManager.java
+index 36a0e85..6b0930b 100644
+--- a/external/storm-kafka/src/jvm/storm/kafka/PartitionManager.java
++++ b/external/storm-kafka/src/jvm/storm/kafka/PartitionManager.java
+@@ -307,7 +307,7 @@
+ 
+         private MessageRetryRecord(int retryNum) {
+             this.retryNum = retryNum;
+-            this.retryTimeUTC = new Date().getTime() + calculateRetryDelay();
++            this.retryTimeUTC = System.currentTimeMillis() + calculateRetryDelay();
+         }
+ 
+         public MessageRetryRecord createNextRetryRecord() {
+@@ -321,7 +321,7 @@
+         }
+ 
+         public boolean isReadyForRetry() {
+-            return new Date().getTime() > this.retryTimeUTC;
++            return System.currentTimeMillis() > this.retryTimeUTC;
+         }
+     }
+ }
+diff --git a/external/storm-kafka/src/jvm/storm/kafka/PartitionManager.java b/external/storm-kafka/src/jvm/storm/kafka/PartitionManager.java
+index 36a0e85..6b0930b 100644
+--- a/external/storm-kafka/src/jvm/storm/kafka/PartitionManager.java
++++ b/external/storm-kafka/src/jvm/storm/kafka/PartitionManager.java
+@@ -307,7 +307,7 @@
+ 
+         private MessageRetryRecord(int retryNum) {
+             this.retryNum = retryNum;
+-            this.retryTimeUTC = new Date().getTime() + calculateRetryDelay();
++            this.retryTimeUTC = System.currentTimeMillis() + calculateRetryDelay();
+         }
+ 
+         public MessageRetryRecord createNextRetryRecord() {
+@@ -321,7 +321,7 @@
+         }
+ 
+         public boolean isReadyForRetry() {
+-            return new Date().getTime() > this.retryTimeUTC;
++            return System.currentTimeMillis() > this.retryTimeUTC;
+         }
+     }
+ }

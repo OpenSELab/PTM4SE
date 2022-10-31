@@ -1,0 +1,26 @@
+diff --git a/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/jobgen/JSONGenerator.java b/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/jobgen/JSONGenerator.java
+index 6e19e48..c9c489f 100644
+--- a/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/jobgen/JSONGenerator.java
++++ b/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/jobgen/JSONGenerator.java
+@@ -410,7 +410,7 @@
+ 			String valuesKey = "(none)";
+ 			if (hints.getAvgNumValuesPerDistinctValues().size() > 0) {
+ 				valuesKey = "";
+-				for (Entry<FieldSet, Long> entry : visitable.getEstimatedCardinalities().entrySet()) {
++				for (Entry<FieldSet, Float> entry : hints.getAvgNumValuesPerDistinctValues().entrySet()) {
+ 					valuesKey += "[" + entry.getKey().toString() + "->" + entry.getValue() + "]"; 
+ 				}
+ 			}
+diff --git a/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/jobgen/JSONGenerator.java b/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/jobgen/JSONGenerator.java
+index 6e19e48..c9c489f 100644
+--- a/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/jobgen/JSONGenerator.java
++++ b/pact/pact-compiler/src/main/java/eu/stratosphere/pact/compiler/jobgen/JSONGenerator.java
+@@ -410,7 +410,7 @@
+ 			String valuesKey = "(none)";
+ 			if (hints.getAvgNumValuesPerDistinctValues().size() > 0) {
+ 				valuesKey = "";
+-				for (Entry<FieldSet, Long> entry : visitable.getEstimatedCardinalities().entrySet()) {
++				for (Entry<FieldSet, Float> entry : hints.getAvgNumValuesPerDistinctValues().entrySet()) {
+ 					valuesKey += "[" + entry.getKey().toString() + "->" + entry.getValue() + "]"; 
+ 				}
+ 			}

@@ -1,0 +1,26 @@
+diff --git a/connector/src/main/java/org/jboss/as/connector/deployers/processors/DriverProcessor.java b/connector/src/main/java/org/jboss/as/connector/deployers/processors/DriverProcessor.java
+index afcee6b..a403515 100644
+--- a/connector/src/main/java/org/jboss/as/connector/deployers/processors/DriverProcessor.java
++++ b/connector/src/main/java/org/jboss/as/connector/deployers/processors/DriverProcessor.java
+@@ -80,7 +80,7 @@
+                     DriverService driverService = new DriverService(driverMetadata, driver);
+                     phaseContext
+                             .getServiceTarget()
+-                            .addService(ServiceName.JBOSS.append("jdbc-driver", driverName.replaceAll(".", "_")), driverService)
++                            .addService(ServiceName.JBOSS.append("jdbc-driver", driverName.replaceAll("\\.", "_")), driverService)
+                             .addDependency(ConnectorServices.JDBC_DRIVER_REGISTRY_SERVICE, DriverRegistry.class,
+                                     driverService.getDriverRegistryServiceInjector()).setInitialMode(Mode.ACTIVE).install();
+ 
+diff --git a/connector/src/main/java/org/jboss/as/connector/deployers/processors/DriverProcessor.java b/connector/src/main/java/org/jboss/as/connector/deployers/processors/DriverProcessor.java
+index afcee6b..a403515 100644
+--- a/connector/src/main/java/org/jboss/as/connector/deployers/processors/DriverProcessor.java
++++ b/connector/src/main/java/org/jboss/as/connector/deployers/processors/DriverProcessor.java
+@@ -80,7 +80,7 @@
+                     DriverService driverService = new DriverService(driverMetadata, driver);
+                     phaseContext
+                             .getServiceTarget()
+-                            .addService(ServiceName.JBOSS.append("jdbc-driver", driverName.replaceAll(".", "_")), driverService)
++                            .addService(ServiceName.JBOSS.append("jdbc-driver", driverName.replaceAll("\\.", "_")), driverService)
+                             .addDependency(ConnectorServices.JDBC_DRIVER_REGISTRY_SERVICE, DriverRegistry.class,
+                                     driverService.getDriverRegistryServiceInjector()).setInitialMode(Mode.ACTIVE).install();
+ 

@@ -1,0 +1,44 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
+index a68fa38..b6ad5e2 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
+@@ -2516,7 +2516,7 @@
+       Path resFile = new Path(descTbl.getResFile());
+       if (tbl == null) {
+         FileSystem fs = resFile.getFileSystem(conf);
+-        outStream = (DataOutput) fs.open(resFile);
++        outStream = fs.create(resFile);
+         String errMsg = "Table " + tableName + " does not exist";
+         outStream.write(errMsg.getBytes("UTF-8"));
+         ((FSDataOutputStream) outStream).close();
+@@ -2527,7 +2527,7 @@
+         part = db.getPartition(tbl, descTbl.getPartSpec(), false);
+         if (part == null) {
+           FileSystem fs = resFile.getFileSystem(conf);
+-          outStream = (DataOutput) fs.open(resFile);
++          outStream = fs.create(resFile);
+           String errMsg = "Partition " + descTbl.getPartSpec() + " for table "
+               + tableName + " does not exist";
+           outStream.write(errMsg.getBytes("UTF-8"));
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java b/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
+index a68fa38..b6ad5e2 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/exec/DDLTask.java
+@@ -2516,7 +2516,7 @@
+       Path resFile = new Path(descTbl.getResFile());
+       if (tbl == null) {
+         FileSystem fs = resFile.getFileSystem(conf);
+-        outStream = (DataOutput) fs.open(resFile);
++        outStream = fs.create(resFile);
+         String errMsg = "Table " + tableName + " does not exist";
+         outStream.write(errMsg.getBytes("UTF-8"));
+         ((FSDataOutputStream) outStream).close();
+@@ -2527,7 +2527,7 @@
+         part = db.getPartition(tbl, descTbl.getPartSpec(), false);
+         if (part == null) {
+           FileSystem fs = resFile.getFileSystem(conf);
+-          outStream = (DataOutput) fs.open(resFile);
++          outStream = fs.create(resFile);
+           String errMsg = "Partition " + descTbl.getPartSpec() + " for table "
+               + tableName + " does not exist";
+           outStream.write(errMsg.getBytes("UTF-8"));

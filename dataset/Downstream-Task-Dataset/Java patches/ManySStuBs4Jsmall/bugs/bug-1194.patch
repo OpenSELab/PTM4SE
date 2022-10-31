@@ -1,0 +1,42 @@
+diff --git a/integration-tests/src/test/java/tachyon/underfs/s3/S3UnderStorageCluster.java b/integration-tests/src/test/java/tachyon/underfs/s3/S3UnderStorageCluster.java
+index d2efda0..9641055 100644
+--- a/integration-tests/src/test/java/tachyon/underfs/s3/S3UnderStorageCluster.java
++++ b/integration-tests/src/test/java/tachyon/underfs/s3/S3UnderStorageCluster.java
+@@ -39,14 +39,14 @@
+   public S3UnderStorageCluster(String baseDir, TachyonConf tachyonConf) {
+     super(baseDir, tachyonConf);
+     mS3Bucket = System.getProperty(INTEGRATION_S3_BUCKET);
+-    mBaseDir = PathUtils.concatPath(mS3Bucket + UUID.randomUUID());
++    mBaseDir = PathUtils.concatPath(mS3Bucket, UUID.randomUUID());
+   }
+ 
+   @Override
+   public void cleanup() throws IOException {
+     UnderFileSystem ufs = UnderFileSystem.get(mBaseDir, mTachyonConf);
+     ufs.delete(mBaseDir, true);
+-    mBaseDir = PathUtils.concatPath(mS3Bucket + UUID.randomUUID());
++    mBaseDir = PathUtils.concatPath(mS3Bucket, UUID.randomUUID());
+   }
+ 
+   @Override
+diff --git a/integration-tests/src/test/java/tachyon/underfs/s3/S3UnderStorageCluster.java b/integration-tests/src/test/java/tachyon/underfs/s3/S3UnderStorageCluster.java
+index d2efda0..9641055 100644
+--- a/integration-tests/src/test/java/tachyon/underfs/s3/S3UnderStorageCluster.java
++++ b/integration-tests/src/test/java/tachyon/underfs/s3/S3UnderStorageCluster.java
+@@ -39,14 +39,14 @@
+   public S3UnderStorageCluster(String baseDir, TachyonConf tachyonConf) {
+     super(baseDir, tachyonConf);
+     mS3Bucket = System.getProperty(INTEGRATION_S3_BUCKET);
+-    mBaseDir = PathUtils.concatPath(mS3Bucket + UUID.randomUUID());
++    mBaseDir = PathUtils.concatPath(mS3Bucket, UUID.randomUUID());
+   }
+ 
+   @Override
+   public void cleanup() throws IOException {
+     UnderFileSystem ufs = UnderFileSystem.get(mBaseDir, mTachyonConf);
+     ufs.delete(mBaseDir, true);
+-    mBaseDir = PathUtils.concatPath(mS3Bucket + UUID.randomUUID());
++    mBaseDir = PathUtils.concatPath(mS3Bucket, UUID.randomUUID());
+   }
+ 
+   @Override

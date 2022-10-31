@@ -1,0 +1,13 @@
+diff --git a/src/main/java/org/apache/ibatis/executor/loader/javassist/JavassistProxyFactory.java b/src/main/java/org/apache/ibatis/executor/loader/javassist/JavassistProxyFactory.java
+index da81929..1097bcf 100644
+--- a/src/main/java/org/apache/ibatis/executor/loader/javassist/JavassistProxyFactory.java
++++ b/src/main/java/org/apache/ibatis/executor/loader/javassist/JavassistProxyFactory.java
+@@ -187,7 +187,7 @@
+     @Override
+     public Object invoke(Object enhanced, Method method, Method methodProxy, Object[] args) throws Throwable {
+       final Object o = super.invoke(enhanced, method, args);
+-      return (o instanceof AbstractSerialStateHolder) ? o : methodProxy.invoke(o, args);
++      return o instanceof AbstractSerialStateHolder ? o : methodProxy.invoke(o, args);
+     }
+ 
+     @Override

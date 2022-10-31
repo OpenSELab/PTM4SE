@@ -1,0 +1,42 @@
+diff --git a/src/com/google/javascript/jscomp/newtypes/FunctionType.java b/src/com/google/javascript/jscomp/newtypes/FunctionType.java
+index e6bedc5..33905c8 100644
+--- a/src/com/google/javascript/jscomp/newtypes/FunctionType.java
++++ b/src/com/google/javascript/jscomp/newtypes/FunctionType.java
+@@ -551,7 +551,7 @@
+     if (obj == null) {
+       return false;
+     }
+-    Preconditions.checkArgument(obj instanceof FunctionType, "obj is: " + obj);
++    Preconditions.checkArgument(obj instanceof FunctionType, "obj is: %s", obj);
+     FunctionType f2 = (FunctionType) obj;
+     return Objects.equal(this.requiredFormals, f2.requiredFormals) &&
+         Objects.equal(this.optionalFormals, f2.optionalFormals) &&
+diff --git a/src/com/google/javascript/jscomp/newtypes/JSType.java b/src/com/google/javascript/jscomp/newtypes/JSType.java
+index 0dee4a7..8e55cd5 100644
+--- a/src/com/google/javascript/jscomp/newtypes/JSType.java
++++ b/src/com/google/javascript/jscomp/newtypes/JSType.java
+@@ -79,8 +79,9 @@
+       this.objs = objs;
+     }
+     Preconditions.checkState(this.isValidType(),
+-        "Cannot create type with bits <<<" + Integer.toHexString(mask) +
+-        ">>>, objs <<<" + objs + ">>>, and typeVar <<<" + typeVar + ">>>");
++        "Cannot create type with bits <<<%s>>>, " +
++        "objs <<<%s>>>, and typeVar <<<%s>>>",
++        Integer.toHexString(mask), objs, typeVar);
+   }
+ 
+   private JSType(int mask) {
+diff --git a/src/com/google/javascript/jscomp/newtypes/FunctionType.java b/src/com/google/javascript/jscomp/newtypes/FunctionType.java
+index e6bedc5..33905c8 100644
+--- a/src/com/google/javascript/jscomp/newtypes/FunctionType.java
++++ b/src/com/google/javascript/jscomp/newtypes/FunctionType.java
+@@ -551,7 +551,7 @@
+     if (obj == null) {
+       return false;
+     }
+-    Preconditions.checkArgument(obj instanceof FunctionType, "obj is: " + obj);
++    Preconditions.checkArgument(obj instanceof FunctionType, "obj is: %s", obj);
+     FunctionType f2 = (FunctionType) obj;
+     return Objects.equal(this.requiredFormals, f2.requiredFormals) &&
+         Objects.equal(this.optionalFormals, f2.optionalFormals) &&

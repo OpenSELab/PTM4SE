@@ -1,0 +1,28 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/util/SimpleBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/util/SimpleBroadcaster.java
+index af35bc2..d83f644 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/util/SimpleBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/util/SimpleBroadcaster.java
+@@ -106,7 +106,8 @@
+     @Override
+     public void setBroadcasterConfig(BroadcasterConfig bc) {
+         this.bc = bc;
+-        bc.setExecutorService(null, false).setAsyncWriteService(null, false);
++        bc.setExecutorService(null, false).setAsyncWriteService(null, false)
++                .setScheduledExecutorService(ExecutorsFactory.getScheduler(config));
+     }
+ 
+     /**
+diff --git a/modules/cpr/src/main/java/org/atmosphere/util/SimpleBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/util/SimpleBroadcaster.java
+index af35bc2..d83f644 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/util/SimpleBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/util/SimpleBroadcaster.java
+@@ -106,7 +106,8 @@
+     @Override
+     public void setBroadcasterConfig(BroadcasterConfig bc) {
+         this.bc = bc;
+-        bc.setExecutorService(null, false).setAsyncWriteService(null, false);
++        bc.setExecutorService(null, false).setAsyncWriteService(null, false)
++                .setScheduledExecutorService(ExecutorsFactory.getScheduler(config));
+     }
+ 
+     /**

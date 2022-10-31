@@ -1,0 +1,39 @@
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/Filter.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/Filter.java
+index 94daf03..a9ed76c 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/Filter.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/Filter.java
+@@ -69,7 +69,7 @@ public abstract class Filter extends WrappingIterator implements OptionDescriber
+    * Iterates over the source until an acceptable key/value pair is found.
+    */
+   protected void findTop() {
+-    while (getSource().hasTop() && (negate == accept(getSource().getTopKey(), getSource().getTopValue()))) {
++    while (getSource().hasTop() && !getSource().getTopKey().isDeleted() && (negate == accept(getSource().getTopKey(), getSource().getTopValue()))) {
+       try {
+         getSource().next();
+       } catch (IOException e) {
+diff --git a/src/core/src/main/java/org/apache/accumulo/core/iterators/SortedKeyValueIterator.java b/src/core/src/main/java/org/apache/accumulo/core/iterators/SortedKeyValueIterator.java
+index 8bbf18a..edeaa1d 100644
+--- a/src/core/src/main/java/org/apache/accumulo/core/iterators/SortedKeyValueIterator.java
++++ b/src/core/src/main/java/org/apache/accumulo/core/iterators/SortedKeyValueIterator.java
+@@ -59,7 +59,9 @@ public interface SortedKeyValueIterator<K extends WritableComparable<?>,V extend
+   boolean hasTop();
+   
+   /**
+-   * Advances to the next K,V pair.
++   * Advances to the next K,V pair. Note that in minor compaction scope and in non-full major compaction scopes the iterator may see deletion entries. These
++   * entries should be preserved by all iterators except ones that are strictly scan-time iterators that will never be configured for the minc or majc scopes.
++   * Deletion entries are only removed during full major compactions.
+    * 
+    * @throws IOException
+    *           if an I/O error occurs.
+@@ -88,7 +90,9 @@ public interface SortedKeyValueIterator<K extends WritableComparable<?>,V extend
+   void seek(Range range, Collection<ByteSequence> columnFamilies, boolean inclusive) throws IOException;
+   
+   /**
+-   * Returns top key. Can be called 0 or more times without affecting behavior of next() or hasTop().
++   * Returns top key. Can be called 0 or more times without affecting behavior of next() or hasTop(). Note that in minor compaction scope and in non-full major
++   * compaction scopes the iterator may see deletion entries. These entries should be preserved by all iterators except ones that are strictly scan-time
++   * iterators that will never be configured for the minc or majc scopes. Deletion entries are only removed during full major compactions.
+    * 
+    * @return <tt>K</tt>
+    * @exception IllegalStateException

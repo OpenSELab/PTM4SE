@@ -1,0 +1,665 @@
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeComparator.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeComparator.java
+index a454210..d10e584 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeComparator.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeComparator.java
+@@ -43,7 +43,7 @@
+  * 
+  * @param T The data type that the comparator works on.
+  */
+-public interface TypeComparator<T>
++public abstract class TypeComparator<T>
+ {	
+ 	/**
+ 	 * Computes a hash value for the given record. The hash value should include all fields in the record
+@@ -61,7 +61,7 @@
+ 	 * 
+ 	 * @see java.lang.Object#hashCode()
+ 	 */
+-	public int hash(T record);
++	public abstract int hash(T record);
+ 	
+ 	/**
+ 	 * Sets the given element as the comparison reference for future calls to
+@@ -88,7 +88,7 @@
+ 	 * 
+ 	 * @param toCompare The element to set as the comparison reference.
+ 	 */
+-	public void setReference(T toCompare);
++	public abstract void setReference(T toCompare);
+ 	
+ 	/**
+ 	 * Checks, whether the given element is equal to the element that has been set as the comparison
+@@ -99,7 +99,7 @@
+ 	 * 
+ 	 * @see #setReference(Object)
+ 	 */
+-	public boolean equalToReference(T candidate);
++	public abstract boolean equalToReference(T candidate);
+ 	
+ 	/**
+ 	 * This method compares the element that has been set as reference in this type accessor, to the
+@@ -136,7 +136,7 @@
+ 	 * 
+ 	 * @see #setReference(Object)
+ 	 */
+-	public int compareToReference(TypeComparator<T> referencedComparator);
++	public abstract int compareToReference(TypeComparator<T> referencedComparator);
+ 	
+ 	/**
+ 	 * Compares two records in serialized from. The return value indicates the order of the two in the same way
+@@ -151,7 +151,7 @@
+ 	 * 
+ 	 *  @see java.util.Comparator#compare(Object, Object)
+ 	 */
+-	public int compare(DataInputView firstSource, DataInputView secondSource) throws IOException;
++	public abstract int compare(DataInputView firstSource, DataInputView secondSource) throws IOException;
+ 	
+ 	// --------------------------------------------------------------------------------------------
+ 	
+@@ -160,7 +160,7 @@
+ 	 * 
+ 	 * @return True, if the data type supports the creation of a normalized key for comparison, false otherwise.
+ 	 */
+-	public boolean supportsNormalizedKey();
++	public abstract boolean supportsNormalizedKey();
+ 	
+ 	/**
+ 	 * Check whether this comparator supports to serialize the record in a format that replaces its keys by a normalized
+@@ -168,7 +168,7 @@
+ 	 * 
+ 	 * @return True, if the comparator supports that specific form of serialization, false if not.
+ 	 */
+-	public boolean supportsSerializationWithKeyNormalization();
++	public abstract boolean supportsSerializationWithKeyNormalization();
+ 
+ 	/**
+ 	 * Gets the number of bytes that the normalized key would maximally take. A value of
+@@ -176,7 +176,7 @@
+ 	 * 
+ 	 * @return The number of bytes that the normalized key would maximally take.
+ 	 */
+-	public int getNormalizeKeyLen();
++	public abstract int getNormalizeKeyLen();
+ 	
+ 	/**
+ 	 * Checks, whether the given number of bytes for a normalized suffice to determine the order of elements
+@@ -187,7 +187,7 @@
+ 	 * @return True, if the given number of bytes for a normalized suffice to determine the order of elements,
+ 	 *         false otherwise.
+ 	 */
+-	public boolean isNormalizedKeyPrefixOnly(int keyBytes);
++	public abstract boolean isNormalizedKeyPrefixOnly(int keyBytes);
+ 	
+ 	/**
+ 	 * Writes a normalized key for the given record into the target byte array, starting at the specified position
+@@ -210,7 +210,7 @@
+ 	 * 
+ 	 * @see NormalizableKey#copyNormalizedKey(byte[], int, int)
+ 	 */
+-	public void putNormalizedKey(T record, byte[] target, int offset, int numBytes);
++	public abstract void putNormalizedKey(T record, byte[] target, int offset, int numBytes);
+ 
+ 	/**
+ 	 * Writes the record in such a fashion that all keys are normalizing and at the beginning of the serialized data.
+@@ -224,7 +224,7 @@
+ 	 * @see #readWithKeyDenormalization(Object, DataInputView)
+ 	 * @see NormalizableKey#copyNormalizedKey(byte[], int, int)
+ 	 */
+-	public void writeWithKeyNormalization(T record, DataOutputView target) throws IOException;
++	public abstract void writeWithKeyNormalization(T record, DataOutputView target) throws IOException;
+ 	
+ 	/**
+ 	 * Reads the record back while de-normalizing the key fields. This must only be used when
+@@ -238,7 +238,7 @@
+ 	 * @see #writeWithKeyNormalization(Object, DataOutputView)
+ 	 * @see NormalizableKey#copyNormalizedKey(byte[], int, int)
+ 	 */
+-	public void readWithKeyDenormalization(T record, DataInputView source) throws IOException;
++	public abstract void readWithKeyDenormalization(T record, DataInputView source) throws IOException;
+ 
+ 	/**
+ 	 * Flag whether normalized key comparisons should be inverted key should be interpreted
+@@ -247,7 +247,7 @@
+ 	 * @return True, if all normalized key comparisons should invert the sign of the comparison result,
+ 	 *         false if the normalized key should be used as is.
+ 	 */
+-	public boolean invertNormalizedKey();
++	public abstract boolean invertNormalizedKey();
+ 	
+ 	// --------------------------------------------------------------------------------------------
+ 	
+@@ -257,5 +257,5 @@
+ 	 * 
+ 	 * @return A deep copy of this comparator instance.
+ 	 */
+-	public TypeComparator<T> duplicate();
++	public abstract TypeComparator<T> duplicate();
+ }
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypePairComparator.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypePairComparator.java
+index 38b6581..a271c6a 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypePairComparator.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypePairComparator.java
+@@ -28,14 +28,14 @@
+  * @param <T1> The class of the first data type.
+  * @param <T2> The class of the second data type. 
+  */
+-public interface TypePairComparator<T1, T2>
++public abstract class TypePairComparator<T1, T2>
+ {
+ 	/**
+ 	 * Sets the reference for comparisons.
+ 	 * 
+ 	 * @param reference The reference instance.
+ 	 */
+-	public void setReference(T1 reference);
++	public abstract void setReference(T1 reference);
+ 	
+ 	/**
+ 	 * Checks, whether the given candidate instance is equal to the reference instance, with respect
+@@ -44,7 +44,7 @@
+ 	 * @param candidate The candidate to check.
+ 	 * @return True, if the candidate is equal to the reference, false otherwise.
+ 	 */
+-	public boolean equalToReference(T2 candidate);
++	public abstract boolean equalToReference(T2 candidate);
+ 	
+-	public int compareToReference(T2 candidate);
++	public abstract int compareToReference(T2 candidate);
+ }
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeSerializer.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeSerializer.java
+index 34b1f94..8e0981b 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeSerializer.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeSerializer.java
+@@ -30,14 +30,14 @@
+  * 
+  * @param T The data type that the serializer serializes.
+  */
+-public interface TypeSerializer<T>
++public abstract class TypeSerializer<T>
+ {
+ 	/**
+ 	 * Creates a new instance of the data type.
+ 	 * 
+ 	 * @return A new instance of the data type.
+ 	 */
+-	public T createInstance();
++	public abstract T createInstance();
+ 	
+ 	/**
+ 	 * Creates a copy from the given element.
+@@ -45,7 +45,7 @@
+ 	 * @param from The element to copy.
+ 	 * @return A copy of the given element.
+ 	 */
+-	public T createCopy(T from);
++	public abstract T createCopy(T from);
+ 	
+ 	/**
+ 	 * Creates a copy from the given element, storing the copied result in the given target element.
+@@ -53,7 +53,7 @@
+ 	 * @param from The element to be copied.
+ 	 * @param to The target element.
+ 	 */
+-	public void copyTo(T from, T to);
++	public abstract void copyTo(T from, T to);
+ 	
+ 	// --------------------------------------------------------------------------------------------
+ 	
+@@ -62,7 +62,7 @@
+ 	 * 
+ 	 * @return The length of the data type, or <code>-1</code> for variable length data types.
+ 	 */
+-	public int getLength();
++	public abstract int getLength();
+ 	
+ 	// --------------------------------------------------------------------------------------------
+ 
+@@ -76,7 +76,7 @@
+ 	 * @throws IOException Thrown, if the serialization encountered an I/O related error. Typically raised by the
+ 	 *                     output view, which may have an underlying I/O channel to which it delegates.
+ 	 */
+-	public void serialize(T record, DataOutputView target) throws IOException;
++	public abstract void serialize(T record, DataOutputView target) throws IOException;
+ 
+ 	/**
+ 	 * De-serializes a record from the given source input view into the given target record instance.
+@@ -87,7 +87,7 @@
+ 	 * @throws IOException Thrown, if the de-serialization encountered an I/O related error. Typically raised by the
+ 	 *                     input view, which may have an underlying I/O channel from which it reads.
+ 	 */
+-	public void deserialize(T target, DataInputView source) throws IOException;
++	public abstract void deserialize(T target, DataInputView source) throws IOException;
+ 	
+ 	/**
+ 	 * Copies exactly one record from the source input view to the target output view. Whether this operation
+@@ -101,5 +101,5 @@
+ 	 * 
+ 	 * @throws IOException Thrown if any of the two views raises an exception.
+ 	 */
+-	public void copy(DataInputView source, DataOutputView target) throws IOException;
++	public abstract void copy(DataInputView source, DataOutputView target) throws IOException;
+ }
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithAdjacencyListComparator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithAdjacencyListComparator.java
+index db2e785..2e5459b 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithAdjacencyListComparator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithAdjacencyListComparator.java
+@@ -24,7 +24,7 @@
+ /**
+  *
+  */
+-public final class VertexWithAdjacencyListComparator implements TypeComparator<VertexWithAdjacencyList> {
++public final class VertexWithAdjacencyListComparator extends TypeComparator<VertexWithAdjacencyList> {
+ 
+ 	private long reference;
+ 	
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithAdjacencyListSerializer.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithAdjacencyListSerializer.java
+index f42a3ce..c24e581 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithAdjacencyListSerializer.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithAdjacencyListSerializer.java
+@@ -24,7 +24,7 @@
+ /**
+  *
+  */
+-public final class VertexWithAdjacencyListSerializer implements TypeSerializer<VertexWithAdjacencyList> {
++public final class VertexWithAdjacencyListSerializer extends TypeSerializer<VertexWithAdjacencyList> {
+ 
+ 	@Override
+ 	public VertexWithAdjacencyList createInstance() {
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankAndDanglingComparator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankAndDanglingComparator.java
+index 32ba716..e3d55b0 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankAndDanglingComparator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankAndDanglingComparator.java
+@@ -23,7 +23,7 @@
+ /**
+  *
+  */
+-public final class VertexWithRankAndDanglingComparator implements TypeComparator<VertexWithRankAndDangling> {
++public final class VertexWithRankAndDanglingComparator extends TypeComparator<VertexWithRankAndDangling> {
+ 
+ 	private long reference;
+ 	
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankAndDanglingSerializer.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankAndDanglingSerializer.java
+index 7f1f440..576a344 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankAndDanglingSerializer.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankAndDanglingSerializer.java
+@@ -24,7 +24,7 @@
+ /**
+  *
+  */
+-public final class VertexWithRankAndDanglingSerializer implements TypeSerializer<VertexWithRankAndDangling> {
++public final class VertexWithRankAndDanglingSerializer extends TypeSerializer<VertexWithRankAndDangling> {
+ 
+ 	@Override
+ 	public VertexWithRankAndDangling createInstance() {
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankComparator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankComparator.java
+index 8dcd710..b4cfff2 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankComparator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankComparator.java
+@@ -24,7 +24,7 @@
+ /**
+  *
+  */
+-public final class VertexWithRankComparator implements TypeComparator<VertexWithRank> {
++public final class VertexWithRankComparator extends TypeComparator<VertexWithRank> {
+ 
+ 	private long reference;
+ 	
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankDanglingToVertexWithAdjacencyListPairComparatorFactory.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankDanglingToVertexWithAdjacencyListPairComparatorFactory.java
+index 60f457d..d37208c 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankDanglingToVertexWithAdjacencyListPairComparatorFactory.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankDanglingToVertexWithAdjacencyListPairComparatorFactory.java
+@@ -42,7 +42,7 @@
+ 	
+ 
+ 	public static final class VertexWithRankDanglingToVertexWithAdjacencyListPairComparator
+-		implements TypePairComparator<VertexWithRankAndDangling, VertexWithAdjacencyList>
++		extends TypePairComparator<VertexWithRankAndDangling, VertexWithAdjacencyList>
+ 	{
+ 		private long reference;
+ 		
+@@ -64,7 +64,7 @@
+ 	}
+ 	
+ 	public static final class VertexWithAdjacencyListToVertexWithRankDanglingPairComparator
+-		implements TypePairComparator<VertexWithAdjacencyList, VertexWithRankAndDangling>
++		extends TypePairComparator<VertexWithAdjacencyList, VertexWithRankAndDangling>
+ 	{
+ 		private long reference;
+ 		
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankDanglingToVertexWithRankPairComparatorFactory.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankDanglingToVertexWithRankPairComparatorFactory.java
+index 7563d30..070ee45 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankDanglingToVertexWithRankPairComparatorFactory.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankDanglingToVertexWithRankPairComparatorFactory.java
+@@ -42,7 +42,7 @@
+ 	
+ 
+ 	public static final class VertexWithRankDanglingToVertexWithRankComparator
+-		implements TypePairComparator<VertexWithRankAndDangling, VertexWithRank>
++		extends TypePairComparator<VertexWithRankAndDangling, VertexWithRank>
+ 	{
+ 		private long reference;
+ 		
+@@ -64,7 +64,7 @@
+ 	}
+ 	
+ 	public static final class VertexWithRankToVertexWithRankDanglingPairComparator
+-		implements TypePairComparator<VertexWithRank, VertexWithRankAndDangling>
++		extends TypePairComparator<VertexWithRank, VertexWithRankAndDangling>
+ 	{
+ 		private long reference;
+ 		
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankSerializer.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankSerializer.java
+index 3bb8663..2926403 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankSerializer.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/iterative/compensatable/danglingpagerank/custom/types/VertexWithRankSerializer.java
+@@ -24,7 +24,7 @@
+ /**
+  *
+  */
+-public final class VertexWithRankSerializer implements TypeSerializer<VertexWithRank> {
++public final class VertexWithRankSerializer extends TypeSerializer<VertexWithRank> {
+ 
+ 	@Override
+ 	public VertexWithRank createInstance() {
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordComparator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordComparator.java
+index d398874..53dc975 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordComparator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordComparator.java
+@@ -33,7 +33,7 @@
+  * Implementation of the {@link TypeComparator} interface for the pact record. Instances of this class
+  * are parameterized with which fields are relevant to the comparison. 
+  */
+-public final class ArrayRecordComparator implements TypeComparator<Value[]> {
++public final class ArrayRecordComparator extends TypeComparator<Value[]> {
+ 	
+ 	private final ArrayRecordSerializer serializer;
+ 	
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordPairComparator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordPairComparator.java
+index bd4e711..b2935a6 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordPairComparator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordPairComparator.java
+@@ -27,7 +27,7 @@
+  * Implementation of the {@link TypePairComparator} interface for Pact Records. The equality is established on a set of
+  * key fields. The indices of the key fields may be different on the reference and candidate side.
+  */
+-public class ArrayRecordPairComparator implements TypePairComparator<Value[], Value[]>
++public class ArrayRecordPairComparator extends TypePairComparator<Value[], Value[]>
+ {
+ 	private final int[] keyFields1, keyFields2;			// arrays with the positions of the keys in the records
+ 	
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordSerializer.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordSerializer.java
+index 379e5a2..014219d 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordSerializer.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/arrayrecord/ArrayRecordSerializer.java
+@@ -28,7 +28,7 @@
+ /**
+  * Implementation of the (de)serialization and copying logic for the {@link PactRecord}.
+  */
+-public final class ArrayRecordSerializer implements TypeSerializer<Value[]>
++public final class ArrayRecordSerializer extends TypeSerializer<Value[]>
+ {
+ 	private final Class<? extends CopyableValue<Value>>[] types;
+ 	
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordComparator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordComparator.java
+index bb4a182..0ee4ccd 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordComparator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordComparator.java
+@@ -32,7 +32,7 @@
+  * Implementation of the {@link TypeComparator} interface for the pact record. Instances of this class
+  * are parameterized with which fields are relevant to the comparison. 
+  */
+-public final class PactRecordComparator implements TypeComparator<PactRecord>
++public final class PactRecordComparator extends TypeComparator<PactRecord>
+ {	
+ 	private final int[] keyFields;
+ 	
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordPairComparator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordPairComparator.java
+index 1e02f7b..8fce26e 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordPairComparator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordPairComparator.java
+@@ -26,7 +26,7 @@
+  * Implementation of the {@link TypePairComparator} interface for Pact Records. The equality is established on a set of
+  * key fields. The indices of the key fields may be different on the reference and candidate side.
+  */
+-public class PactRecordPairComparator implements TypePairComparator<PactRecord, PactRecord>
++public class PactRecordPairComparator extends TypePairComparator<PactRecord, PactRecord>
+ {
+ 	private final int[] keyFields1, keyFields2;			// arrays with the positions of the keys in the records
+ 	
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordSerializer.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordSerializer.java
+index 42d9bb8..3a75c3f 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordSerializer.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/plugable/pactrecord/PactRecordSerializer.java
+@@ -26,7 +26,7 @@
+ /**
+  * Implementation of the (de)serialization and copying logic for the {@link PactRecord}.
+  */
+-public final class PactRecordSerializer implements TypeSerializer<PactRecord>
++public final class PactRecordSerializer extends TypeSerializer<PactRecord>
+ {
+ 	private static final PactRecordSerializer INSTANCE = new PactRecordSerializer(); // singleton instance
+ 	
+diff --git a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
+index 95e1e9b..1722220 100644
+--- a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
++++ b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashMatchIteratorITCase.java
+@@ -718,7 +718,7 @@
+ 		}
+ 	}
+ 	
+-	private static final class IntPairRecordPairComparator implements TypePairComparator<IntPair, PactRecord>
++	private static final class IntPairRecordPairComparator extends TypePairComparator<IntPair, PactRecord>
+ 	{
+ 		private int reference;
+ 		
+@@ -748,7 +748,7 @@
+ 		}
+ 	}
+ 	
+-	private static final class RecordIntPairPairComparator implements TypePairComparator<PactRecord, IntPair>
++	private static final class RecordIntPairPairComparator extends TypePairComparator<PactRecord, IntPair>
+ 	{
+ 		private int reference;
+ 		
+diff --git a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashTableITCase.java b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashTableITCase.java
+index 722d359..5d0fd02 100644
+--- a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashTableITCase.java
++++ b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/hash/HashTableITCase.java
+@@ -1466,7 +1466,7 @@
+ 	
+ 	// ============================================================================================
+ 	
+-	private static final class PactRecordPairComparatorFirstInt implements TypePairComparator<PactRecord, PactRecord>
++	private static final class PactRecordPairComparatorFirstInt extends TypePairComparator<PactRecord, PactRecord>
+ 	{
+ 		private int key;
+ 
+diff --git a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairComparator.java b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairComparator.java
+index 233590d..6ecbe0c 100644
+--- a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairComparator.java
++++ b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairComparator.java
+@@ -22,7 +22,7 @@
+ import eu.stratosphere.pact.generic.types.TypeComparator;
+ 
+ 
+-public class IntPairComparator implements TypeComparator<IntPair>
++public class IntPairComparator extends TypeComparator<IntPair>
+ {
+ 	private int reference;
+ 	
+diff --git a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairPairComparator.java b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairPairComparator.java
+index c04b8f0..ec19e9e 100644
+--- a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairPairComparator.java
++++ b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairPairComparator.java
+@@ -21,7 +21,7 @@
+ /**
+  * @author Stephan Ewen
+  */
+-public class IntPairPairComparator implements TypePairComparator<IntPair, IntPair>
++public class IntPairPairComparator extends TypePairComparator<IntPair, IntPair>
+ {
+ 	private int key;
+ 	
+diff --git a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairSerializer.java b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairSerializer.java
+index 5421ae2..1af902e 100644
+--- a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairSerializer.java
++++ b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/IntPairSerializer.java
+@@ -22,7 +22,7 @@
+ import eu.stratosphere.pact.generic.types.TypeSerializer;
+ 
+ 
+-public class IntPairSerializer implements TypeSerializer<IntPair>
++public class IntPairSerializer extends TypeSerializer<IntPair>
+ {	
+ 	/* (non-Javadoc)
+ 	 * @see eu.stratosphere.pact.runtime.plugable.TypeAccessorsV2#createInstance()
+diff --git a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/PactIntegerSerializer.java b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/PactIntegerSerializer.java
+index 6888e85..729382d 100644
+--- a/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/PactIntegerSerializer.java
++++ b/pact/pact-runtime/src/test/java/eu/stratosphere/pact/runtime/test/util/types/PactIntegerSerializer.java
+@@ -25,7 +25,7 @@
+ /**
+  * @author Stephan Ewen
+  */
+-public class PactIntegerSerializer implements TypeSerializer<PactInteger> {
++public class PactIntegerSerializer extends TypeSerializer<PactInteger> {
+ 
+ 	/* (non-Javadoc)
+ 	 * @see eu.stratosphere.pact.runtime.plugable.TypeSerializer#createInstance()
+diff --git a/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeComparator.java b/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeComparator.java
+index a454210..d10e584 100644
+--- a/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeComparator.java
++++ b/pact/pact-common/src/main/java/eu/stratosphere/pact/generic/types/TypeComparator.java
+@@ -43,7 +43,7 @@
+  * 
+  * @param T The data type that the comparator works on.
+  */
+-public interface TypeComparator<T>
++public abstract class TypeComparator<T>
+ {	
+ 	/**
+ 	 * Computes a hash value for the given record. The hash value should include all fields in the record
+@@ -61,7 +61,7 @@
+ 	 * 
+ 	 * @see java.lang.Object#hashCode()
+ 	 */
+-	public int hash(T record);
++	public abstract int hash(T record);
+ 	
+ 	/**
+ 	 * Sets the given element as the comparison reference for future calls to
+@@ -88,7 +88,7 @@
+ 	 * 
+ 	 * @param toCompare The element to set as the comparison reference.
+ 	 */
+-	public void setReference(T toCompare);
++	public abstract void setReference(T toCompare);
+ 	
+ 	/**
+ 	 * Checks, whether the given element is equal to the element that has been set as the comparison
+@@ -99,7 +99,7 @@
+ 	 * 
+ 	 * @see #setReference(Object)
+ 	 */
+-	public boolean equalToReference(T candidate);
++	public abstract boolean equalToReference(T candidate);
+ 	
+ 	/**
+ 	 * This method compares the element that has been set as reference in this type accessor, to the
+@@ -136,7 +136,7 @@
+ 	 * 
+ 	 * @see #setReference(Object)
+ 	 */
+-	public int compareToReference(TypeComparator<T> referencedComparator);
++	public abstract int compareToReference(TypeComparator<T> referencedComparator);
+ 	
+ 	/**
+ 	 * Compares two records in serialized from. The return value indicates the order of the two in the same way
+@@ -151,7 +151,7 @@
+ 	 * 
+ 	 *  @see java.util.Comparator#compare(Object, Object)
+ 	 */
+-	public int compare(DataInputView firstSource, DataInputView secondSource) throws IOException;
++	public abstract int compare(DataInputView firstSource, DataInputView secondSource) throws IOException;
+ 	
+ 	// --------------------------------------------------------------------------------------------
+ 	
+@@ -160,7 +160,7 @@
+ 	 * 
+ 	 * @return True, if the data type supports the creation of a normalized key for comparison, false otherwise.
+ 	 */
+-	public boolean supportsNormalizedKey();
++	public abstract boolean supportsNormalizedKey();
+ 	
+ 	/**
+ 	 * Check whether this comparator supports to serialize the record in a format that replaces its keys by a normalized
+@@ -168,7 +168,7 @@
+ 	 * 
+ 	 * @return True, if the comparator supports that specific form of serialization, false if not.
+ 	 */
+-	public boolean supportsSerializationWithKeyNormalization();
++	public abstract boolean supportsSerializationWithKeyNormalization();
+ 
+ 	/**
+ 	 * Gets the number of bytes that the normalized key would maximally take. A value of
+@@ -176,7 +176,7 @@
+ 	 * 
+ 	 * @return The number of bytes that the normalized key would maximally take.
+ 	 */
+-	public int getNormalizeKeyLen();
++	public abstract int getNormalizeKeyLen();
+ 	
+ 	/**
+ 	 * Checks, whether the given number of bytes for a normalized suffice to determine the order of elements
+@@ -187,7 +187,7 @@
+ 	 * @return True, if the given number of bytes for a normalized suffice to determine the order of elements,
+ 	 *         false otherwise.
+ 	 */
+-	public boolean isNormalizedKeyPrefixOnly(int keyBytes);
++	public abstract boolean isNormalizedKeyPrefixOnly(int keyBytes);
+ 	
+ 	/**
+ 	 * Writes a normalized key for the given record into the target byte array, starting at the specified position
+@@ -210,7 +210,7 @@
+ 	 * 
+ 	 * @see NormalizableKey#copyNormalizedKey(byte[], int, int)
+ 	 */
+-	public void putNormalizedKey(T record, byte[] target, int offset, int numBytes);
++	public abstract void putNormalizedKey(T record, byte[] target, int offset, int numBytes);
+ 
+ 	/**
+ 	 * Writes the record in such a fashion that all keys are normalizing and at the beginning of the serialized data.
+@@ -224,7 +224,7 @@
+ 	 * @see #readWithKeyDenormalization(Object, DataInputView)
+ 	 * @see NormalizableKey#copyNormalizedKey(byte[], int, int)
+ 	 */
+-	public void writeWithKeyNormalization(T record, DataOutputView target) throws IOException;
++	public abstract void writeWithKeyNormalization(T record, DataOutputView target) throws IOException;
+ 	
+ 	/**
+ 	 * Reads the record back while de-normalizing the key fields. This must only be used when
+@@ -238,7 +238,7 @@
+ 	 * @see #writeWithKeyNormalization(Object, DataOutputView)
+ 	 * @see NormalizableKey#copyNormalizedKey(byte[], int, int)
+ 	 */
+-	public void readWithKeyDenormalization(T record, DataInputView source) throws IOException;
++	public abstract void readWithKeyDenormalization(T record, DataInputView source) throws IOException;
+ 
+ 	/**
+ 	 * Flag whether normalized key comparisons should be inverted key should be interpreted
+@@ -247,7 +247,7 @@
+ 	 * @return True, if all normalized key comparisons should invert the sign of the comparison result,
+ 	 *         false if the normalized key should be used as is.
+ 	 */
+-	public boolean invertNormalizedKey();
++	public abstract boolean invertNormalizedKey();
+ 	
+ 	// --------------------------------------------------------------------------------------------
+ 	
+@@ -257,5 +257,5 @@
+ 	 * 
+ 	 * @return A deep copy of this comparator instance.
+ 	 */
+-	public TypeComparator<T> duplicate();
++	public abstract TypeComparator<T> duplicate();
+ }

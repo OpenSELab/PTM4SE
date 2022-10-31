@@ -1,0 +1,26 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandtpaccept.java b/Essentials/src/com/earth2me/essentials/commands/Commandtpaccept.java
+index 2e3e024..456a77c 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandtpaccept.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandtpaccept.java
+@@ -22,7 +22,7 @@
+ 		final User target = user.getTeleportRequest();
+ 		if (target == null
+ 			|| target.getBase() instanceof OfflinePlayer
+-			|| (user.isTeleportRequestHere() && !target.isAuthorized("essentials.tpahere")))
++			|| (user.isTeleportRequestHere() ? !target.isAuthorized("essentials.tpahere") : !target.isAuthorized("essentials.tpa")))
+ 		{
+ 			throw new Exception(_("noPendingRequest"));
+ 		}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandtpaccept.java b/Essentials/src/com/earth2me/essentials/commands/Commandtpaccept.java
+index 2e3e024..456a77c 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandtpaccept.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandtpaccept.java
+@@ -22,7 +22,7 @@
+ 		final User target = user.getTeleportRequest();
+ 		if (target == null
+ 			|| target.getBase() instanceof OfflinePlayer
+-			|| (user.isTeleportRequestHere() && !target.isAuthorized("essentials.tpahere")))
++			|| (user.isTeleportRequestHere() ? !target.isAuthorized("essentials.tpahere") : !target.isAuthorized("essentials.tpa")))
+ 		{
+ 			throw new Exception(_("noPendingRequest"));
+ 		}

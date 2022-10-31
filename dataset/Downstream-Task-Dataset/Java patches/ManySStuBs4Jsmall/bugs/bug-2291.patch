@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/NettyCometSupport.java b/modules/cpr/src/main/java/org/atmosphere/container/NettyCometSupport.java
+index 5be04cf..159327e 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/NettyCometSupport.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/NettyCometSupport.java
+@@ -85,7 +85,7 @@
+     @Override
+     public void action(AtmosphereResourceImpl r) {
+         super.action(r);
+-        if (r.isResumed()) {
++        if (r.isResumed() && r.getRequest().getAttribute(HOOK) != null ) {
+             ((CometSupportHook) r.getRequest().getAttribute(HOOK)).resume();
+         }
+     }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/NettyCometSupport.java b/modules/cpr/src/main/java/org/atmosphere/container/NettyCometSupport.java
+index 5be04cf..159327e 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/NettyCometSupport.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/NettyCometSupport.java
+@@ -85,7 +85,7 @@
+     @Override
+     public void action(AtmosphereResourceImpl r) {
+         super.action(r);
+-        if (r.isResumed()) {
++        if (r.isResumed() && r.getRequest().getAttribute(HOOK) != null ) {
+             ((CometSupportHook) r.getRequest().getAttribute(HOOK)).resume();
+         }
+     }

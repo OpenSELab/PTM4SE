@@ -1,0 +1,220 @@
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/AggregateDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/AggregateDefinitionRenderer.java
+index ca5dc47..231f484 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/AggregateDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/AggregateDefinitionRenderer.java
+@@ -28,7 +28,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         
+         AggregateDefinition aggregate = (AggregateDefinition)processor;
+         buffer.append(".").append(aggregate.getShortName()).append("()");
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/CatchDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/CatchDefinitionRenderer.java
+index 2040395..b74f531 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/CatchDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/CatchDefinitionRenderer.java
+@@ -30,7 +30,7 @@
+         // Utility class, no public or protected default constructor
+     }
+     
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         CatchDefinition catchDef = (CatchDefinition)processor;
+         buffer.append(".").append(catchDef.getShortName()).append("(");
+         List<Class> exceptions = catchDef.getExceptionClasses();
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/ChoiceDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/ChoiceDefinitionRenderer.java
+index d202ea8..983960e 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/ChoiceDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/ChoiceDefinitionRenderer.java
+@@ -30,7 +30,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         ChoiceDefinition choice = (ChoiceDefinition)processor;
+         buffer.append(".").append(choice.getShortName()).append("()");
+         for (WhenDefinition when : choice.getWhenClauses()) {
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/ConvertBodyDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/ConvertBodyDefinitionRenderer.java
+index f835797..b0ee653 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/ConvertBodyDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/ConvertBodyDefinitionRenderer.java
+@@ -28,7 +28,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         ConvertBodyDefinition convertBody = (ConvertBodyDefinition)processor;
+         buffer.append(".").append(convertBody.getShortName()).append("(");
+         if (convertBody.getType().equals("[B")) {
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/ExpressionNodeRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/ExpressionNodeRenderer.java
+index b5012a4..1d2733c 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/ExpressionNodeRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/ExpressionNodeRenderer.java
+@@ -46,7 +46,7 @@
+         // Utility class, no public or protected default constructor
+     }
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         ExpressionNode expNode = (ExpressionNode)processor;
+         buffer.append(".").append(expNode.getShortName());
+         if (expNode instanceof DelayDefinition) {
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/LoadBalanceDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/LoadBalanceDefinitionRenderer.java
+index 5ad9a34..e65b259 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/LoadBalanceDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/LoadBalanceDefinitionRenderer.java
+@@ -36,7 +36,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         LoadBalanceDefinition loadB = (LoadBalanceDefinition)processor;
+         // buffer.append(".").append(output.getShortName()).append("()");
+         buffer.append(".").append("loadBalance").append("()");
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/OnCompletionDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/OnCompletionDefinitionRenderer.java
+index d4a79e7..5101c2e 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/OnCompletionDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/OnCompletionDefinitionRenderer.java
+@@ -31,7 +31,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         // if not a global onCompletion, add a period
+         boolean notGlobal = buffer.toString().endsWith(")");
+         if (notGlobal) {
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/OnExceptionDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/OnExceptionDefinitionRenderer.java
+index 7ebc61c..fbd20ba 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/OnExceptionDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/OnExceptionDefinitionRenderer.java
+@@ -31,7 +31,7 @@
+         // Utility class, no public or protected default constructor
+     }
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         // if not a global onCompletion, add a period
+         boolean notGlobal = buffer.toString().endsWith(")");
+         if (notGlobal) {
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/OutputDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/OutputDefinitionRenderer.java
+index ab52b7a..31596c4 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/OutputDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/OutputDefinitionRenderer.java
+@@ -57,7 +57,7 @@
+         // Utility class, no public or protected default constructor
+     }
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         OutputDefinition out = (OutputDefinition)processor;
+         boolean notGlobal = buffer.toString().endsWith(")");
+         if (notGlobal) {
+@@ -157,7 +157,7 @@
+         }
+     }
+ 
+-    private static void renderBean(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    private static void renderBean(StringBuilder buffer, ProcessorDefinition processor) {
+         BeanDefinition beanDef = (BeanDefinition)processor;
+         if (beanDef.getRef() != null) {
+             buffer.append("Ref(\"").append(beanDef.getRef()).append("\"");
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/ProcessorDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/ProcessorDefinitionRenderer.java
+index a6c21f2..28e0337 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/ProcessorDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/ProcessorDefinitionRenderer.java
+@@ -45,7 +45,7 @@
+         // Utility class, no public or protected default constructor
+     }
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         if (processor instanceof AggregateDefinition) {
+             AggregateDefinitionRenderer.render(buffer, processor);
+         } else if (processor instanceof CatchDefinition) {
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/ResequenceDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/ResequenceDefinitionRenderer.java
+index 4995519..5dc60e3 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/ResequenceDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/ResequenceDefinitionRenderer.java
+@@ -31,7 +31,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         ResequenceDefinition resequence = (ResequenceDefinition)processor;
+         buffer.append(".").append(processor.getShortName()).append("(");
+ 
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/RoutingSlipDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/RoutingSlipDefinitionRenderer.java
+index 187c5a7..9af6354 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/RoutingSlipDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/RoutingSlipDefinitionRenderer.java
+@@ -28,7 +28,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         RoutingSlipDefinition routingSlip = (RoutingSlipDefinition)processor;
+         buffer.append(".").append(routingSlip.getShortName()).append("(\"").append(routingSlip.getHeaderName()).append("\", \"").append(routingSlip.getUriDelimiter())
+             .append("\")");
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/SendDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/SendDefinitionRenderer.java
+index 6520eeb..92dc79b 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/SendDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/SendDefinitionRenderer.java
+@@ -29,9 +29,9 @@
+         // Utility class, no public or protected default constructor
+     }
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         buffer.append(".");
+-        SendDefinition<?> send = (SendDefinition<?>)processor;
++        SendDefinition send = (SendDefinition)processor;
+         if (send instanceof WireTapDefinition) {
+             // for wireTap
+             buffer.append(send.getShortName());
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/ThrottleDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/ThrottleDefinitionRenderer.java
+index 6bb0b4b..471edb9 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/ThrottleDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/ThrottleDefinitionRenderer.java
+@@ -28,7 +28,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         ThrottleDefinition throttle = (ThrottleDefinition)processor;
+         buffer.append(".").append(throttle.getShortName()).append("(").append(throttle.getMaximumRequestsPerPeriod()).append(")");
+         if (throttle.getTimePeriodMillis() != 1000) {
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/ThrowExceptionDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/ThrowExceptionDefinitionRenderer.java
+index b242ae1..e5129a7 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/ThrowExceptionDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/ThrowExceptionDefinitionRenderer.java
+@@ -28,7 +28,7 @@
+         // Utility class, no public or protected default constructor
+     }
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         ThrowExceptionDefinition throwExp = (ThrowExceptionDefinition)processor;
+         buffer.append(".").append(throwExp.getShortName()).append("(");
+         String expName = throwExp.getException().getClass().getSimpleName();
+diff --git a/components/camel-web/src/main/java/org/apache/camel/web/util/AggregateDefinitionRenderer.java b/components/camel-web/src/main/java/org/apache/camel/web/util/AggregateDefinitionRenderer.java
+index ca5dc47..231f484 100644
+--- a/components/camel-web/src/main/java/org/apache/camel/web/util/AggregateDefinitionRenderer.java
++++ b/components/camel-web/src/main/java/org/apache/camel/web/util/AggregateDefinitionRenderer.java
+@@ -28,7 +28,7 @@
+         // Utility class, no public or protected default constructor
+     }    
+ 
+-    public static void render(StringBuilder buffer, ProcessorDefinition<?> processor) {
++    public static void render(StringBuilder buffer, ProcessorDefinition processor) {
+         
+         AggregateDefinition aggregate = (AggregateDefinition)processor;
+         buffer.append(".").append(aggregate.getShortName()).append("()");

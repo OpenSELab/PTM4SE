@@ -1,0 +1,44 @@
+--- a/molgenis-semantic-mapper/src/main/java/org/molgenis/semanticmapper/service/impl/AlgorithmServiceImpl.java
++++ b/molgenis-semantic-mapper/src/main/java/org/molgenis/semanticmapper/service/impl/AlgorithmServiceImpl.java
+@@ -104,14 +105,21 @@ public class AlgorithmServiceImpl implements AlgorithmService
+ 	public Iterable<AlgorithmEvaluation> applyAlgorithm(Attribute targetAttribute, String algorithm,
+ 			Iterable<Entity> sourceEntities)
+ 	{
+-		return stream(sourceEntities.spliterator(), false).map(entity ->
+-		{
++		return stream(sourceEntities.spliterator(), false).map(entity -> {
+ 			AlgorithmEvaluation algorithmResult = new AlgorithmEvaluation(entity);
+ 			Object derivedValue;
+ 
+ 			try
+ 			{
+ 				Object result = jsMagmaScriptEvaluator.eval(algorithm, entity);
++
++				// jsMagmaScriptEvaluator.eval() catches and returns the error instead of throwing it
++				// so check instance of result object here
++				if (result instanceof ScriptException)
++				{
++					return algorithmResult.errorMessage(((ScriptException) result).getMessage());
++				}
++
+ 				derivedValue = convert(result, targetAttribute);
+ 			}
+ 			catch (RuntimeException e)
+@@ -135,8 +143,16 @@ public class AlgorithmServiceImpl implements AlgorithmService
+ 		{
+ 			return null;
+ 		}
+-		Object value = jsMagmaScriptEvaluator.eval(algorithm, sourceEntity);
+-		return convert(value, attributeMapping.getTargetAttribute());
++		Object result = jsMagmaScriptEvaluator.eval(algorithm, sourceEntity);
++
++		// jsMagmaScriptEvaluator.eval() catches and returns the error instead of throwing it
++		// so check instance of result object here
++		if (result instanceof ScriptException)
++		{
++			throw new ScriptException(((ScriptException) result).getMessage(), ((ScriptException) result).getCause());
++		}
++
++		return convert(result, attributeMapping.getTargetAttribute());
+ 	}
+ 

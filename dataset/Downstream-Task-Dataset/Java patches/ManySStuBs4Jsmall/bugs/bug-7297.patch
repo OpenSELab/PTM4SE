@@ -1,0 +1,28 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/HFileReaderImpl.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/HFileReaderImpl.java
+index fc1c04e..c9e6aea 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/HFileReaderImpl.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/HFileReaderImpl.java
+@@ -662,7 +662,8 @@
+         long i = 0;
+         offsetFromPos++;
+         if (remaining >= Bytes.SIZEOF_INT) {
+-          i = blockBuffer.getIntAfterPosition(offsetFromPos);
++          // The int read has to be converted to unsigned long so the & op
++          i = (blockBuffer.getIntAfterPosition(offsetFromPos) & 0x00000000ffffffffL);
+           remaining -= Bytes.SIZEOF_INT;
+           offsetFromPos += Bytes.SIZEOF_INT;
+         }
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/HFileReaderImpl.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/HFileReaderImpl.java
+index fc1c04e..c9e6aea 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/HFileReaderImpl.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/io/hfile/HFileReaderImpl.java
+@@ -662,7 +662,8 @@
+         long i = 0;
+         offsetFromPos++;
+         if (remaining >= Bytes.SIZEOF_INT) {
+-          i = blockBuffer.getIntAfterPosition(offsetFromPos);
++          // The int read has to be converted to unsigned long so the & op
++          i = (blockBuffer.getIntAfterPosition(offsetFromPos) & 0x00000000ffffffffL);
+           remaining -= Bytes.SIZEOF_INT;
+           offsetFromPos += Bytes.SIZEOF_INT;
+         }

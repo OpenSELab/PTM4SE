@@ -1,0 +1,13 @@
+diff --git a/api/src/main/java/org/openmrs/hl7/handler/ORUR01Handler.java b/api/src/main/java/org/openmrs/hl7/handler/ORUR01Handler.java
+index b5c8b1e..ee67549 100644
+--- a/api/src/main/java/org/openmrs/hl7/handler/ORUR01Handler.java
++++ b/api/src/main/java/org/openmrs/hl7/handler/ORUR01Handler.java
+@@ -673,7 +673,7 @@
+ 				concept = concept.hydrate(concept.getConceptId().toString());
+ 				obs.setConcept(concept);
+ 				if (concept.getDatatype().isBoolean()) {
+-					obs.setValueBoolean(value.equals("1"));
++					obs.setValueBoolean("1".equals(value));
+ 				} else if (concept.getDatatype().isNumeric()) {
+ 					try {
+ 						obs.setValueNumeric(Double.valueOf(value));

@@ -1,0 +1,20 @@
+--- a/java_programs/MINIMUM_SPANNING_TREE.java
++++ b/java_programs/MINIMUM_SPANNING_TREE.java
+@@ -1,5 +1,8 @@
+ package java_programs;
+ import java.util.*;
++
++import java_programs.Node;
++import java_programs.WeightedEdge;
+ /**
+  * Minimum spanning tree
+  */
+@@ -25,7 +28,7 @@ public class MINIMUM_SPANNING_TREE {
+                 minSpanningTree.add(edge);
+                 groupByNode = update(groupByNode, vertex_u, vertex_v);
+                 for (Node node : groupByNode.get(vertex_v)) {
+-                    groupByNode = update(groupByNode, node, vertex_u);
++                    groupByNode.put(node,  groupByNode.get(vertex_u));
+                 }
+             }
+         }

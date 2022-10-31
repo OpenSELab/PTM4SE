@@ -1,0 +1,326 @@
+diff --git a/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/reactive/EndpointRequest.java b/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/reactive/EndpointRequest.java
+index bd55378..d408912 100644
+--- a/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/reactive/EndpointRequest.java
++++ b/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/reactive/EndpointRequest.java
+@@ -91,7 +91,7 @@
+ 	 * The {@link ServerWebExchangeMatcher} used to match against {@link Endpoint actuator
+ 	 * endpoints}.
+ 	 */
+-	public final static class EndpointServerWebExchangeMatcher
++	public static final class EndpointServerWebExchangeMatcher
+ 			extends ApplicationContextServerWebExchangeMatcher<EndpointPathProvider> {
+ 
+ 		private final List<Object> includes;
+diff --git a/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/servlet/EndpointRequest.java b/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/servlet/EndpointRequest.java
+index a4dcbaf..11a9bdd 100644
+--- a/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/servlet/EndpointRequest.java
++++ b/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/servlet/EndpointRequest.java
+@@ -89,7 +89,7 @@
+ 	/**
+ 	 * The request matcher used to match against {@link Endpoint actuator endpoints}.
+ 	 */
+-	public final static class EndpointRequestMatcher
++	public static final class EndpointRequestMatcher
+ 			extends ApplicationContextRequestMatcher<EndpointPathProvider> {
+ 
+ 		private final List<Object> includes;
+diff --git a/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/web/servlet/ServletManagementChildContextConfiguration.java b/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/web/servlet/ServletManagementChildContextConfiguration.java
+index e6c1d9b..e60a3e3 100644
+--- a/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/web/servlet/ServletManagementChildContextConfiguration.java
++++ b/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/web/servlet/ServletManagementChildContextConfiguration.java
+@@ -109,7 +109,7 @@
+ 
+ 	}
+ 
+-	static abstract class AccessLogCustomizer implements Ordered {
++	abstract static class AccessLogCustomizer implements Ordered {
+ 
+ 		protected String customizePrefix(String prefix) {
+ 			return "management_" + prefix;
+diff --git a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/scheduling/ScheduledTasksEndpoint.java b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/scheduling/ScheduledTasksEndpoint.java
+index 1bdaabe..0efcb07 100644
+--- a/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/scheduling/ScheduledTasksEndpoint.java
++++ b/spring-boot-project/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/scheduling/ScheduledTasksEndpoint.java
+@@ -105,7 +105,7 @@
+ 	/**
+ 	 * Base class for descriptions of a {@link Task}.
+ 	 */
+-	public static abstract class TaskDescription {
++	public abstract static class TaskDescription {
+ 
+ 		private static final Map<Class<? extends Task>, Function<Task, TaskDescription>> DESCRIBERS = new LinkedHashMap<>();
+ 
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationPackages.java b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationPackages.java
+index 963af72..379b526 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationPackages.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/AutoConfigurationPackages.java
+@@ -139,7 +139,7 @@
+ 	/**
+ 	 * Wrapper for a package import.
+ 	 */
+-	private final static class PackageImport {
++	private static final class PackageImport {
+ 
+ 		private final String packageName;
+ 
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/amqp/RabbitProperties.java b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/amqp/RabbitProperties.java
+index d392071..c0adbf1 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/amqp/RabbitProperties.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/amqp/RabbitProperties.java
+@@ -537,7 +537,7 @@
+ 
+ 	}
+ 
+-	public static abstract class AmqpContainer {
++	public abstract static class AmqpContainer {
+ 
+ 		/**
+ 		 * Whether to start the container automatically on startup.
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/embedded/EmbeddedMongoAutoConfiguration.java b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/embedded/EmbeddedMongoAutoConfiguration.java
+index b68168e..610d251 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/embedded/EmbeddedMongoAutoConfiguration.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/mongo/embedded/EmbeddedMongoAutoConfiguration.java
+@@ -246,7 +246,7 @@
+ 	 * A workaround for the lack of a {@code toString} implementation on
+ 	 * {@code GenericFeatureAwareVersion}.
+ 	 */
+-	private final static class ToStringFriendlyFeatureAwareVersion
++	private static final class ToStringFriendlyFeatureAwareVersion
+ 			implements IFeatureAwareVersion {
+ 
+ 		private final String version;
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/StaticResourceRequest.java b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/StaticResourceRequest.java
+index 8710c1a..16f4967 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/StaticResourceRequest.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/StaticResourceRequest.java
+@@ -127,7 +127,7 @@
+ 	/**
+ 	 * The request matcher used to match against resource {@link Location Locations}.
+ 	 */
+-	public final static class StaticResourceRequestMatcher
++	public static final class StaticResourceRequestMatcher
+ 			extends ApplicationContextRequestMatcher<ServerProperties> {
+ 
+ 		private final Set<Location> locations;
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/session/SessionAutoConfiguration.java b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/session/SessionAutoConfiguration.java
+index dbaee1b..73462cb 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/session/SessionAutoConfiguration.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/session/SessionAutoConfiguration.java
+@@ -104,7 +104,7 @@
+ 	/**
+ 	 * {@link ImportSelector} base class to add {@link StoreType} configuration classes.
+ 	 */
+-	static abstract class SessionConfigurationImportSelector implements ImportSelector {
++	abstract static class SessionConfigurationImportSelector implements ImportSelector {
+ 
+ 		protected final String[] selectImports(AnnotationMetadata importingClassMetadata,
+ 				WebApplicationType webApplicationType) {
+@@ -153,7 +153,7 @@
+ 	 * Base class for beans used to validate that only one supported implementation is
+ 	 * available in the classpath when the store-type property is not set.
+ 	 */
+-	static abstract class AbstractSessionRepositoryImplementationValidator {
++	abstract static class AbstractSessionRepositoryImplementationValidator {
+ 
+ 		private final List<String> candidates;
+ 
+@@ -233,7 +233,7 @@
+ 	/**
+ 	 * Base class for validating that a (reactive) session repository bean exists.
+ 	 */
+-	static abstract class AbstractSessionRepositoryValidator {
++	abstract static class AbstractSessionRepositoryValidator {
+ 
+ 		private final SessionProperties sessionProperties;
+ 
+diff --git a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/template/PathBasedTemplateAvailabilityProvider.java b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/template/PathBasedTemplateAvailabilityProvider.java
+index 871c2e5..82e90f1 100644
+--- a/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/template/PathBasedTemplateAvailabilityProvider.java
++++ b/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/template/PathBasedTemplateAvailabilityProvider.java
+@@ -74,7 +74,7 @@
+ 		return false;
+ 	}
+ 
+-	protected static abstract class TemplateAvailabilityProperties {
++	protected abstract static class TemplateAvailabilityProperties {
+ 
+ 		private String prefix;
+ 
+diff --git a/spring-boot-project/spring-boot-cli/src/main/java/org/springframework/boot/cli/command/init/InitializrServiceMetadata.java b/spring-boot-project/spring-boot-cli/src/main/java/org/springframework/boot/cli/command/init/InitializrServiceMetadata.java
+index 123b4a5..6f9c5bd 100644
+--- a/spring-boot-project/spring-boot-cli/src/main/java/org/springframework/boot/cli/command/init/InitializrServiceMetadata.java
++++ b/spring-boot-project/spring-boot-cli/src/main/java/org/springframework/boot/cli/command/init/InitializrServiceMetadata.java
+@@ -227,7 +227,7 @@
+ 		return result;
+ 	}
+ 
+-	private final static class MetadataHolder<K, T> {
++	private static final class MetadataHolder<K, T> {
+ 
+ 		private final Map<K, T> content;
+ 
+diff --git a/spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/livereload/Connection.java b/spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/livereload/Connection.java
+index aaa13b9..e4e5391 100644
+--- a/spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/livereload/Connection.java
++++ b/spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/livereload/Connection.java
+@@ -43,7 +43,7 @@
+ 	private static final Pattern WEBSOCKET_KEY_PATTERN = Pattern
+ 			.compile("^Sec-WebSocket-Key:(.*)$", Pattern.MULTILINE);
+ 
+-	public final static String WEBSOCKET_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
++	public static final String WEBSOCKET_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+ 
+ 	private final Socket socket;
+ 
+diff --git a/spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/tunnel/payload/HttpTunnelPayload.java b/spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/tunnel/payload/HttpTunnelPayload.java
+index 88a53aa..7db077b 100644
+--- a/spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/tunnel/payload/HttpTunnelPayload.java
++++ b/spring-boot-project/spring-boot-devtools/src/main/java/org/springframework/boot/devtools/tunnel/payload/HttpTunnelPayload.java
+@@ -45,7 +45,7 @@
+ 
+ 	private static final int BUFFER_SIZE = 1024 * 100;
+ 
+-	final protected static char[] HEX_CHARS = "0123456789ABCDEF".toCharArray();
++	protected final static char[] HEX_CHARS = "0123456789ABCDEF".toCharArray();
+ 
+ 	private static final Log logger = LogFactory.getLog(HttpTunnelPayload.class);
+ 
+diff --git a/spring-boot-project/spring-boot-test/src/main/java/org/springframework/boot/test/context/FilteredClassLoader.java b/spring-boot-project/spring-boot-test/src/main/java/org/springframework/boot/test/context/FilteredClassLoader.java
+index 569696a..0253229 100644
+--- a/spring-boot-project/spring-boot-test/src/main/java/org/springframework/boot/test/context/FilteredClassLoader.java
++++ b/spring-boot-project/spring-boot-test/src/main/java/org/springframework/boot/test/context/FilteredClassLoader.java
+@@ -73,7 +73,7 @@
+ 	/**
+ 	 * Filter to restrict the classes that can be loaded.
+ 	 */
+-	public final static class ClassFilter implements Predicate<String> {
++	public static final class ClassFilter implements Predicate<String> {
+ 
+ 		private Class<?>[] hiddenClasses;
+ 
+@@ -100,7 +100,7 @@
+ 	/**
+ 	 * Filter to restrict the packages that can be loaded.
+ 	 */
+-	public final static class PackageFilter implements Predicate<String> {
++	public static final class PackageFilter implements Predicate<String> {
+ 
+ 		private final String[] hiddenPackages;
+ 
+diff --git a/spring-boot-project/spring-boot-test/src/main/java/org/springframework/boot/test/json/AbstractJsonMarshalTester.java b/spring-boot-project/spring-boot-test/src/main/java/org/springframework/boot/test/json/AbstractJsonMarshalTester.java
+index 2daf685..46e3ef2 100644
+--- a/spring-boot-project/spring-boot-test/src/main/java/org/springframework/boot/test/json/AbstractJsonMarshalTester.java
++++ b/spring-boot-project/spring-boot-test/src/main/java/org/springframework/boot/test/json/AbstractJsonMarshalTester.java
+@@ -354,7 +354,7 @@
+ 	 *
+ 	 * @param <M> The marshaller type
+ 	 */
+-	protected static abstract class FieldInitializer<M> {
++	protected abstract static class FieldInitializer<M> {
+ 
+ 		private final Class<?> testerClass;
+ 
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/ConfigurationWarningsApplicationContextInitializer.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/ConfigurationWarningsApplicationContextInitializer.java
+index ecacf8b..d0e2406 100755
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/ConfigurationWarningsApplicationContextInitializer.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/ConfigurationWarningsApplicationContextInitializer.java
+@@ -72,7 +72,7 @@
+ 	/**
+ 	 * {@link BeanDefinitionRegistryPostProcessor} to report warnings.
+ 	 */
+-	protected final static class ConfigurationWarningsPostProcessor
++	protected static final class ConfigurationWarningsPostProcessor
+ 			implements PriorityOrdered, BeanDefinitionRegistryPostProcessor {
+ 
+ 		private Check[] checks;
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/PropertyMapper.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/PropertyMapper.java
+index 75c5c02..2a54a57 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/PropertyMapper.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/PropertyMapper.java
+@@ -169,7 +169,7 @@
+ 	 * A source that is in the process of being mapped.
+ 	 * @param <T> the source type
+ 	 */
+-	public final static class Source<T> {
++	public static final class Source<T> {
+ 
+ 		private final Supplier<T> supplier;
+ 
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/origin/TextResourceOrigin.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/origin/TextResourceOrigin.java
+index ee32bc3..7fe4a1f 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/origin/TextResourceOrigin.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/origin/TextResourceOrigin.java
+@@ -94,7 +94,7 @@
+ 	/**
+ 	 * A location (line and column number) within the resource.
+ 	 */
+-	public final static class Location {
++	public static final class Location {
+ 
+ 		private final int line;
+ 
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/client/RestTemplateBuilder.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/client/RestTemplateBuilder.java
+index c32a744..8e39f34 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/client/RestTemplateBuilder.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/client/RestTemplateBuilder.java
+@@ -630,7 +630,7 @@
+ 	/**
+ 	 * {@link RequestFactoryCustomizer} to call a "set timeout" method.
+ 	 */
+-	private static abstract class TimeoutRequestFactoryCustomizer
++	private abstract static class TimeoutRequestFactoryCustomizer
+ 			implements RequestFactoryCustomizer {
+ 
+ 		private final int timeout;
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/embedded/undertow/UndertowServletWebServer.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/embedded/undertow/UndertowServletWebServer.java
+index 847ede3..d86d8bf 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/embedded/undertow/UndertowServletWebServer.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/embedded/undertow/UndertowServletWebServer.java
+@@ -321,7 +321,7 @@
+ 	/**
+ 	 * An active Undertow port.
+ 	 */
+-	private final static class Port {
++	private static final class Port {
+ 
+ 		private final int number;
+ 
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/embedded/undertow/UndertowWebServer.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/embedded/undertow/UndertowWebServer.java
+index b8b22dd..cff2575 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/embedded/undertow/UndertowWebServer.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/web/embedded/undertow/UndertowWebServer.java
+@@ -233,7 +233,7 @@
+ 	/**
+ 	 * An active Undertow port.
+ 	 */
+-	private final static class Port {
++	private static final class Port {
+ 
+ 		private final int number;
+ 
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/yaml/SpringProfileDocumentMatcher.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/yaml/SpringProfileDocumentMatcher.java
+index 5a5aa38..8741021 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/yaml/SpringProfileDocumentMatcher.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/yaml/SpringProfileDocumentMatcher.java
+@@ -124,7 +124,7 @@
+ 	/**
+ 	 * Base class for profile matchers.
+ 	 */
+-	private static abstract class ProfilesMatcher {
++	private abstract static class ProfilesMatcher {
+ 
+ 		public final MatchStatus matches(Set<String> profiles) {
+ 			if (CollectionUtils.isEmpty(profiles)) {
+diff --git a/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/reactive/EndpointRequest.java b/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/reactive/EndpointRequest.java
+index bd55378..d408912 100644
+--- a/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/reactive/EndpointRequest.java
++++ b/spring-boot-project/spring-boot-actuator-autoconfigure/src/main/java/org/springframework/boot/actuate/autoconfigure/security/reactive/EndpointRequest.java
+@@ -91,7 +91,7 @@
+ 	 * The {@link ServerWebExchangeMatcher} used to match against {@link Endpoint actuator
+ 	 * endpoints}.
+ 	 */
+-	public final static class EndpointServerWebExchangeMatcher
++	public static final class EndpointServerWebExchangeMatcher
+ 			extends ApplicationContextServerWebExchangeMatcher<EndpointPathProvider> {
+ 
+ 		private final List<Object> includes;

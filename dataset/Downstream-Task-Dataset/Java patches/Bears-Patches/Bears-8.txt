@@ -1,0 +1,13 @@
+--- a/src/main/java/com/fasterxml/jackson/databind/ser/std/MapSerializer.java
++++ b/src/main/java/com/fasterxml/jackson/databind/ser/std/MapSerializer.java
+@@ -952,7 +952,9 @@ public class MapSerializer
+         }
+         // [databind#1411]: TreeMap does not like null key... (although note that
+         //   check above should prevent this code from being called in that case)
+-        if (input.containsKey(null)) {
++        // [databind#153]: but, apparently, some custom Maps do manage hit this
++        //   problem.
++        if (_hasNullKey(input)) {
+             TreeMap<Object,Object> result = new TreeMap<Object,Object>();
+             for (Map.Entry<?,?> entry : input.entrySet()) {
+                 Object key = entry.getKey();

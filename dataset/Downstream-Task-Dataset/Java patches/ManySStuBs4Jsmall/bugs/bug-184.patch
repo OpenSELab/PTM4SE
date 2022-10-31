@@ -1,0 +1,26 @@
+diff --git a/modules/activiti-explorer/src/main/java/org/activiti/explorer/ui/management/identity/GroupSelectionQuery.java b/modules/activiti-explorer/src/main/java/org/activiti/explorer/ui/management/identity/GroupSelectionQuery.java
+index 17b7afc..b7e8341 100644
+--- a/modules/activiti-explorer/src/main/java/org/activiti/explorer/ui/management/identity/GroupSelectionQuery.java
++++ b/modules/activiti-explorer/src/main/java/org/activiti/explorer/ui/management/identity/GroupSelectionQuery.java
+@@ -53,7 +53,7 @@
+     
+     int nrFound = 0;
+     int tries = 0;
+-    while (nrFound == 0) { // must stop at some point in time, as otherwise size() would be reached
++    while (nrFound < count && tries < 5) { // must stop at some point in time, as otherwise size() would be reached
+       
+       List<Group> groups = identityService.createGroupQuery()
+         .orderByGroupType().asc()
+diff --git a/modules/activiti-explorer/src/main/java/org/activiti/explorer/ui/management/identity/GroupSelectionQuery.java b/modules/activiti-explorer/src/main/java/org/activiti/explorer/ui/management/identity/GroupSelectionQuery.java
+index 17b7afc..b7e8341 100644
+--- a/modules/activiti-explorer/src/main/java/org/activiti/explorer/ui/management/identity/GroupSelectionQuery.java
++++ b/modules/activiti-explorer/src/main/java/org/activiti/explorer/ui/management/identity/GroupSelectionQuery.java
+@@ -53,7 +53,7 @@
+     
+     int nrFound = 0;
+     int tries = 0;
+-    while (nrFound == 0) { // must stop at some point in time, as otherwise size() would be reached
++    while (nrFound < count && tries < 5) { // must stop at some point in time, as otherwise size() would be reached
+       
+       List<Group> groups = identityService.createGroupQuery()
+         .orderByGroupType().asc()

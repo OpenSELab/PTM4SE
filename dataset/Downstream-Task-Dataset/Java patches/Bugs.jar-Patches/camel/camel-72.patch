@@ -1,0 +1,22 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/converter/jaxp/StaxConverter.java b/camel-core/src/main/java/org/apache/camel/converter/jaxp/StaxConverter.java
+index 1cd33ae..5469df5 100644
+--- a/camel-core/src/main/java/org/apache/camel/converter/jaxp/StaxConverter.java
++++ b/camel-core/src/main/java/org/apache/camel/converter/jaxp/StaxConverter.java
+@@ -167,7 +167,7 @@ public class StaxConverter {
+     public XMLStreamReader createXMLStreamReader(InputStream in, Exchange exchange) throws XMLStreamException {
+         XMLInputFactory factory = getInputFactory();
+         try {
+-            return factory.createXMLStreamReader(IOHelper.buffered(in), IOHelper.getCharsetName(exchange));
++            return factory.createXMLStreamReader(IOHelper.buffered(in), IOHelper.getCharsetName(exchange, false));
+         } finally {
+             returnXMLInputFactory(factory);
+         }
+@@ -236,7 +236,7 @@ public class StaxConverter {
+     public XMLEventReader createXMLEventReader(InputStream in, Exchange exchange) throws XMLStreamException {
+         XMLInputFactory factory = getInputFactory();
+         try {
+-            return factory.createXMLEventReader(IOHelper.buffered(in), IOHelper.getCharsetName(exchange));
++            return factory.createXMLEventReader(IOHelper.buffered(in), IOHelper.getCharsetName(exchange, false));
+         } finally {
+             returnXMLInputFactory(factory);
+         }

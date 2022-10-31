@@ -1,0 +1,18 @@
+diff --git a/tool/test/org/antlr/v4/test/BaseTest.java b/tool/test/org/antlr/v4/test/BaseTest.java
+index bf09413..c4b8e25 100644
+--- a/tool/test/org/antlr/v4/test/BaseTest.java
++++ b/tool/test/org/antlr/v4/test/BaseTest.java
+@@ -543,11 +543,11 @@
+ 	}
+ 
+ 	public Class<? extends Lexer> loadLexerClassFromTempDir(String name) throws Exception {
+-		return (Class<? extends Lexer>)loadClassFromTempDir(name);
++		return loadClassFromTempDir(name).asSubclass(Lexer.class);
+ 	}
+ 
+ 	public Class<? extends Parser> loadParserClassFromTempDir(String name) throws Exception {
+-		return (Class<? extends Parser>)loadClassFromTempDir(name);
++		return loadClassFromTempDir(name).asSubclass(Parser.class);
+ 	}
+ 
+ 	protected String execParser(String grammarFileName,

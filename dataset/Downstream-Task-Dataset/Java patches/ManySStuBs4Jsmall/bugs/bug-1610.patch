@@ -1,0 +1,79 @@
+diff --git a/client/src/main/java/org/asynchttpclient/netty/NettyResponseFuture.java b/client/src/main/java/org/asynchttpclient/netty/NettyResponseFuture.java
+index 79920d6..73deed6 100755
+--- a/client/src/main/java/org/asynchttpclient/netty/NettyResponseFuture.java
++++ b/client/src/main/java/org/asynchttpclient/netty/NettyResponseFuture.java
+@@ -425,7 +425,7 @@
+         return reuseChannel;
+     }
+ 
+-    public boolean canRetry() {
++    public boolean incRetryAndCheck() {
+         return maxRetry > 0 && CURRENT_RETRY_UPDATER.incrementAndGet(this) <= maxRetry;
+     }
+ 
+@@ -444,7 +444,7 @@
+      * @return true if that {@link Future} cannot be recovered.
+      */
+     public boolean canBeReplayed() {
+-        return !isDone() && canRetry() && !(Channels.isChannelValid(channel) && !getUri().getScheme().equalsIgnoreCase("https")) && !inAuth.get() && !inProxyAuth.get();
++        return !isDone() && !(Channels.isChannelValid(channel) && !getUri().getScheme().equalsIgnoreCase("https")) && !inAuth.get() && !inProxyAuth.get();
+     }
+ 
+     public long getStart() {
+diff --git a/client/src/main/java/org/asynchttpclient/netty/channel/NettyConnectListener.java b/client/src/main/java/org/asynchttpclient/netty/channel/NettyConnectListener.java
+index 948e8f6..54d7743 100755
+--- a/client/src/main/java/org/asynchttpclient/netty/channel/NettyConnectListener.java
++++ b/client/src/main/java/org/asynchttpclient/netty/channel/NettyConnectListener.java
+@@ -120,7 +120,7 @@
+         //beware, channel can be null
+         abortChannelPreemption();
+ 
+-        boolean canRetry = future.canRetry();
++        boolean canRetry = future.incRetryAndCheck();
+         LOGGER.debug("Trying to recover from failing to connect channel {} with a retry value of {} ", channel, canRetry);
+         if (canRetry//
+                 && cause != null // FIXME when can we have a null cause?
+diff --git a/client/src/main/java/org/asynchttpclient/netty/request/NettyRequestSender.java b/client/src/main/java/org/asynchttpclient/netty/request/NettyRequestSender.java
+index 234d03d..cb16a85 100755
+--- a/client/src/main/java/org/asynchttpclient/netty/request/NettyRequestSender.java
++++ b/client/src/main/java/org/asynchttpclient/netty/request/NettyRequestSender.java
+@@ -396,7 +396,7 @@
+     public void handleUnexpectedClosedChannel(Channel channel, NettyResponseFuture<?> future) {
+         if (future.isDone()) {
+             channelManager.closeChannel(channel);
+-        } else if (retry(future)) {
++        } else if (future.incRetryAndCheck() && retry(future)) {
+             future.pendingException = null;
+         } else {
+             abort(channel, future, future.pendingException != null ? future.pendingException : RemotelyClosedException.INSTANCE);
+@@ -447,7 +447,7 @@
+             }
+         }
+ 
+-        if (fc.replayRequest() && future.canBeReplayed()) {
++        if (fc.replayRequest() && future.canBeReplayed() && future.incRetryAndCheck()) {
+             replayRequest(future, fc, channel);
+             replayed = true;
+         }
+diff --git a/client/src/main/java/org/asynchttpclient/netty/NettyResponseFuture.java b/client/src/main/java/org/asynchttpclient/netty/NettyResponseFuture.java
+index 79920d6..73deed6 100755
+--- a/client/src/main/java/org/asynchttpclient/netty/NettyResponseFuture.java
++++ b/client/src/main/java/org/asynchttpclient/netty/NettyResponseFuture.java
+@@ -425,7 +425,7 @@
+         return reuseChannel;
+     }
+ 
+-    public boolean canRetry() {
++    public boolean incRetryAndCheck() {
+         return maxRetry > 0 && CURRENT_RETRY_UPDATER.incrementAndGet(this) <= maxRetry;
+     }
+ 
+@@ -444,7 +444,7 @@
+      * @return true if that {@link Future} cannot be recovered.
+      */
+     public boolean canBeReplayed() {
+-        return !isDone() && canRetry() && !(Channels.isChannelValid(channel) && !getUri().getScheme().equalsIgnoreCase("https")) && !inAuth.get() && !inProxyAuth.get();
++        return !isDone() && !(Channels.isChannelValid(channel) && !getUri().getScheme().equalsIgnoreCase("https")) && !inAuth.get() && !inProxyAuth.get();
+     }
+ 
+     public long getStart() {

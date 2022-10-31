@@ -1,0 +1,44 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaProperties.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaProperties.java
+index a868ce6..bc0c8b5 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaProperties.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaProperties.java
+@@ -116,7 +116,7 @@
+ 
+ 		private Class<?> namingStrategy;
+ 
+-		private static Class<?> DEFAULT_NAMING_STRATEGY = SpringNamingStrategy.class;
++		private static String DEFAULT_NAMING_STRATEGY = "org.springframework.boot.orm.jpa.SpringNamingStrategy";
+ 
+ 		private String ddlAuto;
+ 
+@@ -152,7 +152,7 @@
+ 			}
+ 			else if (this.namingStrategy == null) {
+ 				result.put("hibernate.ejb.naming_strategy",
+-						DEFAULT_NAMING_STRATEGY.getName());
++						DEFAULT_NAMING_STRATEGY);
+ 			}
+ 			String ddlAuto = getOrDeduceDdlAuto(existing, dataSource);
+ 			if (StringUtils.hasText(ddlAuto) && !"none".equals(ddlAuto)) {
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaProperties.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaProperties.java
+index a868ce6..bc0c8b5 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaProperties.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/orm/jpa/JpaProperties.java
+@@ -116,7 +116,7 @@
+ 
+ 		private Class<?> namingStrategy;
+ 
+-		private static Class<?> DEFAULT_NAMING_STRATEGY = SpringNamingStrategy.class;
++		private static String DEFAULT_NAMING_STRATEGY = "org.springframework.boot.orm.jpa.SpringNamingStrategy";
+ 
+ 		private String ddlAuto;
+ 
+@@ -152,7 +152,7 @@
+ 			}
+ 			else if (this.namingStrategy == null) {
+ 				result.put("hibernate.ejb.naming_strategy",
+-						DEFAULT_NAMING_STRATEGY.getName());
++						DEFAULT_NAMING_STRATEGY);
+ 			}
+ 			String ddlAuto = getOrDeduceDdlAuto(existing, dataSource);
+ 			if (StringUtils.hasText(ddlAuto) && !"none".equals(ddlAuto)) {

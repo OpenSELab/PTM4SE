@@ -1,0 +1,46 @@
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestAggregations.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestAggregations.java
+index 2552918..e55cc1d 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestAggregations.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestAggregations.java
+@@ -638,14 +638,14 @@
+     public void testGroupByExtract()
+     {
+         // whole expression in group by
+-        assertQuery("SELECT EXTRACT(YEAR FROM now()), count(*) FROM orders GROUP BY EXTRACT(YEAR FROM now())");
++        assertQuery("SELECT EXTRACT(YEAR FROM orderdate), count(*) FROM orders GROUP BY EXTRACT(YEAR FROM orderdate)");
+ 
+         assertQuery(
+-                "SELECT EXTRACT(YEAR FROM now()), count(*) FROM orders GROUP BY 1",
+-                "SELECT EXTRACT(YEAR FROM now()), count(*) FROM orders GROUP BY EXTRACT(YEAR FROM now())");
++                "SELECT EXTRACT(YEAR FROM orderdate), count(*) FROM orders GROUP BY 1",
++                "SELECT EXTRACT(YEAR FROM orderdate), count(*) FROM orders GROUP BY EXTRACT(YEAR FROM orderdate)");
+ 
+         // argument in group by
+-        assertQuery("SELECT EXTRACT(YEAR FROM now()), count(*) FROM orders GROUP BY now()");
++        assertQuery("SELECT EXTRACT(YEAR FROM orderdate), count(*) FROM orders GROUP BY orderdate");
+     }
+ 
+     @Test
+diff --git a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestAggregations.java b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestAggregations.java
+index 2552918..e55cc1d 100644
+--- a/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestAggregations.java
++++ b/presto-tests/src/main/java/com/facebook/presto/tests/AbstractTestAggregations.java
+@@ -638,14 +638,14 @@
+     public void testGroupByExtract()
+     {
+         // whole expression in group by
+-        assertQuery("SELECT EXTRACT(YEAR FROM now()), count(*) FROM orders GROUP BY EXTRACT(YEAR FROM now())");
++        assertQuery("SELECT EXTRACT(YEAR FROM orderdate), count(*) FROM orders GROUP BY EXTRACT(YEAR FROM orderdate)");
+ 
+         assertQuery(
+-                "SELECT EXTRACT(YEAR FROM now()), count(*) FROM orders GROUP BY 1",
+-                "SELECT EXTRACT(YEAR FROM now()), count(*) FROM orders GROUP BY EXTRACT(YEAR FROM now())");
++                "SELECT EXTRACT(YEAR FROM orderdate), count(*) FROM orders GROUP BY 1",
++                "SELECT EXTRACT(YEAR FROM orderdate), count(*) FROM orders GROUP BY EXTRACT(YEAR FROM orderdate)");
+ 
+         // argument in group by
+-        assertQuery("SELECT EXTRACT(YEAR FROM now()), count(*) FROM orders GROUP BY now()");
++        assertQuery("SELECT EXTRACT(YEAR FROM orderdate), count(*) FROM orders GROUP BY orderdate");
+     }
+ 
+     @Test

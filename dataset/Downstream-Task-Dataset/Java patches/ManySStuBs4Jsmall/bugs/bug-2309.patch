@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/JettyWebSocketUtil.java b/modules/cpr/src/main/java/org/atmosphere/container/JettyWebSocketUtil.java
+index 6a83630..64b2447 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/JettyWebSocketUtil.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/JettyWebSocketUtil.java
+@@ -40,7 +40,7 @@
+                                                            WebSocketFactory webSocketFactory) throws IOException, ServletException {
+         boolean webSocketEnabled = false;
+         if (req.getHeaders("Connection") != null && req.getHeaders("Connection").hasMoreElements()) {
+-            String[] e = req.getHeaders("Connection").nextElement().split(",");
++            String[] e = req.getHeaders("Connection").nextElement().toString().split(",");
+             for (String upgrade : e) {
+                 if (upgrade.trim().equalsIgnoreCase(WEBSOCKET_UPGRADE)) {
+                     webSocketEnabled = true;
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/JettyWebSocketUtil.java b/modules/cpr/src/main/java/org/atmosphere/container/JettyWebSocketUtil.java
+index 6a83630..64b2447 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/JettyWebSocketUtil.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/JettyWebSocketUtil.java
+@@ -40,7 +40,7 @@
+                                                            WebSocketFactory webSocketFactory) throws IOException, ServletException {
+         boolean webSocketEnabled = false;
+         if (req.getHeaders("Connection") != null && req.getHeaders("Connection").hasMoreElements()) {
+-            String[] e = req.getHeaders("Connection").nextElement().split(",");
++            String[] e = req.getHeaders("Connection").nextElement().toString().split(",");
+             for (String upgrade : e) {
+                 if (upgrade.trim().equalsIgnoreCase(WEBSOCKET_UPGRADE)) {
+                     webSocketEnabled = true;

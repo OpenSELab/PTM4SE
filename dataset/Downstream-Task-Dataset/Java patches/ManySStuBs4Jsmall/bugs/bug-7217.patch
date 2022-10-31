@@ -1,0 +1,28 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/TableStateManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/TableStateManager.java
+index 8a33de6..ce76b05 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/TableStateManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/TableStateManager.java
+@@ -270,7 +270,8 @@
+    */
+   @Deprecated
+   private void migrateZooKeeper() throws IOException {
+-    if (this.master.getConfiguration().getBoolean(MIGRATE_TABLE_STATE_FROM_ZK_KEY, false)) {
++    if (!this.master.getConfiguration().getBoolean(MIGRATE_TABLE_STATE_FROM_ZK_KEY,
++        true)) {
+       return;
+     }
+     try {
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/TableStateManager.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/TableStateManager.java
+index 8a33de6..ce76b05 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/TableStateManager.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/TableStateManager.java
+@@ -270,7 +270,8 @@
+    */
+   @Deprecated
+   private void migrateZooKeeper() throws IOException {
+-    if (this.master.getConfiguration().getBoolean(MIGRATE_TABLE_STATE_FROM_ZK_KEY, false)) {
++    if (!this.master.getConfiguration().getBoolean(MIGRATE_TABLE_STATE_FROM_ZK_KEY,
++        true)) {
+       return;
+     }
+     try {

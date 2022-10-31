@@ -1,0 +1,39 @@
+diff --git a/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/async/AsyncThreadDiscrete.java b/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/async/AsyncThreadDiscrete.java
+index 13f7ceb..53bcc8e 100644
+--- a/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/async/AsyncThreadDiscrete.java
++++ b/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/async/AsyncThreadDiscrete.java
+@@ -72,7 +72,7 @@
+                 if (input.shape().length > 2)
+                     input = input.reshape(Learning.makeShape(1, input.shape()));
+                 INDArray[] output = target.outputAll(input);
+-                rewards.add(new MiniTrans(Transition.concat(history), action, output, stepReply.getReward()));
++                rewards.add(new MiniTrans(Transition.concat(history), action, output, accuReward));
+                 reward += stepReply.getReward();
+ 
+                 if (isHistoryProcessor)
+diff --git a/rl4j-doom/src/main/java/org/deeplearning4j/rl4j/mdp/vizdoom/VizDoom.java b/rl4j-doom/src/main/java/org/deeplearning4j/rl4j/mdp/vizdoom/VizDoom.java
+index 381cf5a..e200732 100644
+--- a/rl4j-doom/src/main/java/org/deeplearning4j/rl4j/mdp/vizdoom/VizDoom.java
++++ b/rl4j-doom/src/main/java/org/deeplearning4j/rl4j/mdp/vizdoom/VizDoom.java
+@@ -113,7 +113,7 @@
+ 
+         game.setWindowVisible(render);
+         game.setSoundEnabled(false);
+-        game.setMode(Mode.SPECTATOR);
++        game.setMode(Mode.PLAYER);
+ 
+         game.setLivingReward(conf.getLivingReward());
+ 
+diff --git a/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/async/AsyncThreadDiscrete.java b/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/async/AsyncThreadDiscrete.java
+index 13f7ceb..53bcc8e 100644
+--- a/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/async/AsyncThreadDiscrete.java
++++ b/rl4j-core/src/main/java/org/deeplearning4j/rl4j/learning/async/AsyncThreadDiscrete.java
+@@ -72,7 +72,7 @@
+                 if (input.shape().length > 2)
+                     input = input.reshape(Learning.makeShape(1, input.shape()));
+                 INDArray[] output = target.outputAll(input);
+-                rewards.add(new MiniTrans(Transition.concat(history), action, output, stepReply.getReward()));
++                rewards.add(new MiniTrans(Transition.concat(history), action, output, accuReward));
+                 reward += stepReply.getReward();
+ 
+                 if (isHistoryProcessor)

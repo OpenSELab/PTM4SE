@@ -1,0 +1,26 @@
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/regionserver/wal/TestHLogSplit.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/regionserver/wal/TestHLogSplit.java
+index b1c7676..28ec01c 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/regionserver/wal/TestHLogSplit.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/regionserver/wal/TestHLogSplit.java
+@@ -202,7 +202,7 @@
+     Path p = HLogSplitter.getRegionSplitEditsPath(fs, entry, hbaseDir, true);
+     String parentOfParent = p.getParent().getParent().getName();
+     assertEquals(parentOfParent, HRegionInfo.FIRST_META_REGIONINFO.getEncodedName());
+-    HLogFactory.createWriter(fs, p, conf);
++    HLogFactory.createWriter(fs, p, conf).close();
+   }
+ 
+   @Test(expected = OrphanHLogAfterSplitException.class)
+diff --git a/hbase-server/src/test/java/org/apache/hadoop/hbase/regionserver/wal/TestHLogSplit.java b/hbase-server/src/test/java/org/apache/hadoop/hbase/regionserver/wal/TestHLogSplit.java
+index b1c7676..28ec01c 100644
+--- a/hbase-server/src/test/java/org/apache/hadoop/hbase/regionserver/wal/TestHLogSplit.java
++++ b/hbase-server/src/test/java/org/apache/hadoop/hbase/regionserver/wal/TestHLogSplit.java
+@@ -202,7 +202,7 @@
+     Path p = HLogSplitter.getRegionSplitEditsPath(fs, entry, hbaseDir, true);
+     String parentOfParent = p.getParent().getParent().getName();
+     assertEquals(parentOfParent, HRegionInfo.FIRST_META_REGIONINFO.getEncodedName());
+-    HLogFactory.createWriter(fs, p, conf);
++    HLogFactory.createWriter(fs, p, conf).close();
+   }
+ 
+   @Test(expected = OrphanHLogAfterSplitException.class)

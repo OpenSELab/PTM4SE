@@ -1,0 +1,13 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/tree/AbstractTree.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/tree/AbstractTree.java
+index 51afd2e..30f70ad 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/tree/AbstractTree.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/tree/AbstractTree.java
+@@ -204,7 +204,7 @@ public abstract class AbstractTree implements Tree {
+ 
+     @Override
+     public Status getStatus() {
+-        if (nodeBuilder.isNew()) {
++        if (nodeBuilder.isNew() || nodeBuilder.isReplaced()) {
+             return NEW;
+         } else if (nodeBuilder.isModified()) {
+             return MODIFIED;

@@ -1,0 +1,44 @@
+diff --git a/guava/src/com/google/common/net/MediaType.java b/guava/src/com/google/common/net/MediaType.java
+index 54f4315..b999c1b 100644
+--- a/guava/src/com/google/common/net/MediaType.java
++++ b/guava/src/com/google/common/net/MediaType.java
+@@ -434,7 +434,7 @@
+    * Creates a new media type with the given type and subtype.
+    *
+    * @throws IllegalArgumentException if type or subtype is invalid or if a wildcard is used for the
+-   * subtype, but not the type.
++   * type, but not the subtype.
+    */
+   public static MediaType create(String type, String subtype) {
+     return create(type, subtype, ImmutableListMultimap.<String, String>of());
+@@ -493,7 +493,7 @@
+     String normalizedType = normalizeToken(type);
+     String normalizedSubtype = normalizeToken(subtype);
+     checkArgument(!WILDCARD.equals(normalizedType) || WILDCARD.equals(normalizedSubtype),
+-        "A wildcard subtype cannot be used with a non-wildcard type");
++        "A wildcard type cannot be used with a non-wildcard subtype");
+     final MediaType mediaType;
+     if (parameters.isEmpty()) {
+       mediaType = new MediaType(normalizedType, normalizedSubtype);
+diff --git a/guava/src/com/google/common/net/MediaType.java b/guava/src/com/google/common/net/MediaType.java
+index 54f4315..b999c1b 100644
+--- a/guava/src/com/google/common/net/MediaType.java
++++ b/guava/src/com/google/common/net/MediaType.java
+@@ -434,7 +434,7 @@
+    * Creates a new media type with the given type and subtype.
+    *
+    * @throws IllegalArgumentException if type or subtype is invalid or if a wildcard is used for the
+-   * subtype, but not the type.
++   * type, but not the subtype.
+    */
+   public static MediaType create(String type, String subtype) {
+     return create(type, subtype, ImmutableListMultimap.<String, String>of());
+@@ -493,7 +493,7 @@
+     String normalizedType = normalizeToken(type);
+     String normalizedSubtype = normalizeToken(subtype);
+     checkArgument(!WILDCARD.equals(normalizedType) || WILDCARD.equals(normalizedSubtype),
+-        "A wildcard subtype cannot be used with a non-wildcard type");
++        "A wildcard type cannot be used with a non-wildcard subtype");
+     final MediaType mediaType;
+     if (parameters.isEmpty()) {
+       mediaType = new MediaType(normalizedType, normalizedSubtype);

@@ -1,0 +1,26 @@
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/InputChannelContext.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/InputChannelContext.java
+index dd3369b..c7dc60c 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/InputChannelContext.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/InputChannelContext.java
+@@ -164,7 +164,7 @@
+ 
+ 		synchronized (this.queuedEnvelopes) {
+ 
+-			if (sequenceNumber <= this.lastReceivedEnvelope) {
++			if (sequenceNumber != (this.lastReceivedEnvelope + 1)) {
+ 
+ 				final Buffer buffer = transferEnvelope.getBuffer();
+ 				if (buffer != null) {
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/InputChannelContext.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/InputChannelContext.java
+index dd3369b..c7dc60c 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/InputChannelContext.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/taskmanager/bytebuffered/InputChannelContext.java
+@@ -164,7 +164,7 @@
+ 
+ 		synchronized (this.queuedEnvelopes) {
+ 
+-			if (sequenceNumber <= this.lastReceivedEnvelope) {
++			if (sequenceNumber != (this.lastReceivedEnvelope + 1)) {
+ 
+ 				final Buffer buffer = transferEnvelope.getBuffer();
+ 				if (buffer != null) {

@@ -1,0 +1,40 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index 748f8fa..8cd4707 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -266,7 +266,7 @@
+                 else {
+                     throw new CheckstyleException("Token \""
+                         + token + "\" was not found in Acceptable tokens list"
+-                                + " in check " + check);
++                                + " in check " + check.getClass().getName());
+                 }
+             }
+         }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
+index 38823a8..165bbbf 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractTypeAwareCheck.java
+@@ -491,8 +491,7 @@
+ 
+         @Override
+         public String toString() {
+-            return "ClassAlias[alias " + getName()
+-                + " for " + classInfo + "]";
++            return "ClassAlias[alias " + getName() + " for " + classInfo.getName() + "]";
+         }
+     }
+ 
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index 748f8fa..8cd4707 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -266,7 +266,7 @@
+                 else {
+                     throw new CheckstyleException("Token \""
+                         + token + "\" was not found in Acceptable tokens list"
+-                                + " in check " + check);
++                                + " in check " + check.getClass().getName());
+                 }
+             }
+         }

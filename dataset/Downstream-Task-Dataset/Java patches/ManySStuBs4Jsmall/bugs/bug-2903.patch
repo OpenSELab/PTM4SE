@@ -1,0 +1,17 @@
+diff --git a/src/main/java/org/graylog2/buffers/processors/ProcessBufferProcessor.java b/src/main/java/org/graylog2/buffers/processors/ProcessBufferProcessor.java
+index dc666af..2162462 100644
+--- a/src/main/java/org/graylog2/buffers/processors/ProcessBufferProcessor.java
++++ b/src/main/java/org/graylog2/buffers/processors/ProcessBufferProcessor.java
+@@ -48,10 +48,10 @@
+ 
+         LOG.debug("Starting to process message <" + msg.getId() + ">.");
+ 
+-        for (Class filterType : server.getFilters()) {
++        for (Class<? extends MessageFilter> filterType : server.getFilters()) {
+             try {
+                 // Always create a new instance of this filter.
+-                MessageFilter filter = (MessageFilter) filterType.newInstance();
++                MessageFilter filter = filterType.newInstance();
+       
+                 String name = filterType.getSimpleName();
+                 LOG.debug("Applying filter [" + name +"] on message <" + msg.getId() + ">.");

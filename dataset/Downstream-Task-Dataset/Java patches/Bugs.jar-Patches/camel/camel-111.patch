@@ -1,0 +1,38 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/api/management/mbean/ManagedCamelContextMBean.java b/camel-core/src/main/java/org/apache/camel/api/management/mbean/ManagedCamelContextMBean.java
+index 700ae22..9a58c0d 100644
+--- a/camel-core/src/main/java/org/apache/camel/api/management/mbean/ManagedCamelContextMBean.java
++++ b/camel-core/src/main/java/org/apache/camel/api/management/mbean/ManagedCamelContextMBean.java
+@@ -80,9 +80,6 @@ public interface ManagedCamelContextMBean extends ManagedPerformanceCounterMBean
+     @ManagedAttribute(description = "Tracing")
+     void setTracing(Boolean tracing);
+ 
+-    @ManagedAttribute(description = "Message History")
+-    Boolean getMessageHistory();
+-
+     @ManagedAttribute(description = "Current number of inflight Exchanges")
+     Integer getInflightExchanges();
+ 
+diff --git a/camel-core/src/main/java/org/apache/camel/management/mbean/ManagedCamelContext.java b/camel-core/src/main/java/org/apache/camel/management/mbean/ManagedCamelContext.java
+index a641b68..19a58c0 100644
+--- a/camel-core/src/main/java/org/apache/camel/management/mbean/ManagedCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/management/mbean/ManagedCamelContext.java
+@@ -127,10 +127,6 @@ public class ManagedCamelContext extends ManagedPerformanceCounter implements Ti
+         context.setTracing(tracing);
+     }
+ 
+-    public Boolean getMessageHistory() {
+-        return context.isMessageHistory();
+-    }
+-
+     public Integer getInflightExchanges() {
+         return context.getInflightRepository().size();
+     }
+@@ -212,7 +208,7 @@ public class ManagedCamelContext extends ManagedPerformanceCounter implements Ti
+     }
+ 
+     public boolean isMessageHistory() {
+-        return context.isMessageHistory();
++        return context.isMessageHistory() != null ? context.isMessageHistory() : false;
+     }
+ 
+     public boolean isUseMDCLogging() {

@@ -1,0 +1,13 @@
+diff --git a/api/src/test/java/org/openmrs/OrderEntryIntegrationTest.java b/api/src/test/java/org/openmrs/OrderEntryIntegrationTest.java
+index d21c8d4..0d587e4 100644
+--- a/api/src/test/java/org/openmrs/OrderEntryIntegrationTest.java
++++ b/api/src/test/java/org/openmrs/OrderEntryIntegrationTest.java
+@@ -296,7 +296,7 @@
+ 		assertFalse(encounter.getOrders().isEmpty());
+ 		encounter.getOrders().iterator().next().setInstructions("new");
+ 		expectedException.expect(APIException.class);
+-		expectedException.expectMessage(Matchers.is(Context.getMessageSourceService().getMessage("editing.fields.not.allowed", new Object[] { Order.class.getSimpleName() }, null)));
++		expectedException.expectMessage(Matchers.is(Context.getMessageSourceService().getMessage("editing.fields.not.allowed", new Object[] { "[instructions]", Order.class.getSimpleName() }, null)));
+ 		encounterService.saveEncounter(encounter);
+ 		Context.flushSession();
+ 	}

@@ -1,0 +1,52 @@
+diff --git a/core/common/src/main/java/alluxio/util/ShellUtils.java b/core/common/src/main/java/alluxio/util/ShellUtils.java
+index d58ee87..df7d1a6 100644
+--- a/core/common/src/main/java/alluxio/util/ShellUtils.java
++++ b/core/common/src/main/java/alluxio/util/ShellUtils.java
+@@ -128,7 +128,7 @@
+   }
+ 
+   @NotThreadSafe
+-  private final static class Command {
++  private static final class Command {
+     private String[] mCommand;
+ 
+     private Command(String[] execString) {
+diff --git a/core/common/src/main/java/alluxio/util/UnixMountInfo.java b/core/common/src/main/java/alluxio/util/UnixMountInfo.java
+index 08eb251..a00610d 100644
+--- a/core/common/src/main/java/alluxio/util/UnixMountInfo.java
++++ b/core/common/src/main/java/alluxio/util/UnixMountInfo.java
+@@ -142,7 +142,7 @@
+   }
+ 
+   /** Unix mount info options. */
+-  public final static class Options {
++  public static final class Options {
+     private final Long mSize;
+ 
+     private Options(Long size) {
+diff --git a/core/server/worker/src/main/java/alluxio/worker/block/meta/StorageTier.java b/core/server/worker/src/main/java/alluxio/worker/block/meta/StorageTier.java
+index 4ea26f5..4eb6e79 100644
+--- a/core/server/worker/src/main/java/alluxio/worker/block/meta/StorageTier.java
++++ b/core/server/worker/src/main/java/alluxio/worker/block/meta/StorageTier.java
+@@ -109,7 +109,7 @@
+    * warning is logged but no exception is thrown.
+    *
+    * @param storageDir the storage dir to check
+-   * @throws IllegalStateException if the tmpfs/ramfs is smaller than the configured memory size.
++   * @throws IllegalStateException if the tmpfs/ramfs is smaller than the configured memory size
+    */
+   private void checkEnoughMemSpace(StorageDir storageDir) {
+     if (!OSUtils.isLinux()) {
+diff --git a/core/common/src/main/java/alluxio/util/ShellUtils.java b/core/common/src/main/java/alluxio/util/ShellUtils.java
+index d58ee87..df7d1a6 100644
+--- a/core/common/src/main/java/alluxio/util/ShellUtils.java
++++ b/core/common/src/main/java/alluxio/util/ShellUtils.java
+@@ -128,7 +128,7 @@
+   }
+ 
+   @NotThreadSafe
+-  private final static class Command {
++  private static final class Command {
+     private String[] mCommand;
+ 
+     private Command(String[] execString) {

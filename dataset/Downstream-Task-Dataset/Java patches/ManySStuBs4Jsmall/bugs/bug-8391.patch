@@ -1,0 +1,39 @@
+diff --git a/hikaricp-java6/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java b/hikaricp-java6/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+index 27356d0..fbcdc97 100644
+--- a/hikaricp-java6/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
++++ b/hikaricp-java6/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+@@ -473,7 +473,7 @@
+       checkClosed();
+       try {
+          delegate.setCatalog(catalog);
+-         isCatalogDirty = !catalog.equals(parentPool.catalog);
++         isCatalogDirty = (catalog != null && !catalog.equals(parentPool.catalog)) || (catalog == null && parentPool.catalog != null);
+       }
+       catch (SQLException e) {
+          throw checkException(e);
+diff --git a/hikaricp/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java b/hikaricp/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+index 33b6792..f348dca 100644
+--- a/hikaricp/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
++++ b/hikaricp/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+@@ -474,7 +474,7 @@
+       checkClosed();
+       try {
+          delegate.setCatalog(catalog);
+-         isCatalogDirty = !catalog.equals(parentPool.catalog);
++         isCatalogDirty = (catalog != null && !catalog.equals(parentPool.catalog)) || (catalog == null && parentPool.catalog != null);
+       }
+       catch (SQLException e) {
+          throw checkException(e);
+diff --git a/hikaricp-java6/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java b/hikaricp-java6/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+index 27356d0..fbcdc97 100644
+--- a/hikaricp-java6/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
++++ b/hikaricp-java6/src/main/java/com/zaxxer/hikari/proxy/ConnectionProxy.java
+@@ -473,7 +473,7 @@
+       checkClosed();
+       try {
+          delegate.setCatalog(catalog);
+-         isCatalogDirty = !catalog.equals(parentPool.catalog);
++         isCatalogDirty = (catalog != null && !catalog.equals(parentPool.catalog)) || (catalog == null && parentPool.catalog != null);
+       }
+       catch (SQLException e) {
+          throw checkException(e);

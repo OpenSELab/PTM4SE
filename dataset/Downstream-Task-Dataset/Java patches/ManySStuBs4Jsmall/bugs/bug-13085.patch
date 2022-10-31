@@ -1,0 +1,26 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveMetadata.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveMetadata.java
+index 62ff3c3..30c7199 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveMetadata.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveMetadata.java
+@@ -507,7 +507,7 @@
+ 
+         ImmutableList.Builder<FieldSchema> columns = ImmutableList.builder();
+         columns.addAll(sd.getCols());
+-        columns.add(new FieldSchema(column.getName(), column.getType().getDisplayName(), column.getComment()));
++        columns.add(new FieldSchema(column.getName(), toHiveType(column.getType()).getHiveTypeName(), column.getComment()));
+         sd.setCols(columns.build());
+ 
+         table.setSd(sd);
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveMetadata.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveMetadata.java
+index 62ff3c3..30c7199 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveMetadata.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveMetadata.java
+@@ -507,7 +507,7 @@
+ 
+         ImmutableList.Builder<FieldSchema> columns = ImmutableList.builder();
+         columns.addAll(sd.getCols());
+-        columns.add(new FieldSchema(column.getName(), column.getType().getDisplayName(), column.getComment()));
++        columns.add(new FieldSchema(column.getName(), toHiveType(column.getType()).getHiveTypeName(), column.getComment()));
+         sd.setCols(columns.build());
+ 
+         table.setSd(sd);

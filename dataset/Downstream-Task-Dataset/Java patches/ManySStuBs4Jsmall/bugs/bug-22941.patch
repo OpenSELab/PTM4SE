@@ -1,0 +1,101 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CSharpClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CSharpClientCodegen.java
+index 4b17715..bd3487d 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CSharpClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CSharpClientCodegen.java
+@@ -106,11 +106,11 @@
+         additionalProperties.put("clientPackage", clientPackage);
+ 
+         supportingFiles.add(new SupportingFile("Configuration.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "Configuration.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "Configuration.cs"));
+         supportingFiles.add(new SupportingFile("ApiClient.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "ApiClient.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "ApiClient.cs"));
+         supportingFiles.add(new SupportingFile("ApiException.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "ApiException.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "ApiException.cs"));
+         supportingFiles.add(new SupportingFile("Newtonsoft.Json.dll", "bin", "Newtonsoft.Json.dll"));
+         supportingFiles.add(new SupportingFile("RestSharp.dll", "bin", "RestSharp.dll"));
+         supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
+@@ -137,12 +137,11 @@
+ 
+     @Override
+     public String apiFileFolder() {
+-
+-        return outputFolder + File.separator + (sourceFolder + File.separator + apiPackage()).replace('.', File.separatorChar);
++        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
+     }
+ 
+     public String modelFileFolder() {
+-        return outputFolder + File.separator + (sourceFolder + File.separator + modelPackage()).replace('.', File.separatorChar);
++        return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
+     }
+ 
+     @Override
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CsharpDotNet2ClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CsharpDotNet2ClientCodegen.java
+index 432e7ae..9d9757a 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CsharpDotNet2ClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CsharpDotNet2ClientCodegen.java
+@@ -108,11 +108,11 @@
+         }
+         
+         supportingFiles.add(new SupportingFile("Configuration.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "Configuration.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "Configuration.cs"));
+         supportingFiles.add(new SupportingFile("ApiClient.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "ApiClient.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "ApiClient.cs"));
+         supportingFiles.add(new SupportingFile("ApiException.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "ApiException.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "ApiException.cs"));
+         supportingFiles.add(new SupportingFile("packages.config.mustache", "vendor", "packages.config"));
+         supportingFiles.add(new SupportingFile("compile-mono.sh.mustache", "", "compile-mono.sh"));
+         supportingFiles.add(new SupportingFile("README.md", "", "README.md"));
+@@ -142,11 +142,11 @@
+ 
+     @Override
+     public String apiFileFolder() {
+-        return (outputFolder + File.separator + sourceFolder + File.separator + apiPackage()).replace('.', File.separatorChar);
++        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
+     }
+ 
+     public String modelFileFolder() {
+-        return (outputFolder + File.separator + sourceFolder + File.separator + modelPackage()).replace('.', File.separatorChar);
++        return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
+     }
+ 
+     @Override
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CSharpClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CSharpClientCodegen.java
+index 4b17715..bd3487d 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CSharpClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/CSharpClientCodegen.java
+@@ -106,11 +106,11 @@
+         additionalProperties.put("clientPackage", clientPackage);
+ 
+         supportingFiles.add(new SupportingFile("Configuration.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "Configuration.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "Configuration.cs"));
+         supportingFiles.add(new SupportingFile("ApiClient.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "ApiClient.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "ApiClient.cs"));
+         supportingFiles.add(new SupportingFile("ApiException.mustache",
+-                (sourceFolder + File.separator + clientPackage).replace(".", java.io.File.separator), "ApiException.cs"));
++                sourceFolder + File.separator + clientPackage.replace(".", java.io.File.separator), "ApiException.cs"));
+         supportingFiles.add(new SupportingFile("Newtonsoft.Json.dll", "bin", "Newtonsoft.Json.dll"));
+         supportingFiles.add(new SupportingFile("RestSharp.dll", "bin", "RestSharp.dll"));
+         supportingFiles.add(new SupportingFile("compile.mustache", "", "compile.bat"));
+@@ -137,12 +137,11 @@
+ 
+     @Override
+     public String apiFileFolder() {
+-
+-        return outputFolder + File.separator + (sourceFolder + File.separator + apiPackage()).replace('.', File.separatorChar);
++        return outputFolder + File.separator + sourceFolder + File.separator + apiPackage().replace('.', File.separatorChar);
+     }
+ 
+     public String modelFileFolder() {
+-        return outputFolder + File.separator + (sourceFolder + File.separator + modelPackage()).replace('.', File.separatorChar);
++        return outputFolder + File.separator + sourceFolder + File.separator + modelPackage().replace('.', File.separatorChar);
+     }
+ 
+     @Override

@@ -1,0 +1,35 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/helpers/Transform.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/helpers/Transform.java
+index 6c68e4d..a502245 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/helpers/Transform.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/helpers/Transform.java
+@@ -139,7 +139,7 @@ public final class Transform {
+         final int len = input.length();
+         for (int i = 0; i < len; i++) {
+             final char ch = input.charAt(i);
+-            final String escBs = "\\\\";
++            final String escBs = "\\";
+             switch (ch) {
+             case '"':
+                 buf.append(escBs);
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/layout/JSONLayout.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/layout/JSONLayout.java
+index a6a8af0..a9005d1 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/layout/JSONLayout.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/layout/JSONLayout.java
+@@ -189,7 +189,7 @@ public class JSONLayout extends AbstractStringLayout {
+             if (jsonSupported) {
+                 buf.append(((MultiformatMessage) msg).getFormattedMessage(FORMATS));
+             } else {
+-                Transform.appendEscapingCDATA(buf, event.getMessage().getFormattedMessage());
++                buf.append(Transform.escapeJsonControlCharacters(event.getMessage().getFormattedMessage()));
+             }
+             buf.append('\"');
+         }
+@@ -198,7 +198,7 @@ public class JSONLayout extends AbstractStringLayout {
+             buf.append(",");
+             buf.append(this.eol);
+             buf.append("\"ndc\":");
+-            Transform.appendEscapingCDATA(buf, event.getContextStack().toString());
++            buf.append(Transform.escapeJsonControlCharacters(event.getContextStack().toString()));
+             buf.append("\"");
+         }
+ 

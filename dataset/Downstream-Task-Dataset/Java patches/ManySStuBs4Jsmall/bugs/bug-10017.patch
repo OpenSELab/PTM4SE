@@ -1,0 +1,26 @@
+diff --git a/src/jvm/clojure/lang/PersistentHashMap2.java b/src/jvm/clojure/lang/PersistentHashMap2.java
+index e0af141..a957bc1 100644
+--- a/src/jvm/clojure/lang/PersistentHashMap2.java
++++ b/src/jvm/clojure/lang/PersistentHashMap2.java
+@@ -714,7 +714,7 @@
+ 			return this;
+ 		if(array.length == 2)
+ 			return null;
+-		return new HashCollisionNode(null, hash, removePair(array, idx));
++		return new HashCollisionNode(null, hash, count - 1, removePair(array, idx/2));
+ 	}
+ 
+ 	public IMapEntry find(int shift, int hash, Object key){
+diff --git a/src/jvm/clojure/lang/PersistentHashMap2.java b/src/jvm/clojure/lang/PersistentHashMap2.java
+index e0af141..a957bc1 100644
+--- a/src/jvm/clojure/lang/PersistentHashMap2.java
++++ b/src/jvm/clojure/lang/PersistentHashMap2.java
+@@ -714,7 +714,7 @@
+ 			return this;
+ 		if(array.length == 2)
+ 			return null;
+-		return new HashCollisionNode(null, hash, removePair(array, idx));
++		return new HashCollisionNode(null, hash, count - 1, removePair(array, idx/2));
+ 	}
+ 
+ 	public IMapEntry find(int shift, int hash, Object key){

@@ -1,0 +1,26 @@
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionGraph.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionGraph.java
+index 46e166e..4c8e5b9 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionGraph.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionGraph.java
+@@ -600,7 +600,7 @@
+ 			// let the task code compute the input splits
+ 			if (ev.getEnvironment().getInvokable() instanceof AbstractInputTask) {
+ 				try {
+-					inputSplits = ((AbstractInputTask) ev.getEnvironment().getInvokable()).
++					inputSplits = ((AbstractInputTask<?>) ev.getEnvironment().getInvokable()).
+ 							computeInputSplits(jobVertex.getNumberOfSubtasks());
+ 				}
+ 				catch (Exception e) {
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionGraph.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionGraph.java
+index 46e166e..4c8e5b9 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionGraph.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/executiongraph/ExecutionGraph.java
+@@ -600,7 +600,7 @@
+ 			// let the task code compute the input splits
+ 			if (ev.getEnvironment().getInvokable() instanceof AbstractInputTask) {
+ 				try {
+-					inputSplits = ((AbstractInputTask) ev.getEnvironment().getInvokable()).
++					inputSplits = ((AbstractInputTask<?>) ev.getEnvironment().getInvokable()).
+ 							computeInputSplits(jobVertex.getNumberOfSubtasks());
+ 				}
+ 				catch (Exception e) {

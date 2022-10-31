@@ -1,0 +1,48 @@
+diff --git a/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestHiveStorageFormats.java b/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestHiveStorageFormats.java
+index 731a1d5..7d3e861 100644
+--- a/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestHiveStorageFormats.java
++++ b/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestHiveStorageFormats.java
+@@ -117,8 +117,7 @@
+         String createTableAsSelect = format(
+                 "CREATE TABLE %s WITH (format='%s') AS " +
+                         "SELECT " +
+-                        "orderkey, partkey, suppkey, linenumber, quantity, extendedprice, discount, tax, " +
+-                        "linestatus, shipinstruct, shipmode, comment, returnflag " +
++                        "partkey, suppkey, extendedprice " +
+                         "FROM tpch.%s.lineitem",
+                 tableName,
+                 storageFormat.getName(),
+@@ -192,8 +191,7 @@
+         String createTableAsSelect = format(
+                 "CREATE TABLE %s WITH (format='%s', partitioned_by = ARRAY['returnflag']) AS " +
+                         "SELECT " +
+-                        "orderkey, partkey, suppkey, linenumber, quantity, extendedprice, discount, tax, " +
+-                        "linestatus, shipinstruct, shipmode, comment, returnflag " +
++                        "tax, discount, returnflag " +
+                         "FROM tpch.%s.lineitem",
+                 tableName,
+                 storageFormat.getName(),
+diff --git a/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestHiveStorageFormats.java b/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestHiveStorageFormats.java
+index 731a1d5..7d3e861 100644
+--- a/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestHiveStorageFormats.java
++++ b/presto-product-tests/src/main/java/com/facebook/presto/tests/hive/TestHiveStorageFormats.java
+@@ -117,8 +117,7 @@
+         String createTableAsSelect = format(
+                 "CREATE TABLE %s WITH (format='%s') AS " +
+                         "SELECT " +
+-                        "orderkey, partkey, suppkey, linenumber, quantity, extendedprice, discount, tax, " +
+-                        "linestatus, shipinstruct, shipmode, comment, returnflag " +
++                        "partkey, suppkey, extendedprice " +
+                         "FROM tpch.%s.lineitem",
+                 tableName,
+                 storageFormat.getName(),
+@@ -192,8 +191,7 @@
+         String createTableAsSelect = format(
+                 "CREATE TABLE %s WITH (format='%s', partitioned_by = ARRAY['returnflag']) AS " +
+                         "SELECT " +
+-                        "orderkey, partkey, suppkey, linenumber, quantity, extendedprice, discount, tax, " +
+-                        "linestatus, shipinstruct, shipmode, comment, returnflag " +
++                        "tax, discount, returnflag " +
+                         "FROM tpch.%s.lineitem",
+                 tableName,
+                 storageFormat.getName(),

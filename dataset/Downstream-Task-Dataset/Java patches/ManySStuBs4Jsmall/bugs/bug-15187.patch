@@ -1,0 +1,64 @@
+diff --git a/hazelcast/src/test/java/com/hazelcast/osgi/HazelcastOSGiServiceTest.java b/hazelcast/src/test/java/com/hazelcast/osgi/HazelcastOSGiServiceTest.java
+index 7692c22..a4a9eca 100644
+--- a/hazelcast/src/test/java/com/hazelcast/osgi/HazelcastOSGiServiceTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/osgi/HazelcastOSGiServiceTest.java
+@@ -272,11 +272,11 @@
+ 
+         HazelcastOSGiInstance osgiInstance = service.newHazelcastInstance(config);
+         assertNotNull(osgiInstance);
+-        assertEquals(config, osgiInstance.getConfig());
++        assertEquals(config.getInstanceName(), osgiInstance.getConfig().getInstanceName());
+ 
+         HazelcastInstance instance = osgiInstance.getDelegatedInstance();
+         assertNotNull(instance);
+-        assertEquals(config, instance.getConfig());
++        assertEquals(config.getInstanceName(), instance.getConfig().getInstanceName());
+     }
+ 
+     @Test
+@@ -455,11 +455,11 @@
+ 
+         HazelcastOSGiInstance osgiInstance = service.getHazelcastInstanceByName(INSTANCE_NAME);
+         assertNotNull(osgiInstance);
+-        assertEquals(config, osgiInstance.getConfig());
++        assertEquals(config.getInstanceName(), osgiInstance.getConfig().getInstanceName());
+ 
+         HazelcastInstance instance = osgiInstance.getDelegatedInstance();
+         assertNotNull(instance);
+-        assertEquals(config, instance.getConfig());
++        assertEquals(config.getInstanceName(), instance.getConfig().getInstanceName());
+     }
+ 
+     @Test
+diff --git a/hazelcast/src/test/java/com/hazelcast/osgi/HazelcastOSGiServiceTest.java b/hazelcast/src/test/java/com/hazelcast/osgi/HazelcastOSGiServiceTest.java
+index 7692c22..a4a9eca 100644
+--- a/hazelcast/src/test/java/com/hazelcast/osgi/HazelcastOSGiServiceTest.java
++++ b/hazelcast/src/test/java/com/hazelcast/osgi/HazelcastOSGiServiceTest.java
+@@ -272,11 +272,11 @@
+ 
+         HazelcastOSGiInstance osgiInstance = service.newHazelcastInstance(config);
+         assertNotNull(osgiInstance);
+-        assertEquals(config, osgiInstance.getConfig());
++        assertEquals(config.getInstanceName(), osgiInstance.getConfig().getInstanceName());
+ 
+         HazelcastInstance instance = osgiInstance.getDelegatedInstance();
+         assertNotNull(instance);
+-        assertEquals(config, instance.getConfig());
++        assertEquals(config.getInstanceName(), instance.getConfig().getInstanceName());
+     }
+ 
+     @Test
+@@ -455,11 +455,11 @@
+ 
+         HazelcastOSGiInstance osgiInstance = service.getHazelcastInstanceByName(INSTANCE_NAME);
+         assertNotNull(osgiInstance);
+-        assertEquals(config, osgiInstance.getConfig());
++        assertEquals(config.getInstanceName(), osgiInstance.getConfig().getInstanceName());
+ 
+         HazelcastInstance instance = osgiInstance.getDelegatedInstance();
+         assertNotNull(instance);
+-        assertEquals(config, instance.getConfig());
++        assertEquals(config.getInstanceName(), instance.getConfig().getInstanceName());
+     }
+ 
+     @Test

@@ -1,0 +1,26 @@
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
+index 397b00c..6b46acb 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
+@@ -76,7 +76,7 @@
+     @Override
+     public long getSizeInBytes()
+     {
+-        return getRawSlice().length() + (long) valueIsNull.length();
++        return (fixedSize + Byte.BYTES) * (long) positionCount;
+     }
+ 
+     @Override
+diff --git a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
+index 397b00c..6b46acb 100644
+--- a/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
++++ b/presto-spi/src/main/java/com/facebook/presto/spi/block/FixedWidthBlock.java
+@@ -76,7 +76,7 @@
+     @Override
+     public long getSizeInBytes()
+     {
+-        return getRawSlice().length() + (long) valueIsNull.length();
++        return (fixedSize + Byte.BYTES) * (long) positionCount;
+     }
+ 
+     @Override

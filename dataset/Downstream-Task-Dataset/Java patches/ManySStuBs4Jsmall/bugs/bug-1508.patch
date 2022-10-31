@@ -1,0 +1,91 @@
+diff --git a/core/src/main/java/tachyon/UserInfo.java b/core/src/main/java/tachyon/UserInfo.java
+index 8df6b4d..95adf37 100644
+--- a/core/src/main/java/tachyon/UserInfo.java
++++ b/core/src/main/java/tachyon/UserInfo.java
+@@ -28,7 +28,7 @@
+   private long mLastHeartbeatMs;
+ 
+   public UserInfo(long userId) {
+-    Preconditions.checkArgument(userId <= 0, "Invalid user id " + userId);
++    Preconditions.checkArgument(userId > 0, "Invalid user id " + userId);
+     USER_ID = userId;
+     mOwnBytes = 0;
+     mLastHeartbeatMs = System.currentTimeMillis();
+diff --git a/core/src/main/java/tachyon/client/TachyonFS.java b/core/src/main/java/tachyon/client/TachyonFS.java
+index 5d4165c..08daccc 100644
+--- a/core/src/main/java/tachyon/client/TachyonFS.java
++++ b/core/src/main/java/tachyon/client/TachyonFS.java
+@@ -87,7 +87,7 @@
+     if (tempAddress.contains(Constants.PATH_SEPARATOR)) {
+       masterAddress = tempAddress.substring(0, tempAddress.indexOf(Constants.PATH_SEPARATOR));
+     }
+-    Preconditions.checkArgument(masterAddress.split(":").length != 2, "Illegal Tachyon Master Address: " + tachyonPath);
++    Preconditions.checkArgument(masterAddress.split(":").length == 2, "Illegal Tachyon Master Address: " + tachyonPath);
+ 
+     String masterHost = masterAddress.split(":")[0];
+     int masterPort = Integer.parseInt(masterAddress.split(":")[1]);
+diff --git a/core/src/main/java/tachyon/client/table/RawTable.java b/core/src/main/java/tachyon/client/table/RawTable.java
+index 18da851..f1c7c59 100644
+--- a/core/src/main/java/tachyon/client/table/RawTable.java
++++ b/core/src/main/java/tachyon/client/table/RawTable.java
+@@ -82,7 +82,7 @@
+    * @return the RawColumn
+    */
+   public RawColumn getRawColumn(int columnIndex) {
+-    Preconditions.checkArgument(columnIndex < 0 || columnIndex >= CLIENT_RAW_TABLE_INFO.getColumns(),
++    Preconditions.checkArgument(columnIndex >= 0 && columnIndex < CLIENT_RAW_TABLE_INFO.getColumns(),
+         CLIENT_RAW_TABLE_INFO.getPath() + " does not have column " + columnIndex + ". It has "
+             + CLIENT_RAW_TABLE_INFO.getColumns() + " columns.");
+ 
+diff --git a/core/src/main/java/tachyon/conf/Utils.java b/core/src/main/java/tachyon/conf/Utils.java
+index b9631ea..5e1c00b 100644
+--- a/core/src/main/java/tachyon/conf/Utils.java
++++ b/core/src/main/java/tachyon/conf/Utils.java
+@@ -51,7 +51,7 @@
+ 
+   public static String getProperty(String property) {
+     String ret = System.getProperty(property);
+-    Preconditions.checkArgument(ret == null, property + " is not configured.");
++    Preconditions.checkArgument(ret != null, property + " is not configured.");
+     LOG.debug(property + " : " + ret);
+     return ret;
+   }
+diff --git a/core/src/main/java/tachyon/master/TachyonMaster.java b/core/src/main/java/tachyon/master/TachyonMaster.java
+index 8232ac7..7e0018f 100644
+--- a/core/src/main/java/tachyon/master/TachyonMaster.java
++++ b/core/src/main/java/tachyon/master/TachyonMaster.java
+@@ -87,7 +87,7 @@
+     try {
+       mMasterAddress = address;
+       String journalFolder = MasterConf.get().JOURNAL_FOLDER;
+-      Preconditions.checkArgument(!isFormatted(journalFolder, MasterConf.get().FORMAT_FILE_PREFIX), "Tachyon was not formatted!");
++      Preconditions.checkState(isFormatted(journalFolder, MasterConf.get().FORMAT_FILE_PREFIX), "Tachyon was not formatted!");
+       mJournal = new Journal(journalFolder, "image.data", "log.data");
+       mMasterInfo = new MasterInfo(mMasterAddress, mJournal);
+ 
+diff --git a/core/src/main/java/tachyon/worker/DataServerMessage.java b/core/src/main/java/tachyon/worker/DataServerMessage.java
+index 2c03f6f..e3da84b 100644
+--- a/core/src/main/java/tachyon/worker/DataServerMessage.java
++++ b/core/src/main/java/tachyon/worker/DataServerMessage.java
+@@ -222,7 +222,7 @@
+    * Check if the message is ready. If not ready, it will throw a runtime exception.
+    */
+   public void checkReady() {
+-    Preconditions.checkState(!mIsMessageReady, "Message is not ready.");
++    Preconditions.checkState(mIsMessageReady, "Message is not ready.");
+   }
+ 
+   /**
+diff --git a/core/src/main/java/tachyon/UserInfo.java b/core/src/main/java/tachyon/UserInfo.java
+index 8df6b4d..95adf37 100644
+--- a/core/src/main/java/tachyon/UserInfo.java
++++ b/core/src/main/java/tachyon/UserInfo.java
+@@ -28,7 +28,7 @@
+   private long mLastHeartbeatMs;
+ 
+   public UserInfo(long userId) {
+-    Preconditions.checkArgument(userId <= 0, "Invalid user id " + userId);
++    Preconditions.checkArgument(userId > 0, "Invalid user id " + userId);
+     USER_ID = userId;
+     mOwnBytes = 0;
+     mLastHeartbeatMs = System.currentTimeMillis();

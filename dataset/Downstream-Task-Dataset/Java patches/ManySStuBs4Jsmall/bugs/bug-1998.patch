@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index 7d30994..c5cbcf4 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -1900,7 +1900,7 @@
+                         // Use the one set by the user first.
+                         if (request.getContentType() == null ||
+                                 !request.getContentType().equalsIgnoreCase(s.length > 1 ? s[1] : "")) {
+-                            request.contentType(s.length > 1 ? s[1] : "");
++                            request.contentType(s.length > 1 ? URLDecoder.decode(s[1], "UTF-8") : "");
+                         }
+                     }
+                     if (!s[0].isEmpty()
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+index 7d30994..c5cbcf4 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereFramework.java
+@@ -1900,7 +1900,7 @@
+                         // Use the one set by the user first.
+                         if (request.getContentType() == null ||
+                                 !request.getContentType().equalsIgnoreCase(s.length > 1 ? s[1] : "")) {
+-                            request.contentType(s.length > 1 ? s[1] : "");
++                            request.contentType(s.length > 1 ? URLDecoder.decode(s[1], "UTF-8") : "");
+                         }
+                     }
+                     if (!s[0].isEmpty()

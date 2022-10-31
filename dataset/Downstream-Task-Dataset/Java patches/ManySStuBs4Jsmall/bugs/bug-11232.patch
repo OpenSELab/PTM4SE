@@ -1,0 +1,228 @@
+diff --git a/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationFactoryTest.java b/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationFactoryTest.java
+index d52d828..51e8303 100644
+--- a/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationFactoryTest.java
++++ b/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationFactoryTest.java
+@@ -318,7 +318,7 @@
+                 assertThat(e.getMessage())
+                         .endsWith(String.format(
+                                 "factory-test-invalid.yml has an error:%n" +
+-                                        "  * name must match \"[\\w]+[\\s]+[\\w]+([\\s][\\w]+)?\" (was Boop)%n"));
++                                        "  * name must match \"[\\w]+[\\s]+[\\w]+([\\s][\\w]+)?\"%n"));
+             }
+         }
+     }
+diff --git a/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationValidationExceptionTest.java b/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationValidationExceptionTest.java
+index 39a62d7..955dbd2 100644
+--- a/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationValidationExceptionTest.java
++++ b/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationValidationExceptionTest.java
+@@ -36,7 +36,7 @@
+         assertThat(e.getMessage())
+                 .isEqualTo(String.format(
+                         "config.yml has an error:%n" +
+-                                "  * woo may not be null (was null)%n"
++                                "  * woo may not be null%n"
+                 ));
+     }
+ 
+diff --git a/dropwizard-jersey/src/test/java/io/dropwizard/jersey/jackson/JacksonMessageBodyProviderTest.java b/dropwizard-jersey/src/test/java/io/dropwizard/jersey/jackson/JacksonMessageBodyProviderTest.java
+index 8d2a41f..2edde32 100755
+--- a/dropwizard-jersey/src/test/java/io/dropwizard/jersey/jackson/JacksonMessageBodyProviderTest.java
++++ b/dropwizard-jersey/src/test/java/io/dropwizard/jersey/jackson/JacksonMessageBodyProviderTest.java
+@@ -235,7 +235,7 @@
+             failBecauseExceptionWasNotThrown(ConstraintViolationException.class);
+         } catch(ConstraintViolationException e) {
+             assertThat(ConstraintViolations.formatUntyped(e.getConstraintViolations()))
+-                .containsOnly("text may not be null (was null)");
++                .containsOnly("text may not be null");
+         }
+     }
+ 
+@@ -279,7 +279,7 @@
+             failBecauseExceptionWasNotThrown(ConstraintViolationException.class);
+         } catch (ConstraintViolationException e) {
+             assertThat(ConstraintViolations.formatUntyped(e.getConstraintViolations()))
+-                    .containsOnly("id must be greater than or equal to 0 (was -1)");
++                    .containsOnly("id must be greater than or equal to 0");
+         }
+     }
+ 
+@@ -440,8 +440,8 @@
+             failBecauseExceptionWasNotThrown(ConstraintViolationException.class);
+         } catch (ConstraintViolationException e) {
+             assertThat(ConstraintViolations.formatUntyped(e.getConstraintViolations()))
+-                    .contains("id must be greater than or equal to 0 (was -1)",
+-                            "id must be greater than or equal to 0 (was -2)");
++                    .contains("id must be greater than or equal to 0",
++                            "id must be greater than or equal to 0");
+         }
+     }
+ 
+@@ -463,7 +463,7 @@
+             failBecauseExceptionWasNotThrown(ConstraintViolationException.class);
+         } catch (ConstraintViolationException e) {
+             assertThat(ConstraintViolations.formatUntyped(e.getConstraintViolations()))
+-                    .contains("id must be greater than or equal to 0 (was -2)");
++                    .contains("id must be greater than or equal to 0");
+         }
+     }
+ 
+@@ -485,8 +485,8 @@
+             failBecauseExceptionWasNotThrown(ConstraintViolationException.class);
+         } catch (ConstraintViolationException e) {
+             assertThat(ConstraintViolations.formatUntyped(e.getConstraintViolations()))
+-                    .contains("id must be greater than or equal to 0 (was -1)",
+-                            "id must be greater than or equal to 0 (was -2)");
++                    .contains("id must be greater than or equal to 0",
++                            "id must be greater than or equal to 0");
+         }
+     }
+ 
+@@ -508,8 +508,8 @@
+             failBecauseExceptionWasNotThrown(ConstraintViolationException.class);
+         } catch (ConstraintViolationException e) {
+             assertThat(ConstraintViolations.formatUntyped(e.getConstraintViolations()))
+-                    .containsOnly("id must be greater than or equal to 0 (was -1)",
+-                            "id must be greater than or equal to 0 (was -2)");
++                    .containsOnly("id must be greater than or equal to 0",
++                            "id must be greater than or equal to 0");
+         }
+     }
+ 
+@@ -531,8 +531,8 @@
+             failBecauseExceptionWasNotThrown(ConstraintViolationException.class);
+         } catch (ConstraintViolationException e) {
+             assertThat(ConstraintViolations.formatUntyped(e.getConstraintViolations()))
+-                    .contains("id must be greater than or equal to 0 (was -1)",
+-                            "id must be greater than or equal to 0 (was -2)");
++                    .contains("id must be greater than or equal to 0",
++                            "id must be greater than or equal to 0");
+         }
+     }
+ 
+@@ -578,7 +578,7 @@
+             failBecauseExceptionWasNotThrown(ConstraintViolationException.class);
+         } catch (ConstraintViolationException e) {
+             assertThat(ConstraintViolations.formatUntyped(e.getConstraintViolations()))
+-                    .containsOnly("examples may not be empty (was null)");
++                    .containsOnly("examples may not be empty");
+         }
+     }
+ 
+diff --git a/dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintViolationExceptionMapperTest.java b/dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintViolationExceptionMapperTest.java
+index b989902..d8a9d06 100644
+--- a/dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintViolationExceptionMapperTest.java
++++ b/dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintViolationExceptionMapperTest.java
+@@ -34,6 +34,6 @@
+         final Response response = target("/valid/").request(MediaType.APPLICATION_JSON)
+                 .post(Entity.entity("{}", MediaType.APPLICATION_JSON));
+         assertThat(response.getStatus()).isEqualTo(422);
+-        assertThat(response.readEntity(String.class)).isEqualTo("{\"errors\":[\"name may not be empty (was null)\"]}");
++        assertThat(response.readEntity(String.class)).isEqualTo("{\"errors\":[\"name may not be empty\"]}");
+     }
+ }
+diff --git a/dropwizard-validation/src/main/java/io/dropwizard/validation/ConstraintViolations.java b/dropwizard-validation/src/main/java/io/dropwizard/validation/ConstraintViolations.java
+index e26b5ec..4f20a6c 100644
+--- a/dropwizard-validation/src/main/java/io/dropwizard/validation/ConstraintViolations.java
++++ b/dropwizard-validation/src/main/java/io/dropwizard/validation/ConstraintViolations.java
+@@ -22,10 +22,7 @@
+                                  Joiner.on('.').join(usefulNodes),
+                                  v.getMessage()).trim();
+         } else {
+-            return String.format("%s %s (was %s)",
+-                                 v.getPropertyPath(),
+-                                 v.getMessage(),
+-                                 v.getInvalidValue());
++            return String.format("%s %s", v.getPropertyPath(), v.getMessage());
+         }
+     }
+ 
+diff --git a/dropwizard-validation/src/test/java/io/dropwizard/validation/DurationValidatorTest.java b/dropwizard-validation/src/test/java/io/dropwizard/validation/DurationValidatorTest.java
+index 4e19437..481b4b8 100644
+--- a/dropwizard-validation/src/test/java/io/dropwizard/validation/DurationValidatorTest.java
++++ b/dropwizard-validation/src/test/java/io/dropwizard/validation/DurationValidatorTest.java
+@@ -44,9 +44,9 @@
+ 
+             assertThat(errors)
+                     .containsOnly(
+-                            "outOfRange must be between 10 MINUTES and 30 MINUTES (was 60 minutes)",
+-                            "tooBig must be less than or equal to 30 SECONDS (was 10 minutes)",
+-                            "tooSmall must be greater than or equal to 30 SECONDS (was 100 milliseconds)");
++                            "outOfRange must be between 10 MINUTES and 30 MINUTES",
++                            "tooBig must be less than or equal to 30 SECONDS",
++                            "tooSmall must be greater than or equal to 30 SECONDS");
+         }
+     }
+ 
+diff --git a/dropwizard-validation/src/test/java/io/dropwizard/validation/OneOfValidatorTest.java b/dropwizard-validation/src/test/java/io/dropwizard/validation/OneOfValidatorTest.java
+index d4f9c91..e7cca8a 100644
+--- a/dropwizard-validation/src/test/java/io/dropwizard/validation/OneOfValidatorTest.java
++++ b/dropwizard-validation/src/test/java/io/dropwizard/validation/OneOfValidatorTest.java
+@@ -39,7 +39,7 @@
+         example.basic = "four";
+ 
+         assertThat(format(validator.validate(example)))
+-                .containsOnly("basic must be one of [one, two, three] (was four)");
++                .containsOnly("basic must be one of [one, two, three]");
+     }
+ 
+     @Test
+diff --git a/dropwizard-validation/src/test/java/io/dropwizard/validation/PortRangeValidatorTest.java b/dropwizard-validation/src/test/java/io/dropwizard/validation/PortRangeValidatorTest.java
+index d704c5c..104a782 100644
+--- a/dropwizard-validation/src/test/java/io/dropwizard/validation/PortRangeValidatorTest.java
++++ b/dropwizard-validation/src/test/java/io/dropwizard/validation/PortRangeValidatorTest.java
+@@ -51,7 +51,7 @@
+         example.port = -1;
+ 
+         assertThat(ConstraintViolations.format(validator.validate(example)))
+-                .containsOnly("port must be between 1 and 65535 (was -1)");
++                .containsOnly("port must be between 1 and 65535");
+     }
+ 
+     @Test
+@@ -59,7 +59,7 @@
+         example.otherPort = 8080;
+ 
+         assertThat(ConstraintViolations.format(validator.validate(example)))
+-                .containsOnly("otherPort must be between 10000 and 15000 (was 8080)");
++                .containsOnly("otherPort must be between 10000 and 15000");
+     }
+ 
+     @Test
+@@ -67,6 +67,6 @@
+         example.otherPort = 16000;
+ 
+         assertThat(ConstraintViolations.format(validator.validate(example)))
+-                .containsOnly("otherPort must be between 10000 and 15000 (was 16000)");
++                .containsOnly("otherPort must be between 10000 and 15000");
+     }
+ }
+diff --git a/dropwizard-validation/src/test/java/io/dropwizard/validation/SizeValidatorTest.java b/dropwizard-validation/src/test/java/io/dropwizard/validation/SizeValidatorTest.java
+index ae50d4c..5bf6758 100644
+--- a/dropwizard-validation/src/test/java/io/dropwizard/validation/SizeValidatorTest.java
++++ b/dropwizard-validation/src/test/java/io/dropwizard/validation/SizeValidatorTest.java
+@@ -39,9 +39,9 @@
+     public void returnsASetOfErrorsForAnObject() throws Exception {
+         if ("en".equals(Locale.getDefault().getLanguage())) {
+             assertThat(ConstraintViolations.format(validator.validate(new Example())))
+-                    .containsOnly("outOfRange must be between 10 KILOBYTES and 100 KILOBYTES (was 2 megabytes)",
+-                                  "tooBig must be less than or equal to 30 KILOBYTES (was 2 gigabytes)",
+-                                  "tooSmall must be greater than or equal to 30 KILOBYTES (was 100 bytes)");
++                    .containsOnly("outOfRange must be between 10 KILOBYTES and 100 KILOBYTES",
++                                  "tooBig must be less than or equal to 30 KILOBYTES",
++                                  "tooSmall must be greater than or equal to 30 KILOBYTES");
+         }
+     }
+ 
+diff --git a/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationFactoryTest.java b/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationFactoryTest.java
+index d52d828..51e8303 100644
+--- a/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationFactoryTest.java
++++ b/dropwizard-configuration/src/test/java/io/dropwizard/configuration/ConfigurationFactoryTest.java
+@@ -318,7 +318,7 @@
+                 assertThat(e.getMessage())
+                         .endsWith(String.format(
+                                 "factory-test-invalid.yml has an error:%n" +
+-                                        "  * name must match \"[\\w]+[\\s]+[\\w]+([\\s][\\w]+)?\" (was Boop)%n"));
++                                        "  * name must match \"[\\w]+[\\s]+[\\w]+([\\s][\\w]+)?\"%n"));
+             }
+         }
+     }

@@ -1,0 +1,28 @@
+diff --git a/deployer/src/main/java/com/alibaba/otter/canal/deployer/CanalController.java b/deployer/src/main/java/com/alibaba/otter/canal/deployer/CanalController.java
+index 39c40cd..3a11271 100644
+--- a/deployer/src/main/java/com/alibaba/otter/canal/deployer/CanalController.java
++++ b/deployer/src/main/java/com/alibaba/otter/canal/deployer/CanalController.java
+@@ -182,7 +182,8 @@
+                 public void start(String destination) {
+                     InstanceConfig config = instanceConfigs.get(destination);
+                     if (config == null) {
+-                        config = new InstanceConfig(globalInstanceConfig);
++                        // 重新读取一下instance config
++                        config = parseInstanceConfig(properties, destination);
+                         instanceConfigs.put(destination, config);
+                     }
+ 
+diff --git a/deployer/src/main/java/com/alibaba/otter/canal/deployer/CanalController.java b/deployer/src/main/java/com/alibaba/otter/canal/deployer/CanalController.java
+index 39c40cd..3a11271 100644
+--- a/deployer/src/main/java/com/alibaba/otter/canal/deployer/CanalController.java
++++ b/deployer/src/main/java/com/alibaba/otter/canal/deployer/CanalController.java
+@@ -182,7 +182,8 @@
+                 public void start(String destination) {
+                     InstanceConfig config = instanceConfigs.get(destination);
+                     if (config == null) {
+-                        config = new InstanceConfig(globalInstanceConfig);
++                        // 重新读取一下instance config
++                        config = parseInstanceConfig(properties, destination);
+                         instanceConfigs.put(destination, config);
+                     }
+ 

@@ -1,0 +1,87 @@
+diff --git a/handler/src/main/java/io/netty/handler/traffic/AbstractTrafficShapingHandler.java b/handler/src/main/java/io/netty/handler/traffic/AbstractTrafficShapingHandler.java
+index 3e8f294..ff97783 100644
+--- a/handler/src/main/java/io/netty/handler/traffic/AbstractTrafficShapingHandler.java
++++ b/handler/src/main/java/io/netty/handler/traffic/AbstractTrafficShapingHandler.java
+@@ -91,7 +91,7 @@
+     /**
+      * used in releaseExternalResources() to cancel the timer
+      */
+-    volatile private Timeout timeout = null;
++    private volatile Timeout timeout;
+     
+     /**
+      * Limit in B/s to apply to write
+diff --git a/handler/src/main/java/io/netty/handler/traffic/ChannelTrafficShapingHandler.java b/handler/src/main/java/io/netty/handler/traffic/ChannelTrafficShapingHandler.java
+index bd2f281..7e3a659 100644
+--- a/handler/src/main/java/io/netty/handler/traffic/ChannelTrafficShapingHandler.java
++++ b/handler/src/main/java/io/netty/handler/traffic/ChannelTrafficShapingHandler.java
+@@ -33,7 +33,7 @@
+  * <li>Add in your pipeline a new ChannelTrafficShapingHandler, before a recommended {@link ExecutionHandler} (like
+  * {@link OrderedMemoryAwareThreadPoolExecutor} or {@link MemoryAwareThreadPoolExecutor}).<br>
+  * <tt>ChannelTrafficShapingHandler myHandler = new ChannelTrafficShapingHandler(timer);</tt><br>
+- * timer could be created using <tt>HashedWheelTimer<tt><br>
++ * timer could be created using <tt>HashedWheelTimer</tt><br>
+  * <tt>pipeline.addLast("CHANNEL_TRAFFIC_SHAPING", myHandler);</tt><br><br>
+  *
+  * <b>Note that this handler has a Pipeline Coverage of "one" which means a new handler must be created
+diff --git a/handler/src/main/java/io/netty/handler/traffic/GlobalTrafficShapingHandler.java b/handler/src/main/java/io/netty/handler/traffic/GlobalTrafficShapingHandler.java
+index b6617d8..a52e050 100644
+--- a/handler/src/main/java/io/netty/handler/traffic/GlobalTrafficShapingHandler.java
++++ b/handler/src/main/java/io/netty/handler/traffic/GlobalTrafficShapingHandler.java
+@@ -31,7 +31,7 @@
+  * <ul>
+  * <li>Create your unique GlobalTrafficShapingHandler like:<br><br>
+  * <tt>GlobalTrafficShapingHandler myHandler = new GlobalTrafficShapingHandler(timer);</tt><br><br>
+- * timer could be created using <tt>HashedWheelTimer<tt><br>
++ * timer could be created using <tt>HashedWheelTimer</tt><br>
+  * <tt>pipeline.addLast("GLOBAL_TRAFFIC_SHAPING", myHandler);</tt><br><br>
+  *
+  * <b>Note that this handler has a Pipeline Coverage of "all" which means only one such handler must be created
+diff --git a/handler/src/main/java/io/netty/handler/traffic/TrafficCounter.java b/handler/src/main/java/io/netty/handler/traffic/TrafficCounter.java
+index 4590fb5..ac49367 100644
+--- a/handler/src/main/java/io/netty/handler/traffic/TrafficCounter.java
++++ b/handler/src/main/java/io/netty/handler/traffic/TrafficCounter.java
+@@ -113,7 +113,7 @@
+     /**
+      * used in stop() to cancel the timer
+      */
+-    volatile private Timeout timeout = null;
++    private volatile Timeout timeout;
+ 
+     /**
+      * Is Monitor active
+diff --git a/handler/src/main/java/io/netty/handler/traffic/package-info.java b/handler/src/main/java/io/netty/handler/traffic/package-info.java
+index f39d8f3..fd7e408 100644
+--- a/handler/src/main/java/io/netty/handler/traffic/package-info.java
++++ b/handler/src/main/java/io/netty/handler/traffic/package-info.java
+@@ -36,7 +36,7 @@
+  *
+  * The insertion in the pipeline of one of those handlers can be wherever you want, but
+  * <b>it must be placed before any <tt>{@link MemoryAwareThreadPoolExecutor}</tt>
+- * in your pipeline</b>.</li><br>
++ * in your pipeline</b>.<br>
+  * <b><i>It is really recommended to have such a</i> <tt>{@link MemoryAwareThreadPoolExecutor}</tt>
+  * <i>(either non ordered or </i> <tt>{@link OrderedMemoryAwareThreadPoolExecutor}</tt>
+  * <i>) in your pipeline</i></b>
+@@ -76,7 +76,7 @@
+  *
+  * <P>So in your application you will create your own TrafficShapingHandler and set the values to fit your needs.</P>
+  * <tt>XXXXXTrafficShapingHandler myHandler = new XXXXXTrafficShapingHandler(timer);</tt><br><br>
+- * timer could be created using <tt>HashedWheelTimer<tt> and XXXXX could be either
++ * timer could be created using <tt>HashedWheelTimer</tt> and XXXXX could be either
+  * Global or Channel<br>
+  * <tt>pipeline.addLast("XXXXX_TRAFFIC_SHAPING", myHandler);</tt><br>
+  * <tt>...</tt><br>
+diff --git a/handler/src/main/java/io/netty/handler/traffic/AbstractTrafficShapingHandler.java b/handler/src/main/java/io/netty/handler/traffic/AbstractTrafficShapingHandler.java
+index 3e8f294..ff97783 100644
+--- a/handler/src/main/java/io/netty/handler/traffic/AbstractTrafficShapingHandler.java
++++ b/handler/src/main/java/io/netty/handler/traffic/AbstractTrafficShapingHandler.java
+@@ -91,7 +91,7 @@
+     /**
+      * used in releaseExternalResources() to cancel the timer
+      */
+-    volatile private Timeout timeout = null;
++    private volatile Timeout timeout;
+     
+     /**
+      * Limit in B/s to apply to write

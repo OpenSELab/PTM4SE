@@ -1,0 +1,111 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannel.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannel.java
+index 990166f..0f70d44 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannel.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannel.java
+@@ -338,7 +338,7 @@
+ 	}
+ 
+ 	@VisibleForTesting
+-	public boolean isWaitingForFloatingBuffers() {
++	boolean isWaitingForFloatingBuffers() {
+ 		return isWaitingForFloatingBuffers;
+ 	}
+ 
+diff --git a/flink-runtime/src/test/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannelTest.java b/flink-runtime/src/test/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannelTest.java
+index e3e6623..97a5688 100644
+--- a/flink-runtime/src/test/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannelTest.java
++++ b/flink-runtime/src/test/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannelTest.java
+@@ -355,7 +355,7 @@
+ 				13, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 16 buffers required in the channel",
+ 				16, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 			assertTrue(inputChannel.isWaitingForFloatingBuffers());
+ 
+@@ -369,7 +369,7 @@
+ 				13, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 18 buffers required in the channel",
+ 				18, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 			assertTrue(inputChannel.isWaitingForFloatingBuffers());
+ 
+@@ -383,7 +383,7 @@
+ 				14, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 18 buffers required in the channel",
+ 				18, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 			assertTrue(inputChannel.isWaitingForFloatingBuffers());
+ 
+@@ -397,7 +397,7 @@
+ 				15, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 18 buffers required in the channel",
+ 				18, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 			assertTrue(inputChannel.isWaitingForFloatingBuffers());
+ 
+@@ -411,7 +411,7 @@
+ 				15, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 15 buffers required in the channel",
+ 				15, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 			assertTrue(inputChannel.isWaitingForFloatingBuffers());
+ 
+@@ -439,7 +439,7 @@
+ 				16, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 17 buffers required in the channel",
+ 				17, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 			assertTrue(inputChannel.isWaitingForFloatingBuffers());
+ 
+@@ -490,7 +490,7 @@
+ 				14, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 14 buffers required in the channel",
+ 				14, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 
+ 			// Recycle one floating buffer
+@@ -569,7 +569,7 @@
+ 				14, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 14 buffers required in the channel",
+ 				14, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 
+ 			// Decrease the backlog to make the number of available buffers more than required buffers
+@@ -582,7 +582,7 @@
+ 				14, inputChannel.getNumberOfAvailableBuffers());
+ 			assertEquals("There should be 12 buffers required in the channel",
+ 				12, inputChannel.getNumberOfRequiredBuffers());
+-			assertEquals("There should be 0 buffer available in local pool",
++			assertEquals("There should be 0 buffers available in local pool",
+ 				0, bufferPool.getNumberOfAvailableMemorySegments());
+ 
+ 			// Recycle one exclusive buffer
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannel.java b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannel.java
+index 990166f..0f70d44 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannel.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/io/network/partition/consumer/RemoteInputChannel.java
+@@ -338,7 +338,7 @@
+ 	}
+ 
+ 	@VisibleForTesting
+-	public boolean isWaitingForFloatingBuffers() {
++	boolean isWaitingForFloatingBuffers() {
+ 		return isWaitingForFloatingBuffers;
+ 	}
+ 

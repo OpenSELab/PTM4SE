@@ -1,0 +1,35 @@
+diff --git a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/DagConnection.java b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/DagConnection.java
+index 1f98a11..bd88234 100644
+--- a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/DagConnection.java
++++ b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/DagConnection.java
+@@ -54,13 +54,14 @@
+ 	private boolean breakPipeline;  // whether this connection should break the pipeline due to potential deadlocks
+ 
+ 	/**
+-	 * Creates a new Connection between two nodes. The shipping strategy is by default <tt>NONE</tt>.
+-	 * The temp mode is by default <tt>NONE</tt>.
++	 * Creates a new Connection between two nodes. The shipping strategy is by default <tt>null</tt>.
+ 	 * 
+ 	 * @param source
+ 	 *        The source node.
+ 	 * @param target
+ 	 *        The target node.
++	 * @param exchangeMode
++	 *        The data exchange mode (pipelined / batch / batch only for shuffles / ... )
+ 	 */
+ 	public DagConnection(OptimizerNode source, OptimizerNode target, ExecutionMode exchangeMode) {
+ 		this(source, target, null, exchangeMode);
+@@ -96,10 +97,12 @@
+ 	 * 
+ 	 * @param source
+ 	 *        The source node.
++	 * @param exchangeMode
++	 *        The data exchange mode (pipelined / batch / batch only for shuffles / ... )
+ 	 */
+ 	public DagConnection(OptimizerNode source, ExecutionMode exchangeMode) {
+ 		if (source == null) {
+-			throw new NullPointerException("Source and target must not be null.");
++			throw new NullPointerException("Source must not be null.");
+ 		}
+ 		this.source = source;
+ 		this.target = null;

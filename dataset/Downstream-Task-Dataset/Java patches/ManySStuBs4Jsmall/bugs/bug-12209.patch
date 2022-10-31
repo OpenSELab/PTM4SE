@@ -1,0 +1,344 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandexp.java b/Essentials/src/com/earth2me/essentials/commands/Commandexp.java
+index 7013d7d..b453541 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandexp.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandexp.java
+@@ -115,7 +115,7 @@
+ 		}
+ 	}
+ 
+-	private void showMatch(final Server server, final CommandSender sender, final String match) throws NotEnoughArgumentsException
++	private void showMatch(final Server server, final CommandSender sender, final String match) throws PlayerNotFoundException
+ 	{
+ 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+ 		boolean foundUser = false;
+@@ -132,11 +132,11 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 
+-	private void expMatch(final Server server, final CommandSender sender, final String match, String amount, final boolean give) throws NotEnoughArgumentsException
++	private void expMatch(final Server server, final CommandSender sender, final String match, String amount, final boolean give) throws NotEnoughArgumentsException, PlayerNotFoundException
+ 	{
+ 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+ 		boolean foundUser = false;
+@@ -153,7 +153,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandext.java b/Essentials/src/com/earth2me/essentials/commands/Commandext.java
+index 16190f7..30601d6 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandext.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandext.java
+@@ -38,7 +38,7 @@
+ 
+ 		if (args[0].trim().length() < 2)
+ 		{
+-			throw new Exception(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 
+ 		extinguishPlayers(server, user, args[0]);
+@@ -62,7 +62,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ }
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandfeed.java b/Essentials/src/com/earth2me/essentials/commands/Commandfeed.java
+index 167bfcc..f73e43a 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandfeed.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandfeed.java
+@@ -23,7 +23,7 @@
+ 		{
+ 			if (args[0].trim().length() < 2)
+ 			{
+-				throw new Exception(_("playerNotFound"));
++				throw new PlayerNotFoundException();
+ 			}
+ 			if (!user.isAuthorized("essentials.heal.cooldown.bypass"))
+ 			{
+@@ -60,7 +60,7 @@
+ 		feedOtherPlayers(server, sender, args[0]);
+ 	}
+ 
+-	private void feedOtherPlayers(final Server server, final CommandSender sender, final String name) throws NotEnoughArgumentsException
++	private void feedOtherPlayers(final Server server, final CommandSender sender, final String name) throws PlayerNotFoundException
+ 	{
+ 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+ 		boolean foundUser = false;
+@@ -84,7 +84,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandgamemode.java b/Essentials/src/com/earth2me/essentials/commands/Commandgamemode.java
+index 9707c84..96248b1 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandgamemode.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandgamemode.java
+@@ -77,7 +77,7 @@
+ 		user.sendMessage(_("gameMode", _(user.getGameMode().toString().toLowerCase(Locale.ENGLISH)), user.getDisplayName()));
+ 	}
+ 
+-	private void gamemodeOtherPlayers(final Server server, final CommandSender sender, final GameMode gameMode, final String name) throws NotEnoughArgumentsException
++	private void gamemodeOtherPlayers(final Server server, final CommandSender sender, final GameMode gameMode, final String name) throws NotEnoughArgumentsException, PlayerNotFoundException
+ 	{
+ 		//TODO: TL this
+ 		if (name.trim().length() < 2 || gameMode == null)
+@@ -101,7 +101,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandheal.java b/Essentials/src/com/earth2me/essentials/commands/Commandheal.java
+index a3c80b5..7a1ede6 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandheal.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandheal.java
+@@ -26,7 +26,7 @@
+ 		{
+ 			if (args[0].trim().length() < 2)
+ 			{
+-				throw new Exception(_("playerNotFound"));
++				throw new PlayerNotFoundException();
+ 			}
+ 			if (!user.isAuthorized("essentials.heal.cooldown.bypass"))
+ 			{
+@@ -79,7 +79,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandignore.java b/Essentials/src/com/earth2me/essentials/commands/Commandignore.java
+index 090903c..b83d890 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandignore.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandignore.java
+@@ -30,7 +30,7 @@
+ 		}
+ 		if (player == null)
+ 		{
+-			throw new Exception(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 		if (user.isIgnoredPlayer(player))
+ 		{
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandlightning.java b/Essentials/src/com/earth2me/essentials/commands/Commandlightning.java
+index ff22051..50d7646 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandlightning.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandlightning.java
+@@ -45,7 +45,7 @@
+ 
+ 		if (args[0].trim().length() < 2)
+ 		{
+-			throw new Exception(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 
+ 		final List<Player> matchedPlayers = server.matchPlayer(args[0]);
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandmsg.java b/Essentials/src/com/earth2me/essentials/commands/Commandmsg.java
+index 5488dcb..b6a1c64 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandmsg.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandmsg.java
+@@ -87,7 +87,7 @@
+ 
+ 		if (!foundUser)
+ 		{
+-			throw new Exception(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ }
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandpay.java b/Essentials/src/com/earth2me/essentials/commands/Commandpay.java
+index ae56b3c..859d34c 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandpay.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandpay.java
+@@ -49,7 +49,7 @@
+ 
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ }
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandptime.java b/Essentials/src/com/earth2me/essentials/commands/Commandptime.java
+index 44e9bbc..a0c0deb 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandptime.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandptime.java
+@@ -225,7 +225,7 @@
+ 		// We failed to understand the world target...
+ 		else
+ 		{
+-			throw new Exception(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 
+ 		return users;
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandpweather.java b/Essentials/src/com/earth2me/essentials/commands/Commandpweather.java
+index be5fa11..c410bcd 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandpweather.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandpweather.java
+@@ -175,7 +175,7 @@
+ 		// We failed to understand the world target...
+ 		else
+ 		{
+-			throw new Exception(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 
+ 		return users;
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandrealname.java b/Essentials/src/com/earth2me/essentials/commands/Commandrealname.java
+index 9eb9173..cadc0e6 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandrealname.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandrealname.java
+@@ -43,7 +43,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NoSuchFieldException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ }
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandseen.java b/Essentials/src/com/earth2me/essentials/commands/Commandseen.java
+index 655886e..9e7d2df 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandseen.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandseen.java
+@@ -56,7 +56,7 @@
+ 				}
+ 				else
+ 				{
+-					throw new Exception(_("playerNotFound"));
++					throw new PlayerNotFoundException();
+ 				}
+ 			}
+ 			seenOffline(server, sender, player, showBan, extra);
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandsethome.java b/Essentials/src/com/earth2me/essentials/commands/Commandsethome.java
+index 390ab65..e9907b5 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandsethome.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandsethome.java
+@@ -42,7 +42,7 @@
+ 					usersHome = ess.getUser(args[0]);
+ 					if (usersHome == null)
+ 					{
+-						throw new NoSuchFieldException(_("playerNotFound"));
++						throw new PlayerNotFoundException();
+ 					}
+ 					name = args[1].toLowerCase(Locale.ENGLISH);
+ 				}
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandspeed.java b/Essentials/src/com/earth2me/essentials/commands/Commandspeed.java
+index a13ba60..700e7ea 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandspeed.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandspeed.java
+@@ -51,7 +51,7 @@
+ 			{
+ 				if (args[2].trim().length() < 2)
+ 				{
+-					throw new Exception(_("playerNotFound"));
++					throw new PlayerNotFoundException();
+ 				}
+ 				speedOtherPlayers(server, user, isFly, isBypass, speed, args[2]);
+ 				return;
+@@ -70,7 +70,7 @@
+ 		}
+ 	}
+ 
+-	private void speedOtherPlayers(final Server server, final CommandSender sender, final boolean isFly, final boolean isBypass, final float speed, final String name) throws NotEnoughArgumentsException
++	private void speedOtherPlayers(final Server server, final CommandSender sender, final boolean isFly, final boolean isBypass, final float speed, final String name) throws PlayerNotFoundException
+ 	{
+ 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+ 		boolean foundUser = false;
+@@ -96,7 +96,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 
+diff --git a/Essentials/src/com/earth2me/essentials/commands/EssentialsToggleCommand.java b/Essentials/src/com/earth2me/essentials/commands/EssentialsToggleCommand.java
+index 022bc2f..9fe317b 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/EssentialsToggleCommand.java
++++ b/Essentials/src/com/earth2me/essentials/commands/EssentialsToggleCommand.java
+@@ -31,11 +31,11 @@
+ 		return null;
+ 	}
+ 
+-	protected void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws NotEnoughArgumentsException
++	protected void toggleOtherPlayers(final Server server, final CommandSender sender, final String[] args) throws PlayerNotFoundException, NotEnoughArgumentsException
+ 	{
+ 		if (args.length < 1 || args[0].trim().length() < 2)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 
+ 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+@@ -68,7 +68,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandexp.java b/Essentials/src/com/earth2me/essentials/commands/Commandexp.java
+index 7013d7d..b453541 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandexp.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandexp.java
+@@ -115,7 +115,7 @@
+ 		}
+ 	}
+ 
+-	private void showMatch(final Server server, final CommandSender sender, final String match) throws NotEnoughArgumentsException
++	private void showMatch(final Server server, final CommandSender sender, final String match) throws PlayerNotFoundException
+ 	{
+ 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+ 		boolean foundUser = false;
+@@ -132,11 +132,11 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 
+-	private void expMatch(final Server server, final CommandSender sender, final String match, String amount, final boolean give) throws NotEnoughArgumentsException
++	private void expMatch(final Server server, final CommandSender sender, final String match, String amount, final boolean give) throws NotEnoughArgumentsException, PlayerNotFoundException
+ 	{
+ 		boolean skipHidden = sender instanceof Player && !ess.getUser(sender).isAuthorized("essentials.vanish.interact");
+ 		boolean foundUser = false;
+@@ -153,7 +153,7 @@
+ 		}
+ 		if (!foundUser)
+ 		{
+-			throw new NotEnoughArgumentsException(_("playerNotFound"));
++			throw new PlayerNotFoundException();
+ 		}
+ 	}
+ 

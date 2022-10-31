@@ -1,0 +1,26 @@
+diff --git a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/function/source/FileSourceFunction.java b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/function/source/FileSourceFunction.java
+index d7df266..9289355 100644
+--- a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/function/source/FileSourceFunction.java
++++ b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/function/source/FileSourceFunction.java
+@@ -67,7 +67,7 @@
+ 				String record = serializer.createInstance();
+ 
+ 				format.open(split);
+-				while (!format.reachedEnd()) {
++				while (isRunning && !format.reachedEnd()) {
+ 					if ((record = format.nextRecord(record)) != null) {
+ 						collector.collect(record);
+ 					}
+diff --git a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/function/source/FileSourceFunction.java b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/function/source/FileSourceFunction.java
+index d7df266..9289355 100644
+--- a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/function/source/FileSourceFunction.java
++++ b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/api/function/source/FileSourceFunction.java
+@@ -67,7 +67,7 @@
+ 				String record = serializer.createInstance();
+ 
+ 				format.open(split);
+-				while (!format.reachedEnd()) {
++				while (isRunning && !format.reachedEnd()) {
+ 					if ((record = format.nextRecord(record)) != null) {
+ 						collector.collect(record);
+ 					}

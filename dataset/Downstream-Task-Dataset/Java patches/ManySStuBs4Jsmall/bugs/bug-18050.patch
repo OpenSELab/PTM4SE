@@ -1,0 +1,45 @@
+diff --git a/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ForkRunner.java b/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ForkRunner.java
+index 4d31fb0..ec5fbd5 100644
+--- a/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ForkRunner.java
++++ b/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ForkRunner.java
+@@ -35,9 +35,9 @@
+ 
+         PinpointAgent path = testClass.getAnnotation(PinpointAgent.class);
+         if (path != null && path.value() != null) {
+-            agentJar = projectPath.getPinpointAgentPath() + path.value();
++            agentJar = projectPath.getPinpointAgentPath() + "/" + path.value();
+         } else {
+-            agentJar = projectPath.getPinpointAgentPath() + "pinpoint-bootstrap-" + Version.VERSION + ".jar";
++            agentJar = projectPath.getPinpointAgentPath() + "/" + "pinpoint-bootstrap-" + Version.VERSION + ".jar";
+         }
+         logger.debug("agentJar:{}", agentJar);
+ 
+diff --git a/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ProjectPathResolver.java b/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ProjectPathResolver.java
+index cfc8050..266f8d8 100644
+--- a/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ProjectPathResolver.java
++++ b/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ProjectPathResolver.java
+@@ -79,7 +79,7 @@
+             throw new NullPointerException("projectPath must not be null");
+         }
+ 
+-        String pinpointAgentDir = projectPath + "/profiler/target/pinpoint-agent/";
++        String pinpointAgentDir = projectPath + "/profiler/target/pinpoint-agent";
+         logger.debug("pinpointAgentDir:{}", pinpointAgentDir);
+         return pinpointAgentDir;
+ 
+diff --git a/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ForkRunner.java b/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ForkRunner.java
+index 4d31fb0..ec5fbd5 100644
+--- a/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ForkRunner.java
++++ b/profiler/src/test/java/com/navercorp/pinpoint/profiler/util/ForkRunner.java
+@@ -35,9 +35,9 @@
+ 
+         PinpointAgent path = testClass.getAnnotation(PinpointAgent.class);
+         if (path != null && path.value() != null) {
+-            agentJar = projectPath.getPinpointAgentPath() + path.value();
++            agentJar = projectPath.getPinpointAgentPath() + "/" + path.value();
+         } else {
+-            agentJar = projectPath.getPinpointAgentPath() + "pinpoint-bootstrap-" + Version.VERSION + ".jar";
++            agentJar = projectPath.getPinpointAgentPath() + "/" + "pinpoint-bootstrap-" + Version.VERSION + ".jar";
+         }
+         logger.debug("agentJar:{}", agentJar);
+ 

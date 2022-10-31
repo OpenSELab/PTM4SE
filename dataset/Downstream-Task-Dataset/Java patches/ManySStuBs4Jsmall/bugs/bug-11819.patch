@@ -1,0 +1,12 @@
+diff --git a/server/src/main/java/io/druid/server/coordinator/rules/PeriodLoadRule.java b/server/src/main/java/io/druid/server/coordinator/rules/PeriodLoadRule.java
+index 3f650c8..a9bda62 100644
+--- a/server/src/main/java/io/druid/server/coordinator/rules/PeriodLoadRule.java
++++ b/server/src/main/java/io/druid/server/coordinator/rules/PeriodLoadRule.java
+@@ -94,6 +94,6 @@
+   public boolean appliesTo(Interval interval, DateTime referenceTimestamp)
+   {
+     final Interval currInterval = new Interval(period, referenceTimestamp);
+-    return currInterval.contains(interval);
++    return currInterval.overlaps(interval) && interval.getStartMillis() >= currInterval.getStartMillis();
+   }
+ }

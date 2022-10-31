@@ -1,0 +1,31 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/timer/TimerConsumer.java b/camel-core/src/main/java/org/apache/camel/component/timer/TimerConsumer.java
+index a2cf79e..13be495 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/timer/TimerConsumer.java
++++ b/camel-core/src/main/java/org/apache/camel/component/timer/TimerConsumer.java
+@@ -50,6 +50,11 @@ public class TimerConsumer extends DefaultConsumer {
+ 
+             @Override
+             public void run() {
++                if (!isTaskRunAllowed()) {
++                    // do not run timer task as it was not allowed
++                    return;
++                }
++
+                 try {
+                     long count = counter.incrementAndGet();
+ 
+@@ -80,6 +85,14 @@ public class TimerConsumer extends DefaultConsumer {
+         task = null;
+     }
+ 
++    /**
++     * Whether the timer task is allow to run or not
++     */
++    protected boolean isTaskRunAllowed() {
++        // only allow running the timer task if we can run and are not suspended
++        return isRunAllowed() && !isSuspended();
++    }
++
+     protected void configureTask(TimerTask task, Timer timer) {
+         if (endpoint.isFixedRate()) {
+             if (endpoint.getTime() != null) {

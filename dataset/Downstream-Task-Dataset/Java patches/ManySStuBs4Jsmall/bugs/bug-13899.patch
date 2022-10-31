@@ -1,0 +1,44 @@
+diff --git a/src/com/google/javascript/jscomp/J2clClinitPrunerPass.java b/src/com/google/javascript/jscomp/J2clClinitPrunerPass.java
+index 5b0c9aa..b5f404e 100644
+--- a/src/com/google/javascript/jscomp/J2clClinitPrunerPass.java
++++ b/src/com/google/javascript/jscomp/J2clClinitPrunerPass.java
+@@ -68,7 +68,7 @@
+       }
+ 
+       if (isNewControlBranch(parent)) {
+-        clinitsCalledAtBranch = new HierarchicalSet(clinitsCalledAtBranch);
++        clinitsCalledAtBranch = new HierarchicalSet<>(clinitsCalledAtBranch);
+         if (isClinitMethod(parent)) {
+           // Adds itself as any of your children can assume clinit is already called.
+           clinitsCalledAtBranch.add(NodeUtil.getName(parent));
+@@ -301,7 +301,7 @@
+     private Set<T> currentSet = new HashSet<>();
+     private HierarchicalSet<T> parent;
+ 
+-    public HierarchicalSet(HierarchicalSet parent) {
++    public HierarchicalSet(HierarchicalSet<T> parent) {
+       this.parent = parent;
+     }
+ 
+diff --git a/src/com/google/javascript/jscomp/J2clClinitPrunerPass.java b/src/com/google/javascript/jscomp/J2clClinitPrunerPass.java
+index 5b0c9aa..b5f404e 100644
+--- a/src/com/google/javascript/jscomp/J2clClinitPrunerPass.java
++++ b/src/com/google/javascript/jscomp/J2clClinitPrunerPass.java
+@@ -68,7 +68,7 @@
+       }
+ 
+       if (isNewControlBranch(parent)) {
+-        clinitsCalledAtBranch = new HierarchicalSet(clinitsCalledAtBranch);
++        clinitsCalledAtBranch = new HierarchicalSet<>(clinitsCalledAtBranch);
+         if (isClinitMethod(parent)) {
+           // Adds itself as any of your children can assume clinit is already called.
+           clinitsCalledAtBranch.add(NodeUtil.getName(parent));
+@@ -301,7 +301,7 @@
+     private Set<T> currentSet = new HashSet<>();
+     private HierarchicalSet<T> parent;
+ 
+-    public HierarchicalSet(HierarchicalSet parent) {
++    public HierarchicalSet(HierarchicalSet<T> parent) {
+       this.parent = parent;
+     }
+ 

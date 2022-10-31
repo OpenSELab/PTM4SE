@@ -1,0 +1,25 @@
+--- a/common/src/main/java/slash/common/helpers/JAXBHelper.java
++++ b/common/src/main/java/slash/common/helpers/JAXBHelper.java
+@@ -70,14 +71,20 @@ public class JAXBHelper {
+     }
+ 
+     public static Marshaller newMarshaller(JAXBContext context) {
++        Marshaller result;
+         try {
+-            Marshaller result = context.createMarshaller();
++            result = context.createMarshaller();
+             result.setProperty(JAXB_FORMATTED_OUTPUT, preferences.getBoolean("prettyPrintXml", true));
+-            result.setProperty(JAXB_IMPL_HEADER, HEADER_LINE);
+-            return result;
+         } catch (JAXBException e) {
+             throw new RuntimeException(e);
+         }
++
++        try {
++            result.setProperty(JAXB_IMPL_HEADER, HEADER_LINE);
++        } catch (PropertyException e) {
++            // intentionally left empty
++        }
++        return result;
+     }
+ 

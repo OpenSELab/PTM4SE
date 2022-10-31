@@ -1,0 +1,34 @@
+diff --git a/api/src/main/java/org/openmrs/module/ModuleFactory.java b/api/src/main/java/org/openmrs/module/ModuleFactory.java
+index fcc5fdf..2c9770c 100644
+--- a/api/src/main/java/org/openmrs/module/ModuleFactory.java
++++ b/api/src/main/java/org/openmrs/module/ModuleFactory.java
+@@ -488,8 +488,10 @@
+ 				
+ 				// check for required modules
+ 				if (!requiredModulesStarted(module)) {
+-					throw new ModuleException("Not all required modules are started: "
+-					        + OpenmrsUtil.join(getMissingRequiredModules(module), ", ") + ". ", module.getName());
++					throw new ModuleException("Module " + module.getName()
++					        + " cannot be added because it requires the following module(s): "
++					        + OpenmrsUtil.join(getMissingRequiredModules(module), ", ")
++					        + ". Please add and start these modules first.");
+ 				}
+ 				
+ 				// fire up the classloader for this module
+diff --git a/api/src/main/java/org/openmrs/module/ModuleFactory.java b/api/src/main/java/org/openmrs/module/ModuleFactory.java
+index fcc5fdf..2c9770c 100644
+--- a/api/src/main/java/org/openmrs/module/ModuleFactory.java
++++ b/api/src/main/java/org/openmrs/module/ModuleFactory.java
+@@ -488,8 +488,10 @@
+ 				
+ 				// check for required modules
+ 				if (!requiredModulesStarted(module)) {
+-					throw new ModuleException("Not all required modules are started: "
+-					        + OpenmrsUtil.join(getMissingRequiredModules(module), ", ") + ". ", module.getName());
++					throw new ModuleException("Module " + module.getName()
++					        + " cannot be added because it requires the following module(s): "
++					        + OpenmrsUtil.join(getMissingRequiredModules(module), ", ")
++					        + ". Please add and start these modules first.");
+ 				}
+ 				
+ 				// fire up the classloader for this module

@@ -1,0 +1,146 @@
+diff --git a/bundles/binding/org.openhab.binding.s300th/src/main/java/org/openhab/binding/s300th/internal/S300THBinding.java b/bundles/binding/org.openhab.binding.s300th/src/main/java/org/openhab/binding/s300th/internal/S300THBinding.java
+index e84fb1f..ca1775a 100644
+--- a/bundles/binding/org.openhab.binding.s300th/src/main/java/org/openhab/binding/s300th/internal/S300THBinding.java
++++ b/bundles/binding/org.openhab.binding.s300th/src/main/java/org/openhab/binding/s300th/internal/S300THBinding.java
+@@ -262,7 +262,7 @@
+ 
+     @Override
+     public void error(Exception e) {
+-        logger.error("Received error from CUL instead fo data", e);
++        logger.error("Received error from CUL instead of data", e);
+ 
+     }
+ 
+diff --git a/bundles/binding/org.openhab.binding.samsungac/src/main/java/org/binding/openhab/samsungac/communicator/AirConditioner.java b/bundles/binding/org.openhab.binding.samsungac/src/main/java/org/binding/openhab/samsungac/communicator/AirConditioner.java
+index 0f290fb..120c6e8 100644
+--- a/bundles/binding/org.openhab.binding.samsungac/src/main/java/org/binding/openhab/samsungac/communicator/AirConditioner.java
++++ b/bundles/binding/org.openhab.binding.samsungac/src/main/java/org/binding/openhab/samsungac/communicator/AirConditioner.java
+@@ -77,7 +77,7 @@
+             getToken();
+             loginWithToken();
+         } catch (Exception e) {
+-            logger.debug("Disconneting...", e);
++            logger.debug("Disconnecting...", e);
+             disconnect();
+             throw e;
+         }
+diff --git a/bundles/binding/org.openhab.binding.samsungtv/src/main/java/de/quist/samy/remocon/RemoteSession.java b/bundles/binding/org.openhab.binding.samsungtv/src/main/java/de/quist/samy/remocon/RemoteSession.java
+index 9f28005..654ecd2 100755
+--- a/bundles/binding/org.openhab.binding.samsungtv/src/main/java/de/quist/samy/remocon/RemoteSession.java
++++ b/bundles/binding/org.openhab.binding.samsungtv/src/main/java/de/quist/samy/remocon/RemoteSession.java
+@@ -151,7 +151,7 @@
+         logger.debug("Received ID: " + text1);
+         char[] result = readCharArray(reader); // Read result sequence
+         if (Arrays.equals(result, ALLOWED_BYTES)) {
+-            logger.debug("Registration successfull");
++            logger.debug("Registration successful");
+             return ALLOWED;
+         } else if (Arrays.equals(result, DENIED_BYTES)) {
+             logger.warn("Registration denied");
+diff --git a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/protocol/Ethm1Module.java b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/protocol/Ethm1Module.java
+index 2da411b..6ccf089 100644
+--- a/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/protocol/Ethm1Module.java
++++ b/bundles/binding/org.openhab.binding.satel/src/main/java/org/openhab/binding/satel/internal/protocol/Ethm1Module.java
+@@ -65,7 +65,7 @@
+         try {
+             Socket socket = new Socket();
+             socket.connect(new InetSocketAddress(this.host, this.port), this.getTimeout());
+-            logger.info("ETHM-1 module connected successfuly");
++            logger.info("ETHM-1 module connected successfully");
+ 
+             if (StringUtils.isBlank(this.encryptionKey)) {
+                 return new TCPCommunicationChannel(socket);
+diff --git a/bundles/binding/org.openhab.binding.snmp/src/main/java/org/openhab/binding/snmp/internal/SnmpBinding.java b/bundles/binding/org.openhab.binding.snmp/src/main/java/org/openhab/binding/snmp/internal/SnmpBinding.java
+index f2582b0..ffdefac 100644
+--- a/bundles/binding/org.openhab.binding.snmp/src/main/java/org/openhab/binding/snmp/internal/SnmpBinding.java
++++ b/bundles/binding/org.openhab.binding.snmp/src/main/java/org/openhab/binding/snmp/internal/SnmpBinding.java
+@@ -250,7 +250,7 @@
+                                     variable.toString());
+                         }
+                     } else {
+-                        logger.trace("PDU doesn't contain a variable with OID ‘{}‘", oid.toString());
++                        logger.trace("PDU doesn't contain a variable with OID '{}'", oid.toString());
+                     }
+                 }
+             }
+diff --git a/bundles/binding/org.openhab.binding.sonos/src/main/java/org/openhab/binding/sonos/internal/SonosXMLParser.java b/bundles/binding/org.openhab.binding.sonos/src/main/java/org/openhab/binding/sonos/internal/SonosXMLParser.java
+index d90ec70..28f868f 100644
+--- a/bundles/binding/org.openhab.binding.sonos/src/main/java/org/openhab/binding/sonos/internal/SonosXMLParser.java
++++ b/bundles/binding/org.openhab.binding.sonos/src/main/java/org/openhab/binding/sonos/internal/SonosXMLParser.java
+@@ -347,7 +347,7 @@
+                 try {
+                     md = getEmbededMetaDataFromResource(desc.toString());
+                 } catch (SAXException ignore) {
+-                    logger.debug("Failed to parse embeded", ignore);
++                    logger.debug("Failed to parse embedded", ignore);
+                 }
+ 
+                 artists.add(new SonosEntry(id, title.toString(), parentId, album.toString(), albumArtUri.toString(),
+diff --git a/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/internal/CommunicationService.java b/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/internal/CommunicationService.java
+index 0aa7817..857d1e2 100644
+--- a/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/internal/CommunicationService.java
++++ b/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/internal/CommunicationService.java
+@@ -554,9 +554,9 @@
+             throw new StiebelHeatPumpException("heat pump communication could not be established !");
+         }
+         if (response != DataParser.ESCAPE) {
+-            logger.warn("heat pump is communicating, but did not received Escape message in inital handshake!");
++            logger.warn("heat pump is communicating, but did not receive Escape message in initial handshake!");
+             throw new StiebelHeatPumpException(
+-                    "heat pump is communicating, but did not received Escape message in inital handshake!");
++                    "heat pump is communicating, but did not receive Escape message in initial handshake!");
+         }
+     }
+ 
+diff --git a/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/internal/StiebelHeatPumpBinding.java b/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/internal/StiebelHeatPumpBinding.java
+index 92a73d8..2ab7f59 100644
+--- a/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/internal/StiebelHeatPumpBinding.java
++++ b/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/internal/StiebelHeatPumpBinding.java
+@@ -294,7 +294,7 @@
+                         return false;
+                     }
+                 } catch (InterruptedException e) {
+-                    logger.error("could not access Heat pump for has version {}", version);
++                    logger.error("could not access Heat pump for version {}", version);
+                 }
+             }
+ 
+diff --git a/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/protocol/DataParser.java b/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/protocol/DataParser.java
+index f6d6df1..e601029 100644
+--- a/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/protocol/DataParser.java
++++ b/bundles/binding/org.openhab.binding.stiebelheatpump/src/main/java/org/openhab/binding/stiebelheatpump/protocol/DataParser.java
+@@ -74,7 +74,7 @@
+         logger.debug("Parse bytes: {}", DataParser.bytesToHex(response));
+ 
+         if (response.length < 2) {
+-            logger.error("response does not have a valid length ogf bytes: {}", DataParser.bytesToHex(response));
++            logger.error("response does not have a valid length of bytes: {}", DataParser.bytesToHex(response));
+             return map;
+         }
+ 
+diff --git a/bundles/binding/org.openhab.binding.swegonventilation/src/main/java/org/openhab/binding/swegonventilation/internal/SwegonVentilationBinding.java b/bundles/binding/org.openhab.binding.swegonventilation/src/main/java/org/openhab/binding/swegonventilation/internal/SwegonVentilationBinding.java
+index 4b8e929..688c23c 100644
+--- a/bundles/binding/org.openhab.binding.swegonventilation/src/main/java/org/openhab/binding/swegonventilation/internal/SwegonVentilationBinding.java
++++ b/bundles/binding/org.openhab.binding.swegonventilation/src/main/java/org/openhab/binding/swegonventilation/internal/SwegonVentilationBinding.java
+@@ -255,7 +255,7 @@
+             try {
+                 connector.disconnect();
+             } catch (SwegonVentilationException e) {
+-                logger.error("Error occured when disconnecting form Swegon ventilation system", e);
++                logger.error("Error occured when disconnecting from Swegon ventilation system", e);
+             }
+ 
+         }
+diff --git a/bundles/binding/org.openhab.binding.s300th/src/main/java/org/openhab/binding/s300th/internal/S300THBinding.java b/bundles/binding/org.openhab.binding.s300th/src/main/java/org/openhab/binding/s300th/internal/S300THBinding.java
+index e84fb1f..ca1775a 100644
+--- a/bundles/binding/org.openhab.binding.s300th/src/main/java/org/openhab/binding/s300th/internal/S300THBinding.java
++++ b/bundles/binding/org.openhab.binding.s300th/src/main/java/org/openhab/binding/s300th/internal/S300THBinding.java
+@@ -262,7 +262,7 @@
+ 
+     @Override
+     public void error(Exception e) {
+-        logger.error("Received error from CUL instead fo data", e);
++        logger.error("Received error from CUL instead of data", e);
+ 
+     }
+ 

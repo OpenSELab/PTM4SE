@@ -1,0 +1,30 @@
+diff --git a/googlebigtable/src/main/java/com/yahoo/ycsb/db/GoogleBigtableClient.java b/googlebigtable/src/main/java/com/yahoo/ycsb/db/GoogleBigtableClient.java
+index 86ab94e..d0d21dd 100644
+--- a/googlebigtable/src/main/java/com/yahoo/ycsb/db/GoogleBigtableClient.java
++++ b/googlebigtable/src/main/java/com/yahoo/ycsb/db/GoogleBigtableClient.java
+@@ -365,7 +365,9 @@
+       setCellBuilder.setFamilyNameBytes(ByteStringer.wrap(columnFamilyBytes));
+       setCellBuilder.setColumnQualifier(ByteStringer.wrap(entry.getKey().getBytes()));
+       setCellBuilder.setValue(ByteStringer.wrap(entry.getValue().toArray()));
+-      setCellBuilder.setTimestampMicros(System.nanoTime() / 1000);
++
++      // Bigtable uses a 1ms granularity
++      setCellBuilder.setTimestampMicros(System.currentTimeMillis() * 1000);
+     }
+     
+     try {
+diff --git a/googlebigtable/src/main/java/com/yahoo/ycsb/db/GoogleBigtableClient.java b/googlebigtable/src/main/java/com/yahoo/ycsb/db/GoogleBigtableClient.java
+index 86ab94e..d0d21dd 100644
+--- a/googlebigtable/src/main/java/com/yahoo/ycsb/db/GoogleBigtableClient.java
++++ b/googlebigtable/src/main/java/com/yahoo/ycsb/db/GoogleBigtableClient.java
+@@ -365,7 +365,9 @@
+       setCellBuilder.setFamilyNameBytes(ByteStringer.wrap(columnFamilyBytes));
+       setCellBuilder.setColumnQualifier(ByteStringer.wrap(entry.getKey().getBytes()));
+       setCellBuilder.setValue(ByteStringer.wrap(entry.getValue().toArray()));
+-      setCellBuilder.setTimestampMicros(System.nanoTime() / 1000);
++
++      // Bigtable uses a 1ms granularity
++      setCellBuilder.setTimestampMicros(System.currentTimeMillis() * 1000);
+     }
+     
+     try {

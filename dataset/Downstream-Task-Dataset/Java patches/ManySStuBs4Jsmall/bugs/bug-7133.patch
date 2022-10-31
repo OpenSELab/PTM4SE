@@ -1,0 +1,13 @@
+diff --git a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/factory/providers/YarnRemoteExceptionFactoryProvider.java b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/factory/providers/YarnRemoteExceptionFactoryProvider.java
+index 2cd9f12..e6e3b43 100644
+--- a/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/factory/providers/YarnRemoteExceptionFactoryProvider.java
++++ b/hadoop-yarn-project/hadoop-yarn/hadoop-yarn-common/src/main/java/org/apache/hadoop/yarn/factory/providers/YarnRemoteExceptionFactoryProvider.java
+@@ -51,7 +51,7 @@
+   
+   private static Object getFactoryClassInstance(String factoryClassName) {
+     try {
+-      Class clazz = Class.forName(factoryClassName);
++      Class<?> clazz = Class.forName(factoryClassName);
+       Method method = clazz.getMethod("get", null);
+       method.setAccessible(true);
+       return method.invoke(null, null);

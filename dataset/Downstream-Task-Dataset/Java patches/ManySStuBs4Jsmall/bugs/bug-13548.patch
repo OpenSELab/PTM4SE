@@ -1,0 +1,39 @@
+diff --git a/DataTableUI/src/org/gephi/ui/datatable/EdgeDataTable.java b/DataTableUI/src/org/gephi/ui/datatable/EdgeDataTable.java
+index 44a3f7f..589526d 100644
+--- a/DataTableUI/src/org/gephi/ui/datatable/EdgeDataTable.java
++++ b/DataTableUI/src/org/gephi/ui/datatable/EdgeDataTable.java
+@@ -379,7 +379,7 @@
+ 
+         public Object getValueFor(Edge edge) {
+             Object value = edge.getEdgeData().getAttributes().getValue(column.getIndex());
+-            if (useSparklines && AttributeUtils.getDefault().isNumberListColumn(column)) {
++            if (useSparklines && (AttributeUtils.getDefault().isNumberListColumn(column)||AttributeUtils.getDefault().isDynamicNumberColumn(column))) {
+                 return value;
+             } else {
+                 return value != null ? value.toString() : null;//Show values as Strings like in Edit window and other parts of the program to be consistent
+diff --git a/DataTableUI/src/org/gephi/ui/datatable/NodeDataTable.java b/DataTableUI/src/org/gephi/ui/datatable/NodeDataTable.java
+index c37193f..7334e45 100644
+--- a/DataTableUI/src/org/gephi/ui/datatable/NodeDataTable.java
++++ b/DataTableUI/src/org/gephi/ui/datatable/NodeDataTable.java
+@@ -384,7 +384,7 @@
+             Attributes row = graphNode.getNodeData().getAttributes();
+             Object value = row.getValue(column.getIndex());
+ 
+-            if (useSparklines && AttributeUtils.getDefault().isNumberListColumn(column)) {
++            if (useSparklines && (AttributeUtils.getDefault().isNumberListColumn(column)||AttributeUtils.getDefault().isDynamicNumberColumn(column))) {
+                 return value;
+             } else {
+                 return value != null ? value.toString() : null;//Show values as Strings like in Edit window and other parts of the program to be consistent
+diff --git a/DataTableUI/src/org/gephi/ui/datatable/EdgeDataTable.java b/DataTableUI/src/org/gephi/ui/datatable/EdgeDataTable.java
+index 44a3f7f..589526d 100644
+--- a/DataTableUI/src/org/gephi/ui/datatable/EdgeDataTable.java
++++ b/DataTableUI/src/org/gephi/ui/datatable/EdgeDataTable.java
+@@ -379,7 +379,7 @@
+ 
+         public Object getValueFor(Edge edge) {
+             Object value = edge.getEdgeData().getAttributes().getValue(column.getIndex());
+-            if (useSparklines && AttributeUtils.getDefault().isNumberListColumn(column)) {
++            if (useSparklines && (AttributeUtils.getDefault().isNumberListColumn(column)||AttributeUtils.getDefault().isDynamicNumberColumn(column))) {
+                 return value;
+             } else {
+                 return value != null ? value.toString() : null;//Show values as Strings like in Edit window and other parts of the program to be consistent

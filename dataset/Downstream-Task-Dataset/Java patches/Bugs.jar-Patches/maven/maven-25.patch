@@ -1,0 +1,173 @@
+diff --git a/maven-model-builder/src/main/java/org/apache/maven/model/profile/DefaultProfileSelector.java b/maven-model-builder/src/main/java/org/apache/maven/model/profile/DefaultProfileSelector.java
+index c376c99..0aeed9d 100644
+--- a/maven-model-builder/src/main/java/org/apache/maven/model/profile/DefaultProfileSelector.java
++++ b/maven-model-builder/src/main/java/org/apache/maven/model/profile/DefaultProfileSelector.java
+@@ -104,13 +104,19 @@ else if ( isActiveByDefault( profile ) )
+ 
+     private boolean isActive( Profile profile, ProfileActivationContext context, ModelProblemCollector problems )
+     {
++        boolean isActive = false;
++        for ( ProfileActivator activator : activators ) {
++            if ( activator.presentInConfig( profile, context, problems ) ) {
++                isActive = true;
++            }
++        }
+         for ( ProfileActivator activator : activators )
+         {
+             try
+             {
+-                if ( activator.isActive( profile, context, problems ) )
++                if ( activator.presentInConfig( profile, context, problems ) )
+                 {
+-                    return true;
++                    isActive &=  activator.isActive( profile, context, problems );
+                 }
+             }
+             catch ( RuntimeException e )
+@@ -122,7 +128,7 @@ private boolean isActive( Profile profile, ProfileActivationContext context, Mod
+                 return false;
+             }
+         }
+-        return false;
++        return isActive;
+     }
+ 
+     private boolean isActiveByDefault( Profile profile )
+diff --git a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/FileProfileActivator.java b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/FileProfileActivator.java
+index 07ba79b..b1d0442 100644
+--- a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/FileProfileActivator.java
++++ b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/FileProfileActivator.java
+@@ -167,4 +167,23 @@ else if ( path.contains( "${basedir}" ) )
+         return missing ? !fileExists : fileExists;
+     }
+ 
++    @Override
++    public boolean presentInConfig( Profile profile, ProfileActivationContext context, ModelProblemCollector problems )
++    {
++        Activation activation = profile.getActivation();
++
++        if ( activation == null )
++        {
++            return false;
++        }
++
++        ActivationFile file = activation.getFile();
++
++        if ( file == null )
++        {
++            return false;
++        }
++        return true;
++    }
++
+ }
+diff --git a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/JdkVersionProfileActivator.java b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/JdkVersionProfileActivator.java
+index 62b6cfb..10747de 100644
+--- a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/JdkVersionProfileActivator.java
++++ b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/JdkVersionProfileActivator.java
+@@ -83,6 +83,25 @@ else if ( isRange( jdk ) )
+         }
+     }
+ 
++    @Override
++    public boolean presentInConfig( Profile profile, ProfileActivationContext context, ModelProblemCollector problems )
++    {
++        Activation activation = profile.getActivation();
++
++        if ( activation == null )
++        {
++            return false;
++        }
++
++        String jdk = activation.getJdk();
++
++        if ( jdk == null )
++        {
++            return false;
++        }
++        return true;
++    }
++
+     private static boolean isInRange( String value, List<RangeValue> range )
+     {
+         int leftRelation = getRelationOrder( value, range.get( 0 ), true );
+diff --git a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/OperatingSystemProfileActivator.java b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/OperatingSystemProfileActivator.java
+index 94d380c..b6d3f05 100644
+--- a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/OperatingSystemProfileActivator.java
++++ b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/OperatingSystemProfileActivator.java
+@@ -76,6 +76,25 @@ public boolean isActive( Profile profile, ProfileActivationContext context, Mode
+         return active;
+     }
+ 
++    @Override
++    public boolean presentInConfig( Profile profile, ProfileActivationContext context, ModelProblemCollector problems )
++    {
++        Activation activation = profile.getActivation();
++
++        if ( activation == null )
++        {
++            return false;
++        }
++
++        ActivationOS os = activation.getOs();
++
++        if ( os == null )
++        {
++            return false;
++        }
++        return true;
++    }
++
+     private boolean ensureAtLeastOneNonNull( ActivationOS os )
+     {
+         return os.getArch() != null || os.getFamily() != null || os.getName() != null || os.getVersion() != null;
+diff --git a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/ProfileActivator.java b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/ProfileActivator.java
+index 142dddf..7094a3f 100644
+--- a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/ProfileActivator.java
++++ b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/ProfileActivator.java
+@@ -43,4 +43,17 @@
+      */
+     boolean isActive( Profile profile, ProfileActivationContext context, ModelProblemCollector problems );
+ 
++    /**
++     * Determines whether specified activation method is present in configuration or not. It should help to have AND between
++     * activation conditions
++     * Need for solving http://jira.codehaus.org/browse/MNG-4565
++     * @param profile The profile whose activation status should be determined, must not be {@code null}.
++     * @param context The environmental context used to determine the activation status of the profile, must not be
++     *            {@code null}.
++     * @param problems The container used to collect problems (e.g. bad syntax) that were encountered, must not be
++     *            {@code null}.
++     * @return {@code true} if the profile is active, {@code false} otherwise.
++     */
++    boolean presentInConfig( Profile profile, ProfileActivationContext context, ModelProblemCollector problems );
++
+ }
+diff --git a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/PropertyProfileActivator.java b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/PropertyProfileActivator.java
+index 374647f..e8e6e99 100644
+--- a/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/PropertyProfileActivator.java
++++ b/maven-model-builder/src/main/java/org/apache/maven/model/profile/activation/PropertyProfileActivator.java
+@@ -103,4 +103,23 @@ public boolean isActive( Profile profile, ProfileActivationContext context, Mode
+         }
+     }
+ 
++    @Override
++    public boolean presentInConfig( Profile profile, ProfileActivationContext context, ModelProblemCollector problems )
++    {
++        Activation activation = profile.getActivation();
++
++        if ( activation == null )
++        {
++            return false;
++        }
++
++        ActivationProperty property = activation.getProperty();
++
++        if ( property == null )
++        {
++            return false;
++        }
++        return true;
++    }
++
+ }

@@ -1,0 +1,30 @@
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
+index c550244..c3d51fa 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
+@@ -771,8 +771,8 @@
+    * <li>Handle either fresh cluster start or master failover</li>
+    * </ol>
+    */
+-  private void finishActiveMasterInitialization(MonitoredTask status)
+-      throws IOException, InterruptedException, KeeperException, CoordinatedStateException {
++  private void finishActiveMasterInitialization(MonitoredTask status) throws IOException,
++          InterruptedException, KeeperException, CoordinatedStateException, ReplicationException {
+     Thread zombieDetector = new Thread(new InitializationMonitor(this),
+         "ActiveMasterInitializationMonitor-" + System.currentTimeMillis());
+     zombieDetector.setDaemon(true);
+diff --git a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
+index c550244..c3d51fa 100644
+--- a/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
++++ b/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java
+@@ -771,8 +771,8 @@
+    * <li>Handle either fresh cluster start or master failover</li>
+    * </ol>
+    */
+-  private void finishActiveMasterInitialization(MonitoredTask status)
+-      throws IOException, InterruptedException, KeeperException, CoordinatedStateException {
++  private void finishActiveMasterInitialization(MonitoredTask status) throws IOException,
++          InterruptedException, KeeperException, CoordinatedStateException, ReplicationException {
+     Thread zombieDetector = new Thread(new InitializationMonitor(this),
+         "ActiveMasterInitializationMonitor-" + System.currentTimeMillis());
+     zombieDetector.setDaemon(true);

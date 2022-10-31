@@ -1,0 +1,52 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryQueueManager.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryQueueManager.java
+index 113ed4b..d7ccbae 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryQueueManager.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryQueueManager.java
+@@ -67,7 +67,7 @@
+             if (!queue.reserve(queryExecution)) {
+                 // Reject query if we couldn't acquire a permit to enter the queue.
+                 // The permits will be released when this query fails.
+-                queryExecution.fail(new PrestoException(QUERY_QUEUE_FULL, "Too many queued queries!"));
++                queryExecution.fail(new PrestoException(QUERY_QUEUE_FULL, "Too many queued queries"));
+                 return;
+             }
+         }
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/resourceGroups/InternalResourceGroup.java b/presto-main/src/main/java/com/facebook/presto/execution/resourceGroups/InternalResourceGroup.java
+index 5af89f2..e34c9df 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/resourceGroups/InternalResourceGroup.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/resourceGroups/InternalResourceGroup.java
+@@ -412,7 +412,7 @@
+                 group = group.parent.get();
+             }
+             if (!canQueue && !canRun) {
+-                query.fail(new PrestoException(QUERY_QUEUE_FULL, format("Too many queued queries for \"%s\"!", id)));
++                query.fail(new PrestoException(QUERY_QUEUE_FULL, format("Too many queued queries for \"%s\"", id)));
+                 return;
+             }
+             if (canRun) {
+diff --git a/presto-main/src/test/java/com/facebook/presto/execution/resourceGroups/TestResourceGroups.java b/presto-main/src/test/java/com/facebook/presto/execution/resourceGroups/TestResourceGroups.java
+index 28c7c4b..c74bdbc 100644
+--- a/presto-main/src/test/java/com/facebook/presto/execution/resourceGroups/TestResourceGroups.java
++++ b/presto-main/src/test/java/com/facebook/presto/execution/resourceGroups/TestResourceGroups.java
+@@ -62,7 +62,7 @@
+         MockQueryExecution query3 = new MockQueryExecution(0);
+         root.run(query3);
+         assertEquals(query3.getState(), FAILED);
+-        assertEquals(query3.getFailureCause().getMessage(), "Too many queued queries for \"root\"!");
++        assertEquals(query3.getFailureCause().getMessage(), "Too many queued queries for \"root\"");
+     }
+ 
+     @Test(timeOut = 10_000)
+diff --git a/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryQueueManager.java b/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryQueueManager.java
+index 113ed4b..d7ccbae 100644
+--- a/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryQueueManager.java
++++ b/presto-main/src/main/java/com/facebook/presto/execution/SqlQueryQueueManager.java
+@@ -67,7 +67,7 @@
+             if (!queue.reserve(queryExecution)) {
+                 // Reject query if we couldn't acquire a permit to enter the queue.
+                 // The permits will be released when this query fails.
+-                queryExecution.fail(new PrestoException(QUERY_QUEUE_FULL, "Too many queued queries!"));
++                queryExecution.fail(new PrestoException(QUERY_QUEUE_FULL, "Too many queued queries"));
+                 return;
+             }
+         }

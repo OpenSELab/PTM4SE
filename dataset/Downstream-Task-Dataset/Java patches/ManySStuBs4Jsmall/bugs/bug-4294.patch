@@ -1,0 +1,13 @@
+diff --git a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringDelegatingTestContextLoader.java b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringDelegatingTestContextLoader.java
+index aa76c15..b01c2d2 100644
+--- a/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringDelegatingTestContextLoader.java
++++ b/components/camel-test-spring/src/main/java/org/apache/camel/test/spring/CamelSpringDelegatingTestContextLoader.java
+@@ -79,7 +79,7 @@
+         AnnotationConfigUtils.registerAnnotationConfigProcessors((BeanDefinitionRegistry) context);
+ 
+         // Post CamelContext(s) instantiation but pre CamelContext(s) start setup
+-        CamelAnnotationsHandler.handleRouteCoverage(context, testClass, (String) -> getTestMethod().getName());
++        CamelAnnotationsHandler.handleRouteCoverage(context, testClass, s -> getTestMethod().getName());
+         CamelAnnotationsHandler.handleProvidesBreakpoint(context, testClass);
+         CamelAnnotationsHandler.handleShutdownTimeout(context, testClass);
+         CamelAnnotationsHandler.handleMockEndpoints(context, testClass);

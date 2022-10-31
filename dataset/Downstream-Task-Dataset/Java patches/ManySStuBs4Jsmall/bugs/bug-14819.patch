@@ -1,0 +1,44 @@
+diff --git a/guava-tests/benchmark/com/google/common/hash/ChecksumBenchmark.java b/guava-tests/benchmark/com/google/common/hash/ChecksumBenchmark.java
+index b8e5d73..28d75fa 100644
+--- a/guava-tests/benchmark/com/google/common/hash/ChecksumBenchmark.java
++++ b/guava-tests/benchmark/com/google/common/hash/ChecksumBenchmark.java
+@@ -59,7 +59,7 @@
+     for (int i = 0; i < reps; i++) {
+       CRC32 checksum = new CRC32();
+       checksum.update(testBytes);
+-      result ^= checksum.getValue();
++      result = (byte) (result ^ checksum.getValue());
+     }
+     return result;
+   }
+@@ -75,7 +75,7 @@
+     for (int i = 0; i < reps; i++) {
+       Adler32 checksum = new Adler32();
+       checksum.update(testBytes);
+-      result ^= checksum.getValue();
++      result = (byte) (result ^ checksum.getValue());
+     }
+     return result;
+   }
+diff --git a/guava-tests/benchmark/com/google/common/hash/ChecksumBenchmark.java b/guava-tests/benchmark/com/google/common/hash/ChecksumBenchmark.java
+index b8e5d73..28d75fa 100644
+--- a/guava-tests/benchmark/com/google/common/hash/ChecksumBenchmark.java
++++ b/guava-tests/benchmark/com/google/common/hash/ChecksumBenchmark.java
+@@ -59,7 +59,7 @@
+     for (int i = 0; i < reps; i++) {
+       CRC32 checksum = new CRC32();
+       checksum.update(testBytes);
+-      result ^= checksum.getValue();
++      result = (byte) (result ^ checksum.getValue());
+     }
+     return result;
+   }
+@@ -75,7 +75,7 @@
+     for (int i = 0; i < reps; i++) {
+       Adler32 checksum = new Adler32();
+       checksum.update(testBytes);
+-      result ^= checksum.getValue();
++      result = (byte) (result ^ checksum.getValue());
+     }
+     return result;
+   }

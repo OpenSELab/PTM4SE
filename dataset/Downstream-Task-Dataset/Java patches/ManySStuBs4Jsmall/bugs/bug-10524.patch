@@ -1,0 +1,39 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/ComputationGraphConfiguration.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/ComputationGraphConfiguration.java
+index 1ff8dad..3ac84b1 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/ComputationGraphConfiguration.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/ComputationGraphConfiguration.java
+@@ -475,7 +475,7 @@
+ 
+             if (gv instanceof LayerVertex) {
+                 //Add preprocessor, if necessary:
+-                String in = vertexInputs.get(s).get(i);
++                String in = vertexInputs.get(s).get(0);
+                 InputType layerInput = vertexOutputs.get(in);
+                 inputTypeList.add(layerInput);
+                 currLayerIdx++;
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/MultiLayerConfiguration.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/MultiLayerConfiguration.java
+index 9fa91e5..49ae3aa 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/MultiLayerConfiguration.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/MultiLayerConfiguration.java
+@@ -325,7 +325,7 @@
+             }
+ 
+             //Pass input type through preprocessor, if necessary
+-            InputPreProcessor preproc = getInputPreProcess(0);
++            InputPreProcessor preproc = getInputPreProcess(i);
+             //TODO memory requirements for preprocessor
+             if (preproc != null) {
+                 inputType = preproc.getOutputType(inputType);
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/ComputationGraphConfiguration.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/ComputationGraphConfiguration.java
+index 1ff8dad..3ac84b1 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/ComputationGraphConfiguration.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/conf/ComputationGraphConfiguration.java
+@@ -475,7 +475,7 @@
+ 
+             if (gv instanceof LayerVertex) {
+                 //Add preprocessor, if necessary:
+-                String in = vertexInputs.get(s).get(i);
++                String in = vertexInputs.get(s).get(0);
+                 InputType layerInput = vertexOutputs.get(in);
+                 inputTypeList.add(layerInput);
+                 currLayerIdx++;

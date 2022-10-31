@@ -1,0 +1,56 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/model/ResequenceDefinition.java b/camel-core/src/main/java/org/apache/camel/model/ResequenceDefinition.java
+index 6dd36e3..493367b 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/ResequenceDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/ResequenceDefinition.java
+@@ -50,8 +50,8 @@
+ @XmlAccessorType(XmlAccessType.FIELD)
+ public class ResequenceDefinition extends ProcessorDefinition<ResequenceDefinition> {
+     @XmlElements({
+-    @XmlElement(required = false, name = "batch-config", type = BatchResequencerConfig.class),
+-    @XmlElement(required = false, name = "stream-config", type = StreamResequencerConfig.class)}
++    @XmlElement(type = BatchResequencerConfig.class),
++    @XmlElement(type = StreamResequencerConfig.class)}
+     )
+     private ResequencerConfig resequencerConfig;
+     @XmlTransient
+diff --git a/camel-core/src/main/java/org/apache/camel/model/config/BatchResequencerConfig.java b/camel-core/src/main/java/org/apache/camel/model/config/BatchResequencerConfig.java
+index 20db69d..f5f06f8 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/config/BatchResequencerConfig.java
++++ b/camel-core/src/main/java/org/apache/camel/model/config/BatchResequencerConfig.java
+@@ -25,7 +25,7 @@
+  * Defines the configuration parameters for the batch-processing
+  * {@link org.apache.camel.processor.Resequencer}. Usage example:
+  */
+-@XmlRootElement
++@XmlRootElement(name = "batch-config")
+ @XmlAccessorType(XmlAccessType.FIELD)
+ public class BatchResequencerConfig extends ResequencerConfig {
+     @XmlAttribute
+diff --git a/camel-core/src/main/java/org/apache/camel/model/config/StreamResequencerConfig.java b/camel-core/src/main/java/org/apache/camel/model/config/StreamResequencerConfig.java
+index 7ae8f6c..7c6854a 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/config/StreamResequencerConfig.java
++++ b/camel-core/src/main/java/org/apache/camel/model/config/StreamResequencerConfig.java
+@@ -30,7 +30,7 @@
+  *
+  * @version 
+  */
+-@XmlRootElement
++@XmlRootElement(name = "stream-config")
+ @XmlAccessorType(XmlAccessType.FIELD)
+ public class StreamResequencerConfig extends ResequencerConfig {
+     @XmlAttribute
+diff --git a/camel-core/src/main/java/org/apache/camel/model/ResequenceDefinition.java b/camel-core/src/main/java/org/apache/camel/model/ResequenceDefinition.java
+index 6dd36e3..493367b 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/ResequenceDefinition.java
++++ b/camel-core/src/main/java/org/apache/camel/model/ResequenceDefinition.java
+@@ -50,8 +50,8 @@
+ @XmlAccessorType(XmlAccessType.FIELD)
+ public class ResequenceDefinition extends ProcessorDefinition<ResequenceDefinition> {
+     @XmlElements({
+-    @XmlElement(required = false, name = "batch-config", type = BatchResequencerConfig.class),
+-    @XmlElement(required = false, name = "stream-config", type = StreamResequencerConfig.class)}
++    @XmlElement(type = BatchResequencerConfig.class),
++    @XmlElement(type = StreamResequencerConfig.class)}
+     )
+     private ResequencerConfig resequencerConfig;
+     @XmlTransient

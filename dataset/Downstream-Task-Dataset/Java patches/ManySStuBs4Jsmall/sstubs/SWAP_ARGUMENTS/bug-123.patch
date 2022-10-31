@@ -1,0 +1,156 @@
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheAdd.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheAdd.java
+index 772cbc0..aa8c822 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheAdd.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheAdd.java
+@@ -26,7 +26,7 @@
+                     .setXmlName(Attribute.MODE.getLocalName())
+                     .setAllowExpression(true)
+                     .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-                    .setValidator(new EnumValidator<Mode>(Mode.class, true, false))
++                    .setValidator(new EnumValidator<Mode>(Mode.class, false, true))
+                     .build();
+ 
+     ClusteredCacheAdd(CacheMode mode) {
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/CommonAttributes.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/CommonAttributes.java
+index 16fc238..31be3ed 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/CommonAttributes.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/CommonAttributes.java
+@@ -259,7 +259,7 @@
+                     .setXmlName(Attribute.MODE.getLocalName())
+                     .setAllowExpression(true)
+                     .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-                    .setValidator(new EnumValidator<TransactionMode>(TransactionMode.class, true, false))
++                    .setValidator(new EnumValidator<TransactionMode>(TransactionMode.class, true, true))
+                     .setDefaultValue(new ModelNode().set(TransactionMode.NONE.name()))
+                     .build();
+     SimpleAttributeDefinition MODIFICATION_QUEUE_SIZE =
+diff --git a/connector/src/main/java/org/jboss/as/connector/pool/Constants.java b/connector/src/main/java/org/jboss/as/connector/pool/Constants.java
+index 83631fe..32b8b8a 100644
+--- a/connector/src/main/java/org/jboss/as/connector/pool/Constants.java
++++ b/connector/src/main/java/org/jboss/as/connector/pool/Constants.java
+@@ -66,7 +66,7 @@
+ 
+     public static final SimpleAttributeDefinition IDLETIMEOUTMINUTES = new SimpleAttributeDefinition(IDLETIMEOUTMINUTES_NAME, TimeOut.Tag.IDLE_TIMEOUT_MINUTES.getLocalName(),  new ModelNode(), ModelType.LONG, true, true, MeasurementUnit.MINUTES);
+ 
+-    public static final SimpleAttributeDefinition BACKGROUNDVALIDATIONMILLIS = new SimpleAttributeDefinition(BACKGROUNDVALIDATIONMILLIS_NAME, Validation.Tag.BACKGROUND_VALIDATION_MILLIS.getLocalName(),  new ModelNode(), ModelType.LONG, true, true, MeasurementUnit.MILLISECONDS, new IntRangeValidator(1, true));
++    public static final SimpleAttributeDefinition BACKGROUNDVALIDATIONMILLIS = new SimpleAttributeDefinition(BACKGROUNDVALIDATIONMILLIS_NAME, Validation.Tag.BACKGROUND_VALIDATION_MILLIS.getLocalName(),  new ModelNode(), ModelType.LONG, true, true, MeasurementUnit.MILLISECONDS, new IntRangeValidator(1, true, true));
+ 
+     public static final SimpleAttributeDefinition BACKGROUNDVALIDATION = new SimpleAttributeDefinition(BACKGROUNDVALIDATION_NAME, Validation.Tag.BACKGROUND_VALIDATION.getLocalName(), new ModelNode().set(Defaults.BACKGROUND_VALIDATION), ModelType.BOOLEAN, true, true, MeasurementUnit.NONE);
+ 
+diff --git a/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/Constants.java b/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/Constants.java
+index 31cad9c..a701332 100644
+--- a/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/Constants.java
++++ b/connector/src/main/java/org/jboss/as/connector/subsystems/datasources/Constants.java
+@@ -210,8 +210,7 @@
+ 
+         @Override
+         public void validateResolvedParameter(String parameterName, ModelNode value) throws OperationFailedException {
+-            //TODO implement validateResolvedParameter
+-            throw new UnsupportedOperationException();
++            validateParameter(parameterName,  value.resolve());
+         }
+     });
+ 
+diff --git a/controller/src/main/java/org/jboss/as/controller/descriptions/common/InterfaceDescription.java b/controller/src/main/java/org/jboss/as/controller/descriptions/common/InterfaceDescription.java
+index e9333c8..aa0e427 100644
+--- a/controller/src/main/java/org/jboss/as/controller/descriptions/common/InterfaceDescription.java
++++ b/controller/src/main/java/org/jboss/as/controller/descriptions/common/InterfaceDescription.java
+@@ -166,18 +166,18 @@
+             .build();
+ 
+     public static final AttributeDefinition ANY_ADDRESS = SimpleAttributeDefinitionBuilder.create(ModelDescriptionConstants.ANY_ADDRESS, ModelType.BOOLEAN)
+-            .setAllowExpression(false).setAllowNull(false).setRestartAllServices()
+-            .setValidator(new ModelTypeValidator(ModelType.BOOLEAN, true, true))
++            .setAllowExpression(false).setAllowNull(true).setRestartAllServices()
++            .setValidator(new ModelTypeValidator(ModelType.BOOLEAN, true, false))
+             .addAlternatives(OTHERS).addAlternatives(ModelDescriptionConstants.ANY_IPV4_ADDRESS, ModelDescriptionConstants.ANY_IPV6_ADDRESS)
+             .build();
+     public static final AttributeDefinition ANY_IPV4_ADDRESS = SimpleAttributeDefinitionBuilder.create(ModelDescriptionConstants.ANY_IPV4_ADDRESS, ModelType.BOOLEAN)
+-            .setAllowExpression(false).setAllowNull(false).setRestartAllServices()
+-            .setValidator(new ModelTypeValidator(ModelType.BOOLEAN, true, true))
++            .setAllowExpression(false).setAllowNull(true).setRestartAllServices()
++            .setValidator(new ModelTypeValidator(ModelType.BOOLEAN, true, false))
+             .addAlternatives(OTHERS).addAlternatives(ModelDescriptionConstants.ANY_ADDRESS, ModelDescriptionConstants.ANY_IPV6_ADDRESS)
+             .build();
+     public static final AttributeDefinition ANY_IPV6_ADDRESS = SimpleAttributeDefinitionBuilder.create(ModelDescriptionConstants.ANY_IPV6_ADDRESS, ModelType.BOOLEAN)
+-            .setAllowExpression(false).setAllowNull(false).setRestartAllServices()
+-            .setValidator(new ModelTypeValidator(ModelType.BOOLEAN, true, true))
++            .setAllowExpression(false).setAllowNull(true).setRestartAllServices()
++            .setValidator(new ModelTypeValidator(ModelType.BOOLEAN, true, false))
+             .addAlternatives(OTHERS).addAlternatives(ModelDescriptionConstants.ANY_ADDRESS, ModelDescriptionConstants.ANY_IPV4_ADDRESS)
+             .build();
+     public static final AttributeDefinition INET_ADDRESS = SimpleAttributeDefinitionBuilder.create(ModelDescriptionConstants.INET_ADDRESS, ModelType.STRING)
+diff --git a/deployment-scanner/src/main/java/org/jboss/as/server/deployment/scanner/DeploymentScannerDefinition.java b/deployment-scanner/src/main/java/org/jboss/as/server/deployment/scanner/DeploymentScannerDefinition.java
+index 57f1b5f..e2a8120 100644
+--- a/deployment-scanner/src/main/java/org/jboss/as/server/deployment/scanner/DeploymentScannerDefinition.java
++++ b/deployment-scanner/src/main/java/org/jboss/as/server/deployment/scanner/DeploymentScannerDefinition.java
+@@ -27,7 +27,7 @@
+     protected static final SimpleAttributeDefinition NAME =
+             new SimpleAttributeDefinitionBuilder(CommonAttributes.NAME, ModelType.STRING, false)
+                     .setXmlName(Attribute.NAME.getLocalName())
+-                    .setAllowExpression(true)
++                    .setAllowExpression(false)
+                     .setValidator(new StringLengthValidator(1))
+                     .setDefaultValue(new ModelNode().set(DeploymentScannerExtension.DEFAULT_SCANNER_NAME))
+                     .build();
+diff --git a/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemRootResourceDefinition.java b/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemRootResourceDefinition.java
+index 6f84482..e5af18a 100644
+--- a/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemRootResourceDefinition.java
++++ b/ejb3/src/main/java/org/jboss/as/ejb3/subsystem/EJB3SubsystemRootResourceDefinition.java
+@@ -66,7 +66,7 @@
+                     .setXmlName(EJB3SubsystemXMLAttribute.DEFAULT_ACCESS_TIMEOUT.getLocalName())
+                     .setDefaultValue(new ModelNode().set(5000)) // TODO: this should come from component description
+                     .setAllowExpression(true) // we allow expression for setting a timeout value
+-                    .setValidator(new LongRangeValidator(1, Integer.MAX_VALUE, false, false))
++                    .setValidator(new LongRangeValidator(1, Integer.MAX_VALUE, true, true))
+                     .setFlags(AttributeAccess.Flag.RESTART_NONE)
+                     .build();
+ 
+@@ -75,7 +75,7 @@
+                     .setXmlName(EJB3SubsystemXMLAttribute.DEFAULT_ACCESS_TIMEOUT.getLocalName())
+                     .setDefaultValue(new ModelNode().set(5000)) // TODO: this should come from component description
+                     .setAllowExpression(true) // we allow expression for setting a timeout value
+-                    .setValidator(new LongRangeValidator(1, Integer.MAX_VALUE, false, false))
++                    .setValidator(new LongRangeValidator(1, Integer.MAX_VALUE, true, true))
+                     .setFlags(AttributeAccess.Flag.RESTART_NONE)
+                     .build();
+     public static final SimpleAttributeDefinition DEFAULT_SFSB_CACHE =
+diff --git a/remoting/src/main/java/org/jboss/as/remoting/RemotingSubsystemRootResource.java b/remoting/src/main/java/org/jboss/as/remoting/RemotingSubsystemRootResource.java
+index cf0aeae..6895c30 100644
+--- a/remoting/src/main/java/org/jboss/as/remoting/RemotingSubsystemRootResource.java
++++ b/remoting/src/main/java/org/jboss/as/remoting/RemotingSubsystemRootResource.java
+@@ -78,7 +78,7 @@
+     }
+ 
+     private static SimpleAttributeDefinition createIntAttribute(String name, Attribute attribute, int defaultValue) {
+-        return SimpleAttributeDefinitionBuilder.create(name, ModelType.INT, true).setDefaultValue(new ModelNode().set(defaultValue)).setXmlName(attribute.getLocalName()).setValidator(new IntRangeValidator(1)).build();
++        return SimpleAttributeDefinitionBuilder.create(name, ModelType.INT, true).setDefaultValue(new ModelNode().set(defaultValue)).setXmlName(attribute.getLocalName()).setValidator(new IntRangeValidator(1, true)).build();
+     }
+ 
+     private static class ThreadWriteAttributeHandler extends RestartParentWriteAttributeHandler {
+diff --git a/transactions/src/main/java/org/jboss/as/txn/subsystem/LogStoreConstants.java b/transactions/src/main/java/org/jboss/as/txn/subsystem/LogStoreConstants.java
+index 74dc110..5b846df 100644
+--- a/transactions/src/main/java/org/jboss/as/txn/subsystem/LogStoreConstants.java
++++ b/transactions/src/main/java/org/jboss/as/txn/subsystem/LogStoreConstants.java
+@@ -119,7 +119,7 @@
+             .setAllowNull(true)
+             .setDefaultValue(new ModelNode())
+             .setMeasurementUnit(MeasurementUnit.NONE)
+-            .setValidator(new EnumValidator(ParticipantStatus.class, false, false))
++            .setValidator(new EnumValidator(ParticipantStatus.class, true, false))
+             .build();
+ 
+     static SimpleAttributeDefinition PARTICIPANT_JNDI_NAME = (new SimpleAttributeDefinitionBuilder(JNDI_ATTRIBUTE, ModelType.STRING))
+diff --git a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheAdd.java b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheAdd.java
+index 772cbc0..aa8c822 100644
+--- a/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheAdd.java
++++ b/clustering/infinispan/src/main/java/org/jboss/as/clustering/infinispan/subsystem/ClusteredCacheAdd.java
+@@ -26,7 +26,7 @@
+                     .setXmlName(Attribute.MODE.getLocalName())
+                     .setAllowExpression(true)
+                     .setFlags(AttributeAccess.Flag.RESTART_ALL_SERVICES)
+-                    .setValidator(new EnumValidator<Mode>(Mode.class, true, false))
++                    .setValidator(new EnumValidator<Mode>(Mode.class, false, true))
+                     .build();
+ 
+     ClusteredCacheAdd(CacheMode mode) {

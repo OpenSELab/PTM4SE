@@ -1,0 +1,134 @@
+diff --git a/core/src/main/java/cucumber/runtime/Reflections.java b/core/src/main/java/cucumber/runtime/Reflections.java
+index b76d0de..04918bc 100644
+--- a/core/src/main/java/cucumber/runtime/Reflections.java
++++ b/core/src/main/java/cucumber/runtime/Reflections.java
+@@ -16,7 +16,7 @@
+         Collection<? extends T> instances = instantiateSubclasses(parentType, packageName, constructorParams, constructorArgs);
+         if (instances.size() == 1) {
+             return instances.iterator().next();
+-        } else if (instances.size() == 0) {
++        } else if (instances.isEmpty()) {
+             throw new NoInstancesException(parentType);
+         } else {
+             throw new TooManyInstancesException(instances);
+diff --git a/core/src/main/java/cucumber/runtime/RuntimeGlue.java b/core/src/main/java/cucumber/runtime/RuntimeGlue.java
+index 5039826..88910b7 100644
+--- a/core/src/main/java/cucumber/runtime/RuntimeGlue.java
++++ b/core/src/main/java/cucumber/runtime/RuntimeGlue.java
+@@ -61,7 +61,7 @@
+     public StepDefinitionMatch stepDefinitionMatch(String featurePath, Step step, I18n i18n) {
+         List<StepDefinitionMatch> matches = stepDefinitionMatches(featurePath, step);
+         try {
+-            if (matches.size() == 0) {
++            if (matches.isEmpty()) {
+                 tracker.addUndefinedStep(step, i18n);
+                 return null;
+             }
+diff --git a/core/src/main/java/cucumber/runtime/formatter/RerunFormatter.java b/core/src/main/java/cucumber/runtime/formatter/RerunFormatter.java
+index e7bdad1..83b1594 100644
+--- a/core/src/main/java/cucumber/runtime/formatter/RerunFormatter.java
++++ b/core/src/main/java/cucumber/runtime/formatter/RerunFormatter.java
+@@ -82,7 +82,7 @@
+         Set<Map.Entry<String, ArrayList<Integer>>> entries = featureAndFailedLinesMapping.entrySet();
+         boolean firstFeature = true;
+         for (Map.Entry<String, ArrayList<Integer>> entry : entries) {
+-            if (entry.getValue().size() > 0) {
++            if (!entry.getValue().isEmpty()) {
+                 if (!firstFeature) {
+                     out.append(" ");
+                 }
+diff --git a/core/src/main/java/cucumber/runtime/table/TableConverter.java b/core/src/main/java/cucumber/runtime/table/TableConverter.java
+index e502d1e..53c9faf 100644
+--- a/core/src/main/java/cucumber/runtime/table/TableConverter.java
++++ b/core/src/main/java/cucumber/runtime/table/TableConverter.java
+@@ -289,7 +289,7 @@
+     private boolean isListOfSingleValue(Object object) {
+         if (object instanceof List) {
+             List list = (List) object;
+-            return list.size() > 0 && xStream.getSingleValueConverter(list.get(0).getClass()) != null;
++            return !list.isEmpty() && xStream.getSingleValueConverter(list.get(0).getClass()) != null;
+         }
+         return false;
+     }
+diff --git a/core/src/main/java/cucumber/runtime/table/TableDiffer.java b/core/src/main/java/cucumber/runtime/table/TableDiffer.java
+index 046eea7..52f9739 100644
+--- a/core/src/main/java/cucumber/runtime/table/TableDiffer.java
++++ b/core/src/main/java/cucumber/runtime/table/TableDiffer.java
+@@ -25,7 +25,7 @@
+     }
+ 
+     private void checkColumns(DataTable a, DataTable b) {
+-        if (a.topCells().size() != b.topCells().size() && b.topCells().size() != 0) {
++        if (a.topCells().size() != b.topCells().size() && !b.topCells().isEmpty()) {
+             throw new IllegalArgumentException("Tables must have equal number of columns:\n" + a + "\n" + b);
+         }
+     }
+diff --git a/core/src/main/java/cucumber/runtime/xstream/ConverterWithFormat.java b/core/src/main/java/cucumber/runtime/xstream/ConverterWithFormat.java
+index 05beac6..e92eaab 100644
+--- a/core/src/main/java/cucumber/runtime/xstream/ConverterWithFormat.java
++++ b/core/src/main/java/cucumber/runtime/xstream/ConverterWithFormat.java
+@@ -18,7 +18,7 @@
+     }
+ 
+     public T transform(String string) {
+-        if (string == null || string.length() == 0) {
++        if (string == null || string.isEmpty()) {
+             return null;
+         }
+         for (Format format : getFormats()) {
+diff --git a/core/src/test/java/cucumber/runtime/TestHelper.java b/core/src/test/java/cucumber/runtime/TestHelper.java
+index 0688650..d56a8e7 100644
+--- a/core/src/test/java/cucumber/runtime/TestHelper.java
++++ b/core/src/test/java/cucumber/runtime/TestHelper.java
+@@ -147,10 +147,10 @@
+         for (SimpleEntry<String, Result> hookEntry : hooks) {
+             TestHelper.mockHook(hookEntry, beforeHooks, afterHooks);
+         }
+-        if (beforeHooks.size() != 0) {
++        if (!beforeHooks.isEmpty()) {
+             when(glue.getBeforeHooks()).thenReturn(beforeHooks);
+         }
+-        if (afterHooks.size() != 0) {
++        if (!afterHooks.isEmpty()) {
+             when(glue.getAfterHooks()).thenReturn(afterHooks);
+         }
+     }
+diff --git a/guice/src/test/java/cucumber/runtime/java/guice/collection/CollectionUtil.java b/guice/src/test/java/cucumber/runtime/java/guice/collection/CollectionUtil.java
+index 38966e1..e25aac1 100644
+--- a/guice/src/test/java/cucumber/runtime/java/guice/collection/CollectionUtil.java
++++ b/guice/src/test/java/cucumber/runtime/java/guice/collection/CollectionUtil.java
+@@ -14,7 +14,7 @@
+         if (list == null) {
+             throw new NullPointerException("List must not be null.");
+         }
+-        if (list.size() < 1) {
++        if (list.isEmpty()) {
+             throw new IllegalArgumentException("List must contain at least one element.");
+         }
+         while (list.size() > 1) {
+diff --git a/testng/src/test/java/cucumber/api/testng/TestNGCucumberRunnerTest.java b/testng/src/test/java/cucumber/api/testng/TestNGCucumberRunnerTest.java
+index 79cfcee..e5894b3 100644
+--- a/testng/src/test/java/cucumber/api/testng/TestNGCucumberRunnerTest.java
++++ b/testng/src/test/java/cucumber/api/testng/TestNGCucumberRunnerTest.java
+@@ -35,7 +35,7 @@
+ 
+         Assert.assertEquals(features.size(), numberOfFeatures,
+                 "Not all features associated with " + RunCukesTest.class.getSimpleName() + " were loaded. ");
+-        Assert.assertTrue(features.size() > 0, "Feature files need to exist in the cucumber/runtime/testng/ folder for this test");
++        Assert.assertTrue(!features.isEmpty(), "Feature files need to exist in the cucumber/runtime/testng/ folder for this test");
+     }
+ 
+     /**
+diff --git a/core/src/main/java/cucumber/runtime/Reflections.java b/core/src/main/java/cucumber/runtime/Reflections.java
+index b76d0de..04918bc 100644
+--- a/core/src/main/java/cucumber/runtime/Reflections.java
++++ b/core/src/main/java/cucumber/runtime/Reflections.java
+@@ -16,7 +16,7 @@
+         Collection<? extends T> instances = instantiateSubclasses(parentType, packageName, constructorParams, constructorArgs);
+         if (instances.size() == 1) {
+             return instances.iterator().next();
+-        } else if (instances.size() == 0) {
++        } else if (instances.isEmpty()) {
+             throw new NoInstancesException(parentType);
+         } else {
+             throw new TooManyInstancesException(instances);

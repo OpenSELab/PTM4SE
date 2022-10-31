@@ -1,0 +1,26 @@
+diff --git a/components/camel-mllp/src/main/java/org/apache/camel/component/mllp/internal/TcpSocketConsumerRunnable.java b/components/camel-mllp/src/main/java/org/apache/camel/component/mllp/internal/TcpSocketConsumerRunnable.java
+index 5780d90..fb54754 100644
+--- a/components/camel-mllp/src/main/java/org/apache/camel/component/mllp/internal/TcpSocketConsumerRunnable.java
++++ b/components/camel-mllp/src/main/java/org/apache/camel/component/mllp/internal/TcpSocketConsumerRunnable.java
+@@ -194,7 +194,7 @@
+                             long lastReceivedMessageTicks = consumer.getConsumerRunnables().get(this);
+                             long idleTime = currentTicks - lastReceivedMessageTicks;
+                             if (idleTime >= consumer.getConfiguration().getIdleTimeout()) {
+-                                String resetMessage = String.format("Connection idle time {} exceeded idleTimeout {}", idleTime, consumer.getConfiguration().getIdleTimeout());
++                                String resetMessage = String.format("Connection idle time %d exceeded idleTimeout %d", idleTime, consumer.getConfiguration().getIdleTimeout());
+                                 mllpBuffer.resetSocket(clientSocket, resetMessage);
+                             }
+                         }
+diff --git a/components/camel-mllp/src/main/java/org/apache/camel/component/mllp/internal/TcpSocketConsumerRunnable.java b/components/camel-mllp/src/main/java/org/apache/camel/component/mllp/internal/TcpSocketConsumerRunnable.java
+index 5780d90..fb54754 100644
+--- a/components/camel-mllp/src/main/java/org/apache/camel/component/mllp/internal/TcpSocketConsumerRunnable.java
++++ b/components/camel-mllp/src/main/java/org/apache/camel/component/mllp/internal/TcpSocketConsumerRunnable.java
+@@ -194,7 +194,7 @@
+                             long lastReceivedMessageTicks = consumer.getConsumerRunnables().get(this);
+                             long idleTime = currentTicks - lastReceivedMessageTicks;
+                             if (idleTime >= consumer.getConfiguration().getIdleTimeout()) {
+-                                String resetMessage = String.format("Connection idle time {} exceeded idleTimeout {}", idleTime, consumer.getConfiguration().getIdleTimeout());
++                                String resetMessage = String.format("Connection idle time %d exceeded idleTimeout %d", idleTime, consumer.getConfiguration().getIdleTimeout());
+                                 mllpBuffer.resetSocket(clientSocket, resetMessage);
+                             }
+                         }

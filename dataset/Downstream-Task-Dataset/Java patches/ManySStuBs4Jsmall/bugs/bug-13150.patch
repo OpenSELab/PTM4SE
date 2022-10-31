@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/ExpressionInterpreter.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/ExpressionInterpreter.java
+index ab99b5a..15c81c4 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/ExpressionInterpreter.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/ExpressionInterpreter.java
+@@ -465,7 +465,7 @@
+             ComparisonExpression.Type type = node.getType();
+ 
+             Object left = process(node.getLeft(), context);
+-            if (left == null && !(type == ComparisonExpression.Type.IS_DISTINCT_FROM)) {
++            if (left == null && type != ComparisonExpression.Type.IS_DISTINCT_FROM) {
+                 return null;
+             }
+ 
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/ExpressionInterpreter.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/ExpressionInterpreter.java
+index ab99b5a..15c81c4 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/ExpressionInterpreter.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/ExpressionInterpreter.java
+@@ -465,7 +465,7 @@
+             ComparisonExpression.Type type = node.getType();
+ 
+             Object left = process(node.getLeft(), context);
+-            if (left == null && !(type == ComparisonExpression.Type.IS_DISTINCT_FROM)) {
++            if (left == null && type != ComparisonExpression.Type.IS_DISTINCT_FROM) {
+                 return null;
+             }
+ 

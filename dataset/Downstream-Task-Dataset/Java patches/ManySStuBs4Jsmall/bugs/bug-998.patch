@@ -1,0 +1,44 @@
+diff --git a/core/common/src/main/java/alluxio/replay/ReplayCache.java b/core/common/src/main/java/alluxio/replay/ReplayCache.java
+index 1b2bac7..63c9c6d 100644
+--- a/core/common/src/main/java/alluxio/replay/ReplayCache.java
++++ b/core/common/src/main/java/alluxio/replay/ReplayCache.java
+@@ -85,7 +85,7 @@
+    * @return a cache with the specified maximum size and expiration time
+    */
+   public static <V> ReplayCache<V> newInstance(long maxSize, long expireMs) {
+-    return new ReplayCache<V>(maxSize, expireMs);
++    return new ReplayCache<>(maxSize, expireMs);
+   }
+ 
+   /**
+@@ -98,7 +98,7 @@
+     // TODO(andrew) Make it possible for users to configure this cache via
+     // CacheBuilder<Object, Object> from(String spec)
+     mCache = CacheBuilder.newBuilder().maximumSize(maxSize)
+-        .expireAfterWrite(expireMs, TimeUnit.MILLISECONDS).<String, V>build();
++        .expireAfterWrite(expireMs, TimeUnit.MILLISECONDS).build();
+   }
+ 
+   /**
+diff --git a/core/common/src/main/java/alluxio/replay/ReplayCache.java b/core/common/src/main/java/alluxio/replay/ReplayCache.java
+index 1b2bac7..63c9c6d 100644
+--- a/core/common/src/main/java/alluxio/replay/ReplayCache.java
++++ b/core/common/src/main/java/alluxio/replay/ReplayCache.java
+@@ -85,7 +85,7 @@
+    * @return a cache with the specified maximum size and expiration time
+    */
+   public static <V> ReplayCache<V> newInstance(long maxSize, long expireMs) {
+-    return new ReplayCache<V>(maxSize, expireMs);
++    return new ReplayCache<>(maxSize, expireMs);
+   }
+ 
+   /**
+@@ -98,7 +98,7 @@
+     // TODO(andrew) Make it possible for users to configure this cache via
+     // CacheBuilder<Object, Object> from(String spec)
+     mCache = CacheBuilder.newBuilder().maximumSize(maxSize)
+-        .expireAfterWrite(expireMs, TimeUnit.MILLISECONDS).<String, V>build();
++        .expireAfterWrite(expireMs, TimeUnit.MILLISECONDS).build();
+   }
+ 
+   /**

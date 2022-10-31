@@ -1,0 +1,12 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/SavepointCoordinator.java b/flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/SavepointCoordinator.java
+index 6ce6502..ea4b8ae 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/SavepointCoordinator.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/checkpoint/SavepointCoordinator.java
+@@ -230,6 +230,7 @@ public class SavepointCoordinator extends CheckpointCoordinator {
+ 
+ 			// Reset the checkpoint ID counter
+ 			long nextCheckpointId = checkpoint.getCheckpointID();
++			checkpointIdCounter.start();
+ 			checkpointIdCounter.setCount(nextCheckpointId + 1);
+ 			LOG.info("Reset the checkpoint ID to {}", nextCheckpointId);
+ 

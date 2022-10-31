@@ -1,0 +1,101 @@
+diff --git a/ejb3/src/test/java/org/jboss/as/ejb3/subsystem/SubsystemParsingUnitTestCase.java b/ejb3/src/test/java/org/jboss/as/ejb3/subsystem/SubsystemParsingUnitTestCase.java
+index e35625c..e1e11d5 100644
+--- a/ejb3/src/test/java/org/jboss/as/ejb3/subsystem/SubsystemParsingUnitTestCase.java
++++ b/ejb3/src/test/java/org/jboss/as/ejb3/subsystem/SubsystemParsingUnitTestCase.java
+@@ -60,6 +60,6 @@
+         //Make sure the models from the two controllers are identical
+         super.compare(modelA, modelB);
+ 
+-        assertRemoveSubsystemResources(servicesA);
++        assertRemoveSubsystemResources(servicesB);
+     }
+ }
+diff --git a/model-test/src/main/java/org/jboss/as/model/test/ModelTestModelControllerService.java b/model-test/src/main/java/org/jboss/as/model/test/ModelTestModelControllerService.java
+index a5258b6..979a7f5 100644
+--- a/model-test/src/main/java/org/jboss/as/model/test/ModelTestModelControllerService.java
++++ b/model-test/src/main/java/org/jboss/as/model/test/ModelTestModelControllerService.java
+@@ -196,7 +196,8 @@
+     }
+ 
+     /**
+-     * Grabs the current root resource
++     * Grabs the current root resource. This cannot be called after the kernelServices
++     * have been shut down
+      *
+      * @param kernelServices the kernel services used to access the controller
+      */
+diff --git a/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv11UnitTestCase.java b/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv11UnitTestCase.java
+index be6259c..407cbad 100644
+--- a/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv11UnitTestCase.java
++++ b/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv11UnitTestCase.java
+@@ -54,7 +54,7 @@
+         //Make sure the models from the two controllers are identical
+         super.compare(modelA, modelB);
+ 
+-        assertRemoveSubsystemResources(servicesA);
++        assertRemoveSubsystemResources(servicesB);
+     }
+ 
+ 
+@@ -78,7 +78,7 @@
+         //Make sure the models from the two controllers are identical
+         super.compare(modelA, modelB);
+ 
+-        assertRemoveSubsystemResources(servicesA);
++        assertRemoveSubsystemResources(servicesB);
+     }
+ 
+ //    @Override
+diff --git a/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv12UnitTestCase.java b/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv12UnitTestCase.java
+index 0d2e0c3..7357daa 100644
+--- a/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv12UnitTestCase.java
++++ b/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv12UnitTestCase.java
+@@ -61,7 +61,7 @@
+         //Make sure the models from the two controllers are identical
+         super.compare(modelA, modelB);
+ 
+-        assertRemoveSubsystemResources(servicesA);
++        assertRemoveSubsystemResources(servicesB);
+     }
+ 
+     @Override
+diff --git a/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv1UnitTestCase.java b/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv1UnitTestCase.java
+index 2c2ac81..43a8689 100644
+--- a/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv1UnitTestCase.java
++++ b/security/src/test/java/org/jboss/as/security/test/SecurityDomainModelv1UnitTestCase.java
+@@ -75,6 +75,6 @@
+         //Make sure the models from the two controllers are identical
+         super.compare(modelA, modelB);
+ 
+-        assertRemoveSubsystemResources(servicesA);
++        assertRemoveSubsystemResources(servicesB);
+    }
+ }
+\ No newline at end of file
+diff --git a/subsystem-test/src/main/java/org/jboss/as/subsystem/test/AbstractSubsystemTest.java b/subsystem-test/src/main/java/org/jboss/as/subsystem/test/AbstractSubsystemTest.java
+index 7faee4f..479fadf 100644
+--- a/subsystem-test/src/main/java/org/jboss/as/subsystem/test/AbstractSubsystemTest.java
++++ b/subsystem-test/src/main/java/org/jboss/as/subsystem/test/AbstractSubsystemTest.java
+@@ -202,7 +202,9 @@
+ 
+     /**
+      * Checks that the subystem resources can be removed, i.e. that people have registered
+-     * working 'remove' operations for every 'add' level.
++     * working 'remove' operations for every 'add' level. This cannot be called after the
++     * kernelServices have been shut down.
++     *
+      *
+      * @param kernelServices the kernel services used to access the controller
+      */
+diff --git a/ejb3/src/test/java/org/jboss/as/ejb3/subsystem/SubsystemParsingUnitTestCase.java b/ejb3/src/test/java/org/jboss/as/ejb3/subsystem/SubsystemParsingUnitTestCase.java
+index e35625c..e1e11d5 100644
+--- a/ejb3/src/test/java/org/jboss/as/ejb3/subsystem/SubsystemParsingUnitTestCase.java
++++ b/ejb3/src/test/java/org/jboss/as/ejb3/subsystem/SubsystemParsingUnitTestCase.java
+@@ -60,6 +60,6 @@
+         //Make sure the models from the two controllers are identical
+         super.compare(modelA, modelB);
+ 
+-        assertRemoveSubsystemResources(servicesA);
++        assertRemoveSubsystemResources(servicesB);
+     }
+ }

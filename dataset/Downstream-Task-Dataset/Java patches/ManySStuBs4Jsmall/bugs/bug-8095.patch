@@ -1,0 +1,28 @@
+diff --git a/storm-core/src/jvm/org/apache/storm/executor/error/ReportErrorAndDie.java b/storm-core/src/jvm/org/apache/storm/executor/error/ReportErrorAndDie.java
+index 54736e5..b2e1f34 100644
+--- a/storm-core/src/jvm/org/apache/storm/executor/error/ReportErrorAndDie.java
++++ b/storm-core/src/jvm/org/apache/storm/executor/error/ReportErrorAndDie.java
+@@ -39,7 +39,8 @@
+             LOG.error("Error while reporting error to cluster, proceeding with shutdown", ex);
+         }
+         if (Utils.exceptionCauseIsInstanceOf(InterruptedException.class, e)
+-                || Utils.exceptionCauseIsInstanceOf(java.io.InterruptedIOException.class, e)) {
++                || (Utils.exceptionCauseIsInstanceOf(java.io.InterruptedIOException.class, e)
++                    && !Utils.exceptionCauseIsInstanceOf(java.net.SocketTimeoutException.class, e))) {
+             LOG.info("Got interrupted exception shutting thread down...");
+         } else {
+             suicideFn.run();
+diff --git a/storm-core/src/jvm/org/apache/storm/executor/error/ReportErrorAndDie.java b/storm-core/src/jvm/org/apache/storm/executor/error/ReportErrorAndDie.java
+index 54736e5..b2e1f34 100644
+--- a/storm-core/src/jvm/org/apache/storm/executor/error/ReportErrorAndDie.java
++++ b/storm-core/src/jvm/org/apache/storm/executor/error/ReportErrorAndDie.java
+@@ -39,7 +39,8 @@
+             LOG.error("Error while reporting error to cluster, proceeding with shutdown", ex);
+         }
+         if (Utils.exceptionCauseIsInstanceOf(InterruptedException.class, e)
+-                || Utils.exceptionCauseIsInstanceOf(java.io.InterruptedIOException.class, e)) {
++                || (Utils.exceptionCauseIsInstanceOf(java.io.InterruptedIOException.class, e)
++                    && !Utils.exceptionCauseIsInstanceOf(java.net.SocketTimeoutException.class, e))) {
+             LOG.info("Got interrupted exception shutting thread down...");
+         } else {
+             suicideFn.run();

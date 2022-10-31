@@ -1,0 +1,66 @@
+diff --git a/src/test/java/io/vertx/test/core/WebsocketTest.java b/src/test/java/io/vertx/test/core/WebsocketTest.java
+index 75bf9bc..13775fe 100644
+--- a/src/test/java/io/vertx/test/core/WebsocketTest.java
++++ b/src/test/java/io/vertx/test/core/WebsocketTest.java
+@@ -97,7 +97,7 @@
+     VertxOptions options = super.getOptions();
+     options.getAddressResolverOptions().setHostsValue(Buffer.buffer("" +
+         "127.0.0.1 localhost\n" +
+-        "127.0.0.1 host1"));
++        "127.0.0.1 host2.com"));
+     return options;
+   }
+ 
+@@ -230,8 +230,8 @@
+   @Test
+   // Server specifies cert that the client trusts (not trust all)
+   public void testTLSClientTrustServerCertWithSNI() throws Exception {
+-    testTLS(Cert.NONE, Trust.SNI_JKS_HOST1, Cert.SNI_JKS, Trust.NONE, false, false, false, false, true, true, true, true, new String[0],
+-        client -> client.websocketStream(4043, "host1", "/"));
++    testTLS(Cert.NONE, Trust.SNI_JKS_HOST2, Cert.SNI_JKS, Trust.NONE, false, false, false, false, true, true, true, true, new String[0],
++        client -> client.websocketStream(4043, "host2.com", "/"));
+   }
+ 
+   @Test
+@@ -437,7 +437,7 @@
+           if (clientSsl && sni) {
+             try {
+               X509Certificate clientPeerCert = ws.peerCertificateChain()[0];
+-              assertEquals("host1", cnOf(clientPeerCert));
++              assertEquals("host2.com", cnOf(clientPeerCert));
+             } catch (Exception err) {
+               fail(err);
+             }
+diff --git a/src/test/java/io/vertx/test/core/WebsocketTest.java b/src/test/java/io/vertx/test/core/WebsocketTest.java
+index 75bf9bc..13775fe 100644
+--- a/src/test/java/io/vertx/test/core/WebsocketTest.java
++++ b/src/test/java/io/vertx/test/core/WebsocketTest.java
+@@ -97,7 +97,7 @@
+     VertxOptions options = super.getOptions();
+     options.getAddressResolverOptions().setHostsValue(Buffer.buffer("" +
+         "127.0.0.1 localhost\n" +
+-        "127.0.0.1 host1"));
++        "127.0.0.1 host2.com"));
+     return options;
+   }
+ 
+@@ -230,8 +230,8 @@
+   @Test
+   // Server specifies cert that the client trusts (not trust all)
+   public void testTLSClientTrustServerCertWithSNI() throws Exception {
+-    testTLS(Cert.NONE, Trust.SNI_JKS_HOST1, Cert.SNI_JKS, Trust.NONE, false, false, false, false, true, true, true, true, new String[0],
+-        client -> client.websocketStream(4043, "host1", "/"));
++    testTLS(Cert.NONE, Trust.SNI_JKS_HOST2, Cert.SNI_JKS, Trust.NONE, false, false, false, false, true, true, true, true, new String[0],
++        client -> client.websocketStream(4043, "host2.com", "/"));
+   }
+ 
+   @Test
+@@ -437,7 +437,7 @@
+           if (clientSsl && sni) {
+             try {
+               X509Certificate clientPeerCert = ws.peerCertificateChain()[0];
+-              assertEquals("host1", cnOf(clientPeerCert));
++              assertEquals("host2.com", cnOf(clientPeerCert));
+             } catch (Exception err) {
+               fail(err);
+             }

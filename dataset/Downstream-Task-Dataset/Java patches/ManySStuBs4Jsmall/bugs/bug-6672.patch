@@ -1,0 +1,46 @@
+diff --git a/stratosphere-compiler/src/main/java/eu/stratosphere/compiler/plantranslate/NepheleJobGraphGenerator.java b/stratosphere-compiler/src/main/java/eu/stratosphere/compiler/plantranslate/NepheleJobGraphGenerator.java
+index 48c55f9..3799524 100644
+--- a/stratosphere-compiler/src/main/java/eu/stratosphere/compiler/plantranslate/NepheleJobGraphGenerator.java
++++ b/stratosphere-compiler/src/main/java/eu/stratosphere/compiler/plantranslate/NepheleJobGraphGenerator.java
+@@ -753,7 +753,8 @@
+ 		} else {
+ 			// create task vertex
+ 			vertex = new JobTaskVertex(taskName, this.jobGraph);
+-			vertex.setTaskClass(this.currentIteration == null ? RegularPactTask.class : IterationIntermediatePactTask.class);
++			vertex.setTaskClass( (this.currentIteration != null && node.isOnDynamicPath()) ? IterationIntermediatePactTask.class : RegularPactTask.class);
++			
+ 			config = new TaskConfig(vertex.getConfiguration());
+ 			config.setDriver(ds.getDriverClass());
+ 		}
+@@ -778,7 +779,7 @@
+ 		final DriverStrategy ds = node.getDriverStrategy();
+ 		final JobTaskVertex vertex = new JobTaskVertex(taskName, this.jobGraph);
+ 		final TaskConfig config = new TaskConfig(vertex.getConfiguration());
+-		vertex.setTaskClass(this.currentIteration == null ? RegularPactTask.class : IterationIntermediatePactTask.class);
++		vertex.setTaskClass( (this.currentIteration != null && node.isOnDynamicPath()) ? IterationIntermediatePactTask.class : RegularPactTask.class);
+ 		
+ 		// set user code
+ 		config.setStubWrapper(node.getPactContract().getUserCodeWrapper());
+diff --git a/stratosphere-compiler/src/main/java/eu/stratosphere/compiler/plantranslate/NepheleJobGraphGenerator.java b/stratosphere-compiler/src/main/java/eu/stratosphere/compiler/plantranslate/NepheleJobGraphGenerator.java
+index 48c55f9..3799524 100644
+--- a/stratosphere-compiler/src/main/java/eu/stratosphere/compiler/plantranslate/NepheleJobGraphGenerator.java
++++ b/stratosphere-compiler/src/main/java/eu/stratosphere/compiler/plantranslate/NepheleJobGraphGenerator.java
+@@ -753,7 +753,8 @@
+ 		} else {
+ 			// create task vertex
+ 			vertex = new JobTaskVertex(taskName, this.jobGraph);
+-			vertex.setTaskClass(this.currentIteration == null ? RegularPactTask.class : IterationIntermediatePactTask.class);
++			vertex.setTaskClass( (this.currentIteration != null && node.isOnDynamicPath()) ? IterationIntermediatePactTask.class : RegularPactTask.class);
++			
+ 			config = new TaskConfig(vertex.getConfiguration());
+ 			config.setDriver(ds.getDriverClass());
+ 		}
+@@ -778,7 +779,7 @@
+ 		final DriverStrategy ds = node.getDriverStrategy();
+ 		final JobTaskVertex vertex = new JobTaskVertex(taskName, this.jobGraph);
+ 		final TaskConfig config = new TaskConfig(vertex.getConfiguration());
+-		vertex.setTaskClass(this.currentIteration == null ? RegularPactTask.class : IterationIntermediatePactTask.class);
++		vertex.setTaskClass( (this.currentIteration != null && node.isOnDynamicPath()) ? IterationIntermediatePactTask.class : RegularPactTask.class);
+ 		
+ 		// set user code
+ 		config.setStubWrapper(node.getPactContract().getUserCodeWrapper());

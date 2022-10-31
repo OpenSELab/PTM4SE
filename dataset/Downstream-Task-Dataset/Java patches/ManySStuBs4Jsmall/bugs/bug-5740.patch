@@ -1,0 +1,106 @@
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+index 5fa724d..8223760 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+@@ -55,7 +55,7 @@
+     @Test
+     public void testTCPEncodeUTF8InputIsString() throws Exception {
+         final String myUri = "mina:tcp://localhost:9085?encoding=UTF-8&sync=false";
+-        this.context.addRoutes(new RouteBuilder() {
++        context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(myUri).to("mock:result");
+             }
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaEncodingTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaEncodingTest.java
+index 765054f..4c0f05d 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaEncodingTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaEncodingTest.java
+@@ -37,7 +37,7 @@
+     @Test
+     public void testTCPEncodeUTF8InputIsBytes() throws Exception {
+         final String uri = "mina:tcp://localhost:9083?encoding=UTF-8&sync=false";
+-        this.context.addRoutes(new RouteBuilder() {
++        context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).to("mock:result");
+             }
+@@ -58,7 +58,7 @@
+     @Test
+     public void testTCPEncodeUTF8InputIsString() throws Exception {
+         final String uri = "mina:tcp://localhost:9084?encoding=UTF-8&sync=false";
+-        this.context.addRoutes(new RouteBuilder() {
++        context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).to("mock:result");
+             }
+@@ -79,7 +79,7 @@
+     @Test
+     public void testTCPEncodeUTF8TextLineInputIsString() throws Exception {
+         final String uri = "mina:tcp://localhost:9085?textline=true&encoding=UTF-8&sync=false";
+-        this.context.addRoutes(new RouteBuilder() {
++        context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).to("mock:result");
+             }
+@@ -103,7 +103,7 @@
+     @Test
+     public void testUDPEncodeUTF8InputIsBytes() throws Exception {
+         final String uri = "mina:udp://localhost:9080?encoding=UTF-8&sync=false";
+-        this.context.addRoutes(new RouteBuilder() {
++        context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).to("mock:result");
+             }
+@@ -124,7 +124,7 @@
+     @Test
+     public void testUDPEncodeUTF8InputIsString() throws Exception {
+         final String uri = "mina:udp://localhost:9080?encoding=UTF-8&sync=false";
+-        this.context.addRoutes(new RouteBuilder() {
++        context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).to("mock:result");
+             }
+@@ -152,7 +152,7 @@
+         final String bye = "Hello Thai Elephant \u0E08";
+ 
+         final String uri = "mina:udp://localhost:9080?sync=true&encoding=UTF-8";
+-        this.context.addRoutes(new RouteBuilder() {
++        context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(uri).process(new Processor() {
+                     public void process(Exchange exchange) throws Exception {
+@@ -182,7 +182,7 @@
+         final String uri = "mina:tcp://localhost:9080?textline=true&encoding=XXX&sync=false";
+ 
+         try {
+-            this.context.addRoutes(new RouteBuilder() {
++            context.addRoutes(new RouteBuilder() {
+                 public void configure() {
+                     from(uri).to("mock:result");
+                 }
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaExchangeTimeOutTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaExchangeTimeOutTest.java
+index d7c87ba..6ffa8ee 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaExchangeTimeOutTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaExchangeTimeOutTest.java
+@@ -39,7 +39,7 @@
+     public void testUsingTimeoutParameter() throws Exception {
+ 
+         // use a timeout value of 2 seconds (timeout is in millis) so we should actually get a response in this test
+-        Endpoint endpoint = this.context.getEndpoint("mina:tcp://localhost:" + PORT + "?textline=true&sync=true&timeout=2000");
++        Endpoint endpoint = context.getEndpoint("mina:tcp://localhost:" + PORT + "?textline=true&sync=true&timeout=2000");
+         Producer producer = endpoint.createProducer();
+         producer.start();
+         Exchange exchange = producer.createExchange();
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+index 5fa724d..8223760 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+@@ -55,7 +55,7 @@
+     @Test
+     public void testTCPEncodeUTF8InputIsString() throws Exception {
+         final String myUri = "mina:tcp://localhost:9085?encoding=UTF-8&sync=false";
+-        this.context.addRoutes(new RouteBuilder() {
++        context.addRoutes(new RouteBuilder() {
+             public void configure() {
+                 from(myUri).to("mock:result");
+             }

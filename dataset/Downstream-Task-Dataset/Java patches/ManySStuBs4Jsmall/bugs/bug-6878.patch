@@ -1,0 +1,26 @@
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/resettable/SpillingResettableIterator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/resettable/SpillingResettableIterator.java
+index 992e7c7..b7b3d05 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/resettable/SpillingResettableIterator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/resettable/SpillingResettableIterator.java
+@@ -251,7 +251,7 @@
+ 	}
+ 
+ 	public void close() {
+-		if (!fitsIntoMem) {
++		if (ioReader != null) {
+ 			try {
+ 				ioReader.close();
+ 				ioReader.deleteChannel();
+diff --git a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/resettable/SpillingResettableIterator.java b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/resettable/SpillingResettableIterator.java
+index 992e7c7..b7b3d05 100644
+--- a/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/resettable/SpillingResettableIterator.java
++++ b/pact/pact-runtime/src/main/java/eu/stratosphere/pact/runtime/resettable/SpillingResettableIterator.java
+@@ -251,7 +251,7 @@
+ 	}
+ 
+ 	public void close() {
+-		if (!fitsIntoMem) {
++		if (ioReader != null) {
+ 			try {
+ 				ioReader.close();
+ 				ioReader.deleteChannel();

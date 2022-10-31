@@ -1,0 +1,32 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/executor/ExecutorServiceProxy.java b/hazelcast/src/main/java/com/hazelcast/executor/ExecutorServiceProxy.java
+index 94863e4..772ea11 100644
+--- a/hazelcast/src/main/java/com/hazelcast/executor/ExecutorServiceProxy.java
++++ b/hazelcast/src/main/java/com/hazelcast/executor/ExecutorServiceProxy.java
+@@ -67,7 +67,10 @@
+     private final Random random = new Random(-System.currentTimeMillis());
+     private final int partitionCount;
+     private final ILogger logger;
+-    private volatile long consecutiveSubmits = 0L;
++
++    // This field is never accessed directly but by the UPDATER above
++    private volatile int consecutiveSubmits = 0;
++
+     private volatile long lastSubmitTime;
+ 
+     public ExecutorServiceProxy(String name, NodeEngine nodeEngine, DistributedExecutorService service) {
+diff --git a/hazelcast/src/main/java/com/hazelcast/executor/ExecutorServiceProxy.java b/hazelcast/src/main/java/com/hazelcast/executor/ExecutorServiceProxy.java
+index 94863e4..772ea11 100644
+--- a/hazelcast/src/main/java/com/hazelcast/executor/ExecutorServiceProxy.java
++++ b/hazelcast/src/main/java/com/hazelcast/executor/ExecutorServiceProxy.java
+@@ -67,7 +67,10 @@
+     private final Random random = new Random(-System.currentTimeMillis());
+     private final int partitionCount;
+     private final ILogger logger;
+-    private volatile long consecutiveSubmits = 0L;
++
++    // This field is never accessed directly but by the UPDATER above
++    private volatile int consecutiveSubmits = 0;
++
+     private volatile long lastSubmitTime;
+ 
+     public ExecutorServiceProxy(String name, NodeEngine nodeEngine, DistributedExecutorService service) {

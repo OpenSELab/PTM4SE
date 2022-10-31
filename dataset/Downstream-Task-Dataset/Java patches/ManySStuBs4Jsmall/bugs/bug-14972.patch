@@ -1,0 +1,45 @@
+diff --git a/core/test/com/google/inject/ErrorHandlingTest.java b/core/test/com/google/inject/ErrorHandlingTest.java
+index 3a1a142..19161ca 100644
+--- a/core/test/com/google/inject/ErrorHandlingTest.java
++++ b/core/test/com/google/inject/ErrorHandlingTest.java
+@@ -100,7 +100,9 @@
+     Invalid(String s) {}
+   }
+ 
+-  @Singleton @GoodScope
++  @SuppressWarnings("MoreThanOneScopeAnnotationOnClass") // suppress compiler error to test
++  @Singleton 
++  @GoodScope
+   static class TooManyScopes {
+   }
+ 
+diff --git a/core/test/com/google/inject/ScopesTest.java b/core/test/com/google/inject/ScopesTest.java
+index 7fd328a..d8789f3 100644
+--- a/core/test/com/google/inject/ScopesTest.java
++++ b/core/test/com/google/inject/ScopesTest.java
+@@ -413,7 +413,9 @@
+     final int instanceId = nextInstanceId++;
+   }
+ 
+-  @Singleton @CustomScoped
++  @SuppressWarnings("MoreThanOneScopeAnnotationOnClass") // suppress compiler error for testing
++  @Singleton
++  @CustomScoped
+   static class SingletonAndCustomScoped {}
+ 
+   @ImplementedBy(Implementation.class)
+diff --git a/core/test/com/google/inject/ErrorHandlingTest.java b/core/test/com/google/inject/ErrorHandlingTest.java
+index 3a1a142..19161ca 100644
+--- a/core/test/com/google/inject/ErrorHandlingTest.java
++++ b/core/test/com/google/inject/ErrorHandlingTest.java
+@@ -100,7 +100,9 @@
+     Invalid(String s) {}
+   }
+ 
+-  @Singleton @GoodScope
++  @SuppressWarnings("MoreThanOneScopeAnnotationOnClass") // suppress compiler error to test
++  @Singleton 
++  @GoodScope
+   static class TooManyScopes {
+   }
+ 

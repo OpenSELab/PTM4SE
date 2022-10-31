@@ -1,0 +1,128 @@
+diff --git a/guava-testlib/src/com/google/common/collect/testing/google/AbstractMultimapTester.java b/guava-testlib/src/com/google/common/collect/testing/google/AbstractMultimapTester.java
+index 80074e7..f1a68d6 100644
+--- a/guava-testlib/src/com/google/common/collect/testing/google/AbstractMultimapTester.java
++++ b/guava-testlib/src/com/google/common/collect/testing/google/AbstractMultimapTester.java
+@@ -97,15 +97,15 @@
+   }
+ 
+   protected void initMultimapWithNullKey() {
+-    resetContainer(getSubjectGenerator().create(createArrayWithNullKey()));
++    resetContainer(getSubjectGenerator().create((Object[]) createArrayWithNullKey()));
+   }
+ 
+   protected void initMultimapWithNullValue() {
+-    resetContainer(getSubjectGenerator().create(createArrayWithNullValue()));
++    resetContainer(getSubjectGenerator().create((Object[]) createArrayWithNullValue()));
+   }
+ 
+   protected void initMultimapWithNullKeyAndValue() {
+-    resetContainer(getSubjectGenerator().create(createArrayWithNullKeyAndValue()));
++    resetContainer(getSubjectGenerator().create((Object[]) createArrayWithNullKeyAndValue()));
+   }
+ 
+   protected SampleElements<K> sampleKeys() {
+@@ -131,7 +131,7 @@
+   }
+ 
+   protected Multimap<K, V> resetContainer(Entry<K, V>... newContents) {
+-    multimap = super.resetContainer(getSubjectGenerator().create(newContents));
++    multimap = super.resetContainer(getSubjectGenerator().create((Object[]) newContents));
+     return multimap;
+   }
+ 
+diff --git a/guava-testlib/src/com/google/common/collect/testing/google/MultimapEqualsTester.java b/guava-testlib/src/com/google/common/collect/testing/google/MultimapEqualsTester.java
+index 6eb1ca7..066e94d 100644
+--- a/guava-testlib/src/com/google/common/collect/testing/google/MultimapEqualsTester.java
++++ b/guava-testlib/src/com/google/common/collect/testing/google/MultimapEqualsTester.java
+@@ -59,7 +59,8 @@
+     Multimap<K, V> withNull = multimap();
+     new EqualsTester()
+         .addEqualityGroup(original)
+-        .addEqualityGroup(withNull, getSubjectGenerator().create(createArrayWithNullKey()))
++        .addEqualityGroup(
++            withNull, getSubjectGenerator().create((Object[]) createArrayWithNullKey()))
+         .testEquals();
+   }
+   
+@@ -71,7 +72,8 @@
+     Multimap<K, V> withNull = multimap();
+     new EqualsTester()
+         .addEqualityGroup(original)
+-        .addEqualityGroup(withNull, getSubjectGenerator().create(createArrayWithNullValue()))
++        .addEqualityGroup(
++            withNull, getSubjectGenerator().create((Object[]) createArrayWithNullValue()))
+         .testEquals();
+   }
+ 
+diff --git a/guava-testlib/src/com/google/common/collect/testing/google/MultimapTestSuiteBuilder.java b/guava-testlib/src/com/google/common/collect/testing/google/MultimapTestSuiteBuilder.java
+index 15261dd..468c010 100644
+--- a/guava-testlib/src/com/google/common/collect/testing/google/MultimapTestSuiteBuilder.java
++++ b/guava-testlib/src/com/google/common/collect/testing/google/MultimapTestSuiteBuilder.java
+@@ -450,7 +450,7 @@
+       for (int i = 0; i < elements.length; i++) {
+         entries[i] = mapEntry(k, (V) elements[i]);
+       }
+-      return multimapGenerator.create(entries).values();
++      return multimapGenerator.create((Object[]) entries).values();
+     }
+ 
+     @SuppressWarnings("unchecked")
+@@ -514,7 +514,7 @@
+         }
+         entries[i] = mapEntry((K) elements[i], valueItr.next());
+       }
+-      return multimapGenerator.create(entries).keys();
++      return multimapGenerator.create((Object[]) entries).keys();
+     }
+ 
+     private Iterator<V> sampleValuesIterator() {
+@@ -591,7 +591,7 @@
+       for (int i = 0; i < elements.length; i++) {
+         array[i] = mapEntry(k, (V) elements[i]);
+       }
+-      return multimapGenerator.create(array).get(k);
++      return multimapGenerator.create((Object[]) array).get(k);
+     }
+   }
+ 
+@@ -612,7 +612,7 @@
+       for (int i = 0; i < elements.length; i++) {
+         array[i] = mapEntry(k, (V) elements[i]);
+       }
+-      return multimapGenerator.create(array).asMap().get(k);
++      return multimapGenerator.create((Object[]) array).asMap().get(k);
+     }
+   }
+ 
+diff --git a/guava-testlib/src/com/google/common/collect/testing/google/AbstractMultimapTester.java b/guava-testlib/src/com/google/common/collect/testing/google/AbstractMultimapTester.java
+index 80074e7..f1a68d6 100644
+--- a/guava-testlib/src/com/google/common/collect/testing/google/AbstractMultimapTester.java
++++ b/guava-testlib/src/com/google/common/collect/testing/google/AbstractMultimapTester.java
+@@ -97,15 +97,15 @@
+   }
+ 
+   protected void initMultimapWithNullKey() {
+-    resetContainer(getSubjectGenerator().create(createArrayWithNullKey()));
++    resetContainer(getSubjectGenerator().create((Object[]) createArrayWithNullKey()));
+   }
+ 
+   protected void initMultimapWithNullValue() {
+-    resetContainer(getSubjectGenerator().create(createArrayWithNullValue()));
++    resetContainer(getSubjectGenerator().create((Object[]) createArrayWithNullValue()));
+   }
+ 
+   protected void initMultimapWithNullKeyAndValue() {
+-    resetContainer(getSubjectGenerator().create(createArrayWithNullKeyAndValue()));
++    resetContainer(getSubjectGenerator().create((Object[]) createArrayWithNullKeyAndValue()));
+   }
+ 
+   protected SampleElements<K> sampleKeys() {
+@@ -131,7 +131,7 @@
+   }
+ 
+   protected Multimap<K, V> resetContainer(Entry<K, V>... newContents) {
+-    multimap = super.resetContainer(getSubjectGenerator().create(newContents));
++    multimap = super.resetContainer(getSubjectGenerator().create((Object[]) newContents));
+     return multimap;
+   }
+ 

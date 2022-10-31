@@ -1,0 +1,32 @@
+diff --git a/modules/FiltersPlugin/src/main/java/org/gephi/filters/plugin/attribute/AttributeEqualBuilder.java b/modules/FiltersPlugin/src/main/java/org/gephi/filters/plugin/attribute/AttributeEqualBuilder.java
+index 9df394f..2c3daa9 100644
+--- a/modules/FiltersPlugin/src/main/java/org/gephi/filters/plugin/attribute/AttributeEqualBuilder.java
++++ b/modules/FiltersPlugin/src/main/java/org/gephi/filters/plugin/attribute/AttributeEqualBuilder.java
+@@ -146,9 +146,9 @@
+             Object val = attributable.getAttributes().getValue(column.getIndex());
+             val = dynamicHelper.getDynamicValue(val);
+             if (val != null && useRegex) {
+-                return regex.matcher((String) val).matches();
++                return regex.matcher(val.toString()).matches();
+             } else if (val != null) {
+-                return pattern.equals((String) val);
++                return pattern.equals(val.toString());
+             }
+             return false;
+         }
+diff --git a/modules/FiltersPlugin/src/main/java/org/gephi/filters/plugin/attribute/AttributeEqualBuilder.java b/modules/FiltersPlugin/src/main/java/org/gephi/filters/plugin/attribute/AttributeEqualBuilder.java
+index 9df394f..2c3daa9 100644
+--- a/modules/FiltersPlugin/src/main/java/org/gephi/filters/plugin/attribute/AttributeEqualBuilder.java
++++ b/modules/FiltersPlugin/src/main/java/org/gephi/filters/plugin/attribute/AttributeEqualBuilder.java
+@@ -146,9 +146,9 @@
+             Object val = attributable.getAttributes().getValue(column.getIndex());
+             val = dynamicHelper.getDynamicValue(val);
+             if (val != null && useRegex) {
+-                return regex.matcher((String) val).matches();
++                return regex.matcher(val.toString()).matches();
+             } else if (val != null) {
+-                return pattern.equals((String) val);
++                return pattern.equals(val.toString());
+             }
+             return false;
+         }

@@ -1,0 +1,56 @@
+diff --git a/tool/test/org/antlr/v4/test/TestATNConstruction.java b/tool/test/org/antlr/v4/test/TestATNConstruction.java
+index 7d6f4eb..2f0a8c2 100644
+--- a/tool/test/org/antlr/v4/test/TestATNConstruction.java
++++ b/tool/test/org/antlr/v4/test/TestATNConstruction.java
+@@ -360,14 +360,14 @@
+ 	@Test public void testNestedAstar() throws Exception {
+ 		Grammar g = new Grammar(
+ 			"parser grammar P;\n"+
+-			"a : (',' ID*)*;");
++			"a : (COMMA ID*)*;");
+ 		String expecting =
+ 			"RuleStart_a_0->StarLoopEntry_13\n" +
+ 			"StarLoopEntry_13->StarBlockStart_11\n" +
+ 			"StarLoopEntry_13->s14\n" +
+ 			"StarBlockStart_11->s2\n" +
+ 			"s14->RuleStop_a_1\n" +
+-			"s2-','->StarLoopEntry_8\n" +
++			"s2-COMMA->StarLoopEntry_8\n" +
+ 			"RuleStop_a_1-EOF->s16\n" +
+ 			"StarLoopEntry_8->StarBlockStart_6\n" +
+ 			"StarLoopEntry_8->s9\n" +
+diff --git a/tool/test/org/antlr/v4/test/TestSymbolIssues.java b/tool/test/org/antlr/v4/test/TestSymbolIssues.java
+index f9acba0..56f2968 100644
+--- a/tool/test/org/antlr/v4/test/TestSymbolIssues.java
++++ b/tool/test/org/antlr/v4/test/TestSymbolIssues.java
+@@ -46,7 +46,8 @@
+ 		"error(69): B.g4:4:4: label s conflicts with rule with same name\n" +
+ 		"error(69): B.g4:4:9: label b conflicts with rule with same name\n" +
+ 		"error(70): B.g4:4:15: label X conflicts with token with same name\n" +
+-		"error(75): B.g4:6:9: label x type mismatch with previous definition: TOKEN_LIST_LABEL!=TOKEN_LABEL\n"
++		"error(75): B.g4:6:9: label x type mismatch with previous definition: TOKEN_LIST_LABEL!=TOKEN_LABEL\n" +
++		"error(126): B.g4:4:20: cannot create implicit token for string literal '.' in non-combined grammar\n"
+     };
+ 
+     static String[] D = {
+diff --git a/tool/test/org/antlr/v4/test/TestATNConstruction.java b/tool/test/org/antlr/v4/test/TestATNConstruction.java
+index 7d6f4eb..2f0a8c2 100644
+--- a/tool/test/org/antlr/v4/test/TestATNConstruction.java
++++ b/tool/test/org/antlr/v4/test/TestATNConstruction.java
+@@ -360,14 +360,14 @@
+ 	@Test public void testNestedAstar() throws Exception {
+ 		Grammar g = new Grammar(
+ 			"parser grammar P;\n"+
+-			"a : (',' ID*)*;");
++			"a : (COMMA ID*)*;");
+ 		String expecting =
+ 			"RuleStart_a_0->StarLoopEntry_13\n" +
+ 			"StarLoopEntry_13->StarBlockStart_11\n" +
+ 			"StarLoopEntry_13->s14\n" +
+ 			"StarBlockStart_11->s2\n" +
+ 			"s14->RuleStop_a_1\n" +
+-			"s2-','->StarLoopEntry_8\n" +
++			"s2-COMMA->StarLoopEntry_8\n" +
+ 			"RuleStop_a_1-EOF->s16\n" +
+ 			"StarLoopEntry_8->StarBlockStart_6\n" +
+ 			"StarLoopEntry_8->s9\n" +

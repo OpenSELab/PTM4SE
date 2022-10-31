@@ -1,0 +1,13 @@
+diff --git a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+index 7a90c4c..cb768a0 100755
+--- a/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
++++ b/modules/jersey/src/main/java/org/atmosphere/jersey/AtmosphereFilter.java
+@@ -223,7 +223,7 @@
+             this.filters = filters;
+             this.topic = topic;
+             this.writeEntity = writeEntity;
+-            this.defaultContentType = contentType;
++            this.defaultContentType = contentType.equals("") ? null : contentType;
+         }
+ 
+         public ContainerRequestFilter getRequestFilter() {

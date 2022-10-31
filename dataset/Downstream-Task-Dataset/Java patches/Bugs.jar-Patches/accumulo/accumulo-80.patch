@@ -1,0 +1,12 @@
+diff --git a/server/master/src/main/java/org/apache/accumulo/master/tserverOps/ShutdownTServer.java b/server/master/src/main/java/org/apache/accumulo/master/tserverOps/ShutdownTServer.java
+index 11cd91b..171e312 100644
+--- a/server/master/src/main/java/org/apache/accumulo/master/tserverOps/ShutdownTServer.java
++++ b/server/master/src/main/java/org/apache/accumulo/master/tserverOps/ShutdownTServer.java
+@@ -58,6 +58,7 @@ public class ShutdownTServer extends MasterRepo {
+     // only send this request once
+     if (!requestedShutdown) {
+       master.shutdownTServer(server);
++      requestedShutdown = true;
+     }
+ 
+     if (master.onlineTabletServers().contains(server)) {

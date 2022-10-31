@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/alibaba/druid/sql/PagerUtils.java b/src/main/java/com/alibaba/druid/sql/PagerUtils.java
+index 5205ce6..f2b313a 100644
+--- a/src/main/java/com/alibaba/druid/sql/PagerUtils.java
++++ b/src/main/java/com/alibaba/druid/sql/PagerUtils.java
+@@ -200,7 +200,7 @@
+ 
+         if (query instanceof SQLSelectQueryBlock) {
+             OracleSelectQueryBlock queryBlock = (OracleSelectQueryBlock) query;
+-            if (select.getOrderBy() == null && offset <= 0) {
++            if (queryBlock.getGroupBy() == null && select.getOrderBy() == null && offset <= 0) {
+                 SQLExpr condition = new SQLBinaryOpExpr(new SQLIdentifierExpr("ROWNUM"), //
+                                                         SQLBinaryOperator.LessThanOrEqual, //
+                                                         new SQLNumberExpr(count));
+diff --git a/src/main/java/com/alibaba/druid/sql/PagerUtils.java b/src/main/java/com/alibaba/druid/sql/PagerUtils.java
+index 5205ce6..f2b313a 100644
+--- a/src/main/java/com/alibaba/druid/sql/PagerUtils.java
++++ b/src/main/java/com/alibaba/druid/sql/PagerUtils.java
+@@ -200,7 +200,7 @@
+ 
+         if (query instanceof SQLSelectQueryBlock) {
+             OracleSelectQueryBlock queryBlock = (OracleSelectQueryBlock) query;
+-            if (select.getOrderBy() == null && offset <= 0) {
++            if (queryBlock.getGroupBy() == null && select.getOrderBy() == null && offset <= 0) {
+                 SQLExpr condition = new SQLBinaryOpExpr(new SQLIdentifierExpr("ROWNUM"), //
+                                                         SQLBinaryOperator.LessThanOrEqual, //
+                                                         new SQLNumberExpr(count));

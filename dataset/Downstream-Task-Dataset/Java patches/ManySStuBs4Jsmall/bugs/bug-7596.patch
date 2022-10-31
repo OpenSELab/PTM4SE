@@ -1,0 +1,30 @@
+diff --git a/src/java/org/apache/hadoop/hbase/regionserver/HRegion.java b/src/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+index d5d6bc1..a713d10 100644
+--- a/src/java/org/apache/hadoop/hbase/regionserver/HRegion.java
++++ b/src/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+@@ -503,7 +503,9 @@
+                       HTableDescriptor.DEFAULT_MEMCACHE_FLUSH_SIZE);
+     }
+     this.memcacheFlushSize = flushSize;
+-    this.blockingMemcacheSize = this.memcacheFlushSize * flushSize;
++
++    this.blockingMemcacheSize = this.memcacheFlushSize *
++      conf.getInt("hbase.hregion.memcache.block.multiplier", 1);
+ 
+     // See if region is meant to run read-only.
+     if (this.regionInfo.getTableDesc().isReadOnly()) {
+diff --git a/src/java/org/apache/hadoop/hbase/regionserver/HRegion.java b/src/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+index d5d6bc1..a713d10 100644
+--- a/src/java/org/apache/hadoop/hbase/regionserver/HRegion.java
++++ b/src/java/org/apache/hadoop/hbase/regionserver/HRegion.java
+@@ -503,7 +503,9 @@
+                       HTableDescriptor.DEFAULT_MEMCACHE_FLUSH_SIZE);
+     }
+     this.memcacheFlushSize = flushSize;
+-    this.blockingMemcacheSize = this.memcacheFlushSize * flushSize;
++
++    this.blockingMemcacheSize = this.memcacheFlushSize *
++      conf.getInt("hbase.hregion.memcache.block.multiplier", 1);
+ 
+     // See if region is meant to run read-only.
+     if (this.regionInfo.getTableDesc().isReadOnly()) {

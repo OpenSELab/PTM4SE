@@ -1,0 +1,51 @@
+diff --git a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/session/NodeImpl.java b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/session/NodeImpl.java
+index 2dbd284..21a32d0 100644
+--- a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/session/NodeImpl.java
++++ b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/session/NodeImpl.java
+@@ -797,24 +797,32 @@ public class NodeImpl<T extends NodeDelegate> extends ItemImpl<T> implements Nod
+ 
+     @Override
+     public boolean hasNode(String relPath) throws RepositoryException {
+-        final String oakPath = getOakPathOrThrow(relPath);
+-        return perform(new NodeOperation<Boolean>(dlg) {
+-            @Override
+-            public Boolean perform() throws RepositoryException {
+-                return node.getChild(oakPath) != null;
+-            }
+-        });
++        try {
++            final String oakPath = getOakPathOrThrow(relPath);
++            return perform(new NodeOperation<Boolean>(dlg) {
++                @Override
++                public Boolean perform() throws RepositoryException {
++                    return node.getChild(oakPath) != null;
++                }
++            });
++        } catch (PathNotFoundException e) {
++            return false;
++        }
+     }
+ 
+     @Override
+     public boolean hasProperty(String relPath) throws RepositoryException {
+-        final String oakPath = getOakPathOrThrow(relPath);
+-        return perform(new NodeOperation<Boolean>(dlg) {
+-            @Override
+-            public Boolean perform() throws RepositoryException {
+-                return node.getPropertyOrNull(oakPath) != null;
+-            }
+-        });
++        try {
++            final String oakPath = getOakPathOrThrow(relPath);
++            return perform(new NodeOperation<Boolean>(dlg) {
++                @Override
++                public Boolean perform() throws RepositoryException {
++                    return node.getPropertyOrNull(oakPath) != null;
++                }
++            });
++        } catch (PathNotFoundException e) {
++            return false;
++        }
+     }
+ 
+     @Override

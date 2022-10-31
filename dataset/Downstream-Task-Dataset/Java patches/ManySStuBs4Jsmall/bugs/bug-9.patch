@@ -1,0 +1,22 @@
+diff --git a/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureShellTaskTest.java b/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureShellTaskTest.java
+index 7061345..e288bae 100644
+--- a/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureShellTaskTest.java
++++ b/modules/activiti-secure-service-tasks/src/test/java/org/activiti/test/serviceTask/secure/SecureShellTaskTest.java
+@@ -28,7 +28,7 @@
+     @Test
+     public void testClassWhiteListingNotAllowed() {
+         if (osType == OsType.WINDOWS) {
+-            deployProcessDefinition("ShellTaskTest.testEchoShellWindows.bpmn20.xml");
++            deployProcessDefinition("ShellTaskTest.testShellWindows.bpmn20.xml");
+         } else if (osType == OsType.LINUX) {
+             deployProcessDefinition("ShellTaskTest.testEchoShellLinux.bpmn20.xml");
+         } else if (osType == OsType.MAC) {
+@@ -38,7 +38,7 @@
+         }
+ 
+         try {
+-            runtimeService.startProcessInstanceByKey("shellCommandEcho");
++            runtimeService.startProcessInstanceByKey("shellCommandStart");
+             Assert.fail(); // Expecting exception
+         } catch (Exception e) {
+             e.printStackTrace();

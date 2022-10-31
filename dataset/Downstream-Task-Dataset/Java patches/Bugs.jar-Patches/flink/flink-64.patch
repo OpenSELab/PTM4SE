@@ -1,0 +1,29 @@
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
+index bc75664..6d5832b 100644
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/Execution.java
+@@ -797,6 +797,11 @@ public class Execution implements Serializable {
+ 				return false;
+ 			}
+ 
++			if (current == CANCELING) {
++				cancelingComplete();
++				return false;
++			}
++
+ 			if (transitionState(current, FAILED, t)) {
+ 				// success (in a manner of speaking)
+ 				this.failureCause = t;
+diff --git a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
+index 0d6de98..ed50bea 100755
+--- a/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
++++ b/flink-runtime/src/main/java/org/apache/flink/runtime/executiongraph/ExecutionGraph.java
+@@ -809,7 +809,7 @@ public class ExecutionGraph implements Serializable {
+ 	public void fail(Throwable t) {
+ 		while (true) {
+ 			JobStatus current = state;
+-			if (current == JobStatus.FAILED || current == JobStatus.FAILING) {
++			if (current == JobStatus.FAILING || current.isTerminalState()) {
+ 				return;
+ 			}
+ 			else if (transitionState(current, JobStatus.FAILING, t)) {

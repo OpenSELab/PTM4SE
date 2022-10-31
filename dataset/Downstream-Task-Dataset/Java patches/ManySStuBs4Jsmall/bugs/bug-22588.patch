@@ -1,0 +1,40 @@
+diff --git a/samples/server/petstore/java-play-framework/app/controllers/PetApiController.java b/samples/server/petstore/java-play-framework/app/controllers/PetApiController.java
+index 4ee0a23..c36fe77 100644
+--- a/samples/server/petstore/java-play-framework/app/controllers/PetApiController.java
++++ b/samples/server/petstore/java-play-framework/app/controllers/PetApiController.java
+@@ -53,7 +53,7 @@
+             apiKey = (String)valueapiKey;
+         
+         } else {
+-            apiKey = "";
++            apiKey = null;
+         }
+         imp.deletePet(petId, apiKey);
+         
+@@ -116,7 +116,7 @@
+             name = (String)valuename;
+         
+         } else {
+-            name = "";
++            name = null;
+         }
+         String valuestatus = (request().body().asMultipartFormData().asFormUrlEncoded().get("status"))[0];
+         String status;
+@@ -124,7 +124,7 @@
+             status = (String)valuestatus;
+         
+         } else {
+-            status = "";
++            status = null;
+         }
+         imp.updatePetWithForm(petId, name, status);
+         
+@@ -139,7 +139,7 @@
+             additionalMetadata = (String)valueadditionalMetadata;
+         
+         } else {
+-            additionalMetadata = "";
++            additionalMetadata = null;
+         }
+         Http.MultipartFormData.FilePart file = request().body().asMultipartFormData().getFile("file");
+                 ModelApiResponse obj = imp.uploadFile(petId, additionalMetadata, file);

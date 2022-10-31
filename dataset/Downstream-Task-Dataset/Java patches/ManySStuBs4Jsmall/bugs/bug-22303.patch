@@ -1,0 +1,75 @@
+diff --git a/src/edu/stanford/nlp/ie/NumberNormalizer.java b/src/edu/stanford/nlp/ie/NumberNormalizer.java
+index 0f348d4..f80305e 100644
+--- a/src/edu/stanford/nlp/ie/NumberNormalizer.java
++++ b/src/edu/stanford/nlp/ie/NumberNormalizer.java
+@@ -450,7 +450,7 @@
+     List<CoreMap> numbers = new ArrayList<CoreMap>();
+     while (matcher.find()) {
+       @SuppressWarnings("unused")
+-      List<? extends CoreMap> matchedTokens = matcher.groupNodes();
++      List<CoreMap> matchedTokens = matcher.groupNodes();
+       int numStart = matcher.start();
+       int possibleNumEnd = -1;
+       int lastUnitPos = -1;
+@@ -679,7 +679,7 @@
+     List<CoreMap> numberRanges = new ArrayList<CoreMap>();
+     TokenSequenceMatcher matcher = rangePattern.getMatcher(numerizedTokens);
+     while (matcher.find()) {
+-      List<? extends CoreMap> matched = matcher.groupNodes();
++      List<CoreMap> matched = matcher.groupNodes();
+       if (matched.size() == 1) {
+         numberRanges.add(matched.get(0));
+       } else {
+diff --git a/src/edu/stanford/nlp/ling/tokensregex/BasicSequenceMatchResult.java b/src/edu/stanford/nlp/ling/tokensregex/BasicSequenceMatchResult.java
+index 0d44c1b..b1dc11a 100644
+--- a/src/edu/stanford/nlp/ling/tokensregex/BasicSequenceMatchResult.java
++++ b/src/edu/stanford/nlp/ling/tokensregex/BasicSequenceMatchResult.java
+@@ -149,11 +149,11 @@
+     }
+   }
+ 
+-  public List<? extends T> groupNodes() {
++  public List<T> groupNodes() {
+     return groupNodes(0);
+   }
+ 
+-  public List<? extends T> groupNodes(int group) {
++  public List<T> groupNodes(int group) {
+     if (group == GROUP_BEFORE_MATCH || group == GROUP_AFTER_MATCH) {
+       // return a new list so the resulting object is serializable
+       return new ArrayList<T>(elements.subList(start(group), end(group)));
+diff --git a/src/edu/stanford/nlp/ling/tokensregex/SequenceMatcher.java b/src/edu/stanford/nlp/ling/tokensregex/SequenceMatcher.java
+index 6f3e456..a82b5d3 100644
+--- a/src/edu/stanford/nlp/ling/tokensregex/SequenceMatcher.java
++++ b/src/edu/stanford/nlp/ling/tokensregex/SequenceMatcher.java
+@@ -616,7 +616,7 @@
+     }
+   }
+ 
+-  public List<? extends T> groupNodes(int group) {
++  public List<T> groupNodes(int group) {
+     if (matchingCompleted && matched) {
+       return super.groupNodes(group);
+     } else {
+diff --git a/src/edu/stanford/nlp/ie/NumberNormalizer.java b/src/edu/stanford/nlp/ie/NumberNormalizer.java
+index 0f348d4..f80305e 100644
+--- a/src/edu/stanford/nlp/ie/NumberNormalizer.java
++++ b/src/edu/stanford/nlp/ie/NumberNormalizer.java
+@@ -450,7 +450,7 @@
+     List<CoreMap> numbers = new ArrayList<CoreMap>();
+     while (matcher.find()) {
+       @SuppressWarnings("unused")
+-      List<? extends CoreMap> matchedTokens = matcher.groupNodes();
++      List<CoreMap> matchedTokens = matcher.groupNodes();
+       int numStart = matcher.start();
+       int possibleNumEnd = -1;
+       int lastUnitPos = -1;
+@@ -679,7 +679,7 @@
+     List<CoreMap> numberRanges = new ArrayList<CoreMap>();
+     TokenSequenceMatcher matcher = rangePattern.getMatcher(numerizedTokens);
+     while (matcher.find()) {
+-      List<? extends CoreMap> matched = matcher.groupNodes();
++      List<CoreMap> matched = matcher.groupNodes();
+       if (matched.size() == 1) {
+         numberRanges.add(matched.get(0));
+       } else {

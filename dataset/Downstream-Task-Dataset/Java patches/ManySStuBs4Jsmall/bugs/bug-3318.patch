@@ -1,0 +1,40 @@
+diff --git a/src/main/java/com/alibaba/druid/support/http/StatViewServlet.java b/src/main/java/com/alibaba/druid/support/http/StatViewServlet.java
+index 86f1771..dae760b 100644
+--- a/src/main/java/com/alibaba/druid/support/http/StatViewServlet.java
++++ b/src/main/java/com/alibaba/druid/support/http/StatViewServlet.java
+@@ -304,11 +304,13 @@
+ 
+         json.put("PoolingCount", dataSource.getPoolingCount());
+         json.put("PoolingPeak", dataSource.getPoolingPeak());
+-        json.put("PoolingPeakTime", dataSource.getPoolingPeakTime());
++        json.put("PoolingPeakTime",
++                 dataSource.getPoolingPeakTime() == null ? null : dataSource.getPoolingPeakTime().toString());
+ 
+         json.put("ActiveCount", dataSource.getActiveCount());
+         json.put("ActivePeak", dataSource.getActivePeak());
+-        json.put("ActivePeakTime", dataSource.getActivePeakTime());
++        json.put("ActivePeakTime",
++                 dataSource.getActivePeakTime() == null ? null : dataSource.getActivePeakTime().toString());
+ 
+         json.put("InitialSize", dataSource.getInitialSize());
+         json.put("MinIdle", dataSource.getMinIdle());
+diff --git a/src/main/java/com/alibaba/druid/support/http/StatViewServlet.java b/src/main/java/com/alibaba/druid/support/http/StatViewServlet.java
+index 86f1771..dae760b 100644
+--- a/src/main/java/com/alibaba/druid/support/http/StatViewServlet.java
++++ b/src/main/java/com/alibaba/druid/support/http/StatViewServlet.java
+@@ -304,11 +304,13 @@
+ 
+         json.put("PoolingCount", dataSource.getPoolingCount());
+         json.put("PoolingPeak", dataSource.getPoolingPeak());
+-        json.put("PoolingPeakTime", dataSource.getPoolingPeakTime());
++        json.put("PoolingPeakTime",
++                 dataSource.getPoolingPeakTime() == null ? null : dataSource.getPoolingPeakTime().toString());
+ 
+         json.put("ActiveCount", dataSource.getActiveCount());
+         json.put("ActivePeak", dataSource.getActivePeak());
+-        json.put("ActivePeakTime", dataSource.getActivePeakTime());
++        json.put("ActivePeakTime",
++                 dataSource.getActivePeakTime() == null ? null : dataSource.getActivePeakTime().toString());
+ 
+         json.put("InitialSize", dataSource.getInitialSize());
+         json.put("MinIdle", dataSource.getMinIdle());

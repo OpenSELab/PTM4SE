@@ -1,0 +1,137 @@
+--- a/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
++++ b/src/main/java/spoon/reflect/visitor/DefaultJavaPrettyPrinter.java
+@@ -282,7 +282,7 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 			context.elementStack.push(e);
+ 			if (env.isPreserveLineNumbers()) {
+ 				if (!(e instanceof CtNamedElement)) {
+-					printer.adjustPosition(e, sourceCompilationUnit);
++					printer.adjustStartPosition(e);
+ 				}
+ 			}
+ 			e.accept(this);
+@@ -436,9 +436,10 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 			}
+ 		}
+ 		printer.decTab();
++		printer.adjustEndPosition(block);
+ 		if (env.isPreserveLineNumbers()) {
+ 			if (!block.isImplicit()) {
+-				printer.write("}");
++				printer.writeTabs().write("}");
+ 			}
+ 		} else {
+ 			printer.writeln().writeTabs();
+@@ -528,7 +529,7 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 		// lst.addAll(elementPrinterHelper.getComments(ctClass, CommentOffset.INSIDE));
+ 		printer.write(" {").incTab();
+ 		elementPrinterHelper.writeElementList(ctClass.getTypeMembers());
+-		printer.decTab().writeTabs().write("}");
++		printer.adjustEndPosition(ctClass).decTab().writeTabs().write("}");
+ 		context.popCurrentThis();
+ 	}
+ 
+@@ -1092,7 +1093,7 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 
+ 			elementPrinterHelper.writeActualTypeArguments(invocation);
+ 			if (env.isPreserveLineNumbers()) {
+-				printer.adjustPosition(invocation, sourceCompilationUnit);
++				printer.adjustStartPosition(invocation);
+ 			}
+ 			printer.write(invocation.getExecutable().getSimpleName());
+ 		}
+@@ -1163,7 +1164,7 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 			enterCtStatement(localVariable);
+ 		}
+ 		if (env.isPreserveLineNumbers()) {
+-			printer.adjustPosition(localVariable, sourceCompilationUnit);
++			printer.adjustStartPosition(localVariable);
+ 		}
+ 		if (!context.noTypeDecl()) {
+ 			elementPrinterHelper.writeModifiers(localVariable);
+@@ -1185,7 +1186,7 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 	@Override
+ 	public <T> void visitCtCatchVariable(CtCatchVariable<T> catchVariable) {
+ 		if (env.isPreserveLineNumbers()) {
+-			printer.adjustPosition(catchVariable, sourceCompilationUnit);
++			printer.adjustStartPosition(catchVariable);
+ 		}
+ 		elementPrinterHelper.writeModifiers(catchVariable);
+ 		scan(catchVariable.getType());
+@@ -1813,7 +1814,12 @@ public class DefaultJavaPrettyPrinter implements CtVisitor, PrettyPrinter {
+ 		elementPrinterHelper.writeHeader(types, imports);
+ 		for (CtType<?> t : types) {
+ 			scan(t);
+-			printer.writeln().writeln().writeTabs();
++			if (!env.isPreserveLineNumbers()) {
++				// saving lines and chars
++				printer.writeln().writeln().writeTabs();
++			} else {
++				printer.adjustEndPosition(t);
++			}
+ 		}
+ 	}
+ 
+diff --git a/src/main/java/spoon/reflect/visitor/printer/ElementPrinterHelper.java b/src/main/java/spoon/reflect/visitor/printer/ElementPrinterHelper.java
+index 0882ead..0f50d2a 100644
+--- a/src/main/java/spoon/reflect/visitor/printer/ElementPrinterHelper.java
++++ b/src/main/java/spoon/reflect/visitor/printer/ElementPrinterHelper.java
+@@ -88,7 +88,7 @@ public class ElementPrinterHelper {
+ 	public void visitCtNamedElement(CtNamedElement namedElement, CompilationUnit sourceCompilationUnit) {
+ 		writeAnnotations(namedElement);
+ 		if (env.isPreserveLineNumbers()) {
+-			printer.adjustPosition(namedElement, sourceCompilationUnit);
++			printer.adjustStartPosition(namedElement);
+ 		}
+ 	}
+ 
+@@ -261,7 +261,6 @@ public class ElementPrinterHelper {
+ 		if (!types.isEmpty()) {
+ 			for (CtType<?> ctType : types) {
+ 				writeComment(ctType, CommentOffset.TOP_FILE);
+-				printer.writeln().writeln().writeTabs();
+ 			}
+ 			// writing the header package
+ 			if (!types.get(0).getPackage().isUnnamedPackage()) {
+diff --git a/src/main/java/spoon/reflect/visitor/printer/PrinterHelper.java b/src/main/java/spoon/reflect/visitor/printer/PrinterHelper.java
+index 9b19bc3..e4c01ed 100644
+--- a/src/main/java/spoon/reflect/visitor/printer/PrinterHelper.java
++++ b/src/main/java/spoon/reflect/visitor/printer/PrinterHelper.java
+@@ -160,24 +159,30 @@ public class PrinterHelper {
+ 		return (c == ' ') || (c == '\t') || (c == '\n') || (c == '\r');
+ 	}
+ 
+-	public void adjustPosition(CtElement e, CompilationUnit unitExpected) {
+-		if (e.getPosition() != null && !e.isImplicit() && e.getPosition().getCompilationUnit() != null && e.getPosition().getCompilationUnit() == unitExpected) {
++	public PrinterHelper adjustStartPosition(CtElement e) {
++		if (e.getPosition() != null && !e.isImplicit()) {
++			// we should add some lines
+ 			while (line < e.getPosition().getLine()) {
+ 				writeln();
+ 			}
+ 			// trying to remove some lines
+ 			while (line > e.getPosition().getLine()) {
+ 				if (!removeLine()) {
+-					if (line > e.getPosition().getEndLine()) {
+-						final String message = "cannot adjust position of " + e.getClass().getSimpleName() + " '" //
+-								+ e.getShortRepresentation() + "' " + " to match lines: " + line + " > [" //
+-								+ e.getPosition().getLine() + ", " + e.getPosition().getEndLine() + "]"; //
+-						env.report(null, Level.WARN, e, message);
+-					}
+ 					break;
+ 				}
+ 			}
+ 		}
++		return this;
++	}
++
++	public PrinterHelper adjustEndPosition(CtElement e) {
++		if (env.isPreserveLineNumbers() && e.getPosition() != null) {
++			// let's add lines if required
++			while (line < e.getPosition().getEndLine()) {
++				writeln();
++			}
++		}
++		return this;
+ 	}
+ 
+ 	public void undefineLine() {

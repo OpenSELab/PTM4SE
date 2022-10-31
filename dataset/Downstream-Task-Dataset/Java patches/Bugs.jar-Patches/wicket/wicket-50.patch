@@ -1,0 +1,30 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/request/mapper/AbstractResourceReferenceMapper.java b/wicket-core/src/main/java/org/apache/wicket/request/mapper/AbstractResourceReferenceMapper.java
+index b0b40ec..ce4896c 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/request/mapper/AbstractResourceReferenceMapper.java
++++ b/wicket-core/src/main/java/org/apache/wicket/request/mapper/AbstractResourceReferenceMapper.java
+@@ -47,14 +47,22 @@ public abstract class AbstractResourceReferenceMapper extends AbstractComponentM
+ 			{
+ 				res.append(attributes.getLocale().toString());
+ 			}
+-			if (!Strings.isEmpty(attributes.getStyle()))
++			boolean styleEmpty = Strings.isEmpty(attributes.getStyle());
++			if (!styleEmpty)
+ 			{
+-				res.append("-");
++				res.append('-');
+ 				res.append(attributes.getStyle());
+ 			}
+ 			if (!Strings.isEmpty(attributes.getVariation()))
+ 			{
+-				res.append("-");
++				if (styleEmpty)
++				{
++					res.append("--");
++				}
++				else
++				{
++					res.append('-');
++				}
+ 				res.append(attributes.getVariation());
+ 			}
+ 			return res.toString();

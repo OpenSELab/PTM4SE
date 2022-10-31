@@ -1,0 +1,86 @@
+diff --git a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
+index a28c470..0c53007 100644
+--- a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
++++ b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
+@@ -141,7 +141,7 @@
+       }
+       log.info("Loaded offset map[%s]", offsetMap);
+     } else {
+-      log.makeAlert("Unable to cast lastCommit to Map for feed [%s]", feed);
++      log.makeAlert("Unable to cast lastCommit to Map for feed [%s]", feed).emit();
+     }
+     return offsetMap;
+   }
+diff --git a/indexing-service/src/main/java/io/druid/indexing/overlord/RemoteTaskRunner.java b/indexing-service/src/main/java/io/druid/indexing/overlord/RemoteTaskRunner.java
+index c2f2a1d..26cdfb7 100644
+--- a/indexing-service/src/main/java/io/druid/indexing/overlord/RemoteTaskRunner.java
++++ b/indexing-service/src/main/java/io/druid/indexing/overlord/RemoteTaskRunner.java
+@@ -880,7 +880,7 @@
+               task.getId(),
+               elapsed,
+               config.getTaskAssignmentTimeout()
+-          );
++          ).emit();
+           taskComplete(taskRunnerWorkItem, theZkWorker, TaskStatus.failure(task.getId()));
+           break;
+         }
+diff --git a/server/src/main/java/io/druid/metadata/SQLMetadataSegmentManager.java b/server/src/main/java/io/druid/metadata/SQLMetadataSegmentManager.java
+index 1a04d42..eca6620 100644
+--- a/server/src/main/java/io/druid/metadata/SQLMetadataSegmentManager.java
++++ b/server/src/main/java/io/druid/metadata/SQLMetadataSegmentManager.java
+@@ -458,7 +458,7 @@
+                             ));
+                           }
+                           catch (IOException e) {
+-                            log.makeAlert(e, "Failed to read segment from db.");
++                            log.makeAlert(e, "Failed to read segment from db.").emit();
+                             return null;
+                           }
+                         }
+diff --git a/server/src/main/java/io/druid/segment/realtime/RealtimeManager.java b/server/src/main/java/io/druid/segment/realtime/RealtimeManager.java
+index d9428f4..73bf34f 100644
+--- a/server/src/main/java/io/druid/segment/realtime/RealtimeManager.java
++++ b/server/src/main/java/io/druid/segment/realtime/RealtimeManager.java
+@@ -362,7 +362,8 @@
+         }
+         catch (Exception e) {
+           log.makeAlert(e, "Unknown exception, Ignoring and continuing.")
+-             .addData("inputRow", inputRow);
++             .addData("inputRow", inputRow)
++             .emit();
+         }
+ 
+         try {
+diff --git a/server/src/main/java/io/druid/server/coordination/SegmentLoadDropHandler.java b/server/src/main/java/io/druid/server/coordination/SegmentLoadDropHandler.java
+index a95fbb7..1e84da5 100644
+--- a/server/src/main/java/io/druid/server/coordination/SegmentLoadDropHandler.java
++++ b/server/src/main/java/io/druid/server/coordination/SegmentLoadDropHandler.java
+@@ -376,12 +376,13 @@
+ 
+         if (failedSegments.size() > 0) {
+           log.makeAlert("%,d errors seen while loading segments", failedSegments.size())
+-             .addData("failedSegments", failedSegments);
++             .addData("failedSegments", failedSegments)
++             .emit();
+         }
+       }
+       catch (InterruptedException e) {
+         Thread.currentThread().interrupt();
+-        log.makeAlert(e, "LoadingInterrupted");
++        log.makeAlert(e, "LoadingInterrupted").emit();
+       }
+ 
+       backgroundSegmentAnnouncer.finishAnnouncing();
+diff --git a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
+index a28c470..0c53007 100644
+--- a/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
++++ b/extensions-contrib/kafka-eight-simpleConsumer/src/main/java/io/druid/firehose/kafka/KafkaEightSimpleConsumerFirehoseFactory.java
+@@ -141,7 +141,7 @@
+       }
+       log.info("Loaded offset map[%s]", offsetMap);
+     } else {
+-      log.makeAlert("Unable to cast lastCommit to Map for feed [%s]", feed);
++      log.makeAlert("Unable to cast lastCommit to Map for feed [%s]", feed).emit();
+     }
+     return offsetMap;
+   }

@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
+index 1913281..a5e2cb6 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
+@@ -90,7 +90,7 @@
+      */
+     protected boolean testClassExists(final String testClass) {
+         try {
+-            return testClass != null && testClass.length() > 0 && Class.forName(testClass) != null;
++            return testClass != null && testClass.length() > 0 &&  Thread.currentThread().getContextClassLoader().loadClass(testClass) != null;
+         } catch (ClassNotFoundException ex) {
+             return false;
+         } catch (NoClassDefFoundError ex) {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
+index 1913281..a5e2cb6 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultCometSupportResolver.java
+@@ -90,7 +90,7 @@
+      */
+     protected boolean testClassExists(final String testClass) {
+         try {
+-            return testClass != null && testClass.length() > 0 && Class.forName(testClass) != null;
++            return testClass != null && testClass.length() > 0 &&  Thread.currentThread().getContextClassLoader().loadClass(testClass) != null;
+         } catch (ClassNotFoundException ex) {
+             return false;
+         } catch (NoClassDefFoundError ex) {

@@ -1,0 +1,19 @@
+diff --git a/oak-mk/src/main/java/org/apache/jackrabbit/mk/store/DefaultRevisionStore.java b/oak-mk/src/main/java/org/apache/jackrabbit/mk/store/DefaultRevisionStore.java
+index 4e299c3..533ccc8 100644
+--- a/oak-mk/src/main/java/org/apache/jackrabbit/mk/store/DefaultRevisionStore.java
++++ b/oak-mk/src/main/java/org/apache/jackrabbit/mk/store/DefaultRevisionStore.java
+@@ -223,12 +223,12 @@ public class DefaultRevisionStore extends AbstractRevisionStore implements
+      */
+     static class PutTokenImpl extends PutToken {
+ 
+-        private static int idCounter;
++        private static final AtomicInteger ID_COUNTER = new AtomicInteger();
+         private int id;
+         private StoredNode lastModifiedNode;
+ 
+         public PutTokenImpl() {
+-            this.id = ++idCounter;
++            this.id = ID_COUNTER.incrementAndGet();
+         }
+ 
+         @Override

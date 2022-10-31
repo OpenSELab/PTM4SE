@@ -1,0 +1,15 @@
+diff --git a/components/camel-jpa/src/test/java/org/apache/camel/examples/SendEmail.java b/components/camel-jpa/src/test/java/org/apache/camel/examples/SendEmail.java
+index 408d68e..78bc0d7 100644
+--- a/components/camel-jpa/src/test/java/org/apache/camel/examples/SendEmail.java
++++ b/components/camel-jpa/src/test/java/org/apache/camel/examples/SendEmail.java
+@@ -44,7 +44,9 @@
+ 
+     @Override
+     public String toString() {
+-        return "SendEmail[id: " + getId() + " address: " + getAddress() + "]";
++        // TODO: don't make use of the id property here as it could potentially end up
++        // with a deadlock through the openjpa generated proxy object of this entity 
++        return "SendEmail[address: " + getAddress() + "]";
+     }
+ 
+     @Id

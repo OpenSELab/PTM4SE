@@ -1,0 +1,13 @@
+diff --git a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/DFSClient.java b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/DFSClient.java
+index 1fbd2ed..3c43143 100644
+--- a/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/DFSClient.java
++++ b/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/DFSClient.java
+@@ -764,7 +764,7 @@
+         final long elapsed = Time.now() - getLastLeaseRenewal();
+         if (elapsed > HdfsConstants.LEASE_HARDLIMIT_PERIOD) {
+           LOG.warn("Failed to renew lease for " + clientName + " for "
+-              + (elapsed/1000) + " seconds (>= soft-limit ="
++              + (elapsed/1000) + " seconds (>= hard-limit ="
+               + (HdfsConstants.LEASE_HARDLIMIT_PERIOD/1000) + " seconds.) "
+               + "Closing all files being written ...", e);
+           closeAllFilesBeingWritten(true);

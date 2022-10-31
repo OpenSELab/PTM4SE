@@ -1,0 +1,44 @@
+diff --git a/src/main/java/redis/clients/jedis/Jedis.java b/src/main/java/redis/clients/jedis/Jedis.java
+index 38b38e3..d90adfc 100644
+--- a/src/main/java/redis/clients/jedis/Jedis.java
++++ b/src/main/java/redis/clients/jedis/Jedis.java
+@@ -1308,7 +1308,7 @@
+     client.sinter(keys);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }
+@@ -1348,7 +1348,7 @@
+     client.sunion(keys);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }
+diff --git a/src/main/java/redis/clients/jedis/Jedis.java b/src/main/java/redis/clients/jedis/Jedis.java
+index 38b38e3..d90adfc 100644
+--- a/src/main/java/redis/clients/jedis/Jedis.java
++++ b/src/main/java/redis/clients/jedis/Jedis.java
+@@ -1308,7 +1308,7 @@
+     client.sinter(keys);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }
+@@ -1348,7 +1348,7 @@
+     client.sunion(keys);
+     final List<String> members = client.getMultiBulkReply();
+     if (members == null) {
+-      return null;
++      return Collections.emptySet();
+     }
+     return SetFromList.of(members);
+   }

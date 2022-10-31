@@ -1,0 +1,13 @@
+diff --git a/Essentials/src/com/earth2me/essentials/commands/Commandtptoggle.java b/Essentials/src/com/earth2me/essentials/commands/Commandtptoggle.java
+index 442f535..9705287 100644
+--- a/Essentials/src/com/earth2me/essentials/commands/Commandtptoggle.java
++++ b/Essentials/src/com/earth2me/essentials/commands/Commandtptoggle.java
+@@ -55,7 +55,7 @@
+ 		user.setTeleportEnabled(enabled);
+ 
+ 		user.sendMessage(enabled ? _("teleportationEnabled") : _("teleportationDisabled"));
+-		if (!sender.equals(user.getBase()))
++		if (!sender.isPlayer() || !sender.getPlayer().equals(user.getBase()))
+ 		{
+ 			sender.sendMessage(enabled ? _("teleportationEnabledFor", user.getDisplayName()) : _("teleportationDisabledFor", user.getDisplayName()));
+ 		}

@@ -1,0 +1,45 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/api/QueryEngine.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/api/QueryEngine.java
+index c43f58e..96b3ef8 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/api/QueryEngine.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/api/QueryEngine.java
+@@ -52,8 +52,8 @@ public interface QueryEngine {
+      *
+      * @param statement the query statement
+      * @param language the language
+-     * @param limit the maximum result set size
+-     * @param offset the number of rows to skip
++     * @param limit the maximum result set size (may not be negative)
++     * @param offset the number of rows to skip (may not be negative)
+      * @param bindings the bind variable value bindings
+      * @param namePathMapper the name and path mapper to use
+      * @return the result
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/QueryEngineImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/QueryEngineImpl.java
+index 4dcb86b..e5d4adb 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/query/QueryEngineImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/query/QueryEngineImpl.java
+@@ -138,6 +138,12 @@ public abstract class QueryEngineImpl implements QueryEngine {
+     public Result executeQuery(String statement, String language, long limit,
+             long offset, Map<String, ? extends PropertyValue> bindings,
+             NamePathMapper namePathMapper) throws ParseException {
++        if (limit < 0) {
++            throw new IllegalArgumentException("Limit may not be negative, is: " + limit);
++        }
++        if (offset < 0) {
++            throw new IllegalArgumentException("Offset may not be negative, is: " + offset);
++        }
+         Query q = parseQuery(statement, language);
+         q.setRootTree(getRootTree());
+         q.setRootState(getRootState());
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/user/query/XPathQueryBuilder.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/user/query/XPathQueryBuilder.java
+index 893738b..d1dd992 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/user/query/XPathQueryBuilder.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/user/query/XPathQueryBuilder.java
+@@ -35,7 +35,7 @@ public class XPathQueryBuilder implements QueryBuilder<Condition> {
+     private boolean sortIgnoreCase;
+     private Value bound;
+     private long offset;
+-    private long maxCount = -1;
++    private long maxCount = Long.MAX_VALUE;
+ 
+     //-------------------------------------------------------< QueryBuilder >---
+     @Override

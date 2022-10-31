@@ -1,0 +1,264 @@
+diff --git a/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java b/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
+index 1affdeb..b7ffc81 100644
+--- a/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
++++ b/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
+@@ -50,18 +50,18 @@
+         "b : ( options { ick=bar; greedy=true; } : ID )+ ;\n" +
+         "c : ID<blue> ID<x=y> ;",
+         // YIELDS
+-		"warning(47): U.g:2:10: illegal option foo\n" +
+-		"warning(47): U.g:2:19: illegal option k\n" +
+-		": U.g:4:8: token names must start with an uppercase letter: f\n" +
+-		": U.g:4:8: can't assign string value to token name f in non-combined grammar\n" +
+-		": U.g:5:8: can't assign string value to token name S in non-combined grammar\n" +
+-		"warning(47): U.g:8:10: illegal option x\n" +
+-		": U.g:8:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
+-		": U.g:7:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
+-		"warning(47): U.g:11:10: illegal option blech\n" +
+-		"warning(47): U.g:11:21: illegal option greedy\n" +
+-		"warning(47): U.g:14:16: illegal option ick\n" +
+-		"warning(47): U.g:15:16: illegal option x\n",
++		"warning(48): U.g:2:10: illegal option foo\n" +
++		"warning(48): U.g:2:19: illegal option k\n" +
++		"error(26): U.g:4:8: token names must start with an uppercase letter: f\n" +
++		"error(25): U.g:4:8: can't assign string value to token name f in non-combined grammar\n" +
++		"error(25): U.g:5:8: can't assign string value to token name S in non-combined grammar\n" +
++		"warning(48): U.g:8:10: illegal option x\n" +
++		"error(20): U.g:8:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
++		"error(20): U.g:7:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
++		"warning(48): U.g:11:10: illegal option blech\n" +
++		"warning(48): U.g:11:21: illegal option greedy\n" +
++		"warning(48): U.g:14:16: illegal option ick\n" +
++		"warning(48): U.g:15:16: illegal option x\n",
+     };
+ 
+ 	@Test public void testU() { super.testErrors(U, false); }
+diff --git a/tool/test/org/antlr/v4/test/TestSymbolIssues.java b/tool/test/org/antlr/v4/test/TestSymbolIssues.java
+index 2c56322..31b4016 100644
+--- a/tool/test/org/antlr/v4/test/TestSymbolIssues.java
++++ b/tool/test/org/antlr/v4/test/TestSymbolIssues.java
+@@ -20,8 +20,9 @@
+         "\n" +
+         "ID : 'a'..'z'+ ID ;",
+         // YIELDS
+-        "warning(51): A.g:2:10: illegal option opt\n" +
+-		"error(60): A.g:7:1: redefinition of header action\n" +
++        "warning(48): A.g:2:10: illegal option opt\n" +
++        "warning(48): A.g:2:21: illegal option k\n" +
++		"error(59): A.g:7:1: redefinition of header action\n" +
+ 		"warning(51): A.g:2:10: illegal option opt\n" +
+ 		"error(19): A.g:11:0: rule a redefinition\n" +
+ 		"error(60): A.g:5:1: redefinition of members action\n" +
+@@ -41,11 +42,11 @@
+         "\n" +
+         "s : FOO ;",
+         // YIELDS
+-        "error(26): B.g:2:9: can't assign string value to token name X in non-combined grammar\n" +
+-		"error(36): B.g:4:4: label s conflicts with rule with same name\n" +
+-		"error(36): B.g:4:9: label b conflicts with rule with same name\n" +
+-		"error(37): B.g:4:15: label X conflicts with token with same name\n" +
+-		"error(42): B.g:6:9: label x type mismatch with previous definition: TOKEN_LIST_LABEL!=TOKEN_LABEL\n"
++        "error(25): B.g:2:9: can't assign string value to token name X in non-combined grammar\n" +
++		"error(35): B.g:4:4: label s conflicts with rule with same name\n" +
++		"error(35): B.g:4:9: label b conflicts with rule with same name\n" +
++		"error(36): B.g:4:15: label X conflicts with token with same name\n" +
++		"error(40): B.g:6:9: label x type mismatch with previous definition: TOKEN_LIST_LABEL!=TOKEN_LABEL\n"
+     };
+ 
+     static String[] D = {
+@@ -60,8 +61,8 @@
+         "        :       ID ;",
+ 
+         // YIELDS
+-        "error(39): D.g:3:21: label j conflicts with rule a's return value or parameter with same name\n" +
+-		"error(43): D.g:5:0: rule b's argument i conflicts a return value with same name\n"
++        "error(37): D.g:3:21: label j conflicts with rule a's return value or parameter with same name\n" +
++		"error(41): D.g:5:0: rule b's argument i conflicts a return value with same name\n"
+     };
+ 
+ 	static String[] E = {
+@@ -77,10 +78,10 @@
+ 		"a : A ;\n",
+ 
+ 		// YIELDS
+-		"error(74): E.g:4:8: cannot redefine B; token name already defined\n" +
+-		"error(74): E.g:5:4: cannot redefine C; token name already defined\n" +
+-		"error(74): E.g:6:8: cannot redefine D; token name already defined\n" +
+-		"error(73): E.g:7:8: cannot alias X='e'; string already assigned to E\n"
++		"error(73): E.g:4:8: cannot redefine B; token name already defined\n" +
++		"error(73): E.g:5:4: cannot redefine C; token name already defined\n" +
++		"error(73): E.g:6:8: cannot redefine D; token name already defined\n" +
++		"error(72): E.g:7:8: cannot alias X='e'; string already assigned to E\n"
+ 	};
+ 
+     @Test public void testA() { super.testErrors(A, false); }
+diff --git a/tool/test/org/antlr/v4/test/TestToolSyntaxErrors.java b/tool/test/org/antlr/v4/test/TestToolSyntaxErrors.java
+index 8c25bae..2c66c49 100644
+--- a/tool/test/org/antlr/v4/test/TestToolSyntaxErrors.java
++++ b/tool/test/org/antlr/v4/test/TestToolSyntaxErrors.java
+@@ -8,37 +8,37 @@
+         "grammar A;\n" +
+         "",
+         // YIELDS
+-        "error(63): A.g::: grammar A has no rules\n",
++        "error(64): A.g::: grammar A has no rules\n",
+ 
+ 		"A;",
+-		"error(17): <string>:1:0: 'A' came as a complete surprise to me\n",
++		"error(16): <string>:1:0: 'A' came as a complete surprise to me\n",
+ 
+ 		"grammar ;",
+-		"error(17): <string>:1:8: ';' came as a complete surprise to me while looking for an identifier\n",
++		"error(16): <string>:1:8: ';' came as a complete surprise to me while looking for an identifier\n",
+ 
+ 		"grammar A\n" +
+ 		"a : ID ;\n",
+-		"error(17): <string>:2:0: missing SEMI at 'a'\n",
++		"error(16): <string>:2:0: missing SEMI at 'a'\n",
+ 
+ 		"grammar A;\n" +
+ 		"a : ID ;;\n"+
+ 		"b : B ;",
+-		"error(17): A.g:2:8: ';' came as a complete surprise to me\n",
++		"error(16): A.g:2:8: ';' came as a complete surprise to me\n",
+ 
+ 		"grammar A;;\n" +
+ 		"a : ID ;\n",
+-		"error(17): A;.g:1:10: ';' came as a complete surprise to me\n",
++		"error(16): A;.g:1:10: ';' came as a complete surprise to me\n",
+ 
+ 		"grammar A;\n" +
+ 		"a @init : ID ;\n",
+-		"error(17): A.g:2:8: mismatched input ':' expecting ACTION while matching rule preamble\n",
++		"error(16): A.g:2:8: mismatched input ':' expecting ACTION while matching rule preamble\n",
+ 
+ 		"grammar A;\n" +
+ 		"a  ( A | B ) D ;\n" +
+ 		"b : B ;",
+-		": A.g:2:3: '(' came as a complete surprise to me while matching rule preamble\n" +
+-		": A.g:2:11: mismatched input ')' expecting SEMI while matching a rule\n" +
+-		": A.g:2:15: mismatched input ';' expecting COLON while matching a lexer rule\n",
++		"error(16): A.g:2:3: '(' came as a complete surprise to me while matching rule preamble\n" +
++		"error(16): A.g:2:11: mismatched input ')' expecting SEMI while matching a rule\n" +
++		"error(16): A.g:2:15: mismatched input ';' expecting COLON while matching a lexer rule\n",
+     };
+ 
+ 	@Test public void testA() { super.testErrors(A, true); }
+@@ -48,7 +48,7 @@
+ 			"grammar A;\n" +
+ 			"a : : A ;\n" +
+ 			"b : B ;",
+-			"error(17): A.g:2:4: ':' came as a complete surprise to me while matching alternative\n",
++			"error(16): A.g:2:4: ':' came as a complete surprise to me while matching alternative\n",
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -58,7 +58,7 @@
+ 			"grammar A;\n" +
+ 			"a : A \n" +
+ 			"b : B ;",
+-			"error(17): A.g:3:0: unterminated rule (missing ';') detected at 'b :' while looking for rule element\n",
++			"error(16): A.g:3:0: unterminated rule (missing ';') detected at 'b :' while looking for rule element\n",
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -68,7 +68,7 @@
+ 			"lexer grammar A;\n" +
+ 			"A : 'a' \n" +
+ 			"B : 'b' ;",
+-			"error(17): A.g:3:0: unterminated rule (missing ';') detected at 'B :' while looking for lexer rule element\n",
++			"error(16): A.g:3:0: unterminated rule (missing ';') detected at 'B :' while looking for lexer rule element\n",
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -78,7 +78,7 @@
+ 			"grammar A;\n" +
+ 			"a : A \n" +
+ 			"b[int i] returns [int y] : B ;",
+-			"error(17): A.g:3:9: unterminated rule (missing ';') detected at 'returns int y' while looking for rule element\n"
++			"error(16): A.g:3:9: unterminated rule (missing ';') detected at 'returns int y' while looking for rule element\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -90,7 +90,7 @@
+ 			"  catch [Exception e] {...}\n" +
+ 			"b : B ;\n",
+ 
+-			"error(17): A.g:2:4: unterminated rule (missing ';') detected at 'b catch' while looking for rule element\n"
++			"error(16): A.g:2:4: unterminated rule (missing ';') detected at 'b catch' while looking for rule element\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -101,7 +101,7 @@
+ 			"a : A \n" +
+ 			"  catch [Exception e] {...}\n",
+ 
+-			"error(17): A.g:2:4: unterminated rule (missing ';') detected at 'A catch' while looking for rule element\n"
++			"error(16): A.g:2:4: unterminated rule (missing ';') detected at 'A catch' while looking for rule element\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -112,7 +112,7 @@
+ 			"a @ options {k=1;} : A ;\n" +
+ 			"b : B ;",
+ 
+-			"error(17): A.g:2:4: 'options {' came as a complete surprise to me while looking for an identifier\n"
++			"error(16): A.g:2:4: 'options {' came as a complete surprise to me while looking for an identifier\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -123,7 +123,7 @@
+ 			"a } : A ;\n" +
+ 			"b : B ;",
+ 
+-			"error(17): A.g:2:2: '}' came as a complete surprise to me while matching rule preamble\n"
++			"error(16): A.g:2:2: '}' came as a complete surprise to me while matching rule preamble\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+@@ -135,8 +135,8 @@
+ 			"mode foo;\n" +
+ 			"b : B ;",
+ 
+-			": A.g:4:0: 'b' came as a complete surprise to me\n" +
+-			": A.g:4:6: mismatched input ';' expecting COLON while matching a lexer rule\n"
++			"error(16): A.g:4:0: 'b' came as a complete surprise to me\n" +
++			"error(16): A.g:4:6: mismatched input ';' expecting COLON while matching a lexer rule\n"
+ 		};
+ 		super.testErrors(pair, true);
+ 	}
+diff --git a/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java b/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
+index 1affdeb..b7ffc81 100644
+--- a/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
++++ b/tool/test/org/antlr/v4/test/TestBasicSemanticErrors.java
+@@ -50,18 +50,18 @@
+         "b : ( options { ick=bar; greedy=true; } : ID )+ ;\n" +
+         "c : ID<blue> ID<x=y> ;",
+         // YIELDS
+-		"warning(47): U.g:2:10: illegal option foo\n" +
+-		"warning(47): U.g:2:19: illegal option k\n" +
+-		": U.g:4:8: token names must start with an uppercase letter: f\n" +
+-		": U.g:4:8: can't assign string value to token name f in non-combined grammar\n" +
+-		": U.g:5:8: can't assign string value to token name S in non-combined grammar\n" +
+-		"warning(47): U.g:8:10: illegal option x\n" +
+-		": U.g:8:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
+-		": U.g:7:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
+-		"warning(47): U.g:11:10: illegal option blech\n" +
+-		"warning(47): U.g:11:21: illegal option greedy\n" +
+-		"warning(47): U.g:14:16: illegal option ick\n" +
+-		"warning(47): U.g:15:16: illegal option x\n",
++		"warning(48): U.g:2:10: illegal option foo\n" +
++		"warning(48): U.g:2:19: illegal option k\n" +
++		"error(26): U.g:4:8: token names must start with an uppercase letter: f\n" +
++		"error(25): U.g:4:8: can't assign string value to token name f in non-combined grammar\n" +
++		"error(25): U.g:5:8: can't assign string value to token name S in non-combined grammar\n" +
++		"warning(48): U.g:8:10: illegal option x\n" +
++		"error(20): U.g:8:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
++		"error(20): U.g:7:0: repeated grammar prequel spec (option, token, or import); please merge\n" +
++		"warning(48): U.g:11:10: illegal option blech\n" +
++		"warning(48): U.g:11:21: illegal option greedy\n" +
++		"warning(48): U.g:14:16: illegal option ick\n" +
++		"warning(48): U.g:15:16: illegal option x\n",
+     };
+ 
+ 	@Test public void testU() { super.testErrors(U, false); }

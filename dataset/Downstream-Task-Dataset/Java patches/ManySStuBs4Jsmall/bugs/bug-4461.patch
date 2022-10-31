@@ -1,0 +1,13 @@
+diff --git a/components/camel-irc/src/test/java/org/apache/camel/component/irc/IrcsListUsersIntegrationTest.java b/components/camel-irc/src/test/java/org/apache/camel/component/irc/IrcsListUsersIntegrationTest.java
+index fc3241d..7e629ee 100644
+--- a/components/camel-irc/src/test/java/org/apache/camel/component/irc/IrcsListUsersIntegrationTest.java
++++ b/components/camel-irc/src/test/java/org/apache/camel/component/irc/IrcsListUsersIntegrationTest.java
+@@ -65,7 +65,7 @@
+             public void configure() throws Exception {
+                 LOGGER.debug("Creating new test route");
+                 
+-                from(PRODUCER_URI + "?listOnJoin=true&onReply=true")
++                from(PRODUCER_URI + "?namesOnJoin=true&onReply=true")
+                     .choice()
+                         .when(header("irc.messageType").isEqualToIgnoreCase("REPLY"))
+                             .filter(header("irc.num").isEqualTo(IRC_RPL_NAMREPLY))

@@ -1,0 +1,41 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
+index 3fc4940..b86b7b7 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
+@@ -110,7 +110,7 @@
+          */
+         int value(Scope scope) {
+             final Integer value = counts.get(scope);
+-            return null == value ? 0 : value;
++            return value == null ? 0 : value;
+         }
+ 
+         /** @return the total number of methods. */
+@@ -158,21 +158,21 @@
+ 
+     @Override
+     public void visitToken(DetailAST ast) {
+-        if (TokenTypes.METHOD_DEF == ast.getType()) {
++        if (ast.getType() == TokenTypes.METHOD_DEF) {
+             raiseCounter(ast);
+         }
+         else {
+-            final boolean inInterface = TokenTypes.INTERFACE_DEF == ast.getType();
++            final boolean inInterface = ast.getType() == TokenTypes.INTERFACE_DEF;
+             counters.push(new MethodCounter(inInterface));
+         }
+     }
+ 
+     @Override
+     public void leaveToken(DetailAST ast) {
+-        if (TokenTypes.CLASS_DEF == ast.getType()
+-            || TokenTypes.INTERFACE_DEF == ast.getType()
+-            || TokenTypes.ENUM_CONSTANT_DEF == ast.getType()
+-            || TokenTypes.ENUM_DEF == ast.getType()) {
++        if (ast.getType() == TokenTypes.CLASS_DEF
++            || ast.getType() == TokenTypes.INTERFACE_DEF
++            || ast.getType() == TokenTypes.ENUM_CONSTANT_DEF
++            || ast.getType() == TokenTypes.ENUM_DEF) {
+             final MethodCounter counter = counters.pop();
+             checkCounters(counter, ast);
+         }

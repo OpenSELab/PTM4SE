@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/server/StatementResource.java b/presto-main/src/main/java/com/facebook/presto/server/StatementResource.java
+index b6a8d44..98cba92 100644
+--- a/presto-main/src/main/java/com/facebook/presto/server/StatementResource.java
++++ b/presto-main/src/main/java/com/facebook/presto/server/StatementResource.java
+@@ -322,7 +322,7 @@
+                     (columns.size() == 1) && (columns.get(0).getType().equals(StandardTypes.BIGINT))) {
+                 Iterator<List<Object>> iterator = data.iterator();
+                 if (iterator.hasNext()) {
+-                    updateCount = ((Number) iterator.next()).longValue();
++                    updateCount = ((Number) iterator.next().get(0)).longValue();
+                 }
+             }
+ 
+diff --git a/presto-main/src/main/java/com/facebook/presto/server/StatementResource.java b/presto-main/src/main/java/com/facebook/presto/server/StatementResource.java
+index b6a8d44..98cba92 100644
+--- a/presto-main/src/main/java/com/facebook/presto/server/StatementResource.java
++++ b/presto-main/src/main/java/com/facebook/presto/server/StatementResource.java
+@@ -322,7 +322,7 @@
+                     (columns.size() == 1) && (columns.get(0).getType().equals(StandardTypes.BIGINT))) {
+                 Iterator<List<Object>> iterator = data.iterator();
+                 if (iterator.hasNext()) {
+-                    updateCount = ((Number) iterator.next()).longValue();
++                    updateCount = ((Number) iterator.next().get(0)).longValue();
+                 }
+             }
+ 

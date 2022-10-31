@@ -1,0 +1,53 @@
+diff --git a/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java b/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
+index 824ede8..fb626a2 100644
+--- a/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
++++ b/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
+@@ -9,7 +9,7 @@
+  *
+  * @param <T>    the required configuration interface
+  */
+-public interface ConfiguredBundle<T extends Configuration> {
++public interface ConfiguredBundle<T> {
+     /**
+      * Initializes the environment.
+      *
+@@ -24,5 +24,5 @@
+      *
+      * @param bootstrap the application bootstrap
+      */
+-    void initialize(Bootstrap<? extends T> bootstrap);
++    void initialize(Bootstrap<?> bootstrap);
+ }
+diff --git a/dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/HibernateBundle.java b/dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/HibernateBundle.java
+index 5567a8b..a04b782 100644
+--- a/dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/HibernateBundle.java
++++ b/dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/HibernateBundle.java
+@@ -31,7 +31,7 @@
+     }
+ 
+     @Override
+-    public final void initialize(Bootstrap<? extends T> bootstrap) {
++    public final void initialize(Bootstrap<?> bootstrap) {
+         bootstrap.getObjectMapper().registerModule(createHibernate4Module());
+     }
+ 
+diff --git a/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java b/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
+index 824ede8..fb626a2 100644
+--- a/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
++++ b/dropwizard-core/src/main/java/io/dropwizard/ConfiguredBundle.java
+@@ -9,7 +9,7 @@
+  *
+  * @param <T>    the required configuration interface
+  */
+-public interface ConfiguredBundle<T extends Configuration> {
++public interface ConfiguredBundle<T> {
+     /**
+      * Initializes the environment.
+      *
+@@ -24,5 +24,5 @@
+      *
+      * @param bootstrap the application bootstrap
+      */
+-    void initialize(Bootstrap<? extends T> bootstrap);
++    void initialize(Bootstrap<?> bootstrap);
+ }

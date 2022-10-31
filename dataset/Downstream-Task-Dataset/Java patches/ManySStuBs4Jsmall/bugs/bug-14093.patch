@@ -1,0 +1,34 @@
+diff --git a/src/com/google/javascript/jscomp/deps/JsFileParser.java b/src/com/google/javascript/jscomp/deps/JsFileParser.java
+index 2d25e92..640c1d8 100644
+--- a/src/com/google/javascript/jscomp/deps/JsFileParser.java
++++ b/src/com/google/javascript/jscomp/deps/JsFileParser.java
+@@ -40,8 +40,10 @@
+   private static Logger logger = Logger.getLogger(JsFileParser.class.getName());
+ 
+   /** Pattern for matching goog.provide(*) and goog.require(*). */
+-  private static final Pattern GOOG_PROVIDE_REQUIRE_PATTERN = Pattern.compile(
+-      "(?:^|;|=)\\s*goog\\.(provide|module|require|addDependency)\\s*\\((.*?)\\)");
++  private static final Pattern GOOG_PROVIDE_REQUIRE_PATTERN =
++      Pattern.compile(
++          "(?:^|;)(?:[a-zA-Z0-9$_,:{}\\s]+=)?\\s*"
++              + "goog\\.(provide|module|require|addDependency)\\s*\\((.*?)\\)");
+ 
+   /** The first non-comment line of base.js */
+   private static final String BASE_JS_START = "var COMPILED = false;";
+diff --git a/src/com/google/javascript/jscomp/deps/JsFileParser.java b/src/com/google/javascript/jscomp/deps/JsFileParser.java
+index 2d25e92..640c1d8 100644
+--- a/src/com/google/javascript/jscomp/deps/JsFileParser.java
++++ b/src/com/google/javascript/jscomp/deps/JsFileParser.java
+@@ -40,8 +40,10 @@
+   private static Logger logger = Logger.getLogger(JsFileParser.class.getName());
+ 
+   /** Pattern for matching goog.provide(*) and goog.require(*). */
+-  private static final Pattern GOOG_PROVIDE_REQUIRE_PATTERN = Pattern.compile(
+-      "(?:^|;|=)\\s*goog\\.(provide|module|require|addDependency)\\s*\\((.*?)\\)");
++  private static final Pattern GOOG_PROVIDE_REQUIRE_PATTERN =
++      Pattern.compile(
++          "(?:^|;)(?:[a-zA-Z0-9$_,:{}\\s]+=)?\\s*"
++              + "goog\\.(provide|module|require|addDependency)\\s*\\((.*?)\\)");
+ 
+   /** The first non-comment line of base.js */
+   private static final String BASE_JS_START = "var COMPILED = false;";

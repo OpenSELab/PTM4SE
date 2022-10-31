@@ -1,0 +1,39 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/FromFilePollThirdTimeOkTest.java b/camel-core/src/test/java/org/apache/camel/component/file/FromFilePollThirdTimeOkTest.java
+index 293b5c9..c24162d 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/FromFilePollThirdTimeOkTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/FromFilePollThirdTimeOkTest.java
+@@ -47,7 +47,7 @@
+         assertMockEndpointsSatisfied();
+ 
+         // give time to delete file
+-        Thread.sleep(200);
++        Thread.sleep(500);
+ 
+         assertEquals(3, counter);
+ 
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/interceptor/DefaultTraceEventMessageTest.java b/camel-core/src/test/java/org/apache/camel/processor/interceptor/DefaultTraceEventMessageTest.java
+index ed8b278..58d3ac9 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/interceptor/DefaultTraceEventMessageTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/interceptor/DefaultTraceEventMessageTest.java
+@@ -58,7 +58,7 @@
+         assertNotNull(em.getExchangeId());
+         assertNotNull(em.getShortExchangeId());
+         assertEquals("InOut", em.getExchangePattern());
+-        assertEquals("{foo=123}", em.getProperties());
++        assertEquals("{foo=123, CamelToEndpoint=direct://start}", em.getProperties());
+         assertEquals("{bar=456}", em.getHeaders());
+         assertEquals("Hello World", em.getBody());
+         assertEquals("String", em.getBodyType());
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/FromFilePollThirdTimeOkTest.java b/camel-core/src/test/java/org/apache/camel/component/file/FromFilePollThirdTimeOkTest.java
+index 293b5c9..c24162d 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/FromFilePollThirdTimeOkTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/FromFilePollThirdTimeOkTest.java
+@@ -47,7 +47,7 @@
+         assertMockEndpointsSatisfied();
+ 
+         // give time to delete file
+-        Thread.sleep(200);
++        Thread.sleep(500);
+ 
+         assertEquals(3, counter);
+ 

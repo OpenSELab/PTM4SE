@@ -1,0 +1,13 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/api/Comment.java b/src/main/java/com/puppycrawl/tools/checkstyle/api/Comment.java
+index 15583f2..c561378 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/api/Comment.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/api/Comment.java
+@@ -93,7 +93,7 @@
+         final long inStart = startLine * multiplier + startCol;
+         final long inEnd = endLine * multiplier + endCol;
+ 
+-        return !(thisEnd < inStart || inEnd < thisStart);
++        return thisEnd >= inStart && inEnd >= thisStart;
+     }
+ 
+     @Override

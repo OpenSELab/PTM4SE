@@ -1,0 +1,52 @@
+diff --git a/servers/src/test/java/tachyon/worker/block/SpaceReserverTest.java b/servers/src/test/java/tachyon/worker/block/SpaceReserverTest.java
+index 8c96f90..e770a43 100644
+--- a/servers/src/test/java/tachyon/worker/block/SpaceReserverTest.java
++++ b/servers/src/test/java/tachyon/worker/block/SpaceReserverTest.java
+@@ -94,8 +94,8 @@
+       TieredBlockStoreTestUtils.cache(SESSION_ID, blockId ++, BLOCK_SIZE, mBlockStore,
+           tier0);
+     }
+-    CommonUtils.sleepMs(WorkerContext.getConf()
+-        .getLong(Constants.WORKER_SPACE_RESERVER_INTERVAL_MS));
++    CommonUtils
++        .sleepMs(2 * WorkerContext.getConf().getLong(Constants.WORKER_SPACE_RESERVER_INTERVAL_MS));
+     BlockStoreMeta storeMeta = mBlockStore.getBlockStoreMeta();
+     Assert.assertEquals(3 * BLOCK_SIZE, storeMeta.getUsedBytes());
+     List<Long> usedBytesOnTiers = storeMeta.getUsedBytesOnTiers();
+@@ -108,8 +108,8 @@
+     for (int i = 0; i < 7; i ++) {
+       TieredBlockStoreTestUtils.cache(SESSION_ID, blockId ++, BLOCK_SIZE, mBlockStore, tier0);
+     }
+-    CommonUtils.sleepMs(WorkerContext.getConf()
+-        .getLong(Constants.WORKER_SPACE_RESERVER_INTERVAL_MS));
++    CommonUtils
++        .sleepMs(2 * WorkerContext.getConf().getLong(Constants.WORKER_SPACE_RESERVER_INTERVAL_MS));
+     storeMeta = mBlockStore.getBlockStoreMeta();
+     Assert.assertEquals(9 * BLOCK_SIZE, storeMeta.getUsedBytes());
+     usedBytesOnTiers = storeMeta.getUsedBytesOnTiers();
+diff --git a/servers/src/test/java/tachyon/worker/block/SpaceReserverTest.java b/servers/src/test/java/tachyon/worker/block/SpaceReserverTest.java
+index 8c96f90..e770a43 100644
+--- a/servers/src/test/java/tachyon/worker/block/SpaceReserverTest.java
++++ b/servers/src/test/java/tachyon/worker/block/SpaceReserverTest.java
+@@ -94,8 +94,8 @@
+       TieredBlockStoreTestUtils.cache(SESSION_ID, blockId ++, BLOCK_SIZE, mBlockStore,
+           tier0);
+     }
+-    CommonUtils.sleepMs(WorkerContext.getConf()
+-        .getLong(Constants.WORKER_SPACE_RESERVER_INTERVAL_MS));
++    CommonUtils
++        .sleepMs(2 * WorkerContext.getConf().getLong(Constants.WORKER_SPACE_RESERVER_INTERVAL_MS));
+     BlockStoreMeta storeMeta = mBlockStore.getBlockStoreMeta();
+     Assert.assertEquals(3 * BLOCK_SIZE, storeMeta.getUsedBytes());
+     List<Long> usedBytesOnTiers = storeMeta.getUsedBytesOnTiers();
+@@ -108,8 +108,8 @@
+     for (int i = 0; i < 7; i ++) {
+       TieredBlockStoreTestUtils.cache(SESSION_ID, blockId ++, BLOCK_SIZE, mBlockStore, tier0);
+     }
+-    CommonUtils.sleepMs(WorkerContext.getConf()
+-        .getLong(Constants.WORKER_SPACE_RESERVER_INTERVAL_MS));
++    CommonUtils
++        .sleepMs(2 * WorkerContext.getConf().getLong(Constants.WORKER_SPACE_RESERVER_INTERVAL_MS));
+     storeMeta = mBlockStore.getBlockStoreMeta();
+     Assert.assertEquals(9 * BLOCK_SIZE, storeMeta.getUsedBytes());
+     usedBytesOnTiers = storeMeta.getUsedBytesOnTiers();

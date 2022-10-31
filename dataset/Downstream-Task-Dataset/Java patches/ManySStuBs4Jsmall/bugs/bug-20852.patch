@@ -1,0 +1,28 @@
+diff --git a/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/ElasticsearchContainer.java b/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/ElasticsearchContainer.java
+index 29e2d94..86941c6 100644
+--- a/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/ElasticsearchContainer.java
++++ b/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/ElasticsearchContainer.java
+@@ -31,7 +31,8 @@
+ 	public ElasticsearchContainer() {
+ 		super("elasticsearch:6.4.3", 9200,
+ 				(container) -> container.withStartupTimeout(Duration.ofSeconds(120))
+-						.withStartupAttempts(5).addExposedPort(9300));
++						.withStartupAttempts(5).withEnv("discovery.type", "single-node")
++						.addExposedPort(9300));
+ 	}
+ 
+ 	public int getMappedTransportPort() {
+diff --git a/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/ElasticsearchContainer.java b/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/ElasticsearchContainer.java
+index 29e2d94..86941c6 100644
+--- a/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/ElasticsearchContainer.java
++++ b/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/ElasticsearchContainer.java
+@@ -31,7 +31,8 @@
+ 	public ElasticsearchContainer() {
+ 		super("elasticsearch:6.4.3", 9200,
+ 				(container) -> container.withStartupTimeout(Duration.ofSeconds(120))
+-						.withStartupAttempts(5).addExposedPort(9300));
++						.withStartupAttempts(5).withEnv("discovery.type", "single-node")
++						.addExposedPort(9300));
+ 	}
+ 
+ 	public int getMappedTransportPort() {

@@ -1,0 +1,25 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/validation/validator/AbstractRangeValidator.java b/wicket-core/src/main/java/org/apache/wicket/validation/validator/AbstractRangeValidator.java
+index babc170..f6ba851 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/validation/validator/AbstractRangeValidator.java
++++ b/wicket-core/src/main/java/org/apache/wicket/validation/validator/AbstractRangeValidator.java
+@@ -109,7 +109,8 @@ public abstract class AbstractRangeValidator<R extends Comparable<R> & Serializa
+ 		final R max = getMaximum();
+ 		if ((min != null && value.compareTo(min) < 0) || (max != null && value.compareTo(max) > 0))
+ 		{
+-			ValidationError error = new ValidationError(this, getMode().getVariation());
++			Mode mode = getMode();
++			ValidationError error = new ValidationError(this, mode.getVariation());
+ 			if (min != null)
+ 			{
+ 				error.setVariable("minimum", min);
+@@ -118,6 +119,10 @@ public abstract class AbstractRangeValidator<R extends Comparable<R> & Serializa
+ 			{
+ 				error.setVariable("maximum", max);
+ 			}
++			if (mode == Mode.EXACT)
++			{
++				error.setVariable("exact", max);
++			}
+ 			validatable.error(decorate(error, validatable));
+ 		}
+ 	}

@@ -1,0 +1,30 @@
+diff --git a/indexing-hadoop/src/main/java/io/druid/indexer/HadoopDruidIndexerJob.java b/indexing-hadoop/src/main/java/io/druid/indexer/HadoopDruidIndexerJob.java
+index 49ea365..467a2e7 100644
+--- a/indexing-hadoop/src/main/java/io/druid/indexer/HadoopDruidIndexerJob.java
++++ b/indexing-hadoop/src/main/java/io/druid/indexer/HadoopDruidIndexerJob.java
+@@ -77,7 +77,9 @@
+     if (metadataStorageUpdaterJob != null) {
+       jobs.add(metadataStorageUpdaterJob);
+     } else {
+-      log.info("No updaterJobSpec set, not uploading to database");
++      log.info(
++          "No metadataStorageUpdaterJob set in the config. This is cool if you are running a hadoop index task, otherwise nothing will be uploaded to database."
++      );
+     }
+ 
+     jobs.add(
+diff --git a/indexing-hadoop/src/main/java/io/druid/indexer/HadoopDruidIndexerJob.java b/indexing-hadoop/src/main/java/io/druid/indexer/HadoopDruidIndexerJob.java
+index 49ea365..467a2e7 100644
+--- a/indexing-hadoop/src/main/java/io/druid/indexer/HadoopDruidIndexerJob.java
++++ b/indexing-hadoop/src/main/java/io/druid/indexer/HadoopDruidIndexerJob.java
+@@ -77,7 +77,9 @@
+     if (metadataStorageUpdaterJob != null) {
+       jobs.add(metadataStorageUpdaterJob);
+     } else {
+-      log.info("No updaterJobSpec set, not uploading to database");
++      log.info(
++          "No metadataStorageUpdaterJob set in the config. This is cool if you are running a hadoop index task, otherwise nothing will be uploaded to database."
++      );
+     }
+ 
+     jobs.add(

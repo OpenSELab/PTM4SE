@@ -1,0 +1,44 @@
+diff --git a/gdx/src/com/badlogic/gdx/assets/loaders/SkinLoader.java b/gdx/src/com/badlogic/gdx/assets/loaders/SkinLoader.java
+index 2f715fe..ae4ae65 100644
+--- a/gdx/src/com/badlogic/gdx/assets/loaders/SkinLoader.java
++++ b/gdx/src/com/badlogic/gdx/assets/loaders/SkinLoader.java
+@@ -40,7 +40,7 @@
+ 	public Array<AssetDescriptor> getDependencies (String fileName, FileHandle file, SkinParameter parameter) {
+ 		Array<AssetDescriptor> deps = new Array();
+ 		if (parameter == null)
+-			deps.add(new AssetDescriptor(Gdx.files.absolute(fileName).pathWithoutExtension() + ".atlas", TextureAtlas.class));
++			deps.add(new AssetDescriptor(file.pathWithoutExtension() + ".atlas", TextureAtlas.class));
+ 		else if (parameter.textureAtlasPath != null)
+ 			deps.add(new AssetDescriptor(parameter.textureAtlasPath, TextureAtlas.class));
+ 		return deps;
+@@ -54,7 +54,7 @@
+ 	public Skin loadSync (AssetManager manager, String fileName, FileHandle file, SkinParameter parameter) {
+ 		String textureAtlasPath;
+ 		if (parameter == null)
+-			textureAtlasPath = Gdx.files.absolute(fileName).pathWithoutExtension() + ".atlas";
++			textureAtlasPath = file.pathWithoutExtension() + ".atlas";
+ 		else
+ 			textureAtlasPath = parameter.textureAtlasPath;
+ 		TextureAtlas atlas = manager.get(textureAtlasPath, TextureAtlas.class);
+diff --git a/gdx/src/com/badlogic/gdx/assets/loaders/SkinLoader.java b/gdx/src/com/badlogic/gdx/assets/loaders/SkinLoader.java
+index 2f715fe..ae4ae65 100644
+--- a/gdx/src/com/badlogic/gdx/assets/loaders/SkinLoader.java
++++ b/gdx/src/com/badlogic/gdx/assets/loaders/SkinLoader.java
+@@ -40,7 +40,7 @@
+ 	public Array<AssetDescriptor> getDependencies (String fileName, FileHandle file, SkinParameter parameter) {
+ 		Array<AssetDescriptor> deps = new Array();
+ 		if (parameter == null)
+-			deps.add(new AssetDescriptor(Gdx.files.absolute(fileName).pathWithoutExtension() + ".atlas", TextureAtlas.class));
++			deps.add(new AssetDescriptor(file.pathWithoutExtension() + ".atlas", TextureAtlas.class));
+ 		else if (parameter.textureAtlasPath != null)
+ 			deps.add(new AssetDescriptor(parameter.textureAtlasPath, TextureAtlas.class));
+ 		return deps;
+@@ -54,7 +54,7 @@
+ 	public Skin loadSync (AssetManager manager, String fileName, FileHandle file, SkinParameter parameter) {
+ 		String textureAtlasPath;
+ 		if (parameter == null)
+-			textureAtlasPath = Gdx.files.absolute(fileName).pathWithoutExtension() + ".atlas";
++			textureAtlasPath = file.pathWithoutExtension() + ".atlas";
+ 		else
+ 			textureAtlasPath = parameter.textureAtlasPath;
+ 		TextureAtlas atlas = manager.get(textureAtlasPath, TextureAtlas.class);

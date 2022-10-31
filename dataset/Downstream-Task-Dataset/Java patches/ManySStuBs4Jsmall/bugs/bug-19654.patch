@@ -1,0 +1,26 @@
+diff --git a/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java b/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
+index 74c62f9..586a250 100644
+--- a/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
++++ b/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
+@@ -191,7 +191,7 @@
+ 				logger.trace("Client BinRpcRequest {}", request);
+ 			}
+ 			socket = new Socket(context.getConfig().getHost(), hmInterface.getPort());
+-			socket.setSoTimeout(5000);
++			socket.setSoTimeout(context.getConfig().getTimeout() * 1000);
+ 			socket.getOutputStream().write(request.createMessage());
+ 			BinRpcResponse resp = new BinRpcResponse(socket.getInputStream(), false);
+ 
+diff --git a/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java b/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
+index 74c62f9..586a250 100644
+--- a/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
++++ b/bundles/binding/org.openhab.binding.homematic/src/main/java/org/openhab/binding/homematic/internal/communicator/client/BinRpcClient.java
+@@ -191,7 +191,7 @@
+ 				logger.trace("Client BinRpcRequest {}", request);
+ 			}
+ 			socket = new Socket(context.getConfig().getHost(), hmInterface.getPort());
+-			socket.setSoTimeout(5000);
++			socket.setSoTimeout(context.getConfig().getTimeout() * 1000);
+ 			socket.getOutputStream().write(request.createMessage());
+ 			BinRpcResponse resp = new BinRpcResponse(socket.getInputStream(), false);
+ 

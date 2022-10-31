@@ -1,0 +1,26 @@
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnPropertyCondition.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnPropertyCondition.java
+index 122e671..cd8822d 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnPropertyCondition.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnPropertyCondition.java
+@@ -87,7 +87,7 @@
+ 					+ expandNames(prefix, missingProperties) + " ");
+ 		}
+ 		if (!nonMatchingProperties.isEmpty()) {
+-			String expected = havingValue == null ? "!false" : havingValue;
++			String expected = StringUtils.hasLength(havingValue) ? havingValue : "!false";
+ 			message.append("expected '").append(expected).append("' for properties ")
+ 					.append(expandNames(prefix, nonMatchingProperties));
+ 		}
+diff --git a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnPropertyCondition.java b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnPropertyCondition.java
+index 122e671..cd8822d 100644
+--- a/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnPropertyCondition.java
++++ b/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnPropertyCondition.java
+@@ -87,7 +87,7 @@
+ 					+ expandNames(prefix, missingProperties) + " ");
+ 		}
+ 		if (!nonMatchingProperties.isEmpty()) {
+-			String expected = havingValue == null ? "!false" : havingValue;
++			String expected = StringUtils.hasLength(havingValue) ? havingValue : "!false";
+ 			message.append("expected '").append(expected).append("' for properties ")
+ 					.append(expandNames(prefix, nonMatchingProperties));
+ 		}

@@ -1,0 +1,106 @@
+diff --git a/core/client-internal/src/test/java/alluxio/client/block/BlockStoreContextTest.java b/core/client-internal/src/test/java/alluxio/client/block/BlockStoreContextTest.java
+index 2827dc7..b630783 100644
+--- a/core/client-internal/src/test/java/alluxio/client/block/BlockStoreContextTest.java
++++ b/core/client-internal/src/test/java/alluxio/client/block/BlockStoreContextTest.java
+@@ -141,7 +141,7 @@
+     final List<BlockWorkerClient> clients = Lists.newArrayList();
+ 
+     // Reduce the size of the worker thread pool to lower the chance of a timeout.
+-    Configuration conf = Whitebox.getInternalState(ClientContext.class, "sTachyonConf");
++    Configuration conf = Whitebox.getInternalState(ClientContext.class, "sConf");
+     conf.set(Constants.USER_BLOCK_WORKER_CLIENT_THREADS, "10");
+ 
+     // Acquire all the clients
+diff --git a/core/common/src/main/java/alluxio/Constants.java b/core/common/src/main/java/alluxio/Constants.java
+index 564a38f..a16ea3f 100644
+--- a/core/common/src/main/java/alluxio/Constants.java
++++ b/core/common/src/main/java/alluxio/Constants.java
+@@ -61,7 +61,7 @@
+ 
+   public static final int BYTES_IN_INTEGER = 4;
+ 
+-  public static final String SCHEME = "tachyon";
++  public static final String SCHEME = "alluxio";
+   public static final String HEADER = SCHEME + "://";
+ 
+   public static final String SCHEME_FT = "alluxio-ft";
+diff --git a/core/common/src/test/java/alluxio/AlluxioURITest.java b/core/common/src/test/java/alluxio/AlluxioURITest.java
+index 46d4e50..ac37950 100644
+--- a/core/common/src/test/java/alluxio/AlluxioURITest.java
++++ b/core/common/src/test/java/alluxio/AlluxioURITest.java
+@@ -42,7 +42,7 @@
+     Assert.assertEquals("alluxio://localhost:19998/", uri.getParent().getParent().toString());
+     Assert.assertEquals("/xy z/a b c", uri.getPath());
+     Assert.assertEquals(19998, uri.getPort());
+-    Assert.assertEquals("tachyon", uri.getScheme());
++    Assert.assertEquals("alluxio", uri.getScheme());
+     Assert.assertTrue(uri.hasAuthority());
+     Assert.assertTrue(uri.hasScheme());
+     Assert.assertTrue(uri.isAbsolute());
+@@ -222,7 +222,7 @@
+ 
+     AlluxioURI[] uriFromDifferentConstructor =
+         new AlluxioURI[] {new AlluxioURI("alluxio://127.0.0.1:8080/a/b/c.txt"),
+-            new AlluxioURI("tachyon", "127.0.0.1:8080", "/a/b/c.txt"),
++            new AlluxioURI("alluxio", "127.0.0.1:8080", "/a/b/c.txt"),
+             new AlluxioURI(
+                 new AlluxioURI("alluxio://127.0.0.1:8080/a"), new AlluxioURI("b/c.txt"))};
+     for (int i = 0; i < uriFromDifferentConstructor.length - 1; i ++) {
+@@ -350,7 +350,7 @@
+     Assert.assertEquals("file", new AlluxioURI("file://localhost/").getScheme());
+     Assert.assertEquals("alluxio-ft", new AlluxioURI("alluxio-ft://localhost/").getScheme());
+     Assert.assertEquals("s3", new AlluxioURI("s3://localhost/").getScheme());
+-    Assert.assertEquals("tachyon", new AlluxioURI("alluxio://localhost/").getScheme());
++    Assert.assertEquals("alluxio", new AlluxioURI("alluxio://localhost/").getScheme());
+     Assert.assertEquals("hdfs", new AlluxioURI("hdfs://localhost/").getScheme());
+     Assert.assertEquals("glusterfs", new AlluxioURI("glusterfs://localhost/").getScheme());
+   }
+diff --git a/core/common/src/test/java/alluxio/security/authentication/PlainServerCallbackHandlerTest.java b/core/common/src/test/java/alluxio/security/authentication/PlainServerCallbackHandlerTest.java
+index 8cab988..94af9c3 100644
+--- a/core/common/src/test/java/alluxio/security/authentication/PlainServerCallbackHandlerTest.java
++++ b/core/common/src/test/java/alluxio/security/authentication/PlainServerCallbackHandlerTest.java
+@@ -31,8 +31,7 @@
+ import alluxio.Configuration;
+ 
+ /**
+- * Tests the {@link alluxio.security.authentication.PlainSaslServer.PlainServerCallbackHandler}
+- * class.
++ * Tests the {@link PlainSaslServer.PlainServerCallbackHandler} class.
+  */
+ public class PlainServerCallbackHandlerTest {
+   private Configuration mConf;
+@@ -124,7 +123,7 @@
+   public static class NameMatchAuthenticationProvider implements AuthenticationProvider {
+     @Override
+     public void authenticate(String user, String password) throws AuthenticationException {
+-      if (!user.matches("^tachyon.*")) {
++      if (!user.matches("^alluxio.*")) {
+         throw new AuthenticationException("Only allow the user starting with alluxio");
+       }
+       if (!password.matches("^password")) {
+diff --git a/core/server/src/main/java/alluxio/web/WebInterfaceConfigurationServlet.java b/core/server/src/main/java/alluxio/web/WebInterfaceConfigurationServlet.java
+index 4acf3ce..38d490e 100644
+--- a/core/server/src/main/java/alluxio/web/WebInterfaceConfigurationServlet.java
++++ b/core/server/src/main/java/alluxio/web/WebInterfaceConfigurationServlet.java
+@@ -42,7 +42,7 @@
+ @ThreadSafe
+ public final class WebInterfaceConfigurationServlet extends HttpServlet {
+   private static final long serialVersionUID = 2134205675393443914L;
+-  private static final String TACHYON_CONF_PREFIX = "tachyon";
++  private static final String TACHYON_CONF_PREFIX = "alluxio";
+   private static final Set<String> TACHYON_CONF_EXCLUDES = new HashSet<String>(
+       Arrays.asList(Constants.MASTER_WHITELIST));
+ 
+diff --git a/core/client-internal/src/test/java/alluxio/client/block/BlockStoreContextTest.java b/core/client-internal/src/test/java/alluxio/client/block/BlockStoreContextTest.java
+index 2827dc7..b630783 100644
+--- a/core/client-internal/src/test/java/alluxio/client/block/BlockStoreContextTest.java
++++ b/core/client-internal/src/test/java/alluxio/client/block/BlockStoreContextTest.java
+@@ -141,7 +141,7 @@
+     final List<BlockWorkerClient> clients = Lists.newArrayList();
+ 
+     // Reduce the size of the worker thread pool to lower the chance of a timeout.
+-    Configuration conf = Whitebox.getInternalState(ClientContext.class, "sTachyonConf");
++    Configuration conf = Whitebox.getInternalState(ClientContext.class, "sConf");
+     conf.set(Constants.USER_BLOCK_WORKER_CLIENT_THREADS, "10");
+ 
+     // Acquire all the clients

@@ -1,0 +1,11 @@
+--- a/src/main/java/org/springframework/data/auditing/IsNewAwareAuditingHandler.java
++++ b/src/main/java/org/springframework/data/auditing/IsNewAwareAuditingHandler.java
+@@ -73,7 +73,7 @@ public class IsNewAwareAuditingHandler extends AuditingHandler {
+ 	 */
+ 	public void markAudited(Object object) {
+ 
+-		if (object == null) {
++		if (!isAuditable(object)) {
+ 			return;
+ 		}
+ 

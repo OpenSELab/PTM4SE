@@ -1,0 +1,46 @@
+diff --git a/test/com/google/javascript/jscomp/RemoveUnusedCodeNameAnalyzerTest.java b/test/com/google/javascript/jscomp/RemoveUnusedCodeNameAnalyzerTest.java
+index ca00b0f..421a852 100644
+--- a/test/com/google/javascript/jscomp/RemoveUnusedCodeNameAnalyzerTest.java
++++ b/test/com/google/javascript/jscomp/RemoveUnusedCodeNameAnalyzerTest.java
+@@ -213,14 +213,14 @@
+             "  let x = 1; alert(x);",
+             "}"));
+ 
+-    testSame(
+-        lines(
++    test(
++        srcs(lines(
+             "if (true) {", // preserve newline
+             "  let x = 1;",
+             "} else {",
+             "  let x = 1;",
+-            "}"),
+-        "if (true); else;");
++            "}")),
++        expected("if (true); else;"));
+   }
+ 
+   public void testRemoveConstDeclaration1() {
+diff --git a/test/com/google/javascript/jscomp/RemoveUnusedCodeNameAnalyzerTest.java b/test/com/google/javascript/jscomp/RemoveUnusedCodeNameAnalyzerTest.java
+index ca00b0f..421a852 100644
+--- a/test/com/google/javascript/jscomp/RemoveUnusedCodeNameAnalyzerTest.java
++++ b/test/com/google/javascript/jscomp/RemoveUnusedCodeNameAnalyzerTest.java
+@@ -213,14 +213,14 @@
+             "  let x = 1; alert(x);",
+             "}"));
+ 
+-    testSame(
+-        lines(
++    test(
++        srcs(lines(
+             "if (true) {", // preserve newline
+             "  let x = 1;",
+             "} else {",
+             "  let x = 1;",
+-            "}"),
+-        "if (true); else;");
++            "}")),
++        expected("if (true); else;"));
+   }
+ 
+   public void testRemoveConstDeclaration1() {

@@ -1,0 +1,143 @@
+diff --git a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java
+index a0d93b5..3c472ce 100644
+--- a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java
++++ b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java
+@@ -381,7 +381,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) Log.i(tag, message, exception);
+ 	}
+ 
+diff --git a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidDaydream.java b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidDaydream.java
+index 10f7211..c1e2936 100644
+--- a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidDaydream.java
++++ b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidDaydream.java
+@@ -371,7 +371,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) Log.i(tag, message, exception);
+ 	}
+ 
+diff --git a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
+index ccad000..15efbc0 100644
+--- a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
++++ b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidLiveWallpaper.java
+@@ -328,7 +328,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) Log.i(tag, message, exception);
+ 	}
+ 
+diff --git a/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwApplication.java b/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwApplication.java
+index 75d5c2e..8ccfd2e 100644
+--- a/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwApplication.java
++++ b/backends/gdx-backend-jglfw/src/com/badlogic/gdx/backends/jglfw/JglfwApplication.java
+@@ -377,7 +377,7 @@
+ 		}
+ 	}
+ 
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) {
+ 			System.out.println(tag + ": " + message);
+ 			exception.printStackTrace(System.out);
+diff --git a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglAWTCanvas.java b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglAWTCanvas.java
+index 81e4874..09c6d41 100644
+--- a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglAWTCanvas.java
++++ b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglAWTCanvas.java
+@@ -357,7 +357,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) {
+ 			System.out.println(tag + ": " + message);
+ 			exception.printStackTrace(System.out);
+diff --git a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java
+index 1d1b094..5f2e661 100644
+--- a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java
++++ b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java
+@@ -347,7 +347,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) {
+ 			System.out.println(tag + ": " + message);
+ 			exception.printStackTrace(System.out);
+diff --git a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglCanvas.java b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglCanvas.java
+index 38591b5..270c244 100644
+--- a/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglCanvas.java
++++ b/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglCanvas.java
+@@ -356,7 +356,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) {
+ 			System.out.println(tag + ": " + message);
+ 			exception.printStackTrace(System.out);
+diff --git a/backends/gdx-backend-robovm/src/com/badlogic/gdx/backends/iosrobovm/IOSApplication.java b/backends/gdx-backend-robovm/src/com/badlogic/gdx/backends/iosrobovm/IOSApplication.java
+index e1bd308..ac4b98d 100644
+--- a/backends/gdx-backend-robovm/src/com/badlogic/gdx/backends/iosrobovm/IOSApplication.java
++++ b/backends/gdx-backend-robovm/src/com/badlogic/gdx/backends/iosrobovm/IOSApplication.java
+@@ -264,7 +264,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel > LOG_NONE) {
+ 			System.out.println("[info] " + tag + ": " + message);
+ 			exception.printStackTrace();
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtApplication.java b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtApplication.java
+index 13b0832..83d2c67 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtApplication.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gdx/backends/gwt/GwtApplication.java
+@@ -299,7 +299,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) {
+ 			checkLogLabel();
+ 			log.setText(log.getText() + "\n" + tag + ": " + message + "\n" + exception.getMessage() + "\n");
+diff --git a/gdx/src/com/badlogic/gdx/Application.java b/gdx/src/com/badlogic/gdx/Application.java
+index cf8ce5d..fb69334 100644
+--- a/gdx/src/com/badlogic/gdx/Application.java
++++ b/gdx/src/com/badlogic/gdx/Application.java
+@@ -129,7 +129,7 @@
+ 	public void log (String tag, String message);
+ 
+ 	/** Logs a message to the console or logcat */
+-	public void log (String tag, String message, Exception exception);
++	public void log (String tag, String message, Throwable exception);
+ 
+ 	/** Logs an error message to the console or logcat */
+ 	public void error (String tag, String message);
+diff --git a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java
+index a0d93b5..3c472ce 100644
+--- a/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java
++++ b/backends/gdx-backend-android/src/com/badlogic/gdx/backends/android/AndroidApplication.java
+@@ -381,7 +381,7 @@
+ 	}
+ 
+ 	@Override
+-	public void log (String tag, String message, Exception exception) {
++	public void log (String tag, String message, Throwable exception) {
+ 		if (logLevel >= LOG_INFO) Log.i(tag, message, exception);
+ 	}
+ 

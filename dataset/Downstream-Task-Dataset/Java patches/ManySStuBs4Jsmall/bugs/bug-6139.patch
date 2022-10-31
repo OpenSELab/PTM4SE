@@ -1,0 +1,39 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/language/simple/SimpleLanguageSupport.java b/camel-core/src/main/java/org/apache/camel/language/simple/SimpleLanguageSupport.java
+index 72b1b9a..a414255 100644
+--- a/camel-core/src/main/java/org/apache/camel/language/simple/SimpleLanguageSupport.java
++++ b/camel-core/src/main/java/org/apache/camel/language/simple/SimpleLanguageSupport.java
+@@ -41,7 +41,7 @@
+ public abstract class SimpleLanguageSupport implements Language, IsSingleton {
+ 
+     // this is a regex for a given group in a simple expression that uses operators
+-    private static final String GROUP_PATTERN =
++    protected static final String GROUP_PATTERN =
+         "\\$\\{(\\S+)\\}\\s+(==|>|>=|<|<=|!=|contains|not contains|regex|not regex|in|not in|is|not is|range|not range)\\s+('.*'|\\S+)";
+ 
+     // this is the operator reg ex pattern used to match if a given expression is operator based or not
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteWaitIfReplyExpectedTest.java b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteWaitIfReplyExpectedTest.java
+index a190888..85b4bcf 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteWaitIfReplyExpectedTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/async/AsyncRouteWaitIfReplyExpectedTest.java
+@@ -85,7 +85,7 @@
+                             // so we do a bit of delay to simulate heavy work that takes time
+                         .to("mock:foo")
+                             // wait a litter longer for the slow box
+-                        .delay(500)
++                        .delay(1000)
+                             // and we also work with the message so we can prepare a response
+                         .process(new MyProcessor())
+                             // and we use mocks for unit testing
+diff --git a/camel-core/src/main/java/org/apache/camel/language/simple/SimpleLanguageSupport.java b/camel-core/src/main/java/org/apache/camel/language/simple/SimpleLanguageSupport.java
+index 72b1b9a..a414255 100644
+--- a/camel-core/src/main/java/org/apache/camel/language/simple/SimpleLanguageSupport.java
++++ b/camel-core/src/main/java/org/apache/camel/language/simple/SimpleLanguageSupport.java
+@@ -41,7 +41,7 @@
+ public abstract class SimpleLanguageSupport implements Language, IsSingleton {
+ 
+     // this is a regex for a given group in a simple expression that uses operators
+-    private static final String GROUP_PATTERN =
++    protected static final String GROUP_PATTERN =
+         "\\$\\{(\\S+)\\}\\s+(==|>|>=|<|<=|!=|contains|not contains|regex|not regex|in|not in|is|not is|range|not range)\\s+('.*'|\\S+)";
+ 
+     // this is the operator reg ex pattern used to match if a given expression is operator based or not

@@ -1,0 +1,19 @@
+diff --git a/components/camel-http4/src/test/java/org/apache/camel/component/http4/HttpProxyServerTest.java b/components/camel-http4/src/test/java/org/apache/camel/component/http4/HttpProxyServerTest.java
+index 90c26ca..d09202e 100644
+--- a/components/camel-http4/src/test/java/org/apache/camel/component/http4/HttpProxyServerTest.java
++++ b/components/camel-http4/src/test/java/org/apache/camel/component/http4/HttpProxyServerTest.java
+@@ -97,12 +97,12 @@
+     @Test
+     public void testDifferentHttpProxyConfigured() throws Exception {
+         HttpEndpoint http1 = context.getEndpoint("http4://www.google.com?proxyAuthHost=www.myproxy.com&proxyAuthPort=1234", HttpEndpoint.class);
+-        HttpEndpoint http2 = context.getEndpoint("http4://www.google.com?test=parameter&proxyAuthHost=www.myotherproxy.com&proxyAuthPort=2345", HttpEndpoint.class);
++        HttpEndpoint http2 = context.getEndpoint("http4://www.google.com?test=parameter&proxyAuthHost=www.otherproxy.com&proxyAuthPort=2345", HttpEndpoint.class);
+         // HttpClientBuilder doesn't support get the configuration here
+         
+         //As the endpointUri is recreated, so the parameter could be in different place, so we use the URISupport.normalizeUri
+         assertEquals("Get a wrong endpoint uri of http1", "http4://www.google.com?proxyAuthHost=www.myproxy.com&proxyAuthPort=1234", URISupport.normalizeUri(http1.getEndpointUri()));
+-        assertEquals("Get a wrong endpoint uri of http2", "http4://www.google.com?proxyAuthHost=www.myotherproxy.com&proxyAuthPort=2345&test=parameter", URISupport.normalizeUri(http2.getEndpointUri()));
++        assertEquals("Get a wrong endpoint uri of http2", "http4://www.google.com?proxyAuthHost=www.otherproxy.com&proxyAuthPort=2345&test=parameter", URISupport.normalizeUri(http2.getEndpointUri()));
+ 
+         assertEquals("Should get the same EndpointKey", http1.getEndpointKey(), http2.getEndpointKey());
+     }

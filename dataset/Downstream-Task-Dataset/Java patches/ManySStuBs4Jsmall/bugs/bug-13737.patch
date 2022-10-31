@@ -1,0 +1,34 @@
+diff --git a/src/com/google/javascript/rhino/jstype/InstanceObjectType.java b/src/com/google/javascript/rhino/jstype/InstanceObjectType.java
+index 05ea5f6..fb12657 100644
+--- a/src/com/google/javascript/rhino/jstype/InstanceObjectType.java
++++ b/src/com/google/javascript/rhino/jstype/InstanceObjectType.java
+@@ -109,9 +109,10 @@
+     if (name.isEmpty()) {
+       Node n = constructor.getSource();
+       return sb.append("<anonymous@")
+-          .append(n.getSourceFileName())
++          .append(n != null ? n.getSourceFileName() : "unknown")
+           .append(":")
+-          .append(n.getLineno()).append(">");
++          .append(n != null ? n.getLineno() : 0)
++          .append(">");
+     }
+     return sb.append(name);
+   }
+diff --git a/src/com/google/javascript/rhino/jstype/InstanceObjectType.java b/src/com/google/javascript/rhino/jstype/InstanceObjectType.java
+index 05ea5f6..fb12657 100644
+--- a/src/com/google/javascript/rhino/jstype/InstanceObjectType.java
++++ b/src/com/google/javascript/rhino/jstype/InstanceObjectType.java
+@@ -109,9 +109,10 @@
+     if (name.isEmpty()) {
+       Node n = constructor.getSource();
+       return sb.append("<anonymous@")
+-          .append(n.getSourceFileName())
++          .append(n != null ? n.getSourceFileName() : "unknown")
+           .append(":")
+-          .append(n.getLineno()).append(">");
++          .append(n != null ? n.getLineno() : 0)
++          .append(">");
+     }
+     return sb.append(name);
+   }

@@ -1,0 +1,44 @@
+diff --git a/core-server/src/main/java/org/glassfish/jersey/server/ChunkedOutput.java b/core-server/src/main/java/org/glassfish/jersey/server/ChunkedOutput.java
+index 3d4a797..8b44ebd 100644
+--- a/core-server/src/main/java/org/glassfish/jersey/server/ChunkedOutput.java
++++ b/core-server/src/main/java/org/glassfish/jersey/server/ChunkedOutput.java
+@@ -193,7 +193,7 @@
+                     boolean shouldClose;
+                     T t;
+ 
+-                    synchronized (this) {
++                    synchronized (ChunkedOutput.this) {
+                         if (flushing) {
+                             // if another thread is already flushing the queue, we don't have to do anything
+                             return null;
+@@ -254,7 +254,7 @@
+                         }
+                         t = queue.poll();
+                         if (t == null) {
+-                            synchronized (this) {
++                            synchronized (ChunkedOutput.this) {
+                                 // queue seems empty
+                                 // check again in the synchronized block before clearing the flushing flag
+                                 // first remember the closed flag (this has to be before polling the queue,
+diff --git a/core-server/src/main/java/org/glassfish/jersey/server/ChunkedOutput.java b/core-server/src/main/java/org/glassfish/jersey/server/ChunkedOutput.java
+index 3d4a797..8b44ebd 100644
+--- a/core-server/src/main/java/org/glassfish/jersey/server/ChunkedOutput.java
++++ b/core-server/src/main/java/org/glassfish/jersey/server/ChunkedOutput.java
+@@ -193,7 +193,7 @@
+                     boolean shouldClose;
+                     T t;
+ 
+-                    synchronized (this) {
++                    synchronized (ChunkedOutput.this) {
+                         if (flushing) {
+                             // if another thread is already flushing the queue, we don't have to do anything
+                             return null;
+@@ -254,7 +254,7 @@
+                         }
+                         t = queue.poll();
+                         if (t == null) {
+-                            synchronized (this) {
++                            synchronized (ChunkedOutput.this) {
+                                 // queue seems empty
+                                 // check again in the synchronized block before clearing the flushing flag
+                                 // first remember the closed flag (this has to be before polling the queue,

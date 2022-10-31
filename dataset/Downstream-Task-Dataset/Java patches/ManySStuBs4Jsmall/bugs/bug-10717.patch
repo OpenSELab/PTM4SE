@@ -1,0 +1,39 @@
+diff --git a/nd4j-backends/nd4j-backend-impls/nd4j-cuda/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java b/nd4j-backends/nd4j-backend-impls/nd4j-cuda/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
+index 99ecc36..512af6b 100644
+--- a/nd4j-backends/nd4j-backend-impls/nd4j-cuda/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
++++ b/nd4j-backends/nd4j-backend-impls/nd4j-cuda/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
+@@ -33,7 +33,7 @@
+             int dimensionLength = dimension.length;
+ 
+ 
+-            int targetRank = array.rank(); ///Math.max(array.rank() - dimensionLength, 2);
++            int targetRank = dimensionLength <= 1 ? 2 : dimensionLength;
+             int offsetLength = 0;
+             int tadLength = 1;
+             for (int i = 0; i < dimensionLength; i++) {
+diff --git a/nd4j-backends/nd4j-backend-impls/nd4j-native/src/main/java/org/nd4j/linalg/cpu/nativecpu/CpuTADManager.java b/nd4j-backends/nd4j-backend-impls/nd4j-native/src/main/java/org/nd4j/linalg/cpu/nativecpu/CpuTADManager.java
+index 6fa0ea8..69bacee 100644
+--- a/nd4j-backends/nd4j-backend-impls/nd4j-native/src/main/java/org/nd4j/linalg/cpu/nativecpu/CpuTADManager.java
++++ b/nd4j-backends/nd4j-backend-impls/nd4j-native/src/main/java/org/nd4j/linalg/cpu/nativecpu/CpuTADManager.java
+@@ -57,7 +57,7 @@
+             if (!cache.containsKey(descriptor)) {
+                 int dimensionLength = dimension.length;
+ 
+-                int targetRank = array.rank(); ///Math.max(array.rank() - dimensionLength, 2);
++                int targetRank = dimensionLength <= 1 ? 2 : dimensionLength;
+                 int offsetLength = 0;
+                 int tadLength = 1;
+                 for (int i = 0; i < dimensionLength; i++) {
+diff --git a/nd4j-backends/nd4j-backend-impls/nd4j-cuda/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java b/nd4j-backends/nd4j-backend-impls/nd4j-cuda/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
+index 99ecc36..512af6b 100644
+--- a/nd4j-backends/nd4j-backend-impls/nd4j-cuda/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
++++ b/nd4j-backends/nd4j-backend-impls/nd4j-cuda/src/main/java/org/nd4j/jita/allocator/tad/BasicTADManager.java
+@@ -33,7 +33,7 @@
+             int dimensionLength = dimension.length;
+ 
+ 
+-            int targetRank = array.rank(); ///Math.max(array.rank() - dimensionLength, 2);
++            int targetRank = dimensionLength <= 1 ? 2 : dimensionLength;
+             int offsetLength = 0;
+             int tadLength = 1;
+             for (int i = 0; i < dimensionLength; i++) {

@@ -1,0 +1,26 @@
+diff --git a/elasticsearch/src/main/java/com/yahoo/ycsb/db/ElasticsearchClient.java b/elasticsearch/src/main/java/com/yahoo/ycsb/db/ElasticsearchClient.java
+index c91ba17..71f8f12 100644
+--- a/elasticsearch/src/main/java/com/yahoo/ycsb/db/ElasticsearchClient.java
++++ b/elasticsearch/src/main/java/com/yahoo/ycsb/db/ElasticsearchClient.java
+@@ -93,7 +93,7 @@
+     Boolean newdb =
+         Boolean.parseBoolean(props.getProperty("elasticsearch.newdb", "false"));
+     Builder settings = Settings.settingsBuilder()
+-        .put("node.local", "true")
++        .put("node.local", Boolean.toString(!remoteMode))
+         .put("path.data", System.getProperty("java.io.tmpdir") + "/esdata")
+         .put("path.home", System.getProperty("java.io.tmpdir"));
+ 
+diff --git a/elasticsearch/src/main/java/com/yahoo/ycsb/db/ElasticsearchClient.java b/elasticsearch/src/main/java/com/yahoo/ycsb/db/ElasticsearchClient.java
+index c91ba17..71f8f12 100644
+--- a/elasticsearch/src/main/java/com/yahoo/ycsb/db/ElasticsearchClient.java
++++ b/elasticsearch/src/main/java/com/yahoo/ycsb/db/ElasticsearchClient.java
+@@ -93,7 +93,7 @@
+     Boolean newdb =
+         Boolean.parseBoolean(props.getProperty("elasticsearch.newdb", "false"));
+     Builder settings = Settings.settingsBuilder()
+-        .put("node.local", "true")
++        .put("node.local", Boolean.toString(!remoteMode))
+         .put("path.data", System.getProperty("java.io.tmpdir") + "/esdata")
+         .put("path.home", System.getProperty("java.io.tmpdir"));
+ 

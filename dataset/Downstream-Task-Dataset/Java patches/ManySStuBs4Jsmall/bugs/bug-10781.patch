@@ -1,0 +1,44 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/datasets/iterator/MultipleEpochsIterator.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/datasets/iterator/MultipleEpochsIterator.java
+index bc0b86c..5d4a971 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/datasets/iterator/MultipleEpochsIterator.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/datasets/iterator/MultipleEpochsIterator.java
+@@ -57,7 +57,7 @@
+         this.numEpochs = numEpochs;
+         this.iter = iter;
+         this.queueSize = queueSize;
+-        this.async = queueSize == 1? false: true;
++        this.async = queueSize != 1 && iter.asyncSupported();
+     }
+ 
+     public MultipleEpochsIterator(int numEpochs,DataSet ds) {
+@@ -159,7 +159,7 @@
+ 
+     @Override
+     public boolean asyncSupported() {
+-        return iter.asyncSupported();
++        return false;
+     }
+ 
+     /**
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/datasets/iterator/MultipleEpochsIterator.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/datasets/iterator/MultipleEpochsIterator.java
+index bc0b86c..5d4a971 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/datasets/iterator/MultipleEpochsIterator.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/datasets/iterator/MultipleEpochsIterator.java
+@@ -57,7 +57,7 @@
+         this.numEpochs = numEpochs;
+         this.iter = iter;
+         this.queueSize = queueSize;
+-        this.async = queueSize == 1? false: true;
++        this.async = queueSize != 1 && iter.asyncSupported();
+     }
+ 
+     public MultipleEpochsIterator(int numEpochs,DataSet ds) {
+@@ -159,7 +159,7 @@
+ 
+     @Override
+     public boolean asyncSupported() {
+-        return iter.asyncSupported();
++        return false;
+     }
+ 
+     /**

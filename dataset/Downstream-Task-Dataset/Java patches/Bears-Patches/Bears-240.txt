@@ -1,0 +1,59 @@
+--- a/seeds-core/src/main/java/com/github/smallcreep/cucumber/seeds/context/CxJoined.java
++++ b/seeds-core/src/main/java/com/github/smallcreep/cucumber/seeds/context/CxJoined.java
+@@ -63,7 +63,7 @@ public final class CxJoined implements Context {
+      * Ctor.
+      * @param contexts Contexts
+      */
+-    CxJoined(final Iterable<Context> contexts) {
++    public CxJoined(final Iterable<Context> contexts) {
+         this(contexts, new CxSimple());
+     }
+ 
+diff --git a/seeds-core/src/main/java/com/github/smallcreep/cucumber/seeds/suit/StDefault.java b/seeds-core/src/main/java/com/github/smallcreep/cucumber/seeds/suit/StDefault.java
+index b2ad0f9..a2d3aee 100644
+--- a/seeds-core/src/main/java/com/github/smallcreep/cucumber/seeds/suit/StDefault.java
++++ b/seeds-core/src/main/java/com/github/smallcreep/cucumber/seeds/suit/StDefault.java
+@@ -39,20 +42,38 @@ public final class StDefault extends StEnvelope {
+      * @param origin Origin suit
+      */
+     public StDefault(final Suit origin) {
+-        this(origin, new CxProperties());
++        this(
++            origin,
++            new CxProperties(System.getProperties()),
++            new CxProperties()
++        );
++    }
++
++    /**
++     * Ctor.
++     * @param origin Origin suit
++     * @param ctxs Contexts
++     */
++    StDefault(final Suit origin, final Context... ctxs) {
++        this(
++            origin,
++            new IterableOf<>(ctxs)
++        );
+     }
+ 
+     /**
+      * Ctor.
+      * @param origin Origin suit
+-     * @param ctx Properties context
++     * @param ctxs Contexts
+      */
+-    StDefault(final Suit origin, final CxProperties ctx) {
++    StDefault(final Suit origin, final Iterable<Context> ctxs) {
+         this(
+             origin,
+             new CxJoined(
+-                ctx,
+-                origin.context()
++                new Joined<>(
++                    origin.context(),
++                    ctxs
++                )
+             )
+         );
+     }

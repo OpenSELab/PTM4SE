@@ -1,0 +1,50 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java b/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
+index 0c2e045..e067362 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
+@@ -34,7 +34,7 @@
+ public class MarkerFileExclusiveReadLockStrategyTest extends ContextTestSupport {
+ 
+     private static final transient Log LOG = LogFactory.getLog(MarkerFileExclusiveReadLockStrategyTest.class);
+-    private static int NUMBER_OF_THREADS = 5;
++    private static final int NUMBER_OF_THREADS = 5;
+     private AtomicInteger numberOfFilesProcessed = new AtomicInteger(0);
+ 
+     public void testMultithreadedLocking() throws Exception {
+diff --git a/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java b/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
+index d0a73d4..4d617c7 100644
+--- a/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
++++ b/camel-core/src/test/java/org/apache/camel/model/StartingRoutesErrorReportedTest.java
+@@ -53,7 +53,8 @@
+             context.start();
+             fail();
+         } catch (FailedToCreateRouteException e) {
+-            assertTrue(e.getMessage().startsWith("Failed to create route route2 at: >>> To[direct:result?foo=bar] <<< in route: Route[[From[direct:start]] -> [To[direct:result?foo=bar]]] because of"));
++            assertTrue(e.getMessage().startsWith("Failed to create route route2 at: >>> To[direct:result?foo=bar] <<< in route:"
++                    + " Route[[From[direct:start]] -> [To[direct:result?foo=bar]]] because of"));
+         }
+     }
+ 
+@@ -69,7 +70,8 @@
+             });
+             context.start();
+         } catch (FailedToCreateRouteException e) {
+-            assertTrue(e.getMessage().startsWith("Failed to create route route3 at: >>> Bean[ref:] <<< in route: Route[[From[direct:start]] -> [To[mock:foo], Bean[ref:]]] because of"));
++            assertTrue(e.getMessage().startsWith("Failed to create route route3 at: >>> Bean[ref:] <<< in route:"
++                    + " Route[[From[direct:start]] -> [To[mock:foo], Bean[ref:]]] because of"));
+         }
+     }
+ 
+diff --git a/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java b/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
+index 0c2e045..e067362 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/file/strategy/MarkerFileExclusiveReadLockStrategyTest.java
+@@ -34,7 +34,7 @@
+ public class MarkerFileExclusiveReadLockStrategyTest extends ContextTestSupport {
+ 
+     private static final transient Log LOG = LogFactory.getLog(MarkerFileExclusiveReadLockStrategyTest.class);
+-    private static int NUMBER_OF_THREADS = 5;
++    private static final int NUMBER_OF_THREADS = 5;
+     private AtomicInteger numberOfFilesProcessed = new AtomicInteger(0);
+ 
+     public void testMultithreadedLocking() throws Exception {

@@ -1,0 +1,13 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+index 9936769..6f53952 100644
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/BaseOutputLayer.java
+@@ -119,7 +119,7 @@
+         if (l1l2 != 0.0) {
+             scoreArray.addi(l1l2);
+         }
+-        return scoreArray;
++        return workspaceMgr.leverageTo(ArrayType.ACTIVATIONS, scoreArray);
+     }
+ 
+     @Override

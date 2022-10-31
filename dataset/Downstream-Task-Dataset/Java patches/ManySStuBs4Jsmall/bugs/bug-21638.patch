@@ -1,0 +1,26 @@
+diff --git a/spring-security-oauth/src/main/java/org/springframework/security/oauth/consumer/client/OAuthClientHttpRequestFactory.java b/spring-security-oauth/src/main/java/org/springframework/security/oauth/consumer/client/OAuthClientHttpRequestFactory.java
+index 1ee3985..16fe430 100644
+--- a/spring-security-oauth/src/main/java/org/springframework/security/oauth/consumer/client/OAuthClientHttpRequestFactory.java
++++ b/spring-security-oauth/src/main/java/org/springframework/security/oauth/consumer/client/OAuthClientHttpRequestFactory.java
+@@ -52,7 +52,7 @@
+     if (!useAuthHeader) {
+       String queryString = this.support.getOAuthQueryString(this.resource, accessToken, uri.toURL(), httpMethod.name(), this.additionalOAuthParameters);
+       String uriValue = String.valueOf(uri);
+-      uri = URI.create(uriValue.contains("?") ? uriValue + "&" + queryString : uriValue + "?" + queryString);
++      uri = URI.create((uriValue.contains("?") ? uriValue.substring(0, uriValue.indexOf('?')) : uriValue) + "?" + queryString);
+     }
+ 
+     ClientHttpRequest req = delegate.createRequest(uri, httpMethod);
+diff --git a/spring-security-oauth/src/main/java/org/springframework/security/oauth/consumer/client/OAuthClientHttpRequestFactory.java b/spring-security-oauth/src/main/java/org/springframework/security/oauth/consumer/client/OAuthClientHttpRequestFactory.java
+index 1ee3985..16fe430 100644
+--- a/spring-security-oauth/src/main/java/org/springframework/security/oauth/consumer/client/OAuthClientHttpRequestFactory.java
++++ b/spring-security-oauth/src/main/java/org/springframework/security/oauth/consumer/client/OAuthClientHttpRequestFactory.java
+@@ -52,7 +52,7 @@
+     if (!useAuthHeader) {
+       String queryString = this.support.getOAuthQueryString(this.resource, accessToken, uri.toURL(), httpMethod.name(), this.additionalOAuthParameters);
+       String uriValue = String.valueOf(uri);
+-      uri = URI.create(uriValue.contains("?") ? uriValue + "&" + queryString : uriValue + "?" + queryString);
++      uri = URI.create((uriValue.contains("?") ? uriValue.substring(0, uriValue.indexOf('?')) : uriValue) + "?" + queryString);
+     }
+ 
+     ClientHttpRequest req = delegate.createRequest(uri, httpMethod);

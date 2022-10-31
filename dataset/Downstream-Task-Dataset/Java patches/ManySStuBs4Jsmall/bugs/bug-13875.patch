@@ -1,0 +1,64 @@
+diff --git a/test/com/google/javascript/jscomp/lint/CheckInterfacesTest.java b/test/com/google/javascript/jscomp/lint/CheckInterfacesTest.java
+index 4fbf7c9..0b2c3e2 100644
+--- a/test/com/google/javascript/jscomp/lint/CheckInterfacesTest.java
++++ b/test/com/google/javascript/jscomp/lint/CheckInterfacesTest.java
+@@ -48,9 +48,9 @@
+     testSame("/** @interface */ function A(x) {}",
+         CheckInterfaces.INTERFACE_SHOULD_NOT_TAKE_ARGS);
+ 
+-    testSame("var ns = {};\n"
+-        + "/** @interface */\n"
+-        + "ns.SomeInterface = function(x) {};",
++    testSame(
++        LINE_JOINER.join(
++            "var ns = {};\n", "/** @interface */\n", "ns.SomeInterface = function(x) {};"),
+         CheckInterfaces.INTERFACE_SHOULD_NOT_TAKE_ARGS);
+   }
+ 
+@@ -58,9 +58,11 @@
+     testSame("/** @interface */ function A() { this.foo; }",
+         CheckInterfaces.INTERFACE_FUNCTION_NOT_EMPTY);
+ 
+-    testSame("var ns = {};\n"
+-        + "/** @interface */\n"
+-        + "ns.SomeInterface = function() { this.foo; };",
++    testSame(
++        LINE_JOINER.join(
++            "var ns = {};\n",
++            "/** @interface */\n",
++            "ns.SomeInterface = function() { this.foo; };"),
+         CheckInterfaces.INTERFACE_FUNCTION_NOT_EMPTY);
+   }
+ }
+diff --git a/test/com/google/javascript/jscomp/lint/CheckInterfacesTest.java b/test/com/google/javascript/jscomp/lint/CheckInterfacesTest.java
+index 4fbf7c9..0b2c3e2 100644
+--- a/test/com/google/javascript/jscomp/lint/CheckInterfacesTest.java
++++ b/test/com/google/javascript/jscomp/lint/CheckInterfacesTest.java
+@@ -48,9 +48,9 @@
+     testSame("/** @interface */ function A(x) {}",
+         CheckInterfaces.INTERFACE_SHOULD_NOT_TAKE_ARGS);
+ 
+-    testSame("var ns = {};\n"
+-        + "/** @interface */\n"
+-        + "ns.SomeInterface = function(x) {};",
++    testSame(
++        LINE_JOINER.join(
++            "var ns = {};\n", "/** @interface */\n", "ns.SomeInterface = function(x) {};"),
+         CheckInterfaces.INTERFACE_SHOULD_NOT_TAKE_ARGS);
+   }
+ 
+@@ -58,9 +58,11 @@
+     testSame("/** @interface */ function A() { this.foo; }",
+         CheckInterfaces.INTERFACE_FUNCTION_NOT_EMPTY);
+ 
+-    testSame("var ns = {};\n"
+-        + "/** @interface */\n"
+-        + "ns.SomeInterface = function() { this.foo; };",
++    testSame(
++        LINE_JOINER.join(
++            "var ns = {};\n",
++            "/** @interface */\n",
++            "ns.SomeInterface = function() { this.foo; };"),
+         CheckInterfaces.INTERFACE_FUNCTION_NOT_EMPTY);
+   }
+ }

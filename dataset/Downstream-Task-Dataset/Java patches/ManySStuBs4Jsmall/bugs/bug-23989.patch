@@ -1,0 +1,13 @@
+diff --git a/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java b/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
+index bef6170..a5f8a44 100644
+--- a/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
++++ b/controller/src/main/java/org/jboss/as/controller/parsing/HostXml.java
+@@ -594,7 +594,7 @@
+             if (server.hasDefined(SOCKET_BINDING_GROUP)) {
+                 writer.writeStartElement(Element.SOCKET_BINDING_GROUP.getLocalName());
+                 writeAttribute(writer, Attribute.REF, server.get(SOCKET_BINDING_GROUP).asString());
+-                if (server.has(SOCKET_BINDING_PORT_OFFSET)) {
++                if (server.hasDefined(SOCKET_BINDING_PORT_OFFSET) && server.get(SOCKET_BINDING_PORT_OFFSET).asInt() > 0) {
+                     writeAttribute(writer, Attribute.PORT_OFFSET, server.get(SOCKET_BINDING_PORT_OFFSET).asString());
+                 }
+                 writer.writeEndElement();

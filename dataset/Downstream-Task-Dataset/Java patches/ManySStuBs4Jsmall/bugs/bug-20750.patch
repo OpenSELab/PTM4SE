@@ -1,0 +1,50 @@
+diff --git a/roboguice/src/main/java/roboguice/inject/SharedPreferencesProvider.java b/roboguice/src/main/java/roboguice/inject/SharedPreferencesProvider.java
+index f610f91..0dedb6c 100644
+--- a/roboguice/src/main/java/roboguice/inject/SharedPreferencesProvider.java
++++ b/roboguice/src/main/java/roboguice/inject/SharedPreferencesProvider.java
+@@ -24,6 +24,7 @@
+ /**
+  * 
+  * @author Mike Burton
++ * @author Pierre-Yves Ricau (py.ricau+roboguice@gmail.com)
+  */
+ public class SharedPreferencesProvider implements Provider<SharedPreferences> {
+     protected static final String DEFAULT = "default";
+@@ -46,10 +47,11 @@
+         return contextProvider.get().getSharedPreferences(preferencesName, Context.MODE_PRIVATE);
+     }
+ 
++    // http://code.google.com/p/google-guice/wiki/FrequentlyAskedQuestions => How can I inject optional parameters into a constructor?
+     static class PreferencesNameHolder {
+         @Inject(optional = true)
+         @SharedPreferencesName
+-        private String value = DEFAULT;
++        protected String value = DEFAULT;
+     }
+ 
+ }
+diff --git a/roboguice/src/main/java/roboguice/inject/SharedPreferencesProvider.java b/roboguice/src/main/java/roboguice/inject/SharedPreferencesProvider.java
+index f610f91..0dedb6c 100644
+--- a/roboguice/src/main/java/roboguice/inject/SharedPreferencesProvider.java
++++ b/roboguice/src/main/java/roboguice/inject/SharedPreferencesProvider.java
+@@ -24,6 +24,7 @@
+ /**
+  * 
+  * @author Mike Burton
++ * @author Pierre-Yves Ricau (py.ricau+roboguice@gmail.com)
+  */
+ public class SharedPreferencesProvider implements Provider<SharedPreferences> {
+     protected static final String DEFAULT = "default";
+@@ -46,10 +47,11 @@
+         return contextProvider.get().getSharedPreferences(preferencesName, Context.MODE_PRIVATE);
+     }
+ 
++    // http://code.google.com/p/google-guice/wiki/FrequentlyAskedQuestions => How can I inject optional parameters into a constructor?
+     static class PreferencesNameHolder {
+         @Inject(optional = true)
+         @SharedPreferencesName
+-        private String value = DEFAULT;
++        protected String value = DEFAULT;
+     }
+ 
+ }

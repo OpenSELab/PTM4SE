@@ -1,0 +1,26 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/txn/compactor/CompactorMR.java b/ql/src/java/org/apache/hadoop/hive/ql/txn/compactor/CompactorMR.java
+index 4870a90..b1c2288 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/txn/compactor/CompactorMR.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/txn/compactor/CompactorMR.java
+@@ -342,7 +342,7 @@
+       txnHandler.setHadoopJobId(rj.getID().toString(), id);
+       rj.waitForCompletion();
+       if (!rj.isSuccessful()) {
+-        throw new IOException(compactionType == CompactionType.MAJOR ? "Major" : "Minor" +
++        throw new IOException((compactionType == CompactionType.MAJOR ? "Major" : "Minor") +
+                " compactor job failed for " + jobName + "! Hadoop JobId: " + rj.getID());
+       }
+     } finally {
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/txn/compactor/CompactorMR.java b/ql/src/java/org/apache/hadoop/hive/ql/txn/compactor/CompactorMR.java
+index 4870a90..b1c2288 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/txn/compactor/CompactorMR.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/txn/compactor/CompactorMR.java
+@@ -342,7 +342,7 @@
+       txnHandler.setHadoopJobId(rj.getID().toString(), id);
+       rj.waitForCompletion();
+       if (!rj.isSuccessful()) {
+-        throw new IOException(compactionType == CompactionType.MAJOR ? "Major" : "Minor" +
++        throw new IOException((compactionType == CompactionType.MAJOR ? "Major" : "Minor") +
+                " compactor job failed for " + jobName + "! Hadoop JobId: " + rj.getID());
+       }
+     } finally {

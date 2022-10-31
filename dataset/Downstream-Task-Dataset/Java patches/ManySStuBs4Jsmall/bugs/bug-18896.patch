@@ -1,0 +1,36 @@
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+index c7dcc9b..86ae980 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+@@ -1555,11 +1555,11 @@
+         DefaultChannelHandlerContext ctx = prev;
+         for (;;) {
+             if (ctx.hasOutboundByteBuffer()) {
+-                return ctx.outboundByteBuffer().isWritable();
++                return ctx.isWritable();
+             }
+ 
+             if (ctx.hasOutboundMessageBuffer()) {
+-                return ctx.outboundMessageBuffer().isWritable();
++                return ctx.isWritable();
+             }
+             ctx = ctx.prev;
+         }
+diff --git a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+index c7dcc9b..86ae980 100755
+--- a/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
++++ b/transport/src/main/java/io/netty/channel/DefaultChannelHandlerContext.java
+@@ -1555,11 +1555,11 @@
+         DefaultChannelHandlerContext ctx = prev;
+         for (;;) {
+             if (ctx.hasOutboundByteBuffer()) {
+-                return ctx.outboundByteBuffer().isWritable();
++                return ctx.isWritable();
+             }
+ 
+             if (ctx.hasOutboundMessageBuffer()) {
+-                return ctx.outboundMessageBuffer().isWritable();
++                return ctx.isWritable();
+             }
+             ctx = ctx.prev;
+         }

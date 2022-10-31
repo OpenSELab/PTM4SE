@@ -1,0 +1,119 @@
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/operators/AbstractUdfStreamOperator.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/operators/AbstractUdfStreamOperator.java
+index 17bd08d..32be2ba 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/operators/AbstractUdfStreamOperator.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/api/operators/AbstractUdfStreamOperator.java
+@@ -20,8 +20,10 @@ package org.apache.flink.streaming.api.operators;
+ 
+ import java.io.Serializable;
+ 
++import org.apache.flink.api.common.ExecutionConfig;
+ import org.apache.flink.api.common.functions.Function;
+ import org.apache.flink.api.common.functions.util.FunctionUtils;
++import org.apache.flink.api.common.typeinfo.TypeInformation;
+ import org.apache.flink.configuration.Configuration;
+ import org.apache.flink.runtime.state.StateHandle;
+ import org.apache.flink.streaming.api.checkpoint.CheckpointNotifier;
+@@ -44,7 +46,7 @@ import static java.util.Objects.requireNonNull;
+  * @param <F>
+  *            The type of the user function
+  */
+-public abstract class AbstractUdfStreamOperator<OUT, F extends Function> extends AbstractStreamOperator<OUT> {
++public abstract class AbstractUdfStreamOperator<OUT, F extends Function> extends AbstractStreamOperator<OUT> implements OutputTypeConfigurable<OUT> {
+ 
+ 	private static final long serialVersionUID = 1L;
+ 	
+@@ -176,6 +178,20 @@ public abstract class AbstractUdfStreamOperator<OUT, F extends Function> extends
+ 	}
+ 
+ 	// ------------------------------------------------------------------------
++	//  Output type configuration
++	// ------------------------------------------------------------------------
++
++	@Override
++	public void setOutputType(TypeInformation<OUT> outTypeInfo, ExecutionConfig executionConfig) {
++		if (userFunction instanceof OutputTypeConfigurable) {
++			OutputTypeConfigurable<OUT> outputTypeConfigurable = (OutputTypeConfigurable<OUT>) userFunction;
++
++			outputTypeConfigurable.setOutputType(outTypeInfo, executionConfig);
++		}
++	}
++
++
++	// ------------------------------------------------------------------------
+ 	//  Utilities
+ 	// ------------------------------------------------------------------------
+ 
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/windowing/NonKeyedWindowOperator.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/windowing/NonKeyedWindowOperator.java
+index d12a930..cf90cf2 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/windowing/NonKeyedWindowOperator.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/windowing/NonKeyedWindowOperator.java
+@@ -31,7 +31,6 @@ import org.apache.flink.streaming.api.functions.windowing.AllWindowFunction;
+ import org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator;
+ import org.apache.flink.streaming.api.operators.ChainingStrategy;
+ import org.apache.flink.streaming.api.operators.OneInputStreamOperator;
+-import org.apache.flink.streaming.api.operators.OutputTypeConfigurable;
+ import org.apache.flink.streaming.api.operators.TimestampedCollector;
+ import org.apache.flink.streaming.api.watermark.Watermark;
+ import org.apache.flink.streaming.api.windowing.assigners.WindowAssigner;
+@@ -70,7 +69,7 @@ import static java.util.Objects.requireNonNull;
+  */
+ public class NonKeyedWindowOperator<IN, OUT, W extends Window>
+ 		extends AbstractUdfStreamOperator<OUT, AllWindowFunction<IN, OUT, W>>
+-		implements OneInputStreamOperator<IN, OUT>, Triggerable, InputTypeConfigurable, OutputTypeConfigurable<OUT> {
++		implements OneInputStreamOperator<IN, OUT>, Triggerable, InputTypeConfigurable {
+ 
+ 	private static final long serialVersionUID = 1L;
+ 
+@@ -510,15 +509,6 @@ public class NonKeyedWindowOperator<IN, OUT, W extends Window>
+ 		return this;
+ 	}
+ 
+-	@Override
+-	public final void setOutputType(TypeInformation<OUT> outTypeInfo, ExecutionConfig executionConfig) {
+-		if (userFunction instanceof OutputTypeConfigurable) {
+-			@SuppressWarnings("unchecked")
+-			OutputTypeConfigurable<OUT> typeConfigurable = (OutputTypeConfigurable<OUT>) userFunction;
+-			typeConfigurable.setOutputType(outTypeInfo, executionConfig);
+-		}
+-	}
+-
+ 	// ------------------------------------------------------------------------
+ 	//  Checkpointing
+ 	// ------------------------------------------------------------------------
+diff --git a/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/windowing/WindowOperator.java b/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/windowing/WindowOperator.java
+index c39679f..6764186 100644
+--- a/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/windowing/WindowOperator.java
++++ b/flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/operators/windowing/WindowOperator.java
+@@ -32,7 +32,6 @@ import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
+ import org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator;
+ import org.apache.flink.streaming.api.operators.ChainingStrategy;
+ import org.apache.flink.streaming.api.operators.OneInputStreamOperator;
+-import org.apache.flink.streaming.api.operators.OutputTypeConfigurable;
+ import org.apache.flink.streaming.api.operators.TimestampedCollector;
+ import org.apache.flink.streaming.api.watermark.Watermark;
+ import org.apache.flink.streaming.api.windowing.assigners.WindowAssigner;
+@@ -88,7 +87,7 @@ import static java.util.Objects.requireNonNull;
+  */
+ public class WindowOperator<K, IN, OUT, W extends Window>
+ 		extends AbstractUdfStreamOperator<OUT, WindowFunction<IN, OUT, K, W>>
+-		implements OneInputStreamOperator<IN, OUT>, Triggerable, InputTypeConfigurable, OutputTypeConfigurable<OUT> {
++		implements OneInputStreamOperator<IN, OUT>, Triggerable, InputTypeConfigurable {
+ 
+ 	private static final long serialVersionUID = 1L;
+ 
+@@ -579,15 +578,6 @@ public class WindowOperator<K, IN, OUT, W extends Window>
+ 		return this;
+ 	}
+ 
+-	@Override
+-	public final void setOutputType(TypeInformation<OUT> outTypeInfo, ExecutionConfig executionConfig) {
+-		if (userFunction instanceof OutputTypeConfigurable) {
+-			@SuppressWarnings("unchecked")
+-			OutputTypeConfigurable<OUT> typeConfigurable = (OutputTypeConfigurable<OUT>) userFunction;
+-			typeConfigurable.setOutputType(outTypeInfo, executionConfig);
+-		}
+-	}
+-
+ 	// ------------------------------------------------------------------------
+ 	//  Checkpointing
+ 	// ------------------------------------------------------------------------

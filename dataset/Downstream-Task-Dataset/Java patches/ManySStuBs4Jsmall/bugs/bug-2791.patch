@@ -1,0 +1,13 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthorizationFilter.java b/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthorizationFilter.java
+index 9b6ff6a..c5be872 100644
+--- a/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthorizationFilter.java
++++ b/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthorizationFilter.java
+@@ -52,7 +52,7 @@
+             new ContextAwarePermissionAnnotationHandler(context).assertAuthorized(annotation);
+         } catch (AuthorizationException e) {
+             log.info("User not authorized.", e);
+-            throw new NotAuthorizedException(e, "Basic", "Graylog2 Server");
++            throw new NotAuthorizedException(e, "Basic realm=\"Graylog2 Server\"");
+         }
+     }
+ }

@@ -1,0 +1,55 @@
+diff --git a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
+index 3aa9e76..74f8a9d 100644
+--- a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
++++ b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
+@@ -108,10 +108,12 @@
+   }
+ 
+   private void validateParameters(Scan scan) throws IOException {
+-    if (scan == null || 
+-        (Bytes.equals(scan.getStartRow(), scan.getStopRow()) && !Bytes
+-                      .equals(scan.getStartRow(), HConstants.EMPTY_START_ROW))){
+-      throw new IOException("Agg client Exception: Startrow should be smaller than Stoprow");
++    if (scan == null
++        || (Bytes.equals(scan.getStartRow(), scan.getStopRow()) && !Bytes
++            .equals(scan.getStartRow(), HConstants.EMPTY_START_ROW))
++        || Bytes.compareTo(scan.getStartRow(), scan.getStopRow()) > 0) {
++      throw new IOException(
++          "Agg client Exception: Startrow should be smaller than Stoprow");
+     }else if(scan.getFamilyMap().size() != 1) {
+       throw new IOException("There must be only one family.");
+     }
+diff --git a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/ExecResult.java b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/ExecResult.java
+index eb107ed..8cbf646 100644
+--- a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/ExecResult.java
++++ b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/ExecResult.java
+@@ -72,7 +72,7 @@
+   public void write(DataOutput out) throws IOException {
+     Bytes.writeByteArray(out, regionName);
+     HbaseObjectWritable.writeObject(out, value,
+-        value != null ? value.getClass() : valueType, null);
++        value != null ? value.getClass() : Writable.class, null);
+     Class<?> alternativeSerializationClass;
+     if(value instanceof Writable){
+       alternativeSerializationClass = Writable.class;
+diff --git a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
+index 3aa9e76..74f8a9d 100644
+--- a/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
++++ b/src/main/java/org/apache/hadoop/hbase/client/coprocessor/AggregationClient.java
+@@ -108,10 +108,12 @@
+   }
+ 
+   private void validateParameters(Scan scan) throws IOException {
+-    if (scan == null || 
+-        (Bytes.equals(scan.getStartRow(), scan.getStopRow()) && !Bytes
+-                      .equals(scan.getStartRow(), HConstants.EMPTY_START_ROW))){
+-      throw new IOException("Agg client Exception: Startrow should be smaller than Stoprow");
++    if (scan == null
++        || (Bytes.equals(scan.getStartRow(), scan.getStopRow()) && !Bytes
++            .equals(scan.getStartRow(), HConstants.EMPTY_START_ROW))
++        || Bytes.compareTo(scan.getStartRow(), scan.getStopRow()) > 0) {
++      throw new IOException(
++          "Agg client Exception: Startrow should be smaller than Stoprow");
+     }else if(scan.getFamilyMap().size() != 1) {
+       throw new IOException("There must be only one family.");
+     }

@@ -1,0 +1,78 @@
+diff --git a/core/server/src/main/java/alluxio/proxy/AlluxioProxy.java b/core/server/src/main/java/alluxio/proxy/AlluxioProxy.java
+index 53aa2fe..7547218 100644
+--- a/core/server/src/main/java/alluxio/proxy/AlluxioProxy.java
++++ b/core/server/src/main/java/alluxio/proxy/AlluxioProxy.java
+@@ -50,10 +50,11 @@
+ 
+     if (!ConfigurationUtils.masterHostConfigured()) {
+       System.out.println(String.format(
+-          "Cannot start proxy; master hostname is not configured. "
+-              + "Please either configure %s in %s, or configure the proxy to "
+-              + "look up the master address via Zookeeper",
+-          PropertyKey.MASTER_HOSTNAME.toString(), Configuration.SITE_PROPERTIES));
++          "Cannot run alluxio proxy; master hostname is not "
++              + "configured. Please modify %s to either set %s or configure zookeeper with "
++              + "%s=true and %s=[zookeeper master address] ",
++          Configuration.SITE_PROPERTIES, PropertyKey.MASTER_HOSTNAME.toString(),
++          PropertyKey.ZOOKEEPER_ENABLED.toString(), PropertyKey.ZOOKEEPER_ADDRESS.toString()));
+       System.exit(1);
+     }
+ 
+diff --git a/core/server/src/main/java/alluxio/worker/AlluxioWorker.java b/core/server/src/main/java/alluxio/worker/AlluxioWorker.java
+index 480cfcf..8191857 100644
+--- a/core/server/src/main/java/alluxio/worker/AlluxioWorker.java
++++ b/core/server/src/main/java/alluxio/worker/AlluxioWorker.java
+@@ -44,10 +44,11 @@
+ 
+     if (!ConfigurationUtils.masterHostConfigured()) {
+       System.out.println(String.format(
+-          "Cannot start worker; master hostname is not configured. "
+-              + "Please either configure %s in %s, or configure the worker to "
+-              + "look up the master address via Zookeeper",
+-          PropertyKey.MASTER_HOSTNAME.toString(), Configuration.SITE_PROPERTIES));
++          "Cannot run alluxio worker; master hostname is not "
++              + "configured. Please modify %s to either set %s or configure zookeeper with "
++              + "%s=true and %s=[zookeeper master address] ",
++          Configuration.SITE_PROPERTIES, PropertyKey.MASTER_HOSTNAME.toString(),
++          PropertyKey.ZOOKEEPER_ENABLED.toString(), PropertyKey.ZOOKEEPER_ADDRESS.toString()));
+       System.exit(1);
+     }
+ 
+diff --git a/shell/src/main/java/alluxio/cli/AlluxioShell.java b/shell/src/main/java/alluxio/cli/AlluxioShell.java
+index 29c2b97..da18179 100644
+--- a/shell/src/main/java/alluxio/cli/AlluxioShell.java
++++ b/shell/src/main/java/alluxio/cli/AlluxioShell.java
+@@ -62,9 +62,10 @@
+     if (!ConfigurationUtils.masterHostConfigured()) {
+       System.out.println(String.format(
+           "Cannot run alluxio shell; master hostname is not "
+-              + "configured. Please either configure %s in %s, or configure the "
+-              + "shell to look up the master address via Zookeeper",
+-          PropertyKey.MASTER_HOSTNAME.toString(), Configuration.SITE_PROPERTIES));
++              + "configured. Please modify %s to either set %s or configure zookeeper with "
++              + "%s=true and %s=[zookeeper master address] ",
++          Configuration.SITE_PROPERTIES, PropertyKey.MASTER_HOSTNAME.toString(),
++          PropertyKey.ZOOKEEPER_ENABLED.toString(), PropertyKey.ZOOKEEPER_ADDRESS.toString()));
+       System.exit(1);
+     }
+ 
+diff --git a/core/server/src/main/java/alluxio/proxy/AlluxioProxy.java b/core/server/src/main/java/alluxio/proxy/AlluxioProxy.java
+index 53aa2fe..7547218 100644
+--- a/core/server/src/main/java/alluxio/proxy/AlluxioProxy.java
++++ b/core/server/src/main/java/alluxio/proxy/AlluxioProxy.java
+@@ -50,10 +50,11 @@
+ 
+     if (!ConfigurationUtils.masterHostConfigured()) {
+       System.out.println(String.format(
+-          "Cannot start proxy; master hostname is not configured. "
+-              + "Please either configure %s in %s, or configure the proxy to "
+-              + "look up the master address via Zookeeper",
+-          PropertyKey.MASTER_HOSTNAME.toString(), Configuration.SITE_PROPERTIES));
++          "Cannot run alluxio proxy; master hostname is not "
++              + "configured. Please modify %s to either set %s or configure zookeeper with "
++              + "%s=true and %s=[zookeeper master address] ",
++          Configuration.SITE_PROPERTIES, PropertyKey.MASTER_HOSTNAME.toString(),
++          PropertyKey.ZOOKEEPER_ENABLED.toString(), PropertyKey.ZOOKEEPER_ADDRESS.toString()));
+       System.exit(1);
+     }
+ 

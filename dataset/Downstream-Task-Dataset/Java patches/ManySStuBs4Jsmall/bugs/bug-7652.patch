@@ -1,0 +1,36 @@
+diff --git a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
+index 8d7b0c3..7dbdba8 100644
+--- a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
++++ b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
+@@ -350,11 +350,11 @@
+       return null;
+     }
+ 
+-    private static int nextSerialNum = 0;
++    private static AtomicInteger nextSerialNum = new AtomicInteger();
+     private static ThreadLocal<Integer> threadLocalId = new ThreadLocal<Integer>() {
+       @Override
+       protected Integer initialValue() {
+-        return nextSerialNum++;
++        return nextSerialNum.getAndIncrement();
+       }
+     };
+ 
+diff --git a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
+index 8d7b0c3..7dbdba8 100644
+--- a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
++++ b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
+@@ -350,11 +350,11 @@
+       return null;
+     }
+ 
+-    private static int nextSerialNum = 0;
++    private static AtomicInteger nextSerialNum = new AtomicInteger();
+     private static ThreadLocal<Integer> threadLocalId = new ThreadLocal<Integer>() {
+       @Override
+       protected Integer initialValue() {
+-        return nextSerialNum++;
++        return nextSerialNum.getAndIncrement();
+       }
+     };
+ 

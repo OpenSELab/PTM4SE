@@ -1,0 +1,39 @@
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gwtref/gen/ReflectionCacheSourceCreator.java b/backends/gdx-backends-gwt/src/com/badlogic/gwtref/gen/ReflectionCacheSourceCreator.java
+index 75552a1..9f2cc80 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gwtref/gen/ReflectionCacheSourceCreator.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gwtref/gen/ReflectionCacheSourceCreator.java
+@@ -322,7 +322,7 @@
+ 			return "";
+ 		}
+ 
+-		if ((stub.enclosingType.startsWith("java") && !stub.enclosingType.startsWith("java.utils")) || stub.enclosingType.contains("google")) {
++		if ((stub.enclosingType.startsWith("java") && !stub.enclosingType.startsWith("java.util")) || stub.enclosingType.contains("google")) {
+ 			logger.log(Type.INFO, "not emitting code for accessing method " + stub.name + " in class '" + stub.enclosingType
+ 				+ ", either in java.* or GWT related class");
+ 			return "";
+diff --git a/tests/gdx-tests/src/com/badlogic/gdx/tests/MusicTest.java b/tests/gdx-tests/src/com/badlogic/gdx/tests/MusicTest.java
+index e6012be..62fe024 100644
+--- a/tests/gdx-tests/src/com/badlogic/gdx/tests/MusicTest.java
++++ b/tests/gdx-tests/src/com/badlogic/gdx/tests/MusicTest.java
+@@ -85,7 +85,7 @@
+ 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+ 		batch.begin();
+ 		batch.draw(buttons, 0, 0);
+-		font.draw(batch, String.format("%02d:%02d", (int)currentPosition / 60, (int)currentPosition % 60), 365, 35);
++		font.draw(batch, (int)currentPosition / 60 + ":" + (int)currentPosition % 60, 365, 35);
+ 		batch.end();
+ 
+ 		sliderUpdating = true;
+diff --git a/backends/gdx-backends-gwt/src/com/badlogic/gwtref/gen/ReflectionCacheSourceCreator.java b/backends/gdx-backends-gwt/src/com/badlogic/gwtref/gen/ReflectionCacheSourceCreator.java
+index 75552a1..9f2cc80 100644
+--- a/backends/gdx-backends-gwt/src/com/badlogic/gwtref/gen/ReflectionCacheSourceCreator.java
++++ b/backends/gdx-backends-gwt/src/com/badlogic/gwtref/gen/ReflectionCacheSourceCreator.java
+@@ -322,7 +322,7 @@
+ 			return "";
+ 		}
+ 
+-		if ((stub.enclosingType.startsWith("java") && !stub.enclosingType.startsWith("java.utils")) || stub.enclosingType.contains("google")) {
++		if ((stub.enclosingType.startsWith("java") && !stub.enclosingType.startsWith("java.util")) || stub.enclosingType.contains("google")) {
+ 			logger.log(Type.INFO, "not emitting code for accessing method " + stub.name + " in class '" + stub.enclosingType
+ 				+ ", either in java.* or GWT related class");
+ 			return "";

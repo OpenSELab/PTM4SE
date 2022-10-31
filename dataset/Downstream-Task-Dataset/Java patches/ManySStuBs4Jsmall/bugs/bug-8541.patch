@@ -1,0 +1,80 @@
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsJavaDocsTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsJavaDocsTest.java
+index 22a3245..94467a4 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsJavaDocsTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsJavaDocsTest.java
+@@ -247,7 +247,7 @@
+                     final String text = temp.trim();
+ 
+                     if (!text.isEmpty()) {
+-                        if (shouldAppendSpace(result)) {
++                        if (shouldAppendSpace(result, text.charAt(0))) {
+                             result.append(' ');
+                         }
+ 
+@@ -276,7 +276,7 @@
+         if (newLineOpenBefore) {
+             result.append(System.lineSeparator());
+         }
+-        else if (shouldAppendSpace(result)) {
++        else if (shouldAppendSpace(result, '<')) {
+             result.append(' ');
+         }
+ 
+@@ -317,7 +317,7 @@
+         }
+     }
+ 
+-    private static boolean shouldAppendSpace(StringBuffer text) {
++    private static boolean shouldAppendSpace(StringBuffer text, char firstCharToAppend) {
+         final boolean result;
+ 
+         if (text.length() == 0) {
+@@ -326,7 +326,7 @@
+         else {
+             final char last = text.charAt(text.length() - 1);
+ 
+-            result = !Character.isWhitespace(last);
++            result = firstCharToAppend != ':' && !Character.isWhitespace(last);
+         }
+ 
+         return result;
+diff --git a/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsJavaDocsTest.java b/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsJavaDocsTest.java
+index 22a3245..94467a4 100644
+--- a/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsJavaDocsTest.java
++++ b/src/test/java/com/puppycrawl/tools/checkstyle/internal/XdocsJavaDocsTest.java
+@@ -247,7 +247,7 @@
+                     final String text = temp.trim();
+ 
+                     if (!text.isEmpty()) {
+-                        if (shouldAppendSpace(result)) {
++                        if (shouldAppendSpace(result, text.charAt(0))) {
+                             result.append(' ');
+                         }
+ 
+@@ -276,7 +276,7 @@
+         if (newLineOpenBefore) {
+             result.append(System.lineSeparator());
+         }
+-        else if (shouldAppendSpace(result)) {
++        else if (shouldAppendSpace(result, '<')) {
+             result.append(' ');
+         }
+ 
+@@ -317,7 +317,7 @@
+         }
+     }
+ 
+-    private static boolean shouldAppendSpace(StringBuffer text) {
++    private static boolean shouldAppendSpace(StringBuffer text, char firstCharToAppend) {
+         final boolean result;
+ 
+         if (text.length() == 0) {
+@@ -326,7 +326,7 @@
+         else {
+             final char last = text.charAt(text.length() - 1);
+ 
+-            result = !Character.isWhitespace(last);
++            result = firstCharToAppend != ':' && !Character.isWhitespace(last);
+         }
+ 
+         return result;

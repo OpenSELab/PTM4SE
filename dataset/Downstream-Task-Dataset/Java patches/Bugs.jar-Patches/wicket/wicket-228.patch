@@ -1,0 +1,867 @@
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/io/BOMInputStream.java b/wicket-util/src/main/java/org/apache/wicket/util/io/BOMInputStream.java
+new file mode 100644
+index 0000000..b870278
+--- /dev/null
++++ b/wicket-util/src/main/java/org/apache/wicket/util/io/BOMInputStream.java
+@@ -0,0 +1,404 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ * 
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ * 
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.wicket.util.io;
++
++import java.io.IOException;
++import java.io.InputStream;
++import java.util.Arrays;
++import java.util.Comparator;
++import java.util.List;
++
++/**
++ * This class is used to wrap a stream that includes an encoded {@link ByteOrderMark} as its first bytes.
++ * 
++ * This class detects these bytes and, if required, can automatically skip them and return the subsequent byte as the
++ * first byte in the stream.
++ * 
++ * The {@link ByteOrderMark} implementation has the following pre-defined BOMs:
++ * <ul>
++ * <li>UTF-8 - {@link ByteOrderMark#UTF_8}</li>
++ * <li>UTF-16BE - {@link ByteOrderMark#UTF_16LE}</li>
++ * <li>UTF-16LE - {@link ByteOrderMark#UTF_16BE}</li>
++ * <li>UTF-32BE - {@link ByteOrderMark#UTF_32LE}</li>
++ * <li>UTF-32LE - {@link ByteOrderMark#UTF_32BE}</li>
++ * </ul>
++ * 
++ * 
++ * <h3>Example 1 - Detect and exclude a UTF-8 BOM</h3>
++ * 
++ * <pre>
++ * BOMInputStream bomIn = new BOMInputStream(in);
++ * if (bomIn.hasBOM()) {
++ *     // has a UTF-8 BOM
++ * }
++ * </pre>
++ * 
++ * <h3>Example 2 - Detect a UTF-8 BOM (but don't exclude it)</h3>
++ * 
++ * <pre>
++ * boolean include = true;
++ * BOMInputStream bomIn = new BOMInputStream(in, include);
++ * if (bomIn.hasBOM()) {
++ *     // has a UTF-8 BOM
++ * }
++ * </pre>
++ * 
++ * <h3>Example 3 - Detect Multiple BOMs</h3>
++ * 
++ * <pre>
++ * BOMInputStream bomIn = new BOMInputStream(in, 
++ *   ByteOrderMark.UTF_16LE, ByteOrderMark.UTF_16BE,
++ *   ByteOrderMark.UTF_32LE, ByteOrderMark.UTF_32BE
++ *   );
++ * if (bomIn.hasBOM() == false) {
++ *     // No BOM found
++ * } else if (bomIn.hasBOM(ByteOrderMark.UTF_16LE)) {
++ *     // has a UTF-16LE BOM
++ * } else if (bomIn.hasBOM(ByteOrderMark.UTF_16BE)) {
++ *     // has a UTF-16BE BOM
++ * } else if (bomIn.hasBOM(ByteOrderMark.UTF_32LE)) {
++ *     // has a UTF-32LE BOM
++ * } else if (bomIn.hasBOM(ByteOrderMark.UTF_32BE)) {
++ *     // has a UTF-32BE BOM
++ * }
++ * </pre>
++ * 
++ * @see ByteOrderMark
++ * @see <a href="http://en.wikipedia.org/wiki/Byte_order_mark">Wikipedia - Byte Order Mark</a>
++ * @version $Id$
++ * @since 2.0
++ */
++public class BOMInputStream extends ProxyInputStream
++{
++    private final boolean include;
++    /**
++     * BOMs are sorted from longest to shortest.
++     */
++    private final List<ByteOrderMark> boms;
++    private ByteOrderMark byteOrderMark;
++    private int[] firstBytes;
++    private int fbLength;
++    private int fbIndex;
++    private int markFbIndex;
++    private boolean markedAtStart;
++
++    /**
++     * Constructs a new BOM InputStream that excludes a {@link ByteOrderMark#UTF_8} BOM.
++     * 
++     * @param delegate
++     *            the InputStream to delegate to
++     */
++    public BOMInputStream(final InputStream delegate) {
++        this(delegate, false, ByteOrderMark.UTF_8);
++    }
++
++    /**
++     * Constructs a new BOM InputStream that detects a a {@link ByteOrderMark#UTF_8} and optionally includes it.
++     * 
++     * @param delegate
++     *            the InputStream to delegate to
++     * @param include
++     *            true to include the UTF-8 BOM or false to exclude it
++     */
++    public BOMInputStream(final InputStream delegate, final boolean include) {
++        this(delegate, include, ByteOrderMark.UTF_8);
++    }
++
++    /**
++     * Constructs a new BOM InputStream that excludes the specified BOMs.
++     * 
++     * @param delegate
++     *            the InputStream to delegate to
++     * @param boms
++     *            The BOMs to detect and exclude
++     */
++    public BOMInputStream(final InputStream delegate, final ByteOrderMark... boms) {
++        this(delegate, false, boms);
++    }
++
++    /**
++     * Compares ByteOrderMark objects in descending length order.
++     */
++    private static final Comparator<ByteOrderMark> ByteOrderMarkLengthComparator = new Comparator<ByteOrderMark>() {
++
++        public int compare(final ByteOrderMark bom1, final ByteOrderMark bom2) {
++            final int len1 = bom1.length();
++            final int len2 = bom2.length();
++            if (len1 > len2) {
++                return -1;
++            }
++            if (len2 > len1) {
++                return 1;
++            }
++            return 0;
++        }
++    };
++
++    /**
++     * Constructs a new BOM InputStream that detects the specified BOMs and optionally includes them.
++     * 
++     * @param delegate
++     *            the InputStream to delegate to
++     * @param include
++     *            true to include the specified BOMs or false to exclude them
++     * @param boms
++     *            The BOMs to detect and optionally exclude
++     */
++    public BOMInputStream(final InputStream delegate, final boolean include, final ByteOrderMark... boms) {
++        super(delegate);
++        if (boms == null || boms.length == 0) {
++            throw new IllegalArgumentException("No BOMs specified");
++        }
++        this.include = include;
++        // Sort the BOMs to match the longest BOM first because some BOMs have the same starting two bytes.
++        Arrays.sort(boms, ByteOrderMarkLengthComparator);
++        this.boms = Arrays.asList(boms);
++
++    }
++
++    /**
++     * Indicates whether the stream contains one of the specified BOMs.
++     * 
++     * @return true if the stream has one of the specified BOMs, otherwise false if it does not
++     * @throws IOException
++     *             if an error reading the first bytes of the stream occurs
++     */
++    public boolean hasBOM() throws IOException {
++        return getBOM() != null;
++    }
++
++    /**
++     * Indicates whether the stream contains the specified BOM.
++     * 
++     * @param bom
++     *            The BOM to check for
++     * @return true if the stream has the specified BOM, otherwise false if it does not
++     * @throws IllegalArgumentException
++     *             if the BOM is not one the stream is configured to detect
++     * @throws IOException
++     *             if an error reading the first bytes of the stream occurs
++     */
++    public boolean hasBOM(final ByteOrderMark bom) throws IOException {
++        if (!boms.contains(bom)) {
++            throw new IllegalArgumentException("Stream not configure to detect " + bom);
++        }
++        return byteOrderMark != null && getBOM().equals(bom);
++    }
++
++    /**
++     * Return the BOM (Byte Order Mark).
++     * 
++     * @return The BOM or null if none
++     * @throws IOException
++     *             if an error reading the first bytes of the stream occurs
++     */
++    public ByteOrderMark getBOM() throws IOException {
++        if (firstBytes == null) {
++            fbLength = 0;
++            // BOMs are sorted from longest to shortest
++            final int maxBomSize = boms.get(0).length();
++            firstBytes = new int[maxBomSize];
++            // Read first maxBomSize bytes
++            for (int i = 0; i < firstBytes.length; i++) {
++                firstBytes[i] = in.read();
++                fbLength++;
++                if (firstBytes[i] < 0) {
++                    break;
++                }
++            }
++            // match BOM in firstBytes
++            byteOrderMark = find();
++            if (byteOrderMark != null) {
++                if (!include) {
++                    if (byteOrderMark.length() < firstBytes.length) {
++                        fbIndex = byteOrderMark.length();
++                    } else {
++                        fbLength = 0;
++                    }
++                }
++            }
++        }
++        return byteOrderMark;
++    }
++
++    /**
++     * Return the BOM charset Name - {@link ByteOrderMark#getCharsetName()}.
++     * 
++     * @return The BOM charset Name or null if no BOM found
++     * @throws IOException
++     *             if an error reading the first bytes of the stream occurs
++     * 
++     */
++    public String getBOMCharsetName() throws IOException {
++        getBOM();
++        return byteOrderMark == null ? null : byteOrderMark.getCharsetName();
++    }
++
++    /**
++     * This method reads and either preserves or skips the first bytes in the stream. It behaves like the single-byte
++     * <code>read()</code> method, either returning a valid byte or -1 to indicate that the initial bytes have been
++     * processed already.
++     * 
++     * @return the byte read (excluding BOM) or -1 if the end of stream
++     * @throws IOException
++     *             if an I/O error occurs
++     */
++    private int readFirstBytes() throws IOException {
++        getBOM();
++        return fbIndex < fbLength ? firstBytes[fbIndex++] : -1;
++    }
++
++    /**
++     * Find a BOM with the specified bytes.
++     * 
++     * @return The matched BOM or null if none matched
++     */
++    private ByteOrderMark find() {
++        for (final ByteOrderMark bom : boms) {
++            if (matches(bom)) {
++                return bom;
++            }
++        }
++        return null;
++    }
++
++    /**
++     * Check if the bytes match a BOM.
++     * 
++     * @param bom
++     *            The BOM
++     * @return true if the bytes match the bom, otherwise false
++     */
++    private boolean matches(final ByteOrderMark bom) {
++        // if (bom.length() != fbLength) {
++        // return false;
++        // }
++        // firstBytes may be bigger than the BOM bytes
++        for (int i = 0; i < bom.length(); i++) {
++            if (bom.get(i) != firstBytes[i]) {
++                return false;
++            }
++        }
++        return true;
++    }
++
++    // ----------------------------------------------------------------------------
++    // Implementation of InputStream
++    // ----------------------------------------------------------------------------
++
++    /**
++     * Invokes the delegate's <code>read()</code> method, detecting and optionally skipping BOM.
++     * 
++     * @return the byte read (excluding BOM) or -1 if the end of stream
++     * @throws IOException
++     *             if an I/O error occurs
++     */
++    @Override
++    public int read() throws IOException {
++        final int b = readFirstBytes();
++        return b >= 0 ? b : in.read();
++    }
++
++    /**
++     * Invokes the delegate's <code>read(byte[], int, int)</code> method, detecting and optionally skipping BOM.
++     * 
++     * @param buf
++     *            the buffer to read the bytes into
++     * @param off
++     *            The start offset
++     * @param len
++     *            The number of bytes to read (excluding BOM)
++     * @return the number of bytes read or -1 if the end of stream
++     * @throws IOException
++     *             if an I/O error occurs
++     */
++    @Override
++    public int read(final byte[] buf, int off, int len) throws IOException {
++        int firstCount = 0;
++        int b = 0;
++        while (len > 0 && b >= 0) {
++            b = readFirstBytes();
++            if (b >= 0) {
++                buf[off++] = (byte) (b & 0xFF);
++                len--;
++                firstCount++;
++            }
++        }
++        final int secondCount = in.read(buf, off, len);
++        return secondCount < 0 ? firstCount > 0 ? firstCount : -1 : firstCount + secondCount;
++    }
++
++    /**
++     * Invokes the delegate's <code>read(byte[])</code> method, detecting and optionally skipping BOM.
++     * 
++     * @param buf
++     *            the buffer to read the bytes into
++     * @return the number of bytes read (excluding BOM) or -1 if the end of stream
++     * @throws IOException
++     *             if an I/O error occurs
++     */
++    @Override
++    public int read(final byte[] buf) throws IOException {
++        return read(buf, 0, buf.length);
++    }
++
++    /**
++     * Invokes the delegate's <code>mark(int)</code> method.
++     * 
++     * @param readlimit
++     *            read ahead limit
++     */
++    @Override
++    public synchronized void mark(final int readlimit) {
++        markFbIndex = fbIndex;
++        markedAtStart = firstBytes == null;
++        in.mark(readlimit);
++    }
++
++    /**
++     * Invokes the delegate's <code>reset()</code> method.
++     * 
++     * @throws IOException
++     *             if an I/O error occurs
++     */
++    @Override
++    public synchronized void reset() throws IOException {
++        fbIndex = markFbIndex;
++        if (markedAtStart) {
++            firstBytes = null;
++        }
++
++        in.reset();
++    }
++
++    /**
++     * Invokes the delegate's <code>skip(long)</code> method, detecting and optionallyskipping BOM.
++     * 
++     * @param n
++     *            the number of bytes to skip
++     * @return the number of bytes to skipped or -1 if the end of stream
++     * @throws IOException
++     *             if an I/O error occurs
++     */
++    @Override
++    public long skip(long n) throws IOException {
++        while (n > 0 && readFirstBytes() >= 0) {
++            n--;
++        }
++        return in.skip(n);
++    }
++}
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/io/ByteOrderMark.java b/wicket-util/src/main/java/org/apache/wicket/util/io/ByteOrderMark.java
+new file mode 100644
+index 0000000..e1ee046
+--- /dev/null
++++ b/wicket-util/src/main/java/org/apache/wicket/util/io/ByteOrderMark.java
+@@ -0,0 +1,191 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.wicket.util.io;
++
++import java.io.Serializable;
++
++/**
++ * Byte Order Mark (BOM) representation - see {@link BOMInputStream}.
++ *
++ * @see BOMInputStream
++ * @see <a href="http://en.wikipedia.org/wiki/Byte_order_mark">Wikipedia: Byte Order Mark</a>
++ * @see <a href="http://www.w3.org/TR/2006/REC-xml-20060816/#sec-guessing">W3C: Autodetection of Character Encodings
++ *      (Non-Normative)</a>
++ * @version $Id$
++ * @since 2.0
++ */
++public class ByteOrderMark implements Serializable {
++
++    private static final long serialVersionUID = 1L;
++
++    /** UTF-8 BOM */
++    public static final ByteOrderMark UTF_8    = new ByteOrderMark("UTF-8",    0xEF, 0xBB, 0xBF);
++
++    /** UTF-16BE BOM (Big-Endian) */
++    public static final ByteOrderMark UTF_16BE = new ByteOrderMark("UTF-16BE", 0xFE, 0xFF);
++
++    /** UTF-16LE BOM (Little-Endian) */
++    public static final ByteOrderMark UTF_16LE = new ByteOrderMark("UTF-16LE", 0xFF, 0xFE);
++
++    /**
++     * UTF-32BE BOM (Big-Endian)
++     * @since 2.2
++     */
++    public static final ByteOrderMark UTF_32BE = new ByteOrderMark("UTF-32BE", 0x00, 0x00, 0xFE, 0xFF);
++
++    /**
++     * UTF-32LE BOM (Little-Endian)
++     * @since 2.2
++     */
++    public static final ByteOrderMark UTF_32LE = new ByteOrderMark("UTF-32LE", 0xFF, 0xFE, 0x00, 0x00);
++
++    /**
++     * Unicode BOM character; external form depends on the encoding.
++     * @see <a href="http://unicode.org/faq/utf_bom.html#BOM">Byte Order Mark (BOM) FAQ</a>
++     * @since 2.5
++     */
++    public static final char UTF_BOM = '\uFEFF';
++
++    private final String charsetName;
++    private final int[] bytes;
++
++    /**
++     * Construct a new BOM.
++     *
++     * @param charsetName The name of the charset the BOM represents
++     * @param bytes The BOM's bytes
++     * @throws IllegalArgumentException if the charsetName is null or
++     * zero length
++     * @throws IllegalArgumentException if the bytes are null or zero
++     * length
++     */
++    public ByteOrderMark(final String charsetName, final int... bytes) {
++        if (charsetName == null || charsetName.length() == 0) {
++            throw new IllegalArgumentException("No charsetName specified");
++        }
++        if (bytes == null || bytes.length == 0) {
++            throw new IllegalArgumentException("No bytes specified");
++        }
++        this.charsetName = charsetName;
++        this.bytes = new int[bytes.length];
++        System.arraycopy(bytes, 0, this.bytes, 0, bytes.length);
++    }
++
++    /**
++     * Return the name of the {@link java.nio.charset.Charset} the BOM represents.
++     *
++     * @return the character set name
++     */
++    public String getCharsetName() {
++        return charsetName;
++    }
++
++    /**
++     * Return the length of the BOM's bytes.
++     *
++     * @return the length of the BOM's bytes
++     */
++    public int length() {
++        return bytes.length;
++    }
++
++    /**
++     * The byte at the specified position.
++     *
++     * @param pos The position
++     * @return The specified byte
++     */
++    public int get(final int pos) {
++        return bytes[pos];
++    }
++
++    /**
++     * Return a copy of the BOM's bytes.
++     *
++     * @return a copy of the BOM's bytes
++     */
++    public byte[] getBytes() {
++        final byte[] copy = new byte[bytes.length];
++        for (int i = 0; i < bytes.length; i++) {
++            copy[i] = (byte)bytes[i];
++        }
++        return copy;
++    }
++
++    /**
++     * Indicates if this BOM's bytes equals another.
++     *
++     * @param obj The object to compare to
++     * @return true if the bom's bytes are equal, otherwise
++     * false
++     */
++    @Override
++    public boolean equals(final Object obj) {
++        if (!(obj instanceof ByteOrderMark)) {
++            return false;
++        }
++        final ByteOrderMark bom = (ByteOrderMark)obj;
++        if (bytes.length != bom.length()) {
++            return false;
++        }
++        for (int i = 0; i < bytes.length; i++) {
++            if (bytes[i] != bom.get(i)) {
++                return false;
++            }
++        }
++        return true;
++    }
++
++    /**
++     * Return the hashcode for this BOM.
++     *
++     * @return the hashcode for this BOM.
++     * @see java.lang.Object#hashCode()
++     */
++    @Override
++    public int hashCode() {
++        int hashCode = getClass().hashCode();
++        for (final int b : bytes) {
++            hashCode += b;
++        }
++        return hashCode;
++    }
++
++    /**
++     * Provide a String representation of the BOM.
++     *
++     * @return the length of the BOM's bytes
++     */
++    @Override
++    public String toString() {
++        final StringBuilder builder = new StringBuilder();
++        builder.append(getClass().getSimpleName());
++        builder.append('[');
++        builder.append(charsetName);
++        builder.append(": ");
++        for (int i = 0; i < bytes.length; i++) {
++            if (i > 0) {
++                builder.append(",");
++            }
++            builder.append("0x");
++            builder.append(Integer.toHexString(0xFF & bytes[i]).toUpperCase());
++        }
++        builder.append(']');
++        return builder.toString();
++    }
++
++}
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/io/ProxyInputStream.java b/wicket-util/src/main/java/org/apache/wicket/util/io/ProxyInputStream.java
+new file mode 100644
+index 0000000..e3d424c
+--- /dev/null
++++ b/wicket-util/src/main/java/org/apache/wicket/util/io/ProxyInputStream.java
+@@ -0,0 +1,236 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package org.apache.wicket.util.io;
++
++import java.io.FilterInputStream;
++import java.io.IOException;
++import java.io.InputStream;
++
++/**
++ * A Proxy stream which acts as expected, that is it passes the method
++ * calls on to the proxied stream and doesn't change which methods are
++ * being called.
++ * <p>
++ * It is an alternative base class to FilterInputStream
++ * to increase reusability, because FilterInputStream changes the
++ * methods being called, such as read(byte[]) to read(byte[], int, int).
++ * <p>
++ * See the protected methods for ways in which a subclass can easily decorate
++ * a stream with custom pre-, post- or error processing functionality.
++ *
++ * @version $Id$
++ */
++public abstract class ProxyInputStream extends FilterInputStream {
++
++    /**
++     * Constructs a new ProxyInputStream.
++     *
++     * @param proxy  the InputStream to delegate to
++     */
++    public ProxyInputStream(final InputStream proxy) {
++        super(proxy);
++        // the proxy is stored in a protected superclass variable named 'in'
++    }
++
++    /**
++     * Invokes the delegate's <code>read()</code> method.
++     * @return the byte read or -1 if the end of stream
++     * @throws IOException if an I/O error occurs
++     */
++    @Override
++    public int read() throws IOException {
++        try {
++            beforeRead(1);
++            final int b = in.read();
++            afterRead(b != -1 ? 1 : -1);
++            return b;
++        } catch (final IOException e) {
++            handleIOException(e);
++            return -1;
++        }
++    }
++
++    /**
++     * Invokes the delegate's <code>read(byte[])</code> method.
++     * @param bts the buffer to read the bytes into
++     * @return the number of bytes read or -1 if the end of stream
++     * @throws IOException if an I/O error occurs
++     */
++    @Override
++    public int read(final byte[] bts) throws IOException {
++        try {
++            beforeRead(bts != null ? bts.length : 0);
++            final int n = in.read(bts);
++            afterRead(n);
++            return n;
++        } catch (final IOException e) {
++            handleIOException(e);
++            return -1;
++        }
++    }
++
++    /**
++     * Invokes the delegate's <code>read(byte[], int, int)</code> method.
++     * @param bts the buffer to read the bytes into
++     * @param off The start offset
++     * @param len The number of bytes to read
++     * @return the number of bytes read or -1 if the end of stream
++     * @throws IOException if an I/O error occurs
++     */
++    @Override
++    public int read(final byte[] bts, final int off, final int len) throws IOException {
++        try {
++            beforeRead(len);
++            final int n = in.read(bts, off, len);
++            afterRead(n);
++            return n;
++        } catch (final IOException e) {
++            handleIOException(e);
++            return -1;
++        }
++    }
++
++    /**
++     * Invokes the delegate's <code>skip(long)</code> method.
++     * @param ln the number of bytes to skip
++     * @return the actual number of bytes skipped
++     * @throws IOException if an I/O error occurs
++     */
++    @Override
++    public long skip(final long ln) throws IOException {
++        try {
++            return in.skip(ln);
++        } catch (final IOException e) {
++            handleIOException(e);
++            return 0;
++        }
++    }
++
++    /**
++     * Invokes the delegate's <code>available()</code> method.
++     * @return the number of available bytes
++     * @throws IOException if an I/O error occurs
++     */
++    @Override
++    public int available() throws IOException {
++        try {
++            return super.available();
++        } catch (final IOException e) {
++            handleIOException(e);
++            return 0;
++        }
++    }
++
++    /**
++     * Invokes the delegate's <code>close()</code> method.
++     * @throws IOException if an I/O error occurs
++     */
++    @Override
++    public void close() throws IOException {
++        try {
++            in.close();
++        } catch (final IOException e) {
++            handleIOException(e);
++        }
++    }
++
++    /**
++     * Invokes the delegate's <code>mark(int)</code> method.
++     * @param readlimit read ahead limit
++     */
++    @Override
++    public synchronized void mark(final int readlimit) {
++        in.mark(readlimit);
++    }
++
++    /**
++     * Invokes the delegate's <code>reset()</code> method.
++     * @throws IOException if an I/O error occurs
++     */
++    @Override
++    public synchronized void reset() throws IOException {
++        try {
++            in.reset();
++        } catch (final IOException e) {
++            handleIOException(e);
++        }
++    }
++
++    /**
++     * Invokes the delegate's <code>markSupported()</code> method.
++     * @return true if mark is supported, otherwise false
++     */
++    @Override
++    public boolean markSupported() {
++        return in.markSupported();
++    }
++
++    /**
++     * Invoked by the read methods before the call is proxied. The number
++     * of bytes that the caller wanted to read (1 for the {@link #read()}
++     * method, buffer length for {@link #read(byte[])}, etc.) is given as
++     * an argument.
++     * <p>
++     * Subclasses can override this method to add common pre-processing
++     * functionality without having to override all the read methods.
++     * The default implementation does nothing.
++     * <p>
++     * Note this method is <em>not</em> called from {@link #skip(long)} or
++     * {@link #reset()}. You need to explicitly override those methods if
++     * you want to add pre-processing steps also to them.
++     *
++     * @since 2.0
++     * @param n number of bytes that the caller asked to be read
++     * @throws IOException if the pre-processing fails
++     */
++    protected void beforeRead(final int n) throws IOException {
++    }
++
++    /**
++     * Invoked by the read methods after the proxied call has returned
++     * successfully. The number of bytes returned to the caller (or -1 if
++     * the end of stream was reached) is given as an argument.
++     * <p>
++     * Subclasses can override this method to add common post-processing
++     * functionality without having to override all the read methods.
++     * The default implementation does nothing.
++     * <p>
++     * Note this method is <em>not</em> called from {@link #skip(long)} or
++     * {@link #reset()}. You need to explicitly override those methods if
++     * you want to add post-processing steps also to them.
++     *
++     * @since 2.0
++     * @param n number of bytes read, or -1 if the end of stream was reached
++     * @throws IOException if the post-processing fails
++     */
++    protected void afterRead(final int n) throws IOException {
++    }
++
++    /**
++     * Handle any IOExceptions thrown.
++     * <p>
++     * This method provides a point to implement custom exception
++     * handling. The default behaviour is to re-throw the exception.
++     * @param e The IOException thrown
++     * @throws IOException if an I/O error occurs
++     * @since 2.0
++     */
++    protected void handleIOException(final IOException e) throws IOException {
++        throw e;
++    }
++
++}
+diff --git a/wicket-util/src/main/java/org/apache/wicket/util/io/XmlReader.java b/wicket-util/src/main/java/org/apache/wicket/util/io/XmlReader.java
+index ce4c041..1f3a408 100644
+--- a/wicket-util/src/main/java/org/apache/wicket/util/io/XmlReader.java
++++ b/wicket-util/src/main/java/org/apache/wicket/util/io/XmlReader.java
+@@ -70,11 +70,11 @@ public final class XmlReader extends Reader
+ 
+ 		if (!inputStream.markSupported())
+ 		{
+-			this.inputStream = new BufferedInputStream(inputStream);
++			this.inputStream = new BufferedInputStream(new BOMInputStream(inputStream));
+ 		}
+ 		else
+ 		{
+-			this.inputStream = inputStream;
++			this.inputStream = new BOMInputStream(inputStream);
+ 		}
+ 		encoding = defaultEncoding;
+ 

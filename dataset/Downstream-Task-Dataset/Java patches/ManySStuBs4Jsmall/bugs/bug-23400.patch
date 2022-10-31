@@ -1,0 +1,39 @@
+diff --git a/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/JdrRunner.java b/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/JdrRunner.java
+index 2e9bd8d..83dd62b 100644
+--- a/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/JdrRunner.java
++++ b/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/JdrRunner.java
+@@ -92,7 +92,7 @@
+             Properties plugins = new Properties();
+             plugins.load(is);
+             for (String pluginName : plugins.stringPropertyNames()) {
+-                Class pluginClass = Class.forName(pluginName);
++                Class<?> pluginClass = Class.forName(pluginName);
+                 JdrPlugin plugin = (JdrPlugin) pluginClass.newInstance();
+                 commands.addAll(plugin.getCommands());
+                 versionWriter.println(plugin.getPluginId());
+diff --git a/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/commands/SystemProperties.java b/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/commands/SystemProperties.java
+index b978a4e..7b7879a 100644
+--- a/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/commands/SystemProperties.java
++++ b/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/commands/SystemProperties.java
+@@ -45,7 +45,7 @@
+         PrintWriter printWriter = new PrintWriter(stringWriter);
+ 
+         Properties properties = System.getProperties();
+-        Enumeration names = properties.propertyNames();
++        Enumeration<?> names = properties.propertyNames();
+         while(names.hasMoreElements()) {
+             String name = (String) names.nextElement();
+             if(name.matches(".*password.*")) {
+diff --git a/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/JdrRunner.java b/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/JdrRunner.java
+index 2e9bd8d..83dd62b 100644
+--- a/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/JdrRunner.java
++++ b/jdr/jboss-as-jdr/src/main/java/org/jboss/as/jdr/JdrRunner.java
+@@ -92,7 +92,7 @@
+             Properties plugins = new Properties();
+             plugins.load(is);
+             for (String pluginName : plugins.stringPropertyNames()) {
+-                Class pluginClass = Class.forName(pluginName);
++                Class<?> pluginClass = Class.forName(pluginName);
+                 JdrPlugin plugin = (JdrPlugin) pluginClass.newInstance();
+                 commands.addAll(plugin.getCommands());
+                 versionWriter.println(plugin.getPluginId());

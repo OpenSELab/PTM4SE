@@ -1,0 +1,26 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/TransactionMonitorImpl.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/TransactionMonitorImpl.java
+index f4f1529..b755ed1 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/TransactionMonitorImpl.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/TransactionMonitorImpl.java
+@@ -68,7 +68,7 @@
+     @Override
+     public long getNumberOfCommittedTransactions()
+     {
+-        return startedTransactionCount.get() - activeTransactionCount.get();
++        return startedTransactionCount.get() - activeTransactionCount.get() - rolledBackTransactionCount.get();
+     }
+ 
+     @Override
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/TransactionMonitorImpl.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/TransactionMonitorImpl.java
+index f4f1529..b755ed1 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/TransactionMonitorImpl.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/transaction/xaframework/TransactionMonitorImpl.java
+@@ -68,7 +68,7 @@
+     @Override
+     public long getNumberOfCommittedTransactions()
+     {
+-        return startedTransactionCount.get() - activeTransactionCount.get();
++        return startedTransactionCount.get() - activeTransactionCount.get() - rolledBackTransactionCount.get();
+     }
+ 
+     @Override

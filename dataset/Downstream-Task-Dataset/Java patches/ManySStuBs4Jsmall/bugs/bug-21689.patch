@@ -1,0 +1,26 @@
+diff --git a/compiler/src/main/java/dagger/internal/codegen/ModuleAdapterProcessor.java b/compiler/src/main/java/dagger/internal/codegen/ModuleAdapterProcessor.java
+index e2d74f2..32c5a8b 100644
+--- a/compiler/src/main/java/dagger/internal/codegen/ModuleAdapterProcessor.java
++++ b/compiler/src/main/java/dagger/internal/codegen/ModuleAdapterProcessor.java
+@@ -213,7 +213,7 @@
+       TypeElement moduleType = (TypeElement) module;
+ 
+       // Verify that all modules do not extend from non-Object types.
+-      if (!moduleType.getSuperclass().equals(objectType)) {
++      if (!types.isSameType(moduleType.getSuperclass(), objectType)) {
+         error("Modules must not extend from other classes: " + elementToString(module), module);
+       }
+ 
+diff --git a/compiler/src/main/java/dagger/internal/codegen/ModuleAdapterProcessor.java b/compiler/src/main/java/dagger/internal/codegen/ModuleAdapterProcessor.java
+index e2d74f2..32c5a8b 100644
+--- a/compiler/src/main/java/dagger/internal/codegen/ModuleAdapterProcessor.java
++++ b/compiler/src/main/java/dagger/internal/codegen/ModuleAdapterProcessor.java
+@@ -213,7 +213,7 @@
+       TypeElement moduleType = (TypeElement) module;
+ 
+       // Verify that all modules do not extend from non-Object types.
+-      if (!moduleType.getSuperclass().equals(objectType)) {
++      if (!types.isSameType(moduleType.getSuperclass(), objectType)) {
+         error("Modules must not extend from other classes: " + elementToString(module), module);
+       }
+ 

@@ -1,0 +1,39 @@
+diff --git a/itest/src/edu/stanford/nlp/pipeline/ChineseAnnotationPipelineITest.java b/itest/src/edu/stanford/nlp/pipeline/ChineseAnnotationPipelineITest.java
+index 4e6acb4..aff0c89 100644
+--- a/itest/src/edu/stanford/nlp/pipeline/ChineseAnnotationPipelineITest.java
++++ b/itest/src/edu/stanford/nlp/pipeline/ChineseAnnotationPipelineITest.java
+@@ -34,7 +34,7 @@
+                                    "北","京","吗","？"};
+     boolean[] expectedSegs = {true, true, false, true, false,
+                               true, false, true, true};
+-    String[] expectedNer = {"O", "O", "O", "GPE", "O", "O"};
++    String[] expectedNer = {"O", "O", "O", "STATE_OR_PROVINCE", "O", "O"};
+ 
+     assertEquals(expectedCharacters.length, expectedSegs.length);
+     assertEquals(expectedWords.length, expectedNer.length);
+diff --git a/src/edu/stanford/nlp/coref/data/DocumentMaker.java b/src/edu/stanford/nlp/coref/data/DocumentMaker.java
+index 8aa924e..b248378 100644
+--- a/src/edu/stanford/nlp/coref/data/DocumentMaker.java
++++ b/src/edu/stanford/nlp/coref/data/DocumentMaker.java
+@@ -114,7 +114,7 @@
+     } else {
+       pipelineProps.setProperty("annotators", "pos, lemma, ner, " +
+               (CorefProperties.useConstituencyParse(props) ? "parse" : "depparse") +
+-              (CorefProperties.useGoldMentions(props) ? "" : ", mention"));
++              (CorefProperties.useGoldMentions(props) ? "" : ", coref.mention"));
+     }
+     return (coreNLP = new StanfordCoreNLP(pipelineProps, false));
+   }
+diff --git a/itest/src/edu/stanford/nlp/pipeline/ChineseAnnotationPipelineITest.java b/itest/src/edu/stanford/nlp/pipeline/ChineseAnnotationPipelineITest.java
+index 4e6acb4..aff0c89 100644
+--- a/itest/src/edu/stanford/nlp/pipeline/ChineseAnnotationPipelineITest.java
++++ b/itest/src/edu/stanford/nlp/pipeline/ChineseAnnotationPipelineITest.java
+@@ -34,7 +34,7 @@
+                                    "北","京","吗","？"};
+     boolean[] expectedSegs = {true, true, false, true, false,
+                               true, false, true, true};
+-    String[] expectedNer = {"O", "O", "O", "GPE", "O", "O"};
++    String[] expectedNer = {"O", "O", "O", "STATE_OR_PROVINCE", "O", "O"};
+ 
+     assertEquals(expectedCharacters.length, expectedSegs.length);
+     assertEquals(expectedWords.length, expectedNer.length);

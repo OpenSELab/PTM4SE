@@ -1,0 +1,88 @@
+diff --git a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+index 3d88a24..7fb1f0b 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
++++ b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+@@ -345,7 +345,7 @@
+    * @return the id if succeed, -1 otherwise
+    * @throws IOException when number of columns is invalid or the underlying master RPC fails
+    */
+-  public synchronized int createRawTable(TachyonURI path, int columns) throws IOException {
++  public synchronized long createRawTable(TachyonURI path, int columns) throws IOException {
+     return createRawTable(path, columns, ByteBuffer.allocate(0));
+   }
+ 
+@@ -358,7 +358,7 @@
+    * @return the id if succeed, -1 otherwise
+    * @throws IOException when number of columns is invalid or the underlying master RPC fails
+    */
+-  public synchronized int createRawTable(TachyonURI path, int columns, ByteBuffer metadata)
++  public synchronized long createRawTable(TachyonURI path, int columns, ByteBuffer metadata)
+       throws IOException {
+     validateUri(path);
+     int maxColumns = mTachyonConf.getInt(Constants.MAX_COLUMNS);
+@@ -1005,7 +1005,7 @@
+    * @param metadata the new meta data
+    * @throws IOException when the underlying master RPC fails
+    */
+-  public synchronized void updateRawTableMetadata(int id, ByteBuffer metadata) throws IOException {
++  public synchronized void updateRawTableMetadata(long id, ByteBuffer metadata) throws IOException {
+     throw new UnsupportedOperationException("Raw table is currently unsupported");
+     //mMasterClient.user_updateRawTableMetadata(id, metadata);
+   }
+diff --git a/clients/unshaded/src/main/java/tachyon/client/table/RawTable.java b/clients/unshaded/src/main/java/tachyon/client/table/RawTable.java
+index d2774b9..39c846d2 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/table/RawTable.java
++++ b/clients/unshaded/src/main/java/tachyon/client/table/RawTable.java
+@@ -53,7 +53,7 @@
+   /**
+    * @return the id of the raw table
+    */
+-  public int getId() {
++  public long getId() {
+     return mRawTableInfo.getId();
+   }
+ 
+diff --git a/examples/src/main/java/tachyon/examples/BasicRawTableOperations.java b/examples/src/main/java/tachyon/examples/BasicRawTableOperations.java
+index 381b7ec..8116263 100644
+--- a/examples/src/main/java/tachyon/examples/BasicRawTableOperations.java
++++ b/examples/src/main/java/tachyon/examples/BasicRawTableOperations.java
+@@ -46,7 +46,7 @@
+   private final WriteType mWriteType;
+   private final int mDataLength = 20;
+   private final int mMetadataLength = 5;
+-  private int mId;
++  private long mId;
+ 
+   public BasicRawTableOperations(TachyonURI masterAddress, TachyonURI tablePath,
+       WriteType writeType) {
+diff --git a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+index 3d88a24..7fb1f0b 100644
+--- a/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
++++ b/clients/unshaded/src/main/java/tachyon/client/TachyonFS.java
+@@ -345,7 +345,7 @@
+    * @return the id if succeed, -1 otherwise
+    * @throws IOException when number of columns is invalid or the underlying master RPC fails
+    */
+-  public synchronized int createRawTable(TachyonURI path, int columns) throws IOException {
++  public synchronized long createRawTable(TachyonURI path, int columns) throws IOException {
+     return createRawTable(path, columns, ByteBuffer.allocate(0));
+   }
+ 
+@@ -358,7 +358,7 @@
+    * @return the id if succeed, -1 otherwise
+    * @throws IOException when number of columns is invalid or the underlying master RPC fails
+    */
+-  public synchronized int createRawTable(TachyonURI path, int columns, ByteBuffer metadata)
++  public synchronized long createRawTable(TachyonURI path, int columns, ByteBuffer metadata)
+       throws IOException {
+     validateUri(path);
+     int maxColumns = mTachyonConf.getInt(Constants.MAX_COLUMNS);
+@@ -1005,7 +1005,7 @@
+    * @param metadata the new meta data
+    * @throws IOException when the underlying master RPC fails
+    */
+-  public synchronized void updateRawTableMetadata(int id, ByteBuffer metadata) throws IOException {
++  public synchronized void updateRawTableMetadata(long id, ByteBuffer metadata) throws IOException {
+     throw new UnsupportedOperationException("Raw table is currently unsupported");
+     //mMasterClient.user_updateRawTableMetadata(id, metadata);
+   }

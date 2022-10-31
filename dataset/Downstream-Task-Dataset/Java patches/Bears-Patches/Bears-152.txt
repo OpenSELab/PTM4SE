@@ -1,0 +1,67 @@
+--- a/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/ProtocolConfig.java
++++ b/dubbo-config/dubbo-config-api/src/main/java/com/alibaba/dubbo/config/ProtocolConfig.java
+@@ -155,14 +154,8 @@ public class ProtocolConfig extends AbstractConfig {
+         if (!destroyed.compareAndSet(false, true)) {
+             return;
+         }
+-        AbstractRegistryFactory.destroyAll();
+ 
+-        // Wait for registry notification
+-        try {
+-            Thread.sleep(ConfigUtils.getServerShutdownTimeout());
+-        } catch (InterruptedException e) {
+-            logger.warn("Interrupted unexpectedly when waiting for registry notification during shutdown process!");
+-        }
++        AbstractRegistryFactory.destroyAll();
+ 
+         ExtensionLoader<Protocol> loader = ExtensionLoader.getExtensionLoader(Protocol.class);
+         for (String protocolName : loader.getLoadedExtensions()) {
+diff --git a/dubbo-config/dubbo-config-spring/src/main/java/com/alibaba/dubbo/config/spring/AnnotationBean.java b/dubbo-config/dubbo-config-spring/src/main/java/com/alibaba/dubbo/config/spring/AnnotationBean.java
+index e14fc4b..bbb75d9 100644
+--- a/dubbo-config/dubbo-config-spring/src/main/java/com/alibaba/dubbo/config/spring/AnnotationBean.java
++++ b/dubbo-config/dubbo-config-spring/src/main/java/com/alibaba/dubbo/config/spring/AnnotationBean.java
+@@ -111,13 +111,18 @@ public class AnnotationBean extends AbstractConfig implements DisposableBean, Be
+ 
+     @Override
+     public void destroy() throws Exception {
+-        for (ServiceConfig<?> serviceConfig : serviceConfigs) {
+-            try {
+-                serviceConfig.unexport();
+-            } catch (Throwable e) {
+-                logger.error(e.getMessage(), e);
+-            }
+-        }
++
++        //  This will only be called for singleton scope bean, and expected to be called by spring shutdown hook when BeanFactory/ApplicationContext destroys.
++        //  We will guarantee dubbo related resources being released with dubbo shutdown hook.
++
++        //  for (ServiceConfig<?> serviceConfig : serviceConfigs) {
++        //      try {
++        //          serviceConfig.unexport();
++        //      } catch (Throwable e) {
++        //          logger.error(e.getMessage(), e);
++        //      }
++        //  }
++
+         for (ReferenceConfig<?> referenceConfig : referenceConfigs.values()) {
+             try {
+                 referenceConfig.destroy();
+diff --git a/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java b/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
+index 2a09c5d..2ab32f0 100644
+--- a/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
++++ b/dubbo-remoting/dubbo-remoting-api/src/main/java/com/alibaba/dubbo/remoting/exchange/support/header/HeaderExchangeServer.java
+@@ -85,7 +83,13 @@ public class HeaderExchangeServer implements ExchangeServer {
+     private boolean isRunning() {
+         Collection<Channel> channels = getChannels();
+         for (Channel channel : channels) {
+-            if (DefaultFuture.hasFuture(channel)) {
++
++            /**
++             *  If there are any client connections,
++             *  our server should be running.
++             */
++
++            if (channel.isConnected()) {
+                 return true;
+             }
+         }

@@ -1,0 +1,44 @@
+diff --git a/server/src/main/java/io/druid/segment/realtime/plumber/FlushingPlumber.java b/server/src/main/java/io/druid/segment/realtime/plumber/FlushingPlumber.java
+index 9f6e4c4..a69d4be 100644
+--- a/server/src/main/java/io/druid/segment/realtime/plumber/FlushingPlumber.java
++++ b/server/src/main/java/io/druid/segment/realtime/plumber/FlushingPlumber.java
+@@ -156,7 +156,7 @@
+                 for (Map.Entry<Long, Sink> entry : getSinks().entrySet()) {
+                   final Long intervalStart = entry.getKey();
+                   if (intervalStart < minTimestamp) {
+-                    log.info("Adding entry[%s] for merge and push.", entry);
++                    log.info("Adding entry[%s] to flush.", entry);
+                     sinksToPush.add(entry);
+                   }
+                 }
+@@ -166,7 +166,7 @@
+                 }
+ 
+                 if (stopped) {
+-                  log.info("Stopping merge-n-push overseer thread");
++                  log.info("Stopping flusher thread");
+                   return ScheduledExecutors.Signal.STOP;
+                 } else {
+                   return ScheduledExecutors.Signal.REPEAT;
+diff --git a/server/src/main/java/io/druid/segment/realtime/plumber/FlushingPlumber.java b/server/src/main/java/io/druid/segment/realtime/plumber/FlushingPlumber.java
+index 9f6e4c4..a69d4be 100644
+--- a/server/src/main/java/io/druid/segment/realtime/plumber/FlushingPlumber.java
++++ b/server/src/main/java/io/druid/segment/realtime/plumber/FlushingPlumber.java
+@@ -156,7 +156,7 @@
+                 for (Map.Entry<Long, Sink> entry : getSinks().entrySet()) {
+                   final Long intervalStart = entry.getKey();
+                   if (intervalStart < minTimestamp) {
+-                    log.info("Adding entry[%s] for merge and push.", entry);
++                    log.info("Adding entry[%s] to flush.", entry);
+                     sinksToPush.add(entry);
+                   }
+                 }
+@@ -166,7 +166,7 @@
+                 }
+ 
+                 if (stopped) {
+-                  log.info("Stopping merge-n-push overseer thread");
++                  log.info("Stopping flusher thread");
+                   return ScheduledExecutors.Signal.STOP;
+                 } else {
+                   return ScheduledExecutors.Signal.REPEAT;

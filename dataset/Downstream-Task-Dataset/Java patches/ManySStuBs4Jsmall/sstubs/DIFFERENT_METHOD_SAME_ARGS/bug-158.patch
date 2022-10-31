@@ -1,0 +1,52 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/version/Jetty8WebSocket.java b/modules/cpr/src/main/java/org/atmosphere/container/version/Jetty8WebSocket.java
+index fce20a0..8182996 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/version/Jetty8WebSocket.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/version/Jetty8WebSocket.java
+@@ -51,7 +51,7 @@
+             logger.debug("The WebSocket handshake succeeded but the dispatched URI failed {}:{}. " +
+                     "The WebSocket connection is still open and client can continue sending messages.", message, errorCode);
+         } else {
+-            logger.debug("{} {}", errorCode, message);
++            logger.warn("{} {}", errorCode, message);
+         }
+     }
+ 
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+index 8c7b6bd..16e20f3 100755
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AsynchronousProcessor.java
+@@ -490,7 +490,7 @@
+                     invokeAtmosphereHandler(r);
+ 
+                     try {
+-                        r.getResponse().sendError(500, "Remotly closed.");
++                        r.getResponse().sendError(503);
+                         r.getResponse().getOutputStream().close();
+                     } catch (Throwable t) {
+                         try {
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+index 7791f65..e4e1033 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereRequest.java
+@@ -351,7 +351,7 @@
+      */
+     @Override
+     public String getParameter(String s) {
+-        String name = b.request  == null ? null : b.request.getParameter(s);
++        String name = b.request.getParameter(s);
+         if (name == null) {
+             if (b.queryStrings.get(s) != null) {
+                 return b.queryStrings.get(s)[0];
+diff --git a/modules/cpr/src/main/java/org/atmosphere/container/version/Jetty8WebSocket.java b/modules/cpr/src/main/java/org/atmosphere/container/version/Jetty8WebSocket.java
+index fce20a0..8182996 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/container/version/Jetty8WebSocket.java
++++ b/modules/cpr/src/main/java/org/atmosphere/container/version/Jetty8WebSocket.java
+@@ -51,7 +51,7 @@
+             logger.debug("The WebSocket handshake succeeded but the dispatched URI failed {}:{}. " +
+                     "The WebSocket connection is still open and client can continue sending messages.", message, errorCode);
+         } else {
+-            logger.debug("{} {}", errorCode, message);
++            logger.warn("{} {}", errorCode, message);
+         }
+     }
+ 

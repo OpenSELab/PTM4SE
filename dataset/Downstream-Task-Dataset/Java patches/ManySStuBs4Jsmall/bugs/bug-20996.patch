@@ -1,0 +1,17 @@
+diff --git a/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/Neo4jContainer.java b/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/Neo4jContainer.java
+index 6bbb2c9..7d65914 100644
+--- a/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/Neo4jContainer.java
++++ b/spring-boot-project/spring-boot-tools/spring-boot-test-support/src/main/java/org/springframework/boot/testsupport/testcontainers/Neo4jContainer.java
+@@ -42,10 +42,10 @@
+ 	private static class WaitStrategy extends HostPortWaitStrategy {
+ 
+ 		@Override
+-		protected void waitUntilReady() {
++		public void waitUntilReady(GenericContainer container) {
+ 			super.waitUntilReady();
+ 			Configuration configuration = new Configuration.Builder()
+-					.uri("bolt://localhost:" + this.container.getMappedPort(7687))
++					.uri("bolt://localhost:" + container.getMappedPort(7687))
+ 					.build();
+ 			SessionFactory sessionFactory = new SessionFactory(configuration,
+ 					"org.springframework.boot.test.autoconfigure.data.neo4j");

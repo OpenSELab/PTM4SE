@@ -1,0 +1,26 @@
+diff --git a/modules/activiti-osgi/src/main/java/org/activiti/osgi/Extender.java b/modules/activiti-osgi/src/main/java/org/activiti/osgi/Extender.java
+index 8b7eb93..f65fda2 100644
+--- a/modules/activiti-osgi/src/main/java/org/activiti/osgi/Extender.java
++++ b/modules/activiti-osgi/src/main/java/org/activiti/osgi/Extender.java
+@@ -295,7 +295,7 @@
+   //remove bundle protocol specific part, so that resource can be accessed by path relative to bundle root
+   private static String getPath(URL url) {
+       String path = url.toExternalForm();
+-      return path.replaceAll("bundle://[^/]*/","");
++      return path.replaceAll(url.getProtocol() + "://[^/]*/", "");
+   }
+ 
+   // script engine part
+diff --git a/modules/activiti-osgi/src/main/java/org/activiti/osgi/Extender.java b/modules/activiti-osgi/src/main/java/org/activiti/osgi/Extender.java
+index 8b7eb93..f65fda2 100644
+--- a/modules/activiti-osgi/src/main/java/org/activiti/osgi/Extender.java
++++ b/modules/activiti-osgi/src/main/java/org/activiti/osgi/Extender.java
+@@ -295,7 +295,7 @@
+   //remove bundle protocol specific part, so that resource can be accessed by path relative to bundle root
+   private static String getPath(URL url) {
+       String path = url.toExternalForm();
+-      return path.replaceAll("bundle://[^/]*/","");
++      return path.replaceAll(url.getProtocol() + "://[^/]*/", "");
+   }
+ 
+   // script engine part

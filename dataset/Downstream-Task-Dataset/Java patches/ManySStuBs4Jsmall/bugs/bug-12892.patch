@@ -1,0 +1,65 @@
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriterFactory.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriterFactory.java
+index f56c693..ae3d410 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriterFactory.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriterFactory.java
+@@ -274,10 +274,10 @@
+         else {
+             // Write to: an existing partition in an existing partitioned table,
+             if (bucketNumber.isPresent()) {
+-                throw new PrestoException(HIVE_PARTITION_READ_ONLY, "Can not insert into existing partitions of bucketed Hive table");
++                throw new PrestoException(HIVE_PARTITION_READ_ONLY, "Cannot insert into existing partition of bucketed Hive table: " + partitionName.get());
+             }
+             if (immutablePartitions) {
+-                throw new PrestoException(HIVE_PARTITION_READ_ONLY, "Hive partitions are immutable");
++                throw new PrestoException(HIVE_PARTITION_READ_ONLY, "Hive partitions are immutable: " + partitionName.get());
+             }
+             isNew = false;
+ 
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
+index d401a39..ba2edc5 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
+@@ -605,7 +605,7 @@
+             fail("expected failure");
+         }
+         catch (Exception e) {
+-            assertEquals(e.getMessage(), "Can not insert into existing partitions of bucketed Hive table");
++            assertEquals(e.getMessage(), "Cannot insert into existing partition of bucketed Hive table: partition_key=c");
+         }
+ 
+         assertUpdate(session, "DROP TABLE " + tableName);
+@@ -715,7 +715,7 @@
+             fail("expected failure");
+         }
+         catch (Exception e) {
+-            assertEquals(e.getMessage(), "Can not insert into existing partitions of bucketed Hive table");
++            assertEquals(e.getMessage(), "Cannot insert into existing partition of bucketed Hive table: orderstatus=O");
+         }
+     }
+ 
+@@ -813,7 +813,7 @@
+             fail("expected failure");
+         }
+         catch (Exception e) {
+-            assertEquals(e.getMessage(), "Can not insert into existing partitions of bucketed Hive table");
++            assertEquals(e.getMessage(), "Cannot insert into existing partition of bucketed Hive table: partition_key=c");
+         }
+ 
+         assertUpdate(session, "DROP TABLE test_insert_partitioned_bucketed_table_few_rows");
+diff --git a/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriterFactory.java b/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriterFactory.java
+index f56c693..ae3d410 100644
+--- a/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriterFactory.java
++++ b/presto-hive/src/main/java/com/facebook/presto/hive/HiveWriterFactory.java
+@@ -274,10 +274,10 @@
+         else {
+             // Write to: an existing partition in an existing partitioned table,
+             if (bucketNumber.isPresent()) {
+-                throw new PrestoException(HIVE_PARTITION_READ_ONLY, "Can not insert into existing partitions of bucketed Hive table");
++                throw new PrestoException(HIVE_PARTITION_READ_ONLY, "Cannot insert into existing partition of bucketed Hive table: " + partitionName.get());
+             }
+             if (immutablePartitions) {
+-                throw new PrestoException(HIVE_PARTITION_READ_ONLY, "Hive partitions are immutable");
++                throw new PrestoException(HIVE_PARTITION_READ_ONLY, "Hive partitions are immutable: " + partitionName.get());
+             }
+             isNew = false;
+ 

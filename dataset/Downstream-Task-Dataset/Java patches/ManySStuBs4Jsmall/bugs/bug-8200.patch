@@ -1,0 +1,26 @@
+diff --git a/src/jvm/storm/kafka/ZkCoordinator.java b/src/jvm/storm/kafka/ZkCoordinator.java
+index b06975d..f287d80 100644
+--- a/src/jvm/storm/kafka/ZkCoordinator.java
++++ b/src/jvm/storm/kafka/ZkCoordinator.java
+@@ -129,7 +129,7 @@
+     }
+     
+     private boolean myOwnership(GlobalPartitionId id) {
+-        int val = id.host.hashCode() + 23 * id.partition;        
++        int val = Math.abs(id.host.hashCode() + 23 * id.partition);        
+         return val % _totalTasks == _taskIndex;
+     }
+     
+diff --git a/src/jvm/storm/kafka/ZkCoordinator.java b/src/jvm/storm/kafka/ZkCoordinator.java
+index b06975d..f287d80 100644
+--- a/src/jvm/storm/kafka/ZkCoordinator.java
++++ b/src/jvm/storm/kafka/ZkCoordinator.java
+@@ -129,7 +129,7 @@
+     }
+     
+     private boolean myOwnership(GlobalPartitionId id) {
+-        int val = id.host.hashCode() + 23 * id.partition;        
++        int val = Math.abs(id.host.hashCode() + 23 * id.partition);        
+         return val % _totalTasks == _taskIndex;
+     }
+     

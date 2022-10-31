@@ -1,0 +1,26 @@
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/jms/PooledConnectionFactoryService.java b/messaging/src/main/java/org/jboss/as/messaging/jms/PooledConnectionFactoryService.java
+index cbc6623..680f0f1 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/jms/PooledConnectionFactoryService.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/jms/PooledConnectionFactoryService.java
+@@ -231,7 +231,7 @@
+                     PooledConnectionFactoryService.class.getClassLoader(), name);
+ 
+             serviceTarget
+-                    .addService(ConnectorServices.RESOURCE_ADAPTER_ACTIVATOR_SERVICE, activator)
++                    .addService(ConnectorServices.RESOURCE_ADAPTER_ACTIVATOR_SERVICE.append(name), activator)
+                     .addDependency(ConnectorServices.IRONJACAMAR_MDR, MetadataRepository.class,
+                             activator.getMdrInjector())
+                     .addDependency(ConnectorServices.RA_REPOSISTORY_SERVICE, ResourceAdapterRepository.class,
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/jms/PooledConnectionFactoryService.java b/messaging/src/main/java/org/jboss/as/messaging/jms/PooledConnectionFactoryService.java
+index cbc6623..680f0f1 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/jms/PooledConnectionFactoryService.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/jms/PooledConnectionFactoryService.java
+@@ -231,7 +231,7 @@
+                     PooledConnectionFactoryService.class.getClassLoader(), name);
+ 
+             serviceTarget
+-                    .addService(ConnectorServices.RESOURCE_ADAPTER_ACTIVATOR_SERVICE, activator)
++                    .addService(ConnectorServices.RESOURCE_ADAPTER_ACTIVATOR_SERVICE.append(name), activator)
+                     .addDependency(ConnectorServices.IRONJACAMAR_MDR, MetadataRepository.class,
+                             activator.getMdrInjector())
+                     .addDependency(ConnectorServices.RA_REPOSISTORY_SERVICE, ResourceAdapterRepository.class,

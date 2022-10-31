@@ -1,0 +1,30 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
+index 2da8215..7ce422a 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
+@@ -1704,9 +1704,7 @@
+         {
+             PhysicalOperation source = node.getSource().accept(this, context);
+ 
+-            List<Type> types = node.getOutputSymbols().stream()
+-                    .map(symbol -> requireNonNull(context.getTypes().get(symbol), format("No type for symbol %s", symbol)))
+-                    .collect(toImmutableList());
++            List<Type> types = getSourceOperatorTypes(node, context.getTypes());
+ 
+             OperatorFactory operatorFactory = new EnforceSingleRowOperator.EnforceSingleRowOperatorFactory(context.getNextOperatorId(), node.getId(), types);
+             return new PhysicalOperation(operatorFactory, makeLayout(node), source);
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java b/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
+index 2da8215..7ce422a 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/planner/LocalExecutionPlanner.java
+@@ -1704,9 +1704,7 @@
+         {
+             PhysicalOperation source = node.getSource().accept(this, context);
+ 
+-            List<Type> types = node.getOutputSymbols().stream()
+-                    .map(symbol -> requireNonNull(context.getTypes().get(symbol), format("No type for symbol %s", symbol)))
+-                    .collect(toImmutableList());
++            List<Type> types = getSourceOperatorTypes(node, context.getTypes());
+ 
+             OperatorFactory operatorFactory = new EnforceSingleRowOperator.EnforceSingleRowOperatorFactory(context.getNextOperatorId(), node.getId(), types);
+             return new PhysicalOperation(operatorFactory, makeLayout(node), source);

@@ -1,0 +1,22 @@
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/graph/OutDegreeRangeBuilder.java b/FiltersPlugin/src/org/gephi/filters/plugin/graph/OutDegreeRangeBuilder.java
+index 4edc7d0..067a77c 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/graph/OutDegreeRangeBuilder.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/graph/OutDegreeRangeBuilder.java
+@@ -107,7 +107,7 @@
+ 
+         private Range range;
+         //States
+-        private List<Integer> values;
++        private List<Integer> values = new ArrayList<Integer>();
+ 
+         public String getName() {
+             return NbBundle.getMessage(OutDegreeRangeBuilder.class, "OutDegreeRangeBuilder.name");
+@@ -173,7 +173,7 @@
+         }
+ 
+         public void setRange(Range range) {
+-            if (range.getMinimum() == null && range.getMaximum() == null) {
++            if (range.getMinimum() == null && range.getMaximum() == null && this.range != null) {
+                 //Opening project
+                 this.range = new Range(range.getLowerBound(), range.getUpperBound(), this.range.getMinimum(), this.range.getMaximum());
+             } else {

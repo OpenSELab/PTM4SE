@@ -1,0 +1,26 @@
+diff --git a/nephele/nephele-ec2cloudmanager/src/main/java/eu/stratosphere/nephele/instance/ec2/JobToInstancesMapping.java b/nephele/nephele-ec2cloudmanager/src/main/java/eu/stratosphere/nephele/instance/ec2/JobToInstancesMapping.java
+index 3ecddd8..d6a01fe 100644
+--- a/nephele/nephele-ec2cloudmanager/src/main/java/eu/stratosphere/nephele/instance/ec2/JobToInstancesMapping.java
++++ b/nephele/nephele-ec2cloudmanager/src/main/java/eu/stratosphere/nephele/instance/ec2/JobToInstancesMapping.java
+@@ -75,7 +75,7 @@
+ 	public boolean unassignInstanceFromJob(final AbstractInstance instance) {
+ 
+ 		synchronized (this.assignedInstances) {
+-			return (this.assignedInstances.remove(instance) != null);
++			return (this.assignedInstances.remove(instance.getInstanceConnectionInfo()) != null);
+ 		}
+ 	}
+ 
+diff --git a/nephele/nephele-ec2cloudmanager/src/main/java/eu/stratosphere/nephele/instance/ec2/JobToInstancesMapping.java b/nephele/nephele-ec2cloudmanager/src/main/java/eu/stratosphere/nephele/instance/ec2/JobToInstancesMapping.java
+index 3ecddd8..d6a01fe 100644
+--- a/nephele/nephele-ec2cloudmanager/src/main/java/eu/stratosphere/nephele/instance/ec2/JobToInstancesMapping.java
++++ b/nephele/nephele-ec2cloudmanager/src/main/java/eu/stratosphere/nephele/instance/ec2/JobToInstancesMapping.java
+@@ -75,7 +75,7 @@
+ 	public boolean unassignInstanceFromJob(final AbstractInstance instance) {
+ 
+ 		synchronized (this.assignedInstances) {
+-			return (this.assignedInstances.remove(instance) != null);
++			return (this.assignedInstances.remove(instance.getInstanceConnectionInfo()) != null);
+ 		}
+ 	}
+ 

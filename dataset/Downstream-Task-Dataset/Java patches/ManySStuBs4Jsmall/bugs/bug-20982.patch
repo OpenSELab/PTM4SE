@@ -1,0 +1,17 @@
+diff --git a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/CollectionBinder.java b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/CollectionBinder.java
+index ad735cf..cfd887d 100644
+--- a/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/CollectionBinder.java
++++ b/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/context/properties/bind/CollectionBinder.java
+@@ -55,10 +55,9 @@
+ 	}
+ 
+ 	@Override
+-	@SuppressWarnings("unchecked")
+-	protected Collection<Object> merge(Supplier<?> existing,
++	protected Collection<Object> merge(Supplier<Collection<Object>> existing,
+ 			Collection<Object> additional) {
+-		Collection<Object> existingCollection = (Collection<Object>) existing.get();
++		Collection<Object> existingCollection = existing.get();
+ 		if (existingCollection == null) {
+ 			return additional;
+ 		}

@@ -1,0 +1,26 @@
+diff --git a/guava-testlib/src/com/google/common/collect/testing/SafeTreeSet.java b/guava-testlib/src/com/google/common/collect/testing/SafeTreeSet.java
+index 90bcb3c..89d04c0 100644
+--- a/guava-testlib/src/com/google/common/collect/testing/SafeTreeSet.java
++++ b/guava-testlib/src/com/google/common/collect/testing/SafeTreeSet.java
+@@ -184,7 +184,7 @@
+   }
+ 
+   @Override public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
+-    return delegate.tailSet(checkValid(fromElement), inclusive);
++    return new SafeTreeSet<E>(delegate.tailSet(checkValid(fromElement), inclusive));
+   }
+ 
+   @Override public Object[] toArray() {
+diff --git a/guava-testlib/src/com/google/common/collect/testing/SafeTreeSet.java b/guava-testlib/src/com/google/common/collect/testing/SafeTreeSet.java
+index 90bcb3c..89d04c0 100644
+--- a/guava-testlib/src/com/google/common/collect/testing/SafeTreeSet.java
++++ b/guava-testlib/src/com/google/common/collect/testing/SafeTreeSet.java
+@@ -184,7 +184,7 @@
+   }
+ 
+   @Override public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
+-    return delegate.tailSet(checkValid(fromElement), inclusive);
++    return new SafeTreeSet<E>(delegate.tailSet(checkValid(fromElement), inclusive));
+   }
+ 
+   @Override public Object[] toArray() {

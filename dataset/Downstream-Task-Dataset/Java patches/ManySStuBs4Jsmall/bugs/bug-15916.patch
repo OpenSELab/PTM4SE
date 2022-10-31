@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/queue/QueueContainer.java b/hazelcast/src/main/java/com/hazelcast/queue/QueueContainer.java
+index cb9599f..4af2c77 100644
+--- a/hazelcast/src/main/java/com/hazelcast/queue/QueueContainer.java
++++ b/hazelcast/src/main/java/com/hazelcast/queue/QueueContainer.java
+@@ -130,7 +130,7 @@
+     public void txnPollBackupReserve(long itemId, String transactionId) {
+         QueueItem item = getBackupMap().remove(itemId);
+         if (item == null) {
+-            logger.warning("txnCommitPoll operation-> No txn item for itemId: " + itemId);
++            logger.warning("Backup reserve failed, itemId: " + itemId);
+             return;
+         }
+         txMap.put(itemId, new TxQueueItem(item).setPollOperation(true).setTransactionId(transactionId));
+diff --git a/hazelcast/src/main/java/com/hazelcast/queue/QueueContainer.java b/hazelcast/src/main/java/com/hazelcast/queue/QueueContainer.java
+index cb9599f..4af2c77 100644
+--- a/hazelcast/src/main/java/com/hazelcast/queue/QueueContainer.java
++++ b/hazelcast/src/main/java/com/hazelcast/queue/QueueContainer.java
+@@ -130,7 +130,7 @@
+     public void txnPollBackupReserve(long itemId, String transactionId) {
+         QueueItem item = getBackupMap().remove(itemId);
+         if (item == null) {
+-            logger.warning("txnCommitPoll operation-> No txn item for itemId: " + itemId);
++            logger.warning("Backup reserve failed, itemId: " + itemId);
+             return;
+         }
+         txMap.put(itemId, new TxQueueItem(item).setPollOperation(true).setTransactionId(transactionId));

@@ -1,0 +1,51 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/util/IterableTransformer.java b/presto-main/src/main/java/com/facebook/presto/util/IterableTransformer.java
+index 53aaedf..f72e391 100644
+--- a/presto-main/src/main/java/com/facebook/presto/util/IterableTransformer.java
++++ b/presto-main/src/main/java/com/facebook/presto/util/IterableTransformer.java
+@@ -75,12 +75,12 @@
+         return Iterables.any(iterable, predicate);
+     }
+ 
+-    public <K> MapTransformer<K, E> uniqueIndex(Function<E, K> keyFunction)
++    public <K> MapTransformer<K, E> uniqueIndex(Function<? super E, K> keyFunction)
+     {
+         return new MapTransformer<>(Maps.uniqueIndex(iterable, keyFunction));
+     }
+ 
+-    public <V> MapTransformer<E, V> toMap(Function<E, V> valueFunction)
++    public <V> MapTransformer<E, V> toMap(Function<? super E, V> valueFunction)
+     {
+         return new MapTransformer<>(IterableUtils.toMap(iterable, valueFunction));
+     }
+diff --git a/presto-main/src/main/java/com/facebook/presto/util/IterableUtils.java b/presto-main/src/main/java/com/facebook/presto/util/IterableUtils.java
+index 6ee9064..1ecce46 100644
+--- a/presto-main/src/main/java/com/facebook/presto/util/IterableUtils.java
++++ b/presto-main/src/main/java/com/facebook/presto/util/IterableUtils.java
+@@ -33,7 +33,7 @@
+     }
+ 
+     // TODO: replace with Maps.toMap when Guava 14 comes out (http://code.google.com/p/guava-libraries/issues/detail?id=56)
+-    public static <K, V> Map<K, V> toMap(Iterable<K> keys, Function<K, V> valueFunction)
++    public static <K, V> Map<K, V> toMap(Iterable<K> keys, Function<? super K, V> valueFunction)
+     {
+         ImmutableMap.Builder<K, V> builder = ImmutableMap.builder();
+         for (K key : ImmutableSet.copyOf(keys)) {
+diff --git a/presto-main/src/main/java/com/facebook/presto/util/IterableTransformer.java b/presto-main/src/main/java/com/facebook/presto/util/IterableTransformer.java
+index 53aaedf..f72e391 100644
+--- a/presto-main/src/main/java/com/facebook/presto/util/IterableTransformer.java
++++ b/presto-main/src/main/java/com/facebook/presto/util/IterableTransformer.java
+@@ -75,12 +75,12 @@
+         return Iterables.any(iterable, predicate);
+     }
+ 
+-    public <K> MapTransformer<K, E> uniqueIndex(Function<E, K> keyFunction)
++    public <K> MapTransformer<K, E> uniqueIndex(Function<? super E, K> keyFunction)
+     {
+         return new MapTransformer<>(Maps.uniqueIndex(iterable, keyFunction));
+     }
+ 
+-    public <V> MapTransformer<E, V> toMap(Function<E, V> valueFunction)
++    public <V> MapTransformer<E, V> toMap(Function<? super E, V> valueFunction)
+     {
+         return new MapTransformer<>(IterableUtils.toMap(iterable, valueFunction));
+     }

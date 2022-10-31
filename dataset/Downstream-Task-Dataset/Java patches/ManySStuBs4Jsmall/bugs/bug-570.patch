@@ -1,0 +1,28 @@
+diff --git a/core/common/src/main/java/alluxio/util/io/BufferUtils.java b/core/common/src/main/java/alluxio/util/io/BufferUtils.java
+index fa9af5c..15fb70b 100644
+--- a/core/common/src/main/java/alluxio/util/io/BufferUtils.java
++++ b/core/common/src/main/java/alluxio/util/io/BufferUtils.java
+@@ -81,7 +81,8 @@
+       }
+       sCleanerCleanMethod.invoke(cleaner);
+     } catch (Exception e) {
+-      LOG.warn("Failed to unmap direct ByteBuffer: {}", buffer.getClass().getName(), e);
++      LOG.warn("Failed to unmap direct ByteBuffer: {}, error message: {}",
++                buffer.getClass().getName(), e.getMessage());
+     } finally {
+       // Force to drop reference to the buffer to clean
+       buffer = null;
+diff --git a/core/common/src/main/java/alluxio/util/io/BufferUtils.java b/core/common/src/main/java/alluxio/util/io/BufferUtils.java
+index fa9af5c..15fb70b 100644
+--- a/core/common/src/main/java/alluxio/util/io/BufferUtils.java
++++ b/core/common/src/main/java/alluxio/util/io/BufferUtils.java
+@@ -81,7 +81,8 @@
+       }
+       sCleanerCleanMethod.invoke(cleaner);
+     } catch (Exception e) {
+-      LOG.warn("Failed to unmap direct ByteBuffer: {}", buffer.getClass().getName(), e);
++      LOG.warn("Failed to unmap direct ByteBuffer: {}, error message: {}",
++                buffer.getClass().getName(), e.getMessage());
+     } finally {
+       // Force to drop reference to the buffer to clean
+       buffer = null;

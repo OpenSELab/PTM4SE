@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-core/src/test/java/org/deeplearning4j/datasets/iterator/DataSetIteratorTest.java b/deeplearning4j-core/src/test/java/org/deeplearning4j/datasets/iterator/DataSetIteratorTest.java
+index e70521e..9b07f16 100644
+--- a/deeplearning4j-core/src/test/java/org/deeplearning4j/datasets/iterator/DataSetIteratorTest.java
++++ b/deeplearning4j-core/src/test/java/org/deeplearning4j/datasets/iterator/DataSetIteratorTest.java
+@@ -133,7 +133,7 @@
+                         .layer(1, new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX, new int[] {2, 2})
+                                         .stride(1, 1).build())
+                         .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+-                                        .nOut(4).weightInit(WeightInit.XAVIER).activation(Activation.SOFTMAX)
++                                        .nOut(outputNum).weightInit(WeightInit.XAVIER).activation(Activation.SOFTMAX)
+                                         .build())
+                         .setInputType(InputType.convolutionalFlat(numRows, numColumns, numChannels)).backprop(true)
+                         .pretrain(false);
+diff --git a/deeplearning4j-core/src/test/java/org/deeplearning4j/datasets/iterator/DataSetIteratorTest.java b/deeplearning4j-core/src/test/java/org/deeplearning4j/datasets/iterator/DataSetIteratorTest.java
+index e70521e..9b07f16 100644
+--- a/deeplearning4j-core/src/test/java/org/deeplearning4j/datasets/iterator/DataSetIteratorTest.java
++++ b/deeplearning4j-core/src/test/java/org/deeplearning4j/datasets/iterator/DataSetIteratorTest.java
+@@ -133,7 +133,7 @@
+                         .layer(1, new SubsamplingLayer.Builder(SubsamplingLayer.PoolingType.MAX, new int[] {2, 2})
+                                         .stride(1, 1).build())
+                         .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+-                                        .nOut(4).weightInit(WeightInit.XAVIER).activation(Activation.SOFTMAX)
++                                        .nOut(outputNum).weightInit(WeightInit.XAVIER).activation(Activation.SOFTMAX)
+                                         .build())
+                         .setInputType(InputType.convolutionalFlat(numRows, numColumns, numChannels)).backprop(true)
+                         .pretrain(false);

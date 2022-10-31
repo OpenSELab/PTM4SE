@@ -1,0 +1,48 @@
+diff --git a/api/src/main/java/org/openmrs/api/impl/ConceptServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/ConceptServiceImpl.java
+index 6820418..834e47d 100644
+--- a/api/src/main/java/org/openmrs/api/impl/ConceptServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/ConceptServiceImpl.java
+@@ -1941,7 +1941,8 @@
+ 		new ConceptMapTypeValidator().validate(conceptMapType, errors);
+ 		if (errors.hasErrors()) {
+ 			//see trunk https://tickets.openmrs.org/browse/TRUNK-2393
+-			throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation"));
++			throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation") + ": "
++			        + errors.toString());
+ 		}
+ 		conceptMapType.setName(conceptMapType.getName().trim());
+ 		if (conceptMapType.getDescription() != null)
+@@ -2052,7 +2053,8 @@
+ 		new ConceptReferenceTermValidator().validate(conceptReferenceTerm, errors);
+ 		if (errors.hasErrors()) {
+ 			//see trunk https://tickets.openmrs.org/browse/TRUNK-2393
+-			throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation"));
++			throw new APIException(Context.getMessageSourceService().getMessage(
++			    "error.failed.validation" + ": " + errors.toString()));
+ 		}
+ 		
+ 		return dao.saveConceptReferenceTerm(conceptReferenceTerm);
+diff --git a/api/src/main/java/org/openmrs/api/impl/ConceptServiceImpl.java b/api/src/main/java/org/openmrs/api/impl/ConceptServiceImpl.java
+index 6820418..834e47d 100644
+--- a/api/src/main/java/org/openmrs/api/impl/ConceptServiceImpl.java
++++ b/api/src/main/java/org/openmrs/api/impl/ConceptServiceImpl.java
+@@ -1941,7 +1941,8 @@
+ 		new ConceptMapTypeValidator().validate(conceptMapType, errors);
+ 		if (errors.hasErrors()) {
+ 			//see trunk https://tickets.openmrs.org/browse/TRUNK-2393
+-			throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation"));
++			throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation") + ": "
++			        + errors.toString());
+ 		}
+ 		conceptMapType.setName(conceptMapType.getName().trim());
+ 		if (conceptMapType.getDescription() != null)
+@@ -2052,7 +2053,8 @@
+ 		new ConceptReferenceTermValidator().validate(conceptReferenceTerm, errors);
+ 		if (errors.hasErrors()) {
+ 			//see trunk https://tickets.openmrs.org/browse/TRUNK-2393
+-			throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation"));
++			throw new APIException(Context.getMessageSourceService().getMessage(
++			    "error.failed.validation" + ": " + errors.toString()));
+ 		}
+ 		
+ 		return dao.saveConceptReferenceTerm(conceptReferenceTerm);

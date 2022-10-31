@@ -1,0 +1,44 @@
+diff --git a/core-common/src/main/java/org/glassfish/jersey/uri/internal/UriTemplateParser.java b/core-common/src/main/java/org/glassfish/jersey/uri/internal/UriTemplateParser.java
+index 52987e4..3829913 100644
+--- a/core-common/src/main/java/org/glassfish/jersey/uri/internal/UriTemplateParser.java
++++ b/core-common/src/main/java/org/glassfish/jersey/uri/internal/UriTemplateParser.java
+@@ -60,12 +60,12 @@
+     private static final Set<Character> RESERVED_REGEX_CHARACTERS = initReserved();
+ 
+     private static Set<Character> initReserved() {
+-        // TODO need to escape all regex characters present
+         char[] reserved = {
+-            '.',
+-            '?',
+-            '(',
+-            ')'};
++            '.', '^', '&', '!',
++            '?', '-', ':', '<',
++            '(', '[', '$', '=',
++            ')', ']', ',', '>',
++            '*', '+', '|'};
+ 
+         Set<Character> s = new HashSet<Character>(reserved.length);
+         for (char c : reserved) {
+diff --git a/core-common/src/main/java/org/glassfish/jersey/uri/internal/UriTemplateParser.java b/core-common/src/main/java/org/glassfish/jersey/uri/internal/UriTemplateParser.java
+index 52987e4..3829913 100644
+--- a/core-common/src/main/java/org/glassfish/jersey/uri/internal/UriTemplateParser.java
++++ b/core-common/src/main/java/org/glassfish/jersey/uri/internal/UriTemplateParser.java
+@@ -60,12 +60,12 @@
+     private static final Set<Character> RESERVED_REGEX_CHARACTERS = initReserved();
+ 
+     private static Set<Character> initReserved() {
+-        // TODO need to escape all regex characters present
+         char[] reserved = {
+-            '.',
+-            '?',
+-            '(',
+-            ')'};
++            '.', '^', '&', '!',
++            '?', '-', ':', '<',
++            '(', '[', '$', '=',
++            ')', ']', ',', '>',
++            '*', '+', '|'};
+ 
+         Set<Character> s = new HashSet<Character>(reserved.length);
+         for (char c : reserved) {

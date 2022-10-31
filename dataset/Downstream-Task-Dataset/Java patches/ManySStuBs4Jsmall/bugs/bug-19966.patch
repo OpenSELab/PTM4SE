@@ -1,0 +1,104 @@
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/FrameRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/FrameRenderer.java
+index b31a97e..d9ce2ae 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/FrameRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/FrameRenderer.java
+@@ -57,7 +57,7 @@
+ 	public EList<Widget> renderWidget(Widget w, StringBuilder sb) throws RenderException {
+ 		String snippet = getSnippet("frame");
+ 
+-		snippet = snippet.replaceAll("%label%", itemUIRegistry.getLabel(w));
++		snippet = snippet.replaceAll("%label%", getLabel(w));
+ 		
+ 		sb.append(snippet);
+ 		return ((Frame)w).getChildren();
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/GroupRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/GroupRenderer.java
+index 9f1684c..f67d837 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/GroupRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/GroupRenderer.java
+@@ -60,7 +60,7 @@
+ 
+ 		snippet = snippet.replaceAll("%id%", itemUIRegistry.getWidgetId(w));
+ 		snippet = snippet.replaceAll("%icon%", itemUIRegistry.getIcon(w));
+-		snippet = snippet.replaceAll("%label%", itemUIRegistry.getLabel(w));
++		snippet = snippet.replaceAll("%label%", getLabel(w));
+ 
+ 		sb.append(snippet);
+ 		return null;
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/ListRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/ListRenderer.java
+index d68e840..12ea8d4 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/ListRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/ListRenderer.java
+@@ -56,7 +56,7 @@
+ 	 */
+ 	public EList<Widget> renderWidget(Widget w, StringBuilder sb) throws RenderException {
+ 		String snippet = getSnippet("list");
+-		snippet = snippet.replaceAll("%label%", itemUIRegistry.getLabel(w));
++		snippet = snippet.replaceAll("%label%", getLabel(w));
+ 		
+ 		String rowSnippet = getSnippet("list_row");
+ 		String state = itemUIRegistry.getState(w).toString();
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SelectionRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SelectionRenderer.java
+index 9c2115b..77d186f 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SelectionRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SelectionRenderer.java
+@@ -59,7 +59,7 @@
+ 		String snippet = getSnippet("selection");
+ 
+ 		snippet = snippet.replaceAll("%icon%", itemUIRegistry.getIcon(w));
+-		snippet = snippet.replace("%label_header%", itemUIRegistry.getLabel(w));
++		snippet = snippet.replace("%label_header%", getLabel(w));
+ 		
+ 		String state = itemUIRegistry.getState(w).toString();
+ 		Selection selection = (Selection) w;
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SliderRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SliderRenderer.java
+index 42094a1..db6daf5 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SliderRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SliderRenderer.java
+@@ -73,7 +73,7 @@
+ 		snippet = snippet.replaceAll("%id%", itemUIRegistry.getWidgetId(s));
+ 		snippet = snippet.replaceAll("%icon%", itemUIRegistry.getIcon(s));
+ 		snippet = snippet.replaceAll("%item%", w.getItem());
+-		snippet = snippet.replaceAll("%label%", itemUIRegistry.getLabel(s));
++		snippet = snippet.replaceAll("%label%", getLabel(s));
+ 		snippet = snippet.replaceAll("%state%", itemUIRegistry.getState(s).toString());
+ 		snippet = snippet.replaceAll("%frequency%", frequency);
+ 		snippet = snippet.replaceAll("%switch%", s.isSwitchEnabled() ? "1" : "0");
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
+index c656d96..d869401 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
+@@ -96,7 +96,7 @@
+ 		snippet = snippet.replaceAll("%id%", itemUIRegistry.getWidgetId(w));
+ 		snippet = snippet.replaceAll("%icon%", itemUIRegistry.getIcon(w));
+ 		snippet = snippet.replaceAll("%item%", w.getItem());
+-		snippet = snippet.replaceAll("%label%", itemUIRegistry.getLabel(w));
++		snippet = snippet.replaceAll("%label%", getLabel(w));
+ 		snippet = snippet.replaceAll("%servletname%", WebAppServlet.SERVLET_NAME);
+ 		
+ 		State state = itemUIRegistry.getState(w);
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/TextRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/TextRenderer.java
+index b185959..1a1999d 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/TextRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/TextRenderer.java
+@@ -62,7 +62,7 @@
+ 
+ 		snippet = snippet.replaceAll("%id%", itemUIRegistry.getWidgetId(w));
+ 		snippet = snippet.replaceAll("%icon%", itemUIRegistry.getIcon(w));
+-		snippet = snippet.replaceAll("%label%", itemUIRegistry.getLabel(w));
++		snippet = snippet.replaceAll("%label%", getLabel(w));
+ 		
+ 		sb.append(snippet);
+ 		return null;
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/FrameRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/FrameRenderer.java
+index b31a97e..d9ce2ae 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/FrameRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/FrameRenderer.java
+@@ -57,7 +57,7 @@
+ 	public EList<Widget> renderWidget(Widget w, StringBuilder sb) throws RenderException {
+ 		String snippet = getSnippet("frame");
+ 
+-		snippet = snippet.replaceAll("%label%", itemUIRegistry.getLabel(w));
++		snippet = snippet.replaceAll("%label%", getLabel(w));
+ 		
+ 		sb.append(snippet);
+ 		return ((Frame)w).getChildren();

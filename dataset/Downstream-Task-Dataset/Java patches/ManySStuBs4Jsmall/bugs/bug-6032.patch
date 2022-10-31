@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/aggregate/UseLatestAggregationStrategy.java b/camel-core/src/main/java/org/apache/camel/processor/aggregate/UseLatestAggregationStrategy.java
+index e91586a..2dd1cd4 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/aggregate/UseLatestAggregationStrategy.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/aggregate/UseLatestAggregationStrategy.java
+@@ -36,7 +36,7 @@
+         if (oldExchange == null) {
+             return newExchange.getException();
+         } else {
+-            return newExchange.getException() != null
++            return (newExchange != null && newExchange.getException() != null)
+                 ? newExchange.getException()
+                 : oldExchange.getException();
+         }
+diff --git a/camel-core/src/main/java/org/apache/camel/processor/aggregate/UseLatestAggregationStrategy.java b/camel-core/src/main/java/org/apache/camel/processor/aggregate/UseLatestAggregationStrategy.java
+index e91586a..2dd1cd4 100644
+--- a/camel-core/src/main/java/org/apache/camel/processor/aggregate/UseLatestAggregationStrategy.java
++++ b/camel-core/src/main/java/org/apache/camel/processor/aggregate/UseLatestAggregationStrategy.java
+@@ -36,7 +36,7 @@
+         if (oldExchange == null) {
+             return newExchange.getException();
+         } else {
+-            return newExchange.getException() != null
++            return (newExchange != null && newExchange.getException() != null)
+                 ? newExchange.getException()
+                 : oldExchange.getException();
+         }

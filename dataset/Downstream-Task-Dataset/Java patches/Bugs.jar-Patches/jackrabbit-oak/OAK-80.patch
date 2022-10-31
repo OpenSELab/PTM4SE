@@ -1,0 +1,13 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
+index 0552b33..16c3f83 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentWriter.java
+@@ -219,7 +219,7 @@ public class SegmentWriter {
+                 data.put(buffer, buffer.length - length, length);
+                 data.rewind();
+             } else {
+-                data = ByteBuffer.wrap(buffer);
++                data = ByteBuffer.wrap(buffer, buffer.length - length, length);
+             }
+             tracker.setSegment(id, new Segment(tracker, id, data));
+ 

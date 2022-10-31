@@ -1,0 +1,39 @@
+diff --git a/src/com/google/javascript/jscomp/CompilerInput.java b/src/com/google/javascript/jscomp/CompilerInput.java
+index 4b71ebb..c6f162f 100644
+--- a/src/com/google/javascript/jscomp/CompilerInput.java
++++ b/src/com/google/javascript/jscomp/CompilerInput.java
+@@ -306,7 +306,7 @@
+         return new LazyParsedDependencyInfo(info, (JsAst) ast, compiler);
+       } catch (IOException e) {
+         compiler.getErrorManager().report(CheckLevel.ERROR,
+-            JSError.make(AbstractCompiler.READ_ERROR, getName()));
++            JSError.make(AbstractCompiler.READ_ERROR, getName(), e.getMessage()));
+         return SimpleDependencyInfo.EMPTY;
+       }
+     } else {
+diff --git a/src/com/google/javascript/jscomp/JsAst.java b/src/com/google/javascript/jscomp/JsAst.java
+index 1562e3a..b94b909 100644
+--- a/src/com/google/javascript/jscomp/JsAst.java
++++ b/src/com/google/javascript/jscomp/JsAst.java
+@@ -172,7 +172,7 @@
+       }
+     } catch (IOException e) {
+       compiler.report(
+-          JSError.make(AbstractCompiler.READ_ERROR, sourceFile.getName()));
++          JSError.make(AbstractCompiler.READ_ERROR, sourceFile.getName(), e.getMessage()));
+     }
+ 
+     if (root == null) {
+diff --git a/src/com/google/javascript/jscomp/CompilerInput.java b/src/com/google/javascript/jscomp/CompilerInput.java
+index 4b71ebb..c6f162f 100644
+--- a/src/com/google/javascript/jscomp/CompilerInput.java
++++ b/src/com/google/javascript/jscomp/CompilerInput.java
+@@ -306,7 +306,7 @@
+         return new LazyParsedDependencyInfo(info, (JsAst) ast, compiler);
+       } catch (IOException e) {
+         compiler.getErrorManager().report(CheckLevel.ERROR,
+-            JSError.make(AbstractCompiler.READ_ERROR, getName()));
++            JSError.make(AbstractCompiler.READ_ERROR, getName(), e.getMessage()));
+         return SimpleDependencyInfo.EMPTY;
+       }
+     } else {

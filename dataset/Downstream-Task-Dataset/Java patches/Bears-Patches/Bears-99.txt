@@ -1,0 +1,35 @@
+--- a/src/org/traccar/protocol/H02FrameDecoder.java
++++ b/src/org/traccar/protocol/H02FrameDecoder.java
+@@ -37,7 +37,7 @@ public class H02FrameDecoder extends FrameDecoder {
+ 
+         char marker = (char) buf.getByte(buf.readerIndex());
+ 
+-        while (marker != '*' && marker != '$' && buf.readableBytes() > 0) {
++        while (marker != '*' && marker != '$' && marker != 'X' && buf.readableBytes() > 0) {
+             buf.skipBytes(1);
+             if (buf.readableBytes() > 0) {
+                 marker = (char) buf.getByte(buf.readerIndex());
+@@ -66,6 +66,12 @@ public class H02FrameDecoder extends FrameDecoder {
+                 return buf.readBytes(messageLength);
+             }
+ 
++        } else if (marker == 'X') {
++
++            if (buf.readableBytes() >= MESSAGE_SHORT) {
++                return buf.readBytes(MESSAGE_SHORT);
++            }
++
+         }
+ 
+         return null;
+--- a/src/org/traccar/protocol/H02ProtocolDecoder.java
++++ b/src/org/traccar/protocol/H02ProtocolDecoder.java
+@@ -316,6 +314,8 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
+             }
+         } else if (marker.equals("$")) {
+             return decodeBinary(buf, channel, remoteAddress);
++        } else if (marker.equals("X")) {
++            return null; // X mode
+         }
+ 
+         return null;

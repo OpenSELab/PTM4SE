@@ -1,0 +1,28 @@
+diff --git a/jmx/src/main/java/org/jboss/as/jmx/PluggableMBeanServerImpl.java b/jmx/src/main/java/org/jboss/as/jmx/PluggableMBeanServerImpl.java
+index cb3eca6..25feecb 100644
+--- a/jmx/src/main/java/org/jboss/as/jmx/PluggableMBeanServerImpl.java
++++ b/jmx/src/main/java/org/jboss/as/jmx/PluggableMBeanServerImpl.java
+@@ -281,7 +281,8 @@
+                 }
+             }
+         }
+-        return false;
++        // check if it's registered with the root (a.k.a platform) MBean server
++        return rootMBeanServer.isRegistered(name);
+     }
+ 
+     @Override
+diff --git a/jmx/src/main/java/org/jboss/as/jmx/PluggableMBeanServerImpl.java b/jmx/src/main/java/org/jboss/as/jmx/PluggableMBeanServerImpl.java
+index cb3eca6..25feecb 100644
+--- a/jmx/src/main/java/org/jboss/as/jmx/PluggableMBeanServerImpl.java
++++ b/jmx/src/main/java/org/jboss/as/jmx/PluggableMBeanServerImpl.java
+@@ -281,7 +281,8 @@
+                 }
+             }
+         }
+-        return false;
++        // check if it's registered with the root (a.k.a platform) MBean server
++        return rootMBeanServer.isRegistered(name);
+     }
+ 
+     @Override

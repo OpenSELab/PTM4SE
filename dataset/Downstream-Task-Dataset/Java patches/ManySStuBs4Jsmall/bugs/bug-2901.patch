@@ -1,0 +1,51 @@
+diff --git a/src/main/java/org/graylog2/buffers/processors/OutputBufferProcessor.java b/src/main/java/org/graylog2/buffers/processors/OutputBufferProcessor.java
+index bd0369b..72731e6 100644
+--- a/src/main/java/org/graylog2/buffers/processors/OutputBufferProcessor.java
++++ b/src/main/java/org/graylog2/buffers/processors/OutputBufferProcessor.java
+@@ -49,10 +49,10 @@
+         LOG.debug("Processing message <" + msg.getId() + "> from OutputBuffer.");
+ 
+         String originalMsgId = msg.getId();
+-        for (Class outputType : server.getOutputs()) {
++        for (Class<? extends MessageOutput> outputType : server.getOutputs()) {
+             try {
+                 // Always create a new instance of this filter.
+-                MessageOutput output = (MessageOutput) outputType.newInstance();
++                MessageOutput output = outputType.newInstance();
+ 
+                 LOG.debug("Writing message <" + msg.getId() + "> to [" + outputType.getSimpleName() + "]");
+ 
+diff --git a/src/main/java/org/graylog2/buffers/processors/ProcessBufferProcessor.java b/src/main/java/org/graylog2/buffers/processors/ProcessBufferProcessor.java
+index dc666af..2162462 100644
+--- a/src/main/java/org/graylog2/buffers/processors/ProcessBufferProcessor.java
++++ b/src/main/java/org/graylog2/buffers/processors/ProcessBufferProcessor.java
+@@ -48,10 +48,10 @@
+ 
+         LOG.debug("Starting to process message <" + msg.getId() + ">.");
+ 
+-        for (Class filterType : server.getFilters()) {
++        for (Class<? extends MessageFilter> filterType : server.getFilters()) {
+             try {
+                 // Always create a new instance of this filter.
+-                MessageFilter filter = (MessageFilter) filterType.newInstance();
++                MessageFilter filter = filterType.newInstance();
+       
+                 String name = filterType.getSimpleName();
+                 LOG.debug("Applying filter [" + name +"] on message <" + msg.getId() + ">.");
+diff --git a/src/main/java/org/graylog2/buffers/processors/OutputBufferProcessor.java b/src/main/java/org/graylog2/buffers/processors/OutputBufferProcessor.java
+index bd0369b..72731e6 100644
+--- a/src/main/java/org/graylog2/buffers/processors/OutputBufferProcessor.java
++++ b/src/main/java/org/graylog2/buffers/processors/OutputBufferProcessor.java
+@@ -49,10 +49,10 @@
+         LOG.debug("Processing message <" + msg.getId() + "> from OutputBuffer.");
+ 
+         String originalMsgId = msg.getId();
+-        for (Class outputType : server.getOutputs()) {
++        for (Class<? extends MessageOutput> outputType : server.getOutputs()) {
+             try {
+                 // Always create a new instance of this filter.
+-                MessageOutput output = (MessageOutput) outputType.newInstance();
++                MessageOutput output = outputType.newInstance();
+ 
+                 LOG.debug("Writing message <" + msg.getId() + "> to [" + outputType.getSimpleName() + "]");
+ 

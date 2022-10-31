@@ -1,0 +1,39 @@
+diff --git a/src/test/java/com/zaxxer/hikari/ShutdownTest.java b/src/test/java/com/zaxxer/hikari/ShutdownTest.java
+index b399036..424af6a 100644
+--- a/src/test/java/com/zaxxer/hikari/ShutdownTest.java
++++ b/src/test/java/com/zaxxer/hikari/ShutdownTest.java
+@@ -225,7 +225,7 @@
+            ds.getConnection();
+        }
+        catch (SQLException e) {
+-          Assert.assertTrue(e.getMessage().contains("has been shutdown"));
++          Assert.assertTrue(e.getMessage().contains("has been closed."));
+        }
+    }
+ 
+diff --git a/src/test/java/com/zaxxer/hikari/TestValidation.java b/src/test/java/com/zaxxer/hikari/TestValidation.java
+index 0b280af..e0c8207 100644
+--- a/src/test/java/com/zaxxer/hikari/TestValidation.java
++++ b/src/test/java/com/zaxxer/hikari/TestValidation.java
+@@ -184,7 +184,7 @@
+          Assert.fail();
+       }
+       catch (IllegalStateException ise) {
+-         Assert.assertTrue(ise.getMessage().contains("cannot use"));
++         Assert.assertTrue(ise.getMessage().contains("together"));
+       }
+    }
+ 
+diff --git a/src/test/java/com/zaxxer/hikari/ShutdownTest.java b/src/test/java/com/zaxxer/hikari/ShutdownTest.java
+index b399036..424af6a 100644
+--- a/src/test/java/com/zaxxer/hikari/ShutdownTest.java
++++ b/src/test/java/com/zaxxer/hikari/ShutdownTest.java
+@@ -225,7 +225,7 @@
+            ds.getConnection();
+        }
+        catch (SQLException e) {
+-          Assert.assertTrue(e.getMessage().contains("has been shutdown"));
++          Assert.assertTrue(e.getMessage().contains("has been closed."));
+        }
+    }
+ 

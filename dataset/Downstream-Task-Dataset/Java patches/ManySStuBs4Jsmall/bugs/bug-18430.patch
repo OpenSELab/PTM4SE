@@ -1,0 +1,26 @@
+diff --git a/community/server/src/functionaltest/java/org/neo4j/server/rest/AbstractRestFunctionalTestBase.java b/community/server/src/functionaltest/java/org/neo4j/server/rest/AbstractRestFunctionalTestBase.java
+index 9a8ea51..8b910e7 100644
+--- a/community/server/src/functionaltest/java/org/neo4j/server/rest/AbstractRestFunctionalTestBase.java
++++ b/community/server/src/functionaltest/java/org/neo4j/server/rest/AbstractRestFunctionalTestBase.java
+@@ -88,7 +88,7 @@
+         String queryString = "{\"script\": \"" + createScript( script ) + "\"," + parameterString+"},"  ;
+ 
+         gen.get().expectedStatus( status.getStatusCode() ).payload(
+-                queryString ).description(formatGroovy( script ) );
++                queryString ).description(formatGroovy( createScript( script ) ) );
+         return gen.get().post( endpoint ).entity();
+     }
+     
+diff --git a/community/server/src/functionaltest/java/org/neo4j/server/rest/AbstractRestFunctionalTestBase.java b/community/server/src/functionaltest/java/org/neo4j/server/rest/AbstractRestFunctionalTestBase.java
+index 9a8ea51..8b910e7 100644
+--- a/community/server/src/functionaltest/java/org/neo4j/server/rest/AbstractRestFunctionalTestBase.java
++++ b/community/server/src/functionaltest/java/org/neo4j/server/rest/AbstractRestFunctionalTestBase.java
+@@ -88,7 +88,7 @@
+         String queryString = "{\"script\": \"" + createScript( script ) + "\"," + parameterString+"},"  ;
+ 
+         gen.get().expectedStatus( status.getStatusCode() ).payload(
+-                queryString ).description(formatGroovy( script ) );
++                queryString ).description(formatGroovy( createScript( script ) ) );
+         return gen.get().post( endpoint ).entity();
+     }
+     

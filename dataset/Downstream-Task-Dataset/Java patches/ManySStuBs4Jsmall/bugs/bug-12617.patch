@@ -1,0 +1,13 @@
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestHashSemiJoinOperator.java b/presto-main/src/test/java/com/facebook/presto/operator/TestHashSemiJoinOperator.java
+index 5f4360a..28f8e44 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestHashSemiJoinOperator.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestHashSemiJoinOperator.java
+@@ -349,7 +349,7 @@
+         OperatorAssertion.assertOperatorEquals(joinOperatorFactory, driverContext, probeInput, expected, hashEnabled, ImmutableList.of(probeTypes.size()));
+     }
+ 
+-    @Test(dataProvider = "hashEnabledValues", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of.*")
++    @Test(dataProvider = "hashEnabledValues", expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of.*")
+     public void testMemoryLimit(boolean hashEnabled)
+     {
+         DriverContext driverContext = createTaskContext(executor, scheduledExecutor, TEST_SESSION, new DataSize(100, BYTE))

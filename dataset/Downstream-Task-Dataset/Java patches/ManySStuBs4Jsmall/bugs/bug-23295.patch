@@ -1,0 +1,73 @@
+diff --git a/security/subsystem/src/main/java/org/jboss/as/security/Namespace.java b/security/subsystem/src/main/java/org/jboss/as/security/Namespace.java
+index 2aa4985..9e34c14 100644
+--- a/security/subsystem/src/main/java/org/jboss/as/security/Namespace.java
++++ b/security/subsystem/src/main/java/org/jboss/as/security/Namespace.java
+@@ -37,12 +37,12 @@
+     SECURITY_1_0("urn:jboss:domain:security:1.0"),
+     SECURITY_1_1("urn:jboss:domain:security:1.1"),
+     SECURITY_1_2("urn:jboss:domain:security:1.2"),
+-    SECURITY_3_0("urn:jboss:domain:security:3.0");
++    SECURITY_2_0("urn:jboss:domain:security:2.0");
+ 
+     /**
+      * The current namespace version.
+      */
+-    public static final Namespace CURRENT = SECURITY_3_0;
++    public static final Namespace CURRENT = SECURITY_2_0;
+ 
+     private final String name;
+ 
+diff --git a/security/subsystem/src/main/java/org/jboss/as/security/SecurityExtension.java b/security/subsystem/src/main/java/org/jboss/as/security/SecurityExtension.java
+index 6ee4835..176fd8e 100644
+--- a/security/subsystem/src/main/java/org/jboss/as/security/SecurityExtension.java
++++ b/security/subsystem/src/main/java/org/jboss/as/security/SecurityExtension.java
+@@ -50,7 +50,7 @@
+ 
+     private static final String RESOURCE_NAME = SecurityExtension.class.getPackage().getName() + ".LocalDescriptions";
+ 
+-    private static final ModelVersion CURRENT_MODEL_VERSION = ModelVersion.create(3, 0, 0);
++    private static final ModelVersion CURRENT_MODEL_VERSION = ModelVersion.create(2, 0, 0);
+ 
+     static final PathElement ACL_PATH = PathElement.pathElement(Constants.ACL, Constants.CLASSIC);
+     static final PathElement PATH_IDENTITY_TRUST_CLASSIC = PathElement.pathElement(Constants.IDENTITY_TRUST, Constants.CLASSIC);
+@@ -119,6 +119,6 @@
+         context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.SECURITY_1_0.getUriString(), SecuritySubsystemParser::new);
+         context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.SECURITY_1_1.getUriString(), SecuritySubsystemParser::new);
+         context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.SECURITY_1_2.getUriString(), SecuritySubsystemParser::new);
+-        context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.SECURITY_3_0.getUriString(), SecuritySubsystemParser_3_0::new);
++        context.setSubsystemXmlMapping(SUBSYSTEM_NAME, Namespace.SECURITY_2_0.getUriString(), SecuritySubsystemParser_3_0::new);
+     }
+ }
+\ No newline at end of file
+diff --git a/security/subsystem/src/main/java/org/jboss/as/security/elytron/SecurityDomainContextRealm.java b/security/subsystem/src/main/java/org/jboss/as/security/elytron/SecurityDomainContextRealm.java
+index aa15d01..3e0db9f 100644
+--- a/security/subsystem/src/main/java/org/jboss/as/security/elytron/SecurityDomainContextRealm.java
++++ b/security/subsystem/src/main/java/org/jboss/as/security/elytron/SecurityDomainContextRealm.java
+@@ -45,7 +45,7 @@
+  * {@code mydomain}:
+  *
+  * <pre>
+- *     &lt;subsystem xmlns="urn:jboss:domain:security:3.0"&gt;
++ *     &lt;subsystem xmlns="urn:jboss:domain:security:2.0"&gt;
+  *         &lt;security-domains&gt;
+  *             &lt;security-domain name="mydomain" cache-type="default"&gt;
+  *                 ...
+diff --git a/security/subsystem/src/main/java/org/jboss/as/security/Namespace.java b/security/subsystem/src/main/java/org/jboss/as/security/Namespace.java
+index 2aa4985..9e34c14 100644
+--- a/security/subsystem/src/main/java/org/jboss/as/security/Namespace.java
++++ b/security/subsystem/src/main/java/org/jboss/as/security/Namespace.java
+@@ -37,12 +37,12 @@
+     SECURITY_1_0("urn:jboss:domain:security:1.0"),
+     SECURITY_1_1("urn:jboss:domain:security:1.1"),
+     SECURITY_1_2("urn:jboss:domain:security:1.2"),
+-    SECURITY_3_0("urn:jboss:domain:security:3.0");
++    SECURITY_2_0("urn:jboss:domain:security:2.0");
+ 
+     /**
+      * The current namespace version.
+      */
+-    public static final Namespace CURRENT = SECURITY_3_0;
++    public static final Namespace CURRENT = SECURITY_2_0;
+ 
+     private final String name;
+ 

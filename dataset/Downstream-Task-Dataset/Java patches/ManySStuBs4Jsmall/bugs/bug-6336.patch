@@ -1,0 +1,52 @@
+diff --git a/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/async/AsyncIOExample.java b/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/async/AsyncIOExample.java
+index 95379e3..7fd5f88 100644
+--- a/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/async/AsyncIOExample.java
++++ b/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/async/AsyncIOExample.java
+@@ -179,7 +179,7 @@
+ 
+ 		@Override
+ 		public void asyncInvoke(final Integer input, final ResultFuture<String> resultFuture) throws Exception {
+-			this.executorService.submit(new Runnable() {
++			executorService.submit(new Runnable() {
+ 				@Override
+ 				public void run() {
+ 					// wait for while to simulate async operation here
+diff --git a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
+index b2f7a47..fb835e3 100644
+--- a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
++++ b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
+@@ -165,7 +165,7 @@
+ 	@Override
+ 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+ 		final String msg = "Exception in server pipeline. Caused by: " + ExceptionUtils.stringifyException(cause);
+-		final ByteBuf err = serializer.serializeServerFailure(ctx.alloc(), new RuntimeException(msg));
++		final ByteBuf err = MessageSerializer.serializeServerFailure(ctx.alloc(), new RuntimeException(msg));
+ 
+ 		LOG.debug(msg);
+ 		ctx.writeAndFlush(err).addListener(ChannelFutureListener.CLOSE);
+diff --git a/flink-yarn/src/main/java/org/apache/flink/yarn/AbstractYarnClusterDescriptor.java b/flink-yarn/src/main/java/org/apache/flink/yarn/AbstractYarnClusterDescriptor.java
+index 636ae16..089d825 100644
+--- a/flink-yarn/src/main/java/org/apache/flink/yarn/AbstractYarnClusterDescriptor.java
++++ b/flink-yarn/src/main/java/org/apache/flink/yarn/AbstractYarnClusterDescriptor.java
+@@ -517,7 +517,7 @@
+ 			throw new YarnDeploymentException("Could not retrieve information about free cluster resources.", e);
+ 		}
+ 
+-		final int yarnMinAllocationMB = yarnConfiguration.getInt(yarnConfiguration.RM_SCHEDULER_MINIMUM_ALLOCATION_MB, 0);
++		final int yarnMinAllocationMB = yarnConfiguration.getInt(YarnConfiguration.RM_SCHEDULER_MINIMUM_ALLOCATION_MB, 0);
+ 
+ 		final ClusterSpecification validClusterSpecification;
+ 		try {
+diff --git a/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/async/AsyncIOExample.java b/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/async/AsyncIOExample.java
+index 95379e3..7fd5f88 100644
+--- a/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/async/AsyncIOExample.java
++++ b/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/async/AsyncIOExample.java
+@@ -179,7 +179,7 @@
+ 
+ 		@Override
+ 		public void asyncInvoke(final Integer input, final ResultFuture<String> resultFuture) throws Exception {
+-			this.executorService.submit(new Runnable() {
++			executorService.submit(new Runnable() {
+ 				@Override
+ 				public void run() {
+ 					// wait for while to simulate async operation here

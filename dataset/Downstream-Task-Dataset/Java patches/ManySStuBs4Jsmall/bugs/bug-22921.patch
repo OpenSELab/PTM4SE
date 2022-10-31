@@ -1,0 +1,62 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+index 6fc8eec..5df85e1 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+@@ -163,7 +163,7 @@
+                                 .withLoader(new Mustache.TemplateLoader() {
+                                     @Override
+                                     public Reader getTemplate(String name) {
+-                                        return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
++                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                                     }
+                                 })
+                                 .defaultValue("")
+@@ -220,7 +220,7 @@
+                             .withLoader(new Mustache.TemplateLoader() {
+                                 @Override
+                                 public Reader getTemplate(String name) {
+-                                    return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
++                                    return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                                 }
+                             })
+                             .defaultValue("")
+@@ -299,7 +299,7 @@
+                             .withLoader(new Mustache.TemplateLoader() {
+                                 @Override
+                                 public Reader getTemplate(String name) {
+-                                    return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
++                                    return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                                 }
+                             })
+                             .defaultValue("")
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+index 6fc8eec..5df85e1 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultGenerator.java
+@@ -163,7 +163,7 @@
+                                 .withLoader(new Mustache.TemplateLoader() {
+                                     @Override
+                                     public Reader getTemplate(String name) {
+-                                        return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
++                                        return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                                     }
+                                 })
+                                 .defaultValue("")
+@@ -220,7 +220,7 @@
+                             .withLoader(new Mustache.TemplateLoader() {
+                                 @Override
+                                 public Reader getTemplate(String name) {
+-                                    return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
++                                    return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                                 }
+                             })
+                             .defaultValue("")
+@@ -299,7 +299,7 @@
+                             .withLoader(new Mustache.TemplateLoader() {
+                                 @Override
+                                 public Reader getTemplate(String name) {
+-                                    return getTemplateReader(config.templateDir() + File.separator + name + ".mustache");
++                                    return getTemplateReader(getFullTemplateFile(config, name + ".mustache"));
+                                 }
+                             })
+                             .defaultValue("")

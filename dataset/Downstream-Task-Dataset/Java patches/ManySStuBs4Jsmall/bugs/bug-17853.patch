@@ -1,0 +1,86 @@
+diff --git a/src/main/java/org/apache/ibatis/executor/CachingExecutor.java b/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
+index f405ed0..a265862 100644
+--- a/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
++++ b/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
+@@ -59,7 +59,7 @@
+   }
+ 
+ 
+-  public List query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
++  public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+     if (ms != null) {
+       Cache cache = ms.getCache();
+       if (cache != null) {
+@@ -68,16 +68,17 @@
+         try {
+           if (ms.isUseCache() && resultHandler == null) {
+             CacheKey key = createCacheKey(ms, parameterObject, rowBounds);
+-            final List cachedList = (List) cache.getObject(key);
++            @SuppressWarnings( "unchecked" ) // type driven by the key?
++            final List<E> cachedList = (List<E>) cache.getObject(key);
+             if (cachedList != null) {
+               return cachedList;
+             } else {
+-              List list = delegate.query(ms, parameterObject, rowBounds, resultHandler);
++              List<E> list = delegate.<E>query(ms, parameterObject, rowBounds, resultHandler);
+               tcm.putObject(cache, key, list);
+               return list;
+             }
+           } else {
+-            return delegate.query(ms, parameterObject, rowBounds, resultHandler);
++            return delegate.<E>query(ms, parameterObject, rowBounds, resultHandler);
+           }
+         } finally {
+           cache.getReadWriteLock().readLock().unlock();
+@@ -87,7 +88,7 @@
+     return delegate.query(ms, parameterObject, rowBounds, resultHandler);
+   }
+ 
+-  public List flushStatements() throws SQLException {
++  public List<BatchResult> flushStatements() throws SQLException {
+     return delegate.flushStatements();
+   }
+ 
+diff --git a/src/main/java/org/apache/ibatis/executor/CachingExecutor.java b/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
+index f405ed0..a265862 100644
+--- a/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
++++ b/src/main/java/org/apache/ibatis/executor/CachingExecutor.java
+@@ -59,7 +59,7 @@
+   }
+ 
+ 
+-  public List query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
++  public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+     if (ms != null) {
+       Cache cache = ms.getCache();
+       if (cache != null) {
+@@ -68,16 +68,17 @@
+         try {
+           if (ms.isUseCache() && resultHandler == null) {
+             CacheKey key = createCacheKey(ms, parameterObject, rowBounds);
+-            final List cachedList = (List) cache.getObject(key);
++            @SuppressWarnings( "unchecked" ) // type driven by the key?
++            final List<E> cachedList = (List<E>) cache.getObject(key);
+             if (cachedList != null) {
+               return cachedList;
+             } else {
+-              List list = delegate.query(ms, parameterObject, rowBounds, resultHandler);
++              List<E> list = delegate.<E>query(ms, parameterObject, rowBounds, resultHandler);
+               tcm.putObject(cache, key, list);
+               return list;
+             }
+           } else {
+-            return delegate.query(ms, parameterObject, rowBounds, resultHandler);
++            return delegate.<E>query(ms, parameterObject, rowBounds, resultHandler);
+           }
+         } finally {
+           cache.getReadWriteLock().readLock().unlock();
+@@ -87,7 +88,7 @@
+     return delegate.query(ms, parameterObject, rowBounds, resultHandler);
+   }
+ 
+-  public List flushStatements() throws SQLException {
++  public List<BatchResult> flushStatements() throws SQLException {
+     return delegate.flushStatements();
+   }
+ 

@@ -1,0 +1,29 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/query/impl/predicates/RegexPredicate.java b/hazelcast/src/main/java/com/hazelcast/query/impl/predicates/RegexPredicate.java
+index 2d89064..80714bb 100644
+--- a/hazelcast/src/main/java/com/hazelcast/query/impl/predicates/RegexPredicate.java
++++ b/hazelcast/src/main/java/com/hazelcast/query/impl/predicates/RegexPredicate.java
+@@ -38,7 +38,7 @@
+     }
+ 
+     public RegexPredicate(String attributeName, String regex) {
+-        this.attributeName = attributeName;
++        super(attributeName);
+         this.regex = regex;
+     }
+ 
+@@ -60,13 +60,13 @@
+ 
+     @Override
+     public void writeData(ObjectDataOutput out) throws IOException {
+-        out.writeUTF(attributeName);
++        super.writeData(out);
+         out.writeUTF(regex);
+     }
+ 
+     @Override
+     public void readData(ObjectDataInput in) throws IOException {
+-        attributeName = in.readUTF();
++        super.readData(in);
+         regex = in.readUTF();
+     }
+ 

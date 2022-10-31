@@ -1,0 +1,21 @@
+diff --git a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/runtime/io/BarrierBuffer.java b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/runtime/io/BarrierBuffer.java
+index b7766ee..fd896c9 100644
+--- a/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/runtime/io/BarrierBuffer.java
++++ b/flink-staging/flink-streaming/flink-streaming-core/src/main/java/org/apache/flink/streaming/runtime/io/BarrierBuffer.java
+@@ -76,7 +76,7 @@ public class BarrierBuffer implements CheckpointBarrierHandler {
+ 
+ 	/**
+ 	 * 
+-	 * @param inputGate Teh input gate to draw the buffers and events from.
++	 * @param inputGate The input gate to draw the buffers and events from.
+ 	 * @param ioManager The I/O manager that gives access to the temp directories.
+ 	 * 
+ 	 * @throws IOException Thrown, when the spilling to temp files cannot be initialized.
+@@ -102,6 +102,7 @@ public class BarrierBuffer implements CheckpointBarrierHandler {
+ 			if (currentBuffered != null) {
+ 				next = currentBuffered.getNext();
+ 				if (next == null) {
++					currentBuffered.cleanup();
+ 					currentBuffered = queuedBuffered.pollFirst();
+ 					if (currentBuffered != null) {
+ 						currentBuffered.open();

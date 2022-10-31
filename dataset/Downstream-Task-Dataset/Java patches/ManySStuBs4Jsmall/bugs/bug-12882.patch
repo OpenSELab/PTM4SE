@@ -1,0 +1,26 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/CachedInstanceBinder.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/CachedInstanceBinder.java
+index 8f3e463..66ef72c 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/CachedInstanceBinder.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/CachedInstanceBinder.java
+@@ -59,7 +59,7 @@
+         for (Map.Entry<FieldDefinition, MethodHandle> entry : initializers.entrySet()) {
+             Binding binding = callSiteBinder.bind(entry.getValue());
+             block.append(thisVariable)
+-                    .append(invoke(binding, entry.getValue().type().returnType().getSimpleName() + "_constructor"))
++                    .append(invoke(binding, "instanceFieldConstructor"))
+                     .putField(entry.getKey());
+         }
+     }
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/CachedInstanceBinder.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/CachedInstanceBinder.java
+index 8f3e463..66ef72c 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/CachedInstanceBinder.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/CachedInstanceBinder.java
+@@ -59,7 +59,7 @@
+         for (Map.Entry<FieldDefinition, MethodHandle> entry : initializers.entrySet()) {
+             Binding binding = callSiteBinder.bind(entry.getValue());
+             block.append(thisVariable)
+-                    .append(invoke(binding, entry.getValue().type().returnType().getSimpleName() + "_constructor"))
++                    .append(invoke(binding, "instanceFieldConstructor"))
+                     .putField(entry.getKey());
+         }
+     }

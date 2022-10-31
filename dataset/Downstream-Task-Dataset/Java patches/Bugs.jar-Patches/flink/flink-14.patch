@@ -1,0 +1,54 @@
+diff --git a/flink-java/src/main/java/org/apache/flink/api/java/typeutils/runtime/KryoSerializer.java b/flink-java/src/main/java/org/apache/flink/api/java/typeutils/runtime/KryoSerializer.java
+index 133dd57..d8411a0 100644
+--- a/flink-java/src/main/java/org/apache/flink/api/java/typeutils/runtime/KryoSerializer.java
++++ b/flink-java/src/main/java/org/apache/flink/api/java/typeutils/runtime/KryoSerializer.java
+@@ -195,7 +195,18 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
+ 			input = new NoFetchingInput(inputStream);
+ 			previousIn = source;
+ 		}
+-		return (T) kryo.readClassAndObject(input);
++
++		try {
++			return (T) kryo.readClassAndObject(input);
++		} catch (KryoException ke) {
++			Throwable cause = ke.getCause();
++
++			if(cause instanceof EOFException) {
++				throw (EOFException) cause;
++			} else {
++				throw ke;
++			}
++		}
+ 	}
+ 	
+ 	@Override
+diff --git a/flink-java/src/main/java/org/apache/flink/api/java/typeutils/runtime/NoFetchingInput.java b/flink-java/src/main/java/org/apache/flink/api/java/typeutils/runtime/NoFetchingInput.java
+index 524347c..0f4fe94 100644
+--- a/flink-java/src/main/java/org/apache/flink/api/java/typeutils/runtime/NoFetchingInput.java
++++ b/flink-java/src/main/java/org/apache/flink/api/java/typeutils/runtime/NoFetchingInput.java
+@@ -21,6 +21,7 @@ package org.apache.flink.api.java.typeutils.runtime;
+ import com.esotericsoftware.kryo.KryoException;
+ import com.esotericsoftware.kryo.io.Input;
+ 
++import java.io.EOFException;
+ import java.io.IOException;
+ import java.io.InputStream;
+ 
+@@ -73,7 +74,7 @@ public class NoFetchingInput extends Input {
+ 			count = fill(buffer, bytesRead, required - bytesRead);
+ 
+ 			if(count == -1){
+-				throw new KryoException("Buffer underflow");
++				throw new KryoException(new EOFException("No more bytes left."));
+ 			}
+ 
+ 			bytesRead += count;
+@@ -121,7 +122,7 @@ public class NoFetchingInput extends Input {
+ 				c = inputStream.read(bytes, offset+bytesRead, count-bytesRead);
+ 
+ 				if(c == -1){
+-					throw new KryoException("Buffer underflow");
++					throw new KryoException(new EOFException("No more bytes left."));
+ 				}
+ 
+ 				bytesRead += c;

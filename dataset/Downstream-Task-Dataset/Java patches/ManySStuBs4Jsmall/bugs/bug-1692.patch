@@ -1,0 +1,42 @@
+diff --git a/api/src/test/java/org/asynchttpclient/async/AsyncProvidersBasicTest.java b/api/src/test/java/org/asynchttpclient/async/AsyncProvidersBasicTest.java
+index e450adf..029eeba 100755
+--- a/api/src/test/java/org/asynchttpclient/async/AsyncProvidersBasicTest.java
++++ b/api/src/test/java/org/asynchttpclient/async/AsyncProvidersBasicTest.java
+@@ -1405,7 +1405,7 @@
+                 }
+             };
+ 
+-            client.prepareGet("http://www.lemonde.fr").execute(handler);
++            client.prepareGet("http://www.google.com").execute(handler);
+ 
+             if (!l.await(TIMEOUT, TimeUnit.SECONDS)) {
+                 Assert.fail("Timed out");
+@@ -1419,6 +1419,7 @@
+     public void asyncDoGetNestedTest() throws Throwable {
+         final AsyncHttpClient client = getAsyncHttpClient(null);
+         try {
++            // FIXME find a proper website that redirects the same number of times whatever the language
+             // Use a l in case the assert fail
+             final CountDownLatch l = new CountDownLatch(2);
+ 
+diff --git a/api/src/test/java/org/asynchttpclient/async/AsyncProvidersBasicTest.java b/api/src/test/java/org/asynchttpclient/async/AsyncProvidersBasicTest.java
+index e450adf..029eeba 100755
+--- a/api/src/test/java/org/asynchttpclient/async/AsyncProvidersBasicTest.java
++++ b/api/src/test/java/org/asynchttpclient/async/AsyncProvidersBasicTest.java
+@@ -1405,7 +1405,7 @@
+                 }
+             };
+ 
+-            client.prepareGet("http://www.lemonde.fr").execute(handler);
++            client.prepareGet("http://www.google.com").execute(handler);
+ 
+             if (!l.await(TIMEOUT, TimeUnit.SECONDS)) {
+                 Assert.fail("Timed out");
+@@ -1419,6 +1419,7 @@
+     public void asyncDoGetNestedTest() throws Throwable {
+         final AsyncHttpClient client = getAsyncHttpClient(null);
+         try {
++            // FIXME find a proper website that redirects the same number of times whatever the language
+             // Use a l in case the assert fail
+             final CountDownLatch l = new CountDownLatch(2);
+ 

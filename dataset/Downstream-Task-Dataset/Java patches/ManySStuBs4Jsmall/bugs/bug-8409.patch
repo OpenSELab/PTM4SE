@@ -1,0 +1,26 @@
+diff --git a/src/main/java/com/zaxxer/hikari/proxy/JavassistProxyFactory.java b/src/main/java/com/zaxxer/hikari/proxy/JavassistProxyFactory.java
+index 7ca62ef..1e7989d 100644
+--- a/src/main/java/com/zaxxer/hikari/proxy/JavassistProxyFactory.java
++++ b/src/main/java/com/zaxxer/hikari/proxy/JavassistProxyFactory.java
+@@ -192,7 +192,7 @@
+                 }
+                 else
+                 {
+-                    modifiedBody = "return ((cast) delegate).method($$);".replace("method", method.getName()).replace("cast", primaryInterface.getName());
++                    modifiedBody = "{ return ((cast) delegate).method($$); }".replace("method", method.getName()).replace("cast", primaryInterface.getName());
+                 }
+ 
+                 if (method.getReturnType() == CtClass.voidType)
+diff --git a/src/main/java/com/zaxxer/hikari/proxy/JavassistProxyFactory.java b/src/main/java/com/zaxxer/hikari/proxy/JavassistProxyFactory.java
+index 7ca62ef..1e7989d 100644
+--- a/src/main/java/com/zaxxer/hikari/proxy/JavassistProxyFactory.java
++++ b/src/main/java/com/zaxxer/hikari/proxy/JavassistProxyFactory.java
+@@ -192,7 +192,7 @@
+                 }
+                 else
+                 {
+-                    modifiedBody = "return ((cast) delegate).method($$);".replace("method", method.getName()).replace("cast", primaryInterface.getName());
++                    modifiedBody = "{ return ((cast) delegate).method($$); }".replace("method", method.getName()).replace("cast", primaryInterface.getName());
+                 }
+ 
+                 if (method.getReturnType() == CtClass.voidType)

@@ -1,0 +1,26 @@
+diff --git a/tests/src/test/java/alluxio/master/JournalIntegrationTest.java b/tests/src/test/java/alluxio/master/JournalIntegrationTest.java
+index c265f4d..2e4f50c 100644
+--- a/tests/src/test/java/alluxio/master/JournalIntegrationTest.java
++++ b/tests/src/test/java/alluxio/master/JournalIntegrationTest.java
+@@ -147,7 +147,7 @@
+   public void loadMetadataTest() throws Exception {
+     String ufsRoot = PathUtils.concatPath(Configuration.get(Constants.UNDERFS_ADDRESS));
+     UnderFileSystem ufs = UnderFileSystem.get(ufsRoot);
+-    ufs.create(ufsRoot + "/xyz");
++    ufs.create(ufsRoot + "/xyz").close();
+     mFileSystem.loadMetadata(new AlluxioURI("/xyz"));
+     URIStatus status = mFileSystem.getStatus(new AlluxioURI("/xyz"));
+     mLocalAlluxioCluster.stopFS();
+diff --git a/tests/src/test/java/alluxio/master/JournalIntegrationTest.java b/tests/src/test/java/alluxio/master/JournalIntegrationTest.java
+index c265f4d..2e4f50c 100644
+--- a/tests/src/test/java/alluxio/master/JournalIntegrationTest.java
++++ b/tests/src/test/java/alluxio/master/JournalIntegrationTest.java
+@@ -147,7 +147,7 @@
+   public void loadMetadataTest() throws Exception {
+     String ufsRoot = PathUtils.concatPath(Configuration.get(Constants.UNDERFS_ADDRESS));
+     UnderFileSystem ufs = UnderFileSystem.get(ufsRoot);
+-    ufs.create(ufsRoot + "/xyz");
++    ufs.create(ufsRoot + "/xyz").close();
+     mFileSystem.loadMetadata(new AlluxioURI("/xyz"));
+     URIStatus status = mFileSystem.getStatus(new AlluxioURI("/xyz"));
+     mLocalAlluxioCluster.stopFS();

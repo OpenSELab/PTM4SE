@@ -1,0 +1,16 @@
+--- a/src/main/java/spoon/reflect/visitor/ImportScannerImpl.java
++++ b/src/main/java/spoon/reflect/visitor/ImportScannerImpl.java
+@@ -255,6 +255,13 @@ public class ImportScannerImpl extends CtScanner implements ImportScanner {
+ 	 * Adds a type to the classImports.
+ 	 */
+ 	protected boolean addClassImport(CtTypeReference<?> ref) {
++		if (ref == null) {
++			return false;
++		}
++
++		if (targetType != null && targetType.getSimpleName().equals(ref.getSimpleName()) && !targetType.equals(ref)) {
++			return false;
++		}
+ 		if (classImports.containsKey(ref.getSimpleName())) {
+ 			return isImportedInClassImports(ref);
+ 		}

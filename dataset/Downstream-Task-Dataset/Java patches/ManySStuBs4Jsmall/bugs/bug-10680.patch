@@ -1,0 +1,26 @@
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
+index d2d87db..552fe86 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
+@@ -83,7 +83,7 @@
+         INDArray centers = params.get(CenterLossParamInitializer.CENTER_KEY);
+         INDArray centersForExamples = labels.mmul(centers);
+ 
+-        double intraClassScore = intraClassLoss.computeScore(getLabels2d(), input.sub(centersForExamples), Activation.IDENTITY.getActivationFunction(), maskArray, false);
++        double intraClassScore = intraClassLoss.computeScore(centersForExamples, input, Activation.IDENTITY.getActivationFunction(), maskArray, false);
+ 
+ 
+         // now calculate the inter-class score component
+diff --git a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
+index d2d87db..552fe86 100755
+--- a/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
++++ b/deeplearning4j-nn/src/main/java/org/deeplearning4j/nn/layers/training/CenterLossOutputLayer.java
+@@ -83,7 +83,7 @@
+         INDArray centers = params.get(CenterLossParamInitializer.CENTER_KEY);
+         INDArray centersForExamples = labels.mmul(centers);
+ 
+-        double intraClassScore = intraClassLoss.computeScore(getLabels2d(), input.sub(centersForExamples), Activation.IDENTITY.getActivationFunction(), maskArray, false);
++        double intraClassScore = intraClassLoss.computeScore(centersForExamples, input, Activation.IDENTITY.getActivationFunction(), maskArray, false);
+ 
+ 
+         // now calculate the inter-class score component

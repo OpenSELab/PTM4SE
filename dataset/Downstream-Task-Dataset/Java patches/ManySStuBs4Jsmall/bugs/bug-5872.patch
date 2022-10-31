@@ -1,0 +1,54 @@
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+index aabb25d..54543fe 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+@@ -35,9 +35,9 @@
+  */
+ public class MinaCustomCodecTest extends ContextTestSupport {
+ 
+-    protected String uri = "mina:tcp://localhost:5130?sync=true&codec=#myCodec";
++    protected String uri = "mina:tcp://localhost:9130?sync=true&codec=#myCodec";
+    
+-    protected String badUri = "mina:tcp://localhost:5130?sync=true&codec=#XXX";
++    protected String badUri = "mina:tcp://localhost:9130?sync=true&codec=#XXX";
+ 
+     public void testMyCodec() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaProducerConcurrentTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaProducerConcurrentTest.java
+index 9270460..f091c6f 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaProducerConcurrentTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaProducerConcurrentTest.java
+@@ -52,7 +52,7 @@
+             final int index = i;
+             Future out = executor.submit(new Callable<Object>() {
+                 public Object call() throws Exception {
+-                    return template.requestBody("mina:tcp://localhost:8080?sync=true", index, String.class);
++                    return template.requestBody("mina:tcp://localhost:9090?sync=true", index, String.class);
+                 }
+             });
+             responses.put(index, out);
+@@ -75,7 +75,7 @@
+     protected RouteBuilder createRouteBuilder() throws Exception {
+         return new RouteBuilder() {
+             public void configure() throws Exception {
+-                from("mina:tcp://localhost:8080?sync=true").process(new Processor() {
++                from("mina:tcp://localhost:9090?sync=true").process(new Processor() {
+                     public void process(Exchange exchange) throws Exception {
+                         String body = exchange.getIn().getBody(String.class);
+                         exchange.getOut().setBody("Bye " + body);
+diff --git a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+index aabb25d..54543fe 100644
+--- a/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
++++ b/components/camel-mina/src/test/java/org/apache/camel/component/mina/MinaCustomCodecTest.java
+@@ -35,9 +35,9 @@
+  */
+ public class MinaCustomCodecTest extends ContextTestSupport {
+ 
+-    protected String uri = "mina:tcp://localhost:5130?sync=true&codec=#myCodec";
++    protected String uri = "mina:tcp://localhost:9130?sync=true&codec=#myCodec";
+    
+-    protected String badUri = "mina:tcp://localhost:5130?sync=true&codec=#XXX";
++    protected String badUri = "mina:tcp://localhost:9130?sync=true&codec=#XXX";
+ 
+     public void testMyCodec() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:result");

@@ -1,0 +1,106 @@
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveFileFormats.java b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveFileFormats.java
+index 3a060d5..9f4c999 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveFileFormats.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveFileFormats.java
+@@ -615,7 +615,7 @@
+     private static <T> T newInstance(String className, Class<T> superType)
+             throws ReflectiveOperationException
+     {
+-        return HiveStorageFormat.class.getClassLoader().loadClass(className).asSubclass(superType).newInstance();
++        return HiveStorageFormat.class.getClassLoader().loadClass(className).asSubclass(superType).getConstructor().newInstance();
+     }
+ 
+     public static Object getFieldFromCursor(RecordCursor cursor, Type type, int field)
+diff --git a/presto-main/src/main/java/com/facebook/presto/operator/aggregation/state/StateCompiler.java b/presto-main/src/main/java/com/facebook/presto/operator/aggregation/state/StateCompiler.java
+index f1c3a93..771f665 100644
+--- a/presto-main/src/main/java/com/facebook/presto/operator/aggregation/state/StateCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/operator/aggregation/state/StateCompiler.java
+@@ -172,9 +172,9 @@
+ 
+         Class<? extends AccumulatorStateSerializer> serializerClass = defineClass(definition, AccumulatorStateSerializer.class, callSiteBinder.getBindings(), classLoader);
+         try {
+-            return (AccumulatorStateSerializer<T>) serializerClass.newInstance();
++            return (AccumulatorStateSerializer<T>) serializerClass.getConstructor().newInstance();
+         }
+-        catch (InstantiationException | IllegalAccessException e) {
++        catch (ReflectiveOperationException e) {
+             throw new RuntimeException(e);
+         }
+     }
+@@ -400,9 +400,9 @@
+ 
+         Class<? extends AccumulatorStateFactory> factoryClass = defineClass(definition, AccumulatorStateFactory.class, classLoader);
+         try {
+-            return (AccumulatorStateFactory<T>) factoryClass.newInstance();
++            return (AccumulatorStateFactory<T>) factoryClass.getConstructor().newInstance();
+         }
+-        catch (InstantiationException | IllegalAccessException e) {
++        catch (ReflectiveOperationException e) {
+             throw new RuntimeException(e);
+         }
+     }
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
+index eeca7ee..f6e4296 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/ExpressionCompiler.java
+@@ -80,7 +80,7 @@
+         Class<? extends CursorProcessor> cursorProcessor = cursorProcessors.getUnchecked(new CacheKey(filter, projections, uniqueKey));
+         return () -> {
+             try {
+-                return cursorProcessor.newInstance();
++                return cursorProcessor.getConstructor().newInstance();
+             }
+             catch (ReflectiveOperationException e) {
+                 throw new RuntimeException(e);
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/OrderingCompiler.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/OrderingCompiler.java
+index 937475f..5cc1a12 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/OrderingCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/OrderingCompiler.java
+@@ -90,7 +90,7 @@
+         PagesIndexComparator comparator;
+         try {
+             Class<? extends PagesIndexComparator> pagesHashStrategyClass = compilePagesIndexComparator(sortTypes, sortChannels, sortOrders);
+-            comparator = pagesHashStrategyClass.newInstance();
++            comparator = pagesHashStrategyClass.getConstructor().newInstance();
+         }
+         catch (Throwable e) {
+             log.error(e, "Error compiling comparator for channels %s with order %s", sortChannels, sortChannels);
+diff --git a/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java b/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
+index 08faca3..fe765fb 100644
+--- a/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
++++ b/presto-main/src/main/java/com/facebook/presto/sql/gen/PageFunctionCompiler.java
+@@ -407,7 +407,7 @@
+ 
+         return () -> {
+             try {
+-                return functionClass.newInstance();
++                return functionClass.getConstructor().newInstance();
+             }
+             catch (ReflectiveOperationException e) {
+                 throw new PrestoException(COMPILER_ERROR, e);
+diff --git a/presto-testing-server-launcher/src/main/java/com/facebook/presto/server/testing/TestingPrestoServerLauncher.java b/presto-testing-server-launcher/src/main/java/com/facebook/presto/server/testing/TestingPrestoServerLauncher.java
+index 77b5fa7..bcc68a6 100644
+--- a/presto-testing-server-launcher/src/main/java/com/facebook/presto/server/testing/TestingPrestoServerLauncher.java
++++ b/presto-testing-server-launcher/src/main/java/com/facebook/presto/server/testing/TestingPrestoServerLauncher.java
+@@ -51,7 +51,7 @@
+     {
+         try (TestingPrestoServer server = new TestingPrestoServer()) {
+             for (String pluginClass : options.getPluginClassNames()) {
+-                Plugin plugin = (Plugin) Class.forName(pluginClass).newInstance();
++                Plugin plugin = (Plugin) Class.forName(pluginClass).getConstructor().newInstance();
+                 server.installPlugin(plugin);
+             }
+ 
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveFileFormats.java b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveFileFormats.java
+index 3a060d5..9f4c999 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveFileFormats.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/AbstractTestHiveFileFormats.java
+@@ -615,7 +615,7 @@
+     private static <T> T newInstance(String className, Class<T> superType)
+             throws ReflectiveOperationException
+     {
+-        return HiveStorageFormat.class.getClassLoader().loadClass(className).asSubclass(superType).newInstance();
++        return HiveStorageFormat.class.getClassLoader().loadClass(className).asSubclass(superType).getConstructor().newInstance();
+     }
+ 
+     public static Object getFieldFromCursor(RecordCursor cursor, Type type, int field)

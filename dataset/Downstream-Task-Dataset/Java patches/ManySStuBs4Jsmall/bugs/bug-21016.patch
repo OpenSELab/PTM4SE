@@ -1,0 +1,39 @@
+diff --git a/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessor.java b/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessor.java
+index e0aa48b..629308a 100644
+--- a/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessor.java
++++ b/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessor.java
+@@ -438,7 +438,7 @@
+ 		if (hasMainReadOperation(element)) {
+ 			this.metadataCollector.add(ItemMetadata.newProperty(endpointKey,
+ 					"cache.time-to-live", Duration.class.getName(), type, null,
+-					"Maximum time that a response can be cached.", 0, null));
++					"Maximum time that a response can be cached.", "0ms", null));
+ 		}
+ 	}
+ 
+diff --git a/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessorTests.java b/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessorTests.java
+index d7fcc57..bfdbd10 100644
+--- a/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessorTests.java
++++ b/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/test/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessorTests.java
+@@ -706,7 +706,7 @@
+ 	private Metadata.MetadataItemCondition cacheTtl(String endpointId) {
+ 		return Metadata
+ 				.withProperty("management.endpoint." + endpointId + ".cache.time-to-live")
+-				.ofType(Duration.class).withDefaultValue(0)
++				.ofType(Duration.class).withDefaultValue("0ms")
+ 				.withDescription("Maximum time that a response can be cached.");
+ 	}
+ 
+diff --git a/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessor.java b/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessor.java
+index e0aa48b..629308a 100644
+--- a/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessor.java
++++ b/spring-boot-project/spring-boot-tools/spring-boot-configuration-processor/src/main/java/org/springframework/boot/configurationprocessor/ConfigurationMetadataAnnotationProcessor.java
+@@ -438,7 +438,7 @@
+ 		if (hasMainReadOperation(element)) {
+ 			this.metadataCollector.add(ItemMetadata.newProperty(endpointKey,
+ 					"cache.time-to-live", Duration.class.getName(), type, null,
+-					"Maximum time that a response can be cached.", 0, null));
++					"Maximum time that a response can be cached.", "0ms", null));
+ 		}
+ 	}
+ 

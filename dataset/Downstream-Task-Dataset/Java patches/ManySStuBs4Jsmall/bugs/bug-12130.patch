@@ -1,0 +1,28 @@
+diff --git a/src/test/java/io/vertx/test/core/MetricsTest.java b/src/test/java/io/vertx/test/core/MetricsTest.java
+index 2283333..91c9aa3 100644
+--- a/src/test/java/io/vertx/test/core/MetricsTest.java
++++ b/src/test/java/io/vertx/test/core/MetricsTest.java
+@@ -270,7 +270,8 @@
+         assertEquals(ADDRESS1, registration.address);
+         assertEquals(false, registration.replyHandler);
+         assertEquals(1, registration.beginCount.get());
+-        assertEquals(1, registration.endCount.get());
++        // This might take a little time
++        waitUntil(() -> 1 == registration.endCount.get());
+         assertEquals(0, registration.failureCount.get());
+         assertEquals(expectedLocalCoult, registration.localCount.get());
+         testComplete();
+diff --git a/src/test/java/io/vertx/test/core/MetricsTest.java b/src/test/java/io/vertx/test/core/MetricsTest.java
+index 2283333..91c9aa3 100644
+--- a/src/test/java/io/vertx/test/core/MetricsTest.java
++++ b/src/test/java/io/vertx/test/core/MetricsTest.java
+@@ -270,7 +270,8 @@
+         assertEquals(ADDRESS1, registration.address);
+         assertEquals(false, registration.replyHandler);
+         assertEquals(1, registration.beginCount.get());
+-        assertEquals(1, registration.endCount.get());
++        // This might take a little time
++        waitUntil(() -> 1 == registration.endCount.get());
+         assertEquals(0, registration.failureCount.get());
+         assertEquals(expectedLocalCoult, registration.localCount.get());
+         testComplete();

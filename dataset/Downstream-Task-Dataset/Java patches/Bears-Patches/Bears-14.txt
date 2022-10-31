@@ -1,0 +1,11 @@
+--- a/src/main/java/com/fasterxml/jackson/databind/deser/BeanDeserializerFactory.java
++++ b/src/main/java/com/fasterxml/jackson/databind/deser/BeanDeserializerFactory.java
+@@ -139,6 +139,8 @@ public class BeanDeserializerFactory
+         if (!isPotentialBeanType(type.getRawClass())) {
+             return null;
+         }
++        // For checks like [databind#1599]
++        checkIllegalTypes(ctxt, type, beanDesc);
+         // Use generic bean introspection to build deserializer
+         return buildBeanDeserializer(ctxt, type, beanDesc);
+     }

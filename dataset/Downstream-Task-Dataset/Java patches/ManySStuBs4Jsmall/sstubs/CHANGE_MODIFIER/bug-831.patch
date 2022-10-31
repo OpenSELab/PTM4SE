@@ -1,0 +1,65 @@
+diff --git a/plugins/undertow/src/main/java/com/navercorp/pinpoint/plugin/undertow/interceptor/ConnectorsExecuteRootHandlerInterceptor.java b/plugins/undertow/src/main/java/com/navercorp/pinpoint/plugin/undertow/interceptor/ConnectorsExecuteRootHandlerInterceptor.java
+index e902498..b895ea5 100644
+--- a/plugins/undertow/src/main/java/com/navercorp/pinpoint/plugin/undertow/interceptor/ConnectorsExecuteRootHandlerInterceptor.java
++++ b/plugins/undertow/src/main/java/com/navercorp/pinpoint/plugin/undertow/interceptor/ConnectorsExecuteRootHandlerInterceptor.java
+@@ -107,7 +107,7 @@
+         return 0;
+     }
+ 
+-    private class ConnectorsArgumentValidator implements ArgumentValidator {
++    private static class ConnectorsArgumentValidator implements ArgumentValidator {
+         @Override
+         public boolean validate(Object[] args) {
+             if (args == null) {
+diff --git a/profiler/src/main/java/com/navercorp/pinpoint/profiler/context/provider/plugin/JarPluginLoader.java b/profiler/src/main/java/com/navercorp/pinpoint/profiler/context/provider/plugin/JarPluginLoader.java
+index cb70af2..8df2c6e 100644
+--- a/profiler/src/main/java/com/navercorp/pinpoint/profiler/context/provider/plugin/JarPluginLoader.java
++++ b/profiler/src/main/java/com/navercorp/pinpoint/profiler/context/provider/plugin/JarPluginLoader.java
+@@ -107,7 +107,7 @@
+         return file;
+     }
+ 
+-    public class Entry {
++    public static class Entry {
+         private final URL filePath;
+         private final File file;
+         private final ClassLoader classLoader;
+diff --git a/profiler/src/main/java/com/navercorp/pinpoint/profiler/context/provider/plugin/Slf4jCommonLoggerFactory.java b/profiler/src/main/java/com/navercorp/pinpoint/profiler/context/provider/plugin/Slf4jCommonLoggerFactory.java
+index e277ee1..bd261da 100644
+--- a/profiler/src/main/java/com/navercorp/pinpoint/profiler/context/provider/plugin/Slf4jCommonLoggerFactory.java
++++ b/profiler/src/main/java/com/navercorp/pinpoint/profiler/context/provider/plugin/Slf4jCommonLoggerFactory.java
+@@ -33,7 +33,7 @@
+     }
+ 
+ 
+-    private class Sl4jCommonLogger implements CommonLogger {
++    private static class Sl4jCommonLogger implements CommonLogger {
+ 
+         private final Logger logger;
+ 
+diff --git a/profiler/src/main/java/com/navercorp/pinpoint/profiler/monitor/metric/response/ReuseResponseTimeCollector.java b/profiler/src/main/java/com/navercorp/pinpoint/profiler/monitor/metric/response/ReuseResponseTimeCollector.java
+index 5f456d0..91a1362 100644
+--- a/profiler/src/main/java/com/navercorp/pinpoint/profiler/monitor/metric/response/ReuseResponseTimeCollector.java
++++ b/profiler/src/main/java/com/navercorp/pinpoint/profiler/monitor/metric/response/ReuseResponseTimeCollector.java
+@@ -57,7 +57,7 @@
+         return copy;
+     }
+ 
+-    private class ResponseTimeCollector {
++    private static class ResponseTimeCollector {
+         private final Counter totalValue;
+         private final Counter transactionCount;
+         private final AtomicLong maxValue = new AtomicLong(0);
+diff --git a/plugins/undertow/src/main/java/com/navercorp/pinpoint/plugin/undertow/interceptor/ConnectorsExecuteRootHandlerInterceptor.java b/plugins/undertow/src/main/java/com/navercorp/pinpoint/plugin/undertow/interceptor/ConnectorsExecuteRootHandlerInterceptor.java
+index e902498..b895ea5 100644
+--- a/plugins/undertow/src/main/java/com/navercorp/pinpoint/plugin/undertow/interceptor/ConnectorsExecuteRootHandlerInterceptor.java
++++ b/plugins/undertow/src/main/java/com/navercorp/pinpoint/plugin/undertow/interceptor/ConnectorsExecuteRootHandlerInterceptor.java
+@@ -107,7 +107,7 @@
+         return 0;
+     }
+ 
+-    private class ConnectorsArgumentValidator implements ArgumentValidator {
++    private static class ConnectorsArgumentValidator implements ArgumentValidator {
+         @Override
+         public boolean validate(Object[] args) {
+             if (args == null) {

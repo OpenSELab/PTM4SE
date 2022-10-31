@@ -1,0 +1,44 @@
+diff --git a/core/server/src/main/java/alluxio/master/file/meta/LockedInodePath.java b/core/server/src/main/java/alluxio/master/file/meta/LockedInodePath.java
+index 2760795..b02d6de 100644
+--- a/core/server/src/main/java/alluxio/master/file/meta/LockedInodePath.java
++++ b/core/server/src/main/java/alluxio/master/file/meta/LockedInodePath.java
+@@ -75,7 +75,7 @@
+    * @throws FileDoesNotExistException if the target inode does not exist, or it is not a file
+    */
+   public synchronized  InodeFile getInodeFile() throws FileDoesNotExistException {
+-    Inode inode = getInode();
++    Inode<?> inode = getInode();
+     if (!inode.isFile()) {
+       throw new FileDoesNotExistException(ExceptionMessage.PATH_MUST_BE_FILE.getMessage(mUri));
+     }
+@@ -94,7 +94,7 @@
+       throw new FileDoesNotExistException(
+           ExceptionMessage.PATH_DOES_NOT_EXIST.getMessage(mUri.getParent()));
+     }
+-    Inode inode = mInodes.get(mPathComponents.length - 2);
++    Inode<?> inode = mInodes.get(mPathComponents.length - 2);
+     if (!inode.isDirectory()) {
+       throw new InvalidPathException(ExceptionMessage.PATH_MUST_HAVE_VALID_PARENT.getMessage(mUri));
+     }
+diff --git a/core/server/src/main/java/alluxio/master/file/meta/LockedInodePath.java b/core/server/src/main/java/alluxio/master/file/meta/LockedInodePath.java
+index 2760795..b02d6de 100644
+--- a/core/server/src/main/java/alluxio/master/file/meta/LockedInodePath.java
++++ b/core/server/src/main/java/alluxio/master/file/meta/LockedInodePath.java
+@@ -75,7 +75,7 @@
+    * @throws FileDoesNotExistException if the target inode does not exist, or it is not a file
+    */
+   public synchronized  InodeFile getInodeFile() throws FileDoesNotExistException {
+-    Inode inode = getInode();
++    Inode<?> inode = getInode();
+     if (!inode.isFile()) {
+       throw new FileDoesNotExistException(ExceptionMessage.PATH_MUST_BE_FILE.getMessage(mUri));
+     }
+@@ -94,7 +94,7 @@
+       throw new FileDoesNotExistException(
+           ExceptionMessage.PATH_DOES_NOT_EXIST.getMessage(mUri.getParent()));
+     }
+-    Inode inode = mInodes.get(mPathComponents.length - 2);
++    Inode<?> inode = mInodes.get(mPathComponents.length - 2);
+     if (!inode.isDirectory()) {
+       throw new InvalidPathException(ExceptionMessage.PATH_MUST_HAVE_VALID_PARENT.getMessage(mUri));
+     }

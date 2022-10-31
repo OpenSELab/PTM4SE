@@ -1,0 +1,48 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 3d667cd..db000e9 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -1301,7 +1301,8 @@
+             }
+         }
+ 
+-        if (p instanceof BaseIntegerProperty) {
++        // type is integer and without format
++        if (p instanceof BaseIntegerProperty && !(p instanceof IntegerProperty) && !(p instanceof LongProperty)) {
+             BaseIntegerProperty sp = (BaseIntegerProperty) p;
+             property.isInteger = true;
+             /*if (sp.getEnum() != null) {
+@@ -1367,7 +1368,8 @@
+             property.isByteArray = true;
+         }
+ 
+-        if (p instanceof DecimalProperty) {
++        // type is number and without format
++        if (p instanceof DecimalProperty && !(p instanceof DoubleProperty) && !(p instanceof FloatProperty)) {
+             DecimalProperty sp = (DecimalProperty) p;
+             property.isFloat = true;
+             /*if (sp.getEnum() != null) {
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+index 3d667cd..db000e9 100644
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/DefaultCodegen.java
+@@ -1301,7 +1301,8 @@
+             }
+         }
+ 
+-        if (p instanceof BaseIntegerProperty) {
++        // type is integer and without format
++        if (p instanceof BaseIntegerProperty && !(p instanceof IntegerProperty) && !(p instanceof LongProperty)) {
+             BaseIntegerProperty sp = (BaseIntegerProperty) p;
+             property.isInteger = true;
+             /*if (sp.getEnum() != null) {
+@@ -1367,7 +1368,8 @@
+             property.isByteArray = true;
+         }
+ 
+-        if (p instanceof DecimalProperty) {
++        // type is number and without format
++        if (p instanceof DecimalProperty && !(p instanceof DoubleProperty) && !(p instanceof FloatProperty)) {
+             DecimalProperty sp = (DecimalProperty) p;
+             property.isFloat = true;
+             /*if (sp.getEnum() != null) {

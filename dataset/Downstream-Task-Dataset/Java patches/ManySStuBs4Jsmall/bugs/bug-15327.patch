@@ -1,0 +1,26 @@
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/connection/nio/ClientConnectionManagerImpl.java b/hazelcast-client/src/main/java/com/hazelcast/client/connection/nio/ClientConnectionManagerImpl.java
+index b238b0f..94def6f 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/connection/nio/ClientConnectionManagerImpl.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/connection/nio/ClientConnectionManagerImpl.java
+@@ -603,7 +603,7 @@
+     }
+ 
+     private void authenticated(Address target, ClientConnection connection) {
+-        ClientConnection oldConnection = connections.put(connection.getRemoteEndpoint(), connection);
++        ClientConnection oldConnection = connections.put(addressTranslator.translate(connection.getRemoteEndpoint()), connection);
+         if (oldConnection == null) {
+             fireConnectionAddedEvent(connection);
+         }
+diff --git a/hazelcast-client/src/main/java/com/hazelcast/client/connection/nio/ClientConnectionManagerImpl.java b/hazelcast-client/src/main/java/com/hazelcast/client/connection/nio/ClientConnectionManagerImpl.java
+index b238b0f..94def6f 100644
+--- a/hazelcast-client/src/main/java/com/hazelcast/client/connection/nio/ClientConnectionManagerImpl.java
++++ b/hazelcast-client/src/main/java/com/hazelcast/client/connection/nio/ClientConnectionManagerImpl.java
+@@ -603,7 +603,7 @@
+     }
+ 
+     private void authenticated(Address target, ClientConnection connection) {
+-        ClientConnection oldConnection = connections.put(connection.getRemoteEndpoint(), connection);
++        ClientConnection oldConnection = connections.put(addressTranslator.translate(connection.getRemoteEndpoint()), connection);
+         if (oldConnection == null) {
+             fireConnectionAddedEvent(connection);
+         }

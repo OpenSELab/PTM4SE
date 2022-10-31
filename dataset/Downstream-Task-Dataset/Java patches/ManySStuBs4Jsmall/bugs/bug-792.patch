@@ -1,0 +1,17 @@
+diff --git a/core/client/src/main/java/alluxio/client/file/options/CreateUfsFileOptions.java b/core/client/src/main/java/alluxio/client/file/options/CreateUfsFileOptions.java
+index 2f9aab9..1283e70 100644
+--- a/core/client/src/main/java/alluxio/client/file/options/CreateUfsFileOptions.java
++++ b/core/client/src/main/java/alluxio/client/file/options/CreateUfsFileOptions.java
+@@ -98,10 +98,10 @@
+    */
+   public CreateUfsFileTOptions toThrift() {
+     CreateUfsFileTOptions options = new CreateUfsFileTOptions();
+-    if (!mPermission.getOwner().isEmpty()) {
++    if (mPermission.getOwner() != null && !mPermission.getOwner().isEmpty()) {
+       options.setOwner(mPermission.getOwner());
+     }
+-    if (!mPermission.getGroup().isEmpty()) {
++    if (mPermission.getGroup() != null && !mPermission.getGroup().isEmpty()) {
+       options.setGroup(mPermission.getGroup());
+     }
+     short mode = mPermission.getMode().toShort();

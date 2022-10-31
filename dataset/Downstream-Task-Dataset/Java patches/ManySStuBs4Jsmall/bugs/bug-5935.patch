@@ -1,0 +1,57 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index fb8bf11..a13f1f8 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -107,7 +107,7 @@
+ public class DefaultCamelContext extends ServiceSupport implements CamelContext {
+     private static final transient Log LOG = LogFactory.getLog(DefaultCamelContext.class);
+     private static final String NAME_PREFIX = "camel-";
+-    private static int nameSuffix;
++    private static AtomicInteger nameSuffix = new AtomicInteger(0);
+     private ClassLoader applicationContextClassLoader;
+     private boolean routeDefinitionInitiated;
+     private String name;
+@@ -162,7 +162,7 @@
+ 
+     public DefaultCamelContext() {
+         super();
+-        name = NAME_PREFIX + ++nameSuffix;
++        name = NAME_PREFIX + nameSuffix.incrementAndGet();
+ 
+         // use WebSphere specific resolver if running on WebSphere
+         if (WebSpherePackageScanClassResolver.isWebSphereClassLoader(this.getClass().getClassLoader())) {
+diff --git a/camel-core/src/test/java/org/apache/camel/processor/SplitterPojoTest.java b/camel-core/src/test/java/org/apache/camel/processor/SplitterPojoTest.java
+index fac2d3f..6f33a35 100644
+--- a/camel-core/src/test/java/org/apache/camel/processor/SplitterPojoTest.java
++++ b/camel-core/src/test/java/org/apache/camel/processor/SplitterPojoTest.java
+@@ -95,7 +95,7 @@
+          * @return a list containing each part splitted
+          */
+         public List<String> splitBody(String body) {
+-            // since this is based on an unit test you can of couse
++            // since this is based on an unit test you can of cause
+             // use different logic for splitting as Camel have out
+             // of the box support for splitting a String based on comma
+             // but this is for show and tell, since this is java code
+diff --git a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+index fb8bf11..a13f1f8 100644
+--- a/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
++++ b/camel-core/src/main/java/org/apache/camel/impl/DefaultCamelContext.java
+@@ -107,7 +107,7 @@
+ public class DefaultCamelContext extends ServiceSupport implements CamelContext {
+     private static final transient Log LOG = LogFactory.getLog(DefaultCamelContext.class);
+     private static final String NAME_PREFIX = "camel-";
+-    private static int nameSuffix;
++    private static AtomicInteger nameSuffix = new AtomicInteger(0);
+     private ClassLoader applicationContextClassLoader;
+     private boolean routeDefinitionInitiated;
+     private String name;
+@@ -162,7 +162,7 @@
+ 
+     public DefaultCamelContext() {
+         super();
+-        name = NAME_PREFIX + ++nameSuffix;
++        name = NAME_PREFIX + nameSuffix.incrementAndGet();
+ 
+         // use WebSphere specific resolver if running on WebSphere
+         if (WebSpherePackageScanClassResolver.isWebSphereClassLoader(this.getClass().getClassLoader())) {

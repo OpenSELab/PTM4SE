@@ -1,0 +1,27 @@
+diff --git a/flink-java/src/main/java/org/apache/flink/api/java/typeutils/TypeExtractor.java b/flink-java/src/main/java/org/apache/flink/api/java/typeutils/TypeExtractor.java
+index 124055c..c99a80f 100644
+--- a/flink-java/src/main/java/org/apache/flink/api/java/typeutils/TypeExtractor.java
++++ b/flink-java/src/main/java/org/apache/flink/api/java/typeutils/TypeExtractor.java
+@@ -680,10 +680,20 @@ public class TypeExtractor {
+ 		}
+ 	}
+ 	
+-	private static void validateInputType(Class<?> baseClass, Class<?> clazz, int inputParamPos, TypeInformation<?> inType) {
++	private static void validateInputType(Class<?> baseClass, Class<?> clazz, int inputParamPos, TypeInformation<?> inTypeInfo) {
+ 		ArrayList<Type> typeHierarchy = new ArrayList<Type>();
++
++		// try to get generic parameter
++		Type inType;
++		try {
++			inType = getParameterType(baseClass, typeHierarchy, clazz, inputParamPos);
++		}
++		catch (IllegalArgumentException e) {
++			return; // skip input validation e.g. for raw types
++		}
++
+ 		try {
+-			validateInfo(typeHierarchy, getParameterType(baseClass, typeHierarchy, clazz, inputParamPos), inType);
++			validateInfo(typeHierarchy, inType, inTypeInfo);
+ 		}
+ 		catch(InvalidTypesException e) {
+ 			throw new InvalidTypesException("Input mismatch: " + e.getMessage());

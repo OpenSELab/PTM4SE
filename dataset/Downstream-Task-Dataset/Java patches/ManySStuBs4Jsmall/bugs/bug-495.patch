@@ -1,0 +1,44 @@
+diff --git a/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java b/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
+index dad6db2..b392ad8 100644
+--- a/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
++++ b/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
+@@ -363,7 +363,7 @@
+       return new UfsDirectoryStatus(path, permissions.getOwner(), permissions.getGroup(),
+           permissions.getMode());
+     } else {
+-      LOG.error("Error fetching file size, assuming file does not exist");
++      LOG.error("Error fetching directory status, assuming directory does not exist");
+       throw new FileNotFoundException(path);
+     }
+   }
+@@ -397,7 +397,7 @@
+       return new UfsFileStatus(path, details.getContentLength(), details.getLastModifiedTimeMs(),
+           permissions.getOwner(), permissions.getGroup(), permissions.getMode());
+     } else {
+-      LOG.error("Error fetching file size, assuming file does not exist");
++      LOG.error("Error fetching file status, assuming file does not exist");
+       throw new FileNotFoundException(path);
+     }
+   }
+diff --git a/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java b/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
+index dad6db2..b392ad8 100644
+--- a/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
++++ b/core/common/src/main/java/alluxio/underfs/ObjectUnderFileSystem.java
+@@ -363,7 +363,7 @@
+       return new UfsDirectoryStatus(path, permissions.getOwner(), permissions.getGroup(),
+           permissions.getMode());
+     } else {
+-      LOG.error("Error fetching file size, assuming file does not exist");
++      LOG.error("Error fetching directory status, assuming directory does not exist");
+       throw new FileNotFoundException(path);
+     }
+   }
+@@ -397,7 +397,7 @@
+       return new UfsFileStatus(path, details.getContentLength(), details.getLastModifiedTimeMs(),
+           permissions.getOwner(), permissions.getGroup(), permissions.getMode());
+     } else {
+-      LOG.error("Error fetching file size, assuming file does not exist");
++      LOG.error("Error fetching file status, assuming file does not exist");
+       throw new FileNotFoundException(path);
+     }
+   }

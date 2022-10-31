@@ -1,0 +1,26 @@
+diff --git a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/PartitionNode.java b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/PartitionNode.java
+index 63ae1ad..2d3c646 100644
+--- a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/PartitionNode.java
++++ b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/PartitionNode.java
+@@ -98,7 +98,7 @@
+ 			super(pKeys);
+ 
+ 			Preconditions.checkArgument(pMethod != PartitionMethod.RANGE
+-					|| pKeys.toFieldList().isExactMatch(ordering.getInvolvedIndexes()),
++					|| pKeys.equals(new FieldSet(ordering.getFieldPositions())),
+ 					"Partition keys must match the given ordering.");
+ 
+ 			this.pMethod = pMethod;
+diff --git a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/PartitionNode.java b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/PartitionNode.java
+index 63ae1ad..2d3c646 100644
+--- a/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/PartitionNode.java
++++ b/flink-optimizer/src/main/java/org/apache/flink/optimizer/dag/PartitionNode.java
+@@ -98,7 +98,7 @@
+ 			super(pKeys);
+ 
+ 			Preconditions.checkArgument(pMethod != PartitionMethod.RANGE
+-					|| pKeys.toFieldList().isExactMatch(ordering.getInvolvedIndexes()),
++					|| pKeys.equals(new FieldSet(ordering.getFieldPositions())),
+ 					"Partition keys must match the given ordering.");
+ 
+ 			this.pMethod = pMethod;

@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+index b20cffe..7a8ebe1 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+@@ -808,7 +808,7 @@
+                 // FIX ME IN 1.1 -- For legacy, we need to leave the logic here
+                 BroadcasterCache broadcasterCache = bc.getBroadcasterCache();
+                 if (!EventCacheBroadcasterCache.class.isAssignableFrom(broadcasterCache.getClass())) {
+-                    trackBroadcastMessage(r, cacheStrategy == BroadcasterCache.STRATEGY.AFTER_FILTER ? finalMsg: entry.originalMessage);
++                    trackBroadcastMessage(r, entry);
+                 }
+             }  else {
+                 asyncWriteQueue.put(new AsyncWriteToken(r, finalMsg, entry.future, entry.originalMessage, entry.cache));
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+index b20cffe..7a8ebe1 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/DefaultBroadcaster.java
+@@ -808,7 +808,7 @@
+                 // FIX ME IN 1.1 -- For legacy, we need to leave the logic here
+                 BroadcasterCache broadcasterCache = bc.getBroadcasterCache();
+                 if (!EventCacheBroadcasterCache.class.isAssignableFrom(broadcasterCache.getClass())) {
+-                    trackBroadcastMessage(r, cacheStrategy == BroadcasterCache.STRATEGY.AFTER_FILTER ? finalMsg: entry.originalMessage);
++                    trackBroadcastMessage(r, entry);
+                 }
+             }  else {
+                 asyncWriteQueue.put(new AsyncWriteToken(r, finalMsg, entry.future, entry.originalMessage, entry.cache));

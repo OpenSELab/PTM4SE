@@ -1,0 +1,88 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/JavaNCSSCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/JavaNCSSCheck.java
+index b8f57c7..ead7da1 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/JavaNCSSCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/metrics/JavaNCSSCheck.java
+@@ -193,11 +193,11 @@
+     public void visitToken(DetailAST ast) {
+         final int tokenType = ast.getType();
+ 
+-        if (TokenTypes.CLASS_DEF == tokenType
+-            || TokenTypes.METHOD_DEF == tokenType
+-            || TokenTypes.CTOR_DEF == tokenType
+-            || TokenTypes.STATIC_INIT == tokenType
+-            || TokenTypes.INSTANCE_INIT == tokenType) {
++        if (tokenType == TokenTypes.CLASS_DEF
++            || tokenType == TokenTypes.METHOD_DEF
++            || tokenType == TokenTypes.CTOR_DEF
++            || tokenType == TokenTypes.STATIC_INIT
++            || tokenType == TokenTypes.INSTANCE_INIT) {
+             //add a counter for this class/method
+             counters.push(new Counter());
+         }
+@@ -214,10 +214,10 @@
+     @Override
+     public void leaveToken(DetailAST ast) {
+         final int tokenType = ast.getType();
+-        if (TokenTypes.METHOD_DEF == tokenType
+-            || TokenTypes.CTOR_DEF == tokenType
+-            || TokenTypes.STATIC_INIT == tokenType
+-            || TokenTypes.INSTANCE_INIT == tokenType) {
++        if (tokenType == TokenTypes.METHOD_DEF
++            || tokenType == TokenTypes.CTOR_DEF
++            || tokenType == TokenTypes.STATIC_INIT
++            || tokenType == TokenTypes.INSTANCE_INIT) {
+             //pop counter from the stack
+             final Counter counter = counters.pop();
+ 
+@@ -227,7 +227,7 @@
+                         count, methodMax);
+             }
+         }
+-        else if (TokenTypes.CLASS_DEF == tokenType) {
++        else if (tokenType == TokenTypes.CLASS_DEF) {
+             //pop counter from the stack
+             final Counter counter = counters.pop();
+ 
+@@ -294,11 +294,11 @@
+         final int tokenType = ast.getType();
+ 
+         //check if an expression is countable
+-        if (TokenTypes.EXPR == tokenType) {
++        if (tokenType == TokenTypes.EXPR) {
+             countable = isExpressionCountable(ast);
+         }
+         //check if an variable definition is countable
+-        else if (TokenTypes.VARIABLE_DEF == tokenType) {
++        else if (tokenType == TokenTypes.VARIABLE_DEF) {
+             countable = isVariableDefCountable(ast);
+         }
+         return countable;
+@@ -317,8 +317,8 @@
+         // object block
+         final int parentType = ast.getParent().getType();
+ 
+-        if (TokenTypes.SLIST == parentType
+-            || TokenTypes.OBJBLOCK == parentType) {
++        if (parentType == TokenTypes.SLIST
++            || parentType == TokenTypes.OBJBLOCK) {
+             final DetailAST prevSibling = ast.getPreviousSibling();
+ 
+             //is countable if no previous sibling is found or
+@@ -326,7 +326,7 @@
+             //This is done because multiple assignment on one line are countes
+             // as 1
+             countable = prevSibling == null
+-                    || TokenTypes.COMMA != prevSibling.getType();
++                    || prevSibling.getType() != TokenTypes.COMMA;
+         }
+ 
+         return countable;
+@@ -356,7 +356,7 @@
+                 //don't count if or loop conditions
+                 final DetailAST prevSibling = ast.getPreviousSibling();
+                 countable = prevSibling == null
+-                    || TokenTypes.LPAREN != prevSibling.getType();
++                    || prevSibling.getType() != TokenTypes.LPAREN;
+                 break;
+             default :
+                 countable = false;

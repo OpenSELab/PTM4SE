@@ -1,0 +1,44 @@
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
+index 92802b1..9b8286e 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
+@@ -86,11 +86,14 @@
+ 		PluginLifeCycle lifeCycle = this.context.getBean(PluginLifeCycle.class);
+ 		assertThat(lifeCycle).isNotNull();
+ 		assertThat(lifeCycle.getContext().getPlugins(TermIOHandler.class))
+-				.filteredOn(Matched.when(isA(ProcessorIOHandler.class))).isEmpty();
++				.filteredOn(Matched.<TermIOHandler>when(isA(ProcessorIOHandler.class)))
++				.isEmpty();
+ 		assertThat(lifeCycle.getContext().getPlugins(AuthenticationPlugin.class))
+-				.filteredOn(Matched.when(isA(JaasAuthenticationPlugin.class))).isEmpty();
++				.filteredOn(Matched
++						.<AuthenticationPlugin>when(isA(JaasAuthenticationPlugin.class)))
++				.isEmpty();
+ 		assertThat(lifeCycle.getContext().getPlugins(Language.class))
+-				.filteredOn(Matched.when(isA(JavaLanguage.class))).isEmpty();
++				.filteredOn(Matched.<Language>when(isA(JavaLanguage.class))).isEmpty();
+ 	}
+ 
+ 	@Test
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
+index 92802b1..9b8286e 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/autoconfigure/CrshAutoConfigurationTests.java
+@@ -86,11 +86,14 @@
+ 		PluginLifeCycle lifeCycle = this.context.getBean(PluginLifeCycle.class);
+ 		assertThat(lifeCycle).isNotNull();
+ 		assertThat(lifeCycle.getContext().getPlugins(TermIOHandler.class))
+-				.filteredOn(Matched.when(isA(ProcessorIOHandler.class))).isEmpty();
++				.filteredOn(Matched.<TermIOHandler>when(isA(ProcessorIOHandler.class)))
++				.isEmpty();
+ 		assertThat(lifeCycle.getContext().getPlugins(AuthenticationPlugin.class))
+-				.filteredOn(Matched.when(isA(JaasAuthenticationPlugin.class))).isEmpty();
++				.filteredOn(Matched
++						.<AuthenticationPlugin>when(isA(JaasAuthenticationPlugin.class)))
++				.isEmpty();
+ 		assertThat(lifeCycle.getContext().getPlugins(Language.class))
+-				.filteredOn(Matched.when(isA(JavaLanguage.class))).isEmpty();
++				.filteredOn(Matched.<Language>when(isA(JavaLanguage.class))).isEmpty();
+ 	}
+ 
+ 	@Test

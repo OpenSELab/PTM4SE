@@ -1,0 +1,26 @@
+diff --git a/core/server/src/main/java/alluxio/worker/block/BlockLockManager.java b/core/server/src/main/java/alluxio/worker/block/BlockLockManager.java
+index 67e8124..890712f 100644
+--- a/core/server/src/main/java/alluxio/worker/block/BlockLockManager.java
++++ b/core/server/src/main/java/alluxio/worker/block/BlockLockManager.java
+@@ -143,7 +143,7 @@
+       // allocated to another thread, in which case we could just use that lock.
+       if (blockLock == null) {
+         blockLock = mLockPool.acquire(1, TimeUnit.SECONDS);
+-        acquiredNewLock = true;
++        acquiredNewLock = (blockLock != null);
+       }
+     }
+     // If we acquired a new block lock, we need to add it to the mLocks map.
+diff --git a/core/server/src/main/java/alluxio/worker/block/BlockLockManager.java b/core/server/src/main/java/alluxio/worker/block/BlockLockManager.java
+index 67e8124..890712f 100644
+--- a/core/server/src/main/java/alluxio/worker/block/BlockLockManager.java
++++ b/core/server/src/main/java/alluxio/worker/block/BlockLockManager.java
+@@ -143,7 +143,7 @@
+       // allocated to another thread, in which case we could just use that lock.
+       if (blockLock == null) {
+         blockLock = mLockPool.acquire(1, TimeUnit.SECONDS);
+-        acquiredNewLock = true;
++        acquiredNewLock = (blockLock != null);
+       }
+     }
+     // If we acquired a new block lock, we need to add it to the mLocks map.

@@ -1,0 +1,26 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/MapService.java b/hazelcast/src/main/java/com/hazelcast/map/MapService.java
+index fa78d49..4bb21f0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/MapService.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/MapService.java
+@@ -876,7 +876,7 @@
+                 if (maxSizePolicy == MaxSizeConfig.MaxSizePolicy.USED_HEAP_SIZE) {
+                     return maxSize < (used / 1024 / 1024);
+                 } else {
+-                    return maxSize < (used / total);
++                    return maxSize < (100d * used / total);
+                 }
+             }
+             return false;
+diff --git a/hazelcast/src/main/java/com/hazelcast/map/MapService.java b/hazelcast/src/main/java/com/hazelcast/map/MapService.java
+index fa78d49..4bb21f0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/map/MapService.java
++++ b/hazelcast/src/main/java/com/hazelcast/map/MapService.java
+@@ -876,7 +876,7 @@
+                 if (maxSizePolicy == MaxSizeConfig.MaxSizePolicy.USED_HEAP_SIZE) {
+                     return maxSize < (used / 1024 / 1024);
+                 } else {
+-                    return maxSize < (used / total);
++                    return maxSize < (100d * used / total);
+                 }
+             }
+             return false;

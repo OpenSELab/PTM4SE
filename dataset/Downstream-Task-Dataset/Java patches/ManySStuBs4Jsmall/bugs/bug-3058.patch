@@ -1,0 +1,20 @@
+diff --git a/src/cn/trinea/android/common/service/impl/ImageSDCardCache.java b/src/cn/trinea/android/common/service/impl/ImageSDCardCache.java
+index dc22341..9a26c06 100644
+--- a/src/cn/trinea/android/common/service/impl/ImageSDCardCache.java
++++ b/src/cn/trinea/android/common/service/impl/ImageSDCardCache.java
+@@ -765,11 +765,12 @@
+      * get image file path
+      * 
+      * @param imageUrl
+-     * @return
++     * @return if not in cache return null, else return full path.
+      */
+     public String getImagePath(String imageUrl) {
+-        return new StringBuilder(cacheFolder).append(File.separator).append(fileNameRule.getFileName(imageUrl))
+-                                             .toString();
++        return (this.containsKey(imageUrl)) ? new StringBuilder(cacheFolder).append(File.separator)
++                                                                            .append(fileNameRule.getFileName(imageUrl))
++                                                                            .toString() : null;
+     }
+ 
+     /**

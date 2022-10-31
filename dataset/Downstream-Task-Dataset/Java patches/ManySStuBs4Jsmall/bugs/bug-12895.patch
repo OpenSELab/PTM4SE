@@ -1,0 +1,31 @@
+diff --git a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
+index d401a39..ba2edc5 100644
+--- a/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
++++ b/presto-hive/src/test/java/com/facebook/presto/hive/TestHiveIntegrationSmokeTest.java
+@@ -605,7 +605,7 @@
+             fail("expected failure");
+         }
+         catch (Exception e) {
+-            assertEquals(e.getMessage(), "Can not insert into existing partitions of bucketed Hive table");
++            assertEquals(e.getMessage(), "Cannot insert into existing partition of bucketed Hive table: partition_key=c");
+         }
+ 
+         assertUpdate(session, "DROP TABLE " + tableName);
+@@ -715,7 +715,7 @@
+             fail("expected failure");
+         }
+         catch (Exception e) {
+-            assertEquals(e.getMessage(), "Can not insert into existing partitions of bucketed Hive table");
++            assertEquals(e.getMessage(), "Cannot insert into existing partition of bucketed Hive table: orderstatus=O");
+         }
+     }
+ 
+@@ -813,7 +813,7 @@
+             fail("expected failure");
+         }
+         catch (Exception e) {
+-            assertEquals(e.getMessage(), "Can not insert into existing partitions of bucketed Hive table");
++            assertEquals(e.getMessage(), "Cannot insert into existing partition of bucketed Hive table: partition_key=c");
+         }
+ 
+         assertUpdate(session, "DROP TABLE test_insert_partitioned_bucketed_table_few_rows");

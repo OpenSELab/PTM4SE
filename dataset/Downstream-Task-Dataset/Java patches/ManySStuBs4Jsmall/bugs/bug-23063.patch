@@ -1,0 +1,44 @@
+diff --git a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+index e5ee993..5ce5bde 100644
+--- a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
++++ b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+@@ -392,7 +392,7 @@
+ 
+     @Override
+     public void applyImplicitParameters(ReaderContext context, Operation operation, Method method) {
+-        final ApiImplicitParams implicitParams = method.getAnnotation(ApiImplicitParams.class);
++        final ApiImplicitParams implicitParams = ReflectionUtils.getAnnotation(method, ApiImplicitParams.class);
+         if (implicitParams != null && implicitParams.value().length > 0) {
+             for (ApiImplicitParam param : implicitParams.value()) {
+                 final Parameter p = readImplicitParam(context.getSwagger(), param);
+@@ -405,7 +405,7 @@
+ 
+     @Override
+     public void applyExtensions(ReaderContext context, Operation operation, Method method) {
+-        final ApiOperation apiOperation = method.getAnnotation( ApiOperation.class );
++        final ApiOperation apiOperation = ReflectionUtils.getAnnotation(method, ApiOperation.class );
+         if( apiOperation != null ) {
+             operation.getVendorExtensions().putAll(BaseReaderUtils.parseExtensions(apiOperation.extensions()));
+         }
+diff --git a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+index e5ee993..5ce5bde 100644
+--- a/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
++++ b/modules/swagger-servlet/src/main/java/io/swagger/servlet/extensions/ServletReaderExtension.java
+@@ -392,7 +392,7 @@
+ 
+     @Override
+     public void applyImplicitParameters(ReaderContext context, Operation operation, Method method) {
+-        final ApiImplicitParams implicitParams = method.getAnnotation(ApiImplicitParams.class);
++        final ApiImplicitParams implicitParams = ReflectionUtils.getAnnotation(method, ApiImplicitParams.class);
+         if (implicitParams != null && implicitParams.value().length > 0) {
+             for (ApiImplicitParam param : implicitParams.value()) {
+                 final Parameter p = readImplicitParam(context.getSwagger(), param);
+@@ -405,7 +405,7 @@
+ 
+     @Override
+     public void applyExtensions(ReaderContext context, Operation operation, Method method) {
+-        final ApiOperation apiOperation = method.getAnnotation( ApiOperation.class );
++        final ApiOperation apiOperation = ReflectionUtils.getAnnotation(method, ApiOperation.class );
+         if( apiOperation != null ) {
+             operation.getVendorExtensions().putAll(BaseReaderUtils.parseExtensions(apiOperation.extensions()));
+         }

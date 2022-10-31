@@ -1,0 +1,14 @@
+diff --git a/spring-boot-samples/spring-boot-sample-web-secure/src/main/java/sample/web/secure/SampleWebSecureApplication.java b/spring-boot-samples/spring-boot-sample-web-secure/src/main/java/sample/web/secure/SampleWebSecureApplication.java
+index 8bbc13b..a05d0cb 100644
+--- a/spring-boot-samples/spring-boot-sample-web-secure/src/main/java/sample/web/secure/SampleWebSecureApplication.java
++++ b/spring-boot-samples/spring-boot-sample-web-secure/src/main/java/sample/web/secure/SampleWebSecureApplication.java
+@@ -71,7 +71,8 @@
+ 		@Override
+ 		protected void configure(HttpSecurity http) throws Exception {
+ 			http.authorizeRequests().anyRequest().fullyAuthenticated().and().formLogin()
+-					.loginPage("/login").failureUrl("/login?error").permitAll();
++					.loginPage("/login").failureUrl("/login?error").permitAll().and()
++					.logout().permitAll();
+ 		}
+ 
+ 		@Override

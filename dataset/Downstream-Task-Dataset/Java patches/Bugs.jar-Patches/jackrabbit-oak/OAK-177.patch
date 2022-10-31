@@ -1,0 +1,62 @@
+diff --git a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndex.java b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndex.java
+index 0a38732..a582292 100644
+--- a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndex.java
++++ b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LuceneIndex.java
+@@ -1038,14 +1038,17 @@ public class LuceneIndex implements AdvanceFulltextQueryIndex {
+         final String path;
+         final double score;
+         final Iterable<String> suggestWords;
++        final boolean isVirtual;
+ 
+         LuceneResultRow(String path, double score) {
++            this.isVirtual = false;
+             this.path = path;
+             this.score = score;
+             this.suggestWords = Collections.emptySet();
+         }
+ 
+         LuceneResultRow(Iterable<String> suggestWords) {
++            this.isVirtual = true;
+             this.path = "/";
+             this.score = 1.0d;
+             this.suggestWords = suggestWords;
+@@ -1110,7 +1113,7 @@ public class LuceneIndex implements AdvanceFulltextQueryIndex {
+ 
+                 @Override
+                 public boolean isVirtualRow() {
+-                    return getPath() == null;
++                    return currentRow.isVirtual;
+                 }
+ 
+                 @Override
+diff --git a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LucenePropertyIndex.java b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LucenePropertyIndex.java
+index 4095277..2b7e477 100644
+--- a/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LucenePropertyIndex.java
++++ b/oak-lucene/src/main/java/org/apache/jackrabbit/oak/plugins/index/lucene/LucenePropertyIndex.java
+@@ -1280,14 +1280,17 @@ public class LucenePropertyIndex implements AdvancedQueryIndex, QueryIndex, Nati
+         final String path;
+         final double score;
+         final Iterable<String> suggestWords;
++        final boolean isVirutal;
+ 
+         LuceneResultRow(String path, double score) {
++            this.isVirutal = false;
+             this.path = path;
+             this.score = score;
+             this.suggestWords = Collections.emptySet();
+         }
+ 
+         LuceneResultRow(Iterable<String> suggestWords) {
++            this.isVirutal = true;
+             this.path = "/";
+             this.score = 1.0d;
+             this.suggestWords = suggestWords;
+@@ -1354,7 +1357,7 @@ public class LucenePropertyIndex implements AdvancedQueryIndex, QueryIndex, Nati
+ 
+                 @Override
+                 public boolean isVirtualRow() {
+-                    return getPath() == null;
++                    return currentRow.isVirutal;
+                 }
+ 
+                 @Override

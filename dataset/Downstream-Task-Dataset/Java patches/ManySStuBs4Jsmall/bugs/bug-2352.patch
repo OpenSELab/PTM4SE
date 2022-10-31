@@ -1,0 +1,26 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java b/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
+index 51d7416..fe296fa 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
++++ b/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
+@@ -27,7 +27,7 @@
+ 
+         if (request.getHeader("X-Atmosphere-TrackMessageSize").equalsIgnoreCase("true") && String.class.isAssignableFrom(message.getClass())) {
+             String msg = message.toString();
+-            msg = "!?" + msg.length() + "!?" + msg;
++            msg = msg.length() + "|" + msg;
+             return new BroadcastAction(BroadcastAction.ACTION.CONTINUE, msg);
+ 
+         }
+diff --git a/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java b/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
+index 51d7416..fe296fa 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
++++ b/modules/cpr/src/main/java/org/atmosphere/client/TrackMessageSizeFilter.java
+@@ -27,7 +27,7 @@
+ 
+         if (request.getHeader("X-Atmosphere-TrackMessageSize").equalsIgnoreCase("true") && String.class.isAssignableFrom(message.getClass())) {
+             String msg = message.toString();
+-            msg = "!?" + msg.length() + "!?" + msg;
++            msg = msg.length() + "|" + msg;
+             return new BroadcastAction(BroadcastAction.ACTION.CONTINUE, msg);
+ 
+         }

@@ -1,0 +1,99 @@
+diff --git a/mediator/src/main/java/com/iluwatar/mediator/PartyImpl.java b/mediator/src/main/java/com/iluwatar/mediator/PartyImpl.java
+index acc70a0..ab15c26 100644
+--- a/mediator/src/main/java/com/iluwatar/mediator/PartyImpl.java
++++ b/mediator/src/main/java/com/iluwatar/mediator/PartyImpl.java
+@@ -19,7 +19,7 @@
+   @Override
+   public void act(PartyMember actor, Action action) {
+     for (PartyMember member : members) {
+-      if (member != actor) {
++      if (!member.equals(actor)) {
+         member.partyAction(action);
+       }
+     }
+diff --git a/model-view-presenter/src/main/java/com/iluwatar/model/view/presenter/FileSelectorJFrame.java b/model-view-presenter/src/main/java/com/iluwatar/model/view/presenter/FileSelectorJFrame.java
+index 6f220cf..db08d52 100644
+--- a/model-view-presenter/src/main/java/com/iluwatar/model/view/presenter/FileSelectorJFrame.java
++++ b/model-view-presenter/src/main/java/com/iluwatar/model/view/presenter/FileSelectorJFrame.java
+@@ -140,11 +140,11 @@
+ 
+   @Override
+   public void actionPerformed(ActionEvent e) {
+-    if (e.getSource() == this.ok) {
++    if (this.ok.equals(e.getSource())) {
+       this.fileName = this.input.getText();
+       presenter.fileNameChanged();
+       presenter.confirmed();
+-    } else if (e.getSource() == this.cancel) {
++    } else if (this.cancel.equals(e.getSource())) {
+       presenter.cancelled();
+     }
+   }
+diff --git a/naked-objects/fixture/src/main/java/domainapp/fixture/modules/simple/SimpleObjectCreate.java b/naked-objects/fixture/src/main/java/domainapp/fixture/modules/simple/SimpleObjectCreate.java
+index 266529c..9a922a7 100644
+--- a/naked-objects/fixture/src/main/java/domainapp/fixture/modules/simple/SimpleObjectCreate.java
++++ b/naked-objects/fixture/src/main/java/domainapp/fixture/modules/simple/SimpleObjectCreate.java
+@@ -55,9 +55,9 @@
+   @Override
+   protected void execute(final ExecutionContext ec) {
+ 
+-    String name = checkParam("name", ec, String.class);
++    String paramName = checkParam("name", ec, String.class);
+ 
+-    this.simpleObject = wrap(simpleObjects).create(name);
++    this.simpleObject = wrap(simpleObjects).create(paramName);
+ 
+     // also make available to UI
+     ec.addResult(this, simpleObject);
+diff --git a/naked-objects/fixture/src/main/java/domainapp/fixture/scenarios/RecreateSimpleObjects.java b/naked-objects/fixture/src/main/java/domainapp/fixture/scenarios/RecreateSimpleObjects.java
+index c82ef84..6d17d9b 100644
+--- a/naked-objects/fixture/src/main/java/domainapp/fixture/scenarios/RecreateSimpleObjects.java
++++ b/naked-objects/fixture/src/main/java/domainapp/fixture/scenarios/RecreateSimpleObjects.java
+@@ -69,10 +69,10 @@
+   protected void execute(final ExecutionContext ec) {
+ 
+     // defaults
+-    final int number = defaultParam("number", ec, 3);
++    final int paramNumber = defaultParam("number", ec, 3);
+ 
+     // validate
+-    if (number < 0 || number > names.size()) {
++    if (paramNumber < 0 || paramNumber > names.size()) {
+       throw new IllegalArgumentException(String.format("number must be in range [0,%d)",
+           names.size()));
+     }
+@@ -82,7 +82,7 @@
+     //
+     ec.executeChild(this, new SimpleObjectsTearDown());
+ 
+-    for (int i = 0; i < number; i++) {
++    for (int i = 0; i < paramNumber; i++) {
+       final SimpleObjectCreate fs = new SimpleObjectCreate().setName(names.get(i));
+       ec.executeChild(this, fs.getName(), fs);
+       simpleObjects.add(fs.getSimpleObject());
+diff --git a/poison-pill/src/main/java/com/iluwatar/poison/pill/Consumer.java b/poison-pill/src/main/java/com/iluwatar/poison/pill/Consumer.java
+index a305c01..4530ef9 100644
+--- a/poison-pill/src/main/java/com/iluwatar/poison/pill/Consumer.java
++++ b/poison-pill/src/main/java/com/iluwatar/poison/pill/Consumer.java
+@@ -23,7 +23,7 @@
+       Message msg;
+       try {
+         msg = queue.take();
+-        if (msg == Message.POISON_PILL) {
++        if (Message.POISON_PILL.equals(msg)) {
+           System.out.println(String.format("Consumer %s receive request to terminate.", name));
+           break;
+         }
+diff --git a/mediator/src/main/java/com/iluwatar/mediator/PartyImpl.java b/mediator/src/main/java/com/iluwatar/mediator/PartyImpl.java
+index acc70a0..ab15c26 100644
+--- a/mediator/src/main/java/com/iluwatar/mediator/PartyImpl.java
++++ b/mediator/src/main/java/com/iluwatar/mediator/PartyImpl.java
+@@ -19,7 +19,7 @@
+   @Override
+   public void act(PartyMember actor, Action action) {
+     for (PartyMember member : members) {
+-      if (member != actor) {
++      if (!member.equals(actor)) {
+         member.partyAction(action);
+       }
+     }

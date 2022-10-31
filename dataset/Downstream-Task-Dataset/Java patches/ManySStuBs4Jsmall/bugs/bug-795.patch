@@ -1,0 +1,32 @@
+diff --git a/integration/mesos/src/main/java/alluxio/mesos/AlluxioFramework.java b/integration/mesos/src/main/java/alluxio/mesos/AlluxioFramework.java
+index 7d7895a..7e55814 100644
+--- a/integration/mesos/src/main/java/alluxio/mesos/AlluxioFramework.java
++++ b/integration/mesos/src/main/java/alluxio/mesos/AlluxioFramework.java
+@@ -369,7 +369,7 @@
+ 
+   private static Protos.Credential createCredential(Configuration conf) {
+ 
+-    if (conf.get(Constants.INTEGRATION_MESOS_PRINCIPAL) == null) {
++    if (!conf.containsKey(Constants.INTEGRATION_MESOS_PRINCIPAL)) {
+       return null;
+     }
+ 
+@@ -406,15 +406,15 @@
+     Protos.FrameworkInfo.Builder frameworkInfo = Protos.FrameworkInfo.newBuilder()
+         .setName("alluxio").setCheckpoint(true);
+ 
+-    if (conf.get(Constants.INTEGRATION_MESOS_ROLE) != null) {
++    if (conf.containsKey(Constants.INTEGRATION_MESOS_ROLE)) {
+       frameworkInfo.setRole(conf.get(Constants.INTEGRATION_MESOS_ROLE));
+     }
+ 
+-    if (conf.get(Constants.INTEGRATION_MESOS_USER) != null) {
++    if (conf.containsKey(Constants.INTEGRATION_MESOS_USER)) {
+       frameworkInfo.setUser(conf.get(Constants.INTEGRATION_MESOS_USER));
+     }
+ 
+-    if (conf.get(Constants.INTEGRATION_MESOS_PRINCIPAL) != null) {
++    if (conf.containsKey(Constants.INTEGRATION_MESOS_PRINCIPAL)) {
+       frameworkInfo.setPrincipal(conf.get(Constants.INTEGRATION_MESOS_PRINCIPAL));
+     }
+ 

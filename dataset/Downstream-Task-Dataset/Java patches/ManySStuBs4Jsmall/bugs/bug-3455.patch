@@ -1,0 +1,70 @@
+diff --git a/dubbo-rpc/dubbo-rpc-default/src/main/java/com/alibaba/dubbo/rpc/protocol/dubbo/DubboProtocol.java b/dubbo-rpc/dubbo-rpc-default/src/main/java/com/alibaba/dubbo/rpc/protocol/dubbo/DubboProtocol.java
+index 662982f..cad765b 100644
+--- a/dubbo-rpc/dubbo-rpc-default/src/main/java/com/alibaba/dubbo/rpc/protocol/dubbo/DubboProtocol.java
++++ b/dubbo-rpc/dubbo-rpc-default/src/main/java/com/alibaba/dubbo/rpc/protocol/dubbo/DubboProtocol.java
+@@ -91,14 +91,19 @@
+                         }
+                     }
+                     if (!hasMethod) {
+-                        logger.warn(new IllegalStateException("The methodName " + inv.getMethodName() + " not found in callback service interface ,invoke will be ignored. please update the api interface. url is:" + invoker.getUrl()) + " ,invocation is :" + inv);
++                        logger.warn(new IllegalStateException("The methodName " + inv.getMethodName() 
++                                + " not found in callback service interface ,invoke will be ignored."
++                                + " please update the api interface. url is:" 
++                                + invoker.getUrl()) + " ,invocation is :" + inv);
+                         return null;
+                     }
+                 }
+                 RpcContext.getContext().setRemoteAddress(channel.getRemoteAddress());
+                 return invoker.invoke(inv);
+             }
+-            throw new RemotingException(channel, "Unsupported request: " + message == null ? null : (message.getClass().getName() + ": " + message) + ", channel: consumer: " + channel.getRemoteAddress() + " --> provider: " + channel.getLocalAddress());
++            throw new RemotingException(channel, "Unsupported request: " 
++                    + (message == null ? null : (message.getClass().getName() + ": " + message)) 
++                    + ", channel: consumer: " + channel.getRemoteAddress() + " --> provider: " + channel.getLocalAddress());
+         }
+ 
+         @Override
+@@ -118,7 +123,7 @@
+         @Override
+         public void disconnected(Channel channel) throws RemotingException {
+             if (logger.isInfoEnabled()) {
+-                logger.info("disconected from " + channel.getRemoteAddress() + ",url:" + channel.getUrl());
++                logger.info("disconnected from " + channel.getRemoteAddress() + ",url:" + channel.getUrl());
+             }
+             invoke(channel, Constants.ON_DISCONNECT_KEY);
+         }
+diff --git a/dubbo-rpc/dubbo-rpc-default/src/main/java/com/alibaba/dubbo/rpc/protocol/dubbo/DubboProtocol.java b/dubbo-rpc/dubbo-rpc-default/src/main/java/com/alibaba/dubbo/rpc/protocol/dubbo/DubboProtocol.java
+index 662982f..cad765b 100644
+--- a/dubbo-rpc/dubbo-rpc-default/src/main/java/com/alibaba/dubbo/rpc/protocol/dubbo/DubboProtocol.java
++++ b/dubbo-rpc/dubbo-rpc-default/src/main/java/com/alibaba/dubbo/rpc/protocol/dubbo/DubboProtocol.java
+@@ -91,14 +91,19 @@
+                         }
+                     }
+                     if (!hasMethod) {
+-                        logger.warn(new IllegalStateException("The methodName " + inv.getMethodName() + " not found in callback service interface ,invoke will be ignored. please update the api interface. url is:" + invoker.getUrl()) + " ,invocation is :" + inv);
++                        logger.warn(new IllegalStateException("The methodName " + inv.getMethodName() 
++                                + " not found in callback service interface ,invoke will be ignored."
++                                + " please update the api interface. url is:" 
++                                + invoker.getUrl()) + " ,invocation is :" + inv);
+                         return null;
+                     }
+                 }
+                 RpcContext.getContext().setRemoteAddress(channel.getRemoteAddress());
+                 return invoker.invoke(inv);
+             }
+-            throw new RemotingException(channel, "Unsupported request: " + message == null ? null : (message.getClass().getName() + ": " + message) + ", channel: consumer: " + channel.getRemoteAddress() + " --> provider: " + channel.getLocalAddress());
++            throw new RemotingException(channel, "Unsupported request: " 
++                    + (message == null ? null : (message.getClass().getName() + ": " + message)) 
++                    + ", channel: consumer: " + channel.getRemoteAddress() + " --> provider: " + channel.getLocalAddress());
+         }
+ 
+         @Override
+@@ -118,7 +123,7 @@
+         @Override
+         public void disconnected(Channel channel) throws RemotingException {
+             if (logger.isInfoEnabled()) {
+-                logger.info("disconected from " + channel.getRemoteAddress() + ",url:" + channel.getUrl());
++                logger.info("disconnected from " + channel.getRemoteAddress() + ",url:" + channel.getUrl());
+             }
+             invoke(channel, Constants.ON_DISCONNECT_KEY);
+         }

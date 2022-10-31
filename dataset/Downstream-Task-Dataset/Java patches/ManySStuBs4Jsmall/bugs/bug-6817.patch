@@ -1,0 +1,44 @@
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
+index 4abe8c6..71b6076 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
+@@ -665,7 +665,7 @@
+ 			public void run() {
+ 				eg.updateJobStatus(InternalJobStatus.CANCELING, "Job canceled by user");
+ 				final TaskCancelResult cancelResult = cancelJob(eg);
+-				if(cancelResult.getReturnCode() != AbstractTaskResult.ReturnCode.SUCCESS) {
++				if (cancelResult != null) {
+ 					LOG.error(cancelResult.getDescription());
+ 				}
+ 			}
+@@ -683,7 +683,7 @@
+ 	 * 
+ 	 * @param eg
+ 	 *        the execution graph representing the job to cancel.
+-	 * @return <code>null</code> no error occurred during the cancel attempt,
++	 * @return <code>null</code> if no error occurred during the cancel attempt,
+ 	 *         otherwise the returned object will describe the error
+ 	 */
+ 	private TaskCancelResult cancelJob(final ExecutionGraph eg) {
+diff --git a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
+index 4abe8c6..71b6076 100644
+--- a/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
++++ b/nephele/nephele-server/src/main/java/eu/stratosphere/nephele/jobmanager/JobManager.java
+@@ -665,7 +665,7 @@
+ 			public void run() {
+ 				eg.updateJobStatus(InternalJobStatus.CANCELING, "Job canceled by user");
+ 				final TaskCancelResult cancelResult = cancelJob(eg);
+-				if(cancelResult.getReturnCode() != AbstractTaskResult.ReturnCode.SUCCESS) {
++				if (cancelResult != null) {
+ 					LOG.error(cancelResult.getDescription());
+ 				}
+ 			}
+@@ -683,7 +683,7 @@
+ 	 * 
+ 	 * @param eg
+ 	 *        the execution graph representing the job to cancel.
+-	 * @return <code>null</code> no error occurred during the cancel attempt,
++	 * @return <code>null</code> if no error occurred during the cancel attempt,
+ 	 *         otherwise the returned object will describe the error
+ 	 */
+ 	private TaskCancelResult cancelJob(final ExecutionGraph eg) {

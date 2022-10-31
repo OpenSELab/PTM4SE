@@ -1,0 +1,143 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
+index e8ea3c7..372ad06 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
+@@ -246,7 +246,7 @@
+         /** Add a name to the frame.
+          * @param nameToAdd the name we're adding
+          */
+-        void addName(String nameToAdd) {
++        private void addName(String nameToAdd) {
+             varNames.add(nameToAdd);
+         }
+ 
+@@ -262,7 +262,7 @@
+          * @param nameToFind the name we're looking for
+          * @return whether it was found
+          */
+-        LexicalFrame getIfContains(String nameToFind) {
++        private LexicalFrame getIfContains(String nameToFind) {
+             LexicalFrame frame = null;
+ 
+             if (contains(nameToFind)) {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/FinalClassCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/FinalClassCheck.java
+index aac168a..6826004 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/FinalClassCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/design/FinalClassCheck.java
+@@ -134,12 +134,12 @@
+         }
+ 
+         /** Adds private ctor. */
+-        void reportPrivateCtor() {
++        private void reportPrivateCtor() {
+             withPrivateCtor = true;
+         }
+ 
+         /** Adds non-private ctor. */
+-        void reportNonPrivateCtor() {
++        private void reportNonPrivateCtor() {
+             withNonPrivateCtor = true;
+         }
+ 
+@@ -147,7 +147,7 @@
+          *  Does class have private ctors.
+          *  @return true if class has private ctors
+          */
+-        boolean isWithPrivateCtor() {
++        private boolean isWithPrivateCtor() {
+             return withPrivateCtor;
+         }
+ 
+@@ -155,7 +155,7 @@
+          *  Does class have non-private ctors.
+          *  @return true if class has non-private ctors
+          */
+-        boolean isWithNonPrivateCtor() {
++        private boolean isWithNonPrivateCtor() {
+             return withNonPrivateCtor;
+         }
+ 
+@@ -163,7 +163,7 @@
+          *  Is class declared as final.
+          *  @return true if class is declared as final
+          */
+-        boolean isDeclaredAsFinal() {
++        private boolean isDeclaredAsFinal() {
+             return declaredAsFinal;
+         }
+ 
+@@ -171,7 +171,7 @@
+          *  Is class declared as abstract.
+          *  @return true if class is declared as final
+          */
+-        boolean isDeclaredAsAbstract() {
++        private boolean isDeclaredAsAbstract() {
+             return declaredAsAbstract;
+         }
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/ModifierOrderCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/ModifierOrderCheck.java
+index caf4ca0..fd91341 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/ModifierOrderCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/modifier/ModifierOrderCheck.java
+@@ -138,7 +138,7 @@
+      * @return null if the order is correct, otherwise returns the offending
+      *     modifier AST.
+      */
+-    static DetailAST checkOrderSuggestedByJLS(List<DetailAST> modifiers) {
++    private static DetailAST checkOrderSuggestedByJLS(List<DetailAST> modifiers) {
+         final Iterator<DetailAST> iterator = modifiers.iterator();
+ 
+         //Speed past all initial annotations
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
+index c7601e2..f453000 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/MethodCountCheck.java
+@@ -234,7 +234,7 @@
+          * Increments to counter by one for the supplied scope.
+          * @param scope the scope counter to increment.
+          */
+-        void increment(Scope scope) {
++        private void increment(Scope scope) {
+             total++;
+             if (inInterface) {
+                 counts.put(Scope.PUBLIC, 1 + value(Scope.PUBLIC));
+@@ -249,7 +249,7 @@
+          * @param scope the scope counter to get the value of
+          * @return the value of a scope counter
+          */
+-        int value(Scope scope) {
++        private int value(Scope scope) {
+             final Integer value = counts.get(scope);
+ 
+             if (value == null) {
+@@ -263,7 +263,7 @@
+         /**
+          * @return the total number of methods.
+          */
+-        int getTotal() {
++        private int getTotal() {
+             return total;
+         }
+     }
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
+index e8ea3c7..372ad06 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/AbstractDeclarationCollector.java
+@@ -246,7 +246,7 @@
+         /** Add a name to the frame.
+          * @param nameToAdd the name we're adding
+          */
+-        void addName(String nameToAdd) {
++        private void addName(String nameToAdd) {
+             varNames.add(nameToAdd);
+         }
+ 
+@@ -262,7 +262,7 @@
+          * @param nameToFind the name we're looking for
+          * @return whether it was found
+          */
+-        LexicalFrame getIfContains(String nameToFind) {
++        private LexicalFrame getIfContains(String nameToFind) {
+             LexicalFrame frame = null;
+ 
+             if (contains(nameToFind)) {

@@ -1,0 +1,82 @@
+diff --git a/src/main/java/org/jboss/netty/buffer/AbstractChannelBuffer.java b/src/main/java/org/jboss/netty/buffer/AbstractChannelBuffer.java
+index 1b326e5..7111355 100644
+--- a/src/main/java/org/jboss/netty/buffer/AbstractChannelBuffer.java
++++ b/src/main/java/org/jboss/netty/buffer/AbstractChannelBuffer.java
+@@ -267,6 +267,7 @@
+         if (length == 0) {
+             return ChannelBuffers.EMPTY_BUFFER;
+         }
++        // TODO: Allow a user to specify the buffer factory as an overloaded method.
+         ChannelBuffer buf = ChannelBuffers.buffer(order(), length);
+         buf.writeBytes(this, readerIndex, length);
+         readerIndex += length;
+@@ -278,7 +279,7 @@
+         if (endIndex < 0) {
+             throw new NoSuchElementException();
+         }
+-        return readBytes(endIndex);
++        return readBytes(endIndex - readerIndex);
+     }
+ 
+     public ChannelBuffer readSlice(int length) {
+@@ -292,7 +293,7 @@
+         if (endIndex < 0) {
+             throw new NoSuchElementException();
+         }
+-        return readSlice(endIndex);
++        return readSlice(endIndex - readerIndex);
+     }
+ 
+     public void readBytes(byte[] dst, int dstIndex, int length) {
+diff --git a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
+index 102a8d8..4508f18 100644
+--- a/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
++++ b/src/main/java/org/jboss/netty/handler/codec/replay/ReplayingDecoderBuffer.java
+@@ -255,7 +255,7 @@
+         if (endIndex < 0) {
+             throw REPLAY;
+         }
+-        return readBytes(endIndex);
++        return buffer.readBytes(endIndex - buffer.readerIndex());
+     }
+ 
+     public int readBytes(GatheringByteChannel out, int length)
+@@ -275,7 +275,7 @@
+         if (endIndex < 0) {
+             throw REPLAY;
+         }
+-        return readSlice(endIndex);
++        return buffer.readSlice(endIndex - buffer.readerIndex());
+     }
+ 
+     public ChannelBuffer readSlice(int length) {
+diff --git a/src/main/java/org/jboss/netty/buffer/AbstractChannelBuffer.java b/src/main/java/org/jboss/netty/buffer/AbstractChannelBuffer.java
+index 1b326e5..7111355 100644
+--- a/src/main/java/org/jboss/netty/buffer/AbstractChannelBuffer.java
++++ b/src/main/java/org/jboss/netty/buffer/AbstractChannelBuffer.java
+@@ -267,6 +267,7 @@
+         if (length == 0) {
+             return ChannelBuffers.EMPTY_BUFFER;
+         }
++        // TODO: Allow a user to specify the buffer factory as an overloaded method.
+         ChannelBuffer buf = ChannelBuffers.buffer(order(), length);
+         buf.writeBytes(this, readerIndex, length);
+         readerIndex += length;
+@@ -278,7 +279,7 @@
+         if (endIndex < 0) {
+             throw new NoSuchElementException();
+         }
+-        return readBytes(endIndex);
++        return readBytes(endIndex - readerIndex);
+     }
+ 
+     public ChannelBuffer readSlice(int length) {
+@@ -292,7 +293,7 @@
+         if (endIndex < 0) {
+             throw new NoSuchElementException();
+         }
+-        return readSlice(endIndex);
++        return readSlice(endIndex - readerIndex);
+     }
+ 
+     public void readBytes(byte[] dst, int dstIndex, int length) {

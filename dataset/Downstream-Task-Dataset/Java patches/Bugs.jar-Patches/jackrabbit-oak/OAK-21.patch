@@ -1,0 +1,16 @@
+diff --git a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/CompiledPermissionImpl.java b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/CompiledPermissionImpl.java
+index dc1b9c2..c9d0fa0 100644
+--- a/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/CompiledPermissionImpl.java
++++ b/oak-core/src/main/java/org/apache/jackrabbit/oak/security/authorization/permission/CompiledPermissionImpl.java
+@@ -157,7 +157,10 @@ final class CompiledPermissionImpl implements CompiledPermissions, PermissionCon
+                 // TODO: OAK-753 decide on where to filter out hidden items.
+                 return TreePermission.ALL;
+             case TreeTypeProvider.TYPE_VERSION:
+-                String ntName = checkNotNull(TreeUtil.getPrimaryTypeName(tree));
++                String ntName = TreeUtil.getPrimaryTypeName(tree);
++                if (ntName == null) {
++                    return TreePermission.EMPTY;
++                }
+                 if (VersionConstants.VERSION_STORE_NT_NAMES.contains(ntName) || VersionConstants.NT_ACTIVITY.equals(ntName)) {
+                     return new TreePermissionImpl(tree, TreeTypeProvider.TYPE_VERSION, parentPermission);
+                 } else {

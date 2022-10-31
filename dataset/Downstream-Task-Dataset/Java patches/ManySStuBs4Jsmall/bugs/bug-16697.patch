@@ -1,0 +1,13 @@
+diff --git a/gdx/src/com/badlogic/gdx/utils/Json.java b/gdx/src/com/badlogic/gdx/utils/Json.java
+index 4d9f676..5e61b74 100644
+--- a/gdx/src/com/badlogic/gdx/utils/Json.java
++++ b/gdx/src/com/badlogic/gdx/utils/Json.java
+@@ -939,7 +939,7 @@
+ 			Serializer serializer = classToSerializer.get(type);
+ 			if (serializer != null) return (T)serializer.read(this, jsonData, type);
+ 
+-			if (Serializable.class.isAssignableFrom(type)) {
++			if (ClassReflection.isAssignableFrom(Serializable.class, type)) {
+ 				// A Serializable may be read as an array, string, etc, even though it will be written as an object.
+ 				Object object = newInstance(type);
+ 				((Serializable)object).read(this, jsonData);

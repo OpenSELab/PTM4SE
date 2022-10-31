@@ -1,0 +1,67 @@
+diff --git a/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java b/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
+index a6f5e4c..c1889d2 100644
+--- a/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
++++ b/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
+@@ -2603,8 +2603,8 @@
+   /**
+    * Checks whether the owner belongs to the group.
+    *
+-   * @param owner The owner to check
+-   * @param group The group to check
++   * @param owner the owner to check
++   * @param group the group to check
+    * @throws FailedPreconditionException if owner does not belong to group
+    * @throws AccessControlException if this operation is not permitted
+    */
+@@ -2613,7 +2613,7 @@
+     try {
+       List<String> groups = CommonUtils.getGroups(owner);
+       if (groups == null || !groups.contains(group)) {
+-        throw new FailedPreconditionException("setOwner: owner " + owner
++        throw new FailedPreconditionException("Owner " + owner
+             + " does not belong to the group " + group);
+       }
+     } catch (IOException e) {
+diff --git a/shell/src/main/java/alluxio/shell/command/ChownCommand.java b/shell/src/main/java/alluxio/shell/command/ChownCommand.java
+index cba54bd..db56d8c 100644
+--- a/shell/src/main/java/alluxio/shell/command/ChownCommand.java
++++ b/shell/src/main/java/alluxio/shell/command/ChownCommand.java
+@@ -78,10 +78,10 @@
+   /**
+    * Changes the owner and group for the directory or file with the path specified in args.
+    *
+-   * @param path The {@link AlluxioURI} path as the input of the command
+-   * @param owner The owner to be updated to the file or directory
+-   * @param group The group to be updated to the file or directory
+-   * @param recursive Whether change the owner and group recursively
++   * @param path the {@link AlluxioURI} path as the input of the command
++   * @param owner the owner to be updated to the file or directory
++   * @param group the group to be updated to the file or directory
++   * @param recursive whether change the owner and group recursively
+    */
+   private void chown(AlluxioURI path, String owner, String group, boolean recursive)
+       throws AlluxioException, IOException {
+diff --git a/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java b/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
+index a6f5e4c..c1889d2 100644
+--- a/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
++++ b/core/server/master/src/main/java/alluxio/master/file/DefaultFileSystemMaster.java
+@@ -2603,8 +2603,8 @@
+   /**
+    * Checks whether the owner belongs to the group.
+    *
+-   * @param owner The owner to check
+-   * @param group The group to check
++   * @param owner the owner to check
++   * @param group the group to check
+    * @throws FailedPreconditionException if owner does not belong to group
+    * @throws AccessControlException if this operation is not permitted
+    */
+@@ -2613,7 +2613,7 @@
+     try {
+       List<String> groups = CommonUtils.getGroups(owner);
+       if (groups == null || !groups.contains(group)) {
+-        throw new FailedPreconditionException("setOwner: owner " + owner
++        throw new FailedPreconditionException("Owner " + owner
+             + " does not belong to the group " + group);
+       }
+     } catch (IOException e) {

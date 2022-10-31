@@ -1,0 +1,13 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/inputs/syslog/udp/SyslogUDPInput.java b/graylog2-server/src/main/java/org/graylog2/inputs/syslog/udp/SyslogUDPInput.java
+index 8c0b60d..f39cb59 100644
+--- a/graylog2-server/src/main/java/org/graylog2/inputs/syslog/udp/SyslogUDPInput.java
++++ b/graylog2-server/src/main/java/org/graylog2/inputs/syslog/udp/SyslogUDPInput.java
+@@ -49,7 +49,7 @@
+     public void launch() throws MisfireException {
+         // Register throughput counter gauges.
+         for(Map.Entry<String,Gauge<Long>> gauge : throughputCounter.gauges().entrySet()) {
+-            core.metrics().register(MetricRegistry.name(SyslogUDPInput.class, gauge.getKey()), gauge.getValue());
++            core.metrics().register(MetricRegistry.name(getUniqueReadableId(), gauge.getKey()), gauge.getValue());
+         }
+ 
+         final ExecutorService workerThreadPool = Executors.newCachedThreadPool(

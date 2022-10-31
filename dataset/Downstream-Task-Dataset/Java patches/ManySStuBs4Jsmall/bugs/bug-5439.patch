@@ -1,0 +1,26 @@
+diff --git a/camel-core/src/test/java/org/apache/camel/component/log/LogInputStreamTest.java b/camel-core/src/test/java/org/apache/camel/component/log/LogInputStreamTest.java
+index 898d03c..26b4c61 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/log/LogInputStreamTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/log/LogInputStreamTest.java
+@@ -41,7 +41,7 @@
+     public void testB() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:b");
+         mock.expectedMessageCount(1);
+-        mock.message(0).body(String.class).isEqualTo("Hello World");
++        mock.message(0).body(InputStream.class).convertToString().isEqualTo("Hello World");
+ 
+         InputStream is = new ByteArrayInputStream("Hello World".getBytes());
+         template.sendBody("direct:b", is);
+diff --git a/camel-core/src/test/java/org/apache/camel/component/log/LogInputStreamTest.java b/camel-core/src/test/java/org/apache/camel/component/log/LogInputStreamTest.java
+index 898d03c..26b4c61 100644
+--- a/camel-core/src/test/java/org/apache/camel/component/log/LogInputStreamTest.java
++++ b/camel-core/src/test/java/org/apache/camel/component/log/LogInputStreamTest.java
+@@ -41,7 +41,7 @@
+     public void testB() throws Exception {
+         MockEndpoint mock = getMockEndpoint("mock:b");
+         mock.expectedMessageCount(1);
+-        mock.message(0).body(String.class).isEqualTo("Hello World");
++        mock.message(0).body(InputStream.class).convertToString().isEqualTo("Hello World");
+ 
+         InputStream is = new ByteArrayInputStream("Hello World".getBytes());
+         template.sendBody("direct:b", is);

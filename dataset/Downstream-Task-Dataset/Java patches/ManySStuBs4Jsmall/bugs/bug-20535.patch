@@ -1,0 +1,22 @@
+diff --git a/src/web/org/openmrs/web/controller/remotecommunication/PostHl7Controller.java b/src/web/org/openmrs/web/controller/remotecommunication/PostHl7Controller.java
+index 076f9b2..3db171d 100644
+--- a/src/web/org/openmrs/web/controller/remotecommunication/PostHl7Controller.java
++++ b/src/web/org/openmrs/web/controller/remotecommunication/PostHl7Controller.java
+@@ -44,7 +44,7 @@
+ 			if (StringUtils.hasText(username) && StringUtils.hasText(password)) {
+ 				Context.authenticate(username, password);
+ 			} else {
+-				model.put("error", "RemoteCommunication.missingAuthentication");
++				model.put("error", "PostHl7.missingAuthentication");
+ 			}
+ 		}
+ 		if (Context.isAuthenticated()) {
+@@ -61,7 +61,7 @@
+ 				Context.getHL7Service().saveHL7InQueue(hl7InQueue);
+ 				success = true;
+ 			} else {
+-				model.put("error", "RemoteCommunication.sourceAndhl7MessageParametersRequired");
++				model.put("error", "PostHl7.sourceAndhl7MessageParametersRequired");
+ 			}
+ 		}
+ 		model.put("success", success);

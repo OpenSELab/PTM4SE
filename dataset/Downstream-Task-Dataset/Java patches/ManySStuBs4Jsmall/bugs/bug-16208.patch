@@ -1,0 +1,39 @@
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/GroupProperties.java b/hazelcast/src/main/java/com/hazelcast/impl/GroupProperties.java
+index 3606c9a..53340a0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/GroupProperties.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/GroupProperties.java
+@@ -278,7 +278,7 @@
+         CONCURRENT_MAP_SIMPLE_RECORD = new GroupProperty(config, PROP_CONCURRENT_MAP_SIMPLE_RECORD, "false");
+         CONNECTION_MONITOR_INTERVAL = new GroupProperty(config, PROP_CONNECTION_MONITOR_INTERVAL, "100");
+         CONNECTION_MONITOR_MAX_FAULTS = new GroupProperty(config, PROP_CONNECTION_MONITOR_MAX_FAULTS, "3");
+-        PARTITION_MIGRATION_INTERVAL = new GroupProperty(config, PROP_PARTITION_MIGRATION_INTERVAL, "10");
++        PARTITION_MIGRATION_INTERVAL = new GroupProperty(config, PROP_PARTITION_MIGRATION_INTERVAL, "1");
+         IMMEDIATE_BACKUP_INTERVAL = new GroupProperty(config, PROP_IMMEDIATE_BACKUP_INTERVAL, "0");
+         PARTITION_TABLE_SEND_INTERVAL = new GroupProperty(config, PROP_PARTITION_TABLE_SEND_INTERVAL, "10");
+         GRACEFUL_SHUTDOWN_MAX_WAIT = new GroupProperty(config, PROP_GRACEFUL_SHUTDOWN_MAX_WAIT, "600");
+diff --git a/hazelcast/src/main/java/com/hazelcast/nio/AbstractSerializer.java b/hazelcast/src/main/java/com/hazelcast/nio/AbstractSerializer.java
+index 1ce7c4d..1b978c5 100644
+--- a/hazelcast/src/main/java/com/hazelcast/nio/AbstractSerializer.java
++++ b/hazelcast/src/main/java/com/hazelcast/nio/AbstractSerializer.java
+@@ -33,7 +33,7 @@
+     private static final int OUTPUT_STREAM_BUFFER_SIZE = 100 << 10;
+ 
+     private static final Class[] PRIMITIVE_CLASSES_ARRAY = {int.class, long.class, boolean.class, byte.class,
+-            float.class, double.class, byte.class, char.class, short.class};
++            float.class, double.class, byte.class, char.class, short.class, void.class};
+     private static final int MAX_PRIM_CLASSNAME_LENGTH = 7; // boolean.class.getName().length();
+ 
+     private final FastByteArrayOutputStream bbos;
+diff --git a/hazelcast/src/main/java/com/hazelcast/impl/GroupProperties.java b/hazelcast/src/main/java/com/hazelcast/impl/GroupProperties.java
+index 3606c9a..53340a0 100644
+--- a/hazelcast/src/main/java/com/hazelcast/impl/GroupProperties.java
++++ b/hazelcast/src/main/java/com/hazelcast/impl/GroupProperties.java
+@@ -278,7 +278,7 @@
+         CONCURRENT_MAP_SIMPLE_RECORD = new GroupProperty(config, PROP_CONCURRENT_MAP_SIMPLE_RECORD, "false");
+         CONNECTION_MONITOR_INTERVAL = new GroupProperty(config, PROP_CONNECTION_MONITOR_INTERVAL, "100");
+         CONNECTION_MONITOR_MAX_FAULTS = new GroupProperty(config, PROP_CONNECTION_MONITOR_MAX_FAULTS, "3");
+-        PARTITION_MIGRATION_INTERVAL = new GroupProperty(config, PROP_PARTITION_MIGRATION_INTERVAL, "10");
++        PARTITION_MIGRATION_INTERVAL = new GroupProperty(config, PROP_PARTITION_MIGRATION_INTERVAL, "1");
+         IMMEDIATE_BACKUP_INTERVAL = new GroupProperty(config, PROP_IMMEDIATE_BACKUP_INTERVAL, "0");
+         PARTITION_TABLE_SEND_INTERVAL = new GroupProperty(config, PROP_PARTITION_TABLE_SEND_INTERVAL, "10");
+         GRACEFUL_SHUTDOWN_MAX_WAIT = new GroupProperty(config, PROP_GRACEFUL_SHUTDOWN_MAX_WAIT, "600");

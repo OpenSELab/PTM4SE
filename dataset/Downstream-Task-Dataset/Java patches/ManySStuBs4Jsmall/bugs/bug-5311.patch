@@ -1,0 +1,32 @@
+diff --git a/components/camel-mongodb/src/main/java/org/apache/camel/component/mongodb/MongoDbProducer.java b/components/camel-mongodb/src/main/java/org/apache/camel/component/mongodb/MongoDbProducer.java
+index 72c27a9..a3fb73a 100644
+--- a/components/camel-mongodb/src/main/java/org/apache/camel/component/mongodb/MongoDbProducer.java
++++ b/components/camel-mongodb/src/main/java/org/apache/camel/component/mongodb/MongoDbProducer.java
+@@ -341,9 +341,9 @@
+         DBObject query = exchange.getIn().getBody(DBObject.class);
+         Long answer;
+         if (query == null){
+-            answer = Long.valueOf(dbCol.count());    
++            answer = dbCol.count();
+         } else {
+-            answer = Long.valueOf(dbCol.count(query));    
++            answer = dbCol.count(query);
+         }
+         Message resultMessage = prepareResponseMessage(exchange, MongoDbOperation.count);
+         resultMessage.setBody(answer);
+diff --git a/components/camel-mongodb/src/main/java/org/apache/camel/component/mongodb/MongoDbProducer.java b/components/camel-mongodb/src/main/java/org/apache/camel/component/mongodb/MongoDbProducer.java
+index 72c27a9..a3fb73a 100644
+--- a/components/camel-mongodb/src/main/java/org/apache/camel/component/mongodb/MongoDbProducer.java
++++ b/components/camel-mongodb/src/main/java/org/apache/camel/component/mongodb/MongoDbProducer.java
+@@ -341,9 +341,9 @@
+         DBObject query = exchange.getIn().getBody(DBObject.class);
+         Long answer;
+         if (query == null){
+-            answer = Long.valueOf(dbCol.count());    
++            answer = dbCol.count();
+         } else {
+-            answer = Long.valueOf(dbCol.count(query));    
++            answer = dbCol.count(query);
+         }
+         Message resultMessage = prepareResponseMessage(exchange, MongoDbOperation.count);
+         resultMessage.setBody(answer);

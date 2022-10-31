@@ -1,0 +1,30 @@
+diff --git a/oak-segment/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeState.java b/oak-segment/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeState.java
+index cb42af2..6df8c38 100644
+--- a/oak-segment/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeState.java
++++ b/oak-segment/src/main/java/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeState.java
+@@ -555,9 +555,11 @@ public class SegmentNodeState extends Record implements NodeState {
+                 }
+             }
+         } else if (beforeChildName != Template.MANY_CHILD_NODES) {
++            boolean beforeChildStillExists = false;
+             for (ChildNodeEntry entry
+                     : afterTemplate.getChildNodeEntries(afterId)) {
+                 String childName = entry.getName();
++                beforeChildStillExists |= childName.equals(beforeChildName);
+                 NodeState afterChild = entry.getNodeState();
+                 if (beforeChildName.equals(childName)) {
+                     NodeState beforeChild =
+@@ -577,6 +579,13 @@ public class SegmentNodeState extends Record implements NodeState {
+                     return false;
+                 }
+             }
++            if (!beforeChildStillExists) {
++                NodeState beforeChild =
++                        beforeTemplate.getChildNode(beforeChildName, beforeId);
++                if (!diff.childNodeDeleted(beforeChildName, beforeChild)) {
++                    return false;
++                }
++            }
+         } else {
+             MapRecord afterMap = afterTemplate.getChildNodeMap(afterId);
+             MapRecord beforeMap = beforeTemplate.getChildNodeMap(beforeId);

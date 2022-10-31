@@ -1,0 +1,13 @@
+diff --git a/log4j-api/src/main/java/org/apache/logging/log4j/simple/SimpleLogger.java b/log4j-api/src/main/java/org/apache/logging/log4j/simple/SimpleLogger.java
+index a474940..90fc598 100644
+--- a/log4j-api/src/main/java/org/apache/logging/log4j/simple/SimpleLogger.java
++++ b/log4j-api/src/main/java/org/apache/logging/log4j/simple/SimpleLogger.java
+@@ -154,7 +154,7 @@ public class SimpleLogger extends AbstractLogger {
+         }
+         final Object[] params = msg.getParameters();
+         Throwable t;
+-        if (throwable == null && params != null && params[params.length - 1] instanceof Throwable) {
++        if (throwable == null && params != null && params.length > 0 && params[params.length - 1] instanceof Throwable) {
+             t = (Throwable) params[params.length - 1];
+         } else {
+             t = throwable;

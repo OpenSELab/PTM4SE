@@ -1,0 +1,46 @@
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/Checker.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/Checker.java
+index 0cf386a..79ccf23 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/Checker.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/Checker.java
+@@ -159,7 +159,8 @@
+         try {
+             final Object module = mModuleFactory.createModule(name);
+             if (!(module instanceof FileSetCheck)) {
+-                throw new CheckstyleException(name + " is not a FileSetCheck");
++                throw new CheckstyleException(name
++                    + " is not allowed as a module in Checker");
+             }
+             final FileSetCheck fsc = (FileSetCheck) module;
+             fsc.contextualize(mChildContext);
+@@ -169,7 +170,7 @@
+         catch (Exception ex) {
+             // TODO i18n
+             throw new CheckstyleException(
+-                    "cannot initialize filesetcheck with name "
++                    "cannot initialize module "
+                     + name + " - " + ex.getMessage());
+         }
+     }
+diff --git a/src/checkstyle/com/puppycrawl/tools/checkstyle/Checker.java b/src/checkstyle/com/puppycrawl/tools/checkstyle/Checker.java
+index 0cf386a..79ccf23 100644
+--- a/src/checkstyle/com/puppycrawl/tools/checkstyle/Checker.java
++++ b/src/checkstyle/com/puppycrawl/tools/checkstyle/Checker.java
+@@ -159,7 +159,8 @@
+         try {
+             final Object module = mModuleFactory.createModule(name);
+             if (!(module instanceof FileSetCheck)) {
+-                throw new CheckstyleException(name + " is not a FileSetCheck");
++                throw new CheckstyleException(name
++                    + " is not allowed as a module in Checker");
+             }
+             final FileSetCheck fsc = (FileSetCheck) module;
+             fsc.contextualize(mChildContext);
+@@ -169,7 +170,7 @@
+         catch (Exception ex) {
+             // TODO i18n
+             throw new CheckstyleException(
+-                    "cannot initialize filesetcheck with name "
++                    "cannot initialize module "
+                     + name + " - " + ex.getMessage());
+         }
+     }

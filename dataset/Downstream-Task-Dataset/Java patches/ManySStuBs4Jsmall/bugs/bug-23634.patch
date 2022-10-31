@@ -1,0 +1,26 @@
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/AbstractHornetQComponentControlHandler.java b/messaging/src/main/java/org/jboss/as/messaging/AbstractHornetQComponentControlHandler.java
+index b075370..99ec7cd 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/AbstractHornetQComponentControlHandler.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/AbstractHornetQComponentControlHandler.java
+@@ -83,7 +83,7 @@
+         if (READ_ATTRIBUTE_OPERATION.equals(operationName)) {
+             readAttributeValidator.validate(operation);
+             final String name = operation.require(NAME).asString();
+-            if (STARTED.equals(name)) {
++            if (STARTED.getName().equals(name)) {
+                 control = getHornetQComponentControl(context, operation, false);
+                 context.getResult().set(control.isStarted());
+             } else {
+diff --git a/messaging/src/main/java/org/jboss/as/messaging/AbstractHornetQComponentControlHandler.java b/messaging/src/main/java/org/jboss/as/messaging/AbstractHornetQComponentControlHandler.java
+index b075370..99ec7cd 100644
+--- a/messaging/src/main/java/org/jboss/as/messaging/AbstractHornetQComponentControlHandler.java
++++ b/messaging/src/main/java/org/jboss/as/messaging/AbstractHornetQComponentControlHandler.java
+@@ -83,7 +83,7 @@
+         if (READ_ATTRIBUTE_OPERATION.equals(operationName)) {
+             readAttributeValidator.validate(operation);
+             final String name = operation.require(NAME).asString();
+-            if (STARTED.equals(name)) {
++            if (STARTED.getName().equals(name)) {
+                 control = getHornetQComponentControl(context, operation, false);
+                 context.getResult().set(control.isStarted());
+             } else {

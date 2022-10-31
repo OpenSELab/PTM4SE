@@ -1,0 +1,72 @@
+diff --git a/core/src/main/java/tachyon/client/BlockHandlerLocal.java b/core/src/main/java/tachyon/client/BlockHandlerLocal.java
+index 1a29264..e3b6fe1 100644
+--- a/core/src/main/java/tachyon/client/BlockHandlerLocal.java
++++ b/core/src/main/java/tachyon/client/BlockHandlerLocal.java
+@@ -21,7 +21,8 @@
+  */
+ public final class BlockHandlerLocal extends BlockHandler {
+ 
+-  private final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++
+   private final RandomAccessFile mLocalFile;
+   private final FileChannel mLocalFileChannel;
+   private boolean mPermission = false;
+diff --git a/core/src/main/java/tachyon/master/MasterInfo.java b/core/src/main/java/tachyon/master/MasterInfo.java
+index 85352cb..e981fa5 100644
+--- a/core/src/main/java/tachyon/master/MasterInfo.java
++++ b/core/src/main/java/tachyon/master/MasterInfo.java
+@@ -1834,7 +1834,7 @@
+         case Version: {
+           if (ele.getInt("version") != Constants.JOURNAL_VERSION) {
+             throw new IOException("Image " + path + " has journal version " + ele.getInt("version")
+-                + " . The system has verion " + Constants.JOURNAL_VERSION);
++                + ". The system has version " + Constants.JOURNAL_VERSION);
+           }
+           break;
+         }
+diff --git a/core/src/main/java/tachyon/worker/nio/DataServerMessage.java b/core/src/main/java/tachyon/worker/nio/DataServerMessage.java
+index c7c433a..149a77c 100644
+--- a/core/src/main/java/tachyon/worker/nio/DataServerMessage.java
++++ b/core/src/main/java/tachyon/worker/nio/DataServerMessage.java
+@@ -116,7 +116,7 @@
+         }
+ 
+         String filePath = CommonUtils.concat(WorkerConf.get().DATA_FOLDER, blockId);
+-        ret.LOG.info("Try to response remote request by reading from " + filePath);
++        LOG.info("Try to response remote request by reading from " + filePath);
+         RandomAccessFile file = new RandomAccessFile(filePath, "r");
+ 
+         long fileLength = file.length();
+@@ -148,7 +148,7 @@
+         file.close();
+         ret.mIsMessageReady = true;
+         ret.generateHeader();
+-        ret.LOG.info("Response remote request by reading from " + filePath + " preparation done.");
++        LOG.info("Response remote request by reading from " + filePath + " preparation done.");
+       } catch (Exception e) {
+         // TODO This is a trick for now. The data may have been removed before remote retrieving.
+         ret.mBlockId = -ret.mBlockId;
+@@ -157,7 +157,7 @@
+         ret.mData = ByteBuffer.allocate(0);
+         ret.mIsMessageReady = true;
+         ret.generateHeader();
+-        ret.LOG.error("The file is not here : " + e.getMessage(), e);
++        LOG.error("The file is not here : " + e.getMessage(), e);
+       }
+     } else {
+       ret.mHeader = ByteBuffer.allocate(HEADER_LENGTH);
+diff --git a/core/src/main/java/tachyon/client/BlockHandlerLocal.java b/core/src/main/java/tachyon/client/BlockHandlerLocal.java
+index 1a29264..e3b6fe1 100644
+--- a/core/src/main/java/tachyon/client/BlockHandlerLocal.java
++++ b/core/src/main/java/tachyon/client/BlockHandlerLocal.java
+@@ -21,7 +21,8 @@
+  */
+ public final class BlockHandlerLocal extends BlockHandler {
+ 
+-  private final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
++
+   private final RandomAccessFile mLocalFile;
+   private final FileChannel mLocalFileChannel;
+   private boolean mPermission = false;

@@ -1,0 +1,44 @@
+diff --git a/core/src/main/java/com/yahoo/ycsb/measurements/OneMeasurementHistogram.java b/core/src/main/java/com/yahoo/ycsb/measurements/OneMeasurementHistogram.java
+index 4e8f564..a929fec 100644
+--- a/core/src/main/java/com/yahoo/ycsb/measurements/OneMeasurementHistogram.java
++++ b/core/src/main/java/com/yahoo/ycsb/measurements/OneMeasurementHistogram.java
+@@ -61,7 +61,7 @@
+ 	 * The sum of each latency measurement over all operations.
+ 	 * Calculated in ms.
+ 	 */
+-	double totallatency;
++	long totallatency;
+ 	
+ 	/**
+ 	 * The sum of each latency measurement squared over all operations. 
+@@ -125,7 +125,7 @@
+ 			histogram[latency/1000]++;
+ 		}
+ 		operations++;
+-		totallatency += ((double)latency) / 1000;
++		totallatency += latency/1000;
+ 		totalsquaredlatency += ((double)latency) * ((double)latency) / 1000000;
+ 		windowoperations++;
+ 		windowtotallatency += latency;
+diff --git a/core/src/main/java/com/yahoo/ycsb/measurements/OneMeasurementHistogram.java b/core/src/main/java/com/yahoo/ycsb/measurements/OneMeasurementHistogram.java
+index 4e8f564..a929fec 100644
+--- a/core/src/main/java/com/yahoo/ycsb/measurements/OneMeasurementHistogram.java
++++ b/core/src/main/java/com/yahoo/ycsb/measurements/OneMeasurementHistogram.java
+@@ -61,7 +61,7 @@
+ 	 * The sum of each latency measurement over all operations.
+ 	 * Calculated in ms.
+ 	 */
+-	double totallatency;
++	long totallatency;
+ 	
+ 	/**
+ 	 * The sum of each latency measurement squared over all operations. 
+@@ -125,7 +125,7 @@
+ 			histogram[latency/1000]++;
+ 		}
+ 		operations++;
+-		totallatency += ((double)latency) / 1000;
++		totallatency += latency/1000;
+ 		totalsquaredlatency += ((double)latency) * ((double)latency) / 1000000;
+ 		windowoperations++;
+ 		windowtotallatency += latency;

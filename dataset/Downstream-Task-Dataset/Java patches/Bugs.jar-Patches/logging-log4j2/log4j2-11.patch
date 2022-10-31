@@ -1,0 +1,13 @@
+diff --git a/log4j-core/src/main/java/org/apache/logging/log4j/core/pattern/ExtendedThrowablePatternConverter.java b/log4j-core/src/main/java/org/apache/logging/log4j/core/pattern/ExtendedThrowablePatternConverter.java
+index 3897721..2357093 100644
+--- a/log4j-core/src/main/java/org/apache/logging/log4j/core/pattern/ExtendedThrowablePatternConverter.java
++++ b/log4j-core/src/main/java/org/apache/logging/log4j/core/pattern/ExtendedThrowablePatternConverter.java
+@@ -64,7 +64,7 @@ public final class ExtendedThrowablePatternConverter extends ThrowablePatternCon
+             proxy = ((Log4jLogEvent) event).getThrownProxy();
+         }
+         final Throwable throwable = event.getThrown();
+-        if (throwable != null && options.anyLines()) {
++        if ((throwable != null || proxy != null) && options.anyLines()) {
+             if (proxy == null) {
+                 super.format(event, toAppendTo);
+                 return;

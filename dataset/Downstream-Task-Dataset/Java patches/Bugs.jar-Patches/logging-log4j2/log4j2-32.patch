@@ -1,0 +1,23 @@
+diff --git a/core/src/main/java/org/apache/logging/log4j/core/filter/RegexFilter.java b/core/src/main/java/org/apache/logging/log4j/core/filter/RegexFilter.java
+index ae41b86..56d8ec6 100644
+--- a/core/src/main/java/org/apache/logging/log4j/core/filter/RegexFilter.java
++++ b/core/src/main/java/org/apache/logging/log4j/core/filter/RegexFilter.java
+@@ -57,12 +57,18 @@ public final class RegexFilter extends AbstractFilter {
+     @Override
+     public Result filter(final Logger logger, final Level level, final Marker marker, final Object msg,
+                          final Throwable t) {
++        if (msg == null) {
++            return onMismatch;
++        }
+         return filter(msg.toString());
+     }
+ 
+     @Override
+     public Result filter(final Logger logger, final Level level, final Marker marker, final Message msg,
+                          final Throwable t) {
++        if (msg == null) {
++            return onMismatch;
++        }
+         final String text = useRawMessage ? msg.getFormat() : msg.getFormattedMessage();
+         return filter(text);
+     }

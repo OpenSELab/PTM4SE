@@ -1,0 +1,13 @@
+--- a/src/main/java/org/springframework/data/repository/config/RepositoryBeanNameGenerator.java
++++ b/src/main/java/org/springframework/data/repository/config/RepositoryBeanNameGenerator.java
+@@ -51,14 +51,17 @@ public class RepositoryBeanNameGenerator implements BeanNameGenerator, BeanClass
+ 	 */
+ 	public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {
+ 
+-		AnnotatedBeanDefinition beanDefinition = new AnnotatedGenericBeanDefinition(getRepositoryInterfaceFrom(definition));
++		AnnotatedBeanDefinition beanDefinition = definition instanceof AnnotatedBeanDefinition //
++				? (AnnotatedBeanDefinition) definition //
++				: new AnnotatedGenericBeanDefinition(getRepositoryInterfaceFrom(definition));
++
+ 		return DELEGATE.generateBeanName(beanDefinition, registry);
+ 	}

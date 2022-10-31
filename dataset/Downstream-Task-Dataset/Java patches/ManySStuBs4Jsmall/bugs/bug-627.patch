@@ -1,0 +1,26 @@
+diff --git a/tests/src/test/java/alluxio/hadoop/HdfsFileInputStreamIntegrationTest.java b/tests/src/test/java/alluxio/hadoop/HdfsFileInputStreamIntegrationTest.java
+index df89172..d74e0b3 100644
+--- a/tests/src/test/java/alluxio/hadoop/HdfsFileInputStreamIntegrationTest.java
++++ b/tests/src/test/java/alluxio/hadoop/HdfsFileInputStreamIntegrationTest.java
+@@ -410,7 +410,7 @@
+   @Test
+   public void positionedReadCacheNoPartialCache() throws IOException, AlluxioException {
+     createUfsInStreamNoPartialcache(ReadType.CACHE);
+-    mUfsInputStream.readFully(0, new byte[FILE_LEN]);
++    mUfsInputStream.readFully(0, new byte[FILE_LEN - 1]);
+     URIStatus statusUfsOnlyFile = mFileSystem.getStatus(new AlluxioURI(UFS_ONLY_FILE));
+     Assert.assertEquals(0, statusUfsOnlyFile.getInMemoryPercentage());
+   }
+diff --git a/tests/src/test/java/alluxio/hadoop/HdfsFileInputStreamIntegrationTest.java b/tests/src/test/java/alluxio/hadoop/HdfsFileInputStreamIntegrationTest.java
+index df89172..d74e0b3 100644
+--- a/tests/src/test/java/alluxio/hadoop/HdfsFileInputStreamIntegrationTest.java
++++ b/tests/src/test/java/alluxio/hadoop/HdfsFileInputStreamIntegrationTest.java
+@@ -410,7 +410,7 @@
+   @Test
+   public void positionedReadCacheNoPartialCache() throws IOException, AlluxioException {
+     createUfsInStreamNoPartialcache(ReadType.CACHE);
+-    mUfsInputStream.readFully(0, new byte[FILE_LEN]);
++    mUfsInputStream.readFully(0, new byte[FILE_LEN - 1]);
+     URIStatus statusUfsOnlyFile = mFileSystem.getStatus(new AlluxioURI(UFS_ONLY_FILE));
+     Assert.assertEquals(0, statusUfsOnlyFile.getInMemoryPercentage());
+   }

@@ -1,0 +1,26 @@
+diff --git a/src/main/java/tachyon/WorkerStorage.java b/src/main/java/tachyon/WorkerStorage.java
+index 006778f..0f7a2ea 100644
+--- a/src/main/java/tachyon/WorkerStorage.java
++++ b/src/main/java/tachyon/WorkerStorage.java
+@@ -269,7 +269,7 @@
+     byte[] bulk = new byte[BULKSIZE];
+     for (int k = 0; k < (buf.limit() + BULKSIZE - 1) / BULKSIZE; k++) {
+       int len = BULKSIZE < buf.remaining() ? BULKSIZE : buf.remaining();
+-      buf.get(bulk, buf.position(), len);
++      buf.get(bulk, 0, len);
+       os.write(bulk, 0, len);
+     }
+     os.close();
+diff --git a/src/main/java/tachyon/WorkerStorage.java b/src/main/java/tachyon/WorkerStorage.java
+index 006778f..0f7a2ea 100644
+--- a/src/main/java/tachyon/WorkerStorage.java
++++ b/src/main/java/tachyon/WorkerStorage.java
+@@ -269,7 +269,7 @@
+     byte[] bulk = new byte[BULKSIZE];
+     for (int k = 0; k < (buf.limit() + BULKSIZE - 1) / BULKSIZE; k++) {
+       int len = BULKSIZE < buf.remaining() ? BULKSIZE : buf.remaining();
+-      buf.get(bulk, buf.position(), len);
++      buf.get(bulk, 0, len);
+       os.write(bulk, 0, len);
+     }
+     os.close();

@@ -1,0 +1,56 @@
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/SessionsResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/SessionsResource.java
+index 46f7352..338a407 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/SessionsResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/SessionsResource.java
+@@ -115,7 +115,7 @@
+             result.validUntil = new DateTime(session.getLastAccessTime()).plus(session.getTimeout()).toDate();
+             return result;
+         }
+-        throw new NotAuthorizedException("Invalid username or password", "Graylog2 Server session");
++        throw new NotAuthorizedException("Invalid username or password", "Basic realm=\"Graylog2 Server session\"");
+     }
+ 
+     @DELETE
+diff --git a/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthenticationFilter.java b/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthenticationFilter.java
+index eb79e04..1ba81c1 100644
+--- a/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthenticationFilter.java
++++ b/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthenticationFilter.java
+@@ -54,10 +54,10 @@
+ 
+             } catch (LockedAccountException e) {
+                 log.debug("Unable to authenticate user, account is locked.", e);
+-                throw new NotAuthorizedException(e, "Basic", "Graylog2 Server");
++                throw new NotAuthorizedException(e, "Basic realm=\"Graylog2 Server\"");
+             } catch (AuthenticationException e) {
+                 log.debug("Unable to authenticate user.", e);
+-                throw new NotAuthorizedException(e, "Basic", "Graylog2 Server");
++                throw new NotAuthorizedException(e, "Basic realm=\"Graylog2 Server\"");
+             }
+         }
+     }
+diff --git a/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthorizationFilter.java b/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthorizationFilter.java
+index 9b6ff6a..c5be872 100644
+--- a/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthorizationFilter.java
++++ b/graylog2-server/src/main/java/org/graylog2/security/ShiroAuthorizationFilter.java
+@@ -52,7 +52,7 @@
+             new ContextAwarePermissionAnnotationHandler(context).assertAuthorized(annotation);
+         } catch (AuthorizationException e) {
+             log.info("User not authorized.", e);
+-            throw new NotAuthorizedException(e, "Basic", "Graylog2 Server");
++            throw new NotAuthorizedException(e, "Basic realm=\"Graylog2 Server\"");
+         }
+     }
+ }
+diff --git a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/SessionsResource.java b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/SessionsResource.java
+index 46f7352..338a407 100644
+--- a/graylog2-server/src/main/java/org/graylog2/rest/resources/system/SessionsResource.java
++++ b/graylog2-server/src/main/java/org/graylog2/rest/resources/system/SessionsResource.java
+@@ -115,7 +115,7 @@
+             result.validUntil = new DateTime(session.getLastAccessTime()).plus(session.getTimeout()).toDate();
+             return result;
+         }
+-        throw new NotAuthorizedException("Invalid username or password", "Graylog2 Server session");
++        throw new NotAuthorizedException("Invalid username or password", "Basic realm=\"Graylog2 Server session\"");
+     }
+ 
+     @DELETE

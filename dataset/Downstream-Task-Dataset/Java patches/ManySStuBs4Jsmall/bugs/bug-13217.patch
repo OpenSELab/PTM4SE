@@ -1,0 +1,28 @@
+diff --git a/presto-client/src/main/java/com/facebook/presto/client/StatementClient.java b/presto-client/src/main/java/com/facebook/presto/client/StatementClient.java
+index ef06bc3..4b5879f 100644
+--- a/presto-client/src/main/java/com/facebook/presto/client/StatementClient.java
++++ b/presto-client/src/main/java/com/facebook/presto/client/StatementClient.java
+@@ -194,8 +194,7 @@
+             if (response.getStatusCode() != HttpStatus.SERVICE_UNAVAILABLE.code()) {
+                 gone.set(true);
+                 if (!response.hasValue()) {
+-                    throw new RuntimeException(format("Error fetching next at %s returned an invalid response", request.getUri()),
+-                            response.getException());
++                    throw new RuntimeException(format("Error fetching next at %s returned an invalid response: %s", request.getUri(), response), response.getException());
+                 }
+                 throw new RuntimeException(format("Error fetching next at %s returned %s: %s",
+                         request.getUri(),
+diff --git a/presto-client/src/main/java/com/facebook/presto/client/StatementClient.java b/presto-client/src/main/java/com/facebook/presto/client/StatementClient.java
+index ef06bc3..4b5879f 100644
+--- a/presto-client/src/main/java/com/facebook/presto/client/StatementClient.java
++++ b/presto-client/src/main/java/com/facebook/presto/client/StatementClient.java
+@@ -194,8 +194,7 @@
+             if (response.getStatusCode() != HttpStatus.SERVICE_UNAVAILABLE.code()) {
+                 gone.set(true);
+                 if (!response.hasValue()) {
+-                    throw new RuntimeException(format("Error fetching next at %s returned an invalid response", request.getUri()),
+-                            response.getException());
++                    throw new RuntimeException(format("Error fetching next at %s returned an invalid response: %s", request.getUri(), response), response.getException());
+                 }
+                 throw new RuntimeException(format("Error fetching next at %s returned %s: %s",
+                         request.getUri(),

@@ -1,0 +1,47 @@
+diff --git a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
+index a514723..b2f7a47 100644
+--- a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
++++ b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
+@@ -303,7 +303,7 @@
+ 					LOG.debug("Request {} was successfully answered after {} ms.", request, durationMillis);
+ 					stats.reportSuccessfulRequest(durationMillis);
+ 				} else {
+-					LOG.debug("Request {} failed after {} ms : ", request, durationMillis, future.cause());
++					LOG.debug("Request {} failed after {} ms due to: {}", request, durationMillis, future.cause());
+ 					stats.reportFailedRequest();
+ 				}
+ 			}
+diff --git a/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java b/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
+index 2e24431..8201305 100644
+--- a/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
++++ b/flink-queryable-state/flink-queryable-state-runtime/src/main/java/org/apache/flink/queryablestate/client/proxy/KvStateClientProxyHandler.java
+@@ -197,14 +197,14 @@
+ 		final CompletableFuture<KvStateLocation> cachedFuture = lookupCache.get(cacheKey);
+ 
+ 		if (!forceUpdate && cachedFuture != null && !cachedFuture.isCompletedExceptionally()) {
+-			LOG.debug("Retrieving location for state={} of job={} from the cache.", jobId, queryableStateName);
++			LOG.debug("Retrieving location for state={} of job={} from the cache.", queryableStateName, jobId);
+ 			return cachedFuture;
+ 		}
+ 
+ 		final KvStateLocationOracle kvStateLocationOracle = proxy.getKvStateLocationOracle(jobId);
+ 
+ 		if (kvStateLocationOracle != null) {
+-			LOG.debug("Retrieving location for state={} of job={} from the key-value state location oracle.", jobId, queryableStateName);
++			LOG.debug("Retrieving location for state={} of job={} from the key-value state location oracle.", queryableStateName, jobId);
+ 			final CompletableFuture<KvStateLocation> location = new CompletableFuture<>();
+ 			lookupCache.put(cacheKey, location);
+ 
+diff --git a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
+index a514723..b2f7a47 100644
+--- a/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
++++ b/flink-queryable-state/flink-queryable-state-client-java/src/main/java/org/apache/flink/queryablestate/network/AbstractServerHandler.java
+@@ -303,7 +303,7 @@
+ 					LOG.debug("Request {} was successfully answered after {} ms.", request, durationMillis);
+ 					stats.reportSuccessfulRequest(durationMillis);
+ 				} else {
+-					LOG.debug("Request {} failed after {} ms : ", request, durationMillis, future.cause());
++					LOG.debug("Request {} failed after {} ms due to: {}", request, durationMillis, future.cause());
+ 					stats.reportFailedRequest();
+ 				}
+ 			}

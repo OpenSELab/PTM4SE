@@ -1,0 +1,129 @@
+diff --git a/common/src/main/java/io/netty/util/internal/PlatformDependent.java b/common/src/main/java/io/netty/util/internal/PlatformDependent.java
+index 69dfad2..d0a7b14 100644
+--- a/common/src/main/java/io/netty/util/internal/PlatformDependent.java
++++ b/common/src/main/java/io/netty/util/internal/PlatformDependent.java
+@@ -555,7 +555,7 @@
+      * use {@link AtomicReferenceFieldUpdater#newUpdater(Class, Class, String)} as fallback.
+      */
+     public static <U, W> AtomicReferenceFieldUpdater<U, W> newAtomicReferenceFieldUpdater(
+-            Class<U> tclass, String fieldName) {
++            Class<? super U> tclass, String fieldName) {
+         if (hasUnsafe()) {
+             try {
+                 return PlatformDependent0.newAtomicReferenceFieldUpdater(tclass, fieldName);
+@@ -572,7 +572,7 @@
+      * use {@link AtomicIntegerFieldUpdater#newUpdater(Class, String)} as fallback.
+      */
+     public static <T> AtomicIntegerFieldUpdater<T> newAtomicIntegerFieldUpdater(
+-            Class<?> tclass, String fieldName) {
++            Class<? super T> tclass, String fieldName) {
+         if (hasUnsafe()) {
+             try {
+                 return PlatformDependent0.newAtomicIntegerFieldUpdater(tclass, fieldName);
+@@ -589,7 +589,7 @@
+      * use {@link AtomicLongFieldUpdater#newUpdater(Class, String)} as fallback.
+      */
+     public static <T> AtomicLongFieldUpdater<T> newAtomicLongFieldUpdater(
+-            Class<?> tclass, String fieldName) {
++            Class<? super T> tclass, String fieldName) {
+         if (hasUnsafe()) {
+             try {
+                 return PlatformDependent0.newAtomicLongFieldUpdater(tclass, fieldName);
+diff --git a/common/src/main/java/io/netty/util/internal/PlatformDependent0.java b/common/src/main/java/io/netty/util/internal/PlatformDependent0.java
+index 6cb67f3..694e26c 100644
+--- a/common/src/main/java/io/netty/util/internal/PlatformDependent0.java
++++ b/common/src/main/java/io/netty/util/internal/PlatformDependent0.java
+@@ -484,17 +484,17 @@
+     }
+ 
+     static <U, W> AtomicReferenceFieldUpdater<U, W> newAtomicReferenceFieldUpdater(
+-            Class<U> tclass, String fieldName) throws Exception {
++            Class<? super U> tclass, String fieldName) throws Exception {
+         return new UnsafeAtomicReferenceFieldUpdater<U, W>(UNSAFE, tclass, fieldName);
+     }
+ 
+     static <T> AtomicIntegerFieldUpdater<T> newAtomicIntegerFieldUpdater(
+-            Class<?> tclass, String fieldName) throws Exception {
++            Class<? super T> tclass, String fieldName) throws Exception {
+         return new UnsafeAtomicIntegerFieldUpdater<T>(UNSAFE, tclass, fieldName);
+     }
+ 
+     static <T> AtomicLongFieldUpdater<T> newAtomicLongFieldUpdater(
+-            Class<?> tclass, String fieldName) throws Exception {
++            Class<? super T> tclass, String fieldName) throws Exception {
+         return new UnsafeAtomicLongFieldUpdater<T>(UNSAFE, tclass, fieldName);
+     }
+ 
+diff --git a/common/src/main/java/io/netty/util/internal/UnsafeAtomicIntegerFieldUpdater.java b/common/src/main/java/io/netty/util/internal/UnsafeAtomicIntegerFieldUpdater.java
+index bd18424..a9a2bd2 100644
+--- a/common/src/main/java/io/netty/util/internal/UnsafeAtomicIntegerFieldUpdater.java
++++ b/common/src/main/java/io/netty/util/internal/UnsafeAtomicIntegerFieldUpdater.java
+@@ -25,7 +25,8 @@
+     private final long offset;
+     private final Unsafe unsafe;
+ 
+-    UnsafeAtomicIntegerFieldUpdater(Unsafe unsafe, Class<?> tClass, String fieldName) throws NoSuchFieldException {
++    UnsafeAtomicIntegerFieldUpdater(Unsafe unsafe, Class<? super T> tClass, String fieldName)
++            throws NoSuchFieldException {
+         Field field = tClass.getDeclaredField(fieldName);
+         if (!Modifier.isVolatile(field.getModifiers())) {
+             throw new IllegalArgumentException("Must be volatile");
+diff --git a/common/src/main/java/io/netty/util/internal/UnsafeAtomicLongFieldUpdater.java b/common/src/main/java/io/netty/util/internal/UnsafeAtomicLongFieldUpdater.java
+index 229fa8c..da630fd 100644
+--- a/common/src/main/java/io/netty/util/internal/UnsafeAtomicLongFieldUpdater.java
++++ b/common/src/main/java/io/netty/util/internal/UnsafeAtomicLongFieldUpdater.java
+@@ -25,7 +25,8 @@
+     private final long offset;
+     private final Unsafe unsafe;
+ 
+-    UnsafeAtomicLongFieldUpdater(Unsafe unsafe, Class<?> tClass, String fieldName) throws NoSuchFieldException {
++    UnsafeAtomicLongFieldUpdater(Unsafe unsafe, Class<? super T> tClass, String fieldName)
++            throws NoSuchFieldException {
+         Field field = tClass.getDeclaredField(fieldName);
+         if (!Modifier.isVolatile(field.getModifiers())) {
+             throw new IllegalArgumentException("Must be volatile");
+diff --git a/common/src/main/java/io/netty/util/internal/UnsafeAtomicReferenceFieldUpdater.java b/common/src/main/java/io/netty/util/internal/UnsafeAtomicReferenceFieldUpdater.java
+index f0c647e..d839f66 100644
+--- a/common/src/main/java/io/netty/util/internal/UnsafeAtomicReferenceFieldUpdater.java
++++ b/common/src/main/java/io/netty/util/internal/UnsafeAtomicReferenceFieldUpdater.java
+@@ -25,7 +25,8 @@
+     private final long offset;
+     private final Unsafe unsafe;
+ 
+-    UnsafeAtomicReferenceFieldUpdater(Unsafe unsafe, Class<U> tClass, String fieldName) throws NoSuchFieldException {
++    UnsafeAtomicReferenceFieldUpdater(Unsafe unsafe, Class<? super U> tClass, String fieldName)
++            throws NoSuchFieldException {
+         Field field = tClass.getDeclaredField(fieldName);
+         if (!Modifier.isVolatile(field.getModifiers())) {
+             throw new IllegalArgumentException("Must be volatile");
+diff --git a/common/src/main/java/io/netty/util/internal/PlatformDependent.java b/common/src/main/java/io/netty/util/internal/PlatformDependent.java
+index 69dfad2..d0a7b14 100644
+--- a/common/src/main/java/io/netty/util/internal/PlatformDependent.java
++++ b/common/src/main/java/io/netty/util/internal/PlatformDependent.java
+@@ -555,7 +555,7 @@
+      * use {@link AtomicReferenceFieldUpdater#newUpdater(Class, Class, String)} as fallback.
+      */
+     public static <U, W> AtomicReferenceFieldUpdater<U, W> newAtomicReferenceFieldUpdater(
+-            Class<U> tclass, String fieldName) {
++            Class<? super U> tclass, String fieldName) {
+         if (hasUnsafe()) {
+             try {
+                 return PlatformDependent0.newAtomicReferenceFieldUpdater(tclass, fieldName);
+@@ -572,7 +572,7 @@
+      * use {@link AtomicIntegerFieldUpdater#newUpdater(Class, String)} as fallback.
+      */
+     public static <T> AtomicIntegerFieldUpdater<T> newAtomicIntegerFieldUpdater(
+-            Class<?> tclass, String fieldName) {
++            Class<? super T> tclass, String fieldName) {
+         if (hasUnsafe()) {
+             try {
+                 return PlatformDependent0.newAtomicIntegerFieldUpdater(tclass, fieldName);
+@@ -589,7 +589,7 @@
+      * use {@link AtomicLongFieldUpdater#newUpdater(Class, String)} as fallback.
+      */
+     public static <T> AtomicLongFieldUpdater<T> newAtomicLongFieldUpdater(
+-            Class<?> tclass, String fieldName) {
++            Class<? super T> tclass, String fieldName) {
+         if (hasUnsafe()) {
+             try {
+                 return PlatformDependent0.newAtomicLongFieldUpdater(tclass, fieldName);

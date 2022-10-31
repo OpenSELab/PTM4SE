@@ -1,0 +1,30 @@
+diff --git a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/value/ValueFactoryImpl.java b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/value/ValueFactoryImpl.java
+index eb45232..a722509 100644
+--- a/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/value/ValueFactoryImpl.java
++++ b/oak-jcr/src/main/java/org/apache/jackrabbit/oak/jcr/value/ValueFactoryImpl.java
+@@ -37,6 +37,7 @@ import java.io.InputStream;
+ import java.io.UnsupportedEncodingException;
+ import java.math.BigDecimal;
+ import java.util.Calendar;
++import java.util.UUID;
+ 
+ /**
+  * Implementation of {@link ValueFactory} interface based on the
+@@ -185,6 +186,17 @@ public class ValueFactoryImpl implements ValueFactory {
+                     cv = factory.createValue(value, type);
+                     break;
+ 
++                case PropertyType.REFERENCE:
++                case PropertyType.WEAKREFERENCE:
++                    // TODO: move to identifier/uuid management utility instead of relying on impl specific uuid-format here.
++                    try {
++                        UUID.fromString(value);
++                    } catch (IllegalArgumentException e) {
++                        throw new ValueFormatException(e);
++                    }
++                    cv = factory.createValue(value, type);
++                    break;
++
+                 case PropertyType.BINARY:
+                     cv = factory.createValue(new ByteArrayInputStream(value.getBytes("UTF-8")));
+                     break;

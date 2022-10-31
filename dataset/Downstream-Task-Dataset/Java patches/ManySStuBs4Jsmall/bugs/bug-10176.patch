@@ -1,0 +1,13 @@
+diff --git a/core/src/main/java/cucumber/runtime/table/TableConverter.java b/core/src/main/java/cucumber/runtime/table/TableConverter.java
+index e502d1e..53c9faf 100644
+--- a/core/src/main/java/cucumber/runtime/table/TableConverter.java
++++ b/core/src/main/java/cucumber/runtime/table/TableConverter.java
+@@ -289,7 +289,7 @@
+     private boolean isListOfSingleValue(Object object) {
+         if (object instanceof List) {
+             List list = (List) object;
+-            return list.size() > 0 && xStream.getSingleValueConverter(list.get(0).getClass()) != null;
++            return !list.isEmpty() && xStream.getSingleValueConverter(list.get(0).getClass()) != null;
+         }
+         return false;
+     }

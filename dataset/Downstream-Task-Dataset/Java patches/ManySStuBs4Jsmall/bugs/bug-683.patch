@@ -1,0 +1,26 @@
+diff --git a/core/server/src/main/java/alluxio/master/file/meta/InodeTree.java b/core/server/src/main/java/alluxio/master/file/meta/InodeTree.java
+index 965d750..afbfbe4 100644
+--- a/core/server/src/main/java/alluxio/master/file/meta/InodeTree.java
++++ b/core/server/src/main/java/alluxio/master/file/meta/InodeTree.java
+@@ -1027,7 +1027,7 @@
+           // looking for has not been created in the meantime.
+           lockList.unlockLast();
+           lockList.lockWrite(current);
+-          Inode recheckNext = ((InodeDirectory) current).getChild(pathComponents[i]);
++          Inode<?> recheckNext = ((InodeDirectory) current).getChild(pathComponents[i]);
+           if (recheckNext != null) {
+             // When releasing the lock and reacquiring the lock, another thread inserted the node we
+             // are looking for. Use this existing next node.
+diff --git a/core/server/src/main/java/alluxio/master/file/meta/InodeTree.java b/core/server/src/main/java/alluxio/master/file/meta/InodeTree.java
+index 965d750..afbfbe4 100644
+--- a/core/server/src/main/java/alluxio/master/file/meta/InodeTree.java
++++ b/core/server/src/main/java/alluxio/master/file/meta/InodeTree.java
+@@ -1027,7 +1027,7 @@
+           // looking for has not been created in the meantime.
+           lockList.unlockLast();
+           lockList.lockWrite(current);
+-          Inode recheckNext = ((InodeDirectory) current).getChild(pathComponents[i]);
++          Inode<?> recheckNext = ((InodeDirectory) current).getChild(pathComponents[i]);
+           if (recheckNext != null) {
+             // When releasing the lock and reacquiring the lock, another thread inserted the node we
+             // are looking for. Use this existing next node.

@@ -1,0 +1,26 @@
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g3d/loader/G3dModelLoader.java b/gdx/src/com/badlogic/gdx/graphics/g3d/loader/G3dModelLoader.java
+index 6d28bd5..354bdb9 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g3d/loader/G3dModelLoader.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g3d/loader/G3dModelLoader.java
+@@ -210,7 +210,7 @@
+ 						String fileName = texture.getString("filename", null);
+ 						if(fileName == null)
+ 							throw new GdxRuntimeException("Texture needs filename.");
+-						jsonTexture.fileName = materialDir + "/" + fileName;
++						jsonTexture.fileName = materialDir + (materialDir.endsWith("/") ? "" : "/") + fileName;
+ 						
+ 						jsonTexture.uvTranslation = readVector2(texture.get("uvTranslation"), 0f, 0f);
+ 						jsonTexture.uvScaling = readVector2(texture.get("uvScaling"), 1f, 1f);
+diff --git a/gdx/src/com/badlogic/gdx/graphics/g3d/loader/G3dModelLoader.java b/gdx/src/com/badlogic/gdx/graphics/g3d/loader/G3dModelLoader.java
+index 6d28bd5..354bdb9 100644
+--- a/gdx/src/com/badlogic/gdx/graphics/g3d/loader/G3dModelLoader.java
++++ b/gdx/src/com/badlogic/gdx/graphics/g3d/loader/G3dModelLoader.java
+@@ -210,7 +210,7 @@
+ 						String fileName = texture.getString("filename", null);
+ 						if(fileName == null)
+ 							throw new GdxRuntimeException("Texture needs filename.");
+-						jsonTexture.fileName = materialDir + "/" + fileName;
++						jsonTexture.fileName = materialDir + (materialDir.endsWith("/") ? "" : "/") + fileName;
+ 						
+ 						jsonTexture.uvTranslation = readVector2(texture.get("uvTranslation"), 0f, 0f);
+ 						jsonTexture.uvScaling = readVector2(texture.get("uvScaling"), 1f, 1f);

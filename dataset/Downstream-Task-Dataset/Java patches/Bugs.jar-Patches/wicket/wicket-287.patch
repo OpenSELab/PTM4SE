@@ -1,0 +1,15 @@
+diff --git a/wicket-core/src/main/java/org/apache/wicket/protocol/http/WicketFilter.java b/wicket-core/src/main/java/org/apache/wicket/protocol/http/WicketFilter.java
+index 679cfbf..d73a4a7 100644
+--- a/wicket-core/src/main/java/org/apache/wicket/protocol/http/WicketFilter.java
++++ b/wicket-core/src/main/java/org/apache/wicket/protocol/http/WicketFilter.java
+@@ -519,6 +519,10 @@ public class WicketFilter implements Filter
+ 				pattern = "";
+ 			}
+ 
++			if (pattern.endsWith("*"))
++			{
++				pattern = pattern.substring(0, pattern.length() - 1);
++			}
+ 			return pattern;
+ 		}
+ 		return null;

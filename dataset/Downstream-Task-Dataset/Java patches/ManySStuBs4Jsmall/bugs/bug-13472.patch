@@ -1,0 +1,22 @@
+diff --git a/FiltersPlugin/src/org/gephi/filters/plugin/attribute/AttributeRangeBuilder.java b/FiltersPlugin/src/org/gephi/filters/plugin/attribute/AttributeRangeBuilder.java
+index 375f53d..cd2c181 100644
+--- a/FiltersPlugin/src/org/gephi/filters/plugin/attribute/AttributeRangeBuilder.java
++++ b/FiltersPlugin/src/org/gephi/filters/plugin/attribute/AttributeRangeBuilder.java
+@@ -173,7 +173,7 @@
+         private AttributeColumn column;
+         private DynamicAttributesHelper dynamicHelper = new DynamicAttributesHelper(this, null);
+         //States
+-        private Comparable[] values;
++        private Comparable[] values = new Comparable[0];
+ 
+         public AttributeRangeFilter(AttributeColumn column) {
+             this.column = column;
+@@ -283,7 +283,7 @@
+         }
+ 
+         public void setRange(Range range) {
+-            if (range.getMinimum() == null && range.getMaximum() == null) {
++            if (range.getMinimum() == null && range.getMaximum() == null && this.range != null) {
+                 //Opening project
+                 this.range = new Range(range.getLowerBound(), range.getUpperBound(), this.range.getMinimum(), this.range.getMaximum());
+             } else {

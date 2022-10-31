@@ -1,0 +1,26 @@
+diff --git a/presto-server/src/main/java/com/facebook/presto/server/StatementResource.java b/presto-server/src/main/java/com/facebook/presto/server/StatementResource.java
+index a652a1d..157b49c 100644
+--- a/presto-server/src/main/java/com/facebook/presto/server/StatementResource.java
++++ b/presto-server/src/main/java/com/facebook/presto/server/StatementResource.java
+@@ -332,7 +332,7 @@
+                 URI uri = uriBuilderFrom(taskInfo.getSelf()).appendPath("results").appendPath(bufferId).build();
+                 locations.add(uri);
+             }
+-            if (outputStage.getState() != StageState.PLANNED && outputStage.getState() != StageState.SCHEDULED) {
++            if ((outputStage.getState() != StageState.PLANNED) && (outputStage.getState() != StageState.SCHEDULING)) {
+                 noMoreLocations.set(true);
+             }
+         }
+diff --git a/presto-server/src/main/java/com/facebook/presto/server/StatementResource.java b/presto-server/src/main/java/com/facebook/presto/server/StatementResource.java
+index a652a1d..157b49c 100644
+--- a/presto-server/src/main/java/com/facebook/presto/server/StatementResource.java
++++ b/presto-server/src/main/java/com/facebook/presto/server/StatementResource.java
+@@ -332,7 +332,7 @@
+                 URI uri = uriBuilderFrom(taskInfo.getSelf()).appendPath("results").appendPath(bufferId).build();
+                 locations.add(uri);
+             }
+-            if (outputStage.getState() != StageState.PLANNED && outputStage.getState() != StageState.SCHEDULED) {
++            if ((outputStage.getState() != StageState.PLANNED) && (outputStage.getState() != StageState.SCHEDULING)) {
+                 noMoreLocations.set(true);
+             }
+         }

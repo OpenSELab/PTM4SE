@@ -1,0 +1,13 @@
+diff --git a/presto-main/src/test/java/com/facebook/presto/operator/TestWindowOperator.java b/presto-main/src/test/java/com/facebook/presto/operator/TestWindowOperator.java
+index 6e185c4..5917582 100644
+--- a/presto-main/src/test/java/com/facebook/presto/operator/TestWindowOperator.java
++++ b/presto-main/src/test/java/com/facebook/presto/operator/TestWindowOperator.java
+@@ -204,7 +204,7 @@
+         assertOperatorEquals(operatorFactory, driverContext, input, expected);
+     }
+ 
+-    @Test(expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded local user memory limit of 10B")
++    @Test(expectedExceptions = ExceededMemoryLimitException.class, expectedExceptionsMessageRegExp = "Query exceeded per-node user memory limit of 10B")
+     public void testMemoryLimit()
+     {
+         List<Page> input = rowPagesBuilder(BIGINT, DOUBLE)

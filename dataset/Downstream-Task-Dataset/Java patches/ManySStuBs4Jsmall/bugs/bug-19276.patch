@@ -1,0 +1,217 @@
+diff --git a/bundles/binding/org.openhab.binding.davis/src/main/java/org/openhab/binding/davis/datatypes/DataTypeBarometricTrend.java b/bundles/binding/org.openhab.binding.davis/src/main/java/org/openhab/binding/davis/datatypes/DataTypeBarometricTrend.java
+index 5da9fed..56d2929 100644
+--- a/bundles/binding/org.openhab.binding.davis/src/main/java/org/openhab/binding/davis/datatypes/DataTypeBarometricTrend.java
++++ b/bundles/binding/org.openhab.binding.davis/src/main/java/org/openhab/binding/davis/datatypes/DataTypeBarometricTrend.java
+@@ -44,7 +44,7 @@
+                 trend = "no trend info available";
+                 break;
+             default:
+-                trend = "unkown";
++                trend = "unknown";
+                 break;
+         }
+         return trend;
+diff --git a/bundles/binding/org.openhab.binding.frontiersiliconradio/src/main/java/org/openhab/binding/frontiersiliconradio/internal/FrontierSiliconRadioBinding.java b/bundles/binding/org.openhab.binding.frontiersiliconradio/src/main/java/org/openhab/binding/frontiersiliconradio/internal/FrontierSiliconRadioBinding.java
+index b5f8ba2..f6cd8b1 100644
+--- a/bundles/binding/org.openhab.binding.frontiersiliconradio/src/main/java/org/openhab/binding/frontiersiliconradio/internal/FrontierSiliconRadioBinding.java
++++ b/bundles/binding/org.openhab.binding.frontiersiliconradio/src/main/java/org/openhab/binding/frontiersiliconradio/internal/FrontierSiliconRadioBinding.java
+@@ -325,7 +325,7 @@
+                     break;
+                 default:
+                     logger.error(
+-                            "command on unkown property: '" + property + "'. Maybe trying to set read-only property?");
++                            "command on unknown property: '" + property + "'. Maybe trying to set read-only property?");
+                     break;
+             }
+         }
+diff --git a/bundles/binding/org.openhab.binding.intertechno/src/main/java/org/openhab/binding/intertechno/internal/parser/REVParser.java b/bundles/binding/org.openhab.binding.intertechno/src/main/java/org/openhab/binding/intertechno/internal/parser/REVParser.java
+index f0fb893..3ac3665 100644
+--- a/bundles/binding/org.openhab.binding.intertechno/src/main/java/org/openhab/binding/intertechno/internal/parser/REVParser.java
++++ b/bundles/binding/org.openhab.binding.intertechno/src/main/java/org/openhab/binding/intertechno/internal/parser/REVParser.java
+@@ -38,7 +38,7 @@
+             case 'D':
+                 return "FFF1";
+             default:
+-                throw new BindingConfigParseException("Unkown group: " + group);
++                throw new BindingConfigParseException("Unknown group: " + group);
+         }
+     }
+ 
+@@ -52,7 +52,7 @@
+             case 3:
+                 return "FF1";
+             default:
+-                throw new BindingConfigParseException("Unkwown sub address: " + sub);
++                throw new BindingConfigParseException("Unknown sub address: " + sub);
+         }
+     }
+ 
+diff --git a/bundles/binding/org.openhab.binding.neohub/src/main/java/org/openhab/binding/neohub/internal/NeoHubGenericBindingProvider.java b/bundles/binding/org.openhab.binding.neohub/src/main/java/org/openhab/binding/neohub/internal/NeoHubGenericBindingProvider.java
+index c126b2d..dff2ed7 100644
+--- a/bundles/binding/org.openhab.binding.neohub/src/main/java/org/openhab/binding/neohub/internal/NeoHubGenericBindingProvider.java
++++ b/bundles/binding/org.openhab.binding.neohub/src/main/java/org/openhab/binding/neohub/internal/NeoHubGenericBindingProvider.java
+@@ -83,7 +83,7 @@
+         if (config.property == null) {
+             throw new BindingConfigParseException(
+                     "item '" + item.getName() + "' has to define an property (" + StringUtils.join(bindings, ", ")
+-                            + ") value. unkown value: " + property + " - please check your *.items configuration");
++                            + ") value. unknown value: " + property + " - please check your *.items configuration");
+ 
+         }
+ 
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorDigitalOut4Impl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorDigitalOut4Impl.java
+index 231ac8c..5f993ff 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorDigitalOut4Impl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorDigitalOut4Impl.java
+@@ -588,7 +588,7 @@
+             } else if (digitalState == HighLowValue.LOW) {
+                 bricklet.setSelectedValues((short) mask, (short) 0);
+             } else {
+-                logger.error("{} unkown digitalState {}", LoggerConstants.TFMODELUPDATE, digitalState);
++                logger.error("{} unknown digitalState {}", LoggerConstants.TFMODELUPDATE, digitalState);
+             }
+             setDigitalState(digitalState);
+         } catch (TimeoutException e) {
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorIO16Impl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorIO16Impl.java
+index 035302c..09bf167 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorIO16Impl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorIO16Impl.java
+@@ -813,7 +813,7 @@
+             } else if (digitalState == HighLowValue.LOW) {
+                 brickletIO16.setSelectedValues(getPort(), (short) mask, (short) 0);
+             } else {
+-                logger.error("{} unkown digitalState {}", LoggerConstants.TFMODELUPDATE, digitalState);
++                logger.error("{} unknown digitalState {}", LoggerConstants.TFMODELUPDATE, digitalState);
+             }
+             setDigitalState(digitalState);
+         } catch (TimeoutException e) {
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorIO4Impl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorIO4Impl.java
+index 91168d0..ea6bc90 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorIO4Impl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/DigitalActorIO4Impl.java
+@@ -763,7 +763,7 @@
+             } else if (digitalState == HighLowValue.LOW) {
+                 bricklet.setSelectedValues((short) mask, (short) 0);
+             } else {
+-                logger.error("{} unkown digitalState {}", LoggerConstants.TFMODELUPDATE, digitalState);
++                logger.error("{} unknown digitalState {}", LoggerConstants.TFMODELUPDATE, digitalState);
+             }
+             setDigitalState(digitalState);
+         } catch (TimeoutException e) {
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickDCImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickDCImpl.java
+index 244cd05..5c6c9e2 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickDCImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickDCImpl.java
+@@ -1702,7 +1702,7 @@
+         } else if (state == OnOffValue.ON) {
+             setSpeed(Tools.getShortOpt(ConfigOptsSwitchSpeed.SPEED.toString(), opts), null, null, null);
+         } else {
+-            logger.error("{} unkown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
++            logger.error("{} unknown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
+         }
+     }
+ 
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickletLEDStripImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickletLEDStripImpl.java
+index 4b6df93..714a477 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickletLEDStripImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickletLEDStripImpl.java
+@@ -929,7 +929,7 @@
+                 } else if (chipTypeString.equalsIgnoreCase("ws2812")) {
+                     chipType = BrickletLEDStrip.CHIP_TYPE_WS2812;
+                 } else {
+-                    logger.error("Unkown ChipType {}", chipTypeString);
++                    logger.error("Unknown ChipType {}", chipTypeString);
+                     // TODO raise configuration error
+                 }
+             }
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickletSolidStateRelayImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickletSolidStateRelayImpl.java
+index e10aef0..4a824a3 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickletSolidStateRelayImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MBrickletSolidStateRelayImpl.java
+@@ -738,7 +738,7 @@
+             } else if (state == OnOffValue.ON) {
+                 tinkerforgeDevice.setState(true);
+             } else {
+-                logger.error("{} unkown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
++                logger.error("{} unknown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
+             }
+         } catch (TimeoutException e) {
+             TinkerforgeErrorHandler.handleError(this, TinkerforgeErrorHandler.TF_TIMEOUT_EXCEPTION, e);
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MDualRelayImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MDualRelayImpl.java
+index 826b946..3eb6a46 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MDualRelayImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MDualRelayImpl.java
+@@ -830,7 +830,7 @@
+                 logger.debug("setSwitchState on");
+                 getMbrick().getTinkerforgeDevice().setSelectedState(relayNum, true);
+             } else {
+-                logger.error("{} unkown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
++                logger.error("{} unknown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
+             }
+             setSwitchState(state);
+         } catch (TimeoutException e) {
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MIndustrialQuadRelayImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MIndustrialQuadRelayImpl.java
+index c729e15..b956bf9 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MIndustrialQuadRelayImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MIndustrialQuadRelayImpl.java
+@@ -292,7 +292,7 @@
+                 logger.debug("setSwitchState on");
+                 getMbrick().getTinkerforgeDevice().setSelectedValues(mask, mask);
+             } else {
+-                logger.error("{} unkown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
++                logger.error("{} unknown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
+             }
+             setSwitchState(state);
+         } catch (TimeoutException e) {
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MLCD20x4BacklightImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MLCD20x4BacklightImpl.java
+index 801cdef..73559e9 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MLCD20x4BacklightImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MLCD20x4BacklightImpl.java
+@@ -525,7 +525,7 @@
+                 logger.debug("setSwitchState on");
+                 brickletLCD20x4.backlightOn();
+             } else {
+-                logger.error("{} unkown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
++                logger.error("{} unknown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
+             }
+             setSwitchState(state);
+         } catch (TimeoutException e) {
+diff --git a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MServoImpl.java b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MServoImpl.java
+index 449a8a2..2b3645f 100644
+--- a/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MServoImpl.java
++++ b/bundles/binding/org.openhab.binding.tinkerforge/src/main/java/org/openhab/binding/tinkerforge/internal/model/impl/MServoImpl.java
+@@ -1368,7 +1368,7 @@
+                 return;
+             }
+         } else {
+-            logger.error("{} unkown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
++            logger.error("{} unknown switchstate {}", LoggerConstants.TFMODELUPDATE, state);
+         }
+         setPoint(position, opts);
+     }
+diff --git a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveThermostatFanModeCommandClass.java b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveThermostatFanModeCommandClass.java
+index cef5036..6e02441 100644
+--- a/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveThermostatFanModeCommandClass.java
++++ b/bundles/binding/org.openhab.binding.zwave/src/main/java/org/openhab/binding/zwave/internal/protocol/commandclass/ZWaveThermostatFanModeCommandClass.java
+@@ -123,7 +123,7 @@
+                             logger.debug("NODE {}: Added Fan Mode type {} ({})", this.getNode().getNodeId(),
+                                     fanModeTypeToAdd.getLabel(), index);
+                         } else {
+-                            logger.warn("NODE {}: Uknown fan mode type {}", this.getNode().getNodeId(), index);
++                            logger.warn("NODE {}: Unknown fan mode type {}", this.getNode().getNodeId(), index);
+                         }
+                     }
+                 }
+diff --git a/bundles/binding/org.openhab.binding.davis/src/main/java/org/openhab/binding/davis/datatypes/DataTypeBarometricTrend.java b/bundles/binding/org.openhab.binding.davis/src/main/java/org/openhab/binding/davis/datatypes/DataTypeBarometricTrend.java
+index 5da9fed..56d2929 100644
+--- a/bundles/binding/org.openhab.binding.davis/src/main/java/org/openhab/binding/davis/datatypes/DataTypeBarometricTrend.java
++++ b/bundles/binding/org.openhab.binding.davis/src/main/java/org/openhab/binding/davis/datatypes/DataTypeBarometricTrend.java
+@@ -44,7 +44,7 @@
+                 trend = "no trend info available";
+                 break;
+             default:
+-                trend = "unkown";
++                trend = "unknown";
+                 break;
+         }
+         return trend;

@@ -1,0 +1,44 @@
+diff --git a/src/com/google/javascript/jscomp/ES6ModuleLoader.java b/src/com/google/javascript/jscomp/ES6ModuleLoader.java
+index 004f191..3d18759 100644
+--- a/src/com/google/javascript/jscomp/ES6ModuleLoader.java
++++ b/src/com/google/javascript/jscomp/ES6ModuleLoader.java
+@@ -107,7 +107,7 @@
+ 
+     private NaiveModuleLoader(AbstractCompiler compiler, String moduleRoot) {
+       this.moduleRoot = moduleRoot;
+-      this.moduleRootURI = new File(moduleRoot).toURI();
++      this.moduleRootURI = createUri(moduleRoot);
+ 
+       // Precompute the module name of each source file.
+       for (CompilerInput input : compiler.getInputsInOrder()) {
+@@ -118,7 +118,7 @@
+     @Override
+     String locate(String name, CompilerInput referrer) {
+       URI base = isRelativeIdentifier(name) ? createUri(referrer)
+-          : createUri(moduleRoot);
++          : moduleRootURI;
+ 
+       return convertSourceUriToModuleAddress(base.resolve(createUri(name)));
+     }
+diff --git a/src/com/google/javascript/jscomp/ES6ModuleLoader.java b/src/com/google/javascript/jscomp/ES6ModuleLoader.java
+index 004f191..3d18759 100644
+--- a/src/com/google/javascript/jscomp/ES6ModuleLoader.java
++++ b/src/com/google/javascript/jscomp/ES6ModuleLoader.java
+@@ -107,7 +107,7 @@
+ 
+     private NaiveModuleLoader(AbstractCompiler compiler, String moduleRoot) {
+       this.moduleRoot = moduleRoot;
+-      this.moduleRootURI = new File(moduleRoot).toURI();
++      this.moduleRootURI = createUri(moduleRoot);
+ 
+       // Precompute the module name of each source file.
+       for (CompilerInput input : compiler.getInputsInOrder()) {
+@@ -118,7 +118,7 @@
+     @Override
+     String locate(String name, CompilerInput referrer) {
+       URI base = isRelativeIdentifier(name) ? createUri(referrer)
+-          : createUri(moduleRoot);
++          : moduleRootURI;
+ 
+       return convertSourceUriToModuleAddress(base.resolve(createUri(name)));
+     }

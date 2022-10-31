@@ -1,0 +1,13 @@
+diff --git a/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/HealthWebEndpointResponseMapperTests.java b/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/HealthWebEndpointResponseMapperTests.java
+index 3740db5..97884a9 100644
+--- a/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/HealthWebEndpointResponseMapperTests.java
++++ b/spring-boot-project/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/health/HealthWebEndpointResponseMapperTests.java
+@@ -113,7 +113,7 @@
+ 		SecurityContext securityContext = mock(SecurityContext.class);
+ 		given(securityContext.getPrincipal()).willReturn(mock(Principal.class));
+ 		given(securityContext.isUserInRole(anyString()))
+-				.will((Answer<Boolean>) invocation -> {
++				.will((Answer<Boolean>) (invocation) -> {
+ 					String expectedRole = invocation.getArgument(0);
+ 					return associatedRoles.contains(expectedRole);
+ 				});

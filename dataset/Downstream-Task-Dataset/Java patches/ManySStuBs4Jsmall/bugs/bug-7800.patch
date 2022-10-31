@@ -1,0 +1,26 @@
+diff --git a/llap-client/src/java/org/apache/hadoop/hive/llap/registry/impl/LlapZookeeperRegistryImpl.java b/llap-client/src/java/org/apache/hadoop/hive/llap/registry/impl/LlapZookeeperRegistryImpl.java
+index fde70e7..cffa493 100644
+--- a/llap-client/src/java/org/apache/hadoop/hive/llap/registry/impl/LlapZookeeperRegistryImpl.java
++++ b/llap-client/src/java/org/apache/hadoop/hive/llap/registry/impl/LlapZookeeperRegistryImpl.java
+@@ -328,7 +328,7 @@
+     if (ix > 0) {
+       pathToCheck = pathToCheck.substring(0, ix);
+     }
+-    List<ACL> acls = zooKeeperClient.usingNamespace(null).getACL().forPath(pathToCheck);
++    List<ACL> acls = zooKeeperClient.getACL().forPath(pathToCheck);
+     if (acls == null || acls.isEmpty()) {
+       // Can there be no ACLs? There's some access (to get ACLs), so assume it means free for all.
+       throw new SecurityException("No ACLs on "  + pathToCheck);
+diff --git a/llap-client/src/java/org/apache/hadoop/hive/llap/registry/impl/LlapZookeeperRegistryImpl.java b/llap-client/src/java/org/apache/hadoop/hive/llap/registry/impl/LlapZookeeperRegistryImpl.java
+index fde70e7..cffa493 100644
+--- a/llap-client/src/java/org/apache/hadoop/hive/llap/registry/impl/LlapZookeeperRegistryImpl.java
++++ b/llap-client/src/java/org/apache/hadoop/hive/llap/registry/impl/LlapZookeeperRegistryImpl.java
+@@ -328,7 +328,7 @@
+     if (ix > 0) {
+       pathToCheck = pathToCheck.substring(0, ix);
+     }
+-    List<ACL> acls = zooKeeperClient.usingNamespace(null).getACL().forPath(pathToCheck);
++    List<ACL> acls = zooKeeperClient.getACL().forPath(pathToCheck);
+     if (acls == null || acls.isEmpty()) {
+       // Can there be no ACLs? There's some access (to get ACLs), so assume it means free for all.
+       throw new SecurityException("No ACLs on "  + pathToCheck);

@@ -1,0 +1,39 @@
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/LoggersMvcEndpointTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/LoggersMvcEndpointTests.java
+index 1c0a36f..b285ea6 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/LoggersMvcEndpointTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/LoggersMvcEndpointTests.java
+@@ -187,7 +187,7 @@
+ 			throws Exception {
+ 		given(this.loggingSystem.getLoggerConfiguration("com.png"))
+ 				.willReturn(new LoggerConfiguration("com.png", null, LogLevel.DEBUG));
+-		this.mvc.perform(get("/loggers/com.png")).andExpect(status().isOk())
++		this.mvc.perform(get("/application/loggers/com.png")).andExpect(status().isOk())
+ 				.andExpect(content().string(equalTo(
+ 						"{\"configuredLevel\":null," + "\"effectiveLevel\":\"DEBUG\"}")));
+ 	}
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/MetricsMvcEndpointTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/MetricsMvcEndpointTests.java
+index 5290124..7e4e21d 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/MetricsMvcEndpointTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/MetricsMvcEndpointTests.java
+@@ -127,7 +127,7 @@
+ 	@Test
+ 	public void specificMetricWithNameThatCouldBeMistakenForAPathExtension()
+ 			throws Exception {
+-		this.mvc.perform(get("/metrics/bar.png")).andExpect(status().isOk())
++		this.mvc.perform(get("/application/metrics/bar.png")).andExpect(status().isOk())
+ 				.andExpect(content().string(equalTo("{\"bar.png\":1}")));
+ 	}
+ 
+diff --git a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/LoggersMvcEndpointTests.java b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/LoggersMvcEndpointTests.java
+index 1c0a36f..b285ea6 100644
+--- a/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/LoggersMvcEndpointTests.java
++++ b/spring-boot-actuator/src/test/java/org/springframework/boot/actuate/endpoint/mvc/LoggersMvcEndpointTests.java
+@@ -187,7 +187,7 @@
+ 			throws Exception {
+ 		given(this.loggingSystem.getLoggerConfiguration("com.png"))
+ 				.willReturn(new LoggerConfiguration("com.png", null, LogLevel.DEBUG));
+-		this.mvc.perform(get("/loggers/com.png")).andExpect(status().isOk())
++		this.mvc.perform(get("/application/loggers/com.png")).andExpect(status().isOk())
+ 				.andExpect(content().string(equalTo(
+ 						"{\"configuredLevel\":null," + "\"effectiveLevel\":\"DEBUG\"}")));
+ 	}

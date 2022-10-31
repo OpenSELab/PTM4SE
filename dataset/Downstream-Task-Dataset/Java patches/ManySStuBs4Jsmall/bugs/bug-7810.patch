@@ -1,0 +1,15 @@
+diff --git a/ql/src/java/org/apache/hadoop/hive/ql/parse/CalcitePlanner.java b/ql/src/java/org/apache/hadoop/hive/ql/parse/CalcitePlanner.java
+index 21423c1..63bf8f2 100644
+--- a/ql/src/java/org/apache/hadoop/hive/ql/parse/CalcitePlanner.java
++++ b/ql/src/java/org/apache/hadoop/hive/ql/parse/CalcitePlanner.java
+@@ -325,7 +325,9 @@
+               || e instanceof CalciteSemanticException) {
+             reAnalyzeAST = true;
+           } else if (e instanceof SemanticException) {
+-            throw (SemanticException) e;
++            // although, its likely to be a valid exception, we will retry
++            // with cbo off anyway.
++            reAnalyzeAST = true;
+           } else if (e instanceof RuntimeException) {
+             throw (RuntimeException) e;
+           } else {

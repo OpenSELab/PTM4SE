@@ -1,0 +1,242 @@
+diff --git a/wicket/src/main/java/org/apache/wicket/request/target/coding/AbstractRequestTargetUrlCodingStrategy.java b/wicket/src/main/java/org/apache/wicket/request/target/coding/AbstractRequestTargetUrlCodingStrategy.java
+index b1d26e9..5631502 100644
+--- a/wicket/src/main/java/org/apache/wicket/request/target/coding/AbstractRequestTargetUrlCodingStrategy.java
++++ b/wicket/src/main/java/org/apache/wicket/request/target/coding/AbstractRequestTargetUrlCodingStrategy.java
+@@ -83,25 +83,27 @@ public abstract class AbstractRequestTargetUrlCodingStrategy
+ 	 * @param parameters
+ 	 *            Map object to be encoded
+ 	 */
+-	protected void appendParameters(AppendingStringBuffer url, Map<?,?> parameters)
++	protected void appendParameters(AppendingStringBuffer url, Map<?, ?> parameters)
+ 	{
+ 		if (parameters != null && parameters.size() > 0)
+ 		{
+ 			for (Entry<?, ?> entry1 : parameters.entrySet())
+ 			{
+-				Object value = ((Entry<?, ?>) entry1).getValue();
++				Object value = ((Entry<?, ?>)entry1).getValue();
+ 				if (value != null)
+ 				{
+ 					if (value instanceof String[])
+ 					{
+-						String[] values = (String[]) value;
++						String[] values = (String[])value;
+ 						for (String value1 : values)
+ 						{
+-							appendValue(url, ((Entry<?, ?>) entry1).getKey().toString(), value1);
++							appendValue(url, ((Entry<?, ?>)entry1).getKey().toString(), value1);
+ 						}
+-					} else
++					}
++					else
+ 					{
+-						appendValue(url, ((Entry<?, ?>) entry1).getKey().toString(), value.toString());
++						appendValue(url, ((Entry<?, ?>)entry1).getKey().toString(),
++							value.toString());
+ 					}
+ 				}
+ 			}
+@@ -117,7 +119,7 @@ public abstract class AbstractRequestTargetUrlCodingStrategy
+ 			{
+ 				url.append("/");
+ 			}
+-			url.append(key).append("/").append(escapedValue).append("/");
++			url.append(key).append("/").append(escapedValue);
+ 		}
+ 	}
+ 
+@@ -130,7 +132,7 @@ public abstract class AbstractRequestTargetUrlCodingStrategy
+ 	 *            query string parameters
+ 	 * @return Parameters created from the url fragment and query string
+ 	 */
+-	protected ValueMap decodeParameters(String urlFragment, Map<String,Object> urlParameters)
++	protected ValueMap decodeParameters(String urlFragment, Map<String, Object> urlParameters)
+ 	{
+ 		// Hack off any leading slash
+ 		if (urlFragment.startsWith("/"))
+diff --git a/wicket/src/main/java/org/apache/wicket/request/target/coding/IndexedHybridUrlCodingStrategy.java b/wicket/src/main/java/org/apache/wicket/request/target/coding/IndexedHybridUrlCodingStrategy.java
+index 4a46b34..2f3ae49 100644
+--- a/wicket/src/main/java/org/apache/wicket/request/target/coding/IndexedHybridUrlCodingStrategy.java
++++ b/wicket/src/main/java/org/apache/wicket/request/target/coding/IndexedHybridUrlCodingStrategy.java
+@@ -45,6 +45,7 @@ public class IndexedHybridUrlCodingStrategy extends HybridUrlCodingStrategy
+ 		super(mountPath, pageClass);
+ 	}
+ 
++	@Override
+ 	protected void appendParameters(AppendingStringBuffer url, Map parameters)
+ 	{
+ 		int i = 0;
+@@ -55,7 +56,7 @@ public class IndexedHybridUrlCodingStrategy extends HybridUrlCodingStrategy
+ 			{
+ 				url.append("/");
+ 			}
+-			url.append(urlEncodePathComponent(value)).append("/");
++			url.append(urlEncodePathComponent(value));
+ 			i++;
+ 		}
+ 
+@@ -68,18 +69,19 @@ public class IndexedHybridUrlCodingStrategy extends HybridUrlCodingStrategy
+ 			{
+ 				url.append("/");
+ 			}
+-			url.append(WebRequestCodingStrategy.PAGEMAP).append("/").append(urlEncodePathComponent(pageMap))
+-					.append("/");
++			url.append(WebRequestCodingStrategy.PAGEMAP).append("/").append(
++				urlEncodePathComponent(pageMap));
+ 		}
+ 
+ 		if (i != parameters.size())
+ 		{
+ 			throw new WicketRuntimeException(
+-					"Not all parameters were encoded. Make sure all parameter names are integers in consecutive order starting with zero. Current parameter names are: " +
+-							parameters.keySet().toString());
++				"Not all parameters were encoded. Make sure all parameter names are integers in consecutive order starting with zero. Current parameter names are: " +
++					parameters.keySet().toString());
+ 		}
+ 	}
+ 
++	@Override
+ 	protected ValueMap decodeParameters(String urlFragment, Map urlParameters)
+ 	{
+ 		PageParameters params = new PageParameters();
+@@ -102,8 +104,8 @@ public class IndexedHybridUrlCodingStrategy extends HybridUrlCodingStrategy
+ 			if (WebRequestCodingStrategy.PAGEMAP.equals(parts[i]))
+ 			{
+ 				i++;
+-				params.put(WebRequestCodingStrategy.PAGEMAP, WebRequestCodingStrategy
+-						.decodePageMapName(urlDecodePathComponent(parts[i])));
++				params.put(WebRequestCodingStrategy.PAGEMAP,
++					WebRequestCodingStrategy.decodePageMapName(urlDecodePathComponent(parts[i])));
+ 			}
+ 			else
+ 			{
+diff --git a/wicket/src/main/java/org/apache/wicket/request/target/coding/IndexedParamUrlCodingStrategy.java b/wicket/src/main/java/org/apache/wicket/request/target/coding/IndexedParamUrlCodingStrategy.java
+index 5c97510..d6c5c1b 100644
+--- a/wicket/src/main/java/org/apache/wicket/request/target/coding/IndexedParamUrlCodingStrategy.java
++++ b/wicket/src/main/java/org/apache/wicket/request/target/coding/IndexedParamUrlCodingStrategy.java
+@@ -90,7 +90,7 @@ public class IndexedParamUrlCodingStrategy extends BookmarkablePageRequestTarget
+ 			{
+ 				url.append("/");
+ 			}
+-			url.append(urlEncodePathComponent(value)).append("/");
++			url.append(urlEncodePathComponent(value));
+ 			i++;
+ 		}
+ 
+@@ -104,7 +104,7 @@ public class IndexedParamUrlCodingStrategy extends BookmarkablePageRequestTarget
+ 				url.append("/");
+ 			}
+ 			url.append(WebRequestCodingStrategy.PAGEMAP).append("/").append(
+-				urlEncodePathComponent(pageMap)).append("/");
++				urlEncodePathComponent(pageMap));
+ 		}
+ 
+ 		String intface = (String)parameters.get(WebRequestCodingStrategy.INTERFACE_PARAMETER_NAME);
+@@ -116,7 +116,7 @@ public class IndexedParamUrlCodingStrategy extends BookmarkablePageRequestTarget
+ 				url.append("/");
+ 			}
+ 			url.append(WebRequestCodingStrategy.INTERFACE_PARAMETER_NAME).append("/").append(
+-				urlEncodePathComponent(intface)).append("/");
++				urlEncodePathComponent(intface));
+ 		}
+ 		if (i != parameters.size())
+ 		{
+diff --git a/wicket/src/main/java/org/apache/wicket/request/target/coding/MixedParamUrlCodingStrategy.java b/wicket/src/main/java/org/apache/wicket/request/target/coding/MixedParamUrlCodingStrategy.java
+index 9788196..388a0df 100644
+--- a/wicket/src/main/java/org/apache/wicket/request/target/coding/MixedParamUrlCodingStrategy.java
++++ b/wicket/src/main/java/org/apache/wicket/request/target/coding/MixedParamUrlCodingStrategy.java
+@@ -129,7 +129,11 @@ public class MixedParamUrlCodingStrategy extends BookmarkablePageRequestTargetUr
+ 				{
+ 					value = "";
+ 				}
+-				url.append(urlEncodePathComponent(value)).append("/");
++				if (!url.endsWith("/"))
++				{
++					url.append("/");
++				}
++				url.append(urlEncodePathComponent(value));
+ 				parameterNamesToAdd.remove(parameterName);
+ 			}
+ 		}
+diff --git a/wicket/src/main/java/org/apache/wicket/request/target/coding/PackageRequestTargetUrlCodingStrategy.java b/wicket/src/main/java/org/apache/wicket/request/target/coding/PackageRequestTargetUrlCodingStrategy.java
+index 9519fe8..1808f3a 100644
+--- a/wicket/src/main/java/org/apache/wicket/request/target/coding/PackageRequestTargetUrlCodingStrategy.java
++++ b/wicket/src/main/java/org/apache/wicket/request/target/coding/PackageRequestTargetUrlCodingStrategy.java
+@@ -39,8 +39,7 @@ import org.slf4j.LoggerFactory;
+  */
+ public class PackageRequestTargetUrlCodingStrategy extends AbstractRequestTargetUrlCodingStrategy
+ {
+-	private static final Logger log = LoggerFactory
+-			.getLogger(PackageRequestTargetUrlCodingStrategy.class);
++	private static final Logger log = LoggerFactory.getLogger(PackageRequestTargetUrlCodingStrategy.class);
+ 
+ 	/** package for this mount. */
+ 	private final PackageName packageName;
+@@ -93,7 +92,7 @@ public class PackageRequestTargetUrlCodingStrategy extends AbstractRequestTarget
+ 		try
+ 		{
+ 			bookmarkablePageClass = Session.get().getClassResolver().resolveClass(
+-					bookmarkablePageClassName);
++				bookmarkablePageClassName);
+ 		}
+ 		catch (Exception e)
+ 		{
+@@ -101,7 +100,7 @@ public class PackageRequestTargetUrlCodingStrategy extends AbstractRequestTarget
+ 			return null;
+ 		}
+ 		PageParameters parameters = new PageParameters(decodeParameters(parametersFragment,
+-				requestParameters.getParameters()));
++			requestParameters.getParameters()));
+ 
+ 		String pageMapName = (String)parameters.remove(WebRequestCodingStrategy.PAGEMAP);
+ 		pageMapName = WebRequestCodingStrategy.decodePageMapName(pageMapName);
+@@ -110,15 +109,14 @@ public class PackageRequestTargetUrlCodingStrategy extends AbstractRequestTarget
+ 		// do some extra work for checking whether this is a normal request to a
+ 		// bookmarkable page, or a request to a stateless page (in which case a
+ 		// wicket:interface parameter should be available
+-		final String interfaceParameter = (String)parameters
+-				.remove(WebRequestCodingStrategy.INTERFACE_PARAMETER_NAME);
++		final String interfaceParameter = (String)parameters.remove(WebRequestCodingStrategy.INTERFACE_PARAMETER_NAME);
+ 
+ 		if (interfaceParameter != null)
+ 		{
+ 			WebRequestCodingStrategy.addInterfaceParameters(interfaceParameter, requestParameters);
+ 			return new BookmarkableListenerInterfaceRequestTarget(pageMapName,
+-					bookmarkablePageClass, parameters, requestParameters.getComponentPath(),
+-					requestParameters.getInterfaceName(), requestParameters.getVersionNumber());
++				bookmarkablePageClass, parameters, requestParameters.getComponentPath(),
++				requestParameters.getInterfaceName(), requestParameters.getVersionNumber());
+ 		}
+ 		else
+ 		{
+@@ -134,18 +132,18 @@ public class PackageRequestTargetUrlCodingStrategy extends AbstractRequestTarget
+ 		if (!(requestTarget instanceof IBookmarkablePageRequestTarget))
+ 		{
+ 			throw new IllegalArgumentException("this encoder can only be used with instances of " +
+-					IBookmarkablePageRequestTarget.class.getName());
++				IBookmarkablePageRequestTarget.class.getName());
+ 		}
+ 		AppendingStringBuffer url = new AppendingStringBuffer(40);
+ 		url.append(getMountPath());
+ 		IBookmarkablePageRequestTarget target = (IBookmarkablePageRequestTarget)requestTarget;
+-		url.append("/").append(Classes.simpleName(target.getPageClass())).append("/");
++		url.append("/").append(Classes.simpleName(target.getPageClass()));
+ 
+ 		PageParameters pageParameters = target.getPageParameters();
+ 		if (target.getPageMapName() != null)
+ 		{
+-			pageParameters.put(WebRequestCodingStrategy.PAGEMAP, WebRequestCodingStrategy
+-					.encodePageMapName(target.getPageMapName()));
++			pageParameters.put(WebRequestCodingStrategy.PAGEMAP,
++				WebRequestCodingStrategy.encodePageMapName(target.getPageMapName()));
+ 		}
+ 
+ 		appendParameters(url, pageParameters);
+@@ -171,6 +169,7 @@ public class PackageRequestTargetUrlCodingStrategy extends AbstractRequestTarget
+ 	/**
+ 	 * @see java.lang.Object#toString()
+ 	 */
++	@Override
+ 	public String toString()
+ 	{
+ 		return "PackageEncoder[package=" + packageName + "]";

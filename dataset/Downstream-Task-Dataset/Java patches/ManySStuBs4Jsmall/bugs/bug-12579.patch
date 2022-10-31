@@ -1,0 +1,39 @@
+diff --git a/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorUsingExchanges.java b/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorUsingExchanges.java
+index 1efc10e..d7938b7 100644
+--- a/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorUsingExchanges.java
++++ b/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorUsingExchanges.java
+@@ -245,7 +245,7 @@
+                     node,
+                     node.getLeft(),
+                     node.getRight(),
+-                    Objects.equals(node.getDistributionType(), Optional.of(JoinNode.DistributionType.REPLICATED)));
++                    node.getDistributionType() == SpatialJoinNode.DistributionType.REPLICATED);
+         }
+ 
+         @Override
+diff --git a/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorWithEstimatedExchanges.java b/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorWithEstimatedExchanges.java
+index 562c619..fa98fa1 100644
+--- a/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorWithEstimatedExchanges.java
++++ b/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorWithEstimatedExchanges.java
+@@ -148,7 +148,7 @@
+             return calculateJoinCost(
+                     node.getLeft(),
+                     node.getRight(),
+-                    Objects.equals(node.getDistributionType(), Optional.of(JoinNode.DistributionType.REPLICATED)));
++                    node.getDistributionType() == SpatialJoinNode.DistributionType.REPLICATED);
+         }
+ 
+         private PlanNodeCostEstimate calculateJoinCost(PlanNode probe, PlanNode build, boolean replicated)
+diff --git a/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorUsingExchanges.java b/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorUsingExchanges.java
+index 1efc10e..d7938b7 100644
+--- a/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorUsingExchanges.java
++++ b/presto-main/src/main/java/com/facebook/presto/cost/CostCalculatorUsingExchanges.java
+@@ -245,7 +245,7 @@
+                     node,
+                     node.getLeft(),
+                     node.getRight(),
+-                    Objects.equals(node.getDistributionType(), Optional.of(JoinNode.DistributionType.REPLICATED)));
++                    node.getDistributionType() == SpatialJoinNode.DistributionType.REPLICATED);
+         }
+ 
+         @Override

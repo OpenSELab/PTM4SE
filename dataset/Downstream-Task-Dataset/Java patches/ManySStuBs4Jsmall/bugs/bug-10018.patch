@@ -1,0 +1,26 @@
+diff --git a/src/jvm/clojure/lang/PersistentHashMap.java b/src/jvm/clojure/lang/PersistentHashMap.java
+index 15587ae..ecfbeca 100644
+--- a/src/jvm/clojure/lang/PersistentHashMap.java
++++ b/src/jvm/clojure/lang/PersistentHashMap.java
+@@ -221,7 +221,7 @@
+ 		Box removedLeaf = new Box(null);
+ 		INode newroot = root.without(edit, Util.hash(key), key, removedLeaf);
+ 		this.root = newroot == null ? EMPTY.root : newroot;
+-		if (removedLeaf != null) this.count--;
++		if (removedLeaf.val != null) this.count--;
+ 		return this;
+ 	}
+ 
+diff --git a/src/jvm/clojure/lang/PersistentHashMap.java b/src/jvm/clojure/lang/PersistentHashMap.java
+index 15587ae..ecfbeca 100644
+--- a/src/jvm/clojure/lang/PersistentHashMap.java
++++ b/src/jvm/clojure/lang/PersistentHashMap.java
+@@ -221,7 +221,7 @@
+ 		Box removedLeaf = new Box(null);
+ 		INode newroot = root.without(edit, Util.hash(key), key, removedLeaf);
+ 		this.root = newroot == null ? EMPTY.root : newroot;
+-		if (removedLeaf != null) this.count--;
++		if (removedLeaf.val != null) this.count--;
+ 		return this;
+ 	}
+ 

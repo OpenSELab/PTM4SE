@@ -1,0 +1,26 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java b/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java
+index 96fa422..0b5fcc1 100644
+--- a/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java
++++ b/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java
+@@ -240,7 +240,7 @@
+         public NodeStage( InputIterable<InputNode> nodes, IdMapper idMapper, IdGenerator idGenerator,
+                 BatchingNeoStore neoStore, InputCache inputCache, StatsProvider memoryUsage ) throws IOException
+         {
+-            super( "Nodes", config, idGenerator.dependsOnInput() );
++            super( "Nodes", config, true );
+             add( new InputIteratorBatcherStep<>( control(), config.batchSize(), config.movingAverageSize(),
+                     nodes.iterator(), InputNode.class ) );
+             if ( !nodes.supportsMultiplePasses() )
+diff --git a/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java b/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java
+index 96fa422..0b5fcc1 100644
+--- a/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java
++++ b/community/kernel/src/main/java/org/neo4j/unsafe/impl/batchimport/ParallelBatchImporter.java
+@@ -240,7 +240,7 @@
+         public NodeStage( InputIterable<InputNode> nodes, IdMapper idMapper, IdGenerator idGenerator,
+                 BatchingNeoStore neoStore, InputCache inputCache, StatsProvider memoryUsage ) throws IOException
+         {
+-            super( "Nodes", config, idGenerator.dependsOnInput() );
++            super( "Nodes", config, true );
+             add( new InputIteratorBatcherStep<>( control(), config.batchSize(), config.movingAverageSize(),
+                     nodes.iterator(), InputNode.class ) );
+             if ( !nodes.supportsMultiplePasses() )

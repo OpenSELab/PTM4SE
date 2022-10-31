@@ -1,0 +1,67 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/component/seda/SedaEndpoint.java b/camel-core/src/main/java/org/apache/camel/component/seda/SedaEndpoint.java
+index 9d4ade2..ffe2f6d 100644
+--- a/camel-core/src/main/java/org/apache/camel/component/seda/SedaEndpoint.java
++++ b/camel-core/src/main/java/org/apache/camel/component/seda/SedaEndpoint.java
+@@ -308,6 +308,7 @@ public class SedaEndpoint extends DefaultEndpoint implements BrowsableEndpoint,
+         this.purgeWhenStopping = purgeWhenStopping;
+     }
+ 
++    @ManagedAttribute(description = "Singleton")
+     public boolean isSingleton() {
+         return true;
+     }
+@@ -425,6 +426,11 @@ public class SedaEndpoint extends DefaultEndpoint implements BrowsableEndpoint,
+         return getCamelContext().getManagementName();
+     }
+ 
++    @ManagedAttribute(description = "Endpoint URI", mask = true)
++    public String getEndpointUri() {
++        return super.getEndpointUri();
++    }
++
+     @ManagedAttribute(description = "Endpoint service state")
+     public String getState() {
+         return getStatus().name();
+diff --git a/camel-core/src/main/java/org/apache/camel/management/DefaultManagementMBeanAssembler.java b/camel-core/src/main/java/org/apache/camel/management/DefaultManagementMBeanAssembler.java
+index 262b520..fde3592 100644
+--- a/camel-core/src/main/java/org/apache/camel/management/DefaultManagementMBeanAssembler.java
++++ b/camel-core/src/main/java/org/apache/camel/management/DefaultManagementMBeanAssembler.java
+@@ -60,7 +60,7 @@ public class DefaultManagementMBeanAssembler implements ManagementMBeanAssembler
+             if (custom != null && ObjectHelper.hasAnnotation(custom.getClass().getAnnotations(), ManagedResource.class)) {
+                 LOG.trace("Assembling MBeanInfo for: {} from custom @ManagedResource object: {}", name, custom);
+                 // get the mbean info from the custom managed object
+-                mbi = assembler.getMBeanInfo(obj, custom, name.toString());
++                mbi = assembler.getMBeanInfo(null, custom, name.toString());
+                 // and let the custom object be registered in JMX
+                 obj = custom;
+             }
+diff --git a/camel-core/src/main/java/org/apache/camel/management/MBeanInfoAssembler.java b/camel-core/src/main/java/org/apache/camel/management/MBeanInfoAssembler.java
+index 56b5a14..84f0470 100644
+--- a/camel-core/src/main/java/org/apache/camel/management/MBeanInfoAssembler.java
++++ b/camel-core/src/main/java/org/apache/camel/management/MBeanInfoAssembler.java
+@@ -97,7 +97,7 @@ public class MBeanInfoAssembler implements Service {
+      */
+     public ModelMBeanInfo getMBeanInfo(Object defaultManagedBean, Object customManagedBean, String objectName) throws JMException {
+         // skip proxy classes
+-        if (Proxy.isProxyClass(defaultManagedBean.getClass())) {
++        if (defaultManagedBean != null && Proxy.isProxyClass(defaultManagedBean.getClass())) {
+             LOG.trace("Skip creating ModelMBeanInfo due proxy class {}", defaultManagedBean.getClass());
+             return null;
+         }
+@@ -110,10 +110,12 @@ public class MBeanInfoAssembler implements Service {
+         Set<ModelMBeanNotificationInfo> mBeanNotifications = new LinkedHashSet<ModelMBeanNotificationInfo>();
+ 
+         // extract details from default managed bean
+-        extractAttributesAndOperations(defaultManagedBean.getClass(), attributes, operations);
+-        extractMbeanAttributes(defaultManagedBean, attributes, mBeanAttributes, mBeanOperations);
+-        extractMbeanOperations(defaultManagedBean, operations, mBeanOperations);
+-        extractMbeanNotifications(defaultManagedBean, mBeanNotifications);
++        if (defaultManagedBean != null) {
++            extractAttributesAndOperations(defaultManagedBean.getClass(), attributes, operations);
++            extractMbeanAttributes(defaultManagedBean, attributes, mBeanAttributes, mBeanOperations);
++            extractMbeanOperations(defaultManagedBean, operations, mBeanOperations);
++            extractMbeanNotifications(defaultManagedBean, mBeanNotifications);
++        }
+ 
+         // extract details from custom managed bean
+         if (customManagedBean != null) {

@@ -1,0 +1,26 @@
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
+index 73f22a2..41a32ef 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
+@@ -104,7 +104,7 @@
+ 		
+ 		if(s.getMappings().size()==0) {
+ 			if(state instanceof PercentType) {
+-				state = ((PercentType) state).toBigDecimal().compareTo(BigDecimal.ZERO) > 0 ? OnOffType.ON : OnOffType.OFF;
++				state = ((PercentType) state).intValue() > 0 ? OnOffType.ON : OnOffType.OFF;
+ 			}
+ 			if(state.equals(OnOffType.ON)) {
+ 				snippet = snippet.replaceAll("%checked%", "checked=true");
+diff --git a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
+index 73f22a2..41a32ef 100644
+--- a/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
++++ b/bundles/ui/org.openhab.ui.webapp/src/main/java/org/openhab/ui/webapp/internal/render/SwitchRenderer.java
+@@ -104,7 +104,7 @@
+ 		
+ 		if(s.getMappings().size()==0) {
+ 			if(state instanceof PercentType) {
+-				state = ((PercentType) state).toBigDecimal().compareTo(BigDecimal.ZERO) > 0 ? OnOffType.ON : OnOffType.OFF;
++				state = ((PercentType) state).intValue() > 0 ? OnOffType.ON : OnOffType.OFF;
+ 			}
+ 			if(state.equals(OnOffType.ON)) {
+ 				snippet = snippet.replaceAll("%checked%", "checked=true");

@@ -1,0 +1,14 @@
+diff --git a/common/src/main/java/io/netty/util/internal/UnsafeAtomicReferenceFieldUpdater.java b/common/src/main/java/io/netty/util/internal/UnsafeAtomicReferenceFieldUpdater.java
+index f0c647e..d839f66 100644
+--- a/common/src/main/java/io/netty/util/internal/UnsafeAtomicReferenceFieldUpdater.java
++++ b/common/src/main/java/io/netty/util/internal/UnsafeAtomicReferenceFieldUpdater.java
+@@ -25,7 +25,8 @@
+     private final long offset;
+     private final Unsafe unsafe;
+ 
+-    UnsafeAtomicReferenceFieldUpdater(Unsafe unsafe, Class<U> tClass, String fieldName) throws NoSuchFieldException {
++    UnsafeAtomicReferenceFieldUpdater(Unsafe unsafe, Class<? super U> tClass, String fieldName)
++            throws NoSuchFieldException {
+         Field field = tClass.getDeclaredField(fieldName);
+         if (!Modifier.isVolatile(field.getModifiers())) {
+             throw new IllegalArgumentException("Must be volatile");

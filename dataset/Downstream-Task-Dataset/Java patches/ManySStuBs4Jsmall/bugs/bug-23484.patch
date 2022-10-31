@@ -1,0 +1,26 @@
+diff --git a/naming/src/main/java/org/jboss/as/naming/NamingContext.java b/naming/src/main/java/org/jboss/as/naming/NamingContext.java
+index ad87fd5..4bcaf92 100644
+--- a/naming/src/main/java/org/jboss/as/naming/NamingContext.java
++++ b/naming/src/main/java/org/jboss/as/naming/NamingContext.java
+@@ -519,7 +519,7 @@
+         try {
+             final ObjectFactoryBuilder factoryBuilder = ObjectFactoryBuilder.INSTANCE;
+             final ObjectFactory objectFactory = factoryBuilder.createObjectFactory(object, environment);
+-            return objectFactory.getObjectInstance(object, name, this, environment);
++            return objectFactory == null ? null : objectFactory.getObjectInstance(object, name, this, environment);
+         } catch(NamingException e) {
+             throw e;
+         } catch(Throwable t) {
+diff --git a/naming/src/main/java/org/jboss/as/naming/NamingContext.java b/naming/src/main/java/org/jboss/as/naming/NamingContext.java
+index ad87fd5..4bcaf92 100644
+--- a/naming/src/main/java/org/jboss/as/naming/NamingContext.java
++++ b/naming/src/main/java/org/jboss/as/naming/NamingContext.java
+@@ -519,7 +519,7 @@
+         try {
+             final ObjectFactoryBuilder factoryBuilder = ObjectFactoryBuilder.INSTANCE;
+             final ObjectFactory objectFactory = factoryBuilder.createObjectFactory(object, environment);
+-            return objectFactory.getObjectInstance(object, name, this, environment);
++            return objectFactory == null ? null : objectFactory.getObjectInstance(object, name, this, environment);
+         } catch(NamingException e) {
+             throw e;
+         } catch(Throwable t) {

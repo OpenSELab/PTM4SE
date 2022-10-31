@@ -1,0 +1,353 @@
+diff --git a/benchmarks/src/main/java/okhttp3/benchmarks/ApacheHttpClient.java b/benchmarks/src/main/java/okhttp3/benchmarks/ApacheHttpClient.java
+index a5c632f..2fffd7c 100644
+--- a/benchmarks/src/main/java/okhttp3/benchmarks/ApacheHttpClient.java
++++ b/benchmarks/src/main/java/okhttp3/benchmarks/ApacheHttpClient.java
+@@ -55,7 +55,7 @@
+   class ApacheHttpClientRequest implements Runnable {
+     private final HttpUrl url;
+ 
+-    public ApacheHttpClientRequest(HttpUrl url) {
++    ApacheHttpClientRequest(HttpUrl url) {
+       this.url = url;
+     }
+ 
+diff --git a/benchmarks/src/main/java/okhttp3/benchmarks/NettyHttpClient.java b/benchmarks/src/main/java/okhttp3/benchmarks/NettyHttpClient.java
+index 01e6f6e..cd7286d 100644
+--- a/benchmarks/src/main/java/okhttp3/benchmarks/NettyHttpClient.java
++++ b/benchmarks/src/main/java/okhttp3/benchmarks/NettyHttpClient.java
+@@ -137,7 +137,7 @@
+     int total;
+     long start;
+ 
+-    public HttpChannel(SocketChannel channel) {
++    HttpChannel(SocketChannel channel) {
+       this.channel = channel;
+     }
+ 
+diff --git a/benchmarks/src/main/java/okhttp3/benchmarks/OkHttp.java b/benchmarks/src/main/java/okhttp3/benchmarks/OkHttp.java
+index 7c90e5e..7460aa6 100644
+--- a/benchmarks/src/main/java/okhttp3/benchmarks/OkHttp.java
++++ b/benchmarks/src/main/java/okhttp3/benchmarks/OkHttp.java
+@@ -61,7 +61,7 @@
+   class OkHttpRequest implements Runnable {
+     private final Call call;
+ 
+-    public OkHttpRequest(Call call) {
++    OkHttpRequest(Call call) {
+       this.call = call;
+     }
+ 
+diff --git a/benchmarks/src/main/java/okhttp3/benchmarks/UrlConnection.java b/benchmarks/src/main/java/okhttp3/benchmarks/UrlConnection.java
+index f75d160..560534c 100644
+--- a/benchmarks/src/main/java/okhttp3/benchmarks/UrlConnection.java
++++ b/benchmarks/src/main/java/okhttp3/benchmarks/UrlConnection.java
+@@ -52,7 +52,7 @@
+   static class UrlConnectionRequest implements Runnable {
+     private final HttpUrl url;
+ 
+-    public UrlConnectionRequest(HttpUrl url) {
++    UrlConnectionRequest(HttpUrl url) {
+       this.url = url;
+     }
+ 
+diff --git a/okhttp-android-support/src/main/java/okhttp3/internal/huc/JavaApiConverter.java b/okhttp-android-support/src/main/java/okhttp3/internal/huc/JavaApiConverter.java
+index 350d549..1dec85c 100644
+--- a/okhttp-android-support/src/main/java/okhttp3/internal/huc/JavaApiConverter.java
++++ b/okhttp-android-support/src/main/java/okhttp3/internal/huc/JavaApiConverter.java
+@@ -568,7 +568,7 @@
+     private final Request request;
+     private final Response response;
+ 
+-    public CacheHttpURLConnection(Response response) {
++    CacheHttpURLConnection(Response response) {
+       super(response.request().url().url());
+       this.request = response.request();
+       this.response = response;
+@@ -835,7 +835,7 @@
+   private static final class CacheHttpsURLConnection extends DelegatingHttpsURLConnection {
+     private final CacheHttpURLConnection delegate;
+ 
+-    public CacheHttpsURLConnection(CacheHttpURLConnection delegate) {
++    CacheHttpsURLConnection(CacheHttpURLConnection delegate) {
+       super(delegate);
+       this.delegate = delegate;
+     }
+diff --git a/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/DelegatingHttpsURLConnection.java b/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/DelegatingHttpsURLConnection.java
+index 9dd7cfd..a051bf2 100644
+--- a/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/DelegatingHttpsURLConnection.java
++++ b/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/DelegatingHttpsURLConnection.java
+@@ -41,7 +41,7 @@
+ abstract class DelegatingHttpsURLConnection extends HttpsURLConnection {
+   private final HttpURLConnection delegate;
+ 
+-  public DelegatingHttpsURLConnection(HttpURLConnection delegate) {
++  DelegatingHttpsURLConnection(HttpURLConnection delegate) {
+     super(delegate.getURL());
+     this.delegate = delegate;
+   }
+diff --git a/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/OkHttpURLConnection.java b/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/OkHttpURLConnection.java
+index 461b1f1..344a61e 100644
+--- a/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/OkHttpURLConnection.java
++++ b/okhttp-urlconnection/src/main/java/okhttp3/internal/huc/OkHttpURLConnection.java
+@@ -568,7 +568,7 @@
+       }
+     };
+ 
+-    public UnexpectedException(Throwable cause) {
++    UnexpectedException(Throwable cause) {
+       super(cause);
+     }
+   }
+diff --git a/okhttp/src/main/java/okhttp3/Cache.java b/okhttp/src/main/java/okhttp3/Cache.java
+index 8eb4fb0..a37bc91 100644
+--- a/okhttp/src/main/java/okhttp3/Cache.java
++++ b/okhttp/src/main/java/okhttp3/Cache.java
+@@ -432,7 +432,7 @@
+     private Sink body;
+     boolean done;
+ 
+-    public CacheRequestImpl(final DiskLruCache.Editor editor) {
++    CacheRequestImpl(final DiskLruCache.Editor editor) {
+       this.editor = editor;
+       this.cacheOut = editor.newSink(ENTRY_BODY);
+       this.body = new ForwardingSink(cacheOut) {
+@@ -536,7 +536,7 @@
+      * base64-encoded and appear each on their own line. A length of -1 is used to encode a null
+      * array. The last line is optional. If present, it contains the TLS version.
+      */
+-    public Entry(Source in) throws IOException {
++    Entry(Source in) throws IOException {
+       try {
+         BufferedSource source = Okio.buffer(in);
+         url = source.readUtf8LineStrict();
+@@ -590,7 +590,7 @@
+       }
+     }
+ 
+-    public Entry(Response response) {
++    Entry(Response response) {
+       this.url = response.request().url().toString();
+       this.varyHeaders = HttpHeaders.varyHeaders(response);
+       this.requestMethod = response.request().method();
+@@ -735,7 +735,7 @@
+     private final String contentType;
+     private final String contentLength;
+ 
+-    public CacheResponseBody(final DiskLruCache.Snapshot snapshot,
++    CacheResponseBody(final DiskLruCache.Snapshot snapshot,
+         String contentType, String contentLength) {
+       this.snapshot = snapshot;
+       this.contentType = contentType;
+diff --git a/okhttp/src/main/java/okhttp3/internal/cache/FaultHidingSink.java b/okhttp/src/main/java/okhttp3/internal/cache/FaultHidingSink.java
+index b10fddb..561a305 100644
+--- a/okhttp/src/main/java/okhttp3/internal/cache/FaultHidingSink.java
++++ b/okhttp/src/main/java/okhttp3/internal/cache/FaultHidingSink.java
+@@ -24,7 +24,7 @@
+ class FaultHidingSink extends ForwardingSink {
+   private boolean hasErrors;
+ 
+-  public FaultHidingSink(Sink delegate) {
++  FaultHidingSink(Sink delegate) {
+     super(delegate);
+   }
+ 
+diff --git a/okhttp/src/main/java/okhttp3/internal/cache2/FileOperator.java b/okhttp/src/main/java/okhttp3/internal/cache2/FileOperator.java
+index 7091422..b1326cd 100644
+--- a/okhttp/src/main/java/okhttp3/internal/cache2/FileOperator.java
++++ b/okhttp/src/main/java/okhttp3/internal/cache2/FileOperator.java
+@@ -41,7 +41,7 @@
+   private final ByteBuffer byteBuffer = ByteBuffer.wrap(byteArray);
+   private final FileChannel fileChannel;
+ 
+-  public FileOperator(FileChannel fileChannel) {
++  FileOperator(FileChannel fileChannel) {
+     this.fileChannel = fileChannel;
+   }
+ 
+diff --git a/okhttp/src/main/java/okhttp3/internal/http1/Http1Codec.java b/okhttp/src/main/java/okhttp3/internal/http1/Http1Codec.java
+index 625c173..4be3a32 100644
+--- a/okhttp/src/main/java/okhttp3/internal/http1/Http1Codec.java
++++ b/okhttp/src/main/java/okhttp3/internal/http1/Http1Codec.java
+@@ -369,7 +369,7 @@
+   private class FixedLengthSource extends AbstractSource {
+     private long bytesRemaining;
+ 
+-    public FixedLengthSource(long length) throws IOException {
++    FixedLengthSource(long length) throws IOException {
+       bytesRemaining = length;
+       if (bytesRemaining == 0) {
+         endOfInput(true);
+diff --git a/okhttp/src/main/java/okhttp3/internal/http2/Http2Codec.java b/okhttp/src/main/java/okhttp3/internal/http2/Http2Codec.java
+index 61680d5..0ed8be7 100644
+--- a/okhttp/src/main/java/okhttp3/internal/http2/Http2Codec.java
++++ b/okhttp/src/main/java/okhttp3/internal/http2/Http2Codec.java
+@@ -190,7 +190,7 @@
+   }
+ 
+   class StreamFinishingSource extends ForwardingSource {
+-    public StreamFinishingSource(Source delegate) {
++    StreamFinishingSource(Source delegate) {
+       super(delegate);
+     }
+ 
+diff --git a/okhttp/src/main/java/okhttp3/internal/http2/Http2Reader.java b/okhttp/src/main/java/okhttp3/internal/http2/Http2Reader.java
+index c6fd4cc..2b093b3 100644
+--- a/okhttp/src/main/java/okhttp3/internal/http2/Http2Reader.java
++++ b/okhttp/src/main/java/okhttp3/internal/http2/Http2Reader.java
+@@ -67,7 +67,7 @@
+   final Hpack.Reader hpackReader;
+ 
+   /** Creates a frame reader with max header table size of 4096. */
+-  public Http2Reader(BufferedSource source, boolean client) {
++  Http2Reader(BufferedSource source, boolean client) {
+     this.source = source;
+     this.client = client;
+     this.continuation = new ContinuationSource(this.source);
+@@ -356,7 +356,7 @@
+     int left;
+     short padding;
+ 
+-    public ContinuationSource(BufferedSource source) {
++    ContinuationSource(BufferedSource source) {
+       this.source = source;
+     }
+ 
+diff --git a/okhttp/src/main/java/okhttp3/internal/http2/Http2Writer.java b/okhttp/src/main/java/okhttp3/internal/http2/Http2Writer.java
+index 7490b09..5ef6bb9 100644
+--- a/okhttp/src/main/java/okhttp3/internal/http2/Http2Writer.java
++++ b/okhttp/src/main/java/okhttp3/internal/http2/Http2Writer.java
+@@ -54,7 +54,7 @@
+ 
+   final Hpack.Writer hpackWriter;
+ 
+-  public Http2Writer(BufferedSink sink, boolean client) {
++  Http2Writer(BufferedSink sink, boolean client) {
+     this.sink = sink;
+     this.client = client;
+     this.hpackBuffer = new Buffer();
+diff --git a/okhttp/src/main/java/okhttp3/internal/platform/AndroidPlatform.java b/okhttp/src/main/java/okhttp3/internal/platform/AndroidPlatform.java
+index c2cce4b..3d7c2b3 100644
+--- a/okhttp/src/main/java/okhttp3/internal/platform/AndroidPlatform.java
++++ b/okhttp/src/main/java/okhttp3/internal/platform/AndroidPlatform.java
+@@ -47,7 +47,7 @@
+ 
+   private final CloseGuard closeGuard = CloseGuard.get();
+ 
+-  public AndroidPlatform(Class<?> sslParametersClass, OptionalMethod<Socket> setUseSessionTickets,
++  AndroidPlatform(Class<?> sslParametersClass, OptionalMethod<Socket> setUseSessionTickets,
+       OptionalMethod<Socket> setHostname, OptionalMethod<Socket> getAlpnSelectedProtocol,
+       OptionalMethod<Socket> setAlpnProtocols) {
+     this.sslParametersClass = sslParametersClass;
+diff --git a/okhttp/src/main/java/okhttp3/internal/platform/Jdk9Platform.java b/okhttp/src/main/java/okhttp3/internal/platform/Jdk9Platform.java
+index 683e5c1..19f444d 100644
+--- a/okhttp/src/main/java/okhttp3/internal/platform/Jdk9Platform.java
++++ b/okhttp/src/main/java/okhttp3/internal/platform/Jdk9Platform.java
+@@ -31,7 +31,7 @@
+   final Method setProtocolMethod;
+   final Method getProtocolMethod;
+ 
+-  public Jdk9Platform(Method setProtocolMethod, Method getProtocolMethod) {
++  Jdk9Platform(Method setProtocolMethod, Method getProtocolMethod) {
+     this.setProtocolMethod = setProtocolMethod;
+     this.getProtocolMethod = getProtocolMethod;
+   }
+diff --git a/okhttp/src/main/java/okhttp3/internal/platform/JdkWithJettyBootPlatform.java b/okhttp/src/main/java/okhttp3/internal/platform/JdkWithJettyBootPlatform.java
+index 6821bdf..5dd11ee 100644
+--- a/okhttp/src/main/java/okhttp3/internal/platform/JdkWithJettyBootPlatform.java
++++ b/okhttp/src/main/java/okhttp3/internal/platform/JdkWithJettyBootPlatform.java
+@@ -34,7 +34,7 @@
+   private final Class<?> clientProviderClass;
+   private final Class<?> serverProviderClass;
+ 
+-  public JdkWithJettyBootPlatform(Method putMethod, Method getMethod, Method removeMethod,
++  JdkWithJettyBootPlatform(Method putMethod, Method getMethod, Method removeMethod,
+       Class<?> clientProviderClass, Class<?> serverProviderClass) {
+     this.putMethod = putMethod;
+     this.getMethod = getMethod;
+@@ -110,7 +110,7 @@
+     /** The protocol the server selected. */
+     String selected;
+ 
+-    public JettyNegoProvider(List<String> protocols) {
++    JettyNegoProvider(List<String> protocols) {
+       this.protocols = protocols;
+     }
+ 
+diff --git a/okhttp/src/main/java/okhttp3/internal/platform/OptionalMethod.java b/okhttp/src/main/java/okhttp3/internal/platform/OptionalMethod.java
+index b7b1717..c26132f 100644
+--- a/okhttp/src/main/java/okhttp3/internal/platform/OptionalMethod.java
++++ b/okhttp/src/main/java/okhttp3/internal/platform/OptionalMethod.java
+@@ -42,7 +42,7 @@
+    * @param methodName the name of the method
+    * @param methodParams the method parameter types
+    */
+-  public OptionalMethod(Class<?> returnType, String methodName, Class... methodParams) {
++  OptionalMethod(Class<?> returnType, String methodName, Class... methodParams) {
+     this.returnType = returnType;
+     this.methodName = methodName;
+     this.methodParams = methodParams;
+diff --git a/okhttp/src/main/java/okhttp3/internal/tls/DistinguishedNameParser.java b/okhttp/src/main/java/okhttp3/internal/tls/DistinguishedNameParser.java
+index 616bca5..cae8dfa 100644
+--- a/okhttp/src/main/java/okhttp3/internal/tls/DistinguishedNameParser.java
++++ b/okhttp/src/main/java/okhttp3/internal/tls/DistinguishedNameParser.java
+@@ -35,7 +35,7 @@
+   /** Distinguished name characters. */
+   private char[] chars;
+ 
+-  public DistinguishedNameParser(X500Principal principal) {
++  DistinguishedNameParser(X500Principal principal) {
+     // RFC2253 is used to ensure we get attributes in the reverse
+     // order of the underlying ASN.1 encoding, so that the most
+     // significant values of repeated attributes occur first.
+diff --git a/okhttp/src/main/java/okhttp3/internal/tls/TrustRootIndex.java b/okhttp/src/main/java/okhttp3/internal/tls/TrustRootIndex.java
+index e42ad1b..b677203 100644
+--- a/okhttp/src/main/java/okhttp3/internal/tls/TrustRootIndex.java
++++ b/okhttp/src/main/java/okhttp3/internal/tls/TrustRootIndex.java
+@@ -103,7 +103,7 @@
+   static final class BasicTrustRootIndex extends TrustRootIndex {
+     private final Map<X500Principal, Set<X509Certificate>> subjectToCaCerts;
+ 
+-    public BasicTrustRootIndex(X509Certificate... caCerts) {
++    BasicTrustRootIndex(X509Certificate... caCerts) {
+       subjectToCaCerts = new LinkedHashMap<>();
+       for (X509Certificate caCert : caCerts) {
+         X500Principal subject = caCert.getSubjectX500Principal();
+diff --git a/samples/guide/src/main/java/okhttp3/recipes/CustomCipherSuites.java b/samples/guide/src/main/java/okhttp3/recipes/CustomCipherSuites.java
+index a3ea23c..b568bdf 100644
+--- a/samples/guide/src/main/java/okhttp3/recipes/CustomCipherSuites.java
++++ b/samples/guide/src/main/java/okhttp3/recipes/CustomCipherSuites.java
+@@ -109,7 +109,7 @@
+   static class DelegatingSSLSocketFactory extends SSLSocketFactory {
+     protected final SSLSocketFactory delegate;
+ 
+-    public DelegatingSSLSocketFactory(SSLSocketFactory delegate) {
++    DelegatingSSLSocketFactory(SSLSocketFactory delegate) {
+       this.delegate = delegate;
+     }
+ 
+diff --git a/samples/guide/src/main/java/okhttp3/recipes/Progress.java b/samples/guide/src/main/java/okhttp3/recipes/Progress.java
+index f04de79..3056690 100644
+--- a/samples/guide/src/main/java/okhttp3/recipes/Progress.java
++++ b/samples/guide/src/main/java/okhttp3/recipes/Progress.java
+@@ -72,7 +72,7 @@
+     private final ProgressListener progressListener;
+     private BufferedSource bufferedSource;
+ 
+-    public ProgressResponseBody(ResponseBody responseBody, ProgressListener progressListener) {
++    ProgressResponseBody(ResponseBody responseBody, ProgressListener progressListener) {
+       this.responseBody = responseBody;
+       this.progressListener = progressListener;
+     }
+diff --git a/benchmarks/src/main/java/okhttp3/benchmarks/ApacheHttpClient.java b/benchmarks/src/main/java/okhttp3/benchmarks/ApacheHttpClient.java
+index a5c632f..2fffd7c 100644
+--- a/benchmarks/src/main/java/okhttp3/benchmarks/ApacheHttpClient.java
++++ b/benchmarks/src/main/java/okhttp3/benchmarks/ApacheHttpClient.java
+@@ -55,7 +55,7 @@
+   class ApacheHttpClientRequest implements Runnable {
+     private final HttpUrl url;
+ 
+-    public ApacheHttpClientRequest(HttpUrl url) {
++    ApacheHttpClientRequest(HttpUrl url) {
+       this.url = url;
+     }
+ 

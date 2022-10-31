@@ -1,0 +1,29 @@
+diff --git a/community/kernel/src/main/java/org/neo4j/kernel/impl/api/index/PopulatingIndexProxy.java b/community/kernel/src/main/java/org/neo4j/kernel/impl/api/index/PopulatingIndexProxy.java
+index aa7ad89..d0d9efc 100644
+--- a/community/kernel/src/main/java/org/neo4j/kernel/impl/api/index/PopulatingIndexProxy.java
++++ b/community/kernel/src/main/java/org/neo4j/kernel/impl/api/index/PopulatingIndexProxy.java
+@@ -147,7 +147,7 @@
+     @Override
+     public IndexReader newReader() throws IndexNotFoundKernelException
+     {
+-        throw new IndexNotFoundKernelException( descriptor + " is still populating" );
++        throw new IndexNotFoundKernelException( "Index is still populating: " + job );
+     }
+ 
+     @Override
+@@ -160,13 +160,13 @@
+     @Override
+     public void activate() throws IndexActivationFailedKernelException
+     {
+-        throw new IllegalStateException( "Cannot activate index while it is still populating." );
++        throw new IllegalStateException( "Cannot activate index while it is still populating: " + job );
+     }
+ 
+     @Override
+     public void validate()
+     {
+-        throw new IllegalStateException( "Cannot validate index while it is still populating." );
++        throw new IllegalStateException( "Cannot validate index while it is still populating: " + job );
+     }
+ 
+     @Override

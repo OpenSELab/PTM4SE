@@ -1,0 +1,52 @@
+diff --git a/core/server/common/src/main/java/alluxio/master/journal/ufs/UfsJournalWriter.java b/core/server/common/src/main/java/alluxio/master/journal/ufs/UfsJournalWriter.java
+index 65ad207..b2c7e84 100644
+--- a/core/server/common/src/main/java/alluxio/master/journal/ufs/UfsJournalWriter.java
++++ b/core/server/common/src/main/java/alluxio/master/journal/ufs/UfsJournalWriter.java
+@@ -351,7 +351,9 @@
+             mDataOutputStream);
+       } catch (IOException e) {
+         mRotateLogForNextWrite = true;
+-        throw e;
++        throw new IOException(String
++            .format("Failed to write journal file %s. Please ensure there is enough space left",
++                mCurrentLog), e);
+       }
+     }
+ 
+@@ -385,7 +387,9 @@
+         }
+       } catch (IOException e) {
+         mRotateLogForNextWrite = true;
+-        throw e;
++        throw new IOException(String
++            .format("Failed to flush journal file %s. Please ensure there is enough space left",
++                mCurrentLog), e);
+       }
+       boolean overSize = mDataOutputStream.size() >= mMaxLogSize;
+       if (overSize || !mUfs.supportsFlush()) {
+diff --git a/core/server/common/src/main/java/alluxio/master/journal/ufs/UfsJournalWriter.java b/core/server/common/src/main/java/alluxio/master/journal/ufs/UfsJournalWriter.java
+index 65ad207..b2c7e84 100644
+--- a/core/server/common/src/main/java/alluxio/master/journal/ufs/UfsJournalWriter.java
++++ b/core/server/common/src/main/java/alluxio/master/journal/ufs/UfsJournalWriter.java
+@@ -351,7 +351,9 @@
+             mDataOutputStream);
+       } catch (IOException e) {
+         mRotateLogForNextWrite = true;
+-        throw e;
++        throw new IOException(String
++            .format("Failed to write journal file %s. Please ensure there is enough space left",
++                mCurrentLog), e);
+       }
+     }
+ 
+@@ -385,7 +387,9 @@
+         }
+       } catch (IOException e) {
+         mRotateLogForNextWrite = true;
+-        throw e;
++        throw new IOException(String
++            .format("Failed to flush journal file %s. Please ensure there is enough space left",
++                mCurrentLog), e);
+       }
+       boolean overSize = mDataOutputStream.size() >= mMaxLogSize;
+       if (overSize || !mUfs.supportsFlush()) {

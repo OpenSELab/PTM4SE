@@ -1,0 +1,26 @@
+diff --git a/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java b/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
+index e11a920..892e4e0 100644
+--- a/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
++++ b/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
+@@ -268,7 +268,7 @@
+       if (options != null) {
+         flushCache = options.flushCache();
+         useCache = options.useCache();
+-        fetchSize = options.fetchSize() > -1 ? options.fetchSize() : null;
++        fetchSize = options.fetchSize() > -1 || options.fetchSize() == Integer.MIN_VALUE ? options.fetchSize() : null; //issue #348
+         timeout = options.timeout() > -1 ? options.timeout() : null;
+         statementType = options.statementType();
+         resultSetType = options.resultSetType();
+diff --git a/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java b/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
+index e11a920..892e4e0 100644
+--- a/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
++++ b/src/main/java/org/apache/ibatis/builder/annotation/MapperAnnotationBuilder.java
+@@ -268,7 +268,7 @@
+       if (options != null) {
+         flushCache = options.flushCache();
+         useCache = options.useCache();
+-        fetchSize = options.fetchSize() > -1 ? options.fetchSize() : null;
++        fetchSize = options.fetchSize() > -1 || options.fetchSize() == Integer.MIN_VALUE ? options.fetchSize() : null; //issue #348
+         timeout = options.timeout() > -1 ? options.timeout() : null;
+         statementType = options.statementType();
+         resultSetType = options.resultSetType();

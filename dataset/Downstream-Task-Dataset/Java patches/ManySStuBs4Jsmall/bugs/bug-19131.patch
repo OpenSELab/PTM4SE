@@ -1,0 +1,32 @@
+diff --git a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+index d799949..75a449f 100644
+--- a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
++++ b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+@@ -109,8 +109,9 @@
+ 
+     private static final ByteBuffer EMPTY_BUFFER = ByteBuffer.allocate(0);
+ 
+-    private static final Pattern CONNECTION_RESET =
+-        Pattern.compile("^.*Connection\\s*reset.*$", Pattern.CASE_INSENSITIVE);
++    private static final Pattern CONNECTION_RESET = Pattern.compile(
++            "^.*(Connection\\s*reset|Broken\\s*pipe).*$",
++            Pattern.CASE_INSENSITIVE);
+ 
+     private static SslBufferPool defaultBufferPool;
+ 
+diff --git a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+index d799949..75a449f 100644
+--- a/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
++++ b/src/main/java/org/jboss/netty/handler/ssl/SslHandler.java
+@@ -109,8 +109,9 @@
+ 
+     private static final ByteBuffer EMPTY_BUFFER = ByteBuffer.allocate(0);
+ 
+-    private static final Pattern CONNECTION_RESET =
+-        Pattern.compile("^.*Connection\\s*reset.*$", Pattern.CASE_INSENSITIVE);
++    private static final Pattern CONNECTION_RESET = Pattern.compile(
++            "^.*(Connection\\s*reset|Broken\\s*pipe).*$",
++            Pattern.CASE_INSENSITIVE);
+ 
+     private static SslBufferPool defaultBufferPool;
+ 

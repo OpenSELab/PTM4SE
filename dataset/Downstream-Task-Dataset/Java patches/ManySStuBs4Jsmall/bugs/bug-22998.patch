@@ -1,0 +1,44 @@
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PythonClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PythonClientCodegen.java
+index 9553f4a..632b428 100755
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PythonClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PythonClientCodegen.java
+@@ -46,7 +46,7 @@
+         typeMapping.put("long", "int");
+         typeMapping.put("double", "float");
+         typeMapping.put("array", "list");
+-        typeMapping.put("map", "map");
++        typeMapping.put("map", "dict");
+         typeMapping.put("boolean", "bool");
+         typeMapping.put("string", "str");
+         typeMapping.put("date", "datetime");
+@@ -111,7 +111,7 @@
+             MapProperty mp = (MapProperty) p;
+             Property inner = mp.getAdditionalProperties();
+ 
+-            return getSwaggerType(p) + "(String, " + getTypeDeclaration(inner) + ")";
++            return getSwaggerType(p) + "(str, " + getTypeDeclaration(inner) + ")";
+         }
+         return super.getTypeDeclaration(p);
+     }
+diff --git a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PythonClientCodegen.java b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PythonClientCodegen.java
+index 9553f4a..632b428 100755
+--- a/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PythonClientCodegen.java
++++ b/modules/swagger-codegen/src/main/java/io/swagger/codegen/languages/PythonClientCodegen.java
+@@ -46,7 +46,7 @@
+         typeMapping.put("long", "int");
+         typeMapping.put("double", "float");
+         typeMapping.put("array", "list");
+-        typeMapping.put("map", "map");
++        typeMapping.put("map", "dict");
+         typeMapping.put("boolean", "bool");
+         typeMapping.put("string", "str");
+         typeMapping.put("date", "datetime");
+@@ -111,7 +111,7 @@
+             MapProperty mp = (MapProperty) p;
+             Property inner = mp.getAdditionalProperties();
+ 
+-            return getSwaggerType(p) + "(String, " + getTypeDeclaration(inner) + ")";
++            return getSwaggerType(p) + "(str, " + getTypeDeclaration(inner) + ")";
+         }
+         return super.getTypeDeclaration(p);
+     }

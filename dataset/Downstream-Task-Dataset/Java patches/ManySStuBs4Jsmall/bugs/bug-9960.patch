@@ -1,0 +1,38 @@
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index e6d674b..bc3df9b 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -1224,12 +1224,12 @@
+ 		if(targetClass != null && field != null)
+ 			{
+ 			target.emit(C.EXPRESSION, objx, gen);
+-			gen.checkCast(Type.getType(targetClass));
++			gen.checkCast(getType(targetClass));
+ 			val.emit(C.EXPRESSION, objx, gen);
+ 			gen.visitLineNumber(line, gen.mark());
+ 			gen.dupX1();
+ 			HostExpr.emitUnboxArg(objx, gen, field.getType());
+-			gen.putField(Type.getType(targetClass), fieldName, Type.getType(field.getType()));
++			gen.putField(getType(targetClass), fieldName, Type.getType(field.getType()));
+ 			}
+ 		else
+ 			{
+diff --git a/src/jvm/clojure/lang/Compiler.java b/src/jvm/clojure/lang/Compiler.java
+index e6d674b..bc3df9b 100644
+--- a/src/jvm/clojure/lang/Compiler.java
++++ b/src/jvm/clojure/lang/Compiler.java
+@@ -1224,12 +1224,12 @@
+ 		if(targetClass != null && field != null)
+ 			{
+ 			target.emit(C.EXPRESSION, objx, gen);
+-			gen.checkCast(Type.getType(targetClass));
++			gen.checkCast(getType(targetClass));
+ 			val.emit(C.EXPRESSION, objx, gen);
+ 			gen.visitLineNumber(line, gen.mark());
+ 			gen.dupX1();
+ 			HostExpr.emitUnboxArg(objx, gen, field.getType());
+-			gen.putField(Type.getType(targetClass), fieldName, Type.getType(field.getType()));
++			gen.putField(getType(targetClass), fieldName, Type.getType(field.getType()));
+ 			}
+ 		else
+ 			{

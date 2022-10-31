@@ -1,0 +1,57 @@
+diff --git a/minicluster/src/main/java/tachyon/master/LocalTachyonClusterMultiMaster.java b/minicluster/src/main/java/tachyon/master/LocalTachyonClusterMultiMaster.java
+index adac425..aeb5523 100644
+--- a/minicluster/src/main/java/tachyon/master/LocalTachyonClusterMultiMaster.java
++++ b/minicluster/src/main/java/tachyon/master/LocalTachyonClusterMultiMaster.java
+@@ -57,7 +57,7 @@
+ 
+     try {
+       mCuratorServer = new TestingServer();
+-      LOG.info("Started testing zookeeper: " + mCuratorServer.getConnectString());
++      LOG.info("Started testing zookeeper: {}", mCuratorServer.getConnectString());
+     } catch (Exception e) {
+       throw Throwables.propagate(e);
+     }
+@@ -221,7 +221,7 @@
+     for (int k = 0; k < mNumOfMasters; k ++) {
+       mMasters.get(k).stop();
+     }
+-    LOG.info("Stopping testing zookeeper: " + mCuratorServer.getConnectString());
++    LOG.info("Stopping testing zookeeper: {}", mCuratorServer.getConnectString());
+     mCuratorServer.stop();
+   }
+ }
+diff --git a/servers/src/main/java/tachyon/master/TachyonMaster.java b/servers/src/main/java/tachyon/master/TachyonMaster.java
+index 697ba7f..4ed53ee 100644
+--- a/servers/src/main/java/tachyon/master/TachyonMaster.java
++++ b/servers/src/main/java/tachyon/master/TachyonMaster.java
+@@ -284,7 +284,7 @@
+       mTServerSocket.close();
+       mIsServing = false;
+     } else {
+-      LOG.info("Stopping Tachyon Master @ " + mMasterAddress);
++      LOG.info("Stopping Tachyon Master @ {}", mMasterAddress);
+     }
+   }
+ 
+diff --git a/minicluster/src/main/java/tachyon/master/LocalTachyonClusterMultiMaster.java b/minicluster/src/main/java/tachyon/master/LocalTachyonClusterMultiMaster.java
+index adac425..aeb5523 100644
+--- a/minicluster/src/main/java/tachyon/master/LocalTachyonClusterMultiMaster.java
++++ b/minicluster/src/main/java/tachyon/master/LocalTachyonClusterMultiMaster.java
+@@ -57,7 +57,7 @@
+ 
+     try {
+       mCuratorServer = new TestingServer();
+-      LOG.info("Started testing zookeeper: " + mCuratorServer.getConnectString());
++      LOG.info("Started testing zookeeper: {}", mCuratorServer.getConnectString());
+     } catch (Exception e) {
+       throw Throwables.propagate(e);
+     }
+@@ -221,7 +221,7 @@
+     for (int k = 0; k < mNumOfMasters; k ++) {
+       mMasters.get(k).stop();
+     }
+-    LOG.info("Stopping testing zookeeper: " + mCuratorServer.getConnectString());
++    LOG.info("Stopping testing zookeeper: {}", mCuratorServer.getConnectString());
+     mCuratorServer.stop();
+   }
+ }

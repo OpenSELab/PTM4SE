@@ -1,0 +1,39 @@
+diff --git a/core/client/src/main/java/alluxio/client/file/FileInStream.java b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+index bf3035d..777b147 100644
+--- a/core/client/src/main/java/alluxio/client/file/FileInStream.java
++++ b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+@@ -134,7 +134,7 @@
+       Preconditions.checkNotNull(options.getLocationPolicy(),
+           PreconditionMessage.FILE_WRITE_LOCATION_POLICY_UNSPECIFIED);
+     }
+-    int seekBufferSizeBytes = Math.max((int) options.getSeekBufferSizeBytes(), Constants.KB);
++    int seekBufferSizeBytes = Math.max((int) options.getSeekBufferSizeBytes(), 1);
+     mSeekBuffer = new byte[seekBufferSizeBytes];
+     LOG.debug(options.toString());
+   }
+diff --git a/core/client/src/test/java/alluxio/client/file/options/InStreamOptionsTest.java b/core/client/src/test/java/alluxio/client/file/options/InStreamOptionsTest.java
+index 0b214ac..b560f3a 100644
+--- a/core/client/src/test/java/alluxio/client/file/options/InStreamOptionsTest.java
++++ b/core/client/src/test/java/alluxio/client/file/options/InStreamOptionsTest.java
+@@ -34,7 +34,7 @@
+   public void defaultsTest() {
+     InStreamOptions options = InStreamOptions.defaults();
+     Assert.assertEquals(AlluxioStorageType.PROMOTE, options.getAlluxioStorageType());
+-    Assert.assertEquals(128 * Constants.MB, options.getSeekBufferSizeBytes());
++    Assert.assertEquals(Constants.MB, options.getSeekBufferSizeBytes());
+   }
+ 
+   /**
+diff --git a/core/client/src/main/java/alluxio/client/file/FileInStream.java b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+index bf3035d..777b147 100644
+--- a/core/client/src/main/java/alluxio/client/file/FileInStream.java
++++ b/core/client/src/main/java/alluxio/client/file/FileInStream.java
+@@ -134,7 +134,7 @@
+       Preconditions.checkNotNull(options.getLocationPolicy(),
+           PreconditionMessage.FILE_WRITE_LOCATION_POLICY_UNSPECIFIED);
+     }
+-    int seekBufferSizeBytes = Math.max((int) options.getSeekBufferSizeBytes(), Constants.KB);
++    int seekBufferSizeBytes = Math.max((int) options.getSeekBufferSizeBytes(), 1);
+     mSeekBuffer = new byte[seekBufferSizeBytes];
+     LOG.debug(options.toString());
+   }

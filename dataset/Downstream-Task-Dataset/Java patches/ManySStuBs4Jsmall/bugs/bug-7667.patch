@@ -1,0 +1,185 @@
+diff --git a/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java b/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
+index ed0f4d8..c22ac9e 100644
+--- a/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
++++ b/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
+@@ -811,7 +811,7 @@
+      Iterator<String> users = Splitter.on(",").trimResults().omitEmptyStrings().split(userStr).iterator();
+       if (!users.hasNext()) {
+         LOG.info("No user is added in admin role, since config value "+ userStr +
+-          " is in incorrect format. We accept comma seprated list of users.");
++          " is in incorrect format. We accept comma separated list of users.");
+         return;
+       }
+       Role adminRole;
+@@ -4982,7 +4982,7 @@
+         Table origTbl = ms.getTable(index.getDbName(), index.getOrigTableName());
+         if (origTbl == null) {
+           throw new InvalidObjectException(
+-              "Unable to add index because database or the orginal table do not exist");
++              "Unable to add index because database or the original table do not exist");
+         }
+ 
+         // set create time
+@@ -5731,7 +5731,7 @@
+       incrementCounter("add_role_member");
+       firePreEvent(new PreAuthorizationCallEvent(this));
+       if (PUBLIC.equals(roleName)) {
+-        throw new MetaException("No user can be added to " + PUBLIC +". Since all users implictly"
++        throw new MetaException("No user can be added to " + PUBLIC +". Since all users implicitly"
+         + " belong to " + PUBLIC + " role.");
+       }
+       Boolean ret = null;
+@@ -5792,7 +5792,7 @@
+       incrementCounter("create_role");
+       firePreEvent(new PreAuthorizationCallEvent(this));
+       if (PUBLIC.equals(role.getRoleName())) {
+-         throw new MetaException(PUBLIC + " role implictly exists. It can't be created.");
++         throw new MetaException(PUBLIC + " role implicitly exists. It can't be created.");
+       }
+       Boolean ret = null;
+       try {
+@@ -8008,7 +8008,7 @@
+           try {
+             Thread.sleep(1000);
+           } catch (InterruptedException e) {
+-            LOG.warn("Signalling thread was interuppted: " + e.getMessage());
++            LOG.warn("Signalling thread was interrupted: " + e.getMessage());
+           }
+         } while (!server.isServing());
+         startLock.lock();
+diff --git a/service/src/java/org/apache/hive/service/cli/GetInfoValue.java b/service/src/java/org/apache/hive/service/cli/GetInfoValue.java
+index 2b2359c..bf3c6b2 100644
+--- a/service/src/java/org/apache/hive/service/cli/GetInfoValue.java
++++ b/service/src/java/org/apache/hive/service/cli/GetInfoValue.java
+@@ -52,7 +52,7 @@
+       stringValue = tGetInfoValue.getStringValue();
+       break;
+     default:
+-      throw new IllegalArgumentException("Unreconigzed TGetInfoValue");
++      throw new IllegalArgumentException("Unrecognized TGetInfoValue");
+     }
+   }
+ 
+diff --git a/service/src/java/org/apache/hive/service/cli/operation/GetColumnsOperation.java b/service/src/java/org/apache/hive/service/cli/operation/GetColumnsOperation.java
+index 6e06887..f7399b2 100644
+--- a/service/src/java/org/apache/hive/service/cli/operation/GetColumnsOperation.java
++++ b/service/src/java/org/apache/hive/service/cli/operation/GetColumnsOperation.java
+@@ -104,7 +104,7 @@
+       "Schema of table that is the scope of a reference attribute "
+       + "(null if the DATA_TYPE isn't REF)")
+   .addPrimitiveColumn("SCOPE_TABLE", Type.STRING_TYPE,
+-      "Table name that this the scope of a reference attribure "
++      "Table name that this the scope of a reference attribute "
+       + "(null if the DATA_TYPE isn't REF)")
+   .addPrimitiveColumn("SOURCE_DATA_TYPE", Type.SMALLINT_TYPE,
+       "Source type of a distinct type or user-generated Ref type, "
+diff --git a/service/src/java/org/apache/hive/service/cli/session/SessionManager.java b/service/src/java/org/apache/hive/service/cli/session/SessionManager.java
+index 1846c91..cc4dd52 100644
+--- a/service/src/java/org/apache/hive/service/cli/session/SessionManager.java
++++ b/service/src/java/org/apache/hive/service/cli/session/SessionManager.java
+@@ -415,7 +415,7 @@
+         session = (HiveSession) constructor.newInstance(sessionHandle, protocol, username, password,
+           hiveConf, ipAddress, forwardedAddresses);
+         } catch (Exception e) {
+-          throw new HiveSQLException("Cannot initilize session class:" + sessionImplclassName, e);
++          throw new HiveSQLException("Cannot initialize session class:" + sessionImplclassName, e);
+         }
+       }
+     }
+diff --git a/service/src/java/org/apache/hive/service/server/HiveServer2.java b/service/src/java/org/apache/hive/service/server/HiveServer2.java
+index 602dfda..c8516fe 100644
+--- a/service/src/java/org/apache/hive/service/server/HiveServer2.java
++++ b/service/src/java/org/apache/hive/service/server/HiveServer2.java
+@@ -171,7 +171,7 @@
+     try {
+       hiveConf.set(HiveConf.ConfVars.HIVE_SERVER2_THRIFT_BIND_HOST.varname, getServerHost());
+     } catch (Throwable t) {
+-      throw new Error("Unable to intitialize HiveServer2", t);
++      throw new Error("Unable to initialize HiveServer2", t);
+     }
+     if (HiveConf.getBoolVar(hiveConf, ConfVars.LLAP_HS2_ENABLE_COORDINATOR)) {
+       // See method comment.
+@@ -503,7 +503,7 @@
+           try {
+             znode.close();
+             LOG.warn("This HiveServer2 instance is now de-registered from ZooKeeper. "
+-                + "The server will be shut down after the last client sesssion completes.");
++                + "The server will be shut down after the last client session completes.");
+           } catch (IOException e) {
+             LOG.error("Failed to close the persistent ephemeral znode", e);
+           } finally {
+diff --git a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/ObjectStore.java b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/ObjectStore.java
+index de7dc2d..0dc8c39 100644
+--- a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/ObjectStore.java
++++ b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/ObjectStore.java
+@@ -8369,7 +8369,7 @@
+               " Metastore is not upgraded or corrupt");
+         } else {
+           LOG.error("Version information found in metastore differs {} " +
+-              "from expected schema version {}. Schema verififcation is disabled {}", 
++              "from expected schema version {}. Schema verification is disabled {}",
+               dbSchemaVer, hiveSchemaVer, ConfVars.SCHEMA_VERIFICATION);
+           setMetaStoreSchemaVersion(hiveSchemaVer,
+             "Set by MetaStore " + USER + "@" + HOSTNAME);
+diff --git a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/txn/TxnHandler.java b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/txn/TxnHandler.java
+index ec1a988..e45bfb4 100644
+--- a/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/txn/TxnHandler.java
++++ b/standalone-metastore/src/main/java/org/apache/hadoop/hive/metastore/txn/TxnHandler.java
+@@ -2520,7 +2520,7 @@
+ 
+           String msg = "Aborting " + JavaUtils.txnIdToString(writeSet.get(0).txnId) +
+             " since a concurrent committed transaction [" + JavaUtils.txnIdToString(rs.getLong(4)) + "," + rs.getLong(5) +
+-            "] has already updated resouce '" + resourceName + "'";
++            "] has already updated resource '" + resourceName + "'";
+           LOG.info(msg);
+           if(abortTxns(dbConn, Collections.singletonList(writeSet.get(0).txnId), true) != 1) {
+             throw new IllegalStateException(msg + " FAILED!");
+diff --git a/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java b/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
+index ed0f4d8..c22ac9e 100644
+--- a/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
++++ b/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java
+@@ -811,7 +811,7 @@
+      Iterator<String> users = Splitter.on(",").trimResults().omitEmptyStrings().split(userStr).iterator();
+       if (!users.hasNext()) {
+         LOG.info("No user is added in admin role, since config value "+ userStr +
+-          " is in incorrect format. We accept comma seprated list of users.");
++          " is in incorrect format. We accept comma separated list of users.");
+         return;
+       }
+       Role adminRole;
+@@ -4982,7 +4982,7 @@
+         Table origTbl = ms.getTable(index.getDbName(), index.getOrigTableName());
+         if (origTbl == null) {
+           throw new InvalidObjectException(
+-              "Unable to add index because database or the orginal table do not exist");
++              "Unable to add index because database or the original table do not exist");
+         }
+ 
+         // set create time
+@@ -5731,7 +5731,7 @@
+       incrementCounter("add_role_member");
+       firePreEvent(new PreAuthorizationCallEvent(this));
+       if (PUBLIC.equals(roleName)) {
+-        throw new MetaException("No user can be added to " + PUBLIC +". Since all users implictly"
++        throw new MetaException("No user can be added to " + PUBLIC +". Since all users implicitly"
+         + " belong to " + PUBLIC + " role.");
+       }
+       Boolean ret = null;
+@@ -5792,7 +5792,7 @@
+       incrementCounter("create_role");
+       firePreEvent(new PreAuthorizationCallEvent(this));
+       if (PUBLIC.equals(role.getRoleName())) {
+-         throw new MetaException(PUBLIC + " role implictly exists. It can't be created.");
++         throw new MetaException(PUBLIC + " role implicitly exists. It can't be created.");
+       }
+       Boolean ret = null;
+       try {
+@@ -8008,7 +8008,7 @@
+           try {
+             Thread.sleep(1000);
+           } catch (InterruptedException e) {
+-            LOG.warn("Signalling thread was interuppted: " + e.getMessage());
++            LOG.warn("Signalling thread was interrupted: " + e.getMessage());
+           }
+         } while (!server.isServing());
+         startLock.lock();

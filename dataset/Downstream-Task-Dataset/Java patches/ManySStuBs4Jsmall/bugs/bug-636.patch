@@ -1,0 +1,46 @@
+diff --git a/core/server/src/main/java/alluxio/master/file/PermissionChecker.java b/core/server/src/main/java/alluxio/master/file/PermissionChecker.java
+index f99f5e2..6f9bf77 100644
+--- a/core/server/src/main/java/alluxio/master/file/PermissionChecker.java
++++ b/core/server/src/main/java/alluxio/master/file/PermissionChecker.java
+@@ -274,7 +274,7 @@
+    * @param path the path to check permission on
+    * @throws AccessControlException if permission checking fails
+    */
+-  private void checkInode(String user, List<String> groups, Inode inode, Mode.Bits bits,
++  private void checkInode(String user, List<String> groups, Inode<?> inode, Mode.Bits bits,
+       String path) throws AccessControlException {
+     if (inode == null) {
+       return;
+@@ -348,7 +348,8 @@
+     return user.equals(mInodeTree.getRootUserName()) || groups.contains(mFileSystemSuperGroup);
+   }
+ 
+-  private static String toExceptionMessage(String user, Mode.Bits bits, String path, Inode inode) {
++  private static String toExceptionMessage(String user, Mode.Bits bits, String path,
++      Inode<?> inode) {
+     StringBuilder stringBuilder =
+         new StringBuilder().append("user=").append(user).append(", ").append("access=").append(bits)
+             .append(", ").append("path=").append(path).append(": ").append("failed at ")
+diff --git a/core/server/src/main/java/alluxio/master/file/PermissionChecker.java b/core/server/src/main/java/alluxio/master/file/PermissionChecker.java
+index f99f5e2..6f9bf77 100644
+--- a/core/server/src/main/java/alluxio/master/file/PermissionChecker.java
++++ b/core/server/src/main/java/alluxio/master/file/PermissionChecker.java
+@@ -274,7 +274,7 @@
+    * @param path the path to check permission on
+    * @throws AccessControlException if permission checking fails
+    */
+-  private void checkInode(String user, List<String> groups, Inode inode, Mode.Bits bits,
++  private void checkInode(String user, List<String> groups, Inode<?> inode, Mode.Bits bits,
+       String path) throws AccessControlException {
+     if (inode == null) {
+       return;
+@@ -348,7 +348,8 @@
+     return user.equals(mInodeTree.getRootUserName()) || groups.contains(mFileSystemSuperGroup);
+   }
+ 
+-  private static String toExceptionMessage(String user, Mode.Bits bits, String path, Inode inode) {
++  private static String toExceptionMessage(String user, Mode.Bits bits, String path,
++      Inode<?> inode) {
+     StringBuilder stringBuilder =
+         new StringBuilder().append("user=").append(user).append(", ").append("access=").append(bits)
+             .append(", ").append("path=").append(path).append(": ").append("failed at ")

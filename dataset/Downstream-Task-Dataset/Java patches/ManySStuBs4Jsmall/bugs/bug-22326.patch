@@ -1,0 +1,26 @@
+diff --git a/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java b/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
+index 37d3aec..07e99a2 100644
+--- a/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
+@@ -56,7 +56,7 @@
+             new WordToSentenceProcessor<CoreLabel>(boundaryTokenRegex,
+                     boundaryToDiscard, htmlElementsToDiscard,
+                     WordToSentenceProcessor.stringToNewlineIsSentenceBreak(newlineIsSentenceBreak),
+-                    TokenSequencePattern.compile(boundaryMultiTokenRegex), tokenRegexesToDiscard));
++                    (boundaryMultiTokenRegex != null)? TokenSequencePattern.compile(boundaryMultiTokenRegex):null, tokenRegexesToDiscard));
+   }
+ 
+   private WordsToSentencesAnnotator(boolean verbose, boolean countLineNumbers,
+diff --git a/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java b/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
+index 37d3aec..07e99a2 100644
+--- a/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
++++ b/src/edu/stanford/nlp/pipeline/WordsToSentencesAnnotator.java
+@@ -56,7 +56,7 @@
+             new WordToSentenceProcessor<CoreLabel>(boundaryTokenRegex,
+                     boundaryToDiscard, htmlElementsToDiscard,
+                     WordToSentenceProcessor.stringToNewlineIsSentenceBreak(newlineIsSentenceBreak),
+-                    TokenSequencePattern.compile(boundaryMultiTokenRegex), tokenRegexesToDiscard));
++                    (boundaryMultiTokenRegex != null)? TokenSequencePattern.compile(boundaryMultiTokenRegex):null, tokenRegexesToDiscard));
+   }
+ 
+   private WordsToSentencesAnnotator(boolean verbose, boolean countLineNumbers,

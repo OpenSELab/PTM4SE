@@ -1,0 +1,38 @@
+diff --git a/modules/activiti-bpmn-converter/src/test/java/org/activiti/editor/language/xml/MessageConverterTest.java b/modules/activiti-bpmn-converter/src/test/java/org/activiti/editor/language/xml/MessageConverterTest.java
+index 0fb4d08..01311ac 100644
+--- a/modules/activiti-bpmn-converter/src/test/java/org/activiti/editor/language/xml/MessageConverterTest.java
++++ b/modules/activiti-bpmn-converter/src/test/java/org/activiti/editor/language/xml/MessageConverterTest.java
+@@ -40,7 +40,7 @@
+         MessageEventDefinition messageEventDefinition = (MessageEventDefinition) startEvent.getEventDefinitions().get(0);
+         assertNotNull("Attribute messageRef of messageEventDefinition can't be null.", messageEventDefinition.getMessageRef());
+         if(!(message.getId().equals(message.getName())) && messageEventDefinition.getMessageRef() != null){
+-          assertTrue("MessageRef in messageEventDefinition of start event should be equal to messageId.", messageEventDefinition.getMessageRef().equals(message.getId()));
++          assertTrue("MessageRef attribute of messageEventDefinition of start event should be equal to messageId.", (messageEventDefinition.getMessageRef()).equals(message.getId()));
+         }
+       }
+     }
+diff --git a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/deployer/EventSubscriptionManager.java b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/deployer/EventSubscriptionManager.java
+index 0adcf64..83e900a 100644
+--- a/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/deployer/EventSubscriptionManager.java
++++ b/modules/activiti-engine/src/main/java/org/activiti/engine/impl/bpmn/deployer/EventSubscriptionManager.java
+@@ -87,7 +87,6 @@
+     Message message = null;
+     if (bpmnModel.containsMessageId(messageEventDefinition.getMessageRef())) {
+       message = bpmnModel.getMessage(messageEventDefinition.getMessageRef());
+-      //messageEventDefinition.setMessageRef(message.getName());
+     }
+ 
+     // look for subscriptions for the same name in db:
+diff --git a/modules/activiti-bpmn-converter/src/test/java/org/activiti/editor/language/xml/MessageConverterTest.java b/modules/activiti-bpmn-converter/src/test/java/org/activiti/editor/language/xml/MessageConverterTest.java
+index 0fb4d08..01311ac 100644
+--- a/modules/activiti-bpmn-converter/src/test/java/org/activiti/editor/language/xml/MessageConverterTest.java
++++ b/modules/activiti-bpmn-converter/src/test/java/org/activiti/editor/language/xml/MessageConverterTest.java
+@@ -40,7 +40,7 @@
+         MessageEventDefinition messageEventDefinition = (MessageEventDefinition) startEvent.getEventDefinitions().get(0);
+         assertNotNull("Attribute messageRef of messageEventDefinition can't be null.", messageEventDefinition.getMessageRef());
+         if(!(message.getId().equals(message.getName())) && messageEventDefinition.getMessageRef() != null){
+-          assertTrue("MessageRef in messageEventDefinition of start event should be equal to messageId.", messageEventDefinition.getMessageRef().equals(message.getId()));
++          assertTrue("MessageRef attribute of messageEventDefinition of start event should be equal to messageId.", (messageEventDefinition.getMessageRef()).equals(message.getId()));
+         }
+       }
+     }

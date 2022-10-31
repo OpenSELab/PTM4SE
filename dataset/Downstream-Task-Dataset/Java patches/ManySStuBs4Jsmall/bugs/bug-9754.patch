@@ -1,0 +1,78 @@
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index cc49499..776be7d 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -299,7 +299,7 @@
+             tokens = aCheck.getRequiredTokens();
+ 
+             //register configured tokens
+-            final int acceptableTokens[] = aCheck.getAcceptableTokens();
++            final int[] acceptableTokens = aCheck.getAcceptableTokens();
+             Arrays.sort(acceptableTokens);
+             for (String token : checkTokens) {
+                 try {
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/NewlineAtEndOfFileCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/NewlineAtEndOfFileCheck.java
+index f84e1e6..519598c 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/NewlineAtEndOfFileCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/NewlineAtEndOfFileCheck.java
+@@ -116,7 +116,7 @@
+             return false;
+         }
+         aRandomAccessFile.seek(aRandomAccessFile.length() - len);
+-        final byte lastBytes[] = new byte[len];
++        final byte[] lastBytes = new byte[len];
+         final int readBytes = aRandomAccessFile.read(lastBytes);
+         if (readBytes != len) {
+             throw new IOException("Unable to read " + len + " bytes, got "
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/checks/blocks/LeftCurlyCheck.java b/src/main/java/com/puppycrawl/tools/checkstyle/checks/blocks/LeftCurlyCheck.java
+index ee5ff4a..52ae6dc 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/checks/blocks/LeftCurlyCheck.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/checks/blocks/LeftCurlyCheck.java
+@@ -151,7 +151,7 @@
+             final DetailAST objBlock = aAST.findFirstToken(TokenTypes.OBJBLOCK);
+             brace = (objBlock == null)
+                 ? null
+-                : (DetailAST) objBlock.getFirstChild();
++                : objBlock.getFirstChild();
+             break;
+ 
+         case TokenTypes.LITERAL_WHILE:
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/doclets/TokenTypesDoclet.java b/src/main/java/com/puppycrawl/tools/checkstyle/doclets/TokenTypesDoclet.java
+index 1eb9e41..7bde6f7 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/doclets/TokenTypesDoclet.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/doclets/TokenTypesDoclet.java
+@@ -111,7 +111,7 @@
+      * @param aReporter the reporter to report errors.
+      * @return true if only valid options was specified
+      */
+-    public static boolean validOptions(String aOptions[][],
++    public static boolean validOptions(String[][] aOptions,
+                                        DocErrorReporter aReporter)
+     {
+         boolean foundDestFileOption = false;
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/gui/FileDrop.java b/src/main/java/com/puppycrawl/tools/checkstyle/gui/FileDrop.java
+index 7f48951..7620047 100644
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/gui/FileDrop.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/gui/FileDrop.java
+@@ -79,7 +79,7 @@
+     // that the panel layout does not change during the DnD operation.
+ 
+     private transient Border normalBorder;
+-    private transient final DropTargetListener dropListener;
++    private final transient DropTargetListener dropListener;
+ 
+     // TODO: Blue is not a nice color in all LookAndFeels
+     /* Default border color */
+diff --git a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+index cc49499..776be7d 100755
+--- a/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
++++ b/src/main/java/com/puppycrawl/tools/checkstyle/TreeWalker.java
+@@ -299,7 +299,7 @@
+             tokens = aCheck.getRequiredTokens();
+ 
+             //register configured tokens
+-            final int acceptableTokens[] = aCheck.getAcceptableTokens();
++            final int[] acceptableTokens = aCheck.getAcceptableTokens();
+             Arrays.sort(acceptableTokens);
+             for (String token : checkTokens) {
+                 try {

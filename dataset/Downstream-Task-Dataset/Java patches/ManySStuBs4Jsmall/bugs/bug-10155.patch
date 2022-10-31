@@ -1,0 +1,60 @@
+diff --git a/core/src/main/java/cucumber/runtime/formatter/JUnitFormatter.java b/core/src/main/java/cucumber/runtime/formatter/JUnitFormatter.java
+index ffaa644..c73dcda 100644
+--- a/core/src/main/java/cucumber/runtime/formatter/JUnitFormatter.java
++++ b/core/src/main/java/cucumber/runtime/formatter/JUnitFormatter.java
+@@ -322,7 +322,10 @@
+ 
+         private Element createElement(Document doc, StringBuilder sb, String elementType) {
+             Element child = doc.createElement(elementType);
+-            child.appendChild(doc.createCDATASection(sb.toString()));
++            // the createCDATASection method seems to convert "\n" to "\r\n" on Windows, in case
++            // data originally contains "\r\n" line separators the result becomes "\r\r\n", which
++            // are displayed as double line breaks.
++            child.appendChild(doc.createCDATASection(sb.toString().replace(System.lineSeparator(), "\n")));
+             return child;
+         }
+ 
+diff --git a/core/src/test/java/cucumber/runtime/formatter/JUnitFormatterTest.java b/core/src/test/java/cucumber/runtime/formatter/JUnitFormatterTest.java
+index 9819e9e..d4dba19 100644
+--- a/core/src/test/java/cucumber/runtime/formatter/JUnitFormatterTest.java
++++ b/core/src/test/java/cucumber/runtime/formatter/JUnitFormatterTest.java
+@@ -119,7 +119,7 @@
+         String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                 "<testsuite failures=\"0\" name=\"cucumber.runtime.formatter.JUnitFormatter\" skipped=\"1\" tests=\"1\" time=\"0.003\">\n" +
+                 "    <testcase classname=\"feature name\" name=\"scenario name\" time=\"0.003\">\n" +
+-                "        <skipped message=\"" + stackTrace.replace("\n\t", "&#10;&#9;") + "\"><![CDATA[" +
++                "        <skipped message=\"" + stackTrace.replace("\n\t", "&#10;&#9;").replaceAll("\r", "&#13;") + "\"><![CDATA[" +
+                 "Given first step............................................................skipped\n" +
+                 "When second step............................................................skipped\n" +
+                 "Then third step.............................................................skipped\n" +
+diff --git a/java/src/test/java/cucumber/runtime/java/test/SubstitutionStepdefs.java b/java/src/test/java/cucumber/runtime/java/test/SubstitutionStepdefs.java
+index ba79dbf..4254955 100644
+--- a/java/src/test/java/cucumber/runtime/java/test/SubstitutionStepdefs.java
++++ b/java/src/test/java/cucumber/runtime/java/test/SubstitutionStepdefs.java
+@@ -32,8 +32,8 @@
+ 
+     @Then("^I should receive an email with the body:$")
+     public void I_should_receive_an_email_with_the_body(String body) throws Throwable {
+-        String expected = String.format("Dear %s,%n" +
+-                "You have been granted %s rights.  You are %s. Please be responsible.%n" +
++        String expected = String.format("Dear %s,\n" +
++                "You have been granted %s rights.  You are %s. Please be responsible.\n" +
+                 "-The Admins", name, role, details);
+         assertEquals(expected, body);
+     }
+diff --git a/core/src/main/java/cucumber/runtime/formatter/JUnitFormatter.java b/core/src/main/java/cucumber/runtime/formatter/JUnitFormatter.java
+index ffaa644..c73dcda 100644
+--- a/core/src/main/java/cucumber/runtime/formatter/JUnitFormatter.java
++++ b/core/src/main/java/cucumber/runtime/formatter/JUnitFormatter.java
+@@ -322,7 +322,10 @@
+ 
+         private Element createElement(Document doc, StringBuilder sb, String elementType) {
+             Element child = doc.createElement(elementType);
+-            child.appendChild(doc.createCDATASection(sb.toString()));
++            // the createCDATASection method seems to convert "\n" to "\r\n" on Windows, in case
++            // data originally contains "\r\n" line separators the result becomes "\r\r\n", which
++            // are displayed as double line breaks.
++            child.appendChild(doc.createCDATASection(sb.toString().replace(System.lineSeparator(), "\n")));
+             return child;
+         }
+ 

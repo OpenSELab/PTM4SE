@@ -1,0 +1,32 @@
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+index 9cab448..9d5e44e 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+@@ -230,7 +230,10 @@
+ 
+     @Override
+     public boolean isSuspended() {
+-        return suspended.get();
++        // return true also if the type of Action is SUSPEND_MESSAGE. if
++        // WebSocketMessageSuspendInterceptor is enabled it indicates that
++        // this resource represents a message from a WebSocket client
++        return suspended.get() || action.type() == Action.TYPE.SUSPEND_MESSAGE;
+     }
+ 
+     @Override
+diff --git a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+index 9cab448..9d5e44e 100644
+--- a/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
++++ b/modules/cpr/src/main/java/org/atmosphere/cpr/AtmosphereResourceImpl.java
+@@ -230,7 +230,10 @@
+ 
+     @Override
+     public boolean isSuspended() {
+-        return suspended.get();
++        // return true also if the type of Action is SUSPEND_MESSAGE. if
++        // WebSocketMessageSuspendInterceptor is enabled it indicates that
++        // this resource represents a message from a WebSocket client
++        return suspended.get() || action.type() == Action.TYPE.SUSPEND_MESSAGE;
+     }
+ 
+     @Override

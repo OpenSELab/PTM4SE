@@ -1,0 +1,26 @@
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractMemoryHttpData.java b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractMemoryHttpData.java
+index c3a3e0a..929226b 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractMemoryHttpData.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractMemoryHttpData.java
+@@ -206,7 +206,7 @@
+         if (sizeLeft < length) {
+             sliceLength = sizeLeft;
+         }
+-        ByteBuf chunk = byteBuf.slice(chunkPosition, sliceLength);
++        ByteBuf chunk = byteBuf.slice(chunkPosition, sliceLength).retain();
+         chunkPosition += sliceLength;
+         return chunk;
+     }
+diff --git a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractMemoryHttpData.java b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractMemoryHttpData.java
+index c3a3e0a..929226b 100644
+--- a/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractMemoryHttpData.java
++++ b/codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractMemoryHttpData.java
+@@ -206,7 +206,7 @@
+         if (sizeLeft < length) {
+             sliceLength = sizeLeft;
+         }
+-        ByteBuf chunk = byteBuf.slice(chunkPosition, sliceLength);
++        ByteBuf chunk = byteBuf.slice(chunkPosition, sliceLength).retain();
+         chunkPosition += sliceLength;
+         return chunk;
+     }

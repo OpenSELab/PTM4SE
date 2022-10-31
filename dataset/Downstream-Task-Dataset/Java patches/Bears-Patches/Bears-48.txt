@@ -1,0 +1,11 @@
+--- a/src/main/java/spoon/support/visitor/ClassTypingContext.java
++++ b/src/main/java/spoon/support/visitor/ClassTypingContext.java
+@@ -373,7 +373,7 @@ public class ClassTypingContext implements GenericTypeAdapter {
+ 					throw new SpoonException("Cannot adapt type parameters of non type scope");
+ 				}
+ 				CtType<?> typeDeclarer = (CtType<?>) declarer;
+-				List<CtTypeReference<?>> actualTypeArguments = typeToArguments.get(typeDeclarer.getQualifiedName());
++				List<CtTypeReference<?>> actualTypeArguments = getActualTypeArguments(typeDeclarer.getQualifiedName());
+ 				if (actualTypeArguments == null) {
+ 					/*
+ 					 * the actualTypeArguments of this declarer cannot be resolved.

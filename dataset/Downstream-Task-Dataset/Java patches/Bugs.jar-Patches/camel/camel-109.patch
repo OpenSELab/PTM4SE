@@ -1,0 +1,35 @@
+diff --git a/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinitionHelper.java b/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinitionHelper.java
+index 5575d36..2ae283b 100644
+--- a/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinitionHelper.java
++++ b/camel-core/src/main/java/org/apache/camel/model/ProcessorDefinitionHelper.java
+@@ -198,9 +198,6 @@ public final class ProcessorDefinitionHelper {
+         }
+ 
+         for (ProcessorDefinition out : outputs) {
+-            if (type.isInstance(out)) {
+-                found.add((T)out);
+-            }
+ 
+             // send is much common
+             if (out instanceof SendDefinition) {
+@@ -222,6 +219,9 @@ public final class ProcessorDefinitionHelper {
+                     List<ProcessorDefinition<?>> children = choice.getOtherwise().getOutputs();
+                     doFindType(children, type, found);
+                 }
++
++                // do not check children as we already did that
++                continue;
+             }
+ 
+             // special for try ... catch ... finally
+@@ -253,6 +253,10 @@ public final class ProcessorDefinitionHelper {
+                 continue;
+             }
+ 
++            if (type.isInstance(out)) {
++                found.add((T)out);
++            }
++
+             // try children as well
+             List<ProcessorDefinition<?>> children = out.getOutputs();
+             doFindType(children, type, found);

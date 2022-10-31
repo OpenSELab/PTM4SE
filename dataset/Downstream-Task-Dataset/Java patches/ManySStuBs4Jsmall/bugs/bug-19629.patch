@@ -1,0 +1,54 @@
+diff --git a/bundles/persistence/org.openhab.persistence.rrd4j/src/main/java/org/openhab/persistence/rrd4j/internal/RRD4jService.java b/bundles/persistence/org.openhab.persistence.rrd4j/src/main/java/org/openhab/persistence/rrd4j/internal/RRD4jService.java
+index ff480d8..67b9185 100644
+--- a/bundles/persistence/org.openhab.persistence.rrd4j/src/main/java/org/openhab/persistence/rrd4j/internal/RRD4jService.java
++++ b/bundles/persistence/org.openhab.persistence.rrd4j/src/main/java/org/openhab/persistence/rrd4j/internal/RRD4jService.java
+@@ -110,11 +110,11 @@
+ 							sample.setTime(now - 1);
+ 							sample.setValue(DATASOURCE_STATE, lastValue);
+ 							sample.update();
+-							logger.debug("Stored '{}' with state '{}' in rrd4j database", name, mapToState(lastValue, item.getName()));
++							logger.debug("Stored '{}' with state '{}' in rrd4j database (again)", name, mapToState(lastValue, item.getName()));
+ 						}
+ 					}
+ 				} catch (IOException e) {
+-					logger.debug("Error re-storing last value: {}", e.getMessage());
++					logger.debug("Error storing last value (again): {}", e.getMessage());
+ 				}
+ 			}
+ 			try {
+@@ -129,7 +129,7 @@
+ 					}
+ 					sample.setValue(DATASOURCE_STATE, value);
+ 					sample.update();
+-					logger.debug("Stored '{}' with state '{}' in rrd4j database", name, item.getState());
++					logger.debug("Stored '{}' with state '{}' in rrd4j database", name, state);
+ 				}
+ 			} catch (IllegalArgumentException e) {
+ 				if(e.getMessage().contains("at least one second step is required")) {
+diff --git a/bundles/persistence/org.openhab.persistence.rrd4j/src/main/java/org/openhab/persistence/rrd4j/internal/RRD4jService.java b/bundles/persistence/org.openhab.persistence.rrd4j/src/main/java/org/openhab/persistence/rrd4j/internal/RRD4jService.java
+index ff480d8..67b9185 100644
+--- a/bundles/persistence/org.openhab.persistence.rrd4j/src/main/java/org/openhab/persistence/rrd4j/internal/RRD4jService.java
++++ b/bundles/persistence/org.openhab.persistence.rrd4j/src/main/java/org/openhab/persistence/rrd4j/internal/RRD4jService.java
+@@ -110,11 +110,11 @@
+ 							sample.setTime(now - 1);
+ 							sample.setValue(DATASOURCE_STATE, lastValue);
+ 							sample.update();
+-							logger.debug("Stored '{}' with state '{}' in rrd4j database", name, mapToState(lastValue, item.getName()));
++							logger.debug("Stored '{}' with state '{}' in rrd4j database (again)", name, mapToState(lastValue, item.getName()));
+ 						}
+ 					}
+ 				} catch (IOException e) {
+-					logger.debug("Error re-storing last value: {}", e.getMessage());
++					logger.debug("Error storing last value (again): {}", e.getMessage());
+ 				}
+ 			}
+ 			try {
+@@ -129,7 +129,7 @@
+ 					}
+ 					sample.setValue(DATASOURCE_STATE, value);
+ 					sample.update();
+-					logger.debug("Stored '{}' with state '{}' in rrd4j database", name, item.getState());
++					logger.debug("Stored '{}' with state '{}' in rrd4j database", name, state);
+ 				}
+ 			} catch (IllegalArgumentException e) {
+ 				if(e.getMessage().contains("at least one second step is required")) {
