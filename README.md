@@ -1185,6 +1185,7 @@ SE-related downstream task datasets are the datasets used to fine tune the intel
 PL-related tasks are the tasks to solve the problems through studying the syntactic and semantic feature representations of source code. The current main tasks and performance are listed in the followed table.
 
 <div align=center>
+
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
  mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
@@ -1254,8 +1255,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CodeBLEU</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CodeBLEU<o:p></o:p></span></p>
   </td>
   <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
@@ -1267,8 +1267,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>EditSIM</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>EditSIM<o:p></o:p></span></p>
   </td>
   <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
@@ -1289,7 +1288,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
   solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  lang=EN-US style='font-size:6.5pt'>Commit <span class=SpellE>classifcation</span><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>Commit classifcation<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -1382,8 +1381,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>seBERT</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>seBERT</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -1469,8 +1468,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>BERToverflow</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>BERToverflow</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -1650,8 +1649,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CodeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CodeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -1737,8 +1735,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>RoBERTa</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>RoBERTa</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -2263,8 +2261,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>StackOBERTflow</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>StackOBERTflow</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -2441,8 +2439,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>GraphCodeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>GraphCodeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -2528,8 +2525,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CuBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CuBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -2788,9 +2784,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>CodeBERT</span></span><span lang=EN-US style='font-size:6.5pt;
-  color:black;background:white'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>CodeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -3489,8 +3483,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CuBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CuBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -3577,10 +3570,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>RoBERTa</span></span><span lang=EN-US style='font-size:6.5pt;
-  color:black;background:white'> (code)</span><span lang=EN-US
-  style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>RoBERTa
+  (code)</span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -3753,8 +3744,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>CodeBERT</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>CodeBERT</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -3840,9 +3831,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>CodeBERTa</span></span><span lang=EN-US style='font-size:6.5pt;
-  color:black;background:white'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>CodeBERTa<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -3928,9 +3917,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>GraphCodeBERT</span></span><span lang=EN-US style='font-size:6.5pt;
-  color:black;background:white'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>GraphCodeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -4102,8 +4089,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>SynCoBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt;color:black;background:white'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>SynCoBERT<span style='color:black;
+  background:white'><o:p></o:p></span></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -4196,8 +4183,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>RoBERTa</span></span><span
-  lang=EN-US style='font-size:6.5pt'>&nbsp;<o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>RoBERTa&nbsp;<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -4283,8 +4269,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CodeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'>&nbsp;<o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CodeBERT&nbsp;<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -4370,8 +4355,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>GraphCodeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>GraphCodeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -4631,10 +4615,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>RoBERTa</span></span><span lang=EN-US style='font-size:6.5pt;
-  color:black;background:white'> (code)</span><span lang=EN-US
-  style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>RoBERTa
+  (code)</span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -5152,8 +5134,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>InferCode</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>InferCode</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -5236,8 +5218,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>SynCoBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt;color:black;background:white'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>SynCoBERT<span style='color:black;
+  background:white'><o:p></o:p></span></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -5322,8 +5304,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>SCodeR</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>SCodeR<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -5407,9 +5388,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>UniXcoder</span></span><span lang=EN-US style='font-size:6.5pt;
-  color:black;background:white'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>UniXcoder<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -5673,8 +5652,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>RoBERTa</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>RoBERTa</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -5760,8 +5739,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>RoBERTa</span></span><span
-  lang=EN-US style='font-size:6.5pt'> (code)<o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>RoBERTa (code)<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -5847,8 +5825,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CodeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CodeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -5934,8 +5911,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>GraphCodeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>GraphCodeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -6108,8 +6084,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CuBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CuBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -6283,8 +6258,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>CodeBERTa</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>CodeBERTa</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -6547,8 +6522,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CugLM</span></span><span
-  lang=EN-US style='font-size:6.5pt'>&nbsp;<o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CugLM&nbsp;<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -6635,8 +6609,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>UniXcoder</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>UniXcoder<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -6983,8 +6956,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>TreeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>TreeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -7070,8 +7042,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>GraphCodeBERT</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>GraphCodeBERT</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -7163,8 +7135,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>RoBERTa</span></span><span
-  lang=EN-US style='font-size:6.5pt'> (code)<o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>RoBERTa (code)<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -7250,8 +7221,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CodeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CodeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -7423,8 +7393,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>SynCoBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>SynCoBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -7510,8 +7479,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>StructCoder</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>StructCoder<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -7683,8 +7651,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>TreeBERT</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>TreeBERT<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -7770,8 +7737,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CugLM</span></span><span
-  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt'>CugLM<o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -7857,8 +7823,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>GraphCodeBERT</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>GraphCodeBERT</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -8308,8 +8274,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>CodeBERTa</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>CodeBERTa</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -8396,8 +8362,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:1.0pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  class=SpellE><span lang=EN-US style='font-size:6.5pt;color:black;background:
-  white'>CodeBERT</span></span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>CodeBERT</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
   <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
   border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
@@ -8478,9 +8444,9 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   vertical-align:top'><span lang=EN-US style='font-size:6.5pt;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></p>
   </td>
  </tr>
-</table> 
-</div>
+</table>
 
+</div>
 
 ### 4.2 NL-related tasks
 
