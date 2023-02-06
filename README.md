@@ -1184,6 +1184,7 @@ SE-related downstream task datasets are the datasets used to fine tune the intel
 
 PL-related tasks are the tasks to solve the problems through studying the syntactic and semantic feature representations of source code. The current main tasks and performance are listed in the followed table.
 
+<div>
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
  mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
@@ -8478,6 +8479,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   </td>
  </tr>
 </table>
+ 
+ </div>
 
 
 ### 4.2 NL-related tasks
