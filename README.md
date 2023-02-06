@@ -8478,9 +8478,8 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
   vertical-align:top'><span lang=EN-US style='font-size:6.5pt;font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></p>
   </td>
  </tr>
-</table>
- 
- </div>
+</table> 
+</div>
 
 
 ### 4.2 NL-related tasks
@@ -8488,7 +8487,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
 NL-related tasks are the tasks to solve the problems through studying the feature represents included in the text information (e.g., issue report, commit message
 ) in SE, such as the classification of issue reports, the classfication of APP review, and the sentiment classification. The current NL-related tasks with the PTMs and their performance are presented in the followed table to help developers better understand textual information in the field of software engineering.
 
-<div>
+<div  align=center>
 <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" align="left" width="572" style="width:428.85pt;border-collapse:collapse;border:none;
  mso-border-top-alt:solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;
  mso-table-overlap:never;mso-table-lspace:9.0pt;margin-left:6.75pt;mso-table-rspace:
@@ -10736,12 +10735,13 @@ NL-related tasks are the tasks to solve the problems through studying the featur
   </td>
  </tr>
 </tbody></table>
- </div>
+</div>
 
 ### 4.3 Interaction tasks among PL and NL
 
 Interaction tasks among PL and NL are the tasks to process the pairs of PL and NL datasets in SE, such as code summarization, code generation, code review, and code search tasks. We present the these tasks and their current performance in the followed table. 
 
+<div align=center>
 <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
  solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
  1.0pt solid black">
@@ -11352,11 +11352,13 @@ Interaction tasks among PL and NL are the tasks to process the pairs of PL and N
   </td>
  </tr>
 </tbody></table>
+</div>
 
 ### 4.4 CV-related tasks
 
 CV-related tasks are the tasks to process the software artifacts with the image as input in SE. At present, researchers in SE have applied the PTMs into the classification of UML diagrams. 
 
+<div align=center>
 <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
  solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
  1.0pt solid black">
@@ -11396,6 +11398,7 @@ CV-related tasks are the tasks to process the software artifacts with the image 
   </td>
  </tr>
 </tbody></table>
+</div>
 
 ## Notes:
 Check out our paper for more information: Research Progress of Pre-trained models in Software Engineering.
