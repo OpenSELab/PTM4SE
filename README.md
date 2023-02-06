@@ -8488,6 +8488,7 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
 NL-related tasks are the tasks to solve the problems through studying the feature represents included in the text information (e.g., issue report, commit message
 ) in SE, such as the classification of issue reports, the classfication of APP review, and the sentiment classification. The current NL-related tasks with the PTMs and their performance are presented in the followed table to help developers better understand textual information in the field of software engineering.
 
+<div>
 <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" align="left" width="572" style="width:428.85pt;border-collapse:collapse;border:none;
  mso-border-top-alt:solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;
  mso-table-overlap:never;mso-table-lspace:9.0pt;margin-left:6.75pt;mso-table-rspace:
@@ -10735,6 +10736,7 @@ NL-related tasks are the tasks to solve the problems through studying the featur
   </td>
  </tr>
 </tbody></table>
+ </div>
 
 ### 4.3 Interaction tasks among PL and NL
 
