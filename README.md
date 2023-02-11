@@ -14560,6 +14560,7 @@ Interaction tasks among PL and NL are the tasks to process the pairs of PL and N
 
 CV-related tasks are the tasks to process the software artifacts with the image as input in SE. At present, researchers in SE have applied the PTMs into the classification of UML diagrams. 
 
+
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-top-alt:solid black 1.0pt;
  mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:1.0pt solid black'>
@@ -14569,8 +14570,6 @@ CV-related tasks are the tasks to process the software artifacts with the image 
   height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>CV<o:p></o:p></span></p>
-  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
   </td>
   <td valign=top style='border-top:solid black 1.0pt;border-left:none;
   border-bottom:solid black 1.0pt;border-right:none;padding:5.0pt 5.0pt 5.0pt 5.0pt;
