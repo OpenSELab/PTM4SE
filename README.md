@@ -1013,656 +1013,1904 @@ PTMs datasets are datasets that are used for Trained a DL model from scratch. Th
 
 SE-related downstream task datasets are the datasets used to fine tune the intellignet DL models for the se-related downstream tasks. Common SE-related downstream datasets frequently used are listed in the followed table.
 
-<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="581" style="width:435.4pt;border-collapse:collapse;border:none;mso-border-top-alt:
- solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
- 1.0pt solid black">
- <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:7.1pt">
-  <td width="39" valign="top" style="width:29.5pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:#24292F;background:white">Type</span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:7.1pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt;color:#24292F;background:white'>Type</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="65" valign="top" style="width:48.5pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:#24292F;background:white">Tasks</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt;color:#24292F;background:white'>Tasks</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="151" valign="top" style="width:4.0cm;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:#24292F;background:white">Dataset</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt;color:#24292F;background:white'>Dataset</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:#24292F;background:white">Programming
-  Language</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt;color:#24292F;background:white'>Programming
+  Language</span><span lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:#24292F;background:white">Scale</span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt;color:#24292F;background:white'>Scale</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="66" valign="top" style="width:49.6pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:#24292F;background:white">Open Time</span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:1;height:7.1pt">
-  <td width="39" rowspan="12" valign="top" style="width:29.5pt;border:none;
-  border-bottom:solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PL<o:p></o:p></span></p>
-  </td>
-  <td width="65" rowspan="5" valign="top" style="width:48.5pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Classification<o:p></o:p></span></p>
-  </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/TruX-DTF/DL4PatchCorrectness"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java patches</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">102041<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2020<o:p></o:p></span></p>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt;color:#24292F;background:white'>Open Time</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:2;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">POJ104<o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:1;height:7.1pt'>
+  <td rowspan=28 valign=top style='border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>PL<o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">C/C++<o:p></o:p></span></p>
+  <td rowspan=16 valign=top style='border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Code Classification<o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">30815<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="https://github.com/TruX-DTF/DL4PatchCorrectness"><span
+  style='font-size:6.5pt'>Java patches</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2021<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java<o:p></o:p></span></p>
   </td>
- </tr>
- <tr style="mso-yfti-irow:3;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeCloneBench<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>102041<o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">901028<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2014<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:4;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/maldonado/tse.satd.data/tree/master/dataset"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">SATD dataset</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2016<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:5;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/smartbugs/smartbugs-wild"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">SmartBugs Wild Dataset</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:2;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>POJ104<o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C/C++<o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">47398<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>30815<o:p></o:p></span></p>
   </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2020<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:6;height:7.1pt">
-  <td width="65" rowspan="3" valign="top" style="width:48.5pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Program Repair<o:p></o:p></span></p>
-  </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/EhsanMashhadi/MSR2021-ProgramRepair/tree/main/data"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">ManySStuBs4J</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">63923<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2021<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:7;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://drive.google.com/drive/folders/1uJv-kljY1Q59fa-TdkpXOOd9QEG5OZDa?usp=sharing"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Automatic Bug Fixing</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:3;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  class=SpellE><span lang=EN-US style='font-size:6.5pt'>CodeCloneBench</span></span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java<o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">46680<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>901028<o:p></o:p></span></p>
   </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2019<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:8;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://drive.google.com/file/d/1CtfnYaVf-q6FZP5CUM4Wh7ofpp8b9ajW/view"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">TFix-dataset</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">JavaScript<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">104804<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2021<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2014<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:9;height:7.1pt">
-  <td width="65" rowspan="2" valign="top" style="width:48.5pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Completion<o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:4;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a
+  href="https://github.com/maldonado/tse.satd.data/tree/master/dataset"><span
+  style='font-size:6.5pt'>SATD dataset</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java and
-  TypeScript datasets<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java/TypeScript<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2020<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:10;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/google-research-datasets/eth_py150_open"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">ETH Py150 corpus</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Python<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">74749<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2020<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2016<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:11;height:7.1pt">
-  <td width="65" valign="top" style="width:48.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">API Recommendation<o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:5;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="https://github.com/smartbugs/smartbugs-wild"><span
+  style='font-size:6.5pt'>SmartBugs Wild Dataset</span></a></span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Req2Lib-dataset<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>47398<o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">5625<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2020<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:12;height:7.1pt">
-  <td width="65" valign="top" style="width:48.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Translation<o:p></o:p></span></p>
-  </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/microsoft/CodeXGLUE"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeTrans</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java/C#<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">10300<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2021<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:13;height:7.1pt">
-  <td width="39" rowspan="6" valign="top" style="width:29.5pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">NL<o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:6;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://sites.google.com/view/du-commits/home">SPI</a><o:p></o:p></span></p>
   </td>
-  <td width="65" rowspan="4" valign="top" style="width:48.5pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Text Classification<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C<o:p></o:p></span></p>
   </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="http://www.st.cs.uni-saarland.de/softevo/bugclassify/"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Herzig's issue report
-  datasets</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:
-  10.0pt"><o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>298917<o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">English<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2012<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:14;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://zenodo.org/record/4266643#.X6vERuLPxPY"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Commit messages</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:7;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a href="https://www.qemu.org/index.html">QEMU</a><o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">English<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C/C++<o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">1793<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>13600<o:p></o:p></span></p>
   </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2021<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:15;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://bitbucket.org/jstzwj/lms4githubissue/src/master/data_view.7z"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">issue report from GitHub</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">English<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2021<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2005<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:16;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/SEntiMoji/SEntiMoji"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">SEntiMoji dataset</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:8;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://www.linuxjournal.com/article/8517">FFmpeg</a><o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C/C++<o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">10,096<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>4919<o:p></o:p></span></p>
   </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2019<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:17;height:7.1pt">
-  <td width="65" valign="top" style="width:48.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Review Responses
-  Automatic Generation<o:p></o:p></span></p>
-  </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">review-response
-  pairs datasets<o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">English<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">570881<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2020<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2006<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:18;height:7.1pt">
-  <td width="65" valign="top" style="width:48.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Link Prediction<o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:9;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/microsoft/CodeXGLUE/tree/main/Code-Code/Defect-detection">Devign</a><o:p></o:p></span></p>
   </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://zenodo.org/record/4511291#.YB3tjyj0mbg"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">traceability dataset</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C<o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">English<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>27318</span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">1834<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2021<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:19;height:7.1pt">
-  <td width="39" rowspan="5" valign="top" style="width:29.5pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PL+NL<o:p></o:p></span></p>
-  </td>
-  <td width="65" rowspan="3" valign="top" style="width:48.5pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Summarization<o:p></o:p></span></p>
-  </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/senticr/SentiCR/"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code review comments (CR)</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">1600<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2017<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:20;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://drive.google.com/drive/folders/1uJv-kljY1Q59fa-TdkpXOOd9QEG5OZDa?usp=sharing"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Summarization(CS)</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:10;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Merge <span class=SpellE>Conflcts</span>
+  Dataset<o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C#/JavaScript/TypeScript/Java<o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">1953940<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>219934<o:p></o:p></span></p>
   </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2020<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:21;height:7.1pt">
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/github/CodeSearchNet"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeSearchNet</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Ruby/JavaScript/GO/Python/Java/PHP<o:p></o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2019<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2022<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:22;height:7.1pt">
-  <td width="65" valign="top" style="width:48.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Code Generation<o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:11;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://anonymous.4open.science/r/CommitMessageEmpirical/README.mdd">Multi-language
+  Commit Message Dataset (MCMD)</a><o:p></o:p></span></p>
   </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://drive.google.com/drive/folders/1kC6fe7JgOmEHhVFaXjzOmKeatTJy1I1W"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Concode data</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java/C#/C++/Python/JavaScript<o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Java<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2250000</span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">100,000<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2018<o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:23;height:7.1pt">
-  <td width="65" valign="top" style="width:48.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">Synthesis<o:p></o:p></span></p>
-  </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US"><a href="https://github.com/microsoft/CodeXGLUE"><span style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CodeXGLUE</span></a></span><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2021<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2022<o:p></o:p></span></p>
   </td>
  </tr>
- <tr style="mso-yfti-irow:24;mso-yfti-lastrow:yes;height:7.1pt">
-  <td width="39" valign="top" style="width:29.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CV<o:p></o:p></span></p>
+ <tr style='mso-yfti-irow:12;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/CGCL-codes/VulDeePecker">Vuldeepecker</a><o:p></o:p></span></p>
   </td>
-  <td width="65" valign="top" style="width:48.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">UML Diagram Classification<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C/C++<o:p></o:p></span></p>
   </td>
-  <td width="151" valign="top" style="width:4.0cm;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">UML Diagram<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>61638</span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
-  <td width="94" valign="top" style="width:70.85pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width="57" valign="top" style="width:42.55pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">14815<o:p></o:p></span></p>
-  </td>
-  <td width="66" valign="top" style="width:49.6pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:7.1pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">2016<o:p></o:p></span></p>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2018<o:p></o:p></span></p>
   </td>
  </tr>
-</tbody></table>
+ <tr style='mso-yfti-irow:13;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a href="https://osf.io/d45bw/">Draper</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C/C++<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>1274366<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2018<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:14;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/VulDetProject/ReVeal/tree/master/data">REVEAL</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C/C++<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>18169<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:15;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/muVulDeePecker/muVulDeePecker">muVuldeepecker (MVD)</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C/C++<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>181641<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2019<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:16;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a href="https://github.com/ibm/D2A">D2A</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C/C++<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>1295623</span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:17;height:7.1pt'>
+  <td rowspan=7 valign=top style='border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Program Repair<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a
+  href="https://github.com/EhsanMashhadi/MSR2021-ProgramRepair/tree/main/data"><span
+  style='font-size:6.5pt'>ManySStuBs4J</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>63923<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:18;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a
+  href="https://drive.google.com/drive/folders/1uJv-kljY1Q59fa-TdkpXOOd9QEG5OZDa?usp=sharing"><span
+  style='font-size:6.5pt'>Automatic Bug Fixing</span></a></span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>46680<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2019<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:19;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a
+  href="https://drive.google.com/file/d/1CtfnYaVf-q6FZP5CUM4Wh7ofpp8b9ajW/view"><span
+  style='font-size:6.5pt'>TFix-dataset</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>JavaScript<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>104804<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:20;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/jkoppel/QuixBugs">QuixBugs</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python/Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2017<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:21;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/lin-tan/CoCoNut-Artifact/releases">CoCoNut</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java/Python/C/JavaScript<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>9675342<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:22;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="http://salt.ece.ubc.ca/software/bugaid/">BugAID</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>JavaScript<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2016<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:23;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://repairbenchmarks.cs.umass.edu/ManyBugs/">ManyBugs</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>10468<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2015<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:24;height:7.1pt'>
+  <td rowspan=2 valign=top style='border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Code Completion<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java and TypeScript datasets<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java/TypeScript<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:25;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a
+  href="https://github.com/google-research-datasets/eth_py150_open"><span
+  style='font-size:6.5pt'>ETH Py150 corpus</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>74749<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:26;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>API Recommendation<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Req2Lib-dataset<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>5625<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:27;height:7.1pt'>
+  <td rowspan=2 valign=top style='border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Code Translation<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/microsoft/CodeXGLUE">Coode-code (CodeTrans</a><span
+  class=MsoHyperlink>)</span><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java/C#<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>10300<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:28;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/IBM/Project_CodeNet">Python800 dataset</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>240000<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:29;height:7.1pt'>
+  <td rowspan=6 valign=top style='border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>NL<o:p></o:p></span></p>
+  </td>
+  <td rowspan=4 valign=top style='border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Text Classification<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="http://www.st.cs.uni-saarland.de/softevo/bugclassify/"><span
+  style='font-size:6.5pt'>Herzig's issue report datasets</span></a></span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>English<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2012<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:30;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="https://zenodo.org/record/4266643#.X6vERuLPxPY"><span
+  style='font-size:6.5pt'>Commit messages</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>English<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>1793<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:31;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a
+  href="https://bitbucket.org/jstzwj/lms4githubissue/src/master/data_view.7z"><span
+  style='font-size:6.5pt'>issue report from GitHub</span></a></span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>English<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:32;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="https://github.com/SEntiMoji/SEntiMoji"><span
+  style='font-size:6.5pt'>SEntiMoji dataset</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>10096<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2019<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:33;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Review Responses Automatic Generation<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>review-response pairs datasets<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>English<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>570881<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:34;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Link Prediction<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="https://zenodo.org/record/4511291#.YB3tjyj0mbg"><span
+  style='font-size:6.5pt'>traceability dataset</span></a></span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>English<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>1834<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:35;height:7.1pt'>
+  <td rowspan=20 valign=top style='border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>PL+NL<o:p></o:p></span></p>
+  </td>
+  <td rowspan=8 valign=top style='border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt'><span lang=EN-US style='font-size:6.5pt'>Code
+  Generation<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a
+  href="https://drive.google.com/drive/folders/1kC6fe7JgOmEHhVFaXjzOmKeatTJy1I1W"><span
+  style='font-size:6.5pt'>Concode data</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>100,000<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2018<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:36;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>DJANGO<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>18805<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2015<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:37;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/rajasagashe/juice">JUICE-10K</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>13946</span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2019<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:38;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/google-research/google-research/tree/master/mbpp">MBPP</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>974<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:39;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://yale-lily.github.io/spider">Spider</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>SQL<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>5693<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2018<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:40;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a href="https://github.com/hendrycks/apps">APPS</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>232421<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:41;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/deepmind/code_contests">CodeContests</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>C++/Python/Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>13610</span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2022<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:42;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/openai/human-eval">HumanEval</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:43;height:7.1pt'>
+  <td rowspan=5 valign=top style='border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Code Summarization<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="https://github.com/senticr/SentiCR/"><span
+  style='font-size:6.5pt'>Code review comments (CR)</span></a></span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>1600<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2017<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:44;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a
+  href="https://drive.google.com/drive/folders/1uJv-kljY1Q59fa-TdkpXOOd9QEG5OZDa?usp=sharing"><span
+  style='font-size:6.5pt'>Code <span class=GramE>Summarization(</span>CS)</span></a></span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>1953940<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:45;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="https://github.com/github/CodeSearchNet"><span
+  style='font-size:6.5pt'>CodeSearchNet</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Ruby/JavaScript/GO/Python/Java/PHP<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2019<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:46;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java projects from GitHub<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>134239<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:47;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a href="http://www.srl.inf.ethz.ch/py150">PY150</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>30 000<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2016<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:48;height:7.1pt'>
+  <td rowspan=5 valign=top style='border-top:none;border-left:none;border-bottom:
+  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Code Search<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/microsoft/CodeXGLUE/tree/main/Text-Code/NL-code-search-Adv">AdvTest
+  dataset</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>280634</span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:49;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a href="https://conala-corpus.github.io/">CoNaLa</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python/Java<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>79809<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2018<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:50;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/nokia/codesearch">SO-DS</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>13250<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2020<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:51;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/LittleYUYU/StackOverflow-Question-Code-Dataset">StaQC</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>147546<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2018<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:52;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/Jun-jie-Huang/CoCLR/tree/main/data">CoSQA</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>20604<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:53;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Code Review<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><a
+  href="https://github.com/microsoft/CodeBERT/tree/master/CodeReviewer">CodeReview
+  data</a><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Python/Java/Go/C++/JavaScript/C/C#/<span
+  class=SpellE>Php</span>/Ruby<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2022<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:54;height:7.1pt'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>Synthesis<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US><a href="https://github.com/microsoft/CodeXGLUE"><span
+  style='font-size:6.5pt'>CodeXGLUE</span></a></span><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2021<o:p></o:p></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:55;mso-yfti-lastrow:yes;height:7.1pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>CV<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>UML Diagram Classification<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>UML Diagram<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>14815<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:7.1pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>2016<o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
 
 ## 4. SE-related tasks that used the PTMs and their performance
 
