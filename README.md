@@ -14560,47 +14560,52 @@ Interaction tasks among PL and NL are the tasks to process the pairs of PL and N
 
 CV-related tasks are the tasks to process the software artifacts with the image as input in SE. At present, researchers in SE have applied the PTMs into the classification of UML diagrams. 
 
-<div align=center>
-<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="578" style="width:433.45pt;border-collapse:collapse;border:none;mso-border-top-alt:
- solid black 1.0pt;mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:
- 1.0pt solid black">
- <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt">
-  <td width="161" valign="top" style="width:120.5pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">CV<o:p></o:p></span></p>
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p>&nbsp;</o:p></span></p>
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-top-alt:solid black 1.0pt;
+ mso-border-bottom-alt:solid black 1.0pt;mso-border-insideh:1.0pt solid black'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt'>
+  <td valign=top style='border-top:solid black 1.0pt;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:none;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>CV<o:p></o:p></span></p>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
   </td>
-  <td width="95" valign="top" style="width:70.9pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">PTMs<o:p></o:p></span></p>
+  <td valign=top style='border-top:solid black 1.0pt;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:none;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>PTMs<o:p></o:p></span></p>
   </td>
-  <td width="323" valign="top" style="width:242.05pt;border-top:solid black 1.0pt;
-  border-left:none;border-bottom:solid black 1.0pt;border-right:none;
-  padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">Accuracy</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
- </tr>
- <tr style="mso-yfti-irow:1;mso-yfti-lastrow:yes;height:8.5pt">
-  <td width="161" valign="top" style="width:120.5pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt">UML diagram Classification<o:p></o:p></span></p>
-  </td>
-  <td width="95" valign="top" style="width:70.9pt;border:none;border-bottom:solid black 1.0pt;
-  mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><span lang="EN-US" style="font-size:9.0pt;color:black;background:white">VGG-16</span><span lang="EN-US" style="font-size:9.0pt"><o:p></o:p></span></p>
-  </td>
-  <td width="323" valign="top" style="width:242.05pt;border:none;border-bottom:
-  solid black 1.0pt;mso-border-top-alt:solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;
-  height:8.5pt">
-  <p style="mso-line-height-alt:.9pt;mso-pagination:widow-orphan"><b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt">0.50</span></b><span lang="EN-US" style="font-size:9.0pt;mso-bidi-font-size:10.0pt"><o:p></o:p></span></p>
+  <td valign=top style='border-top:solid black 1.0pt;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:none;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:8.5pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>Accuracy</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
   </td>
  </tr>
-</tbody></table>
-</div>
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:8.5pt'>
+  <td valign=top style='border:none;border-bottom:solid black 1.0pt;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt'>UML diagram Classification<o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border:none;border-bottom:solid black 1.0pt;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
+  lang=EN-US style='font-size:6.5pt;color:black;background:white'>VGG-16</span><span
+  lang=EN-US style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+  <td valign=top style='border:none;border-bottom:solid black 1.0pt;mso-border-top-alt:
+  solid black 1.0pt;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:8.5pt'>
+  <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><b><span
+  lang=EN-US style='font-size:6.5pt'>0.50</span></b><span lang=EN-US
+  style='font-size:6.5pt'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
 
 ## Notes:
 Check out our paper for more information: Research Progress of Pre-trained models in Software Engineering.
