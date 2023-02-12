@@ -21,7 +21,7 @@ Since 2018, researchers in SE have begun to introduce different types of PTMs in
  
 <p align="center">Fig.2 Distribution of pre-trained models used in the software engineering</p>
 
-### 2.1 Off-the-shelf Models
+### 2.1 General pre-trained Models
 
 Off-the-shelf Models are the pre-trained models that are trained on general domain datasets in the DL doamin, e.g., BERT (or GPT or XLNet) pre-trained models which are trained on English Wikipedia and general news datasets in Natural language processing (NLP), and ResNet and VGG models which are pretrained on ImageNet datasets in computer vision (CV). Thus, we divide the off-the-shelf models into two categories:  off-the-shelf models in the NLP and  off-the-shelf models in the CV.
 
