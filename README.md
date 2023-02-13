@@ -2926,8 +2926,6 @@ SE-related downstream task datasets are the datasets used to fine tune the intel
 
 PL-related tasks are the tasks to solve the problems through studying the syntactic and semantic feature representations of source code. The current main tasks and performance are listed in the followed table.
 
-<div align=center>
-
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
  mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
@@ -10188,14 +10186,12 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
  </tr>
 </table>
 
-</div>
 
 ### 4.2 NL-related tasks
 
 NL-related tasks are the tasks to solve the problems through studying the feature represents included in the text information (e.g., issue report, commit message
 ) in SE, such as the classification of issue reports, the classfication of APP review, and the sentiment classification. The current NL-related tasks with the PTMs and their performance are presented in the followed table to help developers better understand textual information in the field of software engineering.
 
-<div align=center>
 
 <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-top-alt:solid black 1.0pt;
@@ -11497,13 +11493,11 @@ NL-related tasks are the tasks to solve the problems through studying the featur
  </tr>
 </table>
 
-</div>
 
 ### 4.3 Interaction tasks among PL and NL
 
 Interaction tasks among PL and NL are the tasks to process the pairs of PL and NL datasets in SE, such as code summarization, code generation, code review, and code search tasks. We present the these tasks and their current performance in the followed table. 
 
-<div align=center>
 
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
@@ -14554,7 +14548,6 @@ Interaction tasks among PL and NL are the tasks to process the pairs of PL and N
  </tr>
 </table>
 
-</div>
 
 ### 4.4 CV-related tasks
 
