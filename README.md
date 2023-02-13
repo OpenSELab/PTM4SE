@@ -2930,64 +2930,41 @@ PL-related tasks are the tasks to solve the problems through studying the syntac
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
  mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:8.5pt'>
-  <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
-  <p align=center style='text-align:center;mso-line-height-alt:.9pt;mso-pagination:
-  widow-orphan'><span lang=EN-US style='font-size:6.5pt'>PL<o:p></o:p></span></p>
-  <p class=MsoNormal align=left style='text-align:left;mso-pagination:widow-orphan;
-  vertical-align:top'><span lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <p align=center style='text-align:center;mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span lang=EN-US style='font-size:6.5pt'>PL<o:p></o:p></span></p>
+  <p class=MsoNormal align=left style='text-align:left;mso-pagination:widow-orphan;vertical-align:top'><span lang=EN-US style='font-size:6.5pt'><o:p>&nbsp;</o:p></span></p></td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
-  lang=EN-US style='font-size:6.5pt'>Sub-Tasks<o:p></o:p></span></p>
-  </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  lang=EN-US style='font-size:6.5pt'>Sub-Tasks<o:p></o:p></span></p></td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>PTMs<o:p></o:p></span></p>
   </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>Accuracy<o:p></o:p></span></p>
   </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>Precision<o:p></o:p></span></p>
   </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>Recall<o:p></o:p></span></p>
   </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>F1<o:p></o:p></span></p>
   </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>MAP<o:p></o:p></span></p>
   </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>BLEU<o:p></o:p></span></p>
   </td>
-  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
-  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:8.5pt'>
   <p style='mso-line-height-alt:.9pt;mso-pagination:widow-orphan'><span
   lang=EN-US style='font-size:6.5pt'>EM<o:p></o:p></span></p>
   </td>
